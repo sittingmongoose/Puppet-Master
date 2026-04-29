@@ -1,0 +1,594 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-050",
+  "group_ids": [
+    "pktgrp-0197",
+    "pktgrp-0198",
+    "pktgrp-0199",
+    "pktgrp-0200"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "packet-target-0197",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## 19. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06) (Plans/FinalGUISpec.md:L2020)",
+      "path": "Plans/FinalGUISpec.md",
+      "coverage_row_ids": [
+        "cov-00415",
+        "cov-01333",
+        "cov-04677"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-00415",
+          "cov-01333",
+          "cov-04677"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-273",
+        "obl-1190",
+        "obl-4455"
+      ],
+      "source_seed_ids": [
+        "seed-311",
+        "seed-1422",
+        "seed-6321"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0023",
+        "shard-0061"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-273",
+          "obl-1190",
+          "obl-4455"
+        ],
+        "source_seed_ids": [
+          "seed-311",
+          "seed-1422",
+          "seed-6321"
+        ],
+        "source_shard_ids": [
+          "shard-0011",
+          "shard-0023",
+          "shard-0061"
+        ]
+      },
+      "gap_ids": [
+        "gap-00326",
+        "gap-01042",
+        "gap-03655"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Provider_OpenCode.md` and `Provider_Stream_Mapping_External_Reference_A2A.md` both assume runtime/account disclosure obligations that their current event/API mappings cannot actually satisfy.",
+        "Provider_OpenCode.md",
+        "Provider_Stream_Mapping_External_Reference_A2A.md",
+        "must use progressive disclosure rather than fully expanded seam/package/node trees",
+        "provider/runtime disclosure fields:"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-a9294ce4d16f",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0253",
+      "source_reconciliation_target_ids": [
+        "target-0253"
+      ],
+      "source_target_ids": [
+        "target-0253"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0253\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `Provider_OpenCode.md` and `Provider_Stream_Mapping_External_Reference_A2A.md` both assume runtime/account disclosure obligations that their current event/API mappings cannot actually satisfy.\n  - Provider_OpenCode.md\n  - Provider_Stream_Mapping_External_Reference_A2A.md\n  - must use progressive disclosure rather than fully expanded seam/package/node trees\n  - provider/runtime disclosure fields:\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0198",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## 2. Tech Stack and Renderer (Plans/FinalGUISpec.md:L275)",
+      "path": "Plans/FinalGUISpec.md",
+      "coverage_row_ids": [
+        "cov-06392",
+        "cov-06683"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-06392",
+          "cov-06683"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-6033",
+        "obl-6324"
+      ],
+      "source_seed_ids": [
+        "seed-9128",
+        "seed-9566"
+      ],
+      "source_shard_ids": [
+        "shard-0082",
+        "shard-0086"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-6033",
+          "obl-6324"
+        ],
+        "source_seed_ids": [
+          "seed-9128",
+          "seed-9566"
+        ],
+        "source_shard_ids": [
+          "shard-0082",
+          "shard-0086"
+        ]
+      },
+      "gap_ids": [
+        "gap-04965",
+        "gap-05176"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "The owner-routing stack is not internally closed:",
+        "Owner stack:"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-6e3639d4c705",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0254",
+      "source_reconciliation_target_ids": [
+        "target-0254"
+      ],
+      "source_target_ids": [
+        "target-0254"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0254\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - The owner-routing stack is not internally closed:\n  - Owner stack:\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0199",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## 4. Navigation Architecture (Plans/FinalGUISpec.md:L452)",
+      "path": "Plans/FinalGUISpec.md",
+      "coverage_row_ids": [
+        "cov-02617",
+        "cov-04385",
+        "cov-04519",
+        "cov-04610",
+        "cov-04724",
+        "cov-05207",
+        "cov-05571",
+        "cov-05602",
+        "cov-05619",
+        "cov-06545"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-02617",
+          "cov-04385",
+          "cov-04519",
+          "cov-04610",
+          "cov-04724",
+          "cov-05207",
+          "cov-05571",
+          "cov-05602",
+          "cov-05619",
+          "cov-06545"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-2465",
+        "obl-4225",
+        "obl-4297",
+        "obl-4388",
+        "obl-4502",
+        "obl-4983",
+        "obl-5343",
+        "obl-5374",
+        "obl-5391",
+        "obl-6186"
+      ],
+      "source_seed_ids": [
+        "seed-3217",
+        "seed-5876",
+        "seed-6016",
+        "seed-6203",
+        "seed-6401",
+        "seed-7233",
+        "seed-7938",
+        "seed-7992",
+        "seed-8014",
+        "seed-9361"
+      ],
+      "source_shard_ids": [
+        "shard-0038",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060",
+        "shard-0062",
+        "shard-0069",
+        "shard-0074",
+        "shard-0084"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-2465",
+          "obl-4225",
+          "obl-4297",
+          "obl-4388",
+          "obl-4502",
+          "obl-4983",
+          "obl-5343",
+          "obl-5374",
+          "obl-5391",
+          "obl-6186"
+        ],
+        "source_seed_ids": [
+          "seed-3217",
+          "seed-5876",
+          "seed-6016",
+          "seed-6203",
+          "seed-6401",
+          "seed-7233",
+          "seed-7938",
+          "seed-7992",
+          "seed-8014",
+          "seed-9361"
+        ],
+        "source_shard_ids": [
+          "shard-0038",
+          "shard-0058",
+          "shard-0059",
+          "shard-0060",
+          "shard-0062",
+          "shard-0069",
+          "shard-0074",
+          "shard-0084"
+        ]
+      },
+      "gap_ids": [
+        "gap-02053",
+        "gap-03423",
+        "gap-03550",
+        "gap-03618",
+        "gap-03689",
+        "gap-04047",
+        "gap-04343",
+        "gap-04365",
+        "gap-04378",
+        "gap-05078"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`cmd.panel.switch` is the best local starting point for general navigation, but it is still too panel-centric and too shallow for:",
+        "cmd.panel.switch",
+        "`resume_url` is currently a stronger navigation primitive than generic `UICommand.args`, which inverts the desired architecture.",
+        "resume_url",
+        "UICommand.args",
+        "but they still frame those as view-specific navigation instructions, not as a canonical target model.",
+        "`UICommand.args` is too generic to express reusable navigation semantics without a normalized target object.",
+        "Research Progress - 2026-03-16 - Migration pattern for `route_target` and navigation wrappers",
+        "route_target",
+        "Keep `resume_url` portability and persistence, but remove its status as the strongest implicit navigation mechanism.",
+        "Research Progress - 2026-03-17 - Artifact preview identity versus navigation primitive ownership",
+        "If reconciliation starts in Stratum 3 or Stratum 4 before Stratum 1 is fixed, the consumer docs will keep restating local navigation semantics and drift will recur.",
+        "add a primitive for route-target / open-by-identity navigation near `Primitive:UICommand` and `Primitive:DocumentPane`",
+        "Primitive:UICommand",
+        "Primitive:DocumentPane",
+        "`wizard_attention_required` still treats `resume_url` as the primary navigation object",
+        "wizard_attention_required"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-71b995a11c93",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0255",
+      "source_reconciliation_target_ids": [
+        "target-0255"
+      ],
+      "source_target_ids": [
+        "target-0255"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0255\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `cmd.panel.switch` is the best local starting point for general navigation, but it is still too panel-centric and too shallow for:\n  - cmd.panel.switch\n  - `resume_url` is currently a stronger navigation primitive than generic `UICommand.args`, which inverts the desired architecture.\n  - resume_url\n  - UICommand.args\n  - but they still frame those as view-specific navigation instructions, not as a canonical target model.\n  - `UICommand.args` is too generic to express reusable navigation semantics without a normalized target object.\n  - Research Progress - 2026-03-16 - Migration pattern for `route_target` and navigation wrappers\n  - route_target\n  - Keep `resume_url` portability and persistence, but remove its status as the strongest implicit navigation mechanism.\n  - Research Progress - 2026-03-17 - Artifact preview identity versus navigation primitive ownership\n  - If reconciliation starts in Stratum 3 or Stratum 4 before Stratum 1 is fixed, the consumer docs will keep restating local navigation semantics and drift will recur.\n  - add a primitive for route-target / open-by-identity navigation near `Primitive:UICommand` and `Primitive:DocumentPane`\n  - Primitive:UICommand\n  - Primitive:DocumentPane\n  - `wizard_attention_required` still treats `resume_url` as the primary navigation object\n  - wizard_attention_required\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0200",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## 7. Views Specification (Plans/FinalGUISpec.md:L898)",
+      "path": "Plans/FinalGUISpec.md",
+      "coverage_row_ids": [
+        "cov-00474",
+        "cov-00607",
+        "cov-01408",
+        "cov-01549",
+        "cov-03770",
+        "cov-03943",
+        "cov-03966"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-00474",
+          "cov-00607",
+          "cov-01408",
+          "cov-01549",
+          "cov-03770",
+          "cov-03943",
+          "cov-03966"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-331",
+        "obl-464",
+        "obl-1265",
+        "obl-1406",
+        "obl-3615",
+        "obl-3787",
+        "obl-3810"
+      ],
+      "source_seed_ids": [
+        "seed-380",
+        "seed-534",
+        "seed-1516",
+        "seed-1723",
+        "seed-4885",
+        "seed-5174",
+        "seed-5222"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0013",
+        "shard-0024",
+        "shard-0026",
+        "shard-0050",
+        "shard-0052",
+        "shard-0053"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-331",
+          "obl-464",
+          "obl-1265",
+          "obl-1406",
+          "obl-3615",
+          "obl-3787",
+          "obl-3810"
+        ],
+        "source_seed_ids": [
+          "seed-380",
+          "seed-534",
+          "seed-1516",
+          "seed-1723",
+          "seed-4885",
+          "seed-5174",
+          "seed-5222"
+        ],
+        "source_shard_ids": [
+          "shard-0011",
+          "shard-0013",
+          "shard-0024",
+          "shard-0026",
+          "shard-0050",
+          "shard-0052",
+          "shard-0053"
+        ]
+      },
+      "gap_ids": [
+        "gap-00371",
+        "gap-00473",
+        "gap-01109",
+        "gap-01220",
+        "gap-02942",
+        "gap-03068",
+        "gap-03086"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "lineage views must preserve:",
+        "when necessary, fall back to canonical record-backed views:",
+        "when the UI should fall back to record-backed views",
+        "Keep Source Control worktree-first and compact, with historical/retained material behind filters or lineage views.",
+        "tier-shaped records should be overlays or derived views",
+        "relevant evidence / trace views",
+        "Keep `cost_usage` and receipt views strictly canonical:",
+        "cost_usage"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-6fe2c1573cec",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0256",
+      "source_reconciliation_target_ids": [
+        "target-0256"
+      ],
+      "source_target_ids": [
+        "target-0256"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0256\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - lineage views must preserve:\n  - when necessary, fall back to canonical record-backed views:\n  - when the UI should fall back to record-backed views\n  - Keep Source Control worktree-first and compact, with historical/retained material behind filters or lineage views.\n  - tier-shaped records should be overlays or derived views\n  - relevant evidence / trace views\n  - Keep `cost_usage` and receipt views strictly canonical:\n  - cost_usage\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-00415",
+    "cov-01333",
+    "cov-04677",
+    "cov-06392",
+    "cov-06683",
+    "cov-02617",
+    "cov-04385",
+    "cov-04519",
+    "cov-04610",
+    "cov-04724",
+    "cov-05207",
+    "cov-05571",
+    "cov-05602",
+    "cov-05619",
+    "cov-06545",
+    "cov-00474",
+    "cov-00607",
+    "cov-01408",
+    "cov-01549",
+    "cov-03770",
+    "cov-03943",
+    "cov-03966"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-273",
+    "obl-1190",
+    "obl-4455",
+    "obl-6033",
+    "obl-6324",
+    "obl-2465",
+    "obl-4225",
+    "obl-4297",
+    "obl-4388",
+    "obl-4502",
+    "obl-4983",
+    "obl-5343",
+    "obl-5374",
+    "obl-5391",
+    "obl-6186",
+    "obl-331",
+    "obl-464",
+    "obl-1265",
+    "obl-1406",
+    "obl-3615",
+    "obl-3787",
+    "obl-3810"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-311",
+    "seed-1422",
+    "seed-6321",
+    "seed-9128",
+    "seed-9566",
+    "seed-3217",
+    "seed-5876",
+    "seed-6016",
+    "seed-6203",
+    "seed-6401",
+    "seed-7233",
+    "seed-7938",
+    "seed-7992",
+    "seed-8014",
+    "seed-9361",
+    "seed-380",
+    "seed-534",
+    "seed-1516",
+    "seed-1723",
+    "seed-4885",
+    "seed-5174",
+    "seed-5222"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0011",
+    "shard-0023",
+    "shard-0061",
+    "shard-0082",
+    "shard-0086",
+    "shard-0038",
+    "shard-0058",
+    "shard-0059",
+    "shard-0060",
+    "shard-0062",
+    "shard-0069",
+    "shard-0074",
+    "shard-0084",
+    "shard-0013",
+    "shard-0024",
+    "shard-0026",
+    "shard-0050",
+    "shard-0052",
+    "shard-0053"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "`Provider_OpenCode.md` and `Provider_Stream_Mapping_External_Reference_A2A.md` both assume runtime/account disclosure obligations that their current event/API mappings cannot actually satisfy.",
+    "Provider_OpenCode.md",
+    "Provider_Stream_Mapping_External_Reference_A2A.md",
+    "must use progressive disclosure rather than fully expanded seam/package/node trees",
+    "provider/runtime disclosure fields:",
+    "The owner-routing stack is not internally closed:",
+    "Owner stack:",
+    "`cmd.panel.switch` is the best local starting point for general navigation, but it is still too panel-centric and too shallow for:",
+    "cmd.panel.switch",
+    "`resume_url` is currently a stronger navigation primitive than generic `UICommand.args`, which inverts the desired architecture.",
+    "resume_url",
+    "UICommand.args",
+    "but they still frame those as view-specific navigation instructions, not as a canonical target model.",
+    "`UICommand.args` is too generic to express reusable navigation semantics without a normalized target object.",
+    "Research Progress - 2026-03-16 - Migration pattern for `route_target` and navigation wrappers",
+    "route_target",
+    "Keep `resume_url` portability and persistence, but remove its status as the strongest implicit navigation mechanism.",
+    "Research Progress - 2026-03-17 - Artifact preview identity versus navigation primitive ownership",
+    "If reconciliation starts in Stratum 3 or Stratum 4 before Stratum 1 is fixed, the consumer docs will keep restating local navigation semantics and drift will recur.",
+    "add a primitive for route-target / open-by-identity navigation near `Primitive:UICommand` and `Primitive:DocumentPane`",
+    "Primitive:UICommand",
+    "Primitive:DocumentPane",
+    "`wizard_attention_required` still treats `resume_url` as the primary navigation object",
+    "wizard_attention_required",
+    "lineage views must preserve:",
+    "when necessary, fall back to canonical record-backed views:",
+    "when the UI should fall back to record-backed views",
+    "Keep Source Control worktree-first and compact, with historical/retained material behind filters or lineage views.",
+    "tier-shaped records should be overlays or derived views",
+    "relevant evidence / trace views",
+    "Keep `cost_usage` and receipt views strictly canonical:",
+    "cost_usage"
+  ],
+  "blocked_targets": []
+}

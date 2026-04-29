@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-109",
+  "group_ids": [
+    "discgrp-0433",
+    "discgrp-0434",
+    "discgrp-0435",
+    "discgrp-0436"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00680",
+      "source_obligation_ids": [
+        "obl-537"
+      ],
+      "source_seed_ids": [
+        "seed-618"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Local project regex-index layout",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L302"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00681",
+      "source_obligation_ids": [
+        "obl-538"
+      ],
+      "source_seed_ids": [
+        "seed-619"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00682",
+      "source_obligation_ids": [
+        "obl-539"
+      ],
+      "source_seed_ids": [
+        "seed-620"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "#### Open subject navigation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00683",
+      "source_obligation_ids": [
+        "obl-540"
+      ],
+      "source_seed_ids": [
+        "seed-621"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

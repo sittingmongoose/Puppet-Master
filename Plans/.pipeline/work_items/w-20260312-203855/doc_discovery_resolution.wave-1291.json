@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1291",
+  "group_ids": [
+    "discgrp-5161",
+    "discgrp-5162",
+    "discgrp-5163",
+    "discgrp-5164"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05574",
+      "source_obligation_ids": [
+        "obl-5346"
+      ],
+      "source_seed_ids": [
+        "seed-7946"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "#[derive(Debug, Clone)]",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FileSafe.md:L208"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05576",
+      "source_obligation_ids": [
+        "obl-5348"
+      ],
+      "source_seed_ids": [
+        "seed-7948"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "new_heading_hint": "## 2026-03-09 addendum \u2014 Artifacts panel and Usage/Ledger linkage",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L98"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05577",
+      "source_obligation_ids": [
+        "obl-5349"
+      ],
+      "source_seed_ids": [
+        "seed-7949"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L242"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05578",
+      "source_obligation_ids": [
+        "obl-5350"
+      ],
+      "source_seed_ids": [
+        "seed-7950"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L19"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

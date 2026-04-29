@@ -1,0 +1,986 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-117",
+  "row_group_ids": [
+    "rowgrp-0465",
+    "rowgrp-0466",
+    "rowgrp-0467",
+    "rowgrp-0468"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-00174",
+      "source_obligation_ids": [
+        "obl-070"
+      ],
+      "source_seed_ids": [
+        "seed-070",
+        "seed-140",
+        "seed-171",
+        "seed-186",
+        "seed-218",
+        "seed-330",
+        "seed-388",
+        "seed-425",
+        "seed-1633",
+        "seed-2246",
+        "seed-2267",
+        "seed-2344",
+        "seed-2365",
+        "seed-2393",
+        "seed-2416",
+        "seed-2604",
+        "seed-2711",
+        "seed-2740",
+        "seed-2857",
+        "seed-2885",
+        "seed-3208",
+        "seed-3224",
+        "seed-5679",
+        "seed-5985",
+        "seed-6501",
+        "seed-9623",
+        "seed-9659",
+        "seed-10017",
+        "seed-10140",
+        "seed-10184",
+        "seed-10229",
+        "seed-10267",
+        "seed-10368",
+        "seed-10403"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010",
+        "shard-0011",
+        "shard-0012",
+        "shard-0025",
+        "shard-0031",
+        "shard-0032",
+        "shard-0034",
+        "shard-0035",
+        "shard-0036",
+        "shard-0038",
+        "shard-0056",
+        "shard-0058",
+        "shard-0062",
+        "shard-0086",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091",
+        "shard-0092"
+      ],
+      "canon_label": "`Plans/GitHub_Integration.md`",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/GitHub_Integration.md`",
+        "Plans/GitHub_Integration.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L14",
+        "Plans/GitHub_Integration.md:L25",
+        "Plans/GitHub_Integration.md:L27"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00286",
+      "source_obligation_ids": [
+        "obl-157"
+      ],
+      "source_seed_ids": [
+        "seed-164"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "`Plans/Multi-Account.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/GitHub_Integration.",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Multi-Account.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/GitHub_Integration.md`",
+        "Plans/Multi-Account.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L14",
+        "Plans/GitHub_Integration.md:L25",
+        "Plans/GitHub_Integration.md:L27",
+        "Plans/GitHub_Integration.md:L72",
+        "Plans/GitHub_Integration.md:L82"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00318",
+      "source_obligation_ids": [
+        "obl-179"
+      ],
+      "source_seed_ids": [
+        "seed-205"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "docs involved: `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/fe",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "docs involved: `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/feature-list.md`",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/feature-list.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L14",
+        "Plans/GitHub_Integration.md:L25",
+        "Plans/GitHub_Integration.md:L27",
+        "Plans/GitHub_Integration.md:L73"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00445",
+      "source_obligation_ids": [
+        "obl-302"
+      ],
+      "source_seed_ids": [
+        "seed-351",
+        "seed-2633"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0034"
+      ],
+      "canon_label": "`Plans/GitHub_API_Auth_and_Flows.md` + `Plans/GitHub_Integration.md`",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/GitHub_API_Auth_and_Flows.md` + `Plans/GitHub_Integration.md`",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L14",
+        "Plans/GitHub_Integration.md:L25",
+        "Plans/GitHub_Integration.md:L27",
+        "Plans/GitHub_Integration.md:L72",
+        "Plans/GitHub_Integration.md:L82"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00481",
+      "source_obligation_ids": [
+        "obl-338"
+      ],
+      "source_seed_ids": [
+        "seed-391"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "clearly separates Source Control from GitHub Actions and places worktree management in Hea",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "### Fidelity recovery cov-040: Source Control and worktree handshake",
+      "status": "partial",
+      "exact_items": [
+        "clearly separates Source Control from GitHub Actions and places worktree management in Health/Settings, but does not yet express the stronger Orchestrator-vs-Source-Control lane/worktree boundary."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L7",
+        "Plans/GitHub_Integration.md:L14"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00599",
+      "source_obligation_ids": [
+        "obl-456"
+      ],
+      "source_seed_ids": [
+        "seed-526"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "live mutating / decision-bearing actions must tighten on trust state",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "partial",
+      "exact_items": [
+        "live mutating / decision-bearing actions must tighten on trust state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00600",
+      "source_obligation_ids": [
+        "obl-457"
+      ],
+      "source_seed_ids": [
+        "seed-527"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "`current`: all normal actions allowed",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "partial",
+      "exact_items": [
+        "`current`: all normal actions allowed",
+        "current"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00729",
+      "source_obligation_ids": [
+        "obl-586"
+      ],
+      "source_seed_ids": [
+        "seed-667"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "`Show in ...` actions",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "partial",
+      "exact_items": [
+        "`Show in ...` actions",
+        "Show in ..."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00961",
+      "source_obligation_ids": [
+        "obl-818"
+      ],
+      "source_seed_ids": [
+        "seed-942"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "worktree prune/remove and cleanup actions should disclose:",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "### Fidelity recovery cov-040: Source Control and worktree handshake",
+      "status": "partial",
+      "exact_items": [
+        "worktree prune/remove and cleanup actions should disclose:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L7",
+        "Plans/GitHub_Integration.md:L14"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01161",
+      "source_obligation_ids": [
+        "obl-1018"
+      ],
+      "source_seed_ids": [
+        "seed-1194"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "canon_label": "integration/governance persona biased toward cross-package integration truth",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "partial",
+      "exact_items": [
+        "integration/governance persona biased toward cross-package integration truth"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01210",
+      "source_obligation_ids": [
+        "obl-1067"
+      ],
+      "source_seed_ids": [
+        "seed-1258",
+        "seed-1745",
+        "seed-1777",
+        "seed-2505",
+        "seed-2533"
+      ],
+      "source_shard_ids": [
+        "shard-0021",
+        "shard-0026",
+        "shard-0033"
+      ],
+      "canon_label": "`Weak Integration`",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "partial",
+      "exact_items": [
+        "`Weak Integration`",
+        "Weak Integration"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01372",
+      "source_obligation_ids": [
+        "obl-1229"
+      ],
+      "source_seed_ids": [
+        "seed-1470"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "recover / retry / approve / decline / replan / restore / cleanup actions that already have",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "partial",
+      "exact_items": [
+        "recover / retry / approve / decline / replan / restore / cleanup actions that already have canonical runtime semantics and confirmation rules"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01399",
+      "source_obligation_ids": [
+        "obl-1256"
+      ],
+      "source_seed_ids": [
+        "seed-1501"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "bulk actions should be far narrower than bulk navigation",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "partial",
+      "exact_items": [
+        "bulk actions should be far narrower than bulk navigation"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01407",
+      "source_obligation_ids": [
+        "obl-1264"
+      ],
+      "source_seed_ids": [
+        "seed-1515"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "when actions must be gated",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "partial",
+      "exact_items": [
+        "when actions must be gated"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01436",
+      "source_obligation_ids": [
+        "obl-1293"
+      ],
+      "source_seed_ids": [
+        "seed-1560"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "`Live actions unavailable until refresh`",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "partial",
+      "exact_items": [
+        "`Live actions unavailable until refresh`",
+        "Live actions unavailable until refresh"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01484",
+      "source_obligation_ids": [
+        "obl-1341"
+      ],
+      "source_seed_ids": [
+        "seed-1637"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "worktree rows expose `recover`, `prune`, and `lineage` actions",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "### Fidelity recovery cov-040: Source Control and worktree handshake",
+      "status": "present",
+      "exact_items": [
+        "worktree rows expose `recover`, `prune`, and `lineage` actions",
+        "recover",
+        "prune",
+        "lineage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L3",
+        "Plans/GitHub_Integration.md:L5",
+        "Plans/GitHub_Integration.md:L7",
+        "Plans/GitHub_Integration.md:L12",
+        "Plans/GitHub_Integration.md:L14"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01486",
+      "source_obligation_ids": [
+        "obl-1343"
+      ],
+      "source_seed_ids": [
+        "seed-1639"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "worktree actions must preserve safe-point and remediation lineage",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "### Fidelity recovery cov-040: Source Control and worktree handshake",
+      "status": "partial",
+      "exact_items": [
+        "worktree actions must preserve safe-point and remediation lineage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L7",
+        "Plans/GitHub_Integration.md:L14"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01545",
+      "source_obligation_ids": [
+        "obl-1402"
+      ],
+      "source_seed_ids": [
+        "seed-1719"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Current docs expose worktree actions and blocked classifications, but they do not yet defi",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "### Fidelity recovery cov-040: Source Control and worktree handshake",
+      "status": "partial",
+      "exact_items": [
+        "Current docs expose worktree actions and blocked classifications, but they do not yet define the full lane/worktree cleanup lifecycle."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L7",
+        "Plans/GitHub_Integration.md:L14"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01550",
+      "source_obligation_ids": [
+        "obl-1407"
+      ],
+      "source_seed_ids": [
+        "seed-1724"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "active-run ownership must be visible before destructive worktree actions",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "### Fidelity recovery cov-040: Source Control and worktree handshake",
+      "status": "partial",
+      "exact_items": [
+        "active-run ownership must be visible before destructive worktree actions"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L7",
+        "Plans/GitHub_Integration.md:L14"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01868",
+      "source_obligation_ids": [
+        "obl-1725"
+      ],
+      "source_seed_ids": [
+        "seed-2192"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "`acknowledged` and `dismissed` are operator/user presentation/governance actions",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "partial",
+      "exact_items": [
+        "`acknowledged` and `dismissed` are operator/user presentation/governance actions",
+        "acknowledged",
+        "dismissed"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02042",
+      "source_obligation_ids": [
+        "obl-1899"
+      ],
+      "source_seed_ids": [
+        "seed-2452"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "concern actions never hard-delete canonical concern history in normal operation",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "partial",
+      "exact_items": [
+        "concern actions never hard-delete canonical concern history in normal operation"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02184",
+      "source_obligation_ids": [
+        "obl-2039"
+      ],
+      "source_seed_ids": [
+        "seed-2648"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "Repair GitHub account identity handling end-to-end:",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "### Fidelity recovery cov-098: GitHub stable account identity",
+      "status": "partial",
+      "exact_items": [
+        "Repair GitHub account identity handling end-to-end:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L19",
+        "Plans/GitHub_Integration.md:L25"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02239",
+      "source_obligation_ids": [
+        "obl-2093"
+      ],
+      "source_seed_ids": [
+        "seed-2721"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "GitHub integration still lacks the project/repo/account scoping contract the rewrite now n",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "partial",
+      "exact_items": [
+        "GitHub integration still lacks the project/repo/account scoping contract the rewrite now needs:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02241",
+      "source_obligation_ids": [
+        "obl-2095"
+      ],
+      "source_seed_ids": [
+        "seed-2723"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "`GitHub_Integration.md` still treats current repo selection and effective GitHub account a",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "### Fidelity recovery cov-098: GitHub stable account identity",
+      "status": "present",
+      "exact_items": [
+        "`GitHub_Integration.md` still treats current repo selection and effective GitHub account as implicit rather than canonical",
+        "GitHub_Integration.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L14",
+        "Plans/GitHub_Integration.md:L25",
+        "Plans/GitHub_Integration.md:L27"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02242",
+      "source_obligation_ids": [
+        "obl-2096"
+      ],
+      "source_seed_ids": [
+        "seed-2724"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "Deferred GitHub Recovery Binding now fits more naturally as blocked-episode `detail_ref` /",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "### Fidelity recovery cov-098: GitHub stable account identity",
+      "status": "partial",
+      "exact_items": [
+        "Deferred GitHub Recovery Binding now fits more naturally as blocked-episode `detail_ref` / wizard-blocked attachment than as a new standalone runtime object",
+        "detail_ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L19",
+        "Plans/GitHub_Integration.md:L25"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02268",
+      "source_obligation_ids": [
+        "obl-2121"
+      ],
+      "source_seed_ids": [
+        "seed-2753"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "Bind GitHub Integration to project-scoped `selected_repo_id` and `provider_accounts.*` sta",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "partial",
+      "exact_items": [
+        "Bind GitHub Integration to project-scoped `selected_repo_id` and `provider_accounts.*` state, and fold Deferred GitHub Recovery Binding into canonical blocked-episode detail paths.",
+        "selected_repo_id",
+        "provider_accounts.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02353",
+      "source_obligation_ids": [
+        "obl-2204"
+      ],
+      "source_seed_ids": [
+        "seed-2867"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "GitHub recovery and command ownership remain under-keyed:",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "### Fidelity recovery cov-098: GitHub stable account identity",
+      "status": "partial",
+      "exact_items": [
+        "GitHub recovery and command ownership remain under-keyed:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L19",
+        "Plans/GitHub_Integration.md:L25"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03064",
+      "source_obligation_ids": [
+        "obl-2910"
+      ],
+      "source_seed_ids": [
+        "seed-3842"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "degraded or unavailable should gate mutating actions much more aggressively",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "partial",
+      "exact_items": [
+        "degraded or unavailable should gate mutating actions much more aggressively"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04425",
+      "source_obligation_ids": [
+        "obl-4265"
+      ],
+      "source_seed_ids": [
+        "seed-5949"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "Crosswalk and GitHub Integration both still place normative content after `References`, co",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "present",
+      "exact_items": [
+        "Crosswalk and GitHub Integration both still place normative content after `References`, confirming append-after-references drift across owner docs.",
+        "References"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L29",
+        "Plans/GitHub_Integration.md:L58",
+        "Plans/GitHub_Integration.md:L103"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04471",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04598",
+      "source_obligation_ids": [
+        "obl-4376"
+      ],
+      "source_seed_ids": [
+        "seed-6169"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "canonical target/scope object used by navigation/open/focus actions",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "partial",
+      "exact_items": [
+        "canonical target/scope object used by navigation/open/focus actions"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06240",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06990",
+      "source_obligation_ids": [
+        "obl-6586"
+      ],
+      "source_seed_ids": [
+        "seed-10038",
+        "seed-10154",
+        "seed-10203",
+        "seed-10247",
+        "seed-10279"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/GitHub_Integration.md:251-258`",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/GitHub_Integration.md:251-258`",
+        "Plans/GitHub_Integration.md:251-258"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07179",
+      "source_obligation_ids": [
+        "obl-6746"
+      ],
+      "source_seed_ids": [
+        "seed-10383"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/GitHub_Integration.md:258-258`",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/GitHub_Integration.md:258-258`",
+        "Plans/GitHub_Integration.md:258-258"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

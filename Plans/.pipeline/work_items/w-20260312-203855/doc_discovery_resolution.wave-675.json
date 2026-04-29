@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-675",
+  "group_ids": [
+    "discgrp-2697",
+    "discgrp-2698",
+    "discgrp-2699",
+    "discgrp-2700"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02977",
+      "source_obligation_ids": [
+        "obl-2823"
+      ],
+      "source_seed_ids": [
+        "seed-3721"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Runtime artifact and projection storage scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02978",
+      "source_obligation_ids": [
+        "obl-2824"
+      ],
+      "source_seed_ids": [
+        "seed-3722"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02979",
+      "source_obligation_ids": [
+        "obl-2825"
+      ],
+      "source_seed_ids": [
+        "seed-3723"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02980",
+      "source_obligation_ids": [
+        "obl-2826"
+      ],
+      "source_seed_ids": [
+        "seed-3724"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L43"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

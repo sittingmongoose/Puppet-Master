@@ -1,0 +1,519 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-017",
+  "group_ids": [
+    "pktgrp-0065",
+    "pktgrp-0066",
+    "pktgrp-0067",
+    "pktgrp-0068"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "packet-target-0065",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## 1. Events (persisted) (Plans/Contracts_V0.md:L334)",
+      "path": "Plans/Contracts_V0.md",
+      "coverage_row_ids": [
+        "cov-03435"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-03435"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-3281"
+      ],
+      "source_seed_ids": [
+        "seed-4395"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3281"
+        ],
+        "source_seed_ids": [
+          "seed-4395"
+        ],
+        "source_shard_ids": [
+          "shard-0047"
+        ]
+      },
+      "gap_ids": [
+        "gap-02682"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`WorktreeGitImprovement.md` still lacks a durable `worktree_record` / `worktree_projection` family, still has no explicit precedence rule between persisted runtime lineage and filesystem rediscovery, and still treats git-hook blocks and state files as if they could substitute for canonical blocked/runtime events.",
+        "WorktreeGitImprovement.md",
+        "worktree_record",
+        "worktree_projection"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-776491ed60f4",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0107",
+      "source_reconciliation_target_ids": [
+        "target-0107"
+      ],
+      "source_target_ids": [
+        "target-0107"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0107\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `WorktreeGitImprovement.md` still lacks a durable `worktree_record` / `worktree_projection` family, still has no explicit precedence rule between persisted runtime lineage and filesystem rediscovery, and still treats git-hook blocks and state files as if they could substitute for canonical blocked/runtime events.\n  - WorktreeGitImprovement.md\n  - worktree_record\n  - worktree_projection\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0066",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## 2. Provider normalized stream (non-persisted contract) (Plans/Contracts_V0.md:L368)",
+      "path": "Plans/Contracts_V0.md",
+      "coverage_row_ids": [
+        "cov-04398",
+        "cov-04409",
+        "cov-04534",
+        "cov-04973"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-04398",
+          "cov-04409",
+          "cov-04534",
+          "cov-04973"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-4238",
+        "obl-4249",
+        "obl-4312",
+        "obl-4749"
+      ],
+      "source_seed_ids": [
+        "seed-5901",
+        "seed-5921",
+        "seed-6056",
+        "seed-6842"
+      ],
+      "source_shard_ids": [
+        "shard-0058",
+        "shard-0059",
+        "shard-0065"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4238",
+          "obl-4249",
+          "obl-4312",
+          "obl-4749"
+        ],
+        "source_seed_ids": [
+          "seed-5901",
+          "seed-5921",
+          "seed-6056",
+          "seed-6842"
+        ],
+        "source_shard_ids": [
+          "shard-0058",
+          "shard-0059",
+          "shard-0065"
+        ]
+      },
+      "gap_ids": [
+        "gap-03434",
+        "gap-03445",
+        "gap-03562",
+        "gap-03893"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "non-persisted drafts use transient `generated://<artifact_id>` buffers",
+        "generated://<artifact_id>",
+        "Once the route/subject contract is normalized, these docs should mostly reconcile cleanly rather than needing conceptual redesign.",
+        "rather than a normalized identity-preserving export contract",
+        "canonical primitive or normalized target contract"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-de354fcf9802",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0108",
+      "source_reconciliation_target_ids": [
+        "target-0108"
+      ],
+      "source_target_ids": [
+        "target-0108"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0108\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - non-persisted drafts use transient `generated://<artifact_id>` buffers\n  - generated://<artifact_id>\n  - Once the route/subject contract is normalized, these docs should mostly reconcile cleanly rather than needing conceptual redesign.\n  - rather than a normalized identity-preserving export contract\n  - canonical primitive or normalized target contract\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0067",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement) (Plans/Contracts_V0.md:L767)",
+      "path": "Plans/Contracts_V0.md",
+      "coverage_row_ids": [
+        "cov-00335",
+        "cov-01957",
+        "cov-02262",
+        "cov-03804",
+        "cov-04020",
+        "cov-04077",
+        "cov-05328",
+        "cov-06424"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-00335",
+          "cov-01957",
+          "cov-02262",
+          "cov-03804",
+          "cov-04020",
+          "cov-04077",
+          "cov-05328",
+          "cov-06424"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-193",
+        "obl-1814",
+        "obl-2115",
+        "obl-3649",
+        "obl-3863",
+        "obl-3919",
+        "obl-5100",
+        "obl-6065"
+      ],
+      "source_seed_ids": [
+        "seed-225",
+        "seed-2329",
+        "seed-2747",
+        "seed-4932",
+        "seed-5308",
+        "seed-5373",
+        "seed-7515",
+        "seed-9163"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0032",
+        "shard-0035",
+        "shard-0051",
+        "shard-0054",
+        "shard-0071",
+        "shard-0083"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-193",
+          "obl-1814",
+          "obl-2115",
+          "obl-3649",
+          "obl-3863",
+          "obl-3919",
+          "obl-5100",
+          "obl-6065"
+        ],
+        "source_seed_ids": [
+          "seed-225",
+          "seed-2329",
+          "seed-2747",
+          "seed-4932",
+          "seed-5308",
+          "seed-5373",
+          "seed-7515",
+          "seed-9163"
+        ],
+        "source_shard_ids": [
+          "shard-0010",
+          "shard-0032",
+          "shard-0035",
+          "shard-0051",
+          "shard-0054",
+          "shard-0071",
+          "shard-0083"
+        ]
+      },
+      "gap_ids": [
+        "gap-00272",
+        "gap-01526",
+        "gap-01757",
+        "gap-02967",
+        "gap-03126",
+        "gap-03163",
+        "gap-04134",
+        "gap-04987"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Settings > Branching` and `Settings > Health` expose config/diagnostics, not primary active-worktree management.",
+        "Settings > Branching",
+        "Settings > Health",
+        "mutation-safe-point enforcement",
+        "`Runtime_Artifacts_Panel.md` assumes concrete runtime-artifact schema enforcement that is not currently present in the repo.",
+        "Runtime_Artifacts_Panel.md",
+        "must exist for any dispatched attempt:",
+        "`summary?`",
+        "summary?",
+        "`attempt:<attempt_id>`",
+        "attempt:<attempt_id>",
+        "`object_kind = attempt`",
+        "object_kind = attempt",
+        "`targeted for future enforcement`",
+        "targeted for future enforcement"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-958b7d59f073",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0109",
+      "source_reconciliation_target_ids": [
+        "target-0109"
+      ],
+      "source_target_ids": [
+        "target-0109"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0109\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `Settings > Branching` and `Settings > Health` expose config/diagnostics, not primary active-worktree management.\n  - Settings > Branching\n  - Settings > Health\n  - mutation-safe-point enforcement\n  - `Runtime_Artifacts_Panel.md` assumes concrete runtime-artifact schema enforcement that is not currently present in the repo.\n  - Runtime_Artifacts_Panel.md\n  - must exist for any dispatched attempt:\n  - `summary?`\n  - summary?\n  - `attempt:<attempt_id>`\n  - attempt:<attempt_id>\n  - `object_kind = attempt`\n  - object_kind = attempt\n  - `targeted for future enforcement`\n  - targeted for future enforcement\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0068",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## Canonical Runtime Event, Outcome, and Action Contract Reconciliation Addendum (2026-03-09) (Plans/Contracts_V0.md:L1473)",
+      "path": "Plans/Contracts_V0.md",
+      "coverage_row_ids": [
+        "cov-01997",
+        "cov-02292",
+        "cov-04386",
+        "cov-05308"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-01997",
+          "cov-02292",
+          "cov-04386",
+          "cov-05308"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-1854",
+        "obl-2145",
+        "obl-4226",
+        "obl-5080"
+      ],
+      "source_seed_ids": [
+        "seed-2385",
+        "seed-2787",
+        "seed-5877",
+        "seed-7474"
+      ],
+      "source_shard_ids": [
+        "shard-0032",
+        "shard-0035",
+        "shard-0058",
+        "shard-0070"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1854",
+          "obl-2145",
+          "obl-4226",
+          "obl-5080"
+        ],
+        "source_seed_ids": [
+          "seed-2385",
+          "seed-2787",
+          "seed-5877",
+          "seed-7474"
+        ],
+        "source_shard_ids": [
+          "shard-0032",
+          "shard-0035",
+          "shard-0058",
+          "shard-0070"
+        ]
+      },
+      "gap_ids": [
+        "gap-01557",
+        "gap-01782",
+        "gap-03424",
+        "gap-04115"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Opus reinforces that contract naming drift and native-surface ownership are among the highest-risk reconciliation areas",
+        "must decide whether these field additions are V0 extensions or a V1 event contract",
+        "The contract layer has canonical event aliasing and blocked-action vocabulary, but still no canonical route/subject vocabulary.",
+        "Several Sonnet findings sharpened prior generic flags into precise contract failures or source-verified architecture limits; these should not be collapsed back into generic summary language during reconciliation."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-ddf15d7b09c1",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0110",
+      "source_reconciliation_target_ids": [
+        "target-0110"
+      ],
+      "source_target_ids": [
+        "target-0110"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0110\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Opus reinforces that contract naming drift and native-surface ownership are among the highest-risk reconciliation areas\n  - must decide whether these field additions are V0 extensions or a V1 event contract\n  - The contract layer has canonical event aliasing and blocked-action vocabulary, but still no canonical route/subject vocabulary.\n  - Several Sonnet findings sharpened prior generic flags into precise contract failures or source-verified architecture limits; these should not be collapsed back into generic summary language during reconciliation.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-03435",
+    "cov-04398",
+    "cov-04409",
+    "cov-04534",
+    "cov-04973",
+    "cov-00335",
+    "cov-01957",
+    "cov-02262",
+    "cov-03804",
+    "cov-04020",
+    "cov-04077",
+    "cov-05328",
+    "cov-06424",
+    "cov-01997",
+    "cov-02292",
+    "cov-04386",
+    "cov-05308"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-3281",
+    "obl-4238",
+    "obl-4249",
+    "obl-4312",
+    "obl-4749",
+    "obl-193",
+    "obl-1814",
+    "obl-2115",
+    "obl-3649",
+    "obl-3863",
+    "obl-3919",
+    "obl-5100",
+    "obl-6065",
+    "obl-1854",
+    "obl-2145",
+    "obl-4226",
+    "obl-5080"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-4395",
+    "seed-5901",
+    "seed-5921",
+    "seed-6056",
+    "seed-6842",
+    "seed-225",
+    "seed-2329",
+    "seed-2747",
+    "seed-4932",
+    "seed-5308",
+    "seed-5373",
+    "seed-7515",
+    "seed-9163",
+    "seed-2385",
+    "seed-2787",
+    "seed-5877",
+    "seed-7474"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0047",
+    "shard-0058",
+    "shard-0059",
+    "shard-0065",
+    "shard-0010",
+    "shard-0032",
+    "shard-0035",
+    "shard-0051",
+    "shard-0054",
+    "shard-0071",
+    "shard-0083",
+    "shard-0070"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "`WorktreeGitImprovement.md` still lacks a durable `worktree_record` / `worktree_projection` family, still has no explicit precedence rule between persisted runtime lineage and filesystem rediscovery, and still treats git-hook blocks and state files as if they could substitute for canonical blocked/runtime events.",
+    "WorktreeGitImprovement.md",
+    "worktree_record",
+    "worktree_projection",
+    "non-persisted drafts use transient `generated://<artifact_id>` buffers",
+    "generated://<artifact_id>",
+    "Once the route/subject contract is normalized, these docs should mostly reconcile cleanly rather than needing conceptual redesign.",
+    "rather than a normalized identity-preserving export contract",
+    "canonical primitive or normalized target contract",
+    "`Settings > Branching` and `Settings > Health` expose config/diagnostics, not primary active-worktree management.",
+    "Settings > Branching",
+    "Settings > Health",
+    "mutation-safe-point enforcement",
+    "`Runtime_Artifacts_Panel.md` assumes concrete runtime-artifact schema enforcement that is not currently present in the repo.",
+    "Runtime_Artifacts_Panel.md",
+    "must exist for any dispatched attempt:",
+    "`summary?`",
+    "summary?",
+    "`attempt:<attempt_id>`",
+    "attempt:<attempt_id>",
+    "`object_kind = attempt`",
+    "object_kind = attempt",
+    "`targeted for future enforcement`",
+    "targeted for future enforcement",
+    "Opus reinforces that contract naming drift and native-surface ownership are among the highest-risk reconciliation areas",
+    "must decide whether these field additions are V0 extensions or a V1 event contract",
+    "The contract layer has canonical event aliasing and blocked-action vocabulary, but still no canonical route/subject vocabulary.",
+    "Several Sonnet findings sharpened prior generic flags into precise contract failures or source-verified architecture limits; these should not be collapsed back into generic summary language during reconciliation."
+  ],
+  "blocked_targets": []
+}

@@ -1,0 +1,118 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-177",
+  "group_ids": [
+    "recgrp-0705"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0705",
+      "path": "Plans/usage-feature.md",
+      "mapped_owner_heading": "##### Usage and receipt lineage routing",
+      "live_anchor": "##### Usage and receipt lineage routing (Plans/usage-feature.md:L436)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-02668",
+        "cov-02807",
+        "cov-03960",
+        "cov-05330",
+        "cov-05497"
+      ],
+      "source_obligation_ids": [
+        "obl-2515",
+        "obl-2654",
+        "obl-3804",
+        "obl-5102",
+        "obl-5269"
+      ],
+      "source_seed_ids": [
+        "seed-3302",
+        "seed-3488",
+        "seed-5208",
+        "seed-7518",
+        "seed-7827"
+      ],
+      "source_shard_ids": [
+        "shard-0039",
+        "shard-0040",
+        "shard-0053",
+        "shard-0071",
+        "shard-0073"
+      ],
+      "gap_ids": [
+        "gap-02097",
+        "gap-02212",
+        "gap-03083",
+        "gap-04136",
+        "gap-04278"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Role-scoped routing exists in policy/storage but not in effective-resolution or usage schemas.",
+        "Usage still wants switch explanations without carrying switch lineage in its canonical records.",
+        "keep canonical Usage routing on shared usage identity, not feature-local cost or receipt notions",
+        "`inspector_target = details | evidence | usage | lineage`",
+        "inspector_target = details | evidence | usage | lineage",
+        "Usage pivots still describe `tier_id` filters in graph/detail docs even though the routing and identity work now requires object-first `usage_event` and runtime-object pivots.",
+        "tier_id",
+        "usage_event"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-0ad300575d3c",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-02668",
+    "cov-02807",
+    "cov-03960",
+    "cov-05330",
+    "cov-05497"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-2515",
+    "obl-2654",
+    "obl-3804",
+    "obl-5102",
+    "obl-5269"
+  ],
+  "source_seed_ids_represented": [
+    "seed-3302",
+    "seed-3488",
+    "seed-5208",
+    "seed-7518",
+    "seed-7827"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0039",
+    "shard-0040",
+    "shard-0053",
+    "shard-0071",
+    "shard-0073"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": []
+}

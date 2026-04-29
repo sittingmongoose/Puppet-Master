@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1288",
+  "group_ids": [
+    "discgrp-5149",
+    "discgrp-5150",
+    "discgrp-5151",
+    "discgrp-5152"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05561",
+      "source_obligation_ids": [
+        "obl-5333"
+      ],
+      "source_seed_ids": [
+        "seed-7923",
+        "seed-8159",
+        "seed-8312"
+      ],
+      "source_shard_ids": [
+        "shard-0074",
+        "shard-0075",
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-031: Concern linkage to adjacent families",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L79"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05562",
+      "source_obligation_ids": [
+        "obl-5334"
+      ],
+      "source_seed_ids": [
+        "seed-7925"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### 2.5 Branch already exists when recreating worktree",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L205"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05563",
+      "source_obligation_ids": [
+        "obl-5335"
+      ],
+      "source_seed_ids": [
+        "seed-7930"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-042: Source Control and worktree handshake",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L115"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05564",
+      "source_obligation_ids": [
+        "obl-5336"
+      ],
+      "source_seed_ids": [
+        "seed-7931"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "### Fidelity recovery cov-004: Retire tier-era canon and shadow fields",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L7"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

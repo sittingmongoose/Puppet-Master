@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-914",
+  "group_ids": [
+    "discgrp-3653",
+    "discgrp-3654",
+    "discgrp-3655",
+    "discgrp-3656"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03951",
+      "source_obligation_ids": [
+        "obl-3795"
+      ],
+      "source_seed_ids": [
+        "seed-5195",
+        "seed-5305"
+      ],
+      "source_shard_ids": [
+        "shard-0053",
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03952",
+      "source_obligation_ids": [
+        "obl-3796"
+      ],
+      "source_seed_ids": [
+        "seed-5196",
+        "seed-5292"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03953",
+      "source_obligation_ids": [
+        "obl-3797"
+      ],
+      "source_seed_ids": [
+        "seed-5197",
+        "seed-5291"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03954",
+      "source_obligation_ids": [
+        "obl-3798"
+      ],
+      "source_seed_ids": [
+        "seed-5198"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

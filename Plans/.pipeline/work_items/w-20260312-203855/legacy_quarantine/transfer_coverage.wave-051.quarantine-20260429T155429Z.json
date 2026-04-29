@@ -1,0 +1,692 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-051",
+  "timestamp_utc": "2026-04-28T21:19:29Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-201",
+    "coverage-rowgrp-202",
+    "coverage-rowgrp-203",
+    "coverage-rowgrp-204"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-201 cov-599,cov-785,cov-906,cov-1006,cov-1190 Plans/UI_Command_Catalog.md",
+    "rowgrp-202 cov-326,cov-506,cov-530,cov-658,cov-688,cov-717,cov-912,cov-934,cov-1082,cov-1148 Plans/UI_Command_Catalog.md",
+    "rowgrp-203 cov-821,cov-828,cov-891,cov-1008,cov-1022 Plans/UI_Command_Catalog.md",
+    "rowgrp-204 cov-710,cov-806,cov-859,cov-919,cov-947,cov-956,cov-960,cov-982,cov-1018,cov-1043 Plans/UI_Command_Catalog.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-201": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-202": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-203": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-204": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-599",
+    "cov-785",
+    "cov-906",
+    "cov-1006",
+    "cov-1190",
+    "cov-326",
+    "cov-506",
+    "cov-530",
+    "cov-658",
+    "cov-688",
+    "cov-717",
+    "cov-912",
+    "cov-934",
+    "cov-1082",
+    "cov-1148",
+    "cov-821",
+    "cov-828",
+    "cov-891",
+    "cov-1008",
+    "cov-1022",
+    "cov-710",
+    "cov-806",
+    "cov-859",
+    "cov-919",
+    "cov-947",
+    "cov-956",
+    "cov-960",
+    "cov-982",
+    "cov-1018",
+    "cov-1043"
+  ],
+  "coverage_ids_completed": [
+    "cov-599",
+    "cov-785",
+    "cov-906",
+    "cov-1006",
+    "cov-1190",
+    "cov-326",
+    "cov-506",
+    "cov-530",
+    "cov-658",
+    "cov-688",
+    "cov-717",
+    "cov-912",
+    "cov-934",
+    "cov-1082",
+    "cov-1148",
+    "cov-821",
+    "cov-828",
+    "cov-891",
+    "cov-1008",
+    "cov-1022",
+    "cov-710",
+    "cov-806",
+    "cov-859",
+    "cov-919",
+    "cov-947",
+    "cov-956",
+    "cov-960",
+    "cov-982",
+    "cov-1018",
+    "cov-1043"
+  ],
+  "path_groups_assigned": [
+    "Plans/UI_Command_Catalog.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-599",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:81-109 scopes UI actions by execution_role, concern state, approval context, DAE jail posture, and preserves route_target/OpenSubject/execution_unit_context/approval_scope_key/operational_identity",
+        "Plans/UI_Command_Catalog.md:113-135 normalizes UI commands to a standard record and preserves route_target/OpenSubject intent"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Route/open identity fields and concern-state policy exist, but runtime-artifact producer identity/role/account/switch lineage is not directly covered.",
+      "source_obligation_ids": [
+        "obl-168"
+      ],
+      "source_seed_ids": [
+        "seed-168"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-785",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:64-77 normalizes command families around shared navigation, search routing, runtime recovery ownership, and route_target canonical open/focus identity",
+        "Plans/UI_Command_Catalog.md:186-195 lists project/deferred wizard open commands including cmd.project.open and cmd.project.chain_wizard_open_deferred"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Routed/open commands exist, but no explicit generalized subject-open command family or reusable route payload contract for all new surfaces is defined.",
+      "source_obligation_ids": [
+        "obl-218"
+      ],
+      "source_seed_ids": [
+        "seed-218"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-906",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:269-272 treats Orchestrator object opens as route-consuming navigation wrappers and preserves project_id, focused_run_id, object identity, and inspector focus across cross-tab deep links"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Deep-link identity/focus preservation exists, but no explicit shared override rule prevents remembered shell state from hiding the requested target.",
+      "source_obligation_ids": [
+        "obl-255"
+      ],
+      "source_seed_ids": [
+        "seed-255"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1006",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:186-195 defines deferred wizard open commands with wizard_id and deferred payload ref",
+        "Plans/UI_Command_Catalog.md:269-272 preserves project_id, focused_run_id, object identity, and inspector focus in cross-tab deep links"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Wizard/deep-link behavior exists, but normalized object routes with serialized step anchors and tab/inspector focus secondary to object route are not explicit.",
+      "source_obligation_ids": [
+        "obl-282"
+      ],
+      "source_seed_ids": [
+        "seed-282"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1190",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:679-684 references Contracts_V0, Run_Graph_View, Orchestrator_Page, and Widget_System"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "The file has related references, but not the exact same-file supersession hot list covering every named plan.",
+      "source_obligation_ids": [
+        "obl-341"
+      ],
+      "source_seed_ids": [
+        "seed-341"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-326",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:91-109 gates actions by approval_scope_key, blocked_sequence, DAE jail posture, external side-effect confirmation, and FileSafe route/open guards",
+        "Plans/UI_Command_Catalog.md:113-124 normalizes button clicks, keyboard shortcuts, and context menu items to a standard command record",
+        "Plans/UI_Command_Catalog.md:307-311 routes Orchestrator navigation through shared route payloads and retains confirmation/safety class for mutations"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Generic shortcut/context-menu normalization and safety gating exist, but rewrite-specific palette, bulk, and live-runtime batch safety policy is absent.",
+      "source_obligation_ids": [
+        "obl-097"
+      ],
+      "source_seed_ids": [
+        "seed-097"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-506",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:141-144 retires TierContext, tier_id, TierType, and Tiers",
+        "Plans/UI_Command_Catalog.md:247-274 normalizes Run Graph runtime recovery commands and defines canonical Orchestrator commands including cmd.orchestrator.open_in_source_control",
+        "Plans/UI_Command_Catalog.md:276-311 lists action-envelope fields and route/safety rules"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Run Graph/orchestrator command normalization and tier retirement exist, but open_in_* envelope/trust-state gating and dashboard_layout:v1 contradiction handling are incomplete.",
+      "source_obligation_ids": [
+        "obl-146"
+      ],
+      "source_seed_ids": [
+        "seed-146"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-530",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:28-35 defines canonical route payload treatment and resume_url as serialized transport",
+        "Plans/UI_Command_Catalog.md:113-124 normalizes commands with route_target and open_subject",
+        "Plans/UI_Command_Catalog.md:292-299 defines navigation/mutation canonical terms including route_target"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Route payload terminology exists, but no canonical internal route_payload schema is defined.",
+      "source_obligation_ids": [
+        "obl-153"
+      ],
+      "source_seed_ids": [
+        "seed-153"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-658",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:141-143 retires TierContext, tier_id, TierType, and Tiers",
+        "Plans/UI_Command_Catalog.md:231-243 defines widget layout commands required by Widget_System",
+        "Plans/UI_Command_Catalog.md:247-274 defines canonical Orchestrator commands including cmd.orchestrator.open_in_source_control"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Canonical orchestrator/widget command text and tier retirement exist, but the cmd.orchestrator.switch_tab contradiction and standalone Tiers/Evidence/History/Ledger drift are not directly resolved.",
+      "source_obligation_ids": [
+        "obl-186"
+      ],
+      "source_seed_ids": [
+        "seed-186"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-688",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:428-439 lists chat/thread context commands and marks superseded IDs non-canonical",
+        "Plans/UI_Command_Catalog.md:231-243 defines widget layout commands required by Widget_System"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "The file has command IDs and chat command cleanup, but not the missing UICommand IDs section, cmd.orchestrator.switch_tab, or cmd.chat.run_user_command coverage.",
+      "source_obligation_ids": [
+        "obl-190"
+      ],
+      "source_seed_ids": [
+        "seed-190"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-717",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:690-716 defines canonical cmd.runtime.* recovery commands and maps blocked-state recovery from allowed_action_ids[]",
+        "Plans/UI_Command_Catalog.md:722-755 defines required command metadata including normalization.kind, normalizes_to_contract, alias_of_command_id, allowed_action_ids[], route_target, open_subject, and ref_family"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Runtime recovery canon and metadata exist, but missing catalog rows, runtime-artifact storage registration, dead glossary/crosswalk refs, and reserved slash criteria remain uncovered.",
+      "source_obligation_ids": [
+        "obl-197"
+      ],
+      "source_seed_ids": [
+        "seed-197"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-912",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:113-124 normalizes all UI commands with command_type, route_target, and open_subject",
+        "Plans/UI_Command_Catalog.md:292-311 distinguishes navigation and mutation canonical terms and safety rules",
+        "Plans/UI_Command_Catalog.md:722-755 defines required command metadata including route_target/open_subject and recovery identity behavior"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Taxonomy-related fields and route/open ownership exist, but the formal shell/view-state vs route-consuming navigation vs domain mutation/runtime taxonomy is not stated.",
+      "source_obligation_ids": [
+        "obl-256"
+      ],
+      "source_seed_ids": [
+        "seed-256"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-934",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:113-124 defines normalized command record fields including route_target, open_subject, and approval_scope_key",
+        "Plans/UI_Command_Catalog.md:722-755 defines command metadata including command_kind, normalization.kind, normalizes_to_contract, alias_of_command_id, route_target, and open_subject"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Normalization metadata exists, but an explicit ui_command_id-centered small-contract/gate-logic rule is absent.",
+      "source_obligation_ids": [
+        "obl-263"
+      ],
+      "source_seed_ids": [
+        "seed-263"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1082",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:251-255 states graph approval/recovery commands target blocked/runtime identity, not request_id, and cmd.graph.approve_hitl/cmd.graph.deny_hitl are not canonical",
+        "Plans/UI_Command_Catalog.md:690-716 defines cmd.runtime.* recovery commands and blocked_sequence targeting when no attempt exists"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Blocked_sequence/runtime recovery canon exists, but HITL request_id/tier_id/tier_type/tier_boundary schema-family coverage remains absent.",
+      "source_obligation_ids": [
+        "obl-310"
+      ],
+      "source_seed_ids": [
+        "seed-310"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1148",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:28-35 treats resume_url as serialized transport of canonical route payload",
+        "Plans/UI_Command_Catalog.md:141-143 retires TierContext, tier_id, TierType, and Tiers",
+        "Plans/UI_Command_Catalog.md:247-274 defines Run Graph runtime recovery and canonical Orchestrator commands"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "resume_url transport and tier retirement exist, but the stronger FinalGUISpec drift-amplifier and first-class navigation identity reduction are incomplete.",
+      "source_obligation_ids": [
+        "obl-334"
+      ],
+      "source_seed_ids": [
+        "seed-334"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-821",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:95-109 defines canonical route payload and route/open tail rules for route_target, OpenSubject, execution_unit_context, approval_scope_key, and operational_identity",
+        "Plans/UI_Command_Catalog.md:113-135 normalizes commands to a standard record and preserves route_target/OpenSubject"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Route/open payload coverage exists, but the requested Contracts_V0 route-target/subject-open contract family above surface commands is not implemented in the assigned file.",
+      "source_obligation_ids": [
+        "obl-230"
+      ],
+      "source_seed_ids": [
+        "seed-230"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-828",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:97-103 requires route/open commands to preserve route_target, OpenSubject, execution_unit_context, approval_scope_key, and operational_identity",
+        "Plans/UI_Command_Catalog.md:252-272 normalizes graph, Source Control, and Usage pivots to canonical route/open contracts"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Route_target normalization exists for several pivots, but one canonical route-target model for search/attention/usage/artifact pivots is incomplete.",
+      "source_obligation_ids": [
+        "obl-232"
+      ],
+      "source_seed_ids": [
+        "seed-232"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-891",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "No direct statement moves panel-local subviews/selectors out of route identity and into destination/view-state handling.",
+      "source_obligation_ids": [
+        "obl-252"
+      ],
+      "source_seed_ids": [
+        "seed-252"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1008",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:105-109 sends file mutations through FileSafe and route/open guards and errors without fallback mutation if route_target is unreachable",
+        "Plans/UI_Command_Catalog.md:132-135 normalizes keyboard/menu/context/programmatic commands to one record without rewriting route_target/OpenSubject"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Route guards and no-fallback behavior exist, but explicit route validation failure semantics and normalize-before-route-construction rules are absent.",
+      "source_obligation_ids": [
+        "obl-283"
+      ],
+      "source_seed_ids": [
+        "seed-283"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1022",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:103 references Primitive:RouteTarget, Primitive:OpenSubject, Primitive:ExecutionContext, Permissions_System, and Contracts_V0",
+        "Plans/UI_Command_Catalog.md:254-274 normalizes graph, Source Control, and Usage pivots to runtime/route/open contracts and references Contracts_V0, Orchestrator_Page, and FinalGUISpec"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Contracts and canonical routing are referenced, but the file does not state that routing conclusions are ahead of high-traffic consumer or owner docs.",
+      "source_obligation_ids": [
+        "obl-287"
+      ],
+      "source_seed_ids": [
+        "seed-287"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-710",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:81-90 scopes actions by execution_role, run mode, concern state, blocked_sequence, approval_scope_key, approval_id, and DAE jail posture",
+        "Plans/UI_Command_Catalog.md:141-144 retires TierContext, tier_id, TierType, Tiers, and stale blocked/HITL survivors"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Blocked/retirement text exists, but execution-context replacement ownership, approval identity minting/scope, storage families, and durable lineage bridges are incomplete.",
+      "source_obligation_ids": [
+        "obl-195"
+      ],
+      "source_seed_ids": [
+        "seed-195"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-806",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:97-103 requires route/open commands to preserve route_target, OpenSubject, and execution_unit_context",
+        "Plans/UI_Command_Catalog.md:147-156 requires catalog commands to be verifiable through wiring matrix handler registration, event emission, UI binding, and acceptance checks"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Route/open preservation and wiring verification exist, but correlation_id envelope/passthrough obligations are absent.",
+      "source_obligation_ids": [
+        "obl-224"
+      ],
+      "source_seed_ids": [
+        "seed-224"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-859",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:95-109 requires route/open commands to preserve route_target, OpenSubject, execution_unit_context, approval_scope_key, and operational_identity",
+        "Plans/UI_Command_Catalog.md:278-290 lists target_kind, subject_id, object_kind, object_id, tab_id, and inspector_target fields"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Related route/target fields exist, but specialized subtarget/detail fields, serialized resume_url handling, and exact normalization guidance are incomplete.",
+      "source_obligation_ids": [
+        "obl-240"
+      ],
+      "source_seed_ids": [
+        "seed-240"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-919",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:76-77 states route_target owns canonical open/focus identity and command normalization remains discoverable at doc-level contract",
+        "Plans/UI_Command_Catalog.md:135-137 preserves user intent without rewriting route_target/OpenSubject and references Contracts_V0 route_target/OpenSubject"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Route_target/OpenSubject ownership is referenced, but wrapper-vs-contract-layer ownership split is not explicit.",
+      "source_obligation_ids": [
+        "obl-258"
+      ],
+      "source_seed_ids": [
+        "seed-258"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-947",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:97-103 requires route/open commands to preserve route_target, OpenSubject, execution_unit_context, approval_scope_key, and operational_identity",
+        "Plans/UI_Command_Catalog.md:278-290 lists target_kind, subject_id, object_kind, object_id, tab_id, and inspector_target fields"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Route fields are present, but the exact canonical minimum route_target field set and project_id requirement are absent.",
+      "source_obligation_ids": [
+        "obl-265"
+      ],
+      "source_seed_ids": [
+        "seed-265"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-956",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "No direct canonical target_kind vocabulary is defined; target_kind appears only as a generic field.",
+      "source_obligation_ids": [
+        "obl-268"
+      ],
+      "source_seed_ids": [
+        "seed-268"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-960",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:278-290 lists target_kind, subject_id, object_kind, object_id, tab_id, and inspector_target fields",
+        "Plans/UI_Command_Catalog.md:307-311 requires Orchestrator commands to route through shared route payloads and retain mutation safety class"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Route selector fields and shared routing exist, but no explicit precedence rule or rejection of multi-selector route payloads is present.",
+      "source_obligation_ids": [
+        "obl-269"
+      ],
+      "source_seed_ids": [
+        "seed-269"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-982",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:278-308 lists inspector_target as a required field and routes Orchestrator commands through shared route payloads"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "inspector_target appears, but no closed enum or message-step-line-range anchor handling is defined.",
+      "source_obligation_ids": [
+        "obl-273"
+      ],
+      "source_seed_ids": [
+        "seed-273"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1018",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:270-274 treats Orchestrator object opens as route-consuming wrappers and normalizes Source Control/Usage pivots to canonical route/open contracts",
+        "Plans/UI_Command_Catalog.md:276 references Orchestrator_Page search/routing policy and Contracts_V0 route_target"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Route-consuming wrapper behavior exists, but explicit owner-doc adoption split and primitive ownership statements are missing.",
+      "source_obligation_ids": [
+        "obl-286"
+      ],
+      "source_seed_ids": [
+        "seed-286"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1043",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:76-77 states route_target owns canonical open/focus identity",
+        "Plans/UI_Command_Catalog.md:270-274 treats Orchestrator object opens as route-consuming wrappers and normalizes Source Control/Usage pivots to canonical route/open contracts"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Route/open primitive behavior exists, but UICommand boundary rewrite and OrchestratorPage boundary update are absent.",
+      "source_obligation_ids": [
+        "obl-293"
+      ],
+      "source_seed_ids": [
+        "seed-293"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

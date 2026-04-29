@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1332",
+  "group_ids": [
+    "discgrp-5325",
+    "discgrp-5326",
+    "discgrp-5327",
+    "discgrp-5328"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05766",
+      "source_obligation_ids": [
+        "obl-5538"
+      ],
+      "source_seed_ids": [
+        "seed-8222",
+        "seed-9270"
+      ],
+      "source_shard_ids": [
+        "shard-0076",
+        "shard-0084"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05767",
+      "source_obligation_ids": [
+        "obl-5539"
+      ],
+      "source_seed_ids": [
+        "seed-8223",
+        "seed-9271"
+      ],
+      "source_shard_ids": [
+        "shard-0076",
+        "shard-0084"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05768",
+      "source_obligation_ids": [
+        "obl-5540"
+      ],
+      "source_seed_ids": [
+        "seed-8224"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileManager.md",
+      "new_heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileManager.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05769",
+      "source_obligation_ids": [
+        "obl-5541"
+      ],
+      "source_seed_ids": [
+        "seed-8225"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/rewrite-tie-in-memo.md",
+      "new_heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L116"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

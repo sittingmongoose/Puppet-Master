@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-469",
+  "group_ids": [
+    "discgrp-1873",
+    "discgrp-1874",
+    "discgrp-1875",
+    "discgrp-1876"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02130",
+      "source_obligation_ids": [
+        "obl-1987"
+      ],
+      "source_seed_ids": [
+        "seed-2584"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02131",
+      "source_obligation_ids": [
+        "obl-1988"
+      ],
+      "source_seed_ids": [
+        "seed-2585"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02132",
+      "source_obligation_ids": [
+        "obl-1989"
+      ],
+      "source_seed_ids": [
+        "seed-2586"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02133",
+      "source_obligation_ids": [
+        "obl-1990"
+      ],
+      "source_seed_ids": [
+        "seed-2587"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 15.2 seglog Projections (for Usage)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1664"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

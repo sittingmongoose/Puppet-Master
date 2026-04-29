@@ -1,0 +1,655 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-017",
+  "timestamp_utc": "2026-04-28T19:58:38Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-065",
+    "coverage-rowgrp-066",
+    "coverage-rowgrp-067",
+    "coverage-rowgrp-068"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-065 cov-895,cov-927,cov-1198,cov-1205 Plans/FinalGUISpec.md",
+    "rowgrp-066 cov-121,cov-201,cov-217,cov-223,cov-233,cov-249,cov-252,cov-259,cov-299,cov-310 Plans/FinalGUISpec.md",
+    "rowgrp-067 cov-359,cov-374,cov-387,cov-394,cov-410,cov-500,cov-573,cov-597,cov-700,cov-783 Plans/FinalGUISpec.md",
+    "rowgrp-068 cov-917,cov-984,cov-1026,cov-1100,cov-1233 Plans/FinalGUISpec.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-065": "completed_reduced_conservatively",
+    "coverage-rowgrp-066": "completed_reduced_conservatively",
+    "coverage-rowgrp-067": "completed_reduced_conservatively",
+    "coverage-rowgrp-068": "completed_reduced_conservatively"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-895",
+    "cov-927",
+    "cov-1198",
+    "cov-1205",
+    "cov-121",
+    "cov-201",
+    "cov-217",
+    "cov-223",
+    "cov-233",
+    "cov-249",
+    "cov-252",
+    "cov-259",
+    "cov-299",
+    "cov-310",
+    "cov-359",
+    "cov-374",
+    "cov-387",
+    "cov-394",
+    "cov-410",
+    "cov-500",
+    "cov-573",
+    "cov-597",
+    "cov-700",
+    "cov-783",
+    "cov-917",
+    "cov-984",
+    "cov-1026",
+    "cov-1100",
+    "cov-1233"
+  ],
+  "coverage_ids_completed": [
+    "cov-895",
+    "cov-927",
+    "cov-1198",
+    "cov-1205",
+    "cov-121",
+    "cov-201",
+    "cov-217",
+    "cov-223",
+    "cov-233",
+    "cov-249",
+    "cov-252",
+    "cov-259",
+    "cov-299",
+    "cov-310",
+    "cov-359",
+    "cov-374",
+    "cov-387",
+    "cov-394",
+    "cov-410",
+    "cov-500",
+    "cov-573",
+    "cov-597",
+    "cov-700",
+    "cov-783",
+    "cov-917",
+    "cov-984",
+    "cov-1026",
+    "cov-1100",
+    "cov-1233"
+  ],
+  "path_groups_assigned": [
+    "Plans/FinalGUISpec.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-895",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:935 all search results, palette actions, widgets, recovery links, and cross-surface pivots emit one shared route/deep-link payload",
+        "Plans/FinalGUISpec.md:937 concern search results route as object-first results with focused-run and target-tab context"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Shared route/deep-link payload behavior is present, but override-only-what-is-necessary destination/object/context boundaries are not fully stated.",
+      "source_obligation_ids": [
+        "obl-253"
+      ],
+      "source_seed_ids": [
+        "seed-253"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-927",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:900 canonical concern definitions, approval scope semantics, and route/open ownership are defined in Plans/Contracts_V0.md while this section owns visible widgets/interactions",
+        "Plans/FinalGUISpec.md:935 shared route/deep-link payload is emitted by search results, palette actions, widgets, recovery links, and cross-surface pivots"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "FinalGUISpec references the route contract boundary, but primitive-boundary and wiring-matrix boundary consumption are not fully covered.",
+      "source_obligation_ids": [
+        "obl-261"
+      ],
+      "source_seed_ids": [
+        "seed-261"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1198",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: assigned file reviewed; no matching mixed-era request/tier-era canon coexistence coverage found"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Older request/tier-era canon coexistence is not evidenced in the assigned path.",
+      "source_obligation_ids": [
+        "obl-342"
+      ],
+      "source_seed_ids": [
+        "seed-342"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1205",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: assigned file reviewed; no matching three-way export taxonomy or shared Orchestrator export manifest contract found"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Export taxonomy resolver display is absent from the assigned path.",
+      "source_obligation_ids": [
+        "obl-344"
+      ],
+      "source_seed_ids": [
+        "seed-344"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-121",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: assigned file reviewed; no matching impacted-doc bundle and old/new model pressure coverage found"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Assigned stale-token consumer evidence is not present in the assigned path.",
+      "source_obligation_ids": [
+        "obl-036"
+      ],
+      "source_seed_ids": [
+        "seed-036"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-201",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:904 Orchestrator renders projection states and gates sensitive actions based on current data or canonical revalidation",
+        "Plans/FinalGUISpec.md:959 project_summary is the reusable summary object for Orchestrator-facing project surfaces"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Projection-backed project summary exists, but the lane/worktree summary, health/state badges, and Source Control deep-link rules are not fully covered.",
+      "source_obligation_ids": [
+        "obl-054"
+      ],
+      "source_seed_ids": [
+        "seed-054"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-217",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:47-48 projection states and sensitive-action gating are required",
+        "Plans/FinalGUISpec.md:904 Orchestrator uses current/refreshing/stale/degraded/unavailable projection states and gates mutation affordances",
+        "Plans/FinalGUISpec.md:959 project_summary discloses projection trust so the operator can see current/degraded state"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Projection state and gating are covered, but last-updated time and degraded/stale reason disclosure are not fully stated for every projection-backed surface.",
+      "source_obligation_ids": [
+        "obl-059"
+      ],
+      "source_seed_ids": [
+        "seed-059"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-223",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md:937 focused_run_id appears in concern search routing, but Historical Run Mode and focused historical run_id UI gating are absent"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Assigned historical run mode gating is not present in the assigned path.",
+      "source_obligation_ids": [
+        "obl-061"
+      ],
+      "source_seed_ids": [
+        "seed-061"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-233",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:935 shared route/deep-link payload is emitted by search results and cross-surface pivots",
+        "Plans/FinalGUISpec.md:937 concern search results route as object-first results with focused-run and target-tab context"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Object-first concern search routing is present, but a complete unified Orchestrator search contract and global-vs-tab-local filtering split are not fully covered.",
+      "source_obligation_ids": [
+        "obl-065"
+      ],
+      "source_seed_ids": [
+        "seed-065"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-249",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: assigned file reviewed; no matching attempt supersession/stale_historical visibility coverage found"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Assigned attempt supersession visibility is not present in the assigned path.",
+      "source_obligation_ids": [
+        "obl-069"
+      ],
+      "source_seed_ids": [
+        "seed-069"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-252",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: assigned file reviewed; no matching historical/related/derived run lineage semantics found"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Assigned run lineage semantics are not present in the assigned path.",
+      "source_obligation_ids": [
+        "obl-070"
+      ],
+      "source_seed_ids": [
+        "seed-070"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-259",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:935 shared route/deep-link payload is emitted by search results, palette actions, widgets, recovery links, and cross-surface pivots",
+        "Plans/FinalGUISpec.md:937 concern search results route as object-first results"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Concern routing is object-first, but the exact Progress/Seams/Evidence/History/Ledger target routing split is not fully represented.",
+      "source_obligation_ids": [
+        "obl-073"
+      ],
+      "source_seed_ids": [
+        "seed-073"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-299",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:955 resolver display grammar is deterministic and defines a resolver matrix for required/preferred/none bindings"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "A deterministic resolver matrix is present, but ranked candidate sets, explanation metadata, and persona/seam-overseer ambiguity handling are not fully covered.",
+      "source_obligation_ids": [
+        "obl-085"
+      ],
+      "source_seed_ids": [
+        "seed-085"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-310",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md:959 project_summary fields exist, but project name/path card fields are not covered"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Assigned top-level project card fields are absent from the assigned path.",
+      "source_obligation_ids": [
+        "obl-089"
+      ],
+      "source_seed_ids": [
+        "seed-089"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-359",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md:167-179 projection freshness/health recovery section exists, but no Weak Integration or Corroboration help-system entries were found"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "No explicit help-system entries for the distinction-heavy concepts in the assigned row.",
+      "source_obligation_ids": [
+        "obl-106"
+      ],
+      "source_seed_ids": [
+        "seed-106"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-374",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:955 resolver display grammar shows source, request, and execution snapshots"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Source/request/execution snapshot display is present, but shared requested/effective runtime identity grammar across surfaces is not fully covered.",
+      "source_obligation_ids": [
+        "obl-110"
+      ],
+      "source_seed_ids": [
+        "seed-110"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-387",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md:935 all search results, palette actions, widgets, recovery links, and cross-surface pivots emit one shared route/deep-link payload"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-116"
+      ],
+      "source_seed_ids": [
+        "seed-116"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-394",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:937 concern search results route as object-first results using object_kind, object_id, focused_run_id, and target_tab",
+        "Plans/FinalGUISpec.md:939 route_target is subject_id-based identity or object_kind/object_id identity"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Object-kind routing vocabulary is present for concern routing, but the full candidate object-kind vocabulary list is not covered.",
+      "source_obligation_ids": [
+        "obl-117"
+      ],
+      "source_seed_ids": [
+        "seed-117"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-410",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md:938 mentions historical views generally, but no ledger/search inspector current-vs-historical or superseded-vs-revoked distinction contract was found"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Assigned ledger/search inspector distinction contract is absent from the assigned path.",
+      "source_obligation_ids": [
+        "obl-121"
+      ],
+      "source_seed_ids": [
+        "seed-121"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-500",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: assigned file reviewed; no usage_event_ref or cross-surface receipt/usage identity coverage found"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Assigned receipt/usage identity contract is absent from the assigned path.",
+      "source_obligation_ids": [
+        "obl-144"
+      ],
+      "source_seed_ids": [
+        "seed-144"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-573",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: assigned file reviewed; no manual_preferred_account_id or manual account semantics coverage found"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Assigned manual account semantics coverage is absent from the assigned path.",
+      "source_obligation_ids": [
+        "obl-161"
+      ],
+      "source_seed_ids": [
+        "seed-161"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-597",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:955 preferred binding falls back with an explicit switch_reason"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "switch_reason is present, but append-only switch/pressure history families are not fully covered.",
+      "source_obligation_ids": [
+        "obl-167"
+      ],
+      "source_seed_ids": [
+        "seed-167"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-700",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: assigned file reviewed; no orchestrator.receipt lifecycle-bridge coverage found"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Assigned orchestrator receipt lifecycle bridge contract is absent from the assigned path.",
+      "source_obligation_ids": [
+        "obl-193"
+      ],
+      "source_seed_ids": [
+        "seed-193"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-783",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: assigned file reviewed; no OpenFile/OpenSubject GUI contract coverage found"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Assigned OpenFile vs OpenSubject GUI contract is absent from the assigned path.",
+      "source_obligation_ids": [
+        "obl-217"
+      ],
+      "source_seed_ids": [
+        "seed-217"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-917",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md:375 and 904 contain stale/projection wording, but no cmd.panel.switch, cmd.source_control.switch_subview, or route-consuming command split was found"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Assigned pure-shell vs route-consuming command distinction is absent from the assigned path.",
+      "source_obligation_ids": [
+        "obl-257"
+      ],
+      "source_seed_ids": [
+        "seed-257"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-984",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:939 route_target is either subject_id-based identity or object_kind/object_id identity",
+        "Plans/FinalGUISpec.md:940 subject_id families are limited to doc: and artifact:"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "subject_id and object_kind/object_id split is present, but the full runtime/governance/conversational/workflow object guidance is not covered.",
+      "source_obligation_ids": [
+        "obl-274"
+      ],
+      "source_seed_ids": [
+        "seed-274"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1026",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: assigned file reviewed; no Tiers, active tier, or TierChanged tab-drift coverage found"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Assigned Orchestrator_Page tier-era tab drift is absent from the assigned path.",
+      "source_obligation_ids": [
+        "obl-288"
+      ],
+      "source_seed_ids": [
+        "seed-288"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1100",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:906 Only Progress is widget-composed inside Orchestrator and orchestrator:progress layout persists independently from Dashboard and Usage layout keys"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Progress-only Orchestrator hostability is stated, but the full stale widget catalog and non-Progress Orchestrator layout retirement list is not covered.",
+      "source_obligation_ids": [
+        "obl-318"
+      ],
+      "source_seed_ids": [
+        "seed-318"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1233",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:2470-2477 wizard_blocked card fields include report_ref and resume_url",
+        "Plans/FinalGUISpec.md:2510-2511 blocked cards use card_type, wizard_id, wizard_step, blocked_reason_code, report_ref, resume_url, and optional thread_id",
+        "Plans/FinalGUISpec.md:2571-2572 blocked node list is sorted by blocked_sequence and shows allowed_action_ids[] as action buttons"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Some blocked packet fields are present, but approval_scope_key, startup_recovered, action_available, escalation_level, and usage/assistant consumer sections are not fully covered.",
+      "source_obligation_ids": [
+        "obl-348"
+      ],
+      "source_seed_ids": [
+        "seed-348"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

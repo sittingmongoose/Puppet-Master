@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-017",
+  "group_ids": [
+    "discgrp-0065",
+    "discgrp-0066",
+    "discgrp-0067",
+    "discgrp-0068"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00251",
+      "source_obligation_ids": [
+        "obl-134"
+      ],
+      "source_seed_ids": [
+        "seed-139"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00252",
+      "source_obligation_ids": [
+        "obl-135"
+      ],
+      "source_seed_ids": [
+        "seed-141"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_Integration.md",
+      "new_heading_hint": "### Fidelity recovery cov-040: Source Control and worktree handshake",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/GitHub_Integration.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00253",
+      "source_obligation_ids": [
+        "obl-136"
+      ],
+      "source_seed_ids": [
+        "seed-142"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-042: Source Control and worktree handshake",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L115"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00254",
+      "source_obligation_ids": [
+        "obl-137"
+      ],
+      "source_seed_ids": [
+        "seed-143"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Runtime artifact and projection storage scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

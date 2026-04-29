@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-181",
+  "group_ids": [
+    "discgrp-0721",
+    "discgrp-0722",
+    "discgrp-0723",
+    "discgrp-0724"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00968",
+      "source_obligation_ids": [
+        "obl-825"
+      ],
+      "source_seed_ids": [
+        "seed-949"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "## Data/state model to preserve in implementation docs",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L716"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00969",
+      "source_obligation_ids": [
+        "obl-826"
+      ],
+      "source_seed_ids": [
+        "seed-950"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00970",
+      "source_obligation_ids": [
+        "obl-827"
+      ],
+      "source_seed_ids": [
+        "seed-956"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "# Runtime Artifacts Panel \u2014 SSOT",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00971",
+      "source_obligation_ids": [
+        "obl-828"
+      ],
+      "source_seed_ids": [
+        "seed-957"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-077: Project summary projection",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L123"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-465",
+  "group_ids": [
+    "discgrp-1857",
+    "discgrp-1858",
+    "discgrp-1859",
+    "discgrp-1860"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02114",
+      "source_obligation_ids": [
+        "obl-1971"
+      ],
+      "source_seed_ids": [
+        "seed-2564"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02115",
+      "source_obligation_ids": [
+        "obl-1972"
+      ],
+      "source_seed_ids": [
+        "seed-2565"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "## 4. Orchestrator Progress widget scope and catalog linkage",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Widget_System.md:L57"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02116",
+      "source_obligation_ids": [
+        "obl-1973"
+      ],
+      "source_seed_ids": [
+        "seed-2566"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "#### Issue 1: False Positives in Documentation",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FileSafe.md:L2252"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02117",
+      "source_obligation_ids": [
+        "obl-1974"
+      ],
+      "source_seed_ids": [
+        "seed-2567"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "#### 6.1.5 Delete",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Commands_System.md:L349"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

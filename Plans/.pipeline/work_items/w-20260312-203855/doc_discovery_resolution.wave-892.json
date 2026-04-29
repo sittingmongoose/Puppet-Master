@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-892",
+  "group_ids": [
+    "discgrp-3565",
+    "discgrp-3566",
+    "discgrp-3567",
+    "discgrp-3568"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03860",
+      "source_obligation_ids": [
+        "obl-3705"
+      ],
+      "source_seed_ids": [
+        "seed-5030"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "## 6. Ways to add tools (implementation angles)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Tools.md:L829"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03861",
+      "source_obligation_ids": [
+        "obl-3706"
+      ],
+      "source_seed_ids": [
+        "seed-5032"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "### 3.5A `skill` tool runtime contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Tools.md:L465"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03862",
+      "source_obligation_ids": [
+        "obl-3707"
+      ],
+      "source_seed_ids": [
+        "seed-5033"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.3 Search and Source Control keep separate projection state",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03863",
+      "source_obligation_ids": [
+        "obl-3708"
+      ],
+      "source_seed_ids": [
+        "seed-5034"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "#### Gap 1: ExecutionRequest Metadata",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L2215"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

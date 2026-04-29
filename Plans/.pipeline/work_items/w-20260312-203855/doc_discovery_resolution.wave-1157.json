@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1157",
+  "group_ids": [
+    "discgrp-4625",
+    "discgrp-4626",
+    "discgrp-4627",
+    "discgrp-4628"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05023",
+      "source_obligation_ids": [
+        "obl-4799"
+      ],
+      "source_seed_ids": [
+        "seed-6912"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05024",
+      "source_obligation_ids": [
+        "obl-4800"
+      ],
+      "source_seed_ids": [
+        "seed-6913"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "# Crosswalk (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05025",
+      "source_obligation_ids": [
+        "obl-4801"
+      ],
+      "source_seed_ids": [
+        "seed-6914"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## 4. Navigation Architecture",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L452"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05026",
+      "source_obligation_ids": [
+        "obl-4802"
+      ],
+      "source_seed_ids": [
+        "seed-6915"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

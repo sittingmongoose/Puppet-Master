@@ -1,0 +1,115 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-726",
+  "group_ids": [
+    "discgrp-2901",
+    "discgrp-2902",
+    "discgrp-2903",
+    "discgrp-2904"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03181",
+      "source_obligation_ids": [
+        "obl-3027"
+      ],
+      "source_seed_ids": [
+        "seed-3995",
+        "seed-4818"
+      ],
+      "source_shard_ids": [
+        "shard-0044",
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03182",
+      "source_obligation_ids": [
+        "obl-3028"
+      ],
+      "source_seed_ids": [
+        "seed-3996"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L774"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03183",
+      "source_obligation_ids": [
+        "obl-3029"
+      ],
+      "source_seed_ids": [
+        "seed-3997",
+        "seed-4357",
+        "seed-4477",
+        "seed-4823",
+        "seed-4955"
+      ],
+      "source_shard_ids": [
+        "shard-0044",
+        "shard-0047",
+        "shard-0050",
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03184",
+      "source_obligation_ids": [
+        "obl-3030"
+      ],
+      "source_seed_ids": [
+        "seed-4002",
+        "seed-4285",
+        "seed-4362",
+        "seed-4828",
+        "seed-4974",
+        "seed-5188",
+        "seed-5306"
+      ],
+      "source_shard_ids": [
+        "shard-0044",
+        "shard-0046",
+        "shard-0047",
+        "shard-0050",
+        "shard-0051",
+        "shard-0053",
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

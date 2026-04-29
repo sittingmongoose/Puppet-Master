@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-668",
+  "group_ids": [
+    "discgrp-2669",
+    "discgrp-2670",
+    "discgrp-2671",
+    "discgrp-2672"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02947",
+      "source_obligation_ids": [
+        "obl-2794"
+      ],
+      "source_seed_ids": [
+        "seed-3682"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.3 Search and Source Control keep separate projection state",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02948",
+      "source_obligation_ids": [
+        "obl-2795"
+      ],
+      "source_seed_ids": [
+        "seed-3683"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Account pressure, history, and runtime attribution baseline",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L491"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02949",
+      "source_obligation_ids": [
+        "obl-2796"
+      ],
+      "source_seed_ids": [
+        "seed-3684"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02950",
+      "source_obligation_ids": [
+        "obl-2797"
+      ],
+      "source_seed_ids": [
+        "seed-3685"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/LSPSupport.md",
+      "new_heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/LSPSupport.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

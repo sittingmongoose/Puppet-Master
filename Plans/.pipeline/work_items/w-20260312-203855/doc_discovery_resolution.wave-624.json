@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-624",
+  "group_ids": [
+    "discgrp-2493",
+    "discgrp-2494",
+    "discgrp-2495",
+    "discgrp-2496"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02771",
+      "source_obligation_ids": [
+        "obl-2618"
+      ],
+      "source_seed_ids": [
+        "seed-3434"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02772",
+      "source_obligation_ids": [
+        "obl-2619"
+      ],
+      "source_seed_ids": [
+        "seed-3435"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02773",
+      "source_obligation_ids": [
+        "obl-2620"
+      ],
+      "source_seed_ids": [
+        "seed-3436"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## 17. Risks and Mitigations",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1816"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02774",
+      "source_obligation_ids": [
+        "obl-2621"
+      ],
+      "source_seed_ids": [
+        "seed-3437"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

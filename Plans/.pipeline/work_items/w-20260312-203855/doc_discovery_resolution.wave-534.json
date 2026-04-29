@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-534",
+  "group_ids": [
+    "discgrp-2133",
+    "discgrp-2134",
+    "discgrp-2135",
+    "discgrp-2136"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02404",
+      "source_obligation_ids": [
+        "obl-2254"
+      ],
+      "source_seed_ids": [
+        "seed-2926"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "### B) Project Contracts (generated per user project)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L188"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02405",
+      "source_obligation_ids": [
+        "obl-2255"
+      ],
+      "source_seed_ids": [
+        "seed-2927"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocking payload rule",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1459"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02406",
+      "source_obligation_ids": [
+        "obl-2256"
+      ],
+      "source_seed_ids": [
+        "seed-2928"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-004 -- UI command boundary (no business logic in UI)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L53"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02407",
+      "source_obligation_ids": [
+        "obl-2257"
+      ],
+      "source_seed_ids": [
+        "seed-2929"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

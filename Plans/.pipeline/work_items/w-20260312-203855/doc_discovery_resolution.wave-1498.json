@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1498",
+  "group_ids": [
+    "discgrp-5989",
+    "discgrp-5990",
+    "discgrp-5991",
+    "discgrp-5992"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06613",
+      "source_obligation_ids": [
+        "obl-6254"
+      ],
+      "source_seed_ids": [
+        "seed-9456"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "# Usage Feature -- App/GUI Plan",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06614",
+      "source_obligation_ids": [
+        "obl-6255"
+      ],
+      "source_seed_ids": [
+        "seed-9462"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06615",
+      "source_obligation_ids": [
+        "obl-6256"
+      ],
+      "source_seed_ids": [
+        "seed-9463"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "new_heading_hint": "#### Action tiers",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L72"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06616",
+      "source_obligation_ids": [
+        "obl-6257"
+      ],
+      "source_seed_ids": [
+        "seed-9464"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### 10.9.1 Copy path and copy value",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1272"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

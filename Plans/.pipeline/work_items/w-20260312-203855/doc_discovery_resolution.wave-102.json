@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-102",
+  "group_ids": [
+    "discgrp-0405",
+    "discgrp-0406",
+    "discgrp-0407",
+    "discgrp-0408"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00652",
+      "source_obligation_ids": [
+        "obl-509"
+      ],
+      "source_seed_ids": [
+        "seed-584"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00653",
+      "source_obligation_ids": [
+        "obl-510"
+      ],
+      "source_seed_ids": [
+        "seed-585"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00654",
+      "source_obligation_ids": [
+        "obl-511"
+      ],
+      "source_seed_ids": [
+        "seed-586"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L35"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00655",
+      "source_obligation_ids": [
+        "obl-512"
+      ],
+      "source_seed_ids": [
+        "seed-587"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

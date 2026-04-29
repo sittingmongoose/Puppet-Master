@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-475",
+  "group_ids": [
+    "discgrp-1897",
+    "discgrp-1898",
+    "discgrp-1899",
+    "discgrp-1900"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02154",
+      "source_obligation_ids": [
+        "obl-2011"
+      ],
+      "source_seed_ids": [
+        "seed-2617"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "new_heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02155",
+      "source_obligation_ids": [
+        "obl-2012"
+      ],
+      "source_seed_ids": [
+        "seed-2618"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-014 -- Shared mutable state requires RWMutex",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L129"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02156",
+      "source_obligation_ids": [
+        "obl-2013"
+      ],
+      "source_seed_ids": [
+        "seed-2619"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02157",
+      "source_obligation_ids": [
+        "obl-2014"
+      ],
+      "source_seed_ids": [
+        "seed-2620"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "### Fidelity recovery cov-038: Focused run and historical routing contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L19"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

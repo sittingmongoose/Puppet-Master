@@ -1,0 +1,433 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-084",
+  "row_group_ids": [
+    "rowgrp-0333",
+    "rowgrp-0334",
+    "rowgrp-0335",
+    "rowgrp-0336"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-00128",
+      "source_obligation_ids": [
+        "obl-041"
+      ],
+      "source_seed_ids": [
+        "seed-041"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "ownership glossary/crosswalk",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "Cleanup Priorities",
+      "status": "missing",
+      "exact_items": [
+        "Extend Glossary.md, Crosswalk.md, Decision_Policy.md, and 00-plans-index.md with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.",
+        "Clarify which docs own execution truth vs projections vs UI-only overlays."
+      ],
+      "stale_tokens": [
+        "tier-centric ownership",
+        "projection-only overlay",
+        "execution truth vs projections"
+      ],
+      "evidence": [
+        "Plans/Decision_Policy.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01245",
+      "source_obligation_ids": [
+        "obl-1102"
+      ],
+      "source_seed_ids": [
+        "seed-1303"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "amber = stale config / missing optional files",
+      "row_type": "stale_retirement",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "## 6. Ambiguity vs. Missing User Intent",
+      "status": "present",
+      "exact_items": [
+        "amber = stale config / missing optional files"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1-L303 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01400",
+      "source_obligation_ids": [
+        "obl-1257"
+      ],
+      "source_seed_ids": [
+        "seed-1502"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "Research Progress - 2026-03-16 - Projection Health / Stale-Data Trust Execution Policy",
+      "row_type": "stale_retirement",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "Research Progress - 2026-03-16 - Projection Health / Stale-Data Trust Execution Policy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1-L303 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01412",
+      "source_obligation_ids": [
+        "obl-1269"
+      ],
+      "source_seed_ids": [
+        "seed-1530"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "allowed on `refreshing`, often allowed on `stale`, sometimes allowed on `degraded`",
+      "row_type": "stale_retirement",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "### 5.1 When Spec Lock updates are allowed",
+      "status": "missing",
+      "exact_items": [
+        "allowed on `refreshing`, often allowed on `stale`, sometimes allowed on `degraded`",
+        "refreshing",
+        "stale",
+        "degraded"
+      ],
+      "stale_tokens": [
+        "degraded",
+        "refreshing",
+        "stale"
+      ],
+      "evidence": [
+        "Plans/Decision_Policy.md:L130",
+        "Plans/Decision_Policy.md:L248"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-02079",
+      "source_obligation_ids": [
+        "obl-1936"
+      ],
+      "source_seed_ids": [
+        "seed-2500"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "it is also a help/copy drift problem because the help system has no explicit rule for how",
+      "row_type": "stale_retirement",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "## 4. \"No human in the loop\" rule",
+      "status": "present",
+      "exact_items": [
+        "it is also a help/copy drift problem because the help system has no explicit rule for how legacy labels are retired or translated"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1-L303 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02729",
+      "source_obligation_ids": [
+        "obl-2576"
+      ],
+      "source_seed_ids": [
+        "seed-3378"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "Multiple consumer docs still use stale forbidden or obsolete vocabulary:",
+      "row_type": "stale_retirement",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "### 6.1 Ambiguity (multiple valid choices)",
+      "status": "present",
+      "exact_items": [
+        "Multiple consumer docs still use stale forbidden or obsolete vocabulary:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1-L303 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03910",
+      "source_obligation_ids": [
+        "obl-3755"
+      ],
+      "source_seed_ids": [
+        "seed-5122"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "add reverse matrix-to-catalog coverage, precondition/freshness/mutation-risk fields, stale",
+      "row_type": "stale_retirement",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "add reverse matrix-to-catalog coverage, precondition/freshness/mutation-risk fields, stale-blocking policy, and explicit dispatcher obligations around allowed-action membership and correlation passthrough."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1-L303 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04193",
+      "source_obligation_ids": [
+        "obl-4033"
+      ],
+      "source_seed_ids": [
+        "seed-5552"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "startup recovery remains split across policy, executor, and storage docs with no single ow",
+      "row_type": "stale_retirement",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "startup recovery remains split across policy, executor, and storage docs with no single owner deciding how interrupted attempts become `stale_historical` vs rehydrated vs `startup_recovered`.",
+        "stale_historical",
+        "startup_recovered"
+      ],
+      "stale_tokens": [
+        "stale_historical",
+        "startup_recovered"
+      ],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1-L303 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04903",
+      "source_obligation_ids": [
+        "obl-4680"
+      ],
+      "source_seed_ids": [
+        "seed-6722"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "Multiple \"owner-of-owners\" docs (`Decision_Log`, `rewrite-tie-in-memo`, `feature-list`, `n",
+      "row_type": "stale_retirement",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "### 6.1 Ambiguity (multiple valid choices)",
+      "status": "missing",
+      "exact_items": [
+        "Multiple \"owner-of-owners\" docs (`Decision_Log`, `rewrite-tie-in-memo`, `feature-list`, `newfeatures`, `OpenCode_Coverage_Matrix`, `DRY_Rules`) are stale enough that they amplify downstream drift rather than containing it.",
+        "Decision_Log",
+        "rewrite-tie-in-memo",
+        "feature-list",
+        "newfeatures",
+        "OpenCode_Coverage_Matrix",
+        "DRY_Rules"
+      ],
+      "stale_tokens": [
+        "DRY_Rules",
+        "Decision_Log",
+        "OpenCode_Coverage_Matrix",
+        "feature-list",
+        "newfeatures",
+        "rewrite-tie-in-memo"
+      ],
+      "evidence": [
+        "Plans/Decision_Policy.md:L3",
+        "Plans/Decision_Policy.md:L17",
+        "Plans/Decision_Policy.md:L27",
+        "Plans/Decision_Policy.md:L68",
+        "Plans/Decision_Policy.md:L129"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-05569",
+      "source_obligation_ids": [
+        "obl-5341"
+      ],
+      "source_seed_ids": [
+        "seed-7936"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "`WorktreeGitImprovement.md` already contains the correct surface boundary. The stale part",
+      "row_type": "stale_retirement",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "### 6.4 Requirements quality report boundary, severity, and persistence",
+      "status": "present",
+      "exact_items": [
+        "`WorktreeGitImprovement.md` already contains the correct surface boundary. The stale part is the identity anchor, not the product boundary.",
+        "WorktreeGitImprovement.md"
+      ],
+      "stale_tokens": [
+        "WorktreeGitImprovement.md"
+      ],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1-L303 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06837",
+      "source_obligation_ids": [
+        "obl-6449"
+      ],
+      "source_seed_ids": [
+        "seed-9828"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`resume_url` demotion rule exists, but stale consumer docs still treat it as a primary beh",
+      "row_type": "stale_retirement",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "## 4. \"No human in the loop\" rule",
+      "status": "present",
+      "exact_items": [
+        "`resume_url` demotion rule exists, but stale consumer docs still treat it as a primary behavioral field",
+        "resume_url"
+      ],
+      "stale_tokens": [
+        "resume_url"
+      ],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1-L303 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07016",
+      "source_obligation_ids": [
+        "obl-6610"
+      ],
+      "source_seed_ids": [
+        "seed-10079"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "The unresolved shape is still the same: missing owner anchors, skeletal consumer carry-thr",
+      "row_type": "stale_retirement",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "## 6. Ambiguity vs. Missing User Intent",
+      "status": "present",
+      "exact_items": [
+        "The unresolved shape is still the same: missing owner anchors, skeletal consumer carry-through, and exact stale contradictory survivors."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1-L303 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04605",
+      "source_obligation_ids": [
+        "obl-4383"
+      ],
+      "source_seed_ids": [
+        "seed-6187"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "may realize as workspace document, transient `generated://` buffer, or routed non-editor s",
+      "row_type": "consumer",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "# Document Packaging Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "may realize as workspace document, transient `generated://` buffer, or routed non-editor surface",
+        "generated://"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06317",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06546",
+      "source_obligation_ids": [
+        "obl-6187"
+      ],
+      "source_seed_ids": [
+        "seed-9362"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "section `7.7 Tiers` still exists as a primary content surface",
+      "row_type": "consumer",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 2.1 Primary split rule",
+      "status": "partial",
+      "exact_items": [
+        "section `7.7 Tiers` still exists as a primary content surface",
+        "7.7 Tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "required_action": "consumer_propagation"
+    }
+  ]
+}

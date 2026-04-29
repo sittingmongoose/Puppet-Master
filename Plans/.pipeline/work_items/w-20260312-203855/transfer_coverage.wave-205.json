@@ -1,0 +1,1112 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-205",
+  "row_group_ids": [
+    "rowgrp-0817",
+    "rowgrp-0818",
+    "rowgrp-0819",
+    "rowgrp-0820"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-00317",
+      "source_obligation_ids": [
+        "obl-178"
+      ],
+      "source_seed_ids": [
+        "seed-204"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "docs involved: `Plans/human-in-the-loop.md`, `Plans/Project_Output_Artifacts.md`",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "docs involved: `Plans/human-in-the-loop.md`, `Plans/Project_Output_Artifacts.md`",
+        "Plans/human-in-the-loop.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L15",
+        "Plans/human-in-the-loop.md:L34",
+        "Plans/human-in-the-loop.md:L36",
+        "Plans/human-in-the-loop.md:L45",
+        "Plans/human-in-the-loop.md:L48"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00437",
+      "source_obligation_ids": [
+        "obl-295"
+      ],
+      "source_seed_ids": [
+        "seed-340"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "neither doc yet gives a durable first-class account-switch / pressure-episode history mode",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "neither doc yet gives a durable first-class account-switch / pressure-episode history model"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00651",
+      "source_obligation_ids": [
+        "obl-508"
+      ],
+      "source_seed_ids": [
+        "seed-583"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Actions that should generally be disabled in historical mode:",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "Actions that should generally be disabled in historical mode:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00864",
+      "source_obligation_ids": [
+        "obl-721"
+      ],
+      "source_seed_ids": [
+        "seed-821",
+        "seed-2043"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0029"
+      ],
+      "canon_label": "`corroboration`",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "`corroboration`",
+        "corroboration"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00894",
+      "source_obligation_ids": [
+        "obl-751"
+      ],
+      "source_seed_ids": [
+        "seed-856",
+        "seed-1260",
+        "seed-1326",
+        "seed-1747",
+        "seed-1778",
+        "seed-2506",
+        "seed-2535"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0021",
+        "shard-0022",
+        "shard-0026",
+        "shard-0033"
+      ],
+      "canon_label": "`Corroboration`",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "`Corroboration`",
+        "Corroboration"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01181",
+      "source_obligation_ids": [
+        "obl-1038"
+      ],
+      "source_seed_ids": [
+        "seed-1216"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "canon_label": "`turn`",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### GUI: Primary Place to Turn On and Configure HITL",
+      "status": "present",
+      "exact_items": [
+        "`turn`",
+        "turn"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L174",
+        "Plans/human-in-the-loop.md:L216",
+        "Plans/human-in-the-loop.md:L229"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01265",
+      "source_obligation_ids": [
+        "obl-1122"
+      ],
+      "source_seed_ids": [
+        "seed-1334"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "`Waiting on user approval`",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Fidelity recovery cov-101: Provider-native correlation and approval scope",
+      "status": "partial",
+      "exact_items": [
+        "`Waiting on user approval`",
+        "Waiting on user approval"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L28",
+        "Plans/human-in-the-loop.md:L34"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02027",
+      "source_obligation_ids": [
+        "obl-1884"
+      ],
+      "source_seed_ids": [
+        "seed-2431"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "`hitl.*`",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "present",
+      "exact_items": [
+        "`hitl.*`",
+        "hitl.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1",
+        "Plans/human-in-the-loop.md:L68",
+        "Plans/human-in-the-loop.md:L75",
+        "Plans/human-in-the-loop.md:L77",
+        "Plans/human-in-the-loop.md:L81"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02296",
+      "source_obligation_ids": [
+        "obl-2148"
+      ],
+      "source_seed_ids": [
+        "seed-2792"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "`Plans/human-in-the-loop.md` + `Plans/Executor_Protocol.md`",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/human-in-the-loop.md` + `Plans/Executor_Protocol.md`",
+        "Plans/human-in-the-loop.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L15",
+        "Plans/human-in-the-loop.md:L34",
+        "Plans/human-in-the-loop.md:L36",
+        "Plans/human-in-the-loop.md:L45",
+        "Plans/human-in-the-loop.md:L48"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02305",
+      "source_obligation_ids": [
+        "obl-2157"
+      ],
+      "source_seed_ids": [
+        "seed-2801"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "Rewrite \u00a79 around dual-overseer / corroboration reality rather than layering more addenda",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "## Rewrite alignment (2026-02-21)",
+      "status": "partial",
+      "exact_items": [
+        "Rewrite \u00a79 around dual-overseer / corroboration reality rather than layering more addenda onto the current singular-Overseer protocol."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L73"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02538",
+      "source_obligation_ids": [
+        "obl-2387"
+      ],
+      "source_seed_ids": [
+        "seed-3100"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "base headless `ask -> deny unless HITL at current tier boundary` language is still tier-er",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "base headless `ask -> deny unless HITL at current tier boundary` language is still tier-era and conflicts with unified blocked-overlay contracts",
+        "ask -> deny unless HITL at current tier boundary"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02540",
+      "source_obligation_ids": [
+        "obl-2389"
+      ],
+      "source_seed_ids": [
+        "seed-3102"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "approval caching still lacks an explicit actor/lane/run/account scope rule, which is unsaf",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Fidelity recovery cov-101: Provider-native correlation and approval scope",
+      "status": "partial",
+      "exact_items": [
+        "approval caching still lacks an explicit actor/lane/run/account scope rule, which is unsafe under shared-runtime parallel actors"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L28",
+        "Plans/human-in-the-loop.md:L34"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02559",
+      "source_obligation_ids": [
+        "obl-2407"
+      ],
+      "source_seed_ids": [
+        "seed-3124"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "Replace permission tier-boundary language with runtime-overlay/blocked-state terminology a",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Fidelity recovery cov-185: Approval scope key and approver identity",
+      "status": "partial",
+      "exact_items": [
+        "Replace permission tier-boundary language with runtime-overlay/blocked-state terminology and key approval cache scope by actor/run/lane/account context."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L50",
+        "Plans/human-in-the-loop.md:L57"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02691",
+      "source_obligation_ids": [
+        "obl-2538"
+      ],
+      "source_seed_ids": [
+        "seed-3331"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "headless `ask -> deny unless HITL at current tier boundary` still leaks tier-era gating in",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "headless `ask -> deny unless HITL at current tier boundary` still leaks tier-era gating into what should now be normal blocked-overlay routing",
+        "ask -> deny unless HITL at current tier boundary"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02699",
+      "source_obligation_ids": [
+        "obl-2546"
+      ],
+      "source_seed_ids": [
+        "seed-3343"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "needs scope-keyed approval semantics, de-tiered gating language, and richer permission sna",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Approval resolution and rerun semantics",
+      "status": "partial",
+      "exact_items": [
+        "needs scope-keyed approval semantics, de-tiered gating language, and richer permission snapshots"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L349"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02703",
+      "source_obligation_ids": [
+        "obl-2550"
+      ],
+      "source_seed_ids": [
+        "seed-3348"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "Permissions still use session-scoped approval logic without defining the session/actor/lan",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Fidelity recovery cov-185: Approval scope key and approver identity",
+      "status": "partial",
+      "exact_items": [
+        "Permissions still use session-scoped approval logic without defining the session/actor/lane scope key."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L50",
+        "Plans/human-in-the-loop.md:L57"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02708",
+      "source_obligation_ids": [
+        "obl-2555"
+      ],
+      "source_seed_ids": [
+        "seed-3353"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "Define an Approval Scope Key for permissions keyed by actor/lane/run/account context.",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Fidelity recovery cov-185: Approval scope key and approver identity",
+      "status": "partial",
+      "exact_items": [
+        "Define an Approval Scope Key for permissions keyed by actor/lane/run/account context."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L50",
+        "Plans/human-in-the-loop.md:L57"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02835",
+      "source_obligation_ids": [
+        "obl-2682"
+      ],
+      "source_seed_ids": [
+        "seed-3528"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "needs scope-keyed approval semantics and richer permission snapshots",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Approval resolution and rerun semantics",
+      "status": "partial",
+      "exact_items": [
+        "needs scope-keyed approval semantics and richer permission snapshots"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L349"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02839",
+      "source_obligation_ids": [
+        "obl-2686"
+      ],
+      "source_seed_ids": [
+        "seed-3533"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "Permission approval caching and reject-cascade still lack actor/lane/account scope.",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Fidelity recovery cov-101: Provider-native correlation and approval scope",
+      "status": "partial",
+      "exact_items": [
+        "Permission approval caching and reject-cascade still lack actor/lane/account scope."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L28",
+        "Plans/human-in-the-loop.md:L34"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02844",
+      "source_obligation_ids": [
+        "obl-2691"
+      ],
+      "source_seed_ids": [
+        "seed-3538"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "Define an Approval Scope Key spanning actor/lane/run/account context.",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Fidelity recovery cov-185: Approval scope key and approver identity",
+      "status": "partial",
+      "exact_items": [
+        "Define an Approval Scope Key spanning actor/lane/run/account context."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L50",
+        "Plans/human-in-the-loop.md:L57"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02990",
+      "source_obligation_ids": [
+        "obl-2836"
+      ],
+      "source_seed_ids": [
+        "seed-3741"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "HITL requests/resolutions still carry no actor/lane/account identity strong enough to answ",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "HITL requests/resolutions still carry no actor/lane/account identity strong enough to answer who asked, who approved, and under which effective runtime identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02992",
+      "source_obligation_ids": [
+        "obl-2838"
+      ],
+      "source_seed_ids": [
+        "seed-3743"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "headless `ask` still cross-wires with tier-bound HITL language in ways that blur tool-appr",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "present",
+      "exact_items": [
+        "headless `ask` still cross-wires with tier-bound HITL language in ways that blur tool-approval vs governance-boundary approval",
+        "ask"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L69",
+        "Plans/human-in-the-loop.md:L101",
+        "Plans/human-in-the-loop.md:L120",
+        "Plans/human-in-the-loop.md:L131",
+        "Plans/human-in-the-loop.md:L132"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03006",
+      "source_obligation_ids": [
+        "obl-2852"
+      ],
+      "source_seed_ids": [
+        "seed-3762"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "Add actor/lane/account identity and approver provenance to HITL request/resolution events.",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "Add actor/lane/account identity and approver provenance to HITL request/resolution events."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03205",
+      "source_obligation_ids": [
+        "obl-3051"
+      ],
+      "source_seed_ids": [
+        "seed-4044"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "HITL now visibly contains two contract eras at once:",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Canonical HITL request contract",
+      "status": "partial",
+      "exact_items": [
+        "HITL now visibly contains two contract eras at once:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L81"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03209",
+      "source_obligation_ids": [
+        "obl-3055"
+      ],
+      "source_seed_ids": [
+        "seed-4048"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "`human-in-the-loop.md` now effectively says the newer model should win:",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "present",
+      "exact_items": [
+        "`human-in-the-loop.md` now effectively says the newer model should win:",
+        "human-in-the-loop.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L15",
+        "Plans/human-in-the-loop.md:L34",
+        "Plans/human-in-the-loop.md:L36",
+        "Plans/human-in-the-loop.md:L45",
+        "Plans/human-in-the-loop.md:L48"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03227",
+      "source_obligation_ids": [
+        "obl-3073"
+      ],
+      "source_seed_ids": [
+        "seed-4073"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "Reconcile HITL so blocked/runtime semantics are canonical and tier-boundary examples becom",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "Reconcile HITL so blocked/runtime semantics are canonical and tier-boundary examples become derived copy only."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03242",
+      "source_obligation_ids": [
+        "obl-3088"
+      ],
+      "source_seed_ids": [
+        "seed-4103"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "Conversational / HITL / tooling contracts still break under shared-runtime and multi-lane",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "Conversational / HITL / tooling contracts still break under shared-runtime and multi-lane execution:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03281",
+      "source_obligation_ids": [
+        "obl-3127"
+      ],
+      "source_seed_ids": [
+        "seed-4161"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "`human-in-the-loop.md` now exposes a three-way approval-identity split: `request_id` for H",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "present",
+      "exact_items": [
+        "`human-in-the-loop.md` now exposes a three-way approval-identity split: `request_id` for HITL replay, `blocked_sequence` for runtime recovery commands, and vague `session` scoping for permission propagation.",
+        "human-in-the-loop.md",
+        "request_id",
+        "blocked_sequence",
+        "session"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L15",
+        "Plans/human-in-the-loop.md:L32",
+        "Plans/human-in-the-loop.md:L34",
+        "Plans/human-in-the-loop.md:L35",
+        "Plans/human-in-the-loop.md:L36"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03282",
+      "source_obligation_ids": [
+        "obl-3128"
+      ],
+      "source_seed_ids": [
+        "seed-4162"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "restart persistence for HITL is still effectively run-scoped (`checkpoints.hitl.{run_id}`)",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "restart persistence for HITL is still effectively run-scoped (`checkpoints.hitl.{run_id}`), which is unsafe once multiple concurrent approval episodes exist in one run.",
+        "checkpoints.hitl.{run_id}"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03292",
+      "source_obligation_ids": [
+        "obl-3138"
+      ],
+      "source_seed_ids": [
+        "seed-4174"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "approval identity/keying split (`request_id` vs `blocked_sequence` vs session scope) is no",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Fidelity recovery cov-101: Provider-native correlation and approval scope",
+      "status": "present",
+      "exact_items": [
+        "approval identity/keying split (`request_id` vs `blocked_sequence` vs session scope) is now a correctness bug for restart and concurrency.",
+        "request_id",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L42",
+        "Plans/human-in-the-loop.md:L46",
+        "Plans/human-in-the-loop.md:L87",
+        "Plans/human-in-the-loop.md:L96",
+        "Plans/human-in-the-loop.md:L143"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03301",
+      "source_obligation_ids": [
+        "obl-3147"
+      ],
+      "source_seed_ids": [
+        "seed-4189"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "Unify approval identity across HITL/chat/runtime recovery (`request_id`, `blocked_sequence",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Fidelity recovery cov-101: Provider-native correlation and approval scope",
+      "status": "present",
+      "exact_items": [
+        "Unify approval identity across HITL/chat/runtime recovery (`request_id`, `blocked_sequence`, approval scope) and make restart persistence episode-scoped rather than run-scoped.",
+        "request_id",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L42",
+        "Plans/human-in-the-loop.md:L46",
+        "Plans/human-in-the-loop.md:L87",
+        "Plans/human-in-the-loop.md:L96",
+        "Plans/human-in-the-loop.md:L143"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03346",
+      "source_obligation_ids": [
+        "obl-3192"
+      ],
+      "source_seed_ids": [
+        "seed-4252"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`allowed_actions[]` is still alive in neighboring docs even though HITL addenda say it is",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "`allowed_actions[]` is still alive in neighboring docs even though HITL addenda say it is deprecated.",
+        "allowed_actions[]"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03438",
+      "source_obligation_ids": [
+        "obl-3284"
+      ],
+      "source_seed_ids": [
+        "seed-4401"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "approval identity, field-family normalization, and persistence semantics are still split a",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Approval resolution and rerun semantics",
+      "status": "partial",
+      "exact_items": [
+        "approval identity, field-family normalization, and persistence semantics are still split across incompatible shapes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L349"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03449",
+      "source_obligation_ids": [
+        "obl-3295"
+      ],
+      "source_seed_ids": [
+        "seed-4417"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "Normalize HITL/tool approval semantics onto one blocked-episode model with explicit scope",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Fidelity recovery cov-101: Provider-native correlation and approval scope",
+      "status": "partial",
+      "exact_items": [
+        "Normalize HITL/tool approval semantics onto one blocked-episode model with explicit scope keying, field-family cleanup, and durable provenance."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L28",
+        "Plans/human-in-the-loop.md:L34"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03584",
+      "source_obligation_ids": [
+        "obl-3430"
+      ],
+      "source_seed_ids": [
+        "seed-4623"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "blocked/approval identity minting and scope (`blocked_sequence`, approval scope key, reque",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Fidelity recovery cov-185: Approval scope key and approver identity",
+      "status": "present",
+      "exact_items": [
+        "blocked/approval identity minting and scope (`blocked_sequence`, approval scope key, request/block bridge)",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L42",
+        "Plans/human-in-the-loop.md:L46",
+        "Plans/human-in-the-loop.md:L87",
+        "Plans/human-in-the-loop.md:L96",
+        "Plans/human-in-the-loop.md:L143"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03647",
+      "source_obligation_ids": [
+        "obl-3493"
+      ],
+      "source_seed_ids": [
+        "seed-4701"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "Recast HITL request contracts so `request_id` is explicitly subordinate to blocked-episode",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Canonical HITL request contract",
+      "status": "partial",
+      "exact_items": [
+        "Recast HITL request contracts so `request_id` is explicitly subordinate to blocked-episode identity.",
+        "request_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L81"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03765",
+      "source_obligation_ids": [
+        "obl-3610"
+      ],
+      "source_seed_ids": [
+        "seed-4880"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "`human-in-the-loop.md` is currently split across two models:",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "present",
+      "exact_items": [
+        "`human-in-the-loop.md` is currently split across two models:",
+        "human-in-the-loop.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L15",
+        "Plans/human-in-the-loop.md:L34",
+        "Plans/human-in-the-loop.md:L36",
+        "Plans/human-in-the-loop.md:L45",
+        "Plans/human-in-the-loop.md:L48"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03781",
+      "source_obligation_ids": [
+        "obl-3626"
+      ],
+      "source_seed_ids": [
+        "seed-4905"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "`human-in-the-loop.md` still stores approval state as `request_id + tier_id + tier_type`,",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "present",
+      "exact_items": [
+        "`human-in-the-loop.md` still stores approval state as `request_id + tier_id + tier_type`, which conflicts with the newer blocked-episode identity model.",
+        "human-in-the-loop.md",
+        "request_id + tier_id + tier_type"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L15",
+        "Plans/human-in-the-loop.md:L34",
+        "Plans/human-in-the-loop.md:L36",
+        "Plans/human-in-the-loop.md:L45",
+        "Plans/human-in-the-loop.md:L48"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04179",
+      "source_obligation_ids": [
+        "obl-4019"
+      ],
+      "source_seed_ids": [
+        "seed-5538"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "`/mode` is now clearly overloaded across runtime-mode vs overlay semantics while the docs",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "`/mode` is now clearly overloaded across runtime-mode vs overlay semantics while the docs still expose only a single `{ mode }` payload.",
+        "/mode",
+        "{ mode }"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04245",
+      "source_obligation_ids": [
+        "obl-4085"
+      ],
+      "source_seed_ids": [
+        "seed-5647"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "`yolo` still overpromises approval freedom even though non-bypassable step-7 guards surviv",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Fidelity recovery cov-101: Provider-native correlation and approval scope",
+      "status": "partial",
+      "exact_items": [
+        "`yolo` still overpromises approval freedom even though non-bypassable step-7 guards survive, and `external_publish_side_effect` remains impossible to enforce safely in DAE without pre-dispatch interception or forced host execution.",
+        "yolo",
+        "external_publish_side_effect"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L28",
+        "Plans/human-in-the-loop.md:L34"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

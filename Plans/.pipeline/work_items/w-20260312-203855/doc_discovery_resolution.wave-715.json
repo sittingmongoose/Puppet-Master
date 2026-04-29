@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-715",
+  "group_ids": [
+    "discgrp-2857",
+    "discgrp-2858",
+    "discgrp-2859",
+    "discgrp-2860"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03137",
+      "source_obligation_ids": [
+        "obl-2983"
+      ],
+      "source_seed_ids": [
+        "seed-3940"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Shared governance and runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L260"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03138",
+      "source_obligation_ids": [
+        "obl-2984"
+      ],
+      "source_seed_ids": [
+        "seed-3941"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-090: Execution role and operational identity",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L157"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03139",
+      "source_obligation_ids": [
+        "obl-2985"
+      ],
+      "source_seed_ids": [
+        "seed-3942"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03140",
+      "source_obligation_ids": [
+        "obl-2986"
+      ],
+      "source_seed_ids": [
+        "seed-3943"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-165: Coverage blocker concern lifecycle owner section",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L233"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,100 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-058",
+  "group_ids": [
+    "discgrp-0229",
+    "discgrp-0230",
+    "discgrp-0231",
+    "discgrp-0232"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00474",
+      "source_obligation_ids": [
+        "obl-331"
+      ],
+      "source_seed_ids": [
+        "seed-380"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## 7. Views Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L898"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00475",
+      "source_obligation_ids": [
+        "obl-332"
+      ],
+      "source_seed_ids": [
+        "seed-381",
+        "seed-4572",
+        "seed-6333",
+        "seed-7277"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0048",
+        "shard-0061",
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00476",
+      "source_obligation_ids": [
+        "obl-333"
+      ],
+      "source_seed_ids": [
+        "seed-382"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00477",
+      "source_obligation_ids": [
+        "obl-334"
+      ],
+      "source_seed_ids": [
+        "seed-383"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Fidelity recovery addendum",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L3"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

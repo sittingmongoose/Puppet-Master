@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1394",
+  "group_ids": [
+    "discgrp-5573",
+    "discgrp-5574",
+    "discgrp-5575",
+    "discgrp-5576"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06036",
+      "source_obligation_ids": [
+        "obl-5808"
+      ],
+      "source_seed_ids": [
+        "seed-8635"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 6.2 Scope and persistence rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L829"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06037",
+      "source_obligation_ids": [
+        "obl-5809"
+      ],
+      "source_seed_ids": [
+        "seed-8636"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L35"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06038",
+      "source_obligation_ids": [
+        "obl-5810"
+      ],
+      "source_seed_ids": [
+        "seed-8639"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "### Field name correction",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Tools.md:L1279"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06039",
+      "source_obligation_ids": [
+        "obl-5811"
+      ],
+      "source_seed_ids": [
+        "seed-8640"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "# Assistant & Chat UI -- Design Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

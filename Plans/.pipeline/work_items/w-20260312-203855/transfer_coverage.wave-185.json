@@ -1,0 +1,942 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-185",
+  "row_group_ids": [
+    "rowgrp-0737",
+    "rowgrp-0738",
+    "rowgrp-0739",
+    "rowgrp-0740"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-06151",
+      "source_obligation_ids": [
+        "obl-5923"
+      ],
+      "source_seed_ids": [
+        "seed-8795"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "`Plans/Widget_System.md` says in section 7.3:",
+      "row_type": "consumer",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Widget_System.md` says in section 7.3:",
+        "Plans/Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L14"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06165",
+      "source_obligation_ids": [
+        "obl-5937"
+      ],
+      "source_seed_ids": [
+        "seed-8814"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "It sits in a cross-cutting SSOT and should be cleaned up during the same widget reconcilia",
+      "row_type": "consumer",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "partial",
+      "exact_items": [
+        "It sits in a cross-cutting SSOT and should be cleaned up during the same widget reconciliation tranche."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06352",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06560",
+      "source_obligation_ids": [
+        "obl-6201"
+      ],
+      "source_seed_ids": [
+        "seed-9385"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "widget command hosting language aligned to `Progress` only inside Orchestrator",
+      "row_type": "consumer",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "## 4. Orchestrator Progress widget scope and catalog linkage",
+      "status": "present",
+      "exact_items": [
+        "widget command hosting language aligned to `Progress` only inside Orchestrator",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L7",
+        "Plans/Widget_System.md:L11",
+        "Plans/Widget_System.md:L12",
+        "Plans/Widget_System.md:L14",
+        "Plans/Widget_System.md:L15"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06584",
+      "source_obligation_ids": [
+        "obl-6225"
+      ],
+      "source_seed_ids": [
+        "seed-9411"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`widget.current_task`",
+      "row_type": "consumer",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "partial",
+      "exact_items": [
+        "`widget.current_task`",
+        "widget.current_task"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06585",
+      "source_obligation_ids": [
+        "obl-6226"
+      ],
+      "source_seed_ids": [
+        "seed-9412"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`widget.progress_bars`",
+      "row_type": "consumer",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "partial",
+      "exact_items": [
+        "`widget.progress_bars`",
+        "widget.progress_bars"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06619",
+      "source_obligation_ids": [
+        "obl-6260"
+      ],
+      "source_seed_ids": [
+        "seed-9470"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "still includes `widget.tier_tree` for `Orch/Tiers`",
+      "row_type": "consumer",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "partial",
+      "exact_items": [
+        "still includes `widget.tier_tree` for `Orch/Tiers`",
+        "widget.tier_tree",
+        "Orch/Tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06651",
+      "source_obligation_ids": [
+        "obl-6292"
+      ],
+      "source_seed_ids": [
+        "seed-9519"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "widget data-source language updated away from `TierChanged` / `tier_id` assumptions",
+      "row_type": "consumer",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "partial",
+      "exact_items": [
+        "widget data-source language updated away from `TierChanged` / `tier_id` assumptions",
+        "TierChanged",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06657",
+      "source_obligation_ids": [
+        "obl-6298"
+      ],
+      "source_seed_ids": [
+        "seed-9529"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "it explicitly says it is not the storage, command, permission, or widget SSOT",
+      "row_type": "consumer",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "partial",
+      "exact_items": [
+        "it explicitly says it is not the storage, command, permission, or widget SSOT"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06663",
+      "source_obligation_ids": [
+        "obl-6304"
+      ],
+      "source_seed_ids": [
+        "seed-9535"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`widget.tier_tree`",
+      "row_type": "consumer",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "partial",
+      "exact_items": [
+        "`widget.tier_tree`",
+        "widget.tier_tree"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06664",
+      "source_obligation_ids": [
+        "obl-6305"
+      ],
+      "source_seed_ids": [
+        "seed-9536"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`widget.progress_bars` as phase/task/subtask bars",
+      "row_type": "consumer",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "partial",
+      "exact_items": [
+        "`widget.progress_bars` as phase/task/subtask bars",
+        "widget.progress_bars"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06665",
+      "source_obligation_ids": [
+        "obl-6306"
+      ],
+      "source_seed_ids": [
+        "seed-9537"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`widget.current_task` as active tier",
+      "row_type": "consumer",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "partial",
+      "exact_items": [
+        "`widget.current_task` as active tier",
+        "widget.current_task"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06777",
+      "source_obligation_ids": [
+        "obl-6412"
+      ],
+      "source_seed_ids": [
+        "seed-9791"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md` / `Plans/Widget_System.md`",
+      "row_type": "consumer",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` / `Plans/Widget_System.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L14",
+        "Plans/Widget_System.md:L34",
+        "Plans/Widget_System.md:L55"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06779",
+      "source_obligation_ids": [
+        "obl-6414"
+      ],
+      "source_seed_ids": [
+        "seed-9793"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "The **default widget drill-target mappings** are also absent.",
+      "row_type": "consumer",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "partial",
+      "exact_items": [
+        "The **default widget drill-target mappings** are also absent."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00243",
+      "source_obligation_ids": [
+        "obl-129"
+      ],
+      "source_seed_ids": [
+        "seed-134"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L14",
+        "Plans/Widget_System.md:L34",
+        "Plans/Widget_System.md:L55"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00432",
+      "source_obligation_ids": [
+        "obl-290"
+      ],
+      "source_seed_ids": [
+        "seed-335"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "`Orchestrator_Page.md` still keeps `Tiers` and multi-tab widget composition",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "partial",
+      "exact_items": [
+        "`Orchestrator_Page.md` still keeps `Tiers` and multi-tab widget composition",
+        "Orchestrator_Page.md",
+        "Tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L34",
+        "Plans/Widget_System.md:L55"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00542",
+      "source_obligation_ids": [
+        "obl-399"
+      ],
+      "source_seed_ids": [
+        "seed-461"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "those non-Progress tabs may internally use reusable view components, but they should not e",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "partial",
+      "exact_items": [
+        "those non-Progress tabs may internally use reusable view components, but they should not expose general add/remove/move/resize widget behavior"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00554",
+      "source_obligation_ids": [
+        "obl-411"
+      ],
+      "source_seed_ids": [
+        "seed-473"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "distinguish `page/tab filters` from `widget presentation config`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "partial",
+      "exact_items": [
+        "distinguish `page/tab filters` from `widget presentation config`",
+        "page/tab filters",
+        "widget presentation config"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00562",
+      "source_obligation_ids": [
+        "obl-419"
+      ],
+      "source_seed_ids": [
+        "seed-481"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "`Plans/Widget_System.md` currently defines layout keys for multiple Orchestrator tabs.",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Widget_System.md` currently defines layout keys for multiple Orchestrator tabs.",
+        "Plans/Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L14"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00576",
+      "source_obligation_ids": [
+        "obl-433"
+      ],
+      "source_seed_ids": [
+        "seed-498"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "Add explicit hostability rules so `Dashboard` and `Progress` can share summary widgets wit",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "### Fidelity recovery cov-048: Progress-only widget hostability",
+      "status": "present",
+      "exact_items": [
+        "Add explicit hostability rules so `Dashboard` and `Progress` can share summary widgets without turning deep inspection tabs into widget canvases.",
+        "Dashboard",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L7",
+        "Plans/Widget_System.md:L11",
+        "Plans/Widget_System.md:L12",
+        "Plans/Widget_System.md:L14",
+        "Plans/Widget_System.md:L15"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00577",
+      "source_obligation_ids": [
+        "obl-434"
+      ],
+      "source_seed_ids": [
+        "seed-499"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "Source Control being a narrow panel reinforces the need to keep widget usage focused on wi",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "## 4. Orchestrator Progress widget scope and catalog linkage",
+      "status": "present",
+      "exact_items": [
+        "Source Control being a narrow panel reinforces the need to keep widget usage focused on wider surfaces like `Dashboard` and `Orchestrator / Progress`, not as a universal composition strategy everywhere.",
+        "Dashboard",
+        "Orchestrator / Progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L12",
+        "Plans/Widget_System.md:L16",
+        "Plans/Widget_System.md:L23",
+        "Plans/Widget_System.md:L53",
+        "Plans/Widget_System.md:L63"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01918",
+      "source_obligation_ids": [
+        "obl-1775"
+      ],
+      "source_seed_ids": [
+        "seed-2279"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "`Widget_System.md` implies broader widget portability",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "partial",
+      "exact_items": [
+        "`Widget_System.md` implies broader widget portability",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L14"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-01919",
+      "source_obligation_ids": [
+        "obl-1776"
+      ],
+      "source_seed_ids": [
+        "seed-2280"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "`Orchestrator_Page.md` still treats multiple tabs as widget containers",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "present",
+      "exact_items": [
+        "`Orchestrator_Page.md` still treats multiple tabs as widget containers",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L34",
+        "Plans/Widget_System.md:L55"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02106",
+      "source_obligation_ids": [
+        "obl-1963"
+      ],
+      "source_seed_ids": [
+        "seed-2556"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "its hostability, layout keys, widget caps, and catalog all still include `Orch/Tiers`, `Or",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "### Fidelity recovery cov-048: Progress-only widget hostability",
+      "status": "partial",
+      "exact_items": [
+        "its hostability, layout keys, widget caps, and catalog all still include `Orch/Tiers`, `Orch/Evidence`, `Orch/History`, and `Orch/Ledger`",
+        "Orch/Tiers",
+        "Orch/Evidence",
+        "Orch/History",
+        "Orch/Ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L7",
+        "Plans/Widget_System.md:L14"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02125",
+      "source_obligation_ids": [
+        "obl-1982"
+      ],
+      "source_seed_ids": [
+        "seed-2579"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "page-global widget layout keys may be too coarse for project/run-centric Orchestrator usag",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "## 4. Orchestrator Progress widget scope and catalog linkage",
+      "status": "partial",
+      "exact_items": [
+        "page-global widget layout keys may be too coarse for project/run-centric Orchestrator usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L57"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02126",
+      "source_obligation_ids": [
+        "obl-1983"
+      ],
+      "source_seed_ids": [
+        "seed-2580"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "but there is no explicit decision yet on app-global vs project-scoped widget layouts for O",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "## 4. Orchestrator Progress widget scope and catalog linkage",
+      "status": "present",
+      "exact_items": [
+        "but there is no explicit decision yet on app-global vs project-scoped widget layouts for Orchestrator `Progress`",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L7",
+        "Plans/Widget_System.md:L11",
+        "Plans/Widget_System.md:L12",
+        "Plans/Widget_System.md:L14",
+        "Plans/Widget_System.md:L15"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02247",
+      "source_obligation_ids": [
+        "obl-2101"
+      ],
+      "source_seed_ids": [
+        "seed-2729"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "widget layouts still need project-scoped keys rather than implicit global layouts for proj",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "partial",
+      "exact_items": [
+        "widget layouts still need project-scoped keys rather than implicit global layouts for project-heavy surfaces"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02265",
+      "source_obligation_ids": [
+        "obl-2118"
+      ],
+      "source_seed_ids": [
+        "seed-2750"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "`Widget_System.md` and `Orchestrator_Page.md` still disagree on terminal widget identity a",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "### Fidelity recovery cov-048: Progress-only widget hostability",
+      "status": "present",
+      "exact_items": [
+        "`Widget_System.md` and `Orchestrator_Page.md` still disagree on terminal widget identity and broader Progress/Dashboard hostability details.",
+        "Widget_System.md",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L14",
+        "Plans/Widget_System.md:L34",
+        "Plans/Widget_System.md:L55"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02267",
+      "source_obligation_ids": [
+        "obl-2120"
+      ],
+      "source_seed_ids": [
+        "seed-2752"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "Normalize terminal widget IDs/hostability and explicitly decide how Orchestrator-owned wor",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "partial",
+      "exact_items": [
+        "Normalize terminal widget IDs/hostability and explicitly decide how Orchestrator-owned worktree state is grouped in Source Control."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02363",
+      "source_obligation_ids": [
+        "obl-2214"
+      ],
+      "source_seed_ids": [
+        "seed-2877"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "terminal widget hostability remains split between `widget.terminal_output` and `widget.age",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "### Fidelity recovery cov-048: Progress-only widget hostability",
+      "status": "partial",
+      "exact_items": [
+        "terminal widget hostability remains split between `widget.terminal_output` and `widget.agent_terminal`",
+        "widget.terminal_output",
+        "widget.agent_terminal"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L7",
+        "Plans/Widget_System.md:L14"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02384",
+      "source_obligation_ids": [
+        "obl-2234"
+      ],
+      "source_seed_ids": [
+        "seed-2901"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Rebind widget multi-account/account-pressure contracts to canonical `provider_accounts.*`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "status": "partial",
+      "exact_items": [
+        "Rebind widget multi-account/account-pressure contracts to canonical `provider_accounts.*` projections and require trust/scope inheritance from the host surface.",
+        "provider_accounts.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02390",
+      "source_obligation_ids": [
+        "obl-2240"
+      ],
+      "source_seed_ids": [
+        "seed-2907"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Orchestrator `Progress` widget layout persistence should use **app-default with project ov",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "## 4. Orchestrator Progress widget scope and catalog linkage",
+      "status": "present",
+      "exact_items": [
+        "Orchestrator `Progress` widget layout persistence should use **app-default with project override**.",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L7",
+        "Plans/Widget_System.md:L11",
+        "Plans/Widget_System.md:L12",
+        "Plans/Widget_System.md:L14",
+        "Plans/Widget_System.md:L15"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02393",
+      "source_obligation_ids": [
+        "obl-2243"
+      ],
+      "source_seed_ids": [
+        "seed-2910"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "effective `Progress` widget layout should be computed as:",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "## 4. Orchestrator Progress widget scope and catalog linkage",
+      "status": "present",
+      "exact_items": [
+        "effective `Progress` widget layout should be computed as:",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L7",
+        "Plans/Widget_System.md:L11",
+        "Plans/Widget_System.md:L12",
+        "Plans/Widget_System.md:L14",
+        "Plans/Widget_System.md:L15"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02955",
+      "source_obligation_ids": [
+        "obl-2802"
+      ],
+      "source_seed_ids": [
+        "seed-3697"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "the 12-widget rewrite-era Progress set still has no concrete home in `FinalGUISpec.md`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "## 4. Orchestrator Progress widget scope and catalog linkage",
+      "status": "present",
+      "exact_items": [
+        "the 12-widget rewrite-era Progress set still has no concrete home in `FinalGUISpec.md`",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L34",
+        "Plans/Widget_System.md:L55",
+        "Plans/Widget_System.md:L67"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

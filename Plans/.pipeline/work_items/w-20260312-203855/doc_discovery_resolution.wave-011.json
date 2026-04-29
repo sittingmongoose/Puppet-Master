@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-011",
+  "group_ids": [
+    "discgrp-0041",
+    "discgrp-0042",
+    "discgrp-0043",
+    "discgrp-0044"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00207",
+      "source_obligation_ids": [
+        "obl-103"
+      ],
+      "source_seed_ids": [
+        "seed-104"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "# Overseer Protocol (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00208",
+      "source_obligation_ids": [
+        "obl-104"
+      ],
+      "source_seed_ids": [
+        "seed-105"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "### Requested vs effective visibility",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L1874"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00209",
+      "source_obligation_ids": [
+        "obl-105"
+      ],
+      "source_seed_ids": [
+        "seed-107"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "# Overseer Protocol (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00210",
+      "source_obligation_ids": [
+        "obl-106"
+      ],
+      "source_seed_ids": [
+        "seed-108"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### Fidelity recovery cov-059: Lane vs worktree lifecycle split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L19"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

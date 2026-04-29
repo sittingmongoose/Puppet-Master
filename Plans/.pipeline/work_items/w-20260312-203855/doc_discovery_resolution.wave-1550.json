@@ -1,0 +1,114 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1550",
+  "group_ids": [
+    "discgrp-6197",
+    "discgrp-6198",
+    "discgrp-6199",
+    "discgrp-6200"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06897",
+      "source_obligation_ids": [
+        "obl-6499"
+      ],
+      "source_seed_ids": [
+        "seed-9882",
+        "seed-9920",
+        "seed-9968",
+        "seed-9998",
+        "seed-10045",
+        "seed-10062",
+        "seed-10080",
+        "seed-10102",
+        "seed-10116",
+        "seed-10132",
+        "seed-10167",
+        "seed-10210",
+        "seed-10252",
+        "seed-10287",
+        "seed-10317",
+        "seed-10348",
+        "seed-10388"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091",
+        "shard-0092"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06898",
+      "source_obligation_ids": [
+        "obl-6500"
+      ],
+      "source_seed_ids": [
+        "seed-9883"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/00-plans-index.md",
+      "new_heading_hint": "## Change Summary",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/00-plans-index.md:L6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06908",
+      "source_obligation_ids": [
+        "obl-6508"
+      ],
+      "source_seed_ids": [
+        "seed-9891"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/newtools.md",
+      "new_heading_hint": "# GUI Testing Tools & Framework Options -- Implementation Plan",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/newtools.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06928",
+      "source_obligation_ids": [
+        "obl-6528"
+      ],
+      "source_seed_ids": [
+        "seed-9919"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### 7.19.2 Bundle controls and review gate",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1105"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

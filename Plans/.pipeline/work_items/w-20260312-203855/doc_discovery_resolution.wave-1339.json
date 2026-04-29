@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1339",
+  "group_ids": [
+    "discgrp-5353",
+    "discgrp-5354",
+    "discgrp-5355",
+    "discgrp-5356"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05794",
+      "source_obligation_ids": [
+        "obl-5566"
+      ],
+      "source_seed_ids": [
+        "seed-8266"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05795",
+      "source_obligation_ids": [
+        "obl-5567"
+      ],
+      "source_seed_ids": [
+        "seed-8272"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "### 2.1 Wizard State Shape",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L154"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05796",
+      "source_obligation_ids": [
+        "obl-5568"
+      ],
+      "source_seed_ids": [
+        "seed-8273"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "### Blocked and retry behavior",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L488"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05797",
+      "source_obligation_ids": [
+        "obl-5569"
+      ],
+      "source_seed_ids": [
+        "seed-8274"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

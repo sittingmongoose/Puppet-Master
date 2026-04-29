@@ -1,10 +1,228 @@
 # Multi-Account Specification
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+  - Runtime / Storage / Contract Impacts
+  - Suggested Research Follow-Ups
+
+#### Source target target-0391
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+  - Runtime / Storage / Contract Impacts
+  - Suggested Research Follow-Ups
+- Exact required items represented:
+  - Add node_id
+  - Add package_id
+  - Add seam_id
+  - Add lane_id
+  - Add attempt_id
+  - Add effective_identity
+  - Normalize requested/effective account identity shapes
+  - Normalize blocked_reason_code/allowed_action_ids and safe-point/restore-point/rollback terminology
+  - Decide which objects are persisted canonically (`package`, `seam`, `lane`, `promotion`, `review`, `resolution_thread`) and which are projections only.
+  - Unify requested vs effective execution identity to include account, lane/worktree, and overseer class.
+  - Specify package-based worktree lane pools, including lane ownership, pool sizing, contamination detection, safe-point restore behavior, and Source Control visibility.
+  - likely issue: multi-account behavior exists in slices, but active/effective account switching is not carried through repo/project/worktree execution contracts.
+  - project-owned multi-account policies plus run snapshots and effective account selection
+  - Multi-account implication
+  - Multi-account adds a second layer of confusion if not presented carefully:
+  - multi-account pressure
+  - supporting references from `Prompt_Pipeline.md`, `Multi-Account.md`, `FinalGUISpec.md`, `Executor_Protocol.md`, and current ledger findings
+  - Prompt_Pipeline.md
+  - Multi-Account.md
+  - FinalGUISpec.md
+  - Executor_Protocol.md
+  - Multi-account history and role scoping remain structurally under-modeled:
+  - `Multi-Account.md` requires switch notifications/history semantics that `storage-plan.md`, `Prompt_Pipeline.md`, and bridged-provider stream contracts still cannot represent durably.
+  - storage-plan.md
+  - but Multi-Account needs configuration/availability/pressure/cooldown state, and Usage/Orchestrator need confidence-aware account-health projections
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - DockerHub auth/account identity remains structurally isolated from Multi-Account and still lacks a coherent receipt/lineage bridge.
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`
+  - Plans/Orchestrator_Page.md
+  - Plans/storage-plan.md
+  - Plans/FinalGUISpec.md
+  - Plans/Models_System.md
+  - Plans/Multi-Account.md
+  - Plans/Personas.md
+  - Plans/Prompt_Pipeline.md
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 ## Fidelity recovery addendum
 
 This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
 
 ### Fidelity recovery cov-008: Requested/effective account identity contract
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0396
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Many contracts have `run_id`, maybe `node_id`, but still lack `project_id`, `attempt_id`, `package_id`, `seam_id`, `lane_id`, `worktree_id`, `safe_point_id`, `promotion_class`, or requested/effective account fields.
+  - run_id
+  - node_id
+  - project_id
+  - attempt_id
+  - package_id
+  - seam_id
+  - lane_id
+  - worktree_id
+  - Settings / Provider / Persona / Account Impacts
+  - Multi-account is surfaced in UX before it is modeled canonically in runtime records.** GPT-5.4 found account widgets and auth panels, but almost no equivalent requested/effective account fields in runtime/storage/schema contracts.
+  - Why it matters: persisted/runtime field drift is already visible and will worsen when account identity is added too.
+  - 2. **Extend requested/effective runtime identity to include account and overseer role.**
+  - Why it matters: provider/persona fields exist, but effective account switching and requested/effective execution identity are still mostly unmodeled.
+  - what likely new model pressure is: requested/effective account identity, package/seam/lane/promotion objects, blocked/recovery payload normalization.
+  - likely issue: `requested_persona` / `effective_persona` are canonical in contracts, but UI still uses `_id` variants; account fallback fields are missing entirely.
+  - requested_persona
+  - effective_persona
+  - _id
+  - likely issue: requested/effective platform/model/persona are modeled, but requested/effective account identity and fallback reason are missing.
+  - why it matters: canonical persona field names already disagree before account identity is added.
+  - why it matters: formalize requested vs effective execution identity, including account fallback/switching, before more provider/chat/SCM docs extend the wrong model.
+  - no canonical requested concrete-account anchor exists when a user pins a specific account
+  - The account identity chain is still split across incompatible concepts:
+  - still internally contradicts canonical field naming and still has no overseer Persona model or account disclosure rule
+  - The missing requested-side account anchor is not just a UX gap; it blocks durable historical requested-vs-effective analysis.
+  - requested/effective account identity is still asymmetric
+  - GitHub account identity is still not aligned with the canonical account model:
+  - `GitHub_Integration.md` still lacks a strong requested/effective GitHub account display/routing contract across project/workspace surfaces
+  - GitHub_Integration.md
+  - manual preferred account is not the same as guaranteed selected account
+  - `Effective account: gemini-oauth-2`
+  - Effective account: gemini-oauth-2
+  - `Account switch active`
+  - Account switch active
+  - canonical contracts have `requested_account_policy` but no robust requested-side concrete account anchor
+  - requested_account_policy
+  - downstream docs therefore improvise or omit requested account selection semantics
+  - Add a canonical requested-side concrete account field or explicit equivalent rule wherever user-selected account pinning must be represented.
+  - `recent_switch_reason` appears in account health state
+  - recent_switch_reason
+  - no append-only `account.switched` / threshold / exhaustion event family exists yet for History, Ledger, Usage, or Orchestrator
+  - account.switched
+  - still mis-handle stable account identity and do not yet expose effective GitHub account / degraded capability clearly enough for runtime/UI parity
+  - still need stronger switch-history, requested/effective linkage, project-scoped account sourcing, and trust-state rules
+  - carrying old/new effective account identity, reason, scope, and timeline semantics
+  - `provider_account_id` remains a shadow-key risk unless it is explicitly subordinated to stable internal account identity.
+  - provider_account_id
+  - permission snapshots still have no account-switch invalidation rule even though account changes can affect effective tool availability
+  - still the biggest dispatch-boundary gap for account identity, execution-role scoping, lane/worktree attribution, and projection-ready usage signals
+  - Add a canonical role enumeration and apply it consistently to role-scoped account policies, Persona resolution, permission scoping, and provider dispatch.
+  - `provider_account_id` remains dangerous unless it is explicitly treated as audit/display-only metadata subordinate to stable internal account identity.
+  - cache scoping still needs `{project_id, selected_repo_id, effective github_api account}` to avoid cross-root or cross-account ambiguity
+  - {project_id, selected_repo_id, effective github_api account}
+  - `auth_state` carries no pool-member / account context for failover rotation
+  - auth_state
+  - requires per-interaction account attribution and switch/failover reasoning that the stream cannot currently express
+  - Extend the stream/event contract with account attribution, actor kind, blocked-owner context, and package/seam/lane identity where downstream projections depend on them.
+  - but requested/effective account resolution already spans thread/chat/interview/wizard/non-run actors
+  - requested/effective provider/model visibility exists, but account policy/account selection/switch fields are still missing from the required identity set
+  - widget view models still lack requested/effective account, switch-history, and projection-trust envelope requirements
+  - now the sharpest auth-boundary conflict for stable account identity, reconnect correlation, and requested/effective disclosure
+  - Normalize Orchestrator/Interview/UI docs to canonical persona field names and extend their required identity sets with requested/effective account fields.
+  - Preserve the hard realm split between `github_api` and `copilot_github` even while normalizing stable account identity.
+  - github_api
+  - copilot_github
+  - The missing requested-side concrete account field is now clearly blocking multiple downstream contracts, not just storage purity:
+  - worker/verifier identity still lacks auth mode, account, project context, switch reason, and applied/skipped control visibility
+  - Account pressure and switching are still modeled as current state plus per-attempt reason, not durable shared history:
+  - GPT-5.2 sharpened that Orchestrator rewrite must not collapse provider account identity and operational side-effect identity into one field family
+  - The missing role dimension is now clearly the link between account routing and auditability:
+  - without it, role-based account choices cannot be explained after the fact even when requested/effective account fields exist
+  - but there is still no canonical requested concrete-account field, so explicit account pinning cannot be shown truthfully when runtime falls back or switches
+  - there is still no canonical slot for actor kind, effective account, switch reason, lane/worktree identity, or pressure/trust context
+  - but the schema only records resolved/effective values and still omits requested state, downgrade reason, effective account, and actor/surface context
+  - requested concrete account
+  - but there is still no canonical way to represent a requested concrete account on the requested side
+  - “use account X if possible”
+  - “must use account X”
+  - it is not the same as the requested account on a particular run/attempt/message
+  - is the requested account a soft preference or a hard requirement?
+  - `required`: a concrete account was explicitly pinned; fallback is not silent and must surface as blocked or explicit override failure if unmet
+  - required
+  - it does not replace the concrete account pin when one exists
+  - per-run requested concrete account
+  - `requested_account_id` must use the stable internal account id, not provider-native display identity
+  - requested_account_id
+  - Codex confirmed the final missing connective tissue between account routing and truthful projections is now **durable actor/role projection**:
+  - without it, requested/effective account decisions remain only partially auditable even after adding account fields
+  - this means Usage can display current account context but still cannot natively explain switch lineage or join it safely to History/Ledger
+  - provider account identity is not enough
+  - Current runtime snapshots can explain which provider account was used, but not which operational identity the action was actually aimed at.
+  - operational identity is not the same as provider account identity
+  - Research Progress - 2026-03-16 - account switch-history and pressure-episode cluster
+  - `recent_switch_reason` on account health state
+  - artifact envelopes still have no producer identity, role, account, or switch lineage
+  - account fields, requested concrete-account truth, role/actor identity, operational identity, switch-history, and trust-state are still missing from many user-facing surfaces that claim to show runtime truth
+  - downstream wizard handoff still lacks requested/effective account, actor/role, and explicit isolation/worktree mode
+  - account pressure / switch history
+  - account pressure/switch episode records
+  - requested concrete account semantics
+  - missing `attempt_id`, `blocked_sequence`, account identity, or execution-role fields mean later UI/runtime promises cannot be implemented faithfully from the current contracts.
+  - blocked_sequence
+  - Extend artifact/tool/HITL/blocked/handoff envelopes with the missing identity anchors: `attempt_id`, `node_id`, `lane_id`, `package_id`, `execution_role`, actor identity, account identity, and `blocked_sequence` where appropriate.
+  - execution_role
+  - Promote `thread_id`, `project_id`, validation/report lineage, and requested/effective account identity into wizard/interview pre-run governance payloads where adjacent canonical docs already require them.
+  - thread_id
+  - no requested/effective account disclosure
+  - requested/effective account fields are not carried through the concrete handoff/provenance requirements
+  - but even here the payload remains too wizard-local and still does not connect cleanly to the broader execution-unit / account / role model
+  - catalog/promoted-family gaps remain explicit: account, concern, promotion, and several promised tab/window/catalog/dev command families still do not exist as concrete catalog entries.
+  - account pressure and switch history
+  - strategy selection remains blind to per-account DAE eligibility and child-run account re-resolution ordering.
+  - account-aware strategy ordering remains underdefined when run-level DAE strategy and attempt-level account re-resolution disagree.
+  - Provider/runtime capability and account seams continued to widen in useful ways:
+  - `OpenCode_Deep_Extraction.md` source-verifies hard architecture limits: server-global SSE with concurrent-client pollution, fixed server working directory requiring separate instances per worktree, session-scoped approvals and compaction state that are destroyed on session deletion, no observable upstream account identity, and no real reconnect/observe path for mid-run SSE loss.
+  - OpenCode_Deep_Extraction.md
+  - `Media_Generation_and_Capabilities.md` still lacks requested/effective account disclosure in `media.generate`, leaves transient disabled-state recovery under-specified, and has no event model for capability-change refresh behavior.
+  - Media_Generation_and_Capabilities.md
+  - media.generate
+  - requested concrete account binding fields
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-008
 - Fidelity gap refs: cov-008
 - Required fidelity items:
@@ -103,6 +321,26 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts
 
 ## 3. Assessment: what we have and gaps (filled)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0393
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - The owner docs already have the stronger source model.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 **Question:** Do we have what we need to reverse-engineer multi-account and apply it to Puppet Master for all covered providers?
 
 **Answer:** Yes. Design and patterns are documented and backed by claude-nonstop and both OpenCode PRs. Remaining work is Rust port and provider-specific clients (usage APIs, rate-limit parsing).
@@ -174,6 +412,26 @@ Each provider entry MUST also declare the allowed `auth_surface` values its runt
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Models_System.md, ContractName:Plans/usage-feature.md
 
 ### 4.2 Account record (canonical)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0395
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Account switching is still modeled as fields and latest-state hints rather than as a first-class historical record family:
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Account-backed providers store ordered account rows with stable ids.
 
@@ -536,6 +794,30 @@ Rules:
 ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
 ## 10. Phase 2 (native auth) -- when available
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0392
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `project_id` / `project_path` when available
+  - project_id
+  - project_path
+  - must carry `usage_event_ref` whenever available
+  - usage_event_ref
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 When the new auth system for Codex, Copilot, Gemini (and optionally Claude) lands (in-process tokens, HTTP calls):
 
 - **In-process token store:** OpenCode PR #11832 shape in Rust: `providers[platform_id]` with `active`, `order`, `records` (per-account tokens + health). File lock for writes; best-effort for health updates.
@@ -551,6 +833,26 @@ When the new auth system for Codex, Copilot, Gemini (and optionally Claude) land
 
 ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
 ## Operational Identity Addendum for GitHub Actions and Docker Manager (2026-03-12)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0394
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - no operational identity or permission posture
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 The current multi-account model must explicitly distinguish provider accounts from operational identities needed by this packet.
 

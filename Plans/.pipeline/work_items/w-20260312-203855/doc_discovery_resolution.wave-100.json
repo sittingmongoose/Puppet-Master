@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-100",
+  "group_ids": [
+    "discgrp-0397",
+    "discgrp-0398",
+    "discgrp-0399",
+    "discgrp-0400"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00644",
+      "source_obligation_ids": [
+        "obl-501"
+      ],
+      "source_seed_ids": [
+        "seed-576"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00645",
+      "source_obligation_ids": [
+        "obl-502"
+      ],
+      "source_seed_ids": [
+        "seed-577"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00646",
+      "source_obligation_ids": [
+        "obl-503"
+      ],
+      "source_seed_ids": [
+        "seed-578"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "### Fidelity recovery cov-038: Focused run and historical routing contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00647",
+      "source_obligation_ids": [
+        "obl-504"
+      ],
+      "source_seed_ids": [
+        "seed-579"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "### Fidelity recovery cov-038: Focused run and historical routing contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L19"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-888",
+  "group_ids": [
+    "discgrp-3549",
+    "discgrp-3550",
+    "discgrp-3551",
+    "discgrp-3552"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03844",
+      "source_obligation_ids": [
+        "obl-3689"
+      ],
+      "source_seed_ids": [
+        "seed-5011"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.1 Unsaved editor recovery is required, not optional",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1295"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03845",
+      "source_obligation_ids": [
+        "obl-3690"
+      ],
+      "source_seed_ids": [
+        "seed-5012"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03846",
+      "source_obligation_ids": [
+        "obl-3691"
+      ],
+      "source_seed_ids": [
+        "seed-5013"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03847",
+      "source_obligation_ids": [
+        "obl-3692"
+      ],
+      "source_seed_ids": [
+        "seed-5014"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "new_heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

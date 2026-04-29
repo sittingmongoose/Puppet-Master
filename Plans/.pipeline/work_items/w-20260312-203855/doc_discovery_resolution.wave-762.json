@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-762",
+  "group_ids": [
+    "discgrp-3045",
+    "discgrp-3046",
+    "discgrp-3047",
+    "discgrp-3048"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03325",
+      "source_obligation_ids": [
+        "obl-3171"
+      ],
+      "source_seed_ids": [
+        "seed-4224"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-039: Focused run and historical routing contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/storage-plan.md:L67"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03326",
+      "source_obligation_ids": [
+        "obl-3172"
+      ],
+      "source_seed_ids": [
+        "seed-4225"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard.md",
+      "new_heading_hint": "## Wizard and launched-run lineage reconciliation",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/chain-wizard.md:L3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03327",
+      "source_obligation_ids": [
+        "obl-3173"
+      ],
+      "source_seed_ids": [
+        "seed-4226"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03328",
+      "source_obligation_ids": [
+        "obl-3174"
+      ],
+      "source_seed_ids": [
+        "seed-4228"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### 7.19.2 Bundle controls and review gate",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1105"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

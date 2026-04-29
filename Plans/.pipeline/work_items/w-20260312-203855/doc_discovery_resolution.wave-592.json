@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-592",
+  "group_ids": [
+    "discgrp-2365",
+    "discgrp-2366",
+    "discgrp-2367",
+    "discgrp-2368"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02640",
+      "source_obligation_ids": [
+        "obl-2488"
+      ],
+      "source_seed_ids": [
+        "seed-3271"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02641",
+      "source_obligation_ids": [
+        "obl-2489"
+      ],
+      "source_seed_ids": [
+        "seed-3272"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "# Containers, Registry, and Unraid Integration",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02642",
+      "source_obligation_ids": [
+        "obl-2490"
+      ],
+      "source_seed_ids": [
+        "seed-3273"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L35"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02643",
+      "source_obligation_ids": [
+        "obl-2491"
+      ],
+      "source_seed_ids": [
+        "seed-3274"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

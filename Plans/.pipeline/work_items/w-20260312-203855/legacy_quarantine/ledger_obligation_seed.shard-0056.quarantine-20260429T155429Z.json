@@ -1,0 +1,110 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0056",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0056-L011001-L011200.md",
+  "source_line_range": "L011001-L011200",
+  "covered_shard_id": "shard-0056",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "CustomHeadlessTool registry/permission/config owner",
+      "exact_items": [
+        "newtools.md and assistant-memory still add net-new owner failures; CustomHeadlessTool still lacks stable tool identity, registration timing, permission semantics, and consistent config-file ownership.",
+        "CustomHeadlessTool still has no stable registry/permission/config owner."
+      ],
+      "affected_doc_hints": [
+        "Plans/newtools.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/STATE_FILES.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "CustomHeadlessTool"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L11009-L11014",
+        "working_ledger.md:L11132-L11137"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "runtime recovery action admission by allowed_action_ids",
+      "exact_items": [
+        "dispatcher still lacks an explicit runtime rule that cmd.runtime.* recovery actions must be admitted only when the current blocked episode exposes the corresponding ordered allowed_action_ids[].",
+        "wiring contract cannot express or verify richer navigation semantics and cannot currently distinguish required route-payload or subject-open arguments"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "cmd.runtime.*",
+        "allowed_action_ids[]"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L11109-L11111",
+        "working_ledger.md:L11195-L11200"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "missing gates and evidence tri-state schema",
+      "exact_items": [
+        "GATE-007 / GATE-008 are still missing from the registry with no tombstone/reserved handling.",
+        "pm.evidence.schema.v1 still cannot encode the tri-state or machine-readable arrays that GATE-011/GATE-012 now demand. GATE-012 still collapses attention_required and true blocked escalation in its evidence path."
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "GATE-007",
+        "GATE-008",
+        "GATE-011",
+        "GATE-012",
+        "attention_required"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L11006-L11008",
+        "working_ledger.md:L11128-L11131"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "superseded command IDs and wildcard command-family verification",
+      "exact_items": [
+        "superseded command IDs still remain visible as plain cmd.* tokens inside the catalog; wildcard command-family requirements cannot be represented by Wiring_Matrix.schema.json as written.",
+        "docs are still vulnerable to mechanical false positives/false negatives because their verification guidance assumes structured extraction while their prose/examples leak stale or filename-shaped cmd.* tokens."
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "cmd.*",
+        "Wiring_Matrix.schema.json"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L11104-L11106",
+        "working_ledger.md:L11167-L11171"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": []
+}

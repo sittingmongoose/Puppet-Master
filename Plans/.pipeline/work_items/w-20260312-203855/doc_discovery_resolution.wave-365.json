@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-365",
+  "group_ids": [
+    "discgrp-1457",
+    "discgrp-1458",
+    "discgrp-1459",
+    "discgrp-1460"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01709",
+      "source_obligation_ids": [
+        "obl-1566"
+      ],
+      "source_seed_ids": [
+        "seed-1954"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01710",
+      "source_obligation_ids": [
+        "obl-1567"
+      ],
+      "source_seed_ids": [
+        "seed-1956"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "### 1.3 Package Overseer",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L88"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01711",
+      "source_obligation_ids": [
+        "obl-1568"
+      ],
+      "source_seed_ids": [
+        "seed-1957"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01712",
+      "source_obligation_ids": [
+        "obl-1569"
+      ],
+      "source_seed_ids": [
+        "seed-1958"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1259",
+  "group_ids": [
+    "discgrp-5033",
+    "discgrp-5034",
+    "discgrp-5035",
+    "discgrp-5036"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05437",
+      "source_obligation_ids": [
+        "obl-5209"
+      ],
+      "source_seed_ids": [
+        "seed-7725"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05438",
+      "source_obligation_ids": [
+        "obl-5210"
+      ],
+      "source_seed_ids": [
+        "seed-7728"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05439",
+      "source_obligation_ids": [
+        "obl-5211"
+      ],
+      "source_seed_ids": [
+        "seed-7730"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05440",
+      "source_obligation_ids": [
+        "obl-5212"
+      ],
+      "source_seed_ids": [
+        "seed-7731"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/DRY_Rules.md",
+      "new_heading_hint": "# DRY Rules (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

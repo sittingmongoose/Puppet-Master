@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-873",
+  "group_ids": [
+    "discgrp-3489",
+    "discgrp-3490",
+    "discgrp-3491",
+    "discgrp-3492"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03782",
+      "source_obligation_ids": [
+        "obl-3627"
+      ],
+      "source_seed_ids": [
+        "seed-4906"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03783",
+      "source_obligation_ids": [
+        "obl-3628"
+      ],
+      "source_seed_ids": [
+        "seed-4907"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L43"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03784",
+      "source_obligation_ids": [
+        "obl-3629"
+      ],
+      "source_seed_ids": [
+        "seed-4908"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-090: Execution role and operational identity",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L157"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03785",
+      "source_obligation_ids": [
+        "obl-3630"
+      ],
+      "source_seed_ids": [
+        "seed-4909"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

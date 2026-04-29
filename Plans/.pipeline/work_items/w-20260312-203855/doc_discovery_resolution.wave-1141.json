@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1141",
+  "group_ids": [
+    "discgrp-4561",
+    "discgrp-4562",
+    "discgrp-4563",
+    "discgrp-4564"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04959",
+      "source_obligation_ids": [
+        "obl-4735"
+      ],
+      "source_seed_ids": [
+        "seed-6821"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04960",
+      "source_obligation_ids": [
+        "obl-4736"
+      ],
+      "source_seed_ids": [
+        "seed-6822"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Wiring_Rules.md",
+      "new_heading_hint": "# UI Wiring Rules (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Wiring_Rules.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04961",
+      "source_obligation_ids": [
+        "obl-4737"
+      ],
+      "source_seed_ids": [
+        "seed-6823"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 2.3 redb: schema, migrations, key patterns",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L455"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04962",
+      "source_obligation_ids": [
+        "obl-4738"
+      ],
+      "source_seed_ids": [
+        "seed-6824"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

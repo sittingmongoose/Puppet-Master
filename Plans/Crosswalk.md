@@ -1,5 +1,121 @@
 # Crosswalk (Canonical)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+  - Highest-Impact Docs
+  - Cleanup Priorities
+
+#### Source target target-0157
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+  - Highest-Impact Docs
+  - Cleanup Priorities
+- Exact required items represented:
+  - Replace tier-rooted execution with package/seam/lane model
+  - Define package overseer + seam overseer roles
+  - Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage
+  - Redefine gates to package-complete / seam-complete
+  - Rename or retire Tiers UI/tab and tier_tree/progress bars
+  - Extend Glossary.md, [retired-token-12], Decision_Policy.md, and 00-plans-index.md with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.
+  - Clarify which docs own [retired-token-11] vs UI-only overlays.
+  - rewrite-era primitives like `Seglog`, evidence-bundle style outputs, and capability-gating concepts still lack Crosswalk routing, so adjacent docs can cite primitives that Crosswalk cannot resolve.
+  - Seglog
+  - `[retired-token-12]` is not just duplicate-numbered; its `References` section is non-terminal, its §2 routing table omits many already-defined primitives, and adjacent docs are already citing primitives like `Seglog` that Crosswalk cannot route.
+  - [retired-token-12]
+  - References
+  - missing primitive routing is now sharper: `Seglog`, `ArtifactStore`, PR/issues surface ownership, and capability-gating ownership all still lack clean Crosswalk routing.
+  - ArtifactStore
+  - Highest-signal docs remain the same core owner set, with `Commands_System.md`, `Wiring_Matrix.md`, `UI_Wiring_Rules.md`, `Project_Output_Artifacts.md`, `FileManager.md`, `[retired-token-12]`, `Decision_Policy.md`, `Run_Modes.md`, `Progression_Gates.md`, `newtools.md`, and `assistant-memory-subsystem.md` still worth pushing through the final pass.
+  - Commands_System.md
+  - Wiring_Matrix.md
+  - UI_Wiring_Rules.md
+  - Project_Output_Artifacts.md
+  - FileManager.md
+  - Decision_Policy.md
+  - Run_Modes.md
+  - PR/issues, `Seglog`, `ArtifactStore`, and capability-gating routing remain unresolved in Crosswalk.
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - Add a new Crosswalk primitive for route-target navigation and likely another for subject-open/open-by-identity, or make one primitive explicitly cover both layers if kept tight.
+  - `[retired-token-12]` still names `Primitive:UICommand` and `Primitive:DocumentPane`, but it has no primitive boundary for route-target navigation or identity-native open/focus behavior.
+  - Primitive:UICommand
+  - Primitive:DocumentPane
+  - crosswalk owns the primitive boundary
+  - The contract conclusions are now stronger than several owner docs, especially `Contracts_V0.md`, `[retired-token-12]`, `UI_Command_Catalog.md`, and `FinalGUISpec.md`.
+  - Contracts_V0.md
+  - UI_Command_Catalog.md
+  - FinalGUISpec.md
+  - `Plans/[retired-token-12]` still does not declare the routing/open-by-identity primitives that these behaviors require.
+  - Plans/[retired-token-12]
+  - `[retired-token-12]` still names `UICommand`, `DocumentPane`, and `DocumentCheckpoint` ownership without naming the route-target / subject-open primitive that sits between them.
+  - UICommand
+  - DocumentPane
+  - DocumentCheckpoint
+  - `[retired-token-12]` also still carries stale Orchestrator ownership text:
+  - `Plans/[retired-token-12]` has duplicated section numbering:
+  - `[retired-token-12]` is especially risky because duplicate numbering weakens its role as a precedence document.
+  - `DRY_Rules.md`, `[retired-token-12]`, `Progression_Gates.md`, and `Contracts_V0.md` now show concrete `ContractRef` format, anchor, and duplicate-section failures that would break deterministic traceability rather than just weaken it.
+  - DRY_Rules.md
+  - Progression_Gates.md
+  - ContractRef
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - `[retired-token-12]`, `DRY_Rules.md`, `Progression_Gates.md`, and `Decision_Log.md` now have explicitly cited duplicate section numbers, misbound `ContractRef`s, line-level gate semantics that do not match adjacent canon usage, and missing rewrite-era governance records.
+  - Decision_Log.md
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - `Plans/[retired-token-12]` still publishes stale top-level ownership guidance for the rewrite:
+  - `[retired-token-12]` still routes readers into stale Orchestrator and widget canon
+  - The duplicated `[retired-token-12]` numbering is not cosmetic. It undermines `ContractRef` stability and gateable traceability.
+  - The duplicated runtime-recovery addendum means the gate doc now has same-file canon duplication similar to the problems already logged in `[retired-token-12]`, `human-in-the-loop.md`, and `storage-plan.md`.
+  - human-in-the-loop.md
+  - storage-plan.md
+  - `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/[retired-token-12]`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Progression_Gates.md
+  - Plans/FileManager.md
+  - Plans/Project_Output_Artifacts.md
+  - `cov-526` / `obl-222` remains unresolved because the ledger requires a concrete worktree allocation strategy (per node, per package, per seam, or remediation branch) plus contamination/reuse/cleanup rules, but the live docs still stop short of that owner section: `Plans/[retired-token-12]:88-94` assigns lane/worktree ownership boundaries, `Plans/WorktreeGitImprovement.md:62-66` and `Plans/WorktreeGitImprovement.md:78-80` retain the worktree plan without defining allocation strategy, and `Plans/orchestrator-subagent-integration.md:28-41` plus later authority wording require identity alignment without specifying how lanes/worktrees are allocated. Exact ledger evidence remains at `working_ledger.md:L806`, `working_ledger.md:L1036`, `working_ledger.md:L1289`, and `working_ledger.md:L1539`.
+  - cov-526
+  - obl-222
+  - Plans/[retired-token-12]:88-94
+  - Plans/WorktreeGitImprovement.md:62-66
+  - Plans/WorktreeGitImprovement.md:78-80
+  - Plans/orchestrator-subagent-integration.md:28-41
+  - working_ledger.md:L806
+  - working_ledger.md:L1036
+  - `Plans/[retired-token-12]:88-94`
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 ## Fidelity recovery addendum
 
 This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
@@ -64,6 +180,50 @@ ContractRef: PolicyRule:Decision_Policy.md§2, SchemaID:Spec_Lock.json
 ---
 
 ## 2. Primitive index (definitions are DRY)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0158
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - own final canonical term definitions for:
+  - `Crosswalk.md` still has duplicate section numbering, a wrong `Primitive:` ContractRef, missing §2 index entries for appended primitives, and orphaned source-control/GitHub-actions/docker surfaces outside the normal routing structure.
+  - Crosswalk.md
+  - Primitive:
+  - a direct binding to a canonical navigation primitive
+  - canonical navigation primitive
+  - `Primitive:DocumentPane`
+  - Primitive:DocumentPane
+  - `Primitive:DocumentReviewSurface`
+  - Primitive:DocumentReviewSurface
+  - `Primitive:DocumentCheckpoint`
+  - Primitive:DocumentCheckpoint
+  - `OpenFile` is currently acting like a surrogate navigation primitive because the real primitive has no owner.
+  - OpenFile
+  - but it should stop being treated as a stronger separate primitive
+  - these are good UX-facing wrapper names, even if they are not the canonical navigation primitive
+  - A smaller hidden or lower-level canonical navigation primitive still looks necessary, but it should be contract-owned rather than catalog-dominant.
+  - for example an internal/shared `open_subject` or `focus_route` primitive
+  - open_subject
+  - focus_route
+  - canonical primitive underneath both
+  - assistant-chat already behaves like subject/open-by-identity exists, even if it does not name the primitive directly
+  - `Primitive:OrchestratorPage` still says six tabs with `Tiers`
+  - Primitive:OrchestratorPage
+  - Tiers
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 This file uses primitive names as **routing labels** only; detailed schemas belong to their SSOT documents.
 
 - `Primitive:Provider` -- provider CLIs and their normalized streams (see `Plans/CLI_Bridged_Providers.md`).
@@ -85,6 +245,64 @@ Primitive:RouteTarget / Primitive:OpenSubject
 Route targets and open subjects are the canonical way to name destinations and inspection points across GUI, CLI, help, and underlying services. This section clarifies the boundary: ownership and canonical semantics live in Plans/Contracts_V0.md; this section explains how surfaces navigate them.
 
 #### Route target navigation rules
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0169
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - read-only navigation may continue on `[retired-token-2]` and some `[retired-token-1]` projections if the UI says so clearly
+  - [retired-token-2]
+  - [retired-token-1]
+  - Each result should carry a canonical route target:
+  - Search result should route based on what the user likely needs:
+  - `usage_event_ref` should be the preferred route for cost-bearing pivots whenever present.
+  - usage_event_ref
+  - `resume_url` should not stay the most expressive navigation mechanism in the product.
+  - resume_url
+  - route target identity
+  - `resume_url` remains stronger and more explicit than most other navigation mechanisms.
+  - Neighboring primitives are already fragmented because no owner doc says where route payloads stop, where subject identity starts, and where file-path opening is merely one realization.
+  - Navigation should follow the same pattern instead of claiming a hard flag day.
+  - That state is real and important, but it is not the same thing as canonical route identity.
+  - That is enough for routing intent. The route model does not need to encode every lower-level shell detail.
+  - Those are real and useful, but they are not the same thing as canonical route identity.
+  - The route model should be precise enough to get the user where they asked to go, but restrained enough not to trash unrelated remembered shell state.
+  - wrappers normalize to canonical route semantics internally
+  - does not define canonical route identity or target structure
+  - Reject multi-selector route payloads as non-canonical.
+  - Serialization must stay narrower than the internal route model.
+  - `document_id` and `artifact_id` still appear in some navigation prose where `subject_id` should be named directly.
+  - document_id
+  - artifact_id
+  - subject_id
+  - Canonical route examples
+  - `usage_event_ref` still appears in current docs as if it can remain a top-level route field.
+  - Source Control and rewrite-era orchestration objects need equally explicit route recipes.
+  - stop owning canonical navigation identity
+  - normalize scheduler/blocking/safe-point/remediation/attempt pivots through object-first route recipes
+  - Replace graph/detail uses of `tier_id` as navigation identity with object-first routing to:
+  - tier_id
+  - `resume_url` is currently the only ref field trying to carry actual navigation, which is why it keeps colliding with the route/open-by-identity work.
+  - Keep canonical usage-event identity primary for Usage/Ledger navigation.
+  - Cluster D - Route / open-subject / bridge-field refinement misses
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_[retired-token-2]_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 1. CLI `-r`/`--route` and GUI "Save" buttons resolve route_target strings through a cascade:
    - `file://...` → local file system (requires file permissions)
    - `github://owner/repo/path` → GitHub repository (requires auth and branch access)
@@ -94,18 +312,151 @@ Route targets and open subjects are the canonical way to name destinations and i
 3. Crosswalk does not own the decision; it documents how the decision made in Contracts_V0.md and Models_System.md flows through to the UI.
 
 #### Open subject navigation rules
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0168
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - History rows can open Graph/Evidence
+  - open evidence/history/ledger/source control
+  - open selected items in `History`, `Evidence`, or `Ledger`
+  - History
+  - Evidence
+  - Ledger
+  - `TierContext` replacement/wrapper is now one of the most important structural follow-ups still open
+  - TierContext
+  - Add the missing runtime-identity open path to FileManager and align evidence/artifact keys with attempt-native records.
+  - identity-based open is the canonical entrypoint for:
+  - it lets FileManager/editor/Artifacts/Orchestrator share one identity model instead of ad hoc open handlers
+  - identity-native subject open
+  - identity-native subject/route open
+  - Promote `project_id`, `attempt_id`, and generated/runtime subject routing to first-class owners in artifact/file/storage docs.
+  - project_id
+  - attempt_id
+  - artifact-backed content may open source in transient `generated://<artifact_id>` buffers
+  - generated://<artifact_id>
+  - routing should target the subject identity first, then resolve to the best openable representation
+  - `Open in Source Control`
+  - Open in Source Control
+  - Keep `generated://<artifact_id>` as a transport/open realization, not as the canonical subject identity.
+  - Storage already knows canonical subject identity, but Contracts and Crosswalk still do not declare the navigation primitive that consumes it.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 1. GUI "Open" and "Inspect" buttons normalize open requests to an OpenSubject and route through the orchestrator's concern/help/artifact resolution.
 2. Subject types: `file`, `concern`, `help_entry`, `project_state`, `run`, `artifact_storage`.
 3. Crosswalk describes which surfaces can open which types; canonical ownership rules are in Contracts_V0.md.
 
 ### 3.3 Navigation and source-open ownership
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0164
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - what likely new model pressure is: new vocabulary canon, migration guidance, deprecation boundaries, package/seam/lane/promotion terminology ownership.
+  - Add a Crosswalk primitive boundary for route-target / open-subject ownership so the split between shell-state and canonical navigation is explicit.
+  - `FinalGUISpec.md` still gives `resume_url` more concrete ownership than generic navigation.
+  - FinalGUISpec.md
+  - resume_url
+  - owner-doc primitive boundaries that remain prose-only rather than formalized (for example navigation identity / route-target ownership)
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 The source control lane, worktree, and open-file system are owned by the FileManager. However, navigation through opened files (following includes, tracing references) remains a GUI responsibility coordinated through open/route semantics.
 
 ### 3.4 Source Control and lane/worktree ownership
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0165
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Source Control rows expose `owner run/tier when present`
+  - owner run/tier when present
+  - glossary/help/labels for lane/worktree terminology
+  - preserve Source Control as Git/worktree-first
+  - lane/worktree records
+  - lane/worktree objects
+  - Source Control still needs a more concrete worktree-first vocabulary.
+  - This should stay worktree-first in Source Control, with lane/package/run metadata attached.
+  - revoked/reopened flow leaves an old lane/worktree no longer needed live
+  - Source Control / lane/worktree language
+  - Treat `acknowledged` as escalation/noise control and ownership visibility, not semantic closure and not blocker removal by itself
+  - acknowledged
+  - Source Control is compact and worktree-first
+  - no clean lane/worktree binding exists
+  - lane/worktree refs
+  - Source Control / repo/worktree/branch
+  - Source Control remains worktree-first.
+  - FileManager handoff to Source Control must preserve `repo_id` and `worktree_id`
+  - repo_id
+  - worktree_id
+  - lane/worktree state
+  - `worktree-first` Source Control with lane/worktree split
+  - worktree-first
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 FileManager owns the git/worktree model and lane assignments. Crosswalk clarifies when navigation crosses lanes and how that affects artifact visibility and approval scope.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md, ContractName:Plans/FileManager.md
 ### 3.5 Assistant thread worktree binding ownership
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0166
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Requested binding`
+  - Requested binding
+  - workspace binding: `workspace`, `worktree_path`
+  - workspace
+  - worktree_path
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Thread-to-worktree binding is owned by `Plans/assistant-chat-design.md`.
 
@@ -127,6 +478,27 @@ Thread-to-worktree binding is owned by `Plans/assistant-chat-design.md`.
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/DRY_Rules.md
 
 ### 3.6 Projection-state ownership
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0167
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - preview/browser `trust_tier` should not be casually reused as the generic projection-state term
+  - trust_tier
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Projection freshness/health vocabulary is owned centrally so consumer docs do not invent surface-local degraded-state semantics.
 
@@ -182,6 +554,27 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/orc
 
 ### 3.10 Permission and approval-scope ownership
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0162
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Add an explicit approval-scope field or object, likely something like `approval_scope_key`, so reusable approvals and one-off blocked-episode approvals cannot bleed together.
+  - approval_scope_key
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 Canonical permission ownership is:
 - `Permissions_System.md` owns permission precedence, rule persistence, approval-scope derivation, durable-rule authoring, and blocked-family expectations for permission-caused outcomes
 - `Contracts_V0.md` owns canonical blocked payload shapes, `approval_scope_key`, and action-id field names
@@ -191,6 +584,26 @@ Canonical permission ownership is:
 ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md
 
 ### 3.11 Remediation lifecycle ownership
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0163
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - enrich row metadata with package/lane/run ownership and lifecycle state
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Canonical remediation ownership is:
 - `Executor_Protocol.md` owns when remediation is spawned, how it interacts with retry/safe-point flows, and when execution escalates instead of retrying
@@ -222,6 +635,26 @@ Canonical ownership is:
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
 ## References
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0160
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - glossary/crosswalk/TOC dead references and missing advertised sections
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - `Plans/Spec_Lock.json`
 - `Plans/DRY_Rules.md`
 - `Plans/Glossary.md`
@@ -288,6 +721,28 @@ ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/chain-wizard-fle
 
 ## Recovery Terminology Reconciliation Addendum (2026-03-08)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0159
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - docs that mostly need terminology / projection cleanup
+  - still needs runtime-overlay terminology, identity linkage, and approval cache scoping for multi-actor execution
+  - Stop letting consumer docs fill owner gaps with “compatibility” fields or local terminology when the canonical owner is still undecided.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 This packet requires an explicit terminology crosswalk:
 - `safe point` = runtime-internal retry/remediation anchor
 - `restore point` = user-visible history/rewind anchor
@@ -298,6 +753,34 @@ Required rule:
 - docs and implementations must not use these terms interchangeably
 - UI copy must preserve the distinction
 ## Runtime Scheduler / Recovery Ownership and Precedence
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0161
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - still missing canonical ownership for `execution_role`, `blocked_sequence` minting, and startup-recovery scheduler handoff.
+  - execution_role
+  - blocked_sequence
+  - `Executor_Protocol.md` contains byte-identical duplicated canonical scheduler sections and still leaves `blocked_sequence` minting, startup recovery handshake, `execution_role` ownership, and reviewer/corroboration lifecycle unowned.
+  - Executor_Protocol.md
+  - `Crosswalk.md` is structurally broken (duplicate section numbering, orphaned addenda, wrong ContractRef) and still does not route major rewrite-era owners such as `orchestrator-subagent-integration.md`, runtime scheduler ownership, or worktree lifecycle ownership.
+  - Crosswalk.md
+  - orchestrator-subagent-integration.md
+  - `Crosswalk.md` still acts as if owner primitives are stable while the rewrite has already shifted ownership boundaries around Orchestrator, widgets, route/open contracts, blocked identity, and runtime identity disclosure.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Canonical ownership:
 - runtime lifecycle and scheduling: `Plans/Executor_Protocol.md`

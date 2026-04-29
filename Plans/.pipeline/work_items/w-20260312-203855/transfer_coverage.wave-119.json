@@ -1,0 +1,907 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-119",
+  "row_group_ids": [
+    "rowgrp-0473",
+    "rowgrp-0474",
+    "rowgrp-0475",
+    "rowgrp-0476"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-00100",
+      "source_obligation_ids": [
+        "obl-036"
+      ],
+      "source_seed_ids": [
+        "seed-036"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "package/seam overseer + lane-aware execution model",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "missing",
+      "exact_items": [
+        "Replace tier-rooted execution with package/seam/lane model",
+        "Define package overseer + seam overseer roles",
+        "Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage",
+        "Redefine gates to package-complete / seam-complete",
+        "Rename or retire Tiers UI/tab and tier_tree/progress bars"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars",
+        "phase/task/subtask"
+      ],
+      "evidence": [
+        "Plans/Glossary.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00179",
+      "source_obligation_ids": [
+        "obl-075"
+      ],
+      "source_seed_ids": [
+        "seed-075",
+        "seed-194",
+        "seed-1234",
+        "seed-1727",
+        "seed-2489",
+        "seed-2513",
+        "seed-2974",
+        "seed-2989",
+        "seed-3771",
+        "seed-3807",
+        "seed-3827",
+        "seed-3855",
+        "seed-4715",
+        "seed-4748",
+        "seed-5061",
+        "seed-5098",
+        "seed-5526",
+        "seed-5568",
+        "seed-5616",
+        "seed-5662",
+        "seed-5927",
+        "seed-5968",
+        "seed-6715",
+        "seed-7281",
+        "seed-7449",
+        "seed-8880",
+        "seed-8972",
+        "seed-9066",
+        "seed-9613",
+        "seed-9653",
+        "seed-9743",
+        "seed-9769",
+        "seed-9896",
+        "seed-9934",
+        "seed-10015",
+        "seed-10138",
+        "seed-10182",
+        "seed-10227",
+        "seed-10266",
+        "seed-10296",
+        "seed-10367",
+        "seed-10402"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010",
+        "shard-0021",
+        "shard-0026",
+        "shard-0033",
+        "shard-0037",
+        "shard-0042",
+        "shard-0043",
+        "shard-0049",
+        "shard-0052",
+        "shard-0055",
+        "shard-0056",
+        "shard-0058",
+        "shard-0064",
+        "shard-0069",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082",
+        "shard-0086",
+        "shard-0087",
+        "shard-0088",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091",
+        "shard-0092"
+      ],
+      "canon_label": "`Plans/Glossary.md`",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Glossary.md`",
+        "Plans/Glossary.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00236",
+      "source_obligation_ids": [
+        "obl-125"
+      ],
+      "source_seed_ids": [
+        "seed-130"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "`Plans/00-plans-index.md`, `Plans/Crosswalk.md`, `Plans/Glossary.md`",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/00-plans-index.md`, `Plans/Crosswalk.md`, `Plans/Glossary.md`",
+        "Plans/00-plans-index.md",
+        "Plans/Crosswalk.md",
+        "Plans/Glossary.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00774",
+      "source_obligation_ids": [
+        "obl-631"
+      ],
+      "source_seed_ids": [
+        "seed-726"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "canon_label": "There is not yet one shared semantic glossary for `historical` / `superseded` / `revoked`",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "There is not yet one shared semantic glossary for `historical` / `superseded` / `revoked` / `reopened` / `archived` / `removed`.",
+        "historical",
+        "superseded",
+        "revoked",
+        "reopened",
+        "archived",
+        "removed"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L95"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00980",
+      "source_obligation_ids": [
+        "obl-837"
+      ],
+      "source_seed_ids": [
+        "seed-982"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "search/routing can reuse common routing fields",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Runtime and routing terms",
+      "status": "partial",
+      "exact_items": [
+        "search/routing can reuse common routing fields"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L70"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01201",
+      "source_obligation_ids": [
+        "obl-1058"
+      ],
+      "source_seed_ids": [
+        "seed-1242"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "At the same time, the canonical model is getting denser, so \u201csimple help\u201d must not mutate",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Help architecture and project status terms",
+      "status": "partial",
+      "exact_items": [
+        "At the same time, the canonical model is getting denser, so \u201csimple help\u201d must not mutate the underlying terms or invent alternate semantics."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L92"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01202",
+      "source_obligation_ids": [
+        "obl-1059"
+      ],
+      "source_seed_ids": [
+        "seed-1243",
+        "seed-1246"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "`canonical term system`",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`canonical term system`",
+        "canonical term system"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01203",
+      "source_obligation_ids": [
+        "obl-1060"
+      ],
+      "source_seed_ids": [
+        "seed-1244",
+        "seed-1247"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "`help entry system`",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Fidelity recovery cov-194: Help entry template and related-concept clusters",
+      "status": "partial",
+      "exact_items": [
+        "`help entry system`",
+        "help entry system"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L17",
+        "Plans/Glossary.md:L23"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01204",
+      "source_obligation_ids": [
+        "obl-1061"
+      ],
+      "source_seed_ids": [
+        "seed-1245",
+        "seed-1248"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "`contextual help system`",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Fidelity recovery cov-061: Glossary and help governance",
+      "status": "partial",
+      "exact_items": [
+        "`contextual help system`",
+        "contextual help system"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L7",
+        "Plans/Glossary.md:L13"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01205",
+      "source_obligation_ids": [
+        "obl-1062"
+      ],
+      "source_seed_ids": [
+        "seed-1249"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Simple help must simplify explanation, not rename the model.",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Fidelity recovery cov-061: Glossary and help governance",
+      "status": "partial",
+      "exact_items": [
+        "Simple help must simplify explanation, not rename the model."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L7",
+        "Plans/Glossary.md:L13"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01209",
+      "source_obligation_ids": [
+        "obl-1066"
+      ],
+      "source_seed_ids": [
+        "seed-1253"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Which concepts need dedicated help entries",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Fidelity recovery cov-061: Glossary and help governance",
+      "status": "partial",
+      "exact_items": [
+        "Which concepts need dedicated help entries"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L7",
+        "Plans/Glossary.md:L13"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01217",
+      "source_obligation_ids": [
+        "obl-1074"
+      ],
+      "source_seed_ids": [
+        "seed-1267"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "each dedicated help entry should have a small fixed template",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Fidelity recovery cov-194: Help entry template and related-concept clusters",
+      "status": "partial",
+      "exact_items": [
+        "each dedicated help entry should have a small fixed template"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L17",
+        "Plans/Glossary.md:L23"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01218",
+      "source_obligation_ids": [
+        "obl-1075"
+      ],
+      "source_seed_ids": [
+        "seed-1268"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Good template fields:",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Fidelity recovery cov-194: Help entry template and related-concept clusters",
+      "status": "partial",
+      "exact_items": [
+        "Good template fields:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L17",
+        "Plans/Glossary.md:L23"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01219",
+      "source_obligation_ids": [
+        "obl-1076"
+      ],
+      "source_seed_ids": [
+        "seed-1269"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "canonical name",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "## 1. Canonical platform name",
+      "status": "present",
+      "exact_items": [
+        "canonical name"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L66"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01233",
+      "source_obligation_ids": [
+        "obl-1090"
+      ],
+      "source_seed_ids": [
+        "seed-1286"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "exact records first, but should still offer concept help links for unfamiliar states/actio",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Fidelity recovery cov-061: Glossary and help governance",
+      "status": "partial",
+      "exact_items": [
+        "exact records first, but should still offer concept help links for unfamiliar states/actions"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L7",
+        "Plans/Glossary.md:L13"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01234",
+      "source_obligation_ids": [
+        "obl-1091"
+      ],
+      "source_seed_ids": [
+        "seed-1287"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "`Plans/Glossary.md` likely needs to become the canonical concept inventory backbone, even",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Glossary.md` likely needs to become the canonical concept inventory backbone, even if richer help entries live elsewhere.",
+        "Plans/Glossary.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01235",
+      "source_obligation_ids": [
+        "obl-1092"
+      ],
+      "source_seed_ids": [
+        "seed-1288"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Glossary = canonical short definitions",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Glossary = canonical short definitions"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01240",
+      "source_obligation_ids": [
+        "obl-1097"
+      ],
+      "source_seed_ids": [
+        "seed-1293"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Use Glossary as the canonical short-definition inventory.",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Use Glossary as the canonical short-definition inventory."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01558",
+      "source_obligation_ids": [
+        "obl-1415"
+      ],
+      "source_seed_ids": [
+        "seed-1737"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "`Glossary.md` is now lagging behind the rewrite research.",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`Glossary.md` is now lagging behind the rewrite research.",
+        "Glossary.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01560",
+      "source_obligation_ids": [
+        "obl-1417"
+      ],
+      "source_seed_ids": [
+        "seed-1739"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Terms that now need canonical glossary ownership",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Terms that now need canonical glossary ownership"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01576",
+      "source_obligation_ids": [
+        "obl-1433"
+      ],
+      "source_seed_ids": [
+        "seed-1775"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "glossary owns short canonical definitions",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "glossary owns short canonical definitions"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01577",
+      "source_obligation_ids": [
+        "obl-1434"
+      ],
+      "source_seed_ids": [
+        "seed-1776"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "contextual help can simplify wording, but must not mutate the underlying semantics",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Fidelity recovery cov-061: Glossary and help governance",
+      "status": "partial",
+      "exact_items": [
+        "contextual help can simplify wording, but must not mutate the underlying semantics"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L7",
+        "Plans/Glossary.md:L13"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01591",
+      "source_obligation_ids": [
+        "obl-1448"
+      ],
+      "source_seed_ids": [
+        "seed-1794"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "`Glossary.md` is now materially behind the Orchestrator rewrite vocabulary.",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Orchestrator rewrite terms",
+      "status": "present",
+      "exact_items": [
+        "`Glossary.md` is now materially behind the Orchestrator rewrite vocabulary.",
+        "Glossary.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01594",
+      "source_obligation_ids": [
+        "obl-1451"
+      ],
+      "source_seed_ids": [
+        "seed-1797"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Expand `Glossary.md` to cover the rewrite-critical Orchestrator objects, states, and trust",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Orchestrator rewrite terms",
+      "status": "present",
+      "exact_items": [
+        "Expand `Glossary.md` to cover the rewrite-critical Orchestrator objects, states, and trust terms.",
+        "Glossary.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01595",
+      "source_obligation_ids": [
+        "obl-1452"
+      ],
+      "source_seed_ids": [
+        "seed-1798"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Use glossary definitions as the canonical short-definition source for future help entries.",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Fidelity recovery cov-061: Glossary and help governance",
+      "status": "partial",
+      "exact_items": [
+        "Use glossary definitions as the canonical short-definition source for future help entries."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L7",
+        "Plans/Glossary.md:L13"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01702",
+      "source_obligation_ids": [
+        "obl-1559"
+      ],
+      "source_seed_ids": [
+        "seed-1946"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "canon_label": "how blocked-owner influences message routing",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Runtime and routing terms",
+      "status": "partial",
+      "exact_items": [
+        "how blocked-owner influences message routing"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L70"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02080",
+      "source_obligation_ids": [
+        "obl-1937"
+      ],
+      "source_seed_ids": [
+        "seed-2501"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "canonical concept definition / glossary entry",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "canonical concept definition / glossary entry"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02084",
+      "source_obligation_ids": [
+        "obl-1941"
+      ],
+      "source_seed_ids": [
+        "seed-2518"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "The rewrite now depends on canonical terms that do not yet have canonical glossary ownersh",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Orchestrator rewrite terms",
+      "status": "partial",
+      "exact_items": [
+        "The rewrite now depends on canonical terms that do not yet have canonical glossary ownership."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L56"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02089",
+      "source_obligation_ids": [
+        "obl-1946"
+      ],
+      "source_seed_ids": [
+        "seed-2523"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "clicking or hovering a term/badge/state should know whether to show a short tooltip, a ric",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Fidelity recovery cov-194: Help entry template and related-concept clusters",
+      "status": "partial",
+      "exact_items": [
+        "clicking or hovering a term/badge/state should know whether to show a short tooltip, a richer side explanation, or route to a dedicated help entry"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L17",
+        "Plans/Glossary.md:L23"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02091",
+      "source_obligation_ids": [
+        "obl-1948"
+      ],
+      "source_seed_ids": [
+        "seed-2525"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "`inline help`: short tooltip / badge explainer / field helper text",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Fidelity recovery cov-061: Glossary and help governance",
+      "status": "present",
+      "exact_items": [
+        "`inline help`: short tooltip / badge explainer / field helper text",
+        "inline help"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L11",
+        "Plans/Glossary.md:L14",
+        "Plans/Glossary.md:L62",
+        "Plans/Glossary.md:L64",
+        "Plans/Glossary.md:L98"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02094",
+      "source_obligation_ids": [
+        "obl-1951"
+      ],
+      "source_seed_ids": [
+        "seed-2528"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "canonical term names do not change between Expert and ELI5",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "canonical term names do not change between Expert and ELI5"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

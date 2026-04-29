@@ -1,0 +1,2810 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-145",
+  "group_ids": [
+    "gapgrp-0577",
+    "gapgrp-0578",
+    "gapgrp-0579",
+    "gapgrp-0580"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-00096",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00099 is missing for package/seam overseer + lane-aware execution model",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "Highest-Impact Docs"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00099"
+      ],
+      "source_obligation_ids": [
+        "obl-036"
+      ],
+      "source_seed_ids": [
+        "seed-036"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Replace tier-rooted execution with package/seam/lane model",
+        "Define package overseer + seam overseer roles",
+        "Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage",
+        "Redefine gates to package-complete / seam-complete",
+        "Rename or retire Tiers UI/tab and tier_tree/progress bars"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars",
+        "phase/task/subtask"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00109",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00112 is missing for orchestrator attention routing and lane-aware widgets",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "GUI / UX Impacts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00112"
+      ],
+      "source_obligation_ids": [
+        "obl-038"
+      ],
+      "source_seed_ids": [
+        "seed-038"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Replace Tiers-first navigation",
+        "Define Dashboard\u2192Orchestrator\u2192thread routing contract",
+        "Add package/seam/lane visualization widgets",
+        "Define which overseer's thread opens on click",
+        "Make worktree/lane state visible and navigable"
+      ],
+      "stale_tokens": [
+        "Tiers tab",
+        "widget.tier_tree",
+        "3-bar layout",
+        "grouped-by-phase",
+        "single-threaded",
+        "current_task"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00130",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00133 is missing for graph-native attention routing",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "Cleanup Priorities"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00133"
+      ],
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "source_seed_ids": [
+        "seed-042"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "exact_missing_items": [
+        "Replace or demote tiers-first widgets and layouts.",
+        "Add package/seam/lane-aware identity, worktree, and attention surfaces.",
+        "Define Dashboard \u2192 Orchestrator \u2192 chat-thread routing using canonical runtime objects rather than prose-only references."
+      ],
+      "stale_tokens": [
+        "tiers-first",
+        "phase-grouped layouts",
+        "single current task",
+        "single worktree",
+        "prose-only references"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00216",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00243 is present for `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00243"
+      ],
+      "source_obligation_ids": [
+        "obl-129"
+      ],
+      "source_seed_ids": [
+        "seed-134"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00338",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00432 is partial for `Orchestrator_Page.md` still keeps `Tiers` and multi-tab widget composition",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00432"
+      ],
+      "source_obligation_ids": [
+        "obl-290"
+      ],
+      "source_seed_ids": [
+        "seed-335"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator_Page.md` still keeps `Tiers` and multi-tab widget composition",
+        "Orchestrator_Page.md",
+        "Tiers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00427",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00542 is partial for those non-Progress tabs may internally use reusable view components, but they should not e",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00542"
+      ],
+      "source_obligation_ids": [
+        "obl-399"
+      ],
+      "source_seed_ids": [
+        "seed-461"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "those non-Progress tabs may internally use reusable view components, but they should not expose general add/remove/move/resize widget behavior"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00437",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00554 is partial for distinguish `page/tab filters` from `widget presentation config`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00554"
+      ],
+      "source_obligation_ids": [
+        "obl-411"
+      ],
+      "source_seed_ids": [
+        "seed-473"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "distinguish `page/tab filters` from `widget presentation config`",
+        "page/tab filters",
+        "widget presentation config"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00443",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00562 is partial for `Plans/Widget_System.md` currently defines layout keys for multiple Orchestrator tabs.",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00562"
+      ],
+      "source_obligation_ids": [
+        "obl-419"
+      ],
+      "source_seed_ids": [
+        "seed-481"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "`Plans/Widget_System.md` currently defines layout keys for multiple Orchestrator tabs.",
+        "Plans/Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00456",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00576 is present for Add explicit hostability rules so `Dashboard` and `Progress` can share summary widgets wit",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "### Fidelity recovery cov-048: Progress-only widget hostability"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00576"
+      ],
+      "source_obligation_ids": [
+        "obl-433"
+      ],
+      "source_seed_ids": [
+        "seed-498"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "Add explicit hostability rules so `Dashboard` and `Progress` can share summary widgets without turning deep inspection tabs into widget canvases.",
+        "Dashboard",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00457",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00577 is present for Source Control being a narrow panel reinforces the need to keep widget usage focused on wi",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00577"
+      ],
+      "source_obligation_ids": [
+        "obl-434"
+      ],
+      "source_seed_ids": [
+        "seed-499"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "Source Control being a narrow panel reinforces the need to keep widget usage focused on wider surfaces like `Dashboard` and `Orchestrator / Progress`, not as a universal composition strategy everywhere.",
+        "Dashboard",
+        "Orchestrator / Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01497",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01918 is partial for `Widget_System.md` implies broader widget portability",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01918"
+      ],
+      "source_obligation_ids": [
+        "obl-1775"
+      ],
+      "source_seed_ids": [
+        "seed-2279"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "`Widget_System.md` implies broader widget portability",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01498",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01919 is present for `Orchestrator_Page.md` still treats multiple tabs as widget containers",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01919"
+      ],
+      "source_obligation_ids": [
+        "obl-1776"
+      ],
+      "source_seed_ids": [
+        "seed-2280"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator_Page.md` still treats multiple tabs as widget containers",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01637",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02106 is partial for its hostability, layout keys, widget caps, and catalog all still include `Orch/Tiers`, `Or",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "### Fidelity recovery cov-048: Progress-only widget hostability"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02106"
+      ],
+      "source_obligation_ids": [
+        "obl-1963"
+      ],
+      "source_seed_ids": [
+        "seed-2556"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "its hostability, layout keys, widget caps, and catalog all still include `Orch/Tiers`, `Orch/Evidence`, `Orch/History`, and `Orch/Ledger`",
+        "Orch/Tiers",
+        "Orch/Evidence",
+        "Orch/History",
+        "Orch/Ledger"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01652",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02125 is partial for page-global widget layout keys may be too coarse for project/run-centric Orchestrator usag",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02125"
+      ],
+      "source_obligation_ids": [
+        "obl-1982"
+      ],
+      "source_seed_ids": [
+        "seed-2579"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "page-global widget layout keys may be too coarse for project/run-centric Orchestrator usage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01653",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02126 is present for but there is no explicit decision yet on app-global vs project-scoped widget layouts for O",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02126"
+      ],
+      "source_obligation_ids": [
+        "obl-1983"
+      ],
+      "source_seed_ids": [
+        "seed-2580"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "but there is no explicit decision yet on app-global vs project-scoped widget layouts for Orchestrator `Progress`",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01744",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02247 is partial for widget layouts still need project-scoped keys rather than implicit global layouts for proj",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02247"
+      ],
+      "source_obligation_ids": [
+        "obl-2101"
+      ],
+      "source_seed_ids": [
+        "seed-2729"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "widget layouts still need project-scoped keys rather than implicit global layouts for project-heavy surfaces"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01760",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02265 is present for `Widget_System.md` and `Orchestrator_Page.md` still disagree on terminal widget identity a",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "### Fidelity recovery cov-048: Progress-only widget hostability"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02265"
+      ],
+      "source_obligation_ids": [
+        "obl-2118"
+      ],
+      "source_seed_ids": [
+        "seed-2750"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`Widget_System.md` and `Orchestrator_Page.md` still disagree on terminal widget identity and broader Progress/Dashboard hostability details.",
+        "Widget_System.md",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01761",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02267 is partial for Normalize terminal widget IDs/hostability and explicitly decide how Orchestrator-owned wor",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02267"
+      ],
+      "source_obligation_ids": [
+        "obl-2120"
+      ],
+      "source_seed_ids": [
+        "seed-2752"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "Normalize terminal widget IDs/hostability and explicitly decide how Orchestrator-owned worktree state is grouped in Source Control."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01835",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02363 is partial for terminal widget hostability remains split between `widget.terminal_output` and `widget.age",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "### Fidelity recovery cov-048: Progress-only widget hostability"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02363"
+      ],
+      "source_obligation_ids": [
+        "obl-2214"
+      ],
+      "source_seed_ids": [
+        "seed-2877"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "terminal widget hostability remains split between `widget.terminal_output` and `widget.agent_terminal`",
+        "widget.terminal_output",
+        "widget.agent_terminal"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01855",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02384 is partial for Rebind widget multi-account/account-pressure contracts to canonical `provider_accounts.*`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02384"
+      ],
+      "source_obligation_ids": [
+        "obl-2234"
+      ],
+      "source_seed_ids": [
+        "seed-2901"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Rebind widget multi-account/account-pressure contracts to canonical `provider_accounts.*` projections and require trust/scope inheritance from the host surface.",
+        "provider_accounts.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01859",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02390 is present for Orchestrator `Progress` widget layout persistence should use **app-default with project ov",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02390"
+      ],
+      "source_obligation_ids": [
+        "obl-2240"
+      ],
+      "source_seed_ids": [
+        "seed-2907"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Orchestrator `Progress` widget layout persistence should use **app-default with project override**.",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01862",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02393 is present for effective `Progress` widget layout should be computed as:",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02393"
+      ],
+      "source_obligation_ids": [
+        "obl-2243"
+      ],
+      "source_seed_ids": [
+        "seed-2910"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "effective `Progress` widget layout should be computed as:",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02333",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02955 is present for the 12-widget rewrite-era Progress set still has no concrete home in `FinalGUISpec.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02955"
+      ],
+      "source_obligation_ids": [
+        "obl-2802"
+      ],
+      "source_seed_ids": [
+        "seed-3697"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "the 12-widget rewrite-era Progress set still has no concrete home in `FinalGUISpec.md`",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02552",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03263 is present for Add a real Orchestrator section to `FinalGUISpec.md`, make Progress the only widget canvas",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03263"
+      ],
+      "source_obligation_ids": [
+        "obl-3109"
+      ],
+      "source_seed_ids": [
+        "seed-4132"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Add a real Orchestrator section to `FinalGUISpec.md`, make Progress the only widget canvas, and bind all projection-state UX to `projection_freshness` + `projection_health` rather than overloaded trust language.",
+        "FinalGUISpec.md",
+        "projection_freshness",
+        "projection_health"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03785",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04841 is partial for widget layout slot positions",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04841"
+      ],
+      "source_obligation_ids": [
+        "obl-4618"
+      ],
+      "source_seed_ids": [
+        "seed-6599"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "widget layout slot positions"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03998",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05137 is partial for widget layout",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05137"
+      ],
+      "source_obligation_ids": [
+        "obl-4913"
+      ],
+      "source_seed_ids": [
+        "seed-7107"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "exact_missing_items": [
+        "widget layout"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04054",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05216 is partial for `tier`, `tier_id`, raw widget ids, panel ids, and serialization tokens do not belong in `o",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05216"
+      ],
+      "source_obligation_ids": [
+        "obl-4992"
+      ],
+      "source_seed_ids": [
+        "seed-7278"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "`tier`, `tier_id`, raw widget ids, panel ids, and serialization tokens do not belong in `object_kind`.",
+        "tier",
+        "tier_id",
+        "object_kind"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04399",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05650 is present for Orchestrator widget tabs broadly enough to conflict with the newer `Progress`-only widget",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05650"
+      ],
+      "source_obligation_ids": [
+        "obl-5422"
+      ],
+      "source_seed_ids": [
+        "seed-8051"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "Orchestrator widget tabs broadly enough to conflict with the newer `Progress`-only widget composition rule",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04410",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05665 is present for `FinalGUISpec.md` is still a major drift amplifier because it combines shell, page taxonom",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05665"
+      ],
+      "source_obligation_ids": [
+        "obl-5437"
+      ],
+      "source_seed_ids": [
+        "seed-8069"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` is still a major drift amplifier because it combines shell, page taxonomy, widget, and deep-link language in one doc.",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04744",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06133 is partial for `widget.cta_stack` sourced from `PuppetMasterEvent::UserInteractionRequired`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06133"
+      ],
+      "source_obligation_ids": [
+        "obl-5905"
+      ],
+      "source_seed_ids": [
+        "seed-8767"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.cta_stack` sourced from `PuppetMasterEvent::UserInteractionRequired`",
+        "widget.cta_stack",
+        "PuppetMasterEvent::UserInteractionRequired"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04750",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06141 is partial for `Widget_System.md` is still acting as if multiple Orchestrator tabs are widget canvases.",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06141"
+      ],
+      "source_obligation_ids": [
+        "obl-5913"
+      ],
+      "source_seed_ids": [
+        "seed-8782"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`Widget_System.md` is still acting as if multiple Orchestrator tabs are widget canvases.",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04752",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06144 is present for Narrow Orchestrator widget hostability to `Progress` only.",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06144"
+      ],
+      "source_obligation_ids": [
+        "obl-5916"
+      ],
+      "source_seed_ids": [
+        "seed-8786"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "Narrow Orchestrator widget hostability to `Progress` only.",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04754",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06146 is partial for Reconcile widget data contracts away from `TierChanged`, `UserInteractionRequired`, and ti",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 2. Hostability and data contracts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06146"
+      ],
+      "source_obligation_ids": [
+        "obl-5918"
+      ],
+      "source_seed_ids": [
+        "seed-8788"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "Reconcile widget data contracts away from `TierChanged`, `UserInteractionRequired`, and tier-targeted worker filters toward canonical runtime and attention projections.",
+        "TierChanged",
+        "UserInteractionRequired"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04755",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06149 is partial for Research Progress - 2026-03-17 - Widget layout migration contract is internally inconsiste",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06149"
+      ],
+      "source_obligation_ids": [
+        "obl-5921"
+      ],
+      "source_seed_ids": [
+        "seed-8791"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - Widget layout migration contract is internally inconsistent"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04756",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06150 is partial for The widget layout migration contract now has an exact persistence-rule contradiction.",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06150"
+      ],
+      "source_obligation_ids": [
+        "obl-5922"
+      ],
+      "source_seed_ids": [
+        "seed-8794"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "The widget layout migration contract now has an exact persistence-rule contradiction."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04762",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06157 is partial for widget layout takes precedence",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06157"
+      ],
+      "source_obligation_ids": [
+        "obl-5929"
+      ],
+      "source_seed_ids": [
+        "seed-8802"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "widget layout takes precedence"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04764",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06162 is partial for Because `Widget_System.md` claims SSOT precedence for widget layout key handling, this con",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06162"
+      ],
+      "source_obligation_ids": [
+        "obl-5934"
+      ],
+      "source_seed_ids": [
+        "seed-8809"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "Because `Widget_System.md` claims SSOT precedence for widget layout key handling, this contradiction is more than editorial drift.",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [
+        "Widget_System.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04957",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06384 is partial for `Primitive:WidgetCatalog` still says `Orchestrator widget tabs`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06384"
+      ],
+      "source_obligation_ids": [
+        "obl-6025"
+      ],
+      "source_seed_ids": [
+        "seed-9112"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "`Primitive:WidgetCatalog` still says `Orchestrator widget tabs`",
+        "Primitive:WidgetCatalog",
+        "Orchestrator widget tabs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05074",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06541 is present for widget commands still say `Orchestrator widget tabs`, which conflicts with the rewrite dir",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06541"
+      ],
+      "source_obligation_ids": [
+        "obl-6182"
+      ],
+      "source_seed_ids": [
+        "seed-9357"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "widget commands still say `Orchestrator widget tabs`, which conflicts with the rewrite direction that only `Progress` remains widget-composed in Orchestrator",
+        "Orchestrator widget tabs",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05108",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06582 is partial for still makes `Tiers` the second tab and centers `widget.tier_tree`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06582"
+      ],
+      "source_obligation_ids": [
+        "obl-6223"
+      ],
+      "source_seed_ids": [
+        "seed-9409"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "still makes `Tiers` the second tab and centers `widget.tier_tree`",
+        "Tiers",
+        "widget.tier_tree"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00099",
+    "cov-00112",
+    "cov-00133",
+    "cov-00243",
+    "cov-00432",
+    "cov-00542",
+    "cov-00554",
+    "cov-00562",
+    "cov-00576",
+    "cov-00577",
+    "cov-01918",
+    "cov-01919",
+    "cov-02106",
+    "cov-02125",
+    "cov-02126",
+    "cov-02247",
+    "cov-02265",
+    "cov-02267",
+    "cov-02363",
+    "cov-02384",
+    "cov-02390",
+    "cov-02393",
+    "cov-02955",
+    "cov-03263",
+    "cov-04841",
+    "cov-05137",
+    "cov-05216",
+    "cov-05650",
+    "cov-05665",
+    "cov-06133",
+    "cov-06141",
+    "cov-06144",
+    "cov-06146",
+    "cov-06149",
+    "cov-06150",
+    "cov-06157",
+    "cov-06162",
+    "cov-06384",
+    "cov-06541",
+    "cov-06582"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-036",
+    "obl-038",
+    "obl-042",
+    "obl-129",
+    "obl-1775",
+    "obl-1776",
+    "obl-1963",
+    "obl-1982",
+    "obl-1983",
+    "obl-2101",
+    "obl-2118",
+    "obl-2120",
+    "obl-2214",
+    "obl-2234",
+    "obl-2240",
+    "obl-2243",
+    "obl-2802",
+    "obl-290",
+    "obl-3109",
+    "obl-399",
+    "obl-411",
+    "obl-419",
+    "obl-433",
+    "obl-434",
+    "obl-4618",
+    "obl-4913",
+    "obl-4992",
+    "obl-5422",
+    "obl-5437",
+    "obl-5905",
+    "obl-5913",
+    "obl-5916",
+    "obl-5918",
+    "obl-5921",
+    "obl-5922",
+    "obl-5929",
+    "obl-5934",
+    "obl-6025",
+    "obl-6182",
+    "obl-6223"
+  ],
+  "source_seed_ids_represented": [
+    "seed-036",
+    "seed-038",
+    "seed-042",
+    "seed-134",
+    "seed-2279",
+    "seed-2280",
+    "seed-2556",
+    "seed-2579",
+    "seed-2580",
+    "seed-2729",
+    "seed-2750",
+    "seed-2752",
+    "seed-2877",
+    "seed-2901",
+    "seed-2907",
+    "seed-2910",
+    "seed-335",
+    "seed-3697",
+    "seed-4132",
+    "seed-461",
+    "seed-473",
+    "seed-481",
+    "seed-498",
+    "seed-499",
+    "seed-6599",
+    "seed-7107",
+    "seed-7278",
+    "seed-8051",
+    "seed-8069",
+    "seed-8767",
+    "seed-8782",
+    "seed-8786",
+    "seed-8788",
+    "seed-8791",
+    "seed-8794",
+    "seed-8802",
+    "seed-8809",
+    "seed-9112",
+    "seed-9357",
+    "seed-9409"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0007",
+    "shard-0008",
+    "shard-0009",
+    "shard-0011",
+    "shard-0012",
+    "shard-0031",
+    "shard-0034",
+    "shard-0035",
+    "shard-0036",
+    "shard-0042",
+    "shard-0045",
+    "shard-0063",
+    "shard-0067",
+    "shard-0069",
+    "shard-0075",
+    "shard-0080",
+    "shard-0082",
+    "shard-0084",
+    "shard-0085"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-00096",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00099 is missing for package/seam overseer + lane-aware execution model",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "Highest-Impact Docs"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00099"
+      ],
+      "source_obligation_ids": [
+        "obl-036"
+      ],
+      "source_seed_ids": [
+        "seed-036"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Replace tier-rooted execution with package/seam/lane model",
+        "Define package overseer + seam overseer roles",
+        "Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage",
+        "Redefine gates to package-complete / seam-complete",
+        "Rename or retire Tiers UI/tab and tier_tree/progress bars"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars",
+        "phase/task/subtask"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00109",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00112 is missing for orchestrator attention routing and lane-aware widgets",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "GUI / UX Impacts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00112"
+      ],
+      "source_obligation_ids": [
+        "obl-038"
+      ],
+      "source_seed_ids": [
+        "seed-038"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Replace Tiers-first navigation",
+        "Define Dashboard\u2192Orchestrator\u2192thread routing contract",
+        "Add package/seam/lane visualization widgets",
+        "Define which overseer's thread opens on click",
+        "Make worktree/lane state visible and navigable"
+      ],
+      "stale_tokens": [
+        "Tiers tab",
+        "widget.tier_tree",
+        "3-bar layout",
+        "grouped-by-phase",
+        "single-threaded",
+        "current_task"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00130",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00133 is missing for graph-native attention routing",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "Cleanup Priorities"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00133"
+      ],
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "source_seed_ids": [
+        "seed-042"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "exact_missing_items": [
+        "Replace or demote tiers-first widgets and layouts.",
+        "Add package/seam/lane-aware identity, worktree, and attention surfaces.",
+        "Define Dashboard \u2192 Orchestrator \u2192 chat-thread routing using canonical runtime objects rather than prose-only references."
+      ],
+      "stale_tokens": [
+        "tiers-first",
+        "phase-grouped layouts",
+        "single current task",
+        "single worktree",
+        "prose-only references"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00216",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00243 is present for `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00243"
+      ],
+      "source_obligation_ids": [
+        "obl-129"
+      ],
+      "source_seed_ids": [
+        "seed-134"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00338",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00432 is partial for `Orchestrator_Page.md` still keeps `Tiers` and multi-tab widget composition",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00432"
+      ],
+      "source_obligation_ids": [
+        "obl-290"
+      ],
+      "source_seed_ids": [
+        "seed-335"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator_Page.md` still keeps `Tiers` and multi-tab widget composition",
+        "Orchestrator_Page.md",
+        "Tiers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00427",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00542 is partial for those non-Progress tabs may internally use reusable view components, but they should not e",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00542"
+      ],
+      "source_obligation_ids": [
+        "obl-399"
+      ],
+      "source_seed_ids": [
+        "seed-461"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "those non-Progress tabs may internally use reusable view components, but they should not expose general add/remove/move/resize widget behavior"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00437",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00554 is partial for distinguish `page/tab filters` from `widget presentation config`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00554"
+      ],
+      "source_obligation_ids": [
+        "obl-411"
+      ],
+      "source_seed_ids": [
+        "seed-473"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "distinguish `page/tab filters` from `widget presentation config`",
+        "page/tab filters",
+        "widget presentation config"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00443",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00562 is partial for `Plans/Widget_System.md` currently defines layout keys for multiple Orchestrator tabs.",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00562"
+      ],
+      "source_obligation_ids": [
+        "obl-419"
+      ],
+      "source_seed_ids": [
+        "seed-481"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "`Plans/Widget_System.md` currently defines layout keys for multiple Orchestrator tabs.",
+        "Plans/Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00456",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00576 is present for Add explicit hostability rules so `Dashboard` and `Progress` can share summary widgets wit",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "### Fidelity recovery cov-048: Progress-only widget hostability"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00576"
+      ],
+      "source_obligation_ids": [
+        "obl-433"
+      ],
+      "source_seed_ids": [
+        "seed-498"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "Add explicit hostability rules so `Dashboard` and `Progress` can share summary widgets without turning deep inspection tabs into widget canvases.",
+        "Dashboard",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00457",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00577 is present for Source Control being a narrow panel reinforces the need to keep widget usage focused on wi",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00577"
+      ],
+      "source_obligation_ids": [
+        "obl-434"
+      ],
+      "source_seed_ids": [
+        "seed-499"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "Source Control being a narrow panel reinforces the need to keep widget usage focused on wider surfaces like `Dashboard` and `Orchestrator / Progress`, not as a universal composition strategy everywhere.",
+        "Dashboard",
+        "Orchestrator / Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01497",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01918 is partial for `Widget_System.md` implies broader widget portability",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01918"
+      ],
+      "source_obligation_ids": [
+        "obl-1775"
+      ],
+      "source_seed_ids": [
+        "seed-2279"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "`Widget_System.md` implies broader widget portability",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01498",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01919 is present for `Orchestrator_Page.md` still treats multiple tabs as widget containers",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01919"
+      ],
+      "source_obligation_ids": [
+        "obl-1776"
+      ],
+      "source_seed_ids": [
+        "seed-2280"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator_Page.md` still treats multiple tabs as widget containers",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01637",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02106 is partial for its hostability, layout keys, widget caps, and catalog all still include `Orch/Tiers`, `Or",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "### Fidelity recovery cov-048: Progress-only widget hostability"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02106"
+      ],
+      "source_obligation_ids": [
+        "obl-1963"
+      ],
+      "source_seed_ids": [
+        "seed-2556"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "its hostability, layout keys, widget caps, and catalog all still include `Orch/Tiers`, `Orch/Evidence`, `Orch/History`, and `Orch/Ledger`",
+        "Orch/Tiers",
+        "Orch/Evidence",
+        "Orch/History",
+        "Orch/Ledger"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01652",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02125 is partial for page-global widget layout keys may be too coarse for project/run-centric Orchestrator usag",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02125"
+      ],
+      "source_obligation_ids": [
+        "obl-1982"
+      ],
+      "source_seed_ids": [
+        "seed-2579"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "page-global widget layout keys may be too coarse for project/run-centric Orchestrator usage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01653",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02126 is present for but there is no explicit decision yet on app-global vs project-scoped widget layouts for O",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02126"
+      ],
+      "source_obligation_ids": [
+        "obl-1983"
+      ],
+      "source_seed_ids": [
+        "seed-2580"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "but there is no explicit decision yet on app-global vs project-scoped widget layouts for Orchestrator `Progress`",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01744",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02247 is partial for widget layouts still need project-scoped keys rather than implicit global layouts for proj",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02247"
+      ],
+      "source_obligation_ids": [
+        "obl-2101"
+      ],
+      "source_seed_ids": [
+        "seed-2729"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "widget layouts still need project-scoped keys rather than implicit global layouts for project-heavy surfaces"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01760",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02265 is present for `Widget_System.md` and `Orchestrator_Page.md` still disagree on terminal widget identity a",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "### Fidelity recovery cov-048: Progress-only widget hostability"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02265"
+      ],
+      "source_obligation_ids": [
+        "obl-2118"
+      ],
+      "source_seed_ids": [
+        "seed-2750"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`Widget_System.md` and `Orchestrator_Page.md` still disagree on terminal widget identity and broader Progress/Dashboard hostability details.",
+        "Widget_System.md",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01761",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02267 is partial for Normalize terminal widget IDs/hostability and explicitly decide how Orchestrator-owned wor",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02267"
+      ],
+      "source_obligation_ids": [
+        "obl-2120"
+      ],
+      "source_seed_ids": [
+        "seed-2752"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "Normalize terminal widget IDs/hostability and explicitly decide how Orchestrator-owned worktree state is grouped in Source Control."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01835",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02363 is partial for terminal widget hostability remains split between `widget.terminal_output` and `widget.age",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "### Fidelity recovery cov-048: Progress-only widget hostability"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02363"
+      ],
+      "source_obligation_ids": [
+        "obl-2214"
+      ],
+      "source_seed_ids": [
+        "seed-2877"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "terminal widget hostability remains split between `widget.terminal_output` and `widget.agent_terminal`",
+        "widget.terminal_output",
+        "widget.agent_terminal"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01855",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02384 is partial for Rebind widget multi-account/account-pressure contracts to canonical `provider_accounts.*`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02384"
+      ],
+      "source_obligation_ids": [
+        "obl-2234"
+      ],
+      "source_seed_ids": [
+        "seed-2901"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Rebind widget multi-account/account-pressure contracts to canonical `provider_accounts.*` projections and require trust/scope inheritance from the host surface.",
+        "provider_accounts.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01859",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02390 is present for Orchestrator `Progress` widget layout persistence should use **app-default with project ov",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02390"
+      ],
+      "source_obligation_ids": [
+        "obl-2240"
+      ],
+      "source_seed_ids": [
+        "seed-2907"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Orchestrator `Progress` widget layout persistence should use **app-default with project override**.",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01862",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02393 is present for effective `Progress` widget layout should be computed as:",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02393"
+      ],
+      "source_obligation_ids": [
+        "obl-2243"
+      ],
+      "source_seed_ids": [
+        "seed-2910"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "effective `Progress` widget layout should be computed as:",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02333",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02955 is present for the 12-widget rewrite-era Progress set still has no concrete home in `FinalGUISpec.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02955"
+      ],
+      "source_obligation_ids": [
+        "obl-2802"
+      ],
+      "source_seed_ids": [
+        "seed-3697"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "the 12-widget rewrite-era Progress set still has no concrete home in `FinalGUISpec.md`",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02552",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03263 is present for Add a real Orchestrator section to `FinalGUISpec.md`, make Progress the only widget canvas",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03263"
+      ],
+      "source_obligation_ids": [
+        "obl-3109"
+      ],
+      "source_seed_ids": [
+        "seed-4132"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Add a real Orchestrator section to `FinalGUISpec.md`, make Progress the only widget canvas, and bind all projection-state UX to `projection_freshness` + `projection_health` rather than overloaded trust language.",
+        "FinalGUISpec.md",
+        "projection_freshness",
+        "projection_health"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03785",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04841 is partial for widget layout slot positions",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04841"
+      ],
+      "source_obligation_ids": [
+        "obl-4618"
+      ],
+      "source_seed_ids": [
+        "seed-6599"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "widget layout slot positions"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03998",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05137 is partial for widget layout",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05137"
+      ],
+      "source_obligation_ids": [
+        "obl-4913"
+      ],
+      "source_seed_ids": [
+        "seed-7107"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "exact_missing_items": [
+        "widget layout"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04054",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05216 is partial for `tier`, `tier_id`, raw widget ids, panel ids, and serialization tokens do not belong in `o",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05216"
+      ],
+      "source_obligation_ids": [
+        "obl-4992"
+      ],
+      "source_seed_ids": [
+        "seed-7278"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "`tier`, `tier_id`, raw widget ids, panel ids, and serialization tokens do not belong in `object_kind`.",
+        "tier",
+        "tier_id",
+        "object_kind"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04399",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05650 is present for Orchestrator widget tabs broadly enough to conflict with the newer `Progress`-only widget",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05650"
+      ],
+      "source_obligation_ids": [
+        "obl-5422"
+      ],
+      "source_seed_ids": [
+        "seed-8051"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "Orchestrator widget tabs broadly enough to conflict with the newer `Progress`-only widget composition rule",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04410",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05665 is present for `FinalGUISpec.md` is still a major drift amplifier because it combines shell, page taxonom",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05665"
+      ],
+      "source_obligation_ids": [
+        "obl-5437"
+      ],
+      "source_seed_ids": [
+        "seed-8069"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` is still a major drift amplifier because it combines shell, page taxonomy, widget, and deep-link language in one doc.",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04744",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06133 is partial for `widget.cta_stack` sourced from `PuppetMasterEvent::UserInteractionRequired`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06133"
+      ],
+      "source_obligation_ids": [
+        "obl-5905"
+      ],
+      "source_seed_ids": [
+        "seed-8767"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.cta_stack` sourced from `PuppetMasterEvent::UserInteractionRequired`",
+        "widget.cta_stack",
+        "PuppetMasterEvent::UserInteractionRequired"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04750",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06141 is partial for `Widget_System.md` is still acting as if multiple Orchestrator tabs are widget canvases.",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06141"
+      ],
+      "source_obligation_ids": [
+        "obl-5913"
+      ],
+      "source_seed_ids": [
+        "seed-8782"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`Widget_System.md` is still acting as if multiple Orchestrator tabs are widget canvases.",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04752",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06144 is present for Narrow Orchestrator widget hostability to `Progress` only.",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06144"
+      ],
+      "source_obligation_ids": [
+        "obl-5916"
+      ],
+      "source_seed_ids": [
+        "seed-8786"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "Narrow Orchestrator widget hostability to `Progress` only.",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04754",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06146 is partial for Reconcile widget data contracts away from `TierChanged`, `UserInteractionRequired`, and ti",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 2. Hostability and data contracts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06146"
+      ],
+      "source_obligation_ids": [
+        "obl-5918"
+      ],
+      "source_seed_ids": [
+        "seed-8788"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "Reconcile widget data contracts away from `TierChanged`, `UserInteractionRequired`, and tier-targeted worker filters toward canonical runtime and attention projections.",
+        "TierChanged",
+        "UserInteractionRequired"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04755",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06149 is partial for Research Progress - 2026-03-17 - Widget layout migration contract is internally inconsiste",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06149"
+      ],
+      "source_obligation_ids": [
+        "obl-5921"
+      ],
+      "source_seed_ids": [
+        "seed-8791"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - Widget layout migration contract is internally inconsistent"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04756",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06150 is partial for The widget layout migration contract now has an exact persistence-rule contradiction.",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06150"
+      ],
+      "source_obligation_ids": [
+        "obl-5922"
+      ],
+      "source_seed_ids": [
+        "seed-8794"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "The widget layout migration contract now has an exact persistence-rule contradiction."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04762",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06157 is partial for widget layout takes precedence",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06157"
+      ],
+      "source_obligation_ids": [
+        "obl-5929"
+      ],
+      "source_seed_ids": [
+        "seed-8802"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "widget layout takes precedence"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04764",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06162 is partial for Because `Widget_System.md` claims SSOT precedence for widget layout key handling, this con",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06162"
+      ],
+      "source_obligation_ids": [
+        "obl-5934"
+      ],
+      "source_seed_ids": [
+        "seed-8809"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "Because `Widget_System.md` claims SSOT precedence for widget layout key handling, this contradiction is more than editorial drift.",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [
+        "Widget_System.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04957",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06384 is partial for `Primitive:WidgetCatalog` still says `Orchestrator widget tabs`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06384"
+      ],
+      "source_obligation_ids": [
+        "obl-6025"
+      ],
+      "source_seed_ids": [
+        "seed-9112"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "`Primitive:WidgetCatalog` still says `Orchestrator widget tabs`",
+        "Primitive:WidgetCatalog",
+        "Orchestrator widget tabs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05074",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06541 is present for widget commands still say `Orchestrator widget tabs`, which conflicts with the rewrite dir",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06541"
+      ],
+      "source_obligation_ids": [
+        "obl-6182"
+      ],
+      "source_seed_ids": [
+        "seed-9357"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "widget commands still say `Orchestrator widget tabs`, which conflicts with the rewrite direction that only `Progress` remains widget-composed in Orchestrator",
+        "Orchestrator widget tabs",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05108",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06582 is partial for still makes `Tiers` the second tab and centers `widget.tier_tree`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06582"
+      ],
+      "source_obligation_ids": [
+        "obl-6223"
+      ],
+      "source_seed_ids": [
+        "seed-9409"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "still makes `Tiers` the second tab and centers `widget.tier_tree`",
+        "Tiers",
+        "widget.tier_tree"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "uncertain_items": []
+}

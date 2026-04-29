@@ -1,0 +1,872 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-177",
+  "row_group_ids": [
+    "rowgrp-0705",
+    "rowgrp-0706",
+    "rowgrp-0707",
+    "rowgrp-0708"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-04688",
+      "source_obligation_ids": [
+        "obl-4466"
+      ],
+      "source_seed_ids": [
+        "seed-6350"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "Prefer extending `object_kind` deliberately over adding new top-level route fields.",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "# Adding Tool Support -- Research & Plan",
+      "status": "partial",
+      "exact_items": [
+        "Prefer extending `object_kind` deliberately over adding new top-level route fields.",
+        "object_kind"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04840",
+      "source_obligation_ids": [
+        "obl-4617"
+      ],
+      "source_seed_ids": [
+        "seed-6598"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "canon_label": "What should stay out of coarse destination vocabulary",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### 11.2 Support-tier vocabulary",
+      "status": "partial",
+      "exact_items": [
+        "What should stay out of coarse destination vocabulary"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1640"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05155",
+      "source_obligation_ids": [
+        "obl-4931"
+      ],
+      "source_seed_ids": [
+        "seed-7137",
+        "seed-7307"
+      ],
+      "source_shard_ids": [
+        "shard-0068",
+        "shard-0069"
+      ],
+      "canon_label": "The canonical vocabulary is:",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### 11.2 Support-tier vocabulary",
+      "status": "partial",
+      "exact_items": [
+        "The canonical vocabulary is:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1640"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05231",
+      "source_obligation_ids": [
+        "obl-5007"
+      ],
+      "source_seed_ids": [
+        "seed-7306"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "`inspector_target` needs a controlled vocabulary.",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### 11.2 Support-tier vocabulary",
+      "status": "partial",
+      "exact_items": [
+        "`inspector_target` needs a controlled vocabulary.",
+        "inspector_target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1640"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05413",
+      "source_obligation_ids": [
+        "obl-5185"
+      ],
+      "source_seed_ids": [
+        "seed-7684"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "The current high-value canonical vocabulary is:",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### 11.2 Support-tier vocabulary",
+      "status": "partial",
+      "exact_items": [
+        "The current high-value canonical vocabulary is:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1640"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05778",
+      "source_obligation_ids": [
+        "obl-5550"
+      ],
+      "source_seed_ids": [
+        "seed-8239"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "usage/evidence/runtime rollups are still tier-native",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### 8.4 Redb keys for tool rollups (Usage widget)",
+      "status": "partial",
+      "exact_items": [
+        "usage/evidence/runtime rollups are still tier-native"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L967"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06030",
+      "source_obligation_ids": [
+        "obl-5802"
+      ],
+      "source_seed_ids": [
+        "seed-8628"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "later canonical correction addenda",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### Field name correction",
+      "status": "partial",
+      "exact_items": [
+        "later canonical correction addenda"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1279"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06038",
+      "source_obligation_ids": [
+        "obl-5810"
+      ],
+      "source_seed_ids": [
+        "seed-8639"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "The older request-centric sections are no longer compatible with the later canonical corre",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### Field name correction",
+      "status": "partial",
+      "exact_items": [
+        "The older request-centric sections are no longer compatible with the later canonical correction sections."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1279"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06264",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L783"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06727",
+      "source_obligation_ids": [
+        "obl-6368"
+      ],
+      "source_seed_ids": [
+        "seed-9723"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "`tool.invoked` remains analytics-thin rather than carrying the richer attribution packet w",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "# Adding Tool Support -- Research & Plan",
+      "status": "present",
+      "exact_items": [
+        "`tool.invoked` remains analytics-thin rather than carrying the richer attribution packet worked out in the ledger.",
+        "tool.invoked"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L876",
+        "Plans/Tools.md:L973",
+        "Plans/Tools.md:L974",
+        "Plans/Tools.md:L1167",
+        "Plans/Tools.md:L1557"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06845",
+      "source_obligation_ids": [
+        "obl-6451"
+      ],
+      "source_seed_ids": [
+        "seed-9830"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_A",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md`",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Tools.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Run_Modes.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L3",
+        "Plans/Tools.md:L9",
+        "Plans/Tools.md:L67",
+        "Plans/Tools.md:L90",
+        "Plans/Tools.md:L119"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06949",
+      "source_obligation_ids": [
+        "obl-6549"
+      ],
+      "source_seed_ids": [
+        "seed-9956"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/Tools.md:866-916`",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Tools.md:866-916`",
+        "Plans/Tools.md:866-916"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06950",
+      "source_obligation_ids": [
+        "obl-6550"
+      ],
+      "source_seed_ids": [
+        "seed-9957"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/Tools.md:1262-1284`",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Tools.md:1262-1284`",
+        "Plans/Tools.md:1262-1284"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06986",
+      "source_obligation_ids": [
+        "obl-6582"
+      ],
+      "source_seed_ids": [
+        "seed-10031",
+        "seed-10058",
+        "seed-10097",
+        "seed-10164"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090"
+      ],
+      "canon_label": "`Plans/Tools.md:866-920`",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Tools.md:866-920`",
+        "Plans/Tools.md:866-920"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06987",
+      "source_obligation_ids": [
+        "obl-6583"
+      ],
+      "source_seed_ids": [
+        "seed-10032"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/Tools.md:1262-1288`",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Tools.md:1262-1288`",
+        "Plans/Tools.md:1262-1288"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07082",
+      "source_obligation_ids": [
+        "obl-6662"
+      ],
+      "source_seed_ids": [
+        "seed-10199",
+        "seed-10237"
+      ],
+      "source_shard_ids": [
+        "shard-0090",
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/Tools.md:1131-1135`",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Tools.md:1131-1135`",
+        "Plans/Tools.md:1131-1135"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01672",
+      "source_obligation_ids": [
+        "obl-1529"
+      ],
+      "source_seed_ids": [
+        "seed-1906"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "canon_label": "The `trust_state_at_export` field now looks important because earlier research established",
+      "row_type": "stale_retirement",
+      "path": "Plans/Tools.md",
+      "heading_hint": "# Adding Tool Support -- Research & Plan",
+      "status": "present",
+      "exact_items": [
+        "The `trust_state_at_export` field now looks important because earlier research established stale/degraded projection concerns.",
+        "trust_state_at_export"
+      ],
+      "stale_tokens": [
+        "trust_state_at_export"
+      ],
+      "evidence": [
+        "Plans/Tools.md:L1-L1829 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03040",
+      "source_obligation_ids": [
+        "obl-2886"
+      ],
+      "source_seed_ids": [
+        "seed-3810"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "broader Orchestrator/UI research has been using \u201cprojection trust\u201d or \u201cdegraded trust\u201d for",
+      "row_type": "stale_retirement",
+      "path": "Plans/Tools.md",
+      "heading_hint": "# Adding Tool Support -- Research & Plan",
+      "status": "present",
+      "exact_items": [
+        "broader Orchestrator/UI research has been using \u201cprojection trust\u201d or \u201cdegraded trust\u201d for stale/degraded summary data"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1-L1829 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03347",
+      "source_obligation_ids": [
+        "obl-3193"
+      ],
+      "source_seed_ids": [
+        "seed-4253"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`interview-phase-phase-*` looks like a real routing-key bug, not merely stale vocabulary.",
+      "row_type": "stale_retirement",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### 11.2 Support-tier vocabulary",
+      "status": "present",
+      "exact_items": [
+        "`interview-phase-phase-*` looks like a real routing-key bug, not merely stale vocabulary.",
+        "interview-phase-phase-*"
+      ],
+      "stale_tokens": [
+        "interview-phase-phase-*"
+      ],
+      "evidence": [
+        "Plans/Tools.md:L1-L1829 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06978",
+      "source_obligation_ids": [
+        "obl-6576"
+      ],
+      "source_seed_ids": [
+        "seed-10006"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/Tools.md` still carries the stale tuple `{ tool_name, invocation_summary, options }",
+      "row_type": "stale_retirement",
+      "path": "Plans/Tools.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Tools.md` still carries the stale tuple `{ tool_name, invocation_summary, options }`, `Plans/assistant-chat-design.md` still carries `No remaining gaps`, and `Plans/FinalGUISpec.md` still carries the `restore points` contradiction.",
+        "Plans/Tools.md",
+        "{ tool_name, invocation_summary, options }",
+        "Plans/assistant-chat-design.md",
+        "No remaining gaps",
+        "Plans/FinalGUISpec.md",
+        "restore points"
+      ],
+      "stale_tokens": [
+        "No remaining gaps",
+        "Plans/FinalGUISpec.md",
+        "Plans/Tools.md",
+        "Plans/assistant-chat-design.md",
+        "restore points",
+        "{ tool_name, invocation_summary, options }"
+      ],
+      "evidence": [
+        "Plans/Tools.md:L31",
+        "Plans/Tools.md:L116",
+        "Plans/Tools.md:L195",
+        "Plans/Tools.md:L549",
+        "Plans/Tools.md:L612"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-07073",
+      "source_obligation_ids": [
+        "obl-6654"
+      ],
+      "source_seed_ids": [
+        "seed-10174"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "`Plans/Tools.md` still carries the stale ask tuple `{ tool_name, invocation_summary, optio",
+      "row_type": "stale_retirement",
+      "path": "Plans/Tools.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Tools.md` still carries the stale ask tuple `{ tool_name, invocation_summary, options }`, and `Plans/assistant-chat-design.md` still carries the stale self-verdict `No remaining gaps`.",
+        "Plans/Tools.md",
+        "{ tool_name, invocation_summary, options }",
+        "Plans/assistant-chat-design.md",
+        "No remaining gaps"
+      ],
+      "stale_tokens": [
+        "No remaining gaps",
+        "Plans/Tools.md",
+        "Plans/assistant-chat-design.md",
+        "{ tool_name, invocation_summary, options }"
+      ],
+      "evidence": [
+        "Plans/Tools.md:L116",
+        "Plans/Tools.md:L195",
+        "Plans/Tools.md:L549",
+        "Plans/Tools.md:L631",
+        "Plans/Tools.md:L651"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-00556",
+      "source_obligation_ids": [
+        "obl-413"
+      ],
+      "source_seed_ids": [
+        "seed-475"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "widget-local definitions of blocked/completed/integration status",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "### Recovery command definitions",
+      "status": "partial",
+      "exact_items": [
+        "widget-local definitions of blocked/completed/integration status"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L715"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01344",
+      "source_obligation_ids": [
+        "obl-1201"
+      ],
+      "source_seed_ids": [
+        "seed-1436"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "export can retrieve more than the viewport, but normal browsing should stay slice-based",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "#### Browser preview and browsing commands",
+      "status": "partial",
+      "exact_items": [
+        "export can retrieve more than the viewport, but normal browsing should stay slice-based"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L445"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01369",
+      "source_obligation_ids": [
+        "obl-1226"
+      ],
+      "source_seed_ids": [
+        "seed-1467"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "treat the command palette as a universal navigation and precise-action surface, not as a b",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "treat the command palette as a universal navigation and precise-action surface, not as a blanket permission to expose every dangerous runtime mutation as one keystroke away"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01383",
+      "source_obligation_ids": [
+        "obl-1240"
+      ],
+      "source_seed_ids": [
+        "seed-1481"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "command palette results, keyboard shortcuts, context menus, and widgets should route throu",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "### Fidelity recovery cov-072: Canonical route payload",
+      "status": "partial",
+      "exact_items": [
+        "command palette results, keyboard shortcuts, context menus, and widgets should route through the same destination payload model"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L28",
+        "Plans/UI_Command_Catalog.md:L34"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01396",
+      "source_obligation_ids": [
+        "obl-1253"
+      ],
+      "source_seed_ids": [
+        "seed-1498"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "Reuse one shared routing payload across command palette, shortcuts, widgets, search, and d",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Reuse one shared routing payload across command palette, shortcuts, widgets, search, and deep links."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01397",
+      "source_obligation_ids": [
+        "obl-1254"
+      ],
+      "source_seed_ids": [
+        "seed-1499"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "Keep canonical runtime command ids authoritative for blocked/recovery actions on every sur",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "## 2. Canonical command IDs",
+      "status": "partial",
+      "exact_items": [
+        "Keep canonical runtime command ids authoritative for blocked/recovery actions on every surface."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L64"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01647",
+      "source_obligation_ids": [
+        "obl-1504"
+      ],
+      "source_seed_ids": [
+        "seed-1858"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "`thread_id`, `wizard_id`, bundle/review ids, and orchestration `run_id`/attempt ids must r",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "## 2. Canonical command IDs",
+      "status": "present",
+      "exact_items": [
+        "`thread_id`, `wizard_id`, bundle/review ids, and orchestration `run_id`/attempt ids must remain linkable but distinct",
+        "thread_id",
+        "wizard_id",
+        "run_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L195",
+        "Plans/UI_Command_Catalog.md:L271",
+        "Plans/UI_Command_Catalog.md:L430",
+        "Plans/UI_Command_Catalog.md:L431",
+        "Plans/UI_Command_Catalog.md:L432"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01804",
+      "source_obligation_ids": [
+        "obl-1661"
+      ],
+      "source_seed_ids": [
+        "seed-2069"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "subtle mismatches between command palette, search, widgets, and deep links",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "subtle mismatches between command palette, search, widgets, and deep links"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02609",
+      "source_obligation_ids": [
+        "obl-2457"
+      ],
+      "source_seed_ids": [
+        "seed-3209"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "The command catalog is already stronger than most surface docs:",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "The command catalog is already stronger than most surface docs:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03232",
+      "source_obligation_ids": [
+        "obl-3078"
+      ],
+      "source_seed_ids": [
+        "seed-4081"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "Deprecate graph-local HITL command IDs in favor of `cmd.runtime.*` mappings everywhere, wi",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "## 2. Canonical command IDs",
+      "status": "present",
+      "exact_items": [
+        "Deprecate graph-local HITL command IDs in favor of `cmd.runtime.*` mappings everywhere, with surface-specific labels only in copy.",
+        "cmd.runtime.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L690",
+        "Plans/UI_Command_Catalog.md:L694",
+        "Plans/UI_Command_Catalog.md:L695",
+        "Plans/UI_Command_Catalog.md:L696",
+        "Plans/UI_Command_Catalog.md:L697"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

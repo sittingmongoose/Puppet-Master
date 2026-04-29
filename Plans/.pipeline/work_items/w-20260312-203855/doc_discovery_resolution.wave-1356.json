@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1356",
+  "group_ids": [
+    "discgrp-5421",
+    "discgrp-5422",
+    "discgrp-5423",
+    "discgrp-5424"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05868",
+      "source_obligation_ids": [
+        "obl-5640"
+      ],
+      "source_seed_ids": [
+        "seed-8372"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05869",
+      "source_obligation_ids": [
+        "obl-5641"
+      ],
+      "source_seed_ids": [
+        "seed-8373"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05870",
+      "source_obligation_ids": [
+        "obl-5642"
+      ],
+      "source_seed_ids": [
+        "seed-8374"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05871",
+      "source_obligation_ids": [
+        "obl-5643"
+      ],
+      "source_seed_ids": [
+        "seed-8375"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

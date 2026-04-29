@@ -1,0 +1,247 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-043",
+  "timestamp_utc": "2026-04-28T21:04:11Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-169",
+    "coverage-rowgrp-170",
+    "coverage-rowgrp-171",
+    "coverage-rowgrp-172"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-169 cov-519 Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+    "rowgrp-170 cov-142,cov-484 Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+    "rowgrp-171 cov-170 Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+    "rowgrp-172 cov-033,cov-334,cov-454,cov-630,cov-676,cov-1015 Plans/Run_Graph_View.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-169": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-170": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-171": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-172": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-519",
+    "cov-142",
+    "cov-484",
+    "cov-170",
+    "cov-033",
+    "cov-334",
+    "cov-454",
+    "cov-630",
+    "cov-676",
+    "cov-1015"
+  ],
+  "coverage_ids_completed": [
+    "cov-519",
+    "cov-142",
+    "cov-484",
+    "cov-170",
+    "cov-033",
+    "cov-334",
+    "cov-454",
+    "cov-630",
+    "cov-676",
+    "cov-1015"
+  ],
+  "path_groups_assigned": [
+    "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+    "Plans/Run_Graph_View.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-519",
+      "status": "partial",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:11-12 requires OpenCode session IDs to move to provider-native correlation fields and defines approval_scope_key across actor/lane/run/account context",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:23-33 maps external framework/A2A bridge concepts to PM normalized stream events while scoping internal orchestration, requested/effective runtime state, lineage, permissions, and policy to owning SSOTs",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:155-157 maps A2A input_required/input_provided and completion/message behavior to normalized diagnostic/text/done events"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "A2A has bridge/correlation and ownership-scope coverage, but does not directly state weaker bridged contracts versus direct providers, CLI_Bridged_Providers correlation inconsistency, or session-centric permissions under-bound to identity.",
+      "source_obligation_ids": [
+        "obl-149"
+      ],
+      "source_seed_ids": [
+        "seed-149"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-142",
+      "status": "partial",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:351-354 defines approval_scope_key across actor/lane/run/account context, stores upstream OpenCode/A2A session identifiers in provider-native correlation fields, keeps bridge-only provider_attempt_ref continuity separate from PM runtime identity, and reuses approval_scope_key across permissions/HITL/doom-loop/session approval caching"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "The file covers account context in approval scope but not multi-account UX ahead of runtime records, requested/effective account fields, or requested/effective runtime identity including account and overseer role.",
+      "source_obligation_ids": [
+        "obl-039"
+      ],
+      "source_seed_ids": [
+        "seed-039"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-484",
+      "status": "partial",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:91-104 defines reserved diagnostic categories including tier_boundary, handoff, input_required, input_provided, raw_observation, overseer_audit_started, overseer_reviewer_spawned, overseer verdict/consensus events, tier fields, and audit_kind values",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:249-277 defines Overseer tier-boundary audit protocol, exactly two reviewer subagents, consensus, final verdict, forced remediation, and auditability",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:335-345 requires normalized streams to preserve attempt_id and forbids provider-local retry identity separate from runtime identity"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Many stale diagnostics/protocol concerns are directly visible, but account attribution, auth_state pool-member/account context, actor_kind, package/seam/lane handoff context, and minority-advisory/2-of-3 corroboration wording remain uncovered.",
+      "source_obligation_ids": [
+        "obl-141"
+      ],
+      "source_seed_ids": [
+        "seed-141"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-170",
+      "status": "partial",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:91-104 defines tier_boundary and Overseer audit diagnostic categories with tier fields",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:249-277 defines single Overseer tier-boundary subjective audit protocol and exactly two reviewer subagents"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Related tier-boundary/Overseer audit rules exist, but package/seam overseers, automation-first execution, terminology/projection cleanup, and explicit tier-term deprecation/alias choice are not directly covered.",
+      "source_obligation_ids": [
+        "obl-046"
+      ],
+      "source_seed_ids": [
+        "seed-046"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-033",
+      "status": "partial",
+      "evidence": [
+        "Plans/Run_Graph_View.md:31-39 defines Run Graph as canonical graph/lineage inspection for orchestrated execution, runtime nodes not tiers, lineage across graph patching, and blocked/recovery/promotion/corroboration state in selected-node detail",
+        "Plans/Run_Graph_View.md:41-52 defines graph view layout with run/generation/trust header, canvas search/overlays, inspector/table region, historical branches, virtualization, and lineage-focused defaults"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Run Graph covers graph surface and corroboration/recovery/promotion detail, but not explicit work-package/feature-seam surfaces, seam-level acceptance or weak-integration affordance, worktree filtering, or project-summary aggregation.",
+      "source_obligation_ids": [
+        "obl-023"
+      ],
+      "source_seed_ids": [
+        "seed-023"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-334",
+      "status": "partial",
+      "evidence": [
+        "Plans/Run_Graph_View.md:60-64 requires active_run_id/focused_run_id with focus_mode live/historical and coherent cross-tab deep links and search pivots on the focused run"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Focused-run routing is present, but shared destination payload model fields such as project_id, destination surface, selected object id/type, inspector target, and filter payload are absent.",
+      "source_obligation_ids": [
+        "obl-099"
+      ],
+      "source_seed_ids": [
+        "seed-099"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-454",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not define inline/context/canonical help depths, canonical term anti-drift rules, or tooltip/side explanation/help-route behavior.",
+      "source_obligation_ids": [
+        "obl-132"
+      ],
+      "source_seed_ids": [
+        "seed-132"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-630",
+      "status": "partial",
+      "evidence": [
+        "Plans/Run_Graph_View.md:31-39 defines runtime-node graph lineage and selected-node blocked/recovery/promotion/corroboration state",
+        "Plans/Run_Graph_View.md:60-64 defines focused_run_id and live/historical focus mode for cross-tab deep links and search pivots"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Execution-context-related consumer behavior is present, but the file does not explicitly list impacted consumer coverage for execution-context changes.",
+      "source_obligation_ids": [
+        "obl-176"
+      ],
+      "source_seed_ids": [
+        "seed-176"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-676",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not provide a downstream consumer or highest-risk impacted-docs list.",
+      "source_obligation_ids": [
+        "obl-189"
+      ],
+      "source_seed_ids": [
+        "seed-189"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1015",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not directly define scoped object identity resolver context, a small base route contract, or scoped lookup rules.",
+      "source_obligation_ids": [
+        "obl-285"
+      ],
+      "source_seed_ids": [
+        "seed-285"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

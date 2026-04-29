@@ -1,0 +1,957 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-088",
+  "row_group_ids": [
+    "rowgrp-0349",
+    "rowgrp-0350",
+    "rowgrp-0351",
+    "rowgrp-0352"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-06187",
+      "source_obligation_ids": [
+        "obl-5959"
+      ],
+      "source_seed_ids": [
+        "seed-8894"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "Continue the ordered sequence on this same 22-doc tranche into `GPT-5.2`; `GPT-5.4` still",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "### 7.3 Signal handling and process lifecycle",
+      "status": "partial",
+      "exact_items": [
+        "Continue the ordered sequence on this same 22-doc tranche into `GPT-5.2`; `GPT-5.4` still produced enough novel signal to justify it.",
+        "GPT-5.2",
+        "GPT-5.4"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L378"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06233",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06374",
+      "source_obligation_ids": [
+        "obl-6015"
+      ],
+      "source_seed_ids": [
+        "seed-9101",
+        "seed-9344"
+      ],
+      "source_shard_ids": [
+        "shard-0082",
+        "shard-0084"
+      ],
+      "canon_label": "`Package Overseer` / `Seam Overseer`",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "### 1.3 Package Overseer",
+      "status": "partial",
+      "exact_items": [
+        "`Package Overseer` / `Seam Overseer`",
+        "Package Overseer",
+        "Seam Overseer"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L88",
+        "Plans/Executor_Protocol.md:L91"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06453",
+      "source_obligation_ids": [
+        "obl-6094"
+      ],
+      "source_seed_ids": [
+        "seed-9212"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "`Contracts_V0.md` is also carrying two parallel navigation/open stories:",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "### 4. Capacity-aware parallel dispatch",
+      "status": "present",
+      "exact_items": [
+        "`Contracts_V0.md` is also carrying two parallel navigation/open stories:",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L64",
+        "Plans/Executor_Protocol.md:L193",
+        "Plans/Executor_Protocol.md:L222",
+        "Plans/Executor_Protocol.md:L254",
+        "Plans/Executor_Protocol.md:L276"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06520",
+      "source_obligation_ids": [
+        "obl-6161"
+      ],
+      "source_seed_ids": [
+        "seed-9315"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "The addenda already move toward attempt-native handoff identity:",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "## Execution Context: Worktree Handoff",
+      "status": "partial",
+      "exact_items": [
+        "The addenda already move toward attempt-native handoff identity:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L667"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06569",
+      "source_obligation_ids": [
+        "obl-6210"
+      ],
+      "source_seed_ids": [
+        "seed-9396"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Plans/Executor_Protocol.md` is now far less tier-era than several adjacent docs:",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Executor_Protocol.md` is now far less tier-era than several adjacent docs:",
+        "Plans/Executor_Protocol.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L15",
+        "Plans/Executor_Protocol.md:L35",
+        "Plans/Executor_Protocol.md:L38",
+        "Plans/Executor_Protocol.md:L47",
+        "Plans/Executor_Protocol.md:L50"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06575",
+      "source_obligation_ids": [
+        "obl-6216"
+      ],
+      "source_seed_ids": [
+        "seed-9402"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "But `Plans/Executor_Protocol.md` still has owner-level drift in the same file:",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "But `Plans/Executor_Protocol.md` still has owner-level drift in the same file:",
+        "Plans/Executor_Protocol.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L15",
+        "Plans/Executor_Protocol.md:L35",
+        "Plans/Executor_Protocol.md:L38",
+        "Plans/Executor_Protocol.md:L47",
+        "Plans/Executor_Protocol.md:L50"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06595",
+      "source_obligation_ids": [
+        "obl-6236"
+      ],
+      "source_seed_ids": [
+        "seed-9434"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Executor_Protocol.md` still names only the older `Overseer` execution role at the top eve",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "### 1.3 Package Overseer",
+      "status": "present",
+      "exact_items": [
+        "`Executor_Protocol.md` still names only the older `Overseer` execution role at the top even though governance has split into package and seam overseers elsewhere.",
+        "Executor_Protocol.md",
+        "Overseer"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L1",
+        "Plans/Executor_Protocol.md:L15",
+        "Plans/Executor_Protocol.md:L35",
+        "Plans/Executor_Protocol.md:L38",
+        "Plans/Executor_Protocol.md:L44"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06605",
+      "source_obligation_ids": [
+        "obl-6246"
+      ],
+      "source_seed_ids": [
+        "seed-9444"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`tier_id` filters and worker identity fields replaced with canonical node/attempt/runtime",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "### 1.1 Builder / node worker",
+      "status": "partial",
+      "exact_items": [
+        "`tier_id` filters and worker identity fields replaced with canonical node/attempt/runtime identity",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L82"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06841",
+      "source_obligation_ids": [
+        "obl-6451"
+      ],
+      "source_seed_ids": [
+        "seed-9830"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_A",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md`",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Tools.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Run_Modes.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L15",
+        "Plans/Executor_Protocol.md:L35",
+        "Plans/Executor_Protocol.md:L38",
+        "Plans/Executor_Protocol.md:L47",
+        "Plans/Executor_Protocol.md:L50"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06913",
+      "source_obligation_ids": [
+        "obl-6513"
+      ],
+      "source_seed_ids": [
+        "seed-9904"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Executor_Protocol.md:110-130`",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Executor_Protocol.md:110-130`",
+        "Plans/Executor_Protocol.md:110-130"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06955",
+      "source_obligation_ids": [
+        "obl-6555"
+      ],
+      "source_seed_ids": [
+        "seed-9965",
+        "seed-9986",
+        "seed-10029"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/Executor_Protocol.md:110-175`",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Executor_Protocol.md:110-175`",
+        "Plans/Executor_Protocol.md:110-175"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06968",
+      "source_obligation_ids": [
+        "obl-6568"
+      ],
+      "source_seed_ids": [
+        "seed-9997"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "Handoff target is now `Ledger Condenser`.",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "## Execution Context: Worktree Handoff",
+      "status": "partial",
+      "exact_items": [
+        "Handoff target is now `Ledger Condenser`.",
+        "Ledger Condenser"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L667"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07020",
+      "source_obligation_ids": [
+        "obl-6613"
+      ],
+      "source_seed_ids": [
+        "seed-10083"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "`Plans/Contracts_V0.md` and `Plans/Executor_Protocol.md` already carry `startup_recovered`",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md` and `Plans/Executor_Protocol.md` already carry `startup_recovered` in runtime wake canon.",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "startup_recovered"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L15",
+        "Plans/Executor_Protocol.md:L35",
+        "Plans/Executor_Protocol.md:L38",
+        "Plans/Executor_Protocol.md:L47",
+        "Plans/Executor_Protocol.md:L50"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07028",
+      "source_obligation_ids": [
+        "obl-6619"
+      ],
+      "source_seed_ids": [
+        "seed-10095"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "`Plans/Executor_Protocol.md:548-557`",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Executor_Protocol.md:548-557`",
+        "Plans/Executor_Protocol.md:548-557"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07096",
+      "source_obligation_ids": [
+        "obl-6676"
+      ],
+      "source_seed_ids": [
+        "seed-10241"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/Executor_Protocol.md:134-160`",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Executor_Protocol.md:134-160`",
+        "Plans/Executor_Protocol.md:134-160"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07208",
+      "source_obligation_ids": [
+        "obl-6768"
+      ],
+      "source_seed_ids": [
+        "seed-10418"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "`Plans/Executor_Protocol.md:134-178`",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Executor_Protocol.md:134-178`",
+        "Plans/Executor_Protocol.md:134-178"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07217",
+      "source_obligation_ids": [
+        "obl-6775"
+      ],
+      "source_seed_ids": [
+        "seed-10425"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Crosswalk.md`, and `Plans/Orchestrator_Page.md`.",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Models_System.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Crosswalk.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L15",
+        "Plans/Executor_Protocol.md:L35",
+        "Plans/Executor_Protocol.md:L38",
+        "Plans/Executor_Protocol.md:L47",
+        "Plans/Executor_Protocol.md:L50"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00073",
+      "source_obligation_ids": [
+        "obl-029"
+      ],
+      "source_seed_ids": [
+        "seed-029"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Provider/model/persona precedence and delegation policy",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "Emerging execution-settings direction",
+      "status": "missing",
+      "exact_items": [
+        "Define distinct defaults/overrides for provider/model at run/global, feature seam, work package, node, work package overseer, feature seam overseer, and overseer-delegated node worker levels.",
+        "Make requested vs effective provider/model visible at all levels where fallback/override can occur.",
+        "Specify node persona selection as dynamic-by-default from node scope/type; node-worker persona override is policy-owned, not per-node manual config.",
+        "Specify whether overseers may use subagents for node work and what provider/model policy applies to delegated node workers."
+      ],
+      "stale_tokens": [
+        "manual config",
+        "settings-owned roles",
+        "fallback/override"
+      ],
+      "evidence": [
+        "Plans/Executor_Protocol.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00078",
+      "source_obligation_ids": [
+        "obl-030"
+      ],
+      "source_seed_ids": [
+        "seed-030"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Worktree allocation/ownership rules and scale-managed isolation",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "Worktree gap is now explicit",
+      "status": "missing",
+      "exact_items": [
+        "Decide whether worktrees are allocated/owned per node, per package, per seam, or per remediation branch.",
+        "Resolve package-based worktree preference vs per-node worktrees for scale/manageability.",
+        "Record worktree ownership/isolation rules after Orchestrator ownership boundaries are pinned.",
+        "Expose source-control/worktree handshake as a remaining blind spot."
+      ],
+      "stale_tokens": [
+        "per-node worktrees",
+        "package-based worktrees",
+        "source control / worktree handshake"
+      ],
+      "evidence": [
+        "Plans/Executor_Protocol.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00104",
+      "source_obligation_ids": [
+        "obl-037"
+      ],
+      "source_seed_ids": [
+        "seed-037"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "execution identity + lineage fields",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "Runtime / Storage / Contract Impacts",
+      "status": "missing",
+      "exact_items": [
+        "Add node_id",
+        "Add package_id",
+        "Add seam_id",
+        "Add lane_id",
+        "Add attempt_id",
+        "Add effective_identity",
+        "Normalize requested/effective account identity shapes",
+        "Normalize blocked_reason_code/allowed_action_ids and safe-point/restore-point/rollback terminology"
+      ],
+      "stale_tokens": [
+        "phase_id",
+        "task_id",
+        "tier-identity",
+        "requested_auth_mode",
+        "effective_capabilities[]",
+        "active-agents.json",
+        "seglog",
+        "redb"
+      ],
+      "evidence": [
+        "Plans/Executor_Protocol.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00121",
+      "source_obligation_ids": [
+        "obl-040"
+      ],
+      "source_seed_ids": [
+        "seed-040"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "runtime schema anchors",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "Cleanup Priorities",
+      "status": "missing",
+      "exact_items": [
+        "Relax or replace stale graph-schema constants `selection_rule` and tier-rooted breadcrumbs.",
+        "Add package/seam/lane/worktree/account identity fields to canonical runtime/event/envelope contracts.",
+        "Define contamination and safe-point linkage explicitly in storage and blocked-payload contracts."
+      ],
+      "stale_tokens": [
+        "selection_rule",
+        "tier-rooted breadcrumbs",
+        "reason_code",
+        "recovery_options[]",
+        "single Overseer",
+        "one worktree"
+      ],
+      "evidence": [
+        "Plans/Executor_Protocol.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00419",
+      "source_obligation_ids": [
+        "obl-277"
+      ],
+      "source_seed_ids": [
+        "seed-315"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "either retire it",
+      "row_type": "stale_retirement",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "### Fidelity recovery cov-004: Retire tier-era canon and shadow fields",
+      "status": "present",
+      "exact_items": [
+        "either retire it"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L1-L745 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02494",
+      "source_obligation_ids": [
+        "obl-2344"
+      ],
+      "source_seed_ids": [
+        "seed-3045"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "stale `_persona_id` names remain in required worker identity fields",
+      "row_type": "stale_retirement",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "### 1.1 Builder / node worker",
+      "status": "present",
+      "exact_items": [
+        "stale `_persona_id` names remain in required worker identity fields",
+        "_persona_id"
+      ],
+      "stale_tokens": [
+        "_persona_id"
+      ],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L1-L745 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02974",
+      "source_obligation_ids": [
+        "obl-2820"
+      ],
+      "source_seed_ids": [
+        "seed-3718"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "still consume stale tier-era surface assumptions and incomplete identity payloads",
+      "row_type": "stale_retirement",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "### Fidelity recovery cov-004: Retire tier-era canon and shadow fields",
+      "status": "present",
+      "exact_items": [
+        "still consume stale tier-era surface assumptions and incomplete identity payloads"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L1-L745 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03120",
+      "source_obligation_ids": [
+        "obl-2966"
+      ],
+      "source_seed_ids": [
+        "seed-3914"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "`Executor_Protocol.md` has newer scheduler addenda that move toward the rewrite direction,",
+      "row_type": "stale_retirement",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "# Overseer Protocol (Canonical)",
+      "status": "missing",
+      "exact_items": [
+        "`Executor_Protocol.md` has newer scheduler addenda that move toward the rewrite direction, but the base protocol still frames role semantics, lifecycle wording, and dispatch in a singular overseer model with no first-class package/seam governance, corroboration, or concern authority. The addenda add node/lane vocabulary without replacing the stale top-level ontology.",
+        "Executor_Protocol.md"
+      ],
+      "stale_tokens": [
+        "Executor_Protocol.md"
+      ],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L15",
+        "Plans/Executor_Protocol.md:L35",
+        "Plans/Executor_Protocol.md:L38",
+        "Plans/Executor_Protocol.md:L47",
+        "Plans/Executor_Protocol.md:L50"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-03639",
+      "source_obligation_ids": [
+        "obl-3485"
+      ],
+      "source_seed_ids": [
+        "seed-4687"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "If restart determines an in-flight attempt cannot resume, that attempt transitions to `sta",
+      "row_type": "stale_retirement",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "### Blocked episode identity and restart recovery",
+      "status": "present",
+      "exact_items": [
+        "If restart determines an in-flight attempt cannot resume, that attempt transitions to `stale_historical`; if a blocked prerequisite still exists, the existing unresolved blocked episode remains the actionable state.",
+        "stale_historical"
+      ],
+      "stale_tokens": [
+        "stale_historical"
+      ],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L1-L745 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05857",
+      "source_obligation_ids": [
+        "obl-5629"
+      ],
+      "source_seed_ids": [
+        "seed-8350"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Retire or explicitly compatibility-label the older tier/HITL request-era tables instead of",
+      "row_type": "stale_retirement",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "### Fidelity recovery cov-004: Retire tier-era canon and shadow fields",
+      "status": "present",
+      "exact_items": [
+        "Retire or explicitly compatibility-label the older tier/HITL request-era tables instead of letting them stand as live canon beside the newer runtime sections."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L1-L745 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06489",
+      "source_obligation_ids": [
+        "obl-6130"
+      ],
+      "source_seed_ids": [
+        "seed-9265"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "stale tier-era and request-era pieces:",
+      "row_type": "stale_retirement",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "### Fidelity recovery cov-004: Retire tier-era canon and shadow fields",
+      "status": "present",
+      "exact_items": [
+        "stale tier-era and request-era pieces:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L1-L745 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06587",
+      "source_obligation_ids": [
+        "obl-6228"
+      ],
+      "source_seed_ids": [
+        "seed-9414"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "still carries stale worker identity fields:",
+      "row_type": "stale_retirement",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "### 1.1 Builder / node worker",
+      "status": "present",
+      "exact_items": [
+        "still carries stale worker identity fields:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L1-L745 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07090",
+      "source_obligation_ids": [
+        "obl-6670"
+      ],
+      "source_seed_ids": [
+        "seed-10212"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Wave 1 rechecked the storage/receipt/blocked/usage cluster and only reconfirmed the alread",
+      "row_type": "stale_retirement",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "### Fidelity recovery cov-160: Identity and blocked-policy transfer cluster",
+      "status": "present",
+      "exact_items": [
+        "Wave 1 rechecked the storage/receipt/blocked/usage cluster and only reconfirmed the already-recorded inline receipt transfer, missing consumer anchors, skeletal `blocked_notice` payload, blocked-attempt observability gap, and stale ask tuple without adding any new exact missing item or blocker family.",
+        "blocked_notice"
+      ],
+      "stale_tokens": [
+        "blocked_notice"
+      ],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L1-L745 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07188",
+      "source_obligation_ids": [
+        "obl-6752"
+      ],
+      "source_seed_ids": [
+        "seed-10391"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "`cov-511` / `obl-215` remains unresolved because the ledger requires one coherent owner se",
+      "row_type": "stale_retirement",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`cov-511` / `obl-215` remains unresolved because the ledger requires one coherent owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels together with parallel-node worktree assignment and ownership transitions, but the live docs split the topic without closing it: `Plans/Models_System.md:58-80` defines run/persona/surface/default priority only, `Plans/Executor_Protocol.md:134-178` defines `DispatchContext.provider_id` / `model_id` without precedence rules, and `Plans/WorktreeGitImprovement.md:78-161` keeps the legacy tier-keyed worktree model without a package/seam/lane allocation owner. Exact ledger evidence remains at `working_ledger.md:L1030`, `working_ledger.md:L1035-L1036`, and `working_ledger.md:L1283-L1290`.",
+        "cov-511",
+        "obl-215",
+        "Plans/Models_System.md:58-80",
+        "Plans/Executor_Protocol.md:134-178",
+        "DispatchContext.provider_id",
+        "model_id",
+        "Plans/WorktreeGitImprovement.md:78-161",
+        "working_ledger.md:L1030"
+      ],
+      "stale_tokens": [
+        "DispatchContext.provider_id",
+        "Plans/Executor_Protocol.md:134-178",
+        "Plans/Models_System.md:58-80",
+        "Plans/WorktreeGitImprovement.md:78-161",
+        "cov-511",
+        "model_id",
+        "obl-215",
+        "working_ledger.md:L1030",
+        "working_ledger.md:L1035-L1036",
+        "working_ledger.md:L1283-L1290"
+      ],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L1-L745 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

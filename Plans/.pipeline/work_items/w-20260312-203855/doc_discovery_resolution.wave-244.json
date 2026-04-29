@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-244",
+  "group_ids": [
+    "discgrp-0973",
+    "discgrp-0974",
+    "discgrp-0975",
+    "discgrp-0976"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01222",
+      "source_obligation_ids": [
+        "obl-1079"
+      ],
+      "source_seed_ids": [
+        "seed-1273"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "#### `remediation.resolved`",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1262"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01223",
+      "source_obligation_ids": [
+        "obl-1080"
+      ],
+      "source_seed_ids": [
+        "seed-1274"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/LSPSupport.md",
+      "new_heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/LSPSupport.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01224",
+      "source_obligation_ids": [
+        "obl-1081"
+      ],
+      "source_seed_ids": [
+        "seed-1275"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/interview-subagent-integration.md",
+      "new_heading_hint": "# Interview Feature Subagent Integration -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/interview-subagent-integration.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01225",
+      "source_obligation_ids": [
+        "obl-1082"
+      ],
+      "source_seed_ids": [
+        "seed-1276"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Progression_Gates.md",
+      "new_heading_hint": "### Fidelity recovery cov-034: Promotion classes and gate evidence",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Progression_Gates.md:L7"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,329 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-142",
+  "group_ids": [
+    "pktgrp-0565",
+    "pktgrp-0566",
+    "pktgrp-0567",
+    "pktgrp-0568"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0010",
+      "source_reconciliation_target_id": "target-0010",
+      "source_reconciliation_target_ids": [
+        "target-0010"
+      ],
+      "path": "Plans/.../dashboard*",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../dashboard*:L1",
+      "coverage_row_ids": [
+        "cov-00020",
+        "cov-00026"
+      ],
+      "source_obligation_ids": [
+        "obl-007",
+        "obl-009"
+      ],
+      "source_seed_ids": [
+        "seed-007",
+        "seed-009"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-007",
+          "obl-009"
+        ],
+        "source_seed_ids": [
+          "seed-007",
+          "seed-009"
+        ],
+        "source_shard_ids": [
+          "shard-0002"
+        ]
+      },
+      "gap_ids": [
+        "gap-00020",
+        "gap-00026"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Orchestrator widgets should consume stable shared projections rather than raw event streams or bespoke queries",
+        "widget shell needs widget identity/type, scope, filter/sort/display config, projection ref",
+        "Run Summary, Seam Summary, Concern Summary, Account / Usage Pressure, Recent Major Events should be broadly reusable across Orchestrator / Dashboard / Projects",
+        "Actions that change execution/promotion/recovery/approval truth require fresh-enough projection state",
+        "UI should explain gating inline: what is stale, why it matters, what the user can do next",
+        "Projection health becoming an operational concern must mint a real concern rather than stay a silent widget problem"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "raw event streams",
+        "bespoke queries",
+        "silent widget problem"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "raw event streams",
+        "bespoke queries",
+        "silent widget problem"
+      ],
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "Widget-system data-contract direction now clarified",
+        "Action-gating direction under degraded projections now clarified"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-6fb5e29e0907",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0011",
+      "source_reconciliation_target_id": "target-0011",
+      "source_reconciliation_target_ids": [
+        "target-0011"
+      ],
+      "path": "Plans/.../evidence*",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../evidence*:L1",
+      "coverage_row_ids": [
+        "cov-00033"
+      ],
+      "source_obligation_ids": [
+        "obl-011"
+      ],
+      "source_seed_ids": [
+        "seed-011"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-011"
+        ],
+        "source_seed_ids": [
+          "seed-011"
+        ],
+        "source_shard_ids": [
+          "shard-0002"
+        ]
+      },
+      "gap_ids": [
+        "gap-00033"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "All major surfaces should project the same concern model rather than inventing local versions",
+        "`Progress` = operational attention projection",
+        "`Seams` = integration/governance projection",
+        "`Evidence` = proof-backed concern projection",
+        "`History` = concern lifecycle timeline projection",
+        "`Ledger` = exact structured concern-record projection"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "local versions"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "local versions"
+      ],
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "Shared concern projection rule now clarified"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-c1880813fdc8",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0012",
+      "source_reconciliation_target_id": "target-0012",
+      "source_reconciliation_target_ids": [
+        "target-0012"
+      ],
+      "path": "Plans/.../graph detail inspector docs",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../graph detail inspector docs:L1",
+      "coverage_row_ids": [
+        "cov-00007"
+      ],
+      "source_obligation_ids": [
+        "obl-003"
+      ],
+      "source_seed_ids": [
+        "seed-003"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-003"
+        ],
+        "source_seed_ids": [
+          "seed-003"
+        ],
+        "source_shard_ids": [
+          "shard-0001"
+        ]
+      },
+      "gap_ids": [
+        "gap-00007"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "object/event focus should deep-link across Progress / Seams / Node Graph / Evidence / History / Ledger",
+        "deep links should carry selection/filter/focus context, not merely switch tabs",
+        "`Seams` and `Node Graph` should share focus context without hyperactive live-sync",
+        "clicking evidence/artifact links in graph detail should deep-link into the Evidence tab with target selection/filter applied",
+        "evidence and artifacts should remain linked bidirectionally"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "Key Facts and Findings"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-728a4dda1fc9",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0013",
+      "source_reconciliation_target_id": "target-0013",
+      "source_reconciliation_target_ids": [
+        "target-0013"
+      ],
+      "path": "Plans/.../history*",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../history*:L1",
+      "coverage_row_ids": [
+        "cov-00034"
+      ],
+      "source_obligation_ids": [
+        "obl-011"
+      ],
+      "source_seed_ids": [
+        "seed-011"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-011"
+        ],
+        "source_seed_ids": [
+          "seed-011"
+        ],
+        "source_shard_ids": [
+          "shard-0002"
+        ]
+      },
+      "gap_ids": [
+        "gap-00034"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "All major surfaces should project the same concern model rather than inventing local versions",
+        "`Progress` = operational attention projection",
+        "`Seams` = integration/governance projection",
+        "`Evidence` = proof-backed concern projection",
+        "`History` = concern lifecycle timeline projection",
+        "`Ledger` = exact structured concern-record projection"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "local versions"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "local versions"
+      ],
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "Shared concern projection rule now clarified"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-fe6d962cc18d",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-00020",
+    "cov-00026",
+    "cov-00033",
+    "cov-00007",
+    "cov-00034"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-007",
+    "obl-009",
+    "obl-011",
+    "obl-003"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-007",
+    "seed-009",
+    "seed-011",
+    "seed-003"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0002",
+    "shard-0001"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "preserved_exact_required_items": [
+    "Orchestrator widgets should consume stable shared projections rather than raw event streams or bespoke queries",
+    "widget shell needs widget identity/type, scope, filter/sort/display config, projection ref",
+    "Run Summary, Seam Summary, Concern Summary, Account / Usage Pressure, Recent Major Events should be broadly reusable across Orchestrator / Dashboard / Projects",
+    "Actions that change execution/promotion/recovery/approval truth require fresh-enough projection state",
+    "UI should explain gating inline: what is stale, why it matters, what the user can do next",
+    "Projection health becoming an operational concern must mint a real concern rather than stay a silent widget problem",
+    "All major surfaces should project the same concern model rather than inventing local versions",
+    "`Progress` = operational attention projection",
+    "`Seams` = integration/governance projection",
+    "`Evidence` = proof-backed concern projection",
+    "`History` = concern lifecycle timeline projection",
+    "`Ledger` = exact structured concern-record projection",
+    "object/event focus should deep-link across Progress / Seams / Node Graph / Evidence / History / Ledger",
+    "deep links should carry selection/filter/focus context, not merely switch tabs",
+    "`Seams` and `Node Graph` should share focus context without hyperactive live-sync",
+    "clicking evidence/artifact links in graph detail should deep-link into the Evidence tab with target selection/filter applied",
+    "evidence and artifacts should remain linked bidirectionally"
+  ],
+  "blocked_targets": []
+}

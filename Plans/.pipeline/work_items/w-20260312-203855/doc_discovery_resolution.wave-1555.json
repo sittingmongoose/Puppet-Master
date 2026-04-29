@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1555",
+  "group_ids": [
+    "discgrp-6217",
+    "discgrp-6218",
+    "discgrp-6219",
+    "discgrp-6220"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06994",
+      "source_obligation_ids": [
+        "obl-6590"
+      ],
+      "source_seed_ids": [
+        "seed-10046"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06999",
+      "source_obligation_ids": [
+        "obl-6595"
+      ],
+      "source_seed_ids": [
+        "seed-10051"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "### Fidelity recovery cov-170: Coverage blocker worktree allocation strategy",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-07001",
+      "source_obligation_ids": [
+        "obl-6597"
+      ],
+      "source_seed_ids": [
+        "seed-10060"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-165: Coverage blocker concern lifecycle owner section",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L233"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-07002",
+      "source_obligation_ids": [
+        "obl-6598"
+      ],
+      "source_seed_ids": [
+        "seed-10061"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L774"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

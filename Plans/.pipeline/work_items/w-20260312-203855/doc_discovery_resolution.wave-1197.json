@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1197",
+  "group_ids": [
+    "discgrp-4785",
+    "discgrp-4786",
+    "discgrp-4787",
+    "discgrp-4788"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05184",
+      "source_obligation_ids": [
+        "obl-4960"
+      ],
+      "source_seed_ids": [
+        "seed-7196"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "new_heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05185",
+      "source_obligation_ids": [
+        "obl-4961"
+      ],
+      "source_seed_ids": [
+        "seed-7197"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-011 -- UI command dispatch only (Rule 1)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L108"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05186",
+      "source_obligation_ids": [
+        "obl-4962"
+      ],
+      "source_seed_ids": [
+        "seed-7198"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "#### Route target navigation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05187",
+      "source_obligation_ids": [
+        "obl-4963"
+      ],
+      "source_seed_ids": [
+        "seed-7199"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-007 -- No stringly-typed IDs outside SSOT",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L75"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

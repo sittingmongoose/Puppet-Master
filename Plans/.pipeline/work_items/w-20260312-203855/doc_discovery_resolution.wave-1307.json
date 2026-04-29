@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1307",
+  "group_ids": [
+    "discgrp-5225",
+    "discgrp-5226",
+    "discgrp-5227",
+    "discgrp-5228"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05651",
+      "source_obligation_ids": [
+        "obl-5423"
+      ],
+      "source_seed_ids": [
+        "seed-8054"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05652",
+      "source_obligation_ids": [
+        "obl-5424"
+      ],
+      "source_seed_ids": [
+        "seed-8055"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Recommended minimum concern record shape",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L203"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05653",
+      "source_obligation_ids": [
+        "obl-5425"
+      ],
+      "source_seed_ids": [
+        "seed-8056"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "### 3.3 Navigation and source-open ownership",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L101"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05654",
+      "source_obligation_ids": [
+        "obl-5426"
+      ],
+      "source_seed_ids": [
+        "seed-8057"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "### 1. Settings > Advanced > Containers & Registry",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L35"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

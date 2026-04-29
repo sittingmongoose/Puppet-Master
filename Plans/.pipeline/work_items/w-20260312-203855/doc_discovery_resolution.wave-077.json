@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-077",
+  "group_ids": [
+    "discgrp-0305",
+    "discgrp-0306",
+    "discgrp-0307",
+    "discgrp-0308"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00551",
+      "source_obligation_ids": [
+        "obl-408"
+      ],
+      "source_seed_ids": [
+        "seed-470"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L43"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00552",
+      "source_obligation_ids": [
+        "obl-409"
+      ],
+      "source_seed_ids": [
+        "seed-471"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L43"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00553",
+      "source_obligation_ids": [
+        "obl-410"
+      ],
+      "source_seed_ids": [
+        "seed-472"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00554",
+      "source_obligation_ids": [
+        "obl-411"
+      ],
+      "source_seed_ids": [
+        "seed-473"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

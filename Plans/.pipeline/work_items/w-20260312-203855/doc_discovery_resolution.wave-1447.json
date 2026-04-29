@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1447",
+  "group_ids": [
+    "discgrp-5785",
+    "discgrp-5786",
+    "discgrp-5787",
+    "discgrp-5788"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06395",
+      "source_obligation_ids": [
+        "obl-6036"
+      ],
+      "source_seed_ids": [
+        "seed-9131"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06396",
+      "source_obligation_ids": [
+        "obl-6037"
+      ],
+      "source_seed_ids": [
+        "seed-9132"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "# Crosswalk (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06397",
+      "source_obligation_ids": [
+        "obl-6038"
+      ],
+      "source_seed_ids": [
+        "seed-9133"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "## Runtime Scheduler / Recovery Ownership and Precedence",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L300"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06398",
+      "source_obligation_ids": [
+        "obl-6039"
+      ],
+      "source_seed_ids": [
+        "seed-9134"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

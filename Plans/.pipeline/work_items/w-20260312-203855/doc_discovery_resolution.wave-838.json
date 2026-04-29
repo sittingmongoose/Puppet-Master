@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-838",
+  "group_ids": [
+    "discgrp-3349",
+    "discgrp-3350",
+    "discgrp-3351",
+    "discgrp-3352"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03629",
+      "source_obligation_ids": [
+        "obl-3475"
+      ],
+      "source_seed_ids": [
+        "seed-4677"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "### Blocked episode identity and restart recovery",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L603"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03630",
+      "source_obligation_ids": [
+        "obl-3476"
+      ],
+      "source_seed_ids": [
+        "seed-4678"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03631",
+      "source_obligation_ids": [
+        "obl-3477"
+      ],
+      "source_seed_ids": [
+        "seed-4679"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03632",
+      "source_obligation_ids": [
+        "obl-3478"
+      ],
+      "source_seed_ids": [
+        "seed-4680"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Prompt_Pipeline.md",
+      "new_heading_hint": "# Prompt Pipeline (Canonical SSOT)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

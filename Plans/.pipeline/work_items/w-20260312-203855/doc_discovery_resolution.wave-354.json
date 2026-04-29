@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-354",
+  "group_ids": [
+    "discgrp-1413",
+    "discgrp-1414",
+    "discgrp-1415",
+    "discgrp-1416"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01665",
+      "source_obligation_ids": [
+        "obl-1522"
+      ],
+      "source_seed_ids": [
+        "seed-1889"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "### Fidelity recovery cov-038: Focused run and historical routing contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01666",
+      "source_obligation_ids": [
+        "obl-1523"
+      ],
+      "source_seed_ids": [
+        "seed-1891"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01667",
+      "source_obligation_ids": [
+        "obl-1524"
+      ],
+      "source_seed_ids": [
+        "seed-1892"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-018: Export taxonomy and manifest contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L31"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01668",
+      "source_obligation_ids": [
+        "obl-1525"
+      ],
+      "source_seed_ids": [
+        "seed-1900"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

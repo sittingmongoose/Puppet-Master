@@ -1,0 +1,2253 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-137",
+  "group_ids": [
+    "gapgrp-0545",
+    "gapgrp-0546",
+    "gapgrp-0547",
+    "gapgrp-0548"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-01405",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01798 is partial for Because earlier research established `focused_run_id`, historical-run mode, and project-st",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01798"
+      ],
+      "source_obligation_ids": [
+        "obl-1655"
+      ],
+      "source_seed_ids": [
+        "seed-2062"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "Because earlier research established `focused_run_id`, historical-run mode, and project-state persistence, routing needs a persistence-aware rule:",
+        "focused_run_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01795",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02309 is partial for `minority_advisory` is now conceptually required by the research, but it still has no cano",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02309"
+      ],
+      "source_obligation_ids": [
+        "obl-2161"
+      ],
+      "source_seed_ids": [
+        "seed-2805"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`minority_advisory` is now conceptually required by the research, but it still has no canonical stream/event name.",
+        "minority_advisory"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01939",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02479 is partial for `quiet` or temporary suppression should only affect resurfacing of advisory items, not era",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "#### Deadline propagation and loop suppression"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02479"
+      ],
+      "source_obligation_ids": [
+        "obl-2329"
+      ],
+      "source_seed_ids": [
+        "seed-3021"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "`quiet` or temporary suppression should only affect resurfacing of advisory items, not erase canonical blocked/approval-wait rows",
+        "quiet"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02319",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02940 is partial for `decision_kind` (`switched | stayed | blocked_no_backup | blocked_required_account | faile",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 2. blocked vs failed"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02940"
+      ],
+      "source_obligation_ids": [
+        "obl-2787"
+      ],
+      "source_seed_ids": [
+        "seed-3666"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "`decision_kind` (`switched | stayed | blocked_no_backup | blocked_required_account | failed`)",
+        "decision_kind",
+        "switched | stayed | blocked_no_backup | blocked_required_account | failed"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02629",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03362 is partial for The missing structural fields now fall into a repeatable set across tool events and artifa",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03362"
+      ],
+      "source_obligation_ids": [
+        "obl-3208"
+      ],
+      "source_seed_ids": [
+        "seed-4273"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "The missing structural fields now fall into a repeatable set across tool events and artifact families:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03276",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04203 is partial for `CustomHeadlessTool` still lacks stable tool identity, registration timing, permission sem",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "#### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04203"
+      ],
+      "source_obligation_ids": [
+        "obl-4043"
+      ],
+      "source_seed_ids": [
+        "seed-5562"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "`CustomHeadlessTool` still lacks stable tool identity, registration timing, permission semantics, and consistent config-file ownership.",
+        "CustomHeadlessTool"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03734",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04780 is present for `LSPSupport.md` still assumes `tool.invoked` for user editor actions, which conflicts with",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### `tool.denied` requirements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04780"
+      ],
+      "source_obligation_ids": [
+        "obl-4558"
+      ],
+      "source_seed_ids": [
+        "seed-6475"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "`LSPSupport.md` still assumes `tool.invoked` for user editor actions, which conflicts with event requirements that assume a `run_id`.",
+        "LSPSupport.md",
+        "tool.invoked",
+        "run_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04781",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06184 is present for `LSPSupport.md` still lacks a normalized split between UI-only, internal-service, read-onl",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "#### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06184"
+      ],
+      "source_obligation_ids": [
+        "obl-5956"
+      ],
+      "source_seed_ids": [
+        "seed-8855"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "`LSPSupport.md` still lacks a normalized split between UI-only, internal-service, read-only tool, and mutation-capable LSP actions, especially in multi-project-tab routing.",
+        "LSPSupport.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04803",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06209 is present for `LSPSupport.md` still lacks a normalized split between run-scoped `tool.*` telemetry, UI-s",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "#### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06209"
+      ],
+      "source_obligation_ids": [
+        "obl-5978"
+      ],
+      "source_seed_ids": [
+        "seed-8946"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "`LSPSupport.md` still lacks a normalized split between run-scoped `tool.*` telemetry, UI-session LSP interactions, and mutation-capable apply-edit paths in multi-project/workspace-tab routing.",
+        "LSPSupport.md",
+        "tool.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05061",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06528 is partial for extend the effective-resolution and handoff records to the newer identity layers already e",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06528"
+      ],
+      "source_obligation_ids": [
+        "obl-6169"
+      ],
+      "source_seed_ids": [
+        "seed-9331"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "extend the effective-resolution and handoff records to the newer identity layers already established in research"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05217",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06732 is partial for closed `tab_id` vocabulary",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 11.2 Support-tier vocabulary"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06732"
+      ],
+      "source_obligation_ids": [
+        "obl-6373"
+      ],
+      "source_seed_ids": [
+        "seed-9731"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "closed `tab_id` vocabulary",
+        "tab_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05473",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07058 is present for Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-0",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07058"
+      ],
+      "source_obligation_ids": [
+        "obl-6643"
+      ],
+      "source_seed_ids": [
+        "seed-10135"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.",
+        "gap-003",
+        "gap-004",
+        "gap-005",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05545",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07143 is partial for This invocation kept the blocker-family count at eight and the affected-doc count at twent",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07143"
+      ],
+      "source_obligation_ids": [
+        "obl-6716"
+      ],
+      "source_seed_ids": [
+        "seed-10315"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "This invocation kept the blocker-family count at eight and the affected-doc count at twenty, but raised the underlying evidence count to fifty-nine by adding the missing-storage-anchor and missing-glossary-anchor evidence."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02151",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02736 is partial for Still needs research decisions**",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02736"
+      ],
+      "source_obligation_ids": [
+        "obl-2583"
+      ],
+      "source_seed_ids": [
+        "seed-3385"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Still needs research decisions**"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02173",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02761 is partial for Add canonical requested-side fields:",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "## 6. Ways to add tools (implementation angles)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02761"
+      ],
+      "source_obligation_ids": [
+        "obl-2608"
+      ],
+      "source_seed_ids": [
+        "seed-3416"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Add canonical requested-side fields:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02362",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02994 is partial for the tool outcome taxonomy still diverges from canonical blocked reason taxonomy",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "## Tool Policy Outcome Taxonomy Addendum (2026-03-08)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02994"
+      ],
+      "source_obligation_ids": [
+        "obl-2840"
+      ],
+      "source_seed_ids": [
+        "seed-3745"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "the tool outcome taxonomy still diverges from canonical blocked reason taxonomy"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02369",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03002 is partial for Tool events remain under-attributed for node/actor/account-aware audit.",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03002"
+      ],
+      "source_obligation_ids": [
+        "obl-2848"
+      ],
+      "source_seed_ids": [
+        "seed-3758"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "Tool events remain under-attributed for node/actor/account-aware audit."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02374",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03007 is partial for Extend tool events with node/attempt/actor/account context and reconcile tool outcomes wit",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "## Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03007"
+      ],
+      "source_obligation_ids": [
+        "obl-2853"
+      ],
+      "source_seed_ids": [
+        "seed-3763"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "Extend tool events with node/attempt/actor/account context and reconcile tool outcomes with canonical blocked codes."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02635",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03375 is partial for add effective account/runtime attribution where tool execution depends on provider identit",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "#### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03375"
+      ],
+      "source_obligation_ids": [
+        "obl-3221"
+      ],
+      "source_seed_ids": [
+        "seed-4302"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "add effective account/runtime attribution where tool execution depends on provider identity or permission state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02637",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03379 is partial for the real problem is not only missing fields; it is that tool events are still described as",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 3.5A `skill` tool runtime contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03379"
+      ],
+      "source_obligation_ids": [
+        "obl-3225"
+      ],
+      "source_seed_ids": [
+        "seed-4306"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "the real problem is not only missing fields; it is that tool events are still described as analytics exhaust while other docs already want them to carry runtime truth"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02677",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03426 is partial for Artifact / HITL / tool contracts remain under-owned at the exact file/field level:",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03426"
+      ],
+      "source_obligation_ids": [
+        "obl-3272"
+      ],
+      "source_seed_ids": [
+        "seed-4386"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "Artifact / HITL / tool contracts remain under-owned at the exact file/field level:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02816",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03595 is partial for Still needs research / owner decisions**",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03595"
+      ],
+      "source_obligation_ids": [
+        "obl-3441"
+      ],
+      "source_seed_ids": [
+        "seed-4634"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "Still needs research / owner decisions**"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03010",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03860 is partial for add `operational_identity?` to:",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "## 6. Ways to add tools (implementation angles)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03860"
+      ],
+      "source_obligation_ids": [
+        "obl-3705"
+      ],
+      "source_seed_ids": [
+        "seed-5030"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "add `operational_identity?` to:",
+        "operational_identity?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03103",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03989 is partial for tool traces that originate from a provider-backed attempt should carry `provider_attempt_r",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03989"
+      ],
+      "source_obligation_ids": [
+        "obl-3833"
+      ],
+      "source_seed_ids": [
+        "seed-5252"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "tool traces that originate from a provider-backed attempt should carry `provider_attempt_ref?` whenever that provider/runtime handle exists",
+        "provider_attempt_ref?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03288",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04219 is partial for GPT-5.4 did not flatten out; it is still adding precision beyond Sonnet, especially where",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04219"
+      ],
+      "source_obligation_ids": [
+        "obl-4059"
+      ],
+      "source_seed_ids": [
+        "seed-5598"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "GPT-5.4 did not flatten out; it is still adding precision beyond Sonnet, especially where the owner docs themselves remain structurally weak."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03364",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04308 is partial for This means the docs currently describe stronger verifiability than the gate/evidence contr",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04308"
+      ],
+      "source_obligation_ids": [
+        "obl-4148"
+      ],
+      "source_seed_ids": [
+        "seed-5748"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "This means the docs currently describe stronger verifiability than the gate/evidence contracts can actually support once navigation ceases to be a set of one-off command handlers."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03527",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04495 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04495"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03646",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04655 is partial for Avoid adding a generic nested \u201cextra args\u201d bag to `route_target`; that would recreate the",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04655"
+      ],
+      "source_obligation_ids": [
+        "obl-4433"
+      ],
+      "source_seed_ids": [
+        "seed-6278"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "Avoid adding a generic nested \u201cextra args\u201d bag to `route_target`; that would recreate the same drift under a different name.",
+        "route_target"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03662",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04688 is partial for Prefer extending `object_kind` deliberately over adding new top-level route fields.",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04688"
+      ],
+      "source_obligation_ids": [
+        "obl-4466"
+      ],
+      "source_seed_ids": [
+        "seed-6350"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "Prefer extending `object_kind` deliberately over adding new top-level route fields.",
+        "object_kind"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03784",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04840 is partial for What should stay out of coarse destination vocabulary",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 11.2 Support-tier vocabulary"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04840"
+      ],
+      "source_obligation_ids": [
+        "obl-4617"
+      ],
+      "source_seed_ids": [
+        "seed-6598"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "What should stay out of coarse destination vocabulary"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04010",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05155 is partial for The canonical vocabulary is:",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 11.2 Support-tier vocabulary"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05155"
+      ],
+      "source_obligation_ids": [
+        "obl-4931"
+      ],
+      "source_seed_ids": [
+        "seed-7137",
+        "seed-7307"
+      ],
+      "source_shard_ids": [
+        "shard-0068",
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "The canonical vocabulary is:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04064",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05231 is partial for `inspector_target` needs a controlled vocabulary.",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 11.2 Support-tier vocabulary"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05231"
+      ],
+      "source_obligation_ids": [
+        "obl-5007"
+      ],
+      "source_seed_ids": [
+        "seed-7306"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "`inspector_target` needs a controlled vocabulary.",
+        "inspector_target"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04212",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05413 is partial for The current high-value canonical vocabulary is:",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 11.2 Support-tier vocabulary"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05413"
+      ],
+      "source_obligation_ids": [
+        "obl-5185"
+      ],
+      "source_seed_ids": [
+        "seed-7684"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "The current high-value canonical vocabulary is:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-01798",
+    "cov-02309",
+    "cov-02479",
+    "cov-02940",
+    "cov-03362",
+    "cov-04203",
+    "cov-04780",
+    "cov-06184",
+    "cov-06209",
+    "cov-06528",
+    "cov-06732",
+    "cov-07058",
+    "cov-07143",
+    "cov-02736",
+    "cov-02761",
+    "cov-02994",
+    "cov-03002",
+    "cov-03007",
+    "cov-03375",
+    "cov-03379",
+    "cov-03426",
+    "cov-03595",
+    "cov-03860",
+    "cov-03989",
+    "cov-04219",
+    "cov-04308",
+    "cov-04495",
+    "cov-04655",
+    "cov-04688",
+    "cov-04840",
+    "cov-05155",
+    "cov-05231",
+    "cov-05413"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1655",
+    "obl-2161",
+    "obl-2329",
+    "obl-2583",
+    "obl-2608",
+    "obl-2787",
+    "obl-2840",
+    "obl-2848",
+    "obl-2853",
+    "obl-3208",
+    "obl-3221",
+    "obl-3225",
+    "obl-3272",
+    "obl-3441",
+    "obl-3705",
+    "obl-3833",
+    "obl-4043",
+    "obl-4059",
+    "obl-4148",
+    "obl-4292",
+    "obl-4433",
+    "obl-4466",
+    "obl-4558",
+    "obl-4617",
+    "obl-4931",
+    "obl-5007",
+    "obl-5185",
+    "obl-5956",
+    "obl-5978",
+    "obl-6169",
+    "obl-6373",
+    "obl-6643",
+    "obl-6716"
+  ],
+  "source_seed_ids_represented": [
+    "seed-10135",
+    "seed-10315",
+    "seed-2062",
+    "seed-2805",
+    "seed-3021",
+    "seed-3385",
+    "seed-3416",
+    "seed-3666",
+    "seed-3745",
+    "seed-3758",
+    "seed-3763",
+    "seed-4273",
+    "seed-4302",
+    "seed-4306",
+    "seed-4386",
+    "seed-4634",
+    "seed-5030",
+    "seed-5252",
+    "seed-5562",
+    "seed-5598",
+    "seed-5748",
+    "seed-6001",
+    "seed-6278",
+    "seed-6350",
+    "seed-6475",
+    "seed-6598",
+    "seed-7137",
+    "seed-7306",
+    "seed-7307",
+    "seed-7684",
+    "seed-8855",
+    "seed-8946",
+    "seed-9331",
+    "seed-9731"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0029",
+    "shard-0035",
+    "shard-0037",
+    "shard-0040",
+    "shard-0042",
+    "shard-0046",
+    "shard-0047",
+    "shard-0049",
+    "shard-0052",
+    "shard-0053",
+    "shard-0056",
+    "shard-0057",
+    "shard-0059",
+    "shard-0061",
+    "shard-0062",
+    "shard-0063",
+    "shard-0068",
+    "shard-0069",
+    "shard-0072",
+    "shard-0081",
+    "shard-0084",
+    "shard-0087",
+    "shard-0090",
+    "shard-0091"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-01405",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01798 is partial for Because earlier research established `focused_run_id`, historical-run mode, and project-st",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01798"
+      ],
+      "source_obligation_ids": [
+        "obl-1655"
+      ],
+      "source_seed_ids": [
+        "seed-2062"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "Because earlier research established `focused_run_id`, historical-run mode, and project-state persistence, routing needs a persistence-aware rule:",
+        "focused_run_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01795",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02309 is partial for `minority_advisory` is now conceptually required by the research, but it still has no cano",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02309"
+      ],
+      "source_obligation_ids": [
+        "obl-2161"
+      ],
+      "source_seed_ids": [
+        "seed-2805"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`minority_advisory` is now conceptually required by the research, but it still has no canonical stream/event name.",
+        "minority_advisory"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01939",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02479 is partial for `quiet` or temporary suppression should only affect resurfacing of advisory items, not era",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "#### Deadline propagation and loop suppression"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02479"
+      ],
+      "source_obligation_ids": [
+        "obl-2329"
+      ],
+      "source_seed_ids": [
+        "seed-3021"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "`quiet` or temporary suppression should only affect resurfacing of advisory items, not erase canonical blocked/approval-wait rows",
+        "quiet"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02319",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02940 is partial for `decision_kind` (`switched | stayed | blocked_no_backup | blocked_required_account | faile",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 2. blocked vs failed"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02940"
+      ],
+      "source_obligation_ids": [
+        "obl-2787"
+      ],
+      "source_seed_ids": [
+        "seed-3666"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "`decision_kind` (`switched | stayed | blocked_no_backup | blocked_required_account | failed`)",
+        "decision_kind",
+        "switched | stayed | blocked_no_backup | blocked_required_account | failed"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02629",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03362 is partial for The missing structural fields now fall into a repeatable set across tool events and artifa",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03362"
+      ],
+      "source_obligation_ids": [
+        "obl-3208"
+      ],
+      "source_seed_ids": [
+        "seed-4273"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "The missing structural fields now fall into a repeatable set across tool events and artifact families:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03276",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04203 is partial for `CustomHeadlessTool` still lacks stable tool identity, registration timing, permission sem",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "#### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04203"
+      ],
+      "source_obligation_ids": [
+        "obl-4043"
+      ],
+      "source_seed_ids": [
+        "seed-5562"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "`CustomHeadlessTool` still lacks stable tool identity, registration timing, permission semantics, and consistent config-file ownership.",
+        "CustomHeadlessTool"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03734",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04780 is present for `LSPSupport.md` still assumes `tool.invoked` for user editor actions, which conflicts with",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### `tool.denied` requirements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04780"
+      ],
+      "source_obligation_ids": [
+        "obl-4558"
+      ],
+      "source_seed_ids": [
+        "seed-6475"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "`LSPSupport.md` still assumes `tool.invoked` for user editor actions, which conflicts with event requirements that assume a `run_id`.",
+        "LSPSupport.md",
+        "tool.invoked",
+        "run_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04781",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06184 is present for `LSPSupport.md` still lacks a normalized split between UI-only, internal-service, read-onl",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "#### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06184"
+      ],
+      "source_obligation_ids": [
+        "obl-5956"
+      ],
+      "source_seed_ids": [
+        "seed-8855"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "`LSPSupport.md` still lacks a normalized split between UI-only, internal-service, read-only tool, and mutation-capable LSP actions, especially in multi-project-tab routing.",
+        "LSPSupport.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04803",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06209 is present for `LSPSupport.md` still lacks a normalized split between run-scoped `tool.*` telemetry, UI-s",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "#### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06209"
+      ],
+      "source_obligation_ids": [
+        "obl-5978"
+      ],
+      "source_seed_ids": [
+        "seed-8946"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "`LSPSupport.md` still lacks a normalized split between run-scoped `tool.*` telemetry, UI-session LSP interactions, and mutation-capable apply-edit paths in multi-project/workspace-tab routing.",
+        "LSPSupport.md",
+        "tool.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05061",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06528 is partial for extend the effective-resolution and handoff records to the newer identity layers already e",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06528"
+      ],
+      "source_obligation_ids": [
+        "obl-6169"
+      ],
+      "source_seed_ids": [
+        "seed-9331"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "extend the effective-resolution and handoff records to the newer identity layers already established in research"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05217",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06732 is partial for closed `tab_id` vocabulary",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 11.2 Support-tier vocabulary"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06732"
+      ],
+      "source_obligation_ids": [
+        "obl-6373"
+      ],
+      "source_seed_ids": [
+        "seed-9731"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "closed `tab_id` vocabulary",
+        "tab_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05473",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07058 is present for Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-0",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07058"
+      ],
+      "source_obligation_ids": [
+        "obl-6643"
+      ],
+      "source_seed_ids": [
+        "seed-10135"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.",
+        "gap-003",
+        "gap-004",
+        "gap-005",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05545",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07143 is partial for This invocation kept the blocker-family count at eight and the affected-doc count at twent",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07143"
+      ],
+      "source_obligation_ids": [
+        "obl-6716"
+      ],
+      "source_seed_ids": [
+        "seed-10315"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "This invocation kept the blocker-family count at eight and the affected-doc count at twenty, but raised the underlying evidence count to fifty-nine by adding the missing-storage-anchor and missing-glossary-anchor evidence."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02151",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02736 is partial for Still needs research decisions**",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02736"
+      ],
+      "source_obligation_ids": [
+        "obl-2583"
+      ],
+      "source_seed_ids": [
+        "seed-3385"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Still needs research decisions**"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02173",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02761 is partial for Add canonical requested-side fields:",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "## 6. Ways to add tools (implementation angles)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02761"
+      ],
+      "source_obligation_ids": [
+        "obl-2608"
+      ],
+      "source_seed_ids": [
+        "seed-3416"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Add canonical requested-side fields:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02362",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02994 is partial for the tool outcome taxonomy still diverges from canonical blocked reason taxonomy",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "## Tool Policy Outcome Taxonomy Addendum (2026-03-08)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02994"
+      ],
+      "source_obligation_ids": [
+        "obl-2840"
+      ],
+      "source_seed_ids": [
+        "seed-3745"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "the tool outcome taxonomy still diverges from canonical blocked reason taxonomy"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02369",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03002 is partial for Tool events remain under-attributed for node/actor/account-aware audit.",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03002"
+      ],
+      "source_obligation_ids": [
+        "obl-2848"
+      ],
+      "source_seed_ids": [
+        "seed-3758"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "Tool events remain under-attributed for node/actor/account-aware audit."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02374",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03007 is partial for Extend tool events with node/attempt/actor/account context and reconcile tool outcomes wit",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "## Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03007"
+      ],
+      "source_obligation_ids": [
+        "obl-2853"
+      ],
+      "source_seed_ids": [
+        "seed-3763"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "Extend tool events with node/attempt/actor/account context and reconcile tool outcomes with canonical blocked codes."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02635",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03375 is partial for add effective account/runtime attribution where tool execution depends on provider identit",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "#### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03375"
+      ],
+      "source_obligation_ids": [
+        "obl-3221"
+      ],
+      "source_seed_ids": [
+        "seed-4302"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "add effective account/runtime attribution where tool execution depends on provider identity or permission state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02637",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03379 is partial for the real problem is not only missing fields; it is that tool events are still described as",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 3.5A `skill` tool runtime contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03379"
+      ],
+      "source_obligation_ids": [
+        "obl-3225"
+      ],
+      "source_seed_ids": [
+        "seed-4306"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "the real problem is not only missing fields; it is that tool events are still described as analytics exhaust while other docs already want them to carry runtime truth"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02677",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03426 is partial for Artifact / HITL / tool contracts remain under-owned at the exact file/field level:",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03426"
+      ],
+      "source_obligation_ids": [
+        "obl-3272"
+      ],
+      "source_seed_ids": [
+        "seed-4386"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "Artifact / HITL / tool contracts remain under-owned at the exact file/field level:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02816",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03595 is partial for Still needs research / owner decisions**",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03595"
+      ],
+      "source_obligation_ids": [
+        "obl-3441"
+      ],
+      "source_seed_ids": [
+        "seed-4634"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "Still needs research / owner decisions**"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03010",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03860 is partial for add `operational_identity?` to:",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "## 6. Ways to add tools (implementation angles)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03860"
+      ],
+      "source_obligation_ids": [
+        "obl-3705"
+      ],
+      "source_seed_ids": [
+        "seed-5030"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "add `operational_identity?` to:",
+        "operational_identity?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03103",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03989 is partial for tool traces that originate from a provider-backed attempt should carry `provider_attempt_r",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03989"
+      ],
+      "source_obligation_ids": [
+        "obl-3833"
+      ],
+      "source_seed_ids": [
+        "seed-5252"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "tool traces that originate from a provider-backed attempt should carry `provider_attempt_ref?` whenever that provider/runtime handle exists",
+        "provider_attempt_ref?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03288",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04219 is partial for GPT-5.4 did not flatten out; it is still adding precision beyond Sonnet, especially where",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04219"
+      ],
+      "source_obligation_ids": [
+        "obl-4059"
+      ],
+      "source_seed_ids": [
+        "seed-5598"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "GPT-5.4 did not flatten out; it is still adding precision beyond Sonnet, especially where the owner docs themselves remain structurally weak."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03364",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04308 is partial for This means the docs currently describe stronger verifiability than the gate/evidence contr",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04308"
+      ],
+      "source_obligation_ids": [
+        "obl-4148"
+      ],
+      "source_seed_ids": [
+        "seed-5748"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "This means the docs currently describe stronger verifiability than the gate/evidence contracts can actually support once navigation ceases to be a set of one-off command handlers."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03527",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04495 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04495"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03646",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04655 is partial for Avoid adding a generic nested \u201cextra args\u201d bag to `route_target`; that would recreate the",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04655"
+      ],
+      "source_obligation_ids": [
+        "obl-4433"
+      ],
+      "source_seed_ids": [
+        "seed-6278"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "Avoid adding a generic nested \u201cextra args\u201d bag to `route_target`; that would recreate the same drift under a different name.",
+        "route_target"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03662",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04688 is partial for Prefer extending `object_kind` deliberately over adding new top-level route fields.",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "# Adding Tool Support -- Research & Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04688"
+      ],
+      "source_obligation_ids": [
+        "obl-4466"
+      ],
+      "source_seed_ids": [
+        "seed-6350"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "Prefer extending `object_kind` deliberately over adding new top-level route fields.",
+        "object_kind"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03784",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04840 is partial for What should stay out of coarse destination vocabulary",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 11.2 Support-tier vocabulary"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04840"
+      ],
+      "source_obligation_ids": [
+        "obl-4617"
+      ],
+      "source_seed_ids": [
+        "seed-6598"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "What should stay out of coarse destination vocabulary"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04010",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05155 is partial for The canonical vocabulary is:",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 11.2 Support-tier vocabulary"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05155"
+      ],
+      "source_obligation_ids": [
+        "obl-4931"
+      ],
+      "source_seed_ids": [
+        "seed-7137",
+        "seed-7307"
+      ],
+      "source_shard_ids": [
+        "shard-0068",
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "The canonical vocabulary is:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04064",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05231 is partial for `inspector_target` needs a controlled vocabulary.",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 11.2 Support-tier vocabulary"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05231"
+      ],
+      "source_obligation_ids": [
+        "obl-5007"
+      ],
+      "source_seed_ids": [
+        "seed-7306"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "`inspector_target` needs a controlled vocabulary.",
+        "inspector_target"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04212",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05413 is partial for The current high-value canonical vocabulary is:",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 11.2 Support-tier vocabulary"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05413"
+      ],
+      "source_obligation_ids": [
+        "obl-5185"
+      ],
+      "source_seed_ids": [
+        "seed-7684"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "The current high-value canonical vocabulary is:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

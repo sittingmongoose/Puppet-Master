@@ -1,0 +1,805 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-155",
+  "group_ids": [
+    "gapgrp-0617",
+    "gapgrp-0618",
+    "gapgrp-0619",
+    "gapgrp-0620"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-02888",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03695 is partial for Register memory and live-preview/build event families, new doctor checks, and new ToolIDs",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": "# Assistant-Only Memory Subsystem (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03695"
+      ],
+      "source_obligation_ids": [
+        "obl-3540"
+      ],
+      "source_seed_ids": [
+        "seed-4763"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "Register memory and live-preview/build event families, new doctor checks, and new ToolIDs in the canonical storage/tool/command owners instead of leaving them stranded in supporting docs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03304",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04240 is present for `handoff` and `promotion` are now visibly polysemous across stream, UI, memory, and eviden",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": "# Assistant-Only Memory Subsystem (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04240"
+      ],
+      "source_obligation_ids": [
+        "obl-4080"
+      ],
+      "source_seed_ids": [
+        "seed-5642"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "`handoff` and `promotion` are now visibly polysemous across stream, UI, memory, and evidence docs.",
+        "handoff",
+        "promotion"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03471",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04439 is partial for `memory.gist.*`, AutoRunBoundary/AutoMilestone, project-switch handoff, and `attention_req",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": "# Assistant-Only Memory Subsystem (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04439"
+      ],
+      "source_obligation_ids": [
+        "obl-4279"
+      ],
+      "source_seed_ids": [
+        "seed-5963"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "`memory.gist.*`, AutoRunBoundary/AutoMilestone, project-switch handoff, and `attention_required` durability still lack a consistent event/persistence/command ownership story.",
+        "memory.gist.*",
+        "attention_required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00104",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "owner coverage row cov-00107 is missing for execution identity + lineage fields",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": "Runtime / Storage / Contract Impacts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00107"
+      ],
+      "source_obligation_ids": [
+        "obl-037"
+      ],
+      "source_seed_ids": [
+        "seed-037"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Add node_id",
+        "Add package_id",
+        "Add seam_id",
+        "Add lane_id",
+        "Add attempt_id",
+        "Add effective_identity",
+        "Normalize requested/effective account identity shapes",
+        "Normalize blocked_reason_code/allowed_action_ids and safe-point/restore-point/rollback terminology"
+      ],
+      "stale_tokens": [
+        "phase_id",
+        "task_id",
+        "tier-identity",
+        "requested_auth_mode",
+        "effective_capabilities[]",
+        "active-agents.json",
+        "seglog",
+        "redb"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03277",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04204 is partial for `live.*` and memory auto-trigger/handoff event families still have no canonical contracts/",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": "# Assistant-Only Memory Subsystem (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04204"
+      ],
+      "source_obligation_ids": [
+        "obl-4044"
+      ],
+      "source_seed_ids": [
+        "seed-5563"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "`live.*` and memory auto-trigger/handoff event families still have no canonical contracts/storage registration.",
+        "live.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03316",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04253 is partial for assistant-memory still has no clear owner for whether `memory.gist.*` is a seglog event fa",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": "# Assistant-Only Memory Subsystem (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04253"
+      ],
+      "source_obligation_ids": [
+        "obl-4093"
+      ],
+      "source_seed_ids": [
+        "seed-5655"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "assistant-memory still has no clear owner for whether `memory.gist.*` is a seglog event family or merely a redb-side mutation signal.",
+        "memory.gist.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03476",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04444 is partial for Newtools and memory remain the strongest examples of plan-local obligations not yet absorb",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": "# Assistant-Only Memory Subsystem (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04444"
+      ],
+      "source_obligation_ids": [
+        "obl-4284"
+      ],
+      "source_seed_ids": [
+        "seed-5993"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "Newtools and memory remain the strongest examples of plan-local obligations not yet absorbed by canonical state/event/command owners."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03535",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04503 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04503"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04859",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06272 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06272"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00263",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00324 is missing for docs involved: `Plans/sharding_config.json`, `Plans/auto_decisions.jsonl`",
+      "affected_targets": [
+        {
+          "path": "Plans/auto_decisions.json",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00324"
+      ],
+      "source_obligation_ids": [
+        "obl-183"
+      ],
+      "source_seed_ids": [
+        "seed-209"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "docs involved: `Plans/sharding_config.json`, `Plans/auto_decisions.jsonl`",
+        "Plans/sharding_config.json",
+        "Plans/auto_decisions.jsonl"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00257",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00305 is missing for `Plans/auto_decisions.schema.json`",
+      "affected_targets": [
+        {
+          "path": "Plans/auto_decisions.schema.json",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00305"
+      ],
+      "source_obligation_ids": [
+        "obl-172"
+      ],
+      "source_seed_ids": [
+        "seed-198"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "`Plans/auto_decisions.schema.json`",
+        "Plans/auto_decisions.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-03695",
+    "cov-04240",
+    "cov-04439",
+    "cov-00107",
+    "cov-04204",
+    "cov-04253",
+    "cov-04444",
+    "cov-04503",
+    "cov-06272",
+    "cov-00324",
+    "cov-00305"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-037",
+    "obl-172",
+    "obl-183",
+    "obl-3540",
+    "obl-4044",
+    "obl-4080",
+    "obl-4093",
+    "obl-4279",
+    "obl-4284",
+    "obl-4292",
+    "obl-5986"
+  ],
+  "source_seed_ids_represented": [
+    "seed-037",
+    "seed-198",
+    "seed-209",
+    "seed-4763",
+    "seed-5563",
+    "seed-5642",
+    "seed-5655",
+    "seed-5963",
+    "seed-5993",
+    "seed-6001",
+    "seed-9006"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0007",
+    "shard-0010",
+    "shard-0050",
+    "shard-0056",
+    "shard-0058",
+    "shard-0059",
+    "shard-0082"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-02888",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03695 is partial for Register memory and live-preview/build event families, new doctor checks, and new ToolIDs",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": "# Assistant-Only Memory Subsystem (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03695"
+      ],
+      "source_obligation_ids": [
+        "obl-3540"
+      ],
+      "source_seed_ids": [
+        "seed-4763"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "Register memory and live-preview/build event families, new doctor checks, and new ToolIDs in the canonical storage/tool/command owners instead of leaving them stranded in supporting docs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03304",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04240 is present for `handoff` and `promotion` are now visibly polysemous across stream, UI, memory, and eviden",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": "# Assistant-Only Memory Subsystem (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04240"
+      ],
+      "source_obligation_ids": [
+        "obl-4080"
+      ],
+      "source_seed_ids": [
+        "seed-5642"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "`handoff` and `promotion` are now visibly polysemous across stream, UI, memory, and evidence docs.",
+        "handoff",
+        "promotion"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03471",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04439 is partial for `memory.gist.*`, AutoRunBoundary/AutoMilestone, project-switch handoff, and `attention_req",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": "# Assistant-Only Memory Subsystem (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04439"
+      ],
+      "source_obligation_ids": [
+        "obl-4279"
+      ],
+      "source_seed_ids": [
+        "seed-5963"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "`memory.gist.*`, AutoRunBoundary/AutoMilestone, project-switch handoff, and `attention_required` durability still lack a consistent event/persistence/command ownership story.",
+        "memory.gist.*",
+        "attention_required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00104",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "owner coverage row cov-00107 is missing for execution identity + lineage fields",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": "Runtime / Storage / Contract Impacts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00107"
+      ],
+      "source_obligation_ids": [
+        "obl-037"
+      ],
+      "source_seed_ids": [
+        "seed-037"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Add node_id",
+        "Add package_id",
+        "Add seam_id",
+        "Add lane_id",
+        "Add attempt_id",
+        "Add effective_identity",
+        "Normalize requested/effective account identity shapes",
+        "Normalize blocked_reason_code/allowed_action_ids and safe-point/restore-point/rollback terminology"
+      ],
+      "stale_tokens": [
+        "phase_id",
+        "task_id",
+        "tier-identity",
+        "requested_auth_mode",
+        "effective_capabilities[]",
+        "active-agents.json",
+        "seglog",
+        "redb"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03277",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04204 is partial for `live.*` and memory auto-trigger/handoff event families still have no canonical contracts/",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": "# Assistant-Only Memory Subsystem (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04204"
+      ],
+      "source_obligation_ids": [
+        "obl-4044"
+      ],
+      "source_seed_ids": [
+        "seed-5563"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "`live.*` and memory auto-trigger/handoff event families still have no canonical contracts/storage registration.",
+        "live.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03316",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04253 is partial for assistant-memory still has no clear owner for whether `memory.gist.*` is a seglog event fa",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": "# Assistant-Only Memory Subsystem (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04253"
+      ],
+      "source_obligation_ids": [
+        "obl-4093"
+      ],
+      "source_seed_ids": [
+        "seed-5655"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "assistant-memory still has no clear owner for whether `memory.gist.*` is a seglog event family or merely a redb-side mutation signal.",
+        "memory.gist.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03476",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04444 is partial for Newtools and memory remain the strongest examples of plan-local obligations not yet absorb",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": "# Assistant-Only Memory Subsystem (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04444"
+      ],
+      "source_obligation_ids": [
+        "obl-4284"
+      ],
+      "source_seed_ids": [
+        "seed-5993"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "Newtools and memory remain the strongest examples of plan-local obligations not yet absorbed by canonical state/event/command owners."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03535",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04503 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04503"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04859",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06272 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06272"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00263",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00324 is missing for docs involved: `Plans/sharding_config.json`, `Plans/auto_decisions.jsonl`",
+      "affected_targets": [
+        {
+          "path": "Plans/auto_decisions.json",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00324"
+      ],
+      "source_obligation_ids": [
+        "obl-183"
+      ],
+      "source_seed_ids": [
+        "seed-209"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "docs involved: `Plans/sharding_config.json`, `Plans/auto_decisions.jsonl`",
+        "Plans/sharding_config.json",
+        "Plans/auto_decisions.jsonl"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00257",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00305 is missing for `Plans/auto_decisions.schema.json`",
+      "affected_targets": [
+        {
+          "path": "Plans/auto_decisions.schema.json",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00305"
+      ],
+      "source_obligation_ids": [
+        "obl-172"
+      ],
+      "source_seed_ids": [
+        "seed-198"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "`Plans/auto_decisions.schema.json`",
+        "Plans/auto_decisions.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

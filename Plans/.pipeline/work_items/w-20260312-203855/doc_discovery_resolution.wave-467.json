@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-467",
+  "group_ids": [
+    "discgrp-1865",
+    "discgrp-1866",
+    "discgrp-1867",
+    "discgrp-1868"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02122",
+      "source_obligation_ids": [
+        "obl-1979"
+      ],
+      "source_seed_ids": [
+        "seed-2576"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02123",
+      "source_obligation_ids": [
+        "obl-1980"
+      ],
+      "source_seed_ids": [
+        "seed-2577"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02124",
+      "source_obligation_ids": [
+        "obl-1981"
+      ],
+      "source_seed_ids": [
+        "seed-2578"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02125",
+      "source_obligation_ids": [
+        "obl-1982"
+      ],
+      "source_seed_ids": [
+        "seed-2579"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "## 4. Orchestrator Progress widget scope and catalog linkage",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Widget_System.md:L57"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

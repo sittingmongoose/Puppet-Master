@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1272",
+  "group_ids": [
+    "discgrp-5085",
+    "discgrp-5086",
+    "discgrp-5087",
+    "discgrp-5088"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05493",
+      "source_obligation_ids": [
+        "obl-5265"
+      ],
+      "source_seed_ids": [
+        "seed-7821"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Runtime and routing terms",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L70"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05494",
+      "source_obligation_ids": [
+        "obl-5266"
+      ],
+      "source_seed_ids": [
+        "seed-7824"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05495",
+      "source_obligation_ids": [
+        "obl-5267"
+      ],
+      "source_seed_ids": [
+        "seed-7825"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05496",
+      "source_obligation_ids": [
+        "obl-5268"
+      ],
+      "source_seed_ids": [
+        "seed-7826"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

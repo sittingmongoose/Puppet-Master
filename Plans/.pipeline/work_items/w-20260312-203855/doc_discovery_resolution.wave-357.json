@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-357",
+  "group_ids": [
+    "discgrp-1425",
+    "discgrp-1426",
+    "discgrp-1427",
+    "discgrp-1428"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01677",
+      "source_obligation_ids": [
+        "obl-1534"
+      ],
+      "source_seed_ids": [
+        "seed-1911"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-013: Shared governance/runtime record envelope",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/storage-plan.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01678",
+      "source_obligation_ids": [
+        "obl-1535"
+      ],
+      "source_seed_ids": [
+        "seed-1912"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "### 7.4 Optional derived export: `plan_graph/exports/plan_graph.monolithic.json` (non-canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L361"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01679",
+      "source_obligation_ids": [
+        "obl-1536"
+      ],
+      "source_seed_ids": [
+        "seed-1913"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01680",
+      "source_obligation_ids": [
+        "obl-1537"
+      ],
+      "source_seed_ids": [
+        "seed-1914"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "# Runtime Artifacts Panel \u2014 SSOT",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,1147 @@
+{
+  "schema_id": "pm.canonical_obligations_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-090",
+  "seed_group_ids": [
+    "seedgrp-357",
+    "seedgrp-358",
+    "seedgrp-359",
+    "seedgrp-360"
+  ],
+  "obligation_candidates": [
+    {
+      "source_seed_id": "seed-5341",
+      "canon_label": "`Contracts_V0.md` explicitly declines to define runtime-artifact payloads, which is fine,",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Contracts_V0.md` explicitly declines to define runtime-artifact payloads, which is fine, but some owner doc still needs to define the common envelope strongly enough that per-type schemas do not drift.",
+        "Contracts_V0.md"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010659"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5342",
+      "canon_label": "Promote the runtime-artifact envelope from a named schema file to a clearly stated common",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Promote the runtime-artifact envelope from a named schema file to a clearly stated common field contract in `Runtime_Artifacts_Panel.md`.",
+        "Runtime_Artifacts_Panel.md"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010662"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5343",
+      "canon_label": "Treat `task_id` as legacy/compatibility display metadata where necessary, not the main exe",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Treat `task_id` as legacy/compatibility display metadata where necessary, not the main execution anchor.",
+        "task_id"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "task_id"
+      ],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010664"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5344",
+      "canon_label": "Align FileManager open-by-identity requirements with the runtime-artifact envelope rather",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Align FileManager open-by-identity requirements with the runtime-artifact envelope rather than inventing a parallel artifact-opening identity model."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010665"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5345",
+      "canon_label": "The missing piece is no longer \u201cwe need schemas\u201d; it is \u201cthe common envelope contract is u",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The missing piece is no longer \u201cwe need schemas\u201d; it is \u201cthe common envelope contract is underspecified.\u201d"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010668"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5346",
+      "canon_label": "`artifact_id` should identify the artifact object, not the runtime attempt.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`artifact_id` should identify the artifact object, not the runtime attempt.",
+        "artifact_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010669"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5347",
+      "canon_label": "runtime-artifact and project-artifact families are staying distinct, but they now need par",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "runtime-artifact and project-artifact families are staying distinct, but they now need parallel discipline about canonical versus derived identity."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010670"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5348",
+      "canon_label": "Research Progress - 2026-03-16 - FileManager open-by-identity contract split",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Research Progress - 2026-03-16 - FileManager open-by-identity contract split"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010672"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5349",
+      "canon_label": "`Plans/FileManager.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/FileManager.md`",
+        "Plans/FileManager.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010675"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5350",
+      "canon_label": "`Plans/Runtime_Artifacts_Panel.md`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Plans/Runtime_Artifacts_Panel.md`",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010676"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5351",
+      "canon_label": "`Plans/storage-plan.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/storage-plan.md`",
+        "Plans/storage-plan.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010677"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5352",
+      "canon_label": "spot-checks against `Plans/Orchestrator_Page.md` and `Plans/usage-feature.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "spot-checks against `Plans/Orchestrator_Page.md` and `Plans/usage-feature.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/usage-feature.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010678"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5353",
+      "canon_label": "`FileManager.md` still states one canonical open contract:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`FileManager.md` still states one canonical open contract:",
+        "FileManager.md"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010681"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5354",
+      "canon_label": "`OpenFile { path: PathBuf, line?, range?, target_group? }`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`OpenFile { path: PathBuf, line?, range?, target_group? }`",
+        "OpenFile { path: PathBuf, line?, range?, target_group? }"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010682"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5355",
+      "canon_label": "attempt-scoped evidence by `attempt_id`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "attempt-scoped evidence by `attempt_id`",
+        "attempt_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010684"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5356",
+      "canon_label": "safe-point manifests / restore logs by `safe_point_id`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "safe-point manifests / restore logs by `safe_point_id`",
+        "safe_point_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010685"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5357",
+      "canon_label": "remediation lineage summaries by `remediation_root_id`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "remediation lineage summaries by `remediation_root_id`",
+        "remediation_root_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010686"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5358",
+      "canon_label": "runtime artifacts by `artifact_id`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "runtime artifacts by `artifact_id`",
+        "artifact_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010688"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5359",
+      "canon_label": "That means the docs have already outgrown a path-only open contract, even though the main",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "That means the docs have already outgrown a path-only open contract, even though the main body still acts as if all opens resolve to a workspace file path first."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010689"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5360",
+      "canon_label": "`storage-plan.md` already gives a strong related pattern through preview identity:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`storage-plan.md` already gives a strong related pattern through preview identity:",
+        "storage-plan.md"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010690"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5361",
+      "canon_label": "`preview_subject_id = doc:<document_id> | artifact:<artifact_id>`",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`preview_subject_id = doc:<document_id> | artifact:<artifact_id>`",
+        "preview_subject_id = doc:<document_id> | artifact:<artifact_id>"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010691"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5362",
+      "canon_label": "artifact-backed restore opens `generated://<artifact_id>` unless a backing document exists",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "artifact-backed restore opens `generated://<artifact_id>` unless a backing document exists",
+        "generated://<artifact_id>"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010692"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5363",
+      "canon_label": "That preview contract is effectively the model FileManager now wants more broadly.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "That preview contract is effectively the model FileManager now wants more broadly."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010693"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5364",
+      "canon_label": "Recommended contract split",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Recommended contract split"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010695"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5365",
+      "canon_label": "keep `OpenFile { path... }` for canonical workspace-file opens",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "keep `OpenFile { path... }` for canonical workspace-file opens",
+        "OpenFile { path... }"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010696"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5366",
+      "canon_label": "add a second canonical open contract for identity-native objects, e.g.:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "add a second canonical open contract for identity-native objects, e.g.:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010697"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5367",
+      "canon_label": "`OpenSubject { subject_id, target_group?, open_mode?, location? }`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`OpenSubject { subject_id, target_group?, open_mode?, location? }`",
+        "OpenSubject { subject_id, target_group?, open_mode?, location? }"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010698"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5368",
+      "canon_label": "Recommended `OpenSubject` identity families",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Recommended `OpenSubject` identity families",
+        "OpenSubject"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010700"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5369",
+      "canon_label": "`doc:<document_id>`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`doc:<document_id>`",
+        "doc:<document_id>"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010702"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5370",
+      "canon_label": "resolves to canonical workspace file/buffer",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "resolves to canonical workspace file/buffer"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010703"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5371",
+      "canon_label": "`artifact:<artifact_id>`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`artifact:<artifact_id>`",
+        "artifact:<artifact_id>"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010705"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5372",
+      "canon_label": "transient `generated://<artifact_id>` buffer / artifact viewer",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "transient `generated://<artifact_id>` buffer / artifact viewer",
+        "generated://<artifact_id>"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010708"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5373",
+      "canon_label": "`attempt:<attempt_id>`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`attempt:<attempt_id>`",
+        "attempt:<attempt_id>"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010710"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5374",
+      "canon_label": "`safe_point:<safe_point_id>`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`safe_point:<safe_point_id>`",
+        "safe_point:<safe_point_id>"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010711"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5375",
+      "canon_label": "`remediation:<remediation_root_id>`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`remediation:<remediation_root_id>`",
+        "remediation:<remediation_root_id>"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010712"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5376",
+      "canon_label": "`scheduler_pass:<scheduler_pass_id>`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`scheduler_pass:<scheduler_pass_id>`",
+        "scheduler_pass:<scheduler_pass_id>"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010713"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5377",
+      "canon_label": "identity-based open is the canonical entrypoint for:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "identity-based open is the canonical entrypoint for:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010722"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5378",
+      "canon_label": "attempt/evidence/safe-point/remediation reports",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "attempt/evidence/safe-point/remediation reports"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010725"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5379",
+      "canon_label": "UI callers should not reconstruct file paths heuristically when a stable identity exists",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "UI callers should not reconstruct file paths heuristically when a stable identity exists"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010727"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5380",
+      "canon_label": "Recommended resolution order for identity opens",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Recommended resolution order for identity opens"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010729"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5381",
+      "canon_label": "if file-backed canonical document exists:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "if file-backed canonical document exists:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010731"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5382",
+      "canon_label": "open transient `generated://...` or specialized viewer",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "open transient `generated://...` or specialized viewer",
+        "generated://..."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010734"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5383",
+      "canon_label": "route to that surface with exact identity context preserved",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "route to that surface with exact identity context preserved"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010736"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5384",
+      "canon_label": "it keeps attempt/safe-point/remediation opens stable across cleanup/archive/remove flows",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "it keeps attempt/safe-point/remediation opens stable across cleanup/archive/remove flows"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010742"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5385",
+      "canon_label": "it lets FileManager/editor/Artifacts/Orchestrator share one identity model instead of ad h",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "it lets FileManager/editor/Artifacts/Orchestrator share one identity model instead of ad hoc open handlers"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010743"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5386",
+      "canon_label": "`Plans/FileManager.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/FileManager.md`",
+        "Plans/FileManager.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010746"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5387",
+      "canon_label": "`Plans/storage-plan.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/storage-plan.md`",
+        "Plans/storage-plan.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010747"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5388",
+      "canon_label": "`Plans/Runtime_Artifacts_Panel.md`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Plans/Runtime_Artifacts_Panel.md`",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010748"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5389",
+      "canon_label": "`Plans/Orchestrator_Page.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md`",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010749"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5390",
+      "canon_label": "likely routing owner:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "likely routing owner:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010750"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5391",
+      "canon_label": "`Plans/Contracts_V0.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Contracts_V0.md`",
+        "Plans/Contracts_V0.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010751"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5392",
+      "canon_label": "`FileManager.md` still describes one internal open-file contract while its own runtime-art",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`FileManager.md` still describes one internal open-file contract while its own runtime-artifact addendum already requires identity-native opens that cannot be expressed as safe path opens.",
+        "FileManager.md"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010754"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5393",
+      "canon_label": "there is currently no canonical `OpenArtifact`/`OpenSubject` contract even though multiple",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "there is currently no canonical `OpenArtifact`/`OpenSubject` contract even though multiple docs implicitly need it.",
+        "OpenArtifact",
+        "OpenSubject"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010755"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5394",
+      "canon_label": "`generated://<artifact_id>` exists in preview restore behavior, but that identity pattern",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`generated://<artifact_id>` exists in preview restore behavior, but that identity pattern has not yet been generalized for other artifact/report opens.",
+        "generated://<artifact_id>"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010756"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5395",
+      "canon_label": "current \u201cOpen in Editor\u201d wording in Orchestrator/Evidence surfaces risks implying raw-path",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "current \u201cOpen in Editor\u201d wording in Orchestrator/Evidence surfaces risks implying raw-path opens even when the correct target is an artifact-backed or report-backed subject."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010757"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5396",
+      "canon_label": "Split FileManager\u2019s canonical open contract into:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Split FileManager\u2019s canonical open contract into:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010760"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5397",
+      "canon_label": "identity-native subject open",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "identity-native subject open"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010762"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5398",
+      "canon_label": "Reuse the preview subject identity pattern (`doc:` / `artifact:`) as the base instead of i",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Reuse the preview subject identity pattern (`doc:` / `artifact:`) as the base instead of inventing a separate parallel scheme.",
+        "doc:",
+        "artifact:"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010763"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5399",
+      "canon_label": "`Open in Editor` for file/document-backed targets",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Open in Editor` for file/document-backed targets",
+        "Open in Editor"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010766"
+      ]
+    },
+    {
+      "source_seed_id": "seed-5400",
+      "canon_label": "`Open Artifact` / `Open Report` / routed open when the target is identity-native",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Open Artifact` / `Open Report` / routed open when the target is identity-native",
+        "Open Artifact",
+        "Open Report"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0054",
+      "source_evidence": [
+        "working_ledger.md:L010767"
+      ]
+    }
+  ],
+  "represented_seed_ids": [
+    "seed-5341",
+    "seed-5342",
+    "seed-5343",
+    "seed-5344",
+    "seed-5345",
+    "seed-5346",
+    "seed-5347",
+    "seed-5348",
+    "seed-5349",
+    "seed-5350",
+    "seed-5351",
+    "seed-5352",
+    "seed-5353",
+    "seed-5354",
+    "seed-5355",
+    "seed-5356",
+    "seed-5357",
+    "seed-5358",
+    "seed-5359",
+    "seed-5360",
+    "seed-5361",
+    "seed-5362",
+    "seed-5363",
+    "seed-5364",
+    "seed-5365",
+    "seed-5366",
+    "seed-5367",
+    "seed-5368",
+    "seed-5369",
+    "seed-5370",
+    "seed-5371",
+    "seed-5372",
+    "seed-5373",
+    "seed-5374",
+    "seed-5375",
+    "seed-5376",
+    "seed-5377",
+    "seed-5378",
+    "seed-5379",
+    "seed-5380",
+    "seed-5381",
+    "seed-5382",
+    "seed-5383",
+    "seed-5384",
+    "seed-5385",
+    "seed-5386",
+    "seed-5387",
+    "seed-5388",
+    "seed-5389",
+    "seed-5390",
+    "seed-5391",
+    "seed-5392",
+    "seed-5393",
+    "seed-5394",
+    "seed-5395",
+    "seed-5396",
+    "seed-5397",
+    "seed-5398",
+    "seed-5399",
+    "seed-5400"
+  ],
+  "represented_source_shard_ids": [
+    "shard-0054"
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "affected_doc_discovery_notes": []
+}

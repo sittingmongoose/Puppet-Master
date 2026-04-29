@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-743",
+  "group_ids": [
+    "discgrp-2969",
+    "discgrp-2970",
+    "discgrp-2971",
+    "discgrp-2972"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03249",
+      "source_obligation_ids": [
+        "obl-3095"
+      ],
+      "source_seed_ids": [
+        "seed-4110"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "## 6. Adaptive Interview Phases",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L822"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03250",
+      "source_obligation_ids": [
+        "obl-3096"
+      ],
+      "source_seed_ids": [
+        "seed-4111"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Shared governance and runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L260"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03251",
+      "source_obligation_ids": [
+        "obl-3097"
+      ],
+      "source_seed_ids": [
+        "seed-4112"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### Fidelity recovery cov-059: Lane vs worktree lifecycle split",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03252",
+      "source_obligation_ids": [
+        "obl-3098"
+      ],
+      "source_seed_ids": [
+        "seed-4115"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-003 -- UI SSOT (no bespoke UI behavior)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L45"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

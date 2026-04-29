@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-824",
+  "group_ids": [
+    "discgrp-3293",
+    "discgrp-3294",
+    "discgrp-3295",
+    "discgrp-3296"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03573",
+      "source_obligation_ids": [
+        "obl-3419"
+      ],
+      "source_seed_ids": [
+        "seed-4606"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Artifacts index, export manifests, and route/open linkage (ownership split)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L616"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03574",
+      "source_obligation_ids": [
+        "obl-3420"
+      ],
+      "source_seed_ids": [
+        "seed-4607"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03575",
+      "source_obligation_ids": [
+        "obl-3421"
+      ],
+      "source_seed_ids": [
+        "seed-4608"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03576",
+      "source_obligation_ids": [
+        "obl-3422"
+      ],
+      "source_seed_ids": [
+        "seed-4609"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

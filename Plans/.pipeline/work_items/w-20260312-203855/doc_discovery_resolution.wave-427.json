@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-427",
+  "group_ids": [
+    "discgrp-1705",
+    "discgrp-1706",
+    "discgrp-1707",
+    "discgrp-1708"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01962",
+      "source_obligation_ids": [
+        "obl-1819"
+      ],
+      "source_seed_ids": [
+        "seed-2334"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01963",
+      "source_obligation_ids": [
+        "obl-1820"
+      ],
+      "source_seed_ids": [
+        "seed-2335"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "new_heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01964",
+      "source_obligation_ids": [
+        "obl-1821"
+      ],
+      "source_seed_ids": [
+        "seed-2336"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-029: Concern action policy and authority model",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L71"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01965",
+      "source_obligation_ids": [
+        "obl-1822"
+      ],
+      "source_seed_ids": [
+        "seed-2337"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### Drag-and-drop contract",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L627"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

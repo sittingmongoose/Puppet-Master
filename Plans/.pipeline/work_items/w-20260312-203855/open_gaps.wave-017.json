@@ -1,0 +1,1933 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-017",
+  "group_ids": [
+    "gapgrp-0065",
+    "gapgrp-0066",
+    "gapgrp-0067",
+    "gapgrp-0068"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-03832",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-04899 is missing for `DRY_Rules.md` cross-checking surfaced exact duplicate and mislabeled sections in owner do",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Canonical sources (reference, don't duplicate)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04899"
+      ],
+      "source_obligation_ids": [
+        "obl-4676"
+      ],
+      "source_seed_ids": [
+        "seed-6695"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "`DRY_Rules.md` cross-checking surfaced exact duplicate and mislabeled sections in owner docs, showing that stale/additive layering has become a mechanical doc-integrity issue rather than just a conceptual one.",
+        "DRY_Rules.md"
+      ],
+      "stale_tokens": [
+        "DRY_Rules.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05045",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-06506 is missing for `storage-plan.md` is not just a stale consumer. It is still publishing canonical key shape",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Contract shape"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06506"
+      ],
+      "source_obligation_ids": [
+        "obl-6147"
+      ],
+      "source_seed_ids": [
+        "seed-9295"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`storage-plan.md` is not just a stale consumer. It is still publishing canonical key shapes. Any unresolved tier-era key there will keep propagating into other docs.",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [
+        "storage-plan.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05095",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-06565 is missing for `FinalGUISpec.md` is one of the most dangerous drift multipliers because it turns stale on",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Locked decisions (no drift)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06565"
+      ],
+      "source_obligation_ids": [
+        "obl-6206"
+      ],
+      "source_seed_ids": [
+        "seed-9390"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` is one of the most dangerous drift multipliers because it turns stale ontology into user-visible structure.",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [
+        "FinalGUISpec.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00752",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00985 is partial for requested/effective reviewer identity",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00985"
+      ],
+      "source_obligation_ids": [
+        "obl-842"
+      ],
+      "source_seed_ids": [
+        "seed-987"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "exact_missing_items": [
+        "requested/effective reviewer identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01823",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02349 is partial for Actor/runtime unification must preserve ontology separation: chat/interview/wizard actors",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02349"
+      ],
+      "source_obligation_ids": [
+        "obl-2200"
+      ],
+      "source_seed_ids": [
+        "seed-2855"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Actor/runtime unification must preserve ontology separation: chat/interview/wizard actors share provider runtime but are not orchestration nodes."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01985",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02542 is partial for auth/account health, switch pressure, provider confidence, and projection freshness still",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02542"
+      ],
+      "source_obligation_ids": [
+        "obl-2391"
+      ],
+      "source_seed_ids": [
+        "seed-3104"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "auth/account health, switch pressure, provider confidence, and projection freshness still do not flow through one reusable trust/concern contract"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01997",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02555 is partial for Shared degraded-trust / concern escalation remains absent across provider, permissions, wi",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02555"
+      ],
+      "source_obligation_ids": [
+        "obl-2403"
+      ],
+      "source_seed_ids": [
+        "seed-3120"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "Shared degraded-trust / concern escalation remains absent across provider, permissions, widgets, and conversational surfaces."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02217",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02814 is partial for Split transport host identity from upstream provider identity in model/provider contracts",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02814"
+      ],
+      "source_obligation_ids": [
+        "obl-2661"
+      ],
+      "source_seed_ids": [
+        "seed-3495"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Split transport host identity from upstream provider identity in model/provider contracts and downstream projection payloads."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04888",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06309 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06309"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00319",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00406 is partial for session approval carryover and reject-cascade semantics are still effectively single-sessi",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00406"
+      ],
+      "source_obligation_ids": [
+        "obl-264"
+      ],
+      "source_seed_ids": [
+        "seed-297"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "session approval carryover and reject-cascade semantics are still effectively single-session/single-lane even though the rewrite requires parallel actors sharing provider runtime"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00325",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00414 is partial for `CLI_Bridged_Providers.md` requires direct providers to declare multi-account/switch capab",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00414"
+      ],
+      "source_obligation_ids": [
+        "obl-272"
+      ],
+      "source_seed_ids": [
+        "seed-310"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`CLI_Bridged_Providers.md` requires direct providers to declare multi-account/switch capability surfaces, but bridged providers are exempt by omission even though `Multi-Account.md` expects bridged routing support.",
+        "CLI_Bridged_Providers.md",
+        "Multi-Account.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00349",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00446 is partial for still rely on mutable provider identity and thin degraded-capability UX even though per-re",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00446"
+      ],
+      "source_obligation_ids": [
+        "obl-303"
+      ],
+      "source_seed_ids": [
+        "seed-352"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "still rely on mutable provider identity and thin degraded-capability UX even though per-realm stable account identity is now required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00852",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01098 is partial for Requested/effective must remain runtime-facing and auditable.",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01098"
+      ],
+      "source_obligation_ids": [
+        "obl-955"
+      ],
+      "source_seed_ids": [
+        "seed-1122"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "Requested/effective must remain runtime-facing and auditable."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01508",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01932 is partial for Source-qualified usage wording still matters for Gemini and other estimate-only providers;",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01932"
+      ],
+      "source_obligation_ids": [
+        "obl-1789"
+      ],
+      "source_seed_ids": [
+        "seed-2293"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "Source-qualified usage wording still matters for Gemini and other estimate-only providers; that requirement should survive the broader identity rewrite"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01566",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02009 is present for but canonical contracts want stable internal `account_id` plus display-only provider ident",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02009"
+      ],
+      "source_obligation_ids": [
+        "obl-1866"
+      ],
+      "source_seed_ids": [
+        "seed-2405"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "but canonical contracts want stable internal `account_id` plus display-only provider identity",
+        "account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01695",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02178 is present for `GitHub_API_Auth_and_Flows.md` still uses login-derived credential identity while multi-ac",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02178"
+      ],
+      "source_obligation_ids": [
+        "obl-2033"
+      ],
+      "source_seed_ids": [
+        "seed-2642"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`GitHub_API_Auth_and_Flows.md` still uses login-derived credential identity while multi-account/storage contracts require stable internal `account_id` plus disclosure-only provider metadata.",
+        "GitHub_API_Auth_and_Flows.md",
+        "account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01993",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02551 is partial for Bridged providers still lack the capability metadata already required of direct providers.",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02551"
+      ],
+      "source_obligation_ids": [
+        "obl-2399"
+      ],
+      "source_seed_ids": [
+        "seed-3116"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "Bridged providers still lack the capability metadata already required of direct providers."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02117",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02695 is partial for GPT-5.2 also sharpened that bridged/provider docs still lack a legal place for opaque-but-",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02695"
+      ],
+      "source_obligation_ids": [
+        "obl-2542"
+      ],
+      "source_seed_ids": [
+        "seed-3335"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "GPT-5.2 also sharpened that bridged/provider docs still lack a legal place for opaque-but-real provider continuity fields like `provider_attempt_ref?`, which means reconnect/replay semantics remain under-specified even before account-switch history is added",
+        "provider_attempt_ref?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02126",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02705 is partial for Provider continuity fields like `provider_attempt_ref?` are named but still not owned by a",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02705"
+      ],
+      "source_obligation_ids": [
+        "obl-2552"
+      ],
+      "source_seed_ids": [
+        "seed-3350"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Provider continuity fields like `provider_attempt_ref?` are named but still not owned by a stable schema slot.",
+        "provider_attempt_ref?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02132",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02713 is partial for If provider continuity remains opaque, the docs need an explicit opaque contract instead o",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02713"
+      ],
+      "source_obligation_ids": [
+        "obl-2560"
+      ],
+      "source_seed_ids": [
+        "seed-3358"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "If provider continuity remains opaque, the docs need an explicit opaque contract instead of silent omission."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02214",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02809 is partial for Transport-vs-upstream provider identity remains ambiguous in model/runtime examples.",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02809"
+      ],
+      "source_obligation_ids": [
+        "obl-2656"
+      ],
+      "source_seed_ids": [
+        "seed-3490"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Transport-vs-upstream provider identity remains ambiguous in model/runtime examples."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02230",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02829 is partial for requested/effective capability state is required conceptually",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02829"
+      ],
+      "source_obligation_ids": [
+        "obl-2676"
+      ],
+      "source_seed_ids": [
+        "seed-3518"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "requested/effective capability state is required conceptually"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02247",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02848 is partial for Provider continuity can stay opaque, but only if opacity is explicit and projected as such",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02848"
+      ],
+      "source_obligation_ids": [
+        "obl-2695"
+      ],
+      "source_seed_ids": [
+        "seed-3542"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Provider continuity can stay opaque, but only if opacity is explicit and projected as such."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02652",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03397 is present for provenance metadata currently requires `source_stage`, `source_phase_ids[]`, `persona_id`,",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03397"
+      ],
+      "source_obligation_ids": [
+        "obl-3243"
+      ],
+      "source_seed_ids": [
+        "seed-4329"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "provenance metadata currently requires `source_stage`, `source_phase_ids[]`, `persona_id`, `provider`, `model`, `timestamp`, which is useful but still weaker than the shared runtime identity grammar elsewhere",
+        "source_stage",
+        "source_phase_ids[]",
+        "persona_id",
+        "provider",
+        "model",
+        "timestamp"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02660",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03408 is present for Validation pass reports in chain-wizard require `provider` and `model`, but not the fuller",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03408"
+      ],
+      "source_obligation_ids": [
+        "obl-3254"
+      ],
+      "source_seed_ids": [
+        "seed-4348"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "Validation pass reports in chain-wizard require `provider` and `model`, but not the fuller runtime identity fields now needed for multi-account/shared-runtime explanation.",
+        "provider",
+        "model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02707",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03462 is present for required to include `pass_number`, `pass_name`, `pass_verdict`, `verdict_reason`, and `pro",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03462"
+      ],
+      "source_obligation_ids": [
+        "obl-3308"
+      ],
+      "source_seed_ids": [
+        "seed-4435"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "required to include `pass_number`, `pass_name`, `pass_verdict`, `verdict_reason`, and `provider` / `model`",
+        "pass_number",
+        "pass_name",
+        "pass_verdict",
+        "verdict_reason",
+        "provider",
+        "model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02719",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03478 is present for Validation-pass reports require `provider` and `model`, but not the fuller requested/effec",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03478"
+      ],
+      "source_obligation_ids": [
+        "obl-3324"
+      ],
+      "source_seed_ids": [
+        "seed-4465"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "Validation-pass reports require `provider` and `model`, but not the fuller requested/effective runtime identity fields that other provider-using artifacts are now expected to expose.",
+        "provider",
+        "model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02986",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03825 is partial for `attempt.started` and the immutable provider handoff bundle should be isomorphic enough th",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03825"
+      ],
+      "source_obligation_ids": [
+        "obl-3670"
+      ],
+      "source_seed_ids": [
+        "seed-4979"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "`attempt.started` and the immutable provider handoff bundle should be isomorphic enough that one can be projected from the other without inventing new fields.",
+        "attempt.started"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-04899",
+    "cov-06506",
+    "cov-06565",
+    "cov-00985",
+    "cov-02349",
+    "cov-02542",
+    "cov-02555",
+    "cov-02814",
+    "cov-06309",
+    "cov-00406",
+    "cov-00414",
+    "cov-00446",
+    "cov-01098",
+    "cov-01932",
+    "cov-02009",
+    "cov-02178",
+    "cov-02551",
+    "cov-02695",
+    "cov-02705",
+    "cov-02713",
+    "cov-02809",
+    "cov-02829",
+    "cov-02848",
+    "cov-03397",
+    "cov-03408",
+    "cov-03462",
+    "cov-03478",
+    "cov-03825"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1789",
+    "obl-1866",
+    "obl-2033",
+    "obl-2200",
+    "obl-2391",
+    "obl-2399",
+    "obl-2403",
+    "obl-2542",
+    "obl-2552",
+    "obl-2560",
+    "obl-264",
+    "obl-2656",
+    "obl-2661",
+    "obl-2676",
+    "obl-2695",
+    "obl-272",
+    "obl-303",
+    "obl-3243",
+    "obl-3254",
+    "obl-3308",
+    "obl-3324",
+    "obl-3670",
+    "obl-4676",
+    "obl-6009",
+    "obl-6147",
+    "obl-6206",
+    "obl-842",
+    "obl-955"
+  ],
+  "source_seed_ids_represented": [
+    "seed-1122",
+    "seed-2293",
+    "seed-2405",
+    "seed-2642",
+    "seed-2855",
+    "seed-297",
+    "seed-310",
+    "seed-3104",
+    "seed-3116",
+    "seed-3120",
+    "seed-3335",
+    "seed-3350",
+    "seed-3358",
+    "seed-3490",
+    "seed-3495",
+    "seed-3518",
+    "seed-352",
+    "seed-3542",
+    "seed-4329",
+    "seed-4348",
+    "seed-4435",
+    "seed-4465",
+    "seed-4979",
+    "seed-6695",
+    "seed-9092",
+    "seed-9295",
+    "seed-9390",
+    "seed-987"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0011",
+    "shard-0018",
+    "shard-0019",
+    "shard-0031",
+    "shard-0032",
+    "shard-0034",
+    "shard-0036",
+    "shard-0037",
+    "shard-0038",
+    "shard-0039",
+    "shard-0040",
+    "shard-0041",
+    "shard-0046",
+    "shard-0047",
+    "shard-0051",
+    "shard-0064",
+    "shard-0082",
+    "shard-0084"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-03832",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-04899 is missing for `DRY_Rules.md` cross-checking surfaced exact duplicate and mislabeled sections in owner do",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Canonical sources (reference, don't duplicate)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04899"
+      ],
+      "source_obligation_ids": [
+        "obl-4676"
+      ],
+      "source_seed_ids": [
+        "seed-6695"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "`DRY_Rules.md` cross-checking surfaced exact duplicate and mislabeled sections in owner docs, showing that stale/additive layering has become a mechanical doc-integrity issue rather than just a conceptual one.",
+        "DRY_Rules.md"
+      ],
+      "stale_tokens": [
+        "DRY_Rules.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05045",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-06506 is missing for `storage-plan.md` is not just a stale consumer. It is still publishing canonical key shape",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Contract shape"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06506"
+      ],
+      "source_obligation_ids": [
+        "obl-6147"
+      ],
+      "source_seed_ids": [
+        "seed-9295"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`storage-plan.md` is not just a stale consumer. It is still publishing canonical key shapes. Any unresolved tier-era key there will keep propagating into other docs.",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [
+        "storage-plan.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05095",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-06565 is missing for `FinalGUISpec.md` is one of the most dangerous drift multipliers because it turns stale on",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Locked decisions (no drift)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06565"
+      ],
+      "source_obligation_ids": [
+        "obl-6206"
+      ],
+      "source_seed_ids": [
+        "seed-9390"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` is one of the most dangerous drift multipliers because it turns stale ontology into user-visible structure.",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [
+        "FinalGUISpec.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00752",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00985 is partial for requested/effective reviewer identity",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00985"
+      ],
+      "source_obligation_ids": [
+        "obl-842"
+      ],
+      "source_seed_ids": [
+        "seed-987"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "exact_missing_items": [
+        "requested/effective reviewer identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01823",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02349 is partial for Actor/runtime unification must preserve ontology separation: chat/interview/wizard actors",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02349"
+      ],
+      "source_obligation_ids": [
+        "obl-2200"
+      ],
+      "source_seed_ids": [
+        "seed-2855"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Actor/runtime unification must preserve ontology separation: chat/interview/wizard actors share provider runtime but are not orchestration nodes."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01985",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02542 is partial for auth/account health, switch pressure, provider confidence, and projection freshness still",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02542"
+      ],
+      "source_obligation_ids": [
+        "obl-2391"
+      ],
+      "source_seed_ids": [
+        "seed-3104"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "auth/account health, switch pressure, provider confidence, and projection freshness still do not flow through one reusable trust/concern contract"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01997",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02555 is partial for Shared degraded-trust / concern escalation remains absent across provider, permissions, wi",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02555"
+      ],
+      "source_obligation_ids": [
+        "obl-2403"
+      ],
+      "source_seed_ids": [
+        "seed-3120"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "Shared degraded-trust / concern escalation remains absent across provider, permissions, widgets, and conversational surfaces."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02217",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02814 is partial for Split transport host identity from upstream provider identity in model/provider contracts",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02814"
+      ],
+      "source_obligation_ids": [
+        "obl-2661"
+      ],
+      "source_seed_ids": [
+        "seed-3495"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Split transport host identity from upstream provider identity in model/provider contracts and downstream projection payloads."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04888",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06309 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06309"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00319",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00406 is partial for session approval carryover and reject-cascade semantics are still effectively single-sessi",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00406"
+      ],
+      "source_obligation_ids": [
+        "obl-264"
+      ],
+      "source_seed_ids": [
+        "seed-297"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "session approval carryover and reject-cascade semantics are still effectively single-session/single-lane even though the rewrite requires parallel actors sharing provider runtime"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00325",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00414 is partial for `CLI_Bridged_Providers.md` requires direct providers to declare multi-account/switch capab",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00414"
+      ],
+      "source_obligation_ids": [
+        "obl-272"
+      ],
+      "source_seed_ids": [
+        "seed-310"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`CLI_Bridged_Providers.md` requires direct providers to declare multi-account/switch capability surfaces, but bridged providers are exempt by omission even though `Multi-Account.md` expects bridged routing support.",
+        "CLI_Bridged_Providers.md",
+        "Multi-Account.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00349",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00446 is partial for still rely on mutable provider identity and thin degraded-capability UX even though per-re",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00446"
+      ],
+      "source_obligation_ids": [
+        "obl-303"
+      ],
+      "source_seed_ids": [
+        "seed-352"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "still rely on mutable provider identity and thin degraded-capability UX even though per-realm stable account identity is now required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00852",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01098 is partial for Requested/effective must remain runtime-facing and auditable.",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01098"
+      ],
+      "source_obligation_ids": [
+        "obl-955"
+      ],
+      "source_seed_ids": [
+        "seed-1122"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "Requested/effective must remain runtime-facing and auditable."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01508",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01932 is partial for Source-qualified usage wording still matters for Gemini and other estimate-only providers;",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01932"
+      ],
+      "source_obligation_ids": [
+        "obl-1789"
+      ],
+      "source_seed_ids": [
+        "seed-2293"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "Source-qualified usage wording still matters for Gemini and other estimate-only providers; that requirement should survive the broader identity rewrite"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01566",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02009 is present for but canonical contracts want stable internal `account_id` plus display-only provider ident",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02009"
+      ],
+      "source_obligation_ids": [
+        "obl-1866"
+      ],
+      "source_seed_ids": [
+        "seed-2405"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "but canonical contracts want stable internal `account_id` plus display-only provider identity",
+        "account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01695",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02178 is present for `GitHub_API_Auth_and_Flows.md` still uses login-derived credential identity while multi-ac",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02178"
+      ],
+      "source_obligation_ids": [
+        "obl-2033"
+      ],
+      "source_seed_ids": [
+        "seed-2642"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`GitHub_API_Auth_and_Flows.md` still uses login-derived credential identity while multi-account/storage contracts require stable internal `account_id` plus disclosure-only provider metadata.",
+        "GitHub_API_Auth_and_Flows.md",
+        "account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01993",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02551 is partial for Bridged providers still lack the capability metadata already required of direct providers.",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02551"
+      ],
+      "source_obligation_ids": [
+        "obl-2399"
+      ],
+      "source_seed_ids": [
+        "seed-3116"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "Bridged providers still lack the capability metadata already required of direct providers."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02117",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02695 is partial for GPT-5.2 also sharpened that bridged/provider docs still lack a legal place for opaque-but-",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02695"
+      ],
+      "source_obligation_ids": [
+        "obl-2542"
+      ],
+      "source_seed_ids": [
+        "seed-3335"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "GPT-5.2 also sharpened that bridged/provider docs still lack a legal place for opaque-but-real provider continuity fields like `provider_attempt_ref?`, which means reconnect/replay semantics remain under-specified even before account-switch history is added",
+        "provider_attempt_ref?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02126",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02705 is partial for Provider continuity fields like `provider_attempt_ref?` are named but still not owned by a",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02705"
+      ],
+      "source_obligation_ids": [
+        "obl-2552"
+      ],
+      "source_seed_ids": [
+        "seed-3350"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Provider continuity fields like `provider_attempt_ref?` are named but still not owned by a stable schema slot.",
+        "provider_attempt_ref?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02132",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02713 is partial for If provider continuity remains opaque, the docs need an explicit opaque contract instead o",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02713"
+      ],
+      "source_obligation_ids": [
+        "obl-2560"
+      ],
+      "source_seed_ids": [
+        "seed-3358"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "If provider continuity remains opaque, the docs need an explicit opaque contract instead of silent omission."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02214",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02809 is partial for Transport-vs-upstream provider identity remains ambiguous in model/runtime examples.",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02809"
+      ],
+      "source_obligation_ids": [
+        "obl-2656"
+      ],
+      "source_seed_ids": [
+        "seed-3490"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Transport-vs-upstream provider identity remains ambiguous in model/runtime examples."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02230",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02829 is partial for requested/effective capability state is required conceptually",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02829"
+      ],
+      "source_obligation_ids": [
+        "obl-2676"
+      ],
+      "source_seed_ids": [
+        "seed-3518"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "requested/effective capability state is required conceptually"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02247",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02848 is partial for Provider continuity can stay opaque, but only if opacity is explicit and projected as such",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02848"
+      ],
+      "source_obligation_ids": [
+        "obl-2695"
+      ],
+      "source_seed_ids": [
+        "seed-3542"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Provider continuity can stay opaque, but only if opacity is explicit and projected as such."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02652",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03397 is present for provenance metadata currently requires `source_stage`, `source_phase_ids[]`, `persona_id`,",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03397"
+      ],
+      "source_obligation_ids": [
+        "obl-3243"
+      ],
+      "source_seed_ids": [
+        "seed-4329"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "provenance metadata currently requires `source_stage`, `source_phase_ids[]`, `persona_id`, `provider`, `model`, `timestamp`, which is useful but still weaker than the shared runtime identity grammar elsewhere",
+        "source_stage",
+        "source_phase_ids[]",
+        "persona_id",
+        "provider",
+        "model",
+        "timestamp"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02660",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03408 is present for Validation pass reports in chain-wizard require `provider` and `model`, but not the fuller",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03408"
+      ],
+      "source_obligation_ids": [
+        "obl-3254"
+      ],
+      "source_seed_ids": [
+        "seed-4348"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "Validation pass reports in chain-wizard require `provider` and `model`, but not the fuller runtime identity fields now needed for multi-account/shared-runtime explanation.",
+        "provider",
+        "model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02707",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03462 is present for required to include `pass_number`, `pass_name`, `pass_verdict`, `verdict_reason`, and `pro",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03462"
+      ],
+      "source_obligation_ids": [
+        "obl-3308"
+      ],
+      "source_seed_ids": [
+        "seed-4435"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "required to include `pass_number`, `pass_name`, `pass_verdict`, `verdict_reason`, and `provider` / `model`",
+        "pass_number",
+        "pass_name",
+        "pass_verdict",
+        "verdict_reason",
+        "provider",
+        "model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02719",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03478 is present for Validation-pass reports require `provider` and `model`, but not the fuller requested/effec",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03478"
+      ],
+      "source_obligation_ids": [
+        "obl-3324"
+      ],
+      "source_seed_ids": [
+        "seed-4465"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "Validation-pass reports require `provider` and `model`, but not the fuller requested/effective runtime identity fields that other provider-using artifacts are now expected to expose.",
+        "provider",
+        "model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02986",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03825 is partial for `attempt.started` and the immutable provider handoff bundle should be isomorphic enough th",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03825"
+      ],
+      "source_obligation_ids": [
+        "obl-3670"
+      ],
+      "source_seed_ids": [
+        "seed-4979"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "`attempt.started` and the immutable provider handoff bundle should be isomorphic enough that one can be projected from the other without inventing new fields.",
+        "attempt.started"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "uncertain_items": []
+}

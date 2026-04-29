@@ -1,0 +1,124 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-123",
+  "group_ids": [
+    "discgrp-0489",
+    "discgrp-0490",
+    "discgrp-0491",
+    "discgrp-0492"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00736",
+      "source_obligation_ids": [
+        "obl-593"
+      ],
+      "source_seed_ids": [
+        "seed-679"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00737",
+      "source_obligation_ids": [
+        "obl-594"
+      ],
+      "source_seed_ids": [
+        "seed-681",
+        "seed-690",
+        "seed-1758",
+        "seed-2090",
+        "seed-2097",
+        "seed-2137"
+      ],
+      "source_shard_ids": [
+        "shard-0015",
+        "shard-0026",
+        "shard-0029",
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "# Glossary (Canonical)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Glossary.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00738",
+      "source_obligation_ids": [
+        "obl-595"
+      ],
+      "source_seed_ids": [
+        "seed-682",
+        "seed-691",
+        "seed-838",
+        "seed-1619",
+        "seed-2091",
+        "seed-2098",
+        "seed-2111",
+        "seed-2138",
+        "seed-2199",
+        "seed-2211"
+      ],
+      "source_shard_ids": [
+        "shard-0015",
+        "shard-0016",
+        "shard-0025",
+        "shard-0029",
+        "shard-0030",
+        "shard-0031"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00739",
+      "source_obligation_ids": [
+        "obl-596"
+      ],
+      "source_seed_ids": [
+        "seed-683",
+        "seed-693",
+        "seed-1620",
+        "seed-2092",
+        "seed-2100",
+        "seed-2139"
+      ],
+      "source_shard_ids": [
+        "shard-0015",
+        "shard-0025",
+        "shard-0029",
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

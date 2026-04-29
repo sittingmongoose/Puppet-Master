@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1161",
+  "group_ids": [
+    "discgrp-4641",
+    "discgrp-4642",
+    "discgrp-4643",
+    "discgrp-4644"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05039",
+      "source_obligation_ids": [
+        "obl-4815"
+      ],
+      "source_seed_ids": [
+        "seed-6936"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### route_target, OpenSubject, and command normalization",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L315"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05040",
+      "source_obligation_ids": [
+        "obl-4816"
+      ],
+      "source_seed_ids": [
+        "seed-6937"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05041",
+      "source_obligation_ids": [
+        "obl-4817"
+      ],
+      "source_seed_ids": [
+        "seed-6938"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "## 2. Primitive index (definitions are DRY)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L66"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05042",
+      "source_obligation_ids": [
+        "obl-4818"
+      ],
+      "source_seed_ids": [
+        "seed-6939"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### route_target, OpenSubject, and command normalization",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L315"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

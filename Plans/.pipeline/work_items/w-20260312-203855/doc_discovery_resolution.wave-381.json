@@ -1,0 +1,112 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-381",
+  "group_ids": [
+    "discgrp-1521",
+    "discgrp-1522",
+    "discgrp-1523",
+    "discgrp-1524"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01773",
+      "source_obligation_ids": [
+        "obl-1630"
+      ],
+      "source_seed_ids": [
+        "seed-2035",
+        "seed-6309",
+        "seed-7258"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0061",
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01774",
+      "source_obligation_ids": [
+        "obl-1631"
+      ],
+      "source_seed_ids": [
+        "seed-2036",
+        "seed-6310",
+        "seed-7259"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0061",
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01775",
+      "source_obligation_ids": [
+        "obl-1632"
+      ],
+      "source_seed_ids": [
+        "seed-2037",
+        "seed-6303",
+        "seed-7252",
+        "seed-7838"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0061",
+        "shard-0069",
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01776",
+      "source_obligation_ids": [
+        "obl-1633"
+      ],
+      "source_seed_ids": [
+        "seed-2038",
+        "seed-6311",
+        "seed-7260"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0061",
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

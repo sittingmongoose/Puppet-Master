@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-112",
+  "group_ids": [
+    "discgrp-0445",
+    "discgrp-0446",
+    "discgrp-0447",
+    "discgrp-0448"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00692",
+      "source_obligation_ids": [
+        "obl-549"
+      ],
+      "source_seed_ids": [
+        "seed-630"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Fidelity recovery addendum",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00693",
+      "source_obligation_ids": [
+        "obl-550"
+      ],
+      "source_seed_ids": [
+        "seed-631"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00694",
+      "source_obligation_ids": [
+        "obl-551"
+      ],
+      "source_seed_ids": [
+        "seed-632"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-039: Focused run and historical routing contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L67"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00695",
+      "source_obligation_ids": [
+        "obl-552"
+      ],
+      "source_seed_ids": [
+        "seed-633"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.3 Search and Source Control keep separate projection state",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1327"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-092",
+  "group_ids": [
+    "discgrp-0365",
+    "discgrp-0366",
+    "discgrp-0367",
+    "discgrp-0368"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00612",
+      "source_obligation_ids": [
+        "obl-469"
+      ],
+      "source_seed_ids": [
+        "seed-539"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L35"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00613",
+      "source_obligation_ids": [
+        "obl-470"
+      ],
+      "source_seed_ids": [
+        "seed-540"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00614",
+      "source_obligation_ids": [
+        "obl-471"
+      ],
+      "source_seed_ids": [
+        "seed-541"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-090: Execution role and operational identity",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L157"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00615",
+      "source_obligation_ids": [
+        "obl-472"
+      ],
+      "source_seed_ids": [
+        "seed-542"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "### Selection reason and audit trail",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Models_System.md:L954"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

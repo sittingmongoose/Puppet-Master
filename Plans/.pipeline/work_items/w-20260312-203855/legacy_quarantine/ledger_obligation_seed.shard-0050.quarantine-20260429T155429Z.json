@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0050",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0050-L009801-L010000.md",
+  "source_line_range": "L009801-L010000",
+  "covered_shard_id": "shard-0050",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Prompt_Pipeline effective-resolution ownership",
+      "exact_items": [
+        "Plans/Prompt_Pipeline.md should remain the owner of the effective-resolution field family.",
+        "Prompt_Pipeline.md already owns the canonical effective-resolution contract through the effective resolution record."
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L9855-L9856",
+        "working_ledger.md:L9841-L9842"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "storage runtime persistence ownership",
+      "exact_items": [
+        "Plans/storage-plan.md should remain the owner of persisted execution/runtime record families.",
+        "storage-plan.md already owns the canonical runtime persistence side for execution attempts and runtime overlays: attempt_record, tier_runtime_record, blocked_projection, usage_record."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "tier_runtime_record"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L9857-L9858",
+        "working_ledger.md:L9842-L9846"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Executor execution-scoped context ownership",
+      "exact_items": [
+        "Plans/Executor_Protocol.md should own which execution-scoped context is required for scheduler/executor correctness.",
+        "Executor_Protocol.md has already moved toward node-native execution and runtime blocked overlays."
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L9859-L9860",
+        "working_ledger.md:L9852-L9852"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "orchestrator-subagent mixed runtime object demotion",
+      "exact_items": [
+        "Plans/orchestrator-subagent-integration.md should stop owning a canonical mixed runtime object.",
+        "This object is allowed to stay tier-shaped, but it should no longer pretend to be the canonical runtime context.",
+        "tier_runtime_record may survive, but only as a derived current-view/runtime-overlay projection; it should not be treated as the canonical source for execution identity, retry lineage, approval/recovery targeting, or usage truth."
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "tier_runtime_record",
+        "tier-shaped"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L9861-L9862",
+        "working_ledger.md:L9925-L9925",
+        "working_ledger.md:L9991-L9999"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": []
+}

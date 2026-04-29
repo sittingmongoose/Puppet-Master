@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-069",
+  "group_ids": [
+    "discgrp-0273",
+    "discgrp-0274",
+    "discgrp-0275",
+    "discgrp-0276"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00518",
+      "source_obligation_ids": [
+        "obl-375"
+      ],
+      "source_seed_ids": [
+        "seed-433"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "### 10.1 Orchestrator Plan",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FileSafe.md:L1170"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00519",
+      "source_obligation_ids": [
+        "obl-376"
+      ],
+      "source_seed_ids": [
+        "seed-434"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### Bottom runtime information architecture",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L600"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00520",
+      "source_obligation_ids": [
+        "obl-377"
+      ],
+      "source_seed_ids": [
+        "seed-435"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-042: Source Control and worktree handshake",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L115"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00521",
+      "source_obligation_ids": [
+        "obl-378"
+      ],
+      "source_seed_ids": [
+        "seed-436"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## Fidelity recovery addendum",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L3"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

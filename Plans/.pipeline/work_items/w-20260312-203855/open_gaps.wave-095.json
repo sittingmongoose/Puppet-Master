@@ -1,0 +1,439 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-095",
+  "group_ids": [
+    "gapgrp-0377",
+    "gapgrp-0378",
+    "gapgrp-0379",
+    "gapgrp-0380"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-04906",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06328 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/MCP_Integration.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06328"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00560",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00713 is partial for Command palette integration direction",
+      "affected_targets": [
+        {
+          "path": "Plans/MCP_Integration.md",
+          "heading": "# MCP Integration"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00713"
+      ],
+      "source_obligation_ids": [
+        "obl-570"
+      ],
+      "source_seed_ids": [
+        "seed-651"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "Command palette integration direction"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03506",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04474 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/MCP_Integration.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04474"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04831",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06243 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/MCP_Integration.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06243"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04907",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06329 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06329"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01971",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02527 is partial for later addenda require preservation of `thread_id`, `attempt_id`, `node_id`, generation, sn",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": "# Media Generation and Capabilities (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02527"
+      ],
+      "source_obligation_ids": [
+        "obl-2376"
+      ],
+      "source_seed_ids": [
+        "seed-3089"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "later addenda require preservation of `thread_id`, `attempt_id`, `node_id`, generation, snapshot IDs, and remediation lineage",
+        "thread_id",
+        "attempt_id",
+        "node_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-06328",
+    "cov-00713",
+    "cov-04474",
+    "cov-06243",
+    "cov-06329",
+    "cov-02527"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-2376",
+    "obl-4292",
+    "obl-570",
+    "obl-5986",
+    "obl-6009"
+  ],
+  "source_seed_ids_represented": [
+    "seed-3089",
+    "seed-6001",
+    "seed-651",
+    "seed-9006",
+    "seed-9092"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0014",
+    "shard-0037",
+    "shard-0059",
+    "shard-0082"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-04906",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06328 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/MCP_Integration.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06328"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00560",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00713 is partial for Command palette integration direction",
+      "affected_targets": [
+        {
+          "path": "Plans/MCP_Integration.md",
+          "heading": "# MCP Integration"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00713"
+      ],
+      "source_obligation_ids": [
+        "obl-570"
+      ],
+      "source_seed_ids": [
+        "seed-651"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "Command palette integration direction"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03506",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04474 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/MCP_Integration.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04474"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04831",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06243 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/MCP_Integration.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06243"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04907",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06329 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06329"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01971",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02527 is partial for later addenda require preservation of `thread_id`, `attempt_id`, `node_id`, generation, sn",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": "# Media Generation and Capabilities (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02527"
+      ],
+      "source_obligation_ids": [
+        "obl-2376"
+      ],
+      "source_seed_ids": [
+        "seed-3089"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "later addenda require preservation of `thread_id`, `attempt_id`, `node_id`, generation, snapshot IDs, and remediation lineage",
+        "thread_id",
+        "attempt_id",
+        "node_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "uncertain_items": []
+}

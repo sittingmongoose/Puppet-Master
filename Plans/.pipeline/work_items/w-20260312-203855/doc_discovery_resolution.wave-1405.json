@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1405",
+  "group_ids": [
+    "discgrp-5617",
+    "discgrp-5618",
+    "discgrp-5619",
+    "discgrp-5620"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06084",
+      "source_obligation_ids": [
+        "obl-5856"
+      ],
+      "source_seed_ids": [
+        "seed-8695"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06085",
+      "source_obligation_ids": [
+        "obl-5857"
+      ],
+      "source_seed_ids": [
+        "seed-8696"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L767"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06086",
+      "source_obligation_ids": [
+        "obl-5858"
+      ],
+      "source_seed_ids": [
+        "seed-8697"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1323"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06087",
+      "source_obligation_ids": [
+        "obl-5859"
+      ],
+      "source_seed_ids": [
+        "seed-8701"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

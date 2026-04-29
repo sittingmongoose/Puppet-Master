@@ -1,171 +1,203 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
   "work_id": "w-20260312-203855",
   "shard_id": "shard-0007",
   "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0007-L001201-L001400.md",
   "source_line_range": "L001201-L001400",
-  "covered_shard_id": "shard-0007",
   "seed_candidates": [
     {
-      "seed_type": "owner",
-      "canon_label_hint": "tier-rooted runtime/storage identity gaps",
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "package/seam overseer + lane-aware execution model",
       "exact_items": [
-        "active-agents.json is incompatible with event-sourced state",
-        "Contracts_V0.md, Executor_Protocol.md use tier-based paths <phase>/<task>/<subtask>",
-        "Progression_Gates.md gates are phase/task boundaries; package-complete and seam-complete gates are undefined",
-        "Prompt_Pipeline.md run envelope/instruction bundle embeds tier/mode; no node/package/lane identity fields",
-        "storage-plan event schemas lack package_id, seam_id, lane_id, attempt_id, effective_identity"
+        "Replace tier-rooted execution with package/seam/lane model",
+        "Define package overseer + seam overseer roles",
+        "Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage",
+        "Redefine gates to package-complete / seam-complete",
+        "Rename or retire Tiers UI/tab and tier_tree/progress bars"
       ],
       "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
         "Plans/Contracts_V0.md",
         "Plans/Executor_Protocol.md",
-        "Plans/Progression_Gates.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/storage-plan.md"
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Widget_System.md",
+        "Plans/Glossary.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md"
       ],
-      "doc_resolution_status": "concrete",
       "heading_hints": [
+        "Highest-Impact Docs",
+        "GUI / UX Impacts",
         "Runtime / Storage / Contract Impacts",
         "Cleanup Priorities",
         "Contradictions To Resolve"
       ],
       "stale_tokens": [
-        "active-agents.json",
-        "phase/task/subtask",
-        "tier-identity",
-        "tier-scoped",
-        "lexicographic_node_id"
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars",
+        "phase/task/subtask"
       ],
+      "source_shard_id": "shard-0007",
       "source_evidence": [
-        "working_ledger.md:L1270-L1277",
-        "working_ledger.md:L1307-L1310"
+        "working_ledger.md:L001252-L001256",
+        "working_ledger.md:L001261-L001276",
+        "working_ledger.md:L001297-L001310",
+        "working_ledger.md:L001317-L001324"
       ],
-      "notes": []
+      "notes": [
+        "Core blocker: body-vs-addenda split-brain and missing canonical terminology/fields for the new execution model."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "execution identity + lineage fields",
+      "exact_items": [
+        "Add node_id",
+        "Add package_id",
+        "Add seam_id",
+        "Add lane_id",
+        "Add attempt_id",
+        "Add effective_identity",
+        "Normalize requested/effective account identity shapes",
+        "Normalize blocked_reason_code/allowed_action_ids and safe-point/restore-point/rollback terminology"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/storage-plan.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/Multi-Account.md",
+        "Plans/Models_System.md"
+      ],
+      "heading_hints": [
+        "Runtime / Storage / Contract Impacts",
+        "Settings / Provider / Persona / Account Impacts"
+      ],
+      "stale_tokens": [
+        "phase_id",
+        "task_id",
+        "tier-identity",
+        "requested_auth_mode",
+        "effective_capabilities[]",
+        "active-agents.json",
+        "seglog",
+        "redb"
+      ],
+      "source_shard_id": "shard-0007",
+      "source_evidence": [
+        "working_ledger.md:L001270-L001276",
+        "working_ledger.md:L001307-L001310",
+        "working_ledger.md:L001377-L001384",
+        "working_ledger.md:L001388-L001393"
+      ],
+      "notes": [
+        "Missing fields must be carried through producer/consumer contract, storage schema, and prompt envelope."
+      ]
     },
     {
       "seed_type": "layout_blocker",
-      "canon_label_hint": "tiers GUI obsolete",
+      "canon_label_hint": "orchestrator attention routing and lane-aware widgets",
       "exact_items": [
-        "FinalGUISpec.md Tiers tab is obsolete as specified",
-        "widget.tier_tree renders Phase/Task/Subtask tree",
-        "widget.progress_bars renders 3 phase-scoped bars",
-        "Orchestrator_Page.md tab layout needs Tiers->Packages or similar rename plus content respec",
-        "Run_Graph_View.md grouped-by-phase layout is the only layout; package-group swimlanes and seam boundaries absent"
+        "Replace Tiers-first navigation",
+        "Define Dashboard\u2192Orchestrator\u2192thread routing contract",
+        "Add package/seam/lane visualization widgets",
+        "Define which overseer's thread opens on click",
+        "Make worktree/lane state visible and navigable"
       ],
       "affected_doc_hints": [
         "Plans/FinalGUISpec.md",
-        "Plans/Widget_System.md",
         "Plans/Run_Graph_View.md",
-        "Plans/Orchestrator_Page.md"
+        "Plans/Widget_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/assistant-chat-design.md"
       ],
-      "doc_resolution_status": "concrete",
       "heading_hints": [
         "GUI / UX Impacts",
-        "Cleanup Priorities",
-        "Highest-Impact Docs"
+        "Suggested Research Follow-Ups"
       ],
       "stale_tokens": [
         "Tiers tab",
         "widget.tier_tree",
-        "widget.progress_bars",
+        "3-bar layout",
         "grouped-by-phase",
-        "phase/task/subtask"
+        "single-threaded",
+        "current_task"
       ],
+      "source_shard_id": "shard-0007",
       "source_evidence": [
-        "working_ledger.md:L1252-L1257",
-        "working_ledger.md:L1261-L1266",
-        "working_ledger.md:L1302-L1305",
-        "working_ledger.md:L1347-L1350"
+        "working_ledger.md:L001261-L001266",
+        "working_ledger.md:L001327-L001334",
+        "working_ledger.md:L001347-L001350",
+        "working_ledger.md:L001369-L001374"
       ],
-      "notes": []
+      "notes": [
+        "UI contracts currently assume one tiered workstream and one active context."
+      ]
     },
     {
       "seed_type": "layout_blocker",
-      "canon_label_hint": "worktree/scm parallelism contradictions",
+      "canon_label_hint": "lane/worktree pool and contamination policy",
       "exact_items": [
-        "WorktreeGitImprovement.md per-subtask worktree model is legacy",
-        "chain-wizard-flexibility.md mentions explicit no-worktrees vs WorktreeGitImprovement.md per-subtask worktrees",
-        "FileSafe.md write scope assumes monolithic plan / singular active plan",
-        "MiscPlan.md cleanup policy is tier-scoped; runner contract references progress.txt, AGENTS.md, prd.json as tier-era state files",
-        "PM-owned worktrees / template repos are not visible in Source Control / Orchestrator contracts"
+        "Define lane\u2194worktree mapping",
+        "Specify contamination detection and cross-lane reuse rules",
+        "Define safe-point restore for lane/package context",
+        "Resolve no-worktrees vs per-subtask worktrees contradiction",
+        "Register PM-managed worktrees in source control visibility"
       ],
       "affected_doc_hints": [
         "Plans/WorktreeGitImprovement.md",
         "Plans/FileSafe.md",
         "Plans/MiscPlan.md",
-        "Plans/chain-wizard-flexibility.md",
+        "Plans/newfeatures.md",
         "Plans/newtools.md"
       ],
-      "doc_resolution_status": "concrete",
       "heading_hints": [
         "Worktree / SCM / Parallelism Impacts",
         "Contradictions To Resolve",
-        "Highest-Impact Docs"
+        "Cleanup Priorities"
       ],
       "stale_tokens": [
         "per-subtask worktrees",
-        "explicit no-worktrees",
-        "singular active worktree",
-        "tier-era state files",
-        "safe-point"
+        "no-worktrees",
+        "safe points",
+        "cleanup policy",
+        "one active worktree",
+        "project-root artifact paths"
       ],
+      "source_shard_id": "shard-0007",
       "source_evidence": [
-        "working_ledger.md:L1289-L1293",
-        "working_ledger.md:L1357-L1360",
-        "working_ledger.md:L1396-L1400"
+        "working_ledger.md:L001287-L001293",
+        "working_ledger.md:L001319-L001324",
+        "working_ledger.md:L001357-L001360",
+        "working_ledger.md:L001394-L001400"
       ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "terminology authority gaps",
-      "exact_items": [
-        "Glossary.md, Crosswalk.md, Decision_Policy.md, 00-plans-index.md are ownership/terminology authorities that currently lack canonical terms and owners for feature seam, work package, package/seam overseers, lane pools, contamination, safe points, effective execution identity",
-        "orchestrator-subagent-integration.md body vs addenda split-brain on tier vs node execution",
-        "newfeatures.md says four-tier hierarchy and no new tiers which contradicts node-graph canonical output"
-      ],
-      "affected_doc_hints": [
-        "Plans/Glossary.md",
-        "Plans/Crosswalk.md",
-        "Plans/Decision_Policy.md",
-        "Plans/00-plans-index.md",
-        "Plans/orchestrator-subagent-integration.md",
-        "Plans/newfeatures.md"
-      ],
-      "doc_resolution_status": "concrete",
-      "heading_hints": [
-        "Cleanup Priorities",
-        "Contradictions To Resolve",
-        "Suggested Research Follow-Ups",
-        "Highest-Impact Docs"
-      ],
-      "stale_tokens": [
-        "four-tier hierarchy",
-        "no new tiers",
-        "TierContext",
-        "TierType",
-        "select_for_tier",
-        "overseer"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L1230-L1231",
-        "working_ledger.md:L1252-L1257",
-        "working_ledger.md:L1297-L1300",
-        "working_ledger.md:L1317-L1323",
-        "working_ledger.md:L1362-L1365"
-      ],
-      "notes": []
+      "notes": [
+        "SCM/write-scope assumptions are scalar and legacy-tier-based; downstream consumers need lane-scoped isolation and retry lineage."
+      ]
     }
   ],
   "noise_items": [
-    "Model-wave synthesis / sweep framing",
-    "general severity labels (P0/P1/P2/P3, Priority 1/2/3)",
-    "process-only lines about addenda counts or sweep provenance",
-    "generic summary statements without concrete doc/field/action deltas"
+    {
+      "source_evidence": [
+        "working_ledger.md:L1201-L1400"
+      ],
+      "reason": "Metric-like counts, high-level synthesis prose, and general impact summaries without concrete obligations."
+    }
   ],
   "uncertain_items": [
-    "Whether Orchestrator_Page.md is in-scope for direct rename vs. indirect navigation update",
-    "Whether chain-wizard-flexibility.md is a canonical doc target or only a contradiction reference",
-    "Whether active-agents.json should be retired or superseded in-place by a new event-sourced state contract"
-  ]
+    {
+      "source_evidence": [
+        "working_ledger.md:L1201-L1400"
+      ],
+      "reason": "Exact canonical replacement for phase/task/subtask pathing; lane-to-worktree mapping; authority for dual-overseer ownership remain unresolved."
+    }
+  ],
+  "covered_shard_id": "shard-0007"
 }

@@ -1,0 +1,1872 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-096",
+  "group_ids": [
+    "gapgrp-0381",
+    "gapgrp-0382",
+    "gapgrp-0383",
+    "gapgrp-0384"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-00588",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00756 is partial for should also expose when an attempt is superseded by later remediation/graph generation",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": "# Media Generation and Capabilities (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00756"
+      ],
+      "source_obligation_ids": [
+        "obl-613"
+      ],
+      "source_seed_ids": [
+        "seed-708"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "exact_missing_items": [
+        "should also expose when an attempt is superseded by later remediation/graph generation"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00598",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00767 is partial for `Superseded by Generation 4`",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": "# Media Generation and Capabilities (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00767"
+      ],
+      "source_obligation_ids": [
+        "obl-624"
+      ],
+      "source_seed_ids": [
+        "seed-719"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "exact_missing_items": [
+        "`Superseded by Generation 4`",
+        "Superseded by Generation 4"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00763",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00997 is partial for Request should carry:",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": "### 2.2 Request envelope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00997"
+      ],
+      "source_obligation_ids": [
+        "obl-854"
+      ],
+      "source_seed_ids": [
+        "seed-999"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "exact_missing_items": [
+        "Request should carry:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00834",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01074 is partial for `request axis`",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": "### 2.2 Request envelope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01074"
+      ],
+      "source_obligation_ids": [
+        "obl-931"
+      ],
+      "source_seed_ids": [
+        "seed-1095",
+        "seed-1098"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "`request axis`",
+        "request axis"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00868",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01117 is partial for should answer: \"what did this run/attempt request, what actually happened, and why?\"",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": "### 2.2 Request envelope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01117"
+      ],
+      "source_obligation_ids": [
+        "obl-974"
+      ],
+      "source_seed_ids": [
+        "seed-1141"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "should answer: \"what did this run/attempt request, what actually happened, and why?\""
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01118",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01419 is partial for live status claims, blocked action buttons, and generation overlays should disclose trust",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": "# Media Generation and Capabilities (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01419"
+      ],
+      "source_obligation_ids": [
+        "obl-1276"
+      ],
+      "source_seed_ids": [
+        "seed-1540"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "exact_missing_items": [
+        "live status claims, blocked action buttons, and generation overlays should disclose trust state explicitly"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01159",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01472 is partial for patch point, target generation, resulting generation, requested reason, applied outcome",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": "# Media Generation and Capabilities (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01472"
+      ],
+      "source_obligation_ids": [
+        "obl-1329"
+      ],
+      "source_seed_ids": [
+        "seed-1614"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "exact_missing_items": [
+        "patch point, target generation, resulting generation, requested reason, applied outcome"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03507",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04475 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04475"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04832",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06244 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06244"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02155",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02740 is partial for consumer-doc cleanup for requested/effective identity fields",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02740"
+      ],
+      "source_obligation_ids": [
+        "obl-2587"
+      ],
+      "source_seed_ids": [
+        "seed-3389"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "consumer-doc cleanup for requested/effective identity fields"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04447",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05709 is partial for They should be fixed in the same pass as the surrounding owner-consumer reconciliation, no",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05709"
+      ],
+      "source_obligation_ids": [
+        "obl-5481"
+      ],
+      "source_seed_ids": [
+        "seed-8133"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "They should be fixed in the same pass as the surrounding owner-consumer reconciliation, not deferred as cleanup trivia."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04908",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06330 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06330"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05241",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06763 is partial for Primary consumer cleanup docs:",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06763"
+      ],
+      "source_obligation_ids": [
+        "obl-6399"
+      ],
+      "source_seed_ids": [
+        "seed-9771"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Primary consumer cleanup docs:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05319",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06870 is partial for Then consumer cleanup and same-file supersession collapse.",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06870"
+      ],
+      "source_obligation_ids": [
+        "obl-6473"
+      ],
+      "source_seed_ids": [
+        "seed-9852"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "Then consumer cleanup and same-file supersession collapse."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00114",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00117 is missing for lane/worktree pool and contamination policy",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "Worktree / SCM / Parallelism Impacts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00117"
+      ],
+      "source_obligation_ids": [
+        "obl-039"
+      ],
+      "source_seed_ids": [
+        "seed-039"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Define lane\u2194worktree mapping",
+        "Specify contamination detection and cross-lane reuse rules",
+        "Define safe-point restore for lane/package context",
+        "Resolve no-worktrees vs per-subtask worktrees contradiction",
+        "Register PM-managed worktrees in source control visibility"
+      ],
+      "stale_tokens": [
+        "per-subtask worktrees",
+        "no-worktrees",
+        "safe points",
+        "cleanup policy",
+        "one active worktree",
+        "project-root artifact paths"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00172",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00189 is present for Docs involved: `Orchestrator_Page.md`, `Contracts_V0.md`, related UI/runtime docs",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00189"
+      ],
+      "source_obligation_ids": [
+        "obl-085"
+      ],
+      "source_seed_ids": [
+        "seed-085"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "Docs involved: `Orchestrator_Page.md`, `Contracts_V0.md`, related UI/runtime docs",
+        "Orchestrator_Page.md",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00178",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00195 is present for Docs involved: `WorktreeGitImprovement.md`, `GitHub_Integration.md`, `feature-list.md`, `F",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "### 10.1 WorktreeGitImprovement.md"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00195"
+      ],
+      "source_obligation_ids": [
+        "obl-091"
+      ],
+      "source_seed_ids": [
+        "seed-091"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "Docs involved: `WorktreeGitImprovement.md`, `GitHub_Integration.md`, `feature-list.md`, `FinalGUISpec.md`",
+        "WorktreeGitImprovement.md",
+        "GitHub_Integration.md",
+        "feature-list.md",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01249",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01596 is present for Re-check `FinalGUISpec.md` and related UX docs later for copy that uses informal synonyms",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01596"
+      ],
+      "source_obligation_ids": [
+        "obl-1453"
+      ],
+      "source_seed_ids": [
+        "seed-1799"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "exact_missing_items": [
+        "Re-check `FinalGUISpec.md` and related UX docs later for copy that uses informal synonyms where canonical terms are now required.",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01763",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02269 is partial for The missing `usage_event_ref` definition is now a hard blocker for trust-safe cross-surfac",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02269"
+      ],
+      "source_obligation_ids": [
+        "obl-2122"
+      ],
+      "source_seed_ids": [
+        "seed-2754"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "The missing `usage_event_ref` definition is now a hard blocker for trust-safe cross-surface navigation, not just a naming cleanup.",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02210",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02805 is partial for still needs transport/upstream identity cleanup to prevent projection ambiguity",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02805"
+      ],
+      "source_obligation_ids": [
+        "obl-2652"
+      ],
+      "source_seed_ids": [
+        "seed-3486"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "still needs transport/upstream identity cleanup to prevent projection ambiguity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02814",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03593 is partial for tab/layout/help/glossary cleanup",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03593"
+      ],
+      "source_obligation_ids": [
+        "obl-3439"
+      ],
+      "source_seed_ids": [
+        "seed-4632"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "tab/layout/help/glossary cleanup"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04882",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06303 is present for exact `ContractRef` / section-anchor / duplicate-number cleanup in owner docs first",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06303"
+      ],
+      "source_obligation_ids": [
+        "obl-6006"
+      ],
+      "source_seed_ids": [
+        "seed-9089"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "exact `ContractRef` / section-anchor / duplicate-number cleanup in owner docs first",
+        "ContractRef"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04995",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06436 is present for The routing cleanup will stay weak if `Progression_Gates.md` remains flat-command-only whi",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06436"
+      ],
+      "source_obligation_ids": [
+        "obl-6077"
+      ],
+      "source_seed_ids": [
+        "seed-9183"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "The routing cleanup will stay weak if `Progression_Gates.md` remains flat-command-only while `Contracts_V0.md` and `UI_Command_Catalog.md` move to route/open primitives.",
+        "Progression_Gates.md",
+        "Contracts_V0.md",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05062",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06529 is partial for `persona_override_owner_id` needs owner-level cleanup so it no longer teaches `tier_id` as",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "### 3.3 Cleanup Scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06529"
+      ],
+      "source_obligation_ids": [
+        "obl-6170"
+      ],
+      "source_seed_ids": [
+        "seed-9332"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`persona_override_owner_id` needs owner-level cleanup so it no longer teaches `tier_id` as a canonical scope anchor.",
+        "persona_override_owner_id",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05086",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06554 is partial for `UI_Command_Catalog.md` second for command-family cleanup",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06554"
+      ],
+      "source_obligation_ids": [
+        "obl-6195"
+      ],
+      "source_seed_ids": [
+        "seed-9379"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`UI_Command_Catalog.md` second for command-family cleanup",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05087",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06555 is present for `FinalGUISpec.md` third for visible shell/view cleanup",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06555"
+      ],
+      "source_obligation_ids": [
+        "obl-6196"
+      ],
+      "source_seed_ids": [
+        "seed-9380"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` third for visible shell/view cleanup",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05397",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06958 is partial for summary: Final follow-up chunk audits confirmed that the remaining work is now classificat",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06958"
+      ],
+      "source_obligation_ids": [
+        "obl-6558"
+      ],
+      "source_seed_ids": [
+        "seed-9969"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "summary: Final follow-up chunk audits confirmed that the remaining work is now classification cleanup and handoff, not more discovery; the blocker bundle is ready for Ledger Condenser."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00756",
+    "cov-00767",
+    "cov-00997",
+    "cov-01074",
+    "cov-01117",
+    "cov-01419",
+    "cov-01472",
+    "cov-04475",
+    "cov-06244",
+    "cov-02740",
+    "cov-05709",
+    "cov-06330",
+    "cov-06763",
+    "cov-06870",
+    "cov-00117",
+    "cov-00189",
+    "cov-00195",
+    "cov-01596",
+    "cov-02269",
+    "cov-02805",
+    "cov-03593",
+    "cov-06303",
+    "cov-06436",
+    "cov-06529",
+    "cov-06554",
+    "cov-06555",
+    "cov-06958"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-039",
+    "obl-085",
+    "obl-091",
+    "obl-1276",
+    "obl-1329",
+    "obl-1453",
+    "obl-2122",
+    "obl-2587",
+    "obl-2652",
+    "obl-3439",
+    "obl-4292",
+    "obl-5481",
+    "obl-5986",
+    "obl-6006",
+    "obl-6009",
+    "obl-6077",
+    "obl-613",
+    "obl-6170",
+    "obl-6195",
+    "obl-6196",
+    "obl-624",
+    "obl-6399",
+    "obl-6473",
+    "obl-6558",
+    "obl-854",
+    "obl-931",
+    "obl-974"
+  ],
+  "source_seed_ids_represented": [
+    "seed-039",
+    "seed-085",
+    "seed-091",
+    "seed-1095",
+    "seed-1098",
+    "seed-1141",
+    "seed-1540",
+    "seed-1614",
+    "seed-1799",
+    "seed-2754",
+    "seed-3389",
+    "seed-3486",
+    "seed-4632",
+    "seed-6001",
+    "seed-708",
+    "seed-719",
+    "seed-8133",
+    "seed-9006",
+    "seed-9089",
+    "seed-9092",
+    "seed-9183",
+    "seed-9332",
+    "seed-9379",
+    "seed-9380",
+    "seed-9771",
+    "seed-9852",
+    "seed-9969",
+    "seed-999"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0007",
+    "shard-0009",
+    "shard-0015",
+    "shard-0018",
+    "shard-0019",
+    "shard-0024",
+    "shard-0025",
+    "shard-0026",
+    "shard-0035",
+    "shard-0040",
+    "shard-0049",
+    "shard-0059",
+    "shard-0075",
+    "shard-0082",
+    "shard-0083",
+    "shard-0084",
+    "shard-0087",
+    "shard-0088",
+    "shard-0089"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-00588",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00756 is partial for should also expose when an attempt is superseded by later remediation/graph generation",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": "# Media Generation and Capabilities (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00756"
+      ],
+      "source_obligation_ids": [
+        "obl-613"
+      ],
+      "source_seed_ids": [
+        "seed-708"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "exact_missing_items": [
+        "should also expose when an attempt is superseded by later remediation/graph generation"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00598",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00767 is partial for `Superseded by Generation 4`",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": "# Media Generation and Capabilities (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00767"
+      ],
+      "source_obligation_ids": [
+        "obl-624"
+      ],
+      "source_seed_ids": [
+        "seed-719"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "exact_missing_items": [
+        "`Superseded by Generation 4`",
+        "Superseded by Generation 4"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00763",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00997 is partial for Request should carry:",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": "### 2.2 Request envelope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00997"
+      ],
+      "source_obligation_ids": [
+        "obl-854"
+      ],
+      "source_seed_ids": [
+        "seed-999"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "exact_missing_items": [
+        "Request should carry:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00834",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01074 is partial for `request axis`",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": "### 2.2 Request envelope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01074"
+      ],
+      "source_obligation_ids": [
+        "obl-931"
+      ],
+      "source_seed_ids": [
+        "seed-1095",
+        "seed-1098"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "`request axis`",
+        "request axis"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00868",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01117 is partial for should answer: \"what did this run/attempt request, what actually happened, and why?\"",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": "### 2.2 Request envelope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01117"
+      ],
+      "source_obligation_ids": [
+        "obl-974"
+      ],
+      "source_seed_ids": [
+        "seed-1141"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "should answer: \"what did this run/attempt request, what actually happened, and why?\""
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01118",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01419 is partial for live status claims, blocked action buttons, and generation overlays should disclose trust",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": "# Media Generation and Capabilities (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01419"
+      ],
+      "source_obligation_ids": [
+        "obl-1276"
+      ],
+      "source_seed_ids": [
+        "seed-1540"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "exact_missing_items": [
+        "live status claims, blocked action buttons, and generation overlays should disclose trust state explicitly"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01159",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01472 is partial for patch point, target generation, resulting generation, requested reason, applied outcome",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": "# Media Generation and Capabilities (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01472"
+      ],
+      "source_obligation_ids": [
+        "obl-1329"
+      ],
+      "source_seed_ids": [
+        "seed-1614"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "exact_missing_items": [
+        "patch point, target generation, resulting generation, requested reason, applied outcome"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03507",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04475 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04475"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04832",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06244 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06244"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02155",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02740 is partial for consumer-doc cleanup for requested/effective identity fields",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02740"
+      ],
+      "source_obligation_ids": [
+        "obl-2587"
+      ],
+      "source_seed_ids": [
+        "seed-3389"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "consumer-doc cleanup for requested/effective identity fields"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04447",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05709 is partial for They should be fixed in the same pass as the surrounding owner-consumer reconciliation, no",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05709"
+      ],
+      "source_obligation_ids": [
+        "obl-5481"
+      ],
+      "source_seed_ids": [
+        "seed-8133"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "They should be fixed in the same pass as the surrounding owner-consumer reconciliation, not deferred as cleanup trivia."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04908",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06330 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06330"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05241",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06763 is partial for Primary consumer cleanup docs:",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06763"
+      ],
+      "source_obligation_ids": [
+        "obl-6399"
+      ],
+      "source_seed_ids": [
+        "seed-9771"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Primary consumer cleanup docs:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05319",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06870 is partial for Then consumer cleanup and same-file supersession collapse.",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06870"
+      ],
+      "source_obligation_ids": [
+        "obl-6473"
+      ],
+      "source_seed_ids": [
+        "seed-9852"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "Then consumer cleanup and same-file supersession collapse."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00114",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00117 is missing for lane/worktree pool and contamination policy",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "Worktree / SCM / Parallelism Impacts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00117"
+      ],
+      "source_obligation_ids": [
+        "obl-039"
+      ],
+      "source_seed_ids": [
+        "seed-039"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Define lane\u2194worktree mapping",
+        "Specify contamination detection and cross-lane reuse rules",
+        "Define safe-point restore for lane/package context",
+        "Resolve no-worktrees vs per-subtask worktrees contradiction",
+        "Register PM-managed worktrees in source control visibility"
+      ],
+      "stale_tokens": [
+        "per-subtask worktrees",
+        "no-worktrees",
+        "safe points",
+        "cleanup policy",
+        "one active worktree",
+        "project-root artifact paths"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00172",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00189 is present for Docs involved: `Orchestrator_Page.md`, `Contracts_V0.md`, related UI/runtime docs",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00189"
+      ],
+      "source_obligation_ids": [
+        "obl-085"
+      ],
+      "source_seed_ids": [
+        "seed-085"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "Docs involved: `Orchestrator_Page.md`, `Contracts_V0.md`, related UI/runtime docs",
+        "Orchestrator_Page.md",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00178",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00195 is present for Docs involved: `WorktreeGitImprovement.md`, `GitHub_Integration.md`, `feature-list.md`, `F",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "### 10.1 WorktreeGitImprovement.md"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00195"
+      ],
+      "source_obligation_ids": [
+        "obl-091"
+      ],
+      "source_seed_ids": [
+        "seed-091"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "Docs involved: `WorktreeGitImprovement.md`, `GitHub_Integration.md`, `feature-list.md`, `FinalGUISpec.md`",
+        "WorktreeGitImprovement.md",
+        "GitHub_Integration.md",
+        "feature-list.md",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01249",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01596 is present for Re-check `FinalGUISpec.md` and related UX docs later for copy that uses informal synonyms",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01596"
+      ],
+      "source_obligation_ids": [
+        "obl-1453"
+      ],
+      "source_seed_ids": [
+        "seed-1799"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "exact_missing_items": [
+        "Re-check `FinalGUISpec.md` and related UX docs later for copy that uses informal synonyms where canonical terms are now required.",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01763",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02269 is partial for The missing `usage_event_ref` definition is now a hard blocker for trust-safe cross-surfac",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02269"
+      ],
+      "source_obligation_ids": [
+        "obl-2122"
+      ],
+      "source_seed_ids": [
+        "seed-2754"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "The missing `usage_event_ref` definition is now a hard blocker for trust-safe cross-surface navigation, not just a naming cleanup.",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02210",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02805 is partial for still needs transport/upstream identity cleanup to prevent projection ambiguity",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02805"
+      ],
+      "source_obligation_ids": [
+        "obl-2652"
+      ],
+      "source_seed_ids": [
+        "seed-3486"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "still needs transport/upstream identity cleanup to prevent projection ambiguity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02814",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03593 is partial for tab/layout/help/glossary cleanup",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03593"
+      ],
+      "source_obligation_ids": [
+        "obl-3439"
+      ],
+      "source_seed_ids": [
+        "seed-4632"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "tab/layout/help/glossary cleanup"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04882",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06303 is present for exact `ContractRef` / section-anchor / duplicate-number cleanup in owner docs first",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06303"
+      ],
+      "source_obligation_ids": [
+        "obl-6006"
+      ],
+      "source_seed_ids": [
+        "seed-9089"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "exact `ContractRef` / section-anchor / duplicate-number cleanup in owner docs first",
+        "ContractRef"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04995",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06436 is present for The routing cleanup will stay weak if `Progression_Gates.md` remains flat-command-only whi",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06436"
+      ],
+      "source_obligation_ids": [
+        "obl-6077"
+      ],
+      "source_seed_ids": [
+        "seed-9183"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "The routing cleanup will stay weak if `Progression_Gates.md` remains flat-command-only while `Contracts_V0.md` and `UI_Command_Catalog.md` move to route/open primitives.",
+        "Progression_Gates.md",
+        "Contracts_V0.md",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05062",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06529 is partial for `persona_override_owner_id` needs owner-level cleanup so it no longer teaches `tier_id` as",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "### 3.3 Cleanup Scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06529"
+      ],
+      "source_obligation_ids": [
+        "obl-6170"
+      ],
+      "source_seed_ids": [
+        "seed-9332"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`persona_override_owner_id` needs owner-level cleanup so it no longer teaches `tier_id` as a canonical scope anchor.",
+        "persona_override_owner_id",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05086",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06554 is partial for `UI_Command_Catalog.md` second for command-family cleanup",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06554"
+      ],
+      "source_obligation_ids": [
+        "obl-6195"
+      ],
+      "source_seed_ids": [
+        "seed-9379"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`UI_Command_Catalog.md` second for command-family cleanup",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05087",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06555 is present for `FinalGUISpec.md` third for visible shell/view cleanup",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06555"
+      ],
+      "source_obligation_ids": [
+        "obl-6196"
+      ],
+      "source_seed_ids": [
+        "seed-9380"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` third for visible shell/view cleanup",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05397",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06958 is partial for summary: Final follow-up chunk audits confirmed that the remaining work is now classificat",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06958"
+      ],
+      "source_obligation_ids": [
+        "obl-6558"
+      ],
+      "source_seed_ids": [
+        "seed-9969"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "summary: Final follow-up chunk audits confirmed that the remaining work is now classification cleanup and handoff, not more discovery; the blocker bundle is ready for Ledger Condenser."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "uncertain_items": []
+}

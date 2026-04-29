@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-729",
+  "group_ids": [
+    "discgrp-2913",
+    "discgrp-2914",
+    "discgrp-2915",
+    "discgrp-2916"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03193",
+      "source_obligation_ids": [
+        "obl-3039"
+      ],
+      "source_seed_ids": [
+        "seed-4021"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03194",
+      "source_obligation_ids": [
+        "obl-3040"
+      ],
+      "source_seed_ids": [
+        "seed-4022"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1310"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03195",
+      "source_obligation_ids": [
+        "obl-3041"
+      ],
+      "source_seed_ids": [
+        "seed-4023"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03196",
+      "source_obligation_ids": [
+        "obl-3042"
+      ],
+      "source_seed_ids": [
+        "seed-4024"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "new_heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-514",
+  "group_ids": [
+    "discgrp-2053",
+    "discgrp-2054",
+    "discgrp-2055",
+    "discgrp-2056"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02320",
+      "source_obligation_ids": [
+        "obl-2172"
+      ],
+      "source_seed_ids": [
+        "seed-2823"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "# Assistant & Chat UI -- Design Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02321",
+      "source_obligation_ids": [
+        "obl-2173"
+      ],
+      "source_seed_ids": [
+        "seed-2824"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02322",
+      "source_obligation_ids": [
+        "obl-2174"
+      ],
+      "source_seed_ids": [
+        "seed-2825"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02323",
+      "source_obligation_ids": [
+        "obl-2175"
+      ],
+      "source_seed_ids": [
+        "seed-2826"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

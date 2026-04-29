@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-005",
+  "group_ids": [
+    "discgrp-0017",
+    "discgrp-0018",
+    "discgrp-0019",
+    "discgrp-0020"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00183",
+      "source_obligation_ids": [
+        "obl-079"
+      ],
+      "source_seed_ids": [
+        "seed-079"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 2.3 redb: schema, migrations, key patterns",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L455"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00184",
+      "source_obligation_ids": [
+        "obl-080"
+      ],
+      "source_seed_ids": [
+        "seed-080"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00185",
+      "source_obligation_ids": [
+        "obl-081"
+      ],
+      "source_seed_ids": [
+        "seed-081"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00186",
+      "source_obligation_ids": [
+        "obl-082"
+      ],
+      "source_seed_ids": [
+        "seed-082"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "### 1.3 Package Overseer",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L88"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

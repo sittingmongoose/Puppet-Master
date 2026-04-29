@@ -1,875 +1,630 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-077",
-  "timestamp_utc": "2026-04-28T22:02:12Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-305",
-    "coverage-rowgrp-306",
-    "coverage-rowgrp-307",
-    "coverage-rowgrp-308"
+  "row_group_ids": [
+    "rowgrp-0305",
+    "rowgrp-0306",
+    "rowgrp-0307",
+    "rowgrp-0308"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-305 cov-075,cov-187,cov-213,cov-224,cov-306,cov-371,cov-413,cov-415,cov-425,cov-497 Plans/storage-plan.md",
-    "rowgrp-306 cov-509,cov-543,cov-561,cov-566,cov-626,cov-648,cov-662,cov-667,cov-694,cov-696 Plans/storage-plan.md",
-    "rowgrp-307 cov-708,cov-731,cov-737,cov-747,cov-771,cov-926,cov-939,cov-948,cov-953,cov-958 Plans/storage-plan.md",
-    "rowgrp-308 cov-963,cov-966,cov-969,cov-973,cov-1054,cov-1055,cov-1060,cov-1069,cov-1136,cov-1165 Plans/storage-plan.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-305": "completed_reduced_conservatively_with_action_and_path_normalization",
-    "coverage-rowgrp-306": "completed_reduced_conservatively_with_action_and_path_normalization",
-    "coverage-rowgrp-307": "completed_reduced_conservatively_with_action_and_path_normalization",
-    "coverage-rowgrp-308": "completed_reduced_conservatively_with_action_and_path_normalization"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-075",
-    "cov-187",
-    "cov-213",
-    "cov-224",
-    "cov-306",
-    "cov-371",
-    "cov-413",
-    "cov-415",
-    "cov-425",
-    "cov-497",
-    "cov-509",
-    "cov-543",
-    "cov-561",
-    "cov-566",
-    "cov-626",
-    "cov-648",
-    "cov-662",
-    "cov-667",
-    "cov-694",
-    "cov-696",
-    "cov-708",
-    "cov-731",
-    "cov-737",
-    "cov-747",
-    "cov-771",
-    "cov-926",
-    "cov-939",
-    "cov-948",
-    "cov-953",
-    "cov-958",
-    "cov-963",
-    "cov-966",
-    "cov-969",
-    "cov-973",
-    "cov-1054",
-    "cov-1055",
-    "cov-1060",
-    "cov-1069",
-    "cov-1136",
-    "cov-1165"
-  ],
-  "coverage_ids_completed": [
-    "cov-075",
-    "cov-187",
-    "cov-213",
-    "cov-224",
-    "cov-306",
-    "cov-371",
-    "cov-413",
-    "cov-415",
-    "cov-425",
-    "cov-497",
-    "cov-509",
-    "cov-543",
-    "cov-561",
-    "cov-566",
-    "cov-626",
-    "cov-648",
-    "cov-662",
-    "cov-667",
-    "cov-694",
-    "cov-696",
-    "cov-708",
-    "cov-731",
-    "cov-737",
-    "cov-747",
-    "cov-771",
-    "cov-926",
-    "cov-939",
-    "cov-948",
-    "cov-953",
-    "cov-958",
-    "cov-963",
-    "cov-966",
-    "cov-969",
-    "cov-973",
-    "cov-1054",
-    "cov-1055",
-    "cov-1060",
-    "cov-1069",
-    "cov-1136",
-    "cov-1165"
-  ],
-  "path_groups_assigned": [
-    "Plans/storage-plan.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-075",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:611 says TierContext/tier_id decomposition is compatibility-only derived metadata and must not own runtime canon, storage keys, or join identity"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Tier compatibility is covered, but active-agents.json event-sourcing incompatibility and package/seam gates are incomplete.",
+      "coverage_id": "cov-00433",
       "source_obligation_ids": [
-        "obl-030"
+        "obl-291"
       ],
       "source_seed_ids": [
-        "seed-030"
+        "seed-336"
       ],
       "source_shard_ids": [
-        "shard-0007"
+        "shard-0011"
       ],
-      "path_field_status": "match"
+      "canon_label": "`Widget_System.md` still catalogs tier widgets and weak hostability rules",
+      "row_type": "layout_blocker",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`Widget_System.md` still catalogs tier widgets and weak hostability rules",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-187",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:1147 defines effective_provider_identity as effective provider/account pair after routing",
-        "Plans/storage-plan.md:1261-1264 defines effective_account_id, operational_identity, provider_attempt_ref, and usage_event_ref in the activity payload"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Effective identity disclosure exists, but provider_account_id shadow-routing risk is not directly handled.",
+      "coverage_id": "cov-01588",
       "source_obligation_ids": [
-        "obl-049"
+        "obl-1445"
       ],
       "source_seed_ids": [
-        "seed-049"
+        "seed-1791"
       ],
       "source_shard_ids": [
-        "shard-0006"
+        "shard-0026"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-213",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:590-598 separates projection_freshness and projection_health, reserves trust_tier for preview/browser semantics, and gates sensitive actions on both axes"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Projection health/freshness is covered, but trust state and last-updated fields across projection-backed surfaces are incomplete.",
-      "source_obligation_ids": [
-        "obl-058"
-      ],
-      "source_seed_ids": [
-        "seed-058"
-      ],
-      "source_shard_ids": [
-        "shard-0013"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-224",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:588-594 stores active_run_id, focused_run_id, and focus_mode live/historical for project state"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "focused_run_id/focus_mode are covered, but last_live_run_id, selected_tab, and per-tab view refs are incomplete.",
-      "source_obligation_ids": [
-        "obl-062"
-      ],
-      "source_seed_ids": [
-        "seed-062"
-      ],
-      "source_shard_ids": [
-        "shard-0013"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-306",
+      "canon_label": "`FinalGUISpec.md` already contains many local disclosure rules, but they are distributed.",
+      "row_type": "layout_blocker",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
       "status": "present",
+      "exact_items": [
+        "`FinalGUISpec.md` already contains many local disclosure rules, but they are distributed.",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/storage-plan.md:127 defines project_summary with activity_state, attention_state, health_state, owner, and projection trust disclosure"
+        "Plans/DRY_Rules.md:L68",
+        "Plans/DRY_Rules.md:L71"
       ],
-      "required_action": "none",
-      "unresolved_reason": "Project health, activity, and attention separation is directly represented in project_summary.",
-      "source_obligation_ids": [
-        "obl-088"
-      ],
-      "source_seed_ids": [
-        "seed-088"
-      ],
-      "source_shard_ids": [
-        "shard-0021"
-      ],
-      "path_field_status": "match"
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-371",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:1252-1264 defines activity payload fields including node_id, attempt_id, lane_id, package_id, execution_role, effective_account_id, operational_identity, provider_attempt_ref, and usage_event_ref"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Runtime identity fields exist, but actor/run kind distinctions and blocked/remediation taxonomy preservation are incomplete.",
+      "coverage_id": "cov-02180",
       "source_obligation_ids": [
-        "obl-109"
+        "obl-2035"
       ],
       "source_seed_ids": [
-        "seed-109"
+        "seed-2644"
       ],
       "source_shard_ids": [
-        "shard-0027"
+        "shard-0034"
       ],
-      "path_field_status": "match"
+      "canon_label": "Align `storage-plan.md` event-table rows with the stronger normative rules:",
+      "row_type": "layout_blocker",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "Align `storage-plan.md` event-table rows with the stronger normative rules:",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L56",
+        "Plans/DRY_Rules.md:L65",
+        "Plans/DRY_Rules.md:L66",
+        "Plans/DRY_Rules.md:L68",
+        "Plans/DRY_Rules.md:L70"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-413",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:47-48 defines concern as a first-class durable record with concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata",
-        "Plans/storage-plan.md:534 defines concern lifecycle states active, acknowledged, resolved, and dismissed"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Concern identity/lifecycle exists, but scope_type is not explicit.",
+      "coverage_id": "cov-02255",
       "source_obligation_ids": [
-        "obl-122"
+        "obl-2109"
       ],
       "source_seed_ids": [
-        "seed-122"
+        "seed-2739"
       ],
       "source_shard_ids": [
-        "shard-0030"
+        "shard-0035"
       ],
-      "path_field_status": "match"
+      "canon_label": "still needs project-scoped layout rules, terminal-widget normalization, projection-trust c",
+      "row_type": "layout_blocker",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "still needs project-scoped layout rules, terminal-widget normalization, projection-trust chrome, and attempt/lane-aware live data contracts"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-415",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:1144-1147 defines requested_account_binding, operational_identity, effective_account_label, and effective_provider_identity",
-        "Plans/storage-plan.md:1151-1153 requires chat and GUI surfaces consume the same stored field names rather than local variants"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Requested/effective identity disclosure exists, but the full reusable cross-surface contract is incomplete.",
+      "coverage_id": "cov-03284",
       "source_obligation_ids": [
-        "obl-124"
+        "obl-3130"
       ],
       "source_seed_ids": [
-        "seed-124"
+        "seed-4164"
       ],
       "source_shard_ids": [
-        "shard-0031"
+        "shard-0045"
       ],
-      "path_field_status": "match"
+      "canon_label": "`Executor_Protocol.md` still lacks `blocked_sequence` minting rules even though storage/co",
+      "row_type": "layout_blocker",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`Executor_Protocol.md` still lacks `blocked_sequence` minting rules even though storage/contracts/UI all depend on it.",
+        "Executor_Protocol.md",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L69",
+        "Plans/DRY_Rules.md:L70"
+      ],
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-425",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:609-612 makes execution_unit_context canonical and demotes TierContext/tier_id as compatibility-only",
-        "Plans/storage-plan.md:1257-1259 defines attempt_id, lane_id, and package_id in activity payloads"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "lane/package/attempt identity exists, but seam/package/lane-first replacement of tier_tree/Tiers and run.tier events is incomplete.",
+      "coverage_id": "cov-03322",
       "source_obligation_ids": [
-        "obl-125"
+        "obl-3168"
       ],
       "source_seed_ids": [
-        "seed-125"
-      ],
-      "source_shard_ids": [
-        "shard-0031"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-497",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:399 says seglog canonical payload codec is MessagePack with JSON diagnostics only",
-        "Plans/storage-plan.md:1264 defines usage_event_ref as usage-side reference for accounting and evidence joins"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Canonical payload and usage_event_ref exist, but actor envelope and locator-grade canonical reference semantics are incomplete.",
-      "source_obligation_ids": [
-        "obl-143"
-      ],
-      "source_seed_ids": [
-        "seed-143"
-      ],
-      "source_shard_ids": [
-        "shard-0036"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-509",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:528 lists project_attention_item.v1:{project_id}:{attention_item_id}"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "project_attention_item key family exists, but contract fields/resume_url row model are incomplete.",
-      "source_obligation_ids": [
-        "obl-147"
-      ],
-      "source_seed_ids": [
-        "seed-147"
-      ],
-      "source_shard_ids": [
-        "shard-0037"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-543",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:1158-1161 lists requested_account_id, effective_account_id, and execution_role"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "execution_role/account fields exist, but actor_role and operational identity layer are not explicit enough.",
-      "source_obligation_ids": [
-        "obl-155"
-      ],
-      "source_seed_ids": [
-        "seed-155"
-      ],
-      "source_shard_ids": [
-        "shard-0039"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-561",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:927-934 lists requested_account_id, effective_account_id, and account_switch_reason"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Requested/effective account fields exist, but requested_account_binding and owner decisions for projection freshness, route payload, and project summary/attention are incomplete.",
-      "source_obligation_ids": [
-        "obl-159"
-      ],
-      "source_seed_ids": [
-        "seed-159"
-      ],
-      "source_shard_ids": [
-        "shard-0040"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-566",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:916-934 lists execution_role, requested_account_id, effective_account_id, and account_switch_reason"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "execution_role and account switch fields exist, but actor_kind and explicit operational identity block are incomplete.",
-      "source_obligation_ids": [
-        "obl-160"
-      ],
-      "source_seed_ids": [
-        "seed-160"
-      ],
-      "source_shard_ids": [
-        "shard-0040"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-626",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:603-614 introduces execution_unit_context as canonical runtime-facing context, demotes TierContext/tier_id, and makes storage-plan own persistence/projection of attempt/usage/receipt/artifact joins"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "execution_unit_context is present, but execution identity split/owner-doc closure remains incomplete.",
-      "source_obligation_ids": [
-        "obl-175"
-      ],
-      "source_seed_ids": [
-        "seed-175"
-      ],
-      "source_shard_ids": [
-        "shard-0044"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-648",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:731 defines attempt_record.v1 with project_id/node_id/attempt_number and stores run_id/attempt_id on the record"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Attempt record identity exists, but runtime-artifact schema canonical attempt/node identifiers are incomplete.",
-      "source_obligation_ids": [
-        "obl-183"
-      ],
-      "source_seed_ids": [
-        "seed-183"
+        "seed-4221"
       ],
       "source_shard_ids": [
         "shard-0046"
       ],
-      "path_field_status": "match"
+      "canon_label": "`Executor_Protocol.md` still has duplicated scheduler sections, still leaves `blocked_sequ",
+      "row_type": "layout_blocker",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`Executor_Protocol.md` still has duplicated scheduler sections, still leaves `blocked_sequence` minting rules unowned, and still leaves the startup-recovery -> first scheduler-pass handshake implicit even though the vocabulary (`startup_recovered`) now exists.",
+        "Executor_Protocol.md",
+        "blocked_sequence",
+        "startup_recovered"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L69",
+        "Plans/DRY_Rules.md:L70"
+      ],
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-662",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:1013 lists session_id, thread_id, run_id, message_id, step_id, tool_call_id, approval_id, provider_session_id, terminal_session_id, and dev_session_id"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Generic session/thread IDs exist, but wizard/builder/interview handoff lineage fields and runtime snapshots are incomplete.",
+      "coverage_id": "cov-03439",
       "source_obligation_ids": [
-        "obl-187"
+        "obl-3285"
       ],
       "source_seed_ids": [
-        "seed-187"
+        "seed-4403"
       ],
       "source_shard_ids": [
         "shard-0047"
       ],
-      "path_field_status": "match"
+      "canon_label": "duplicate canonical sections plus unowned mint/handshake rules remain an execution-core ri",
+      "row_type": "layout_blocker",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "duplicate canonical sections plus unowned mint/handshake rules remain an execution-core risk multiplier."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-667",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:564 mentions validation_pass_report"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "validation_pass_report token exists, but exactly-three-per-sweep and lineage constraints are absent.",
+      "coverage_id": "cov-04366",
       "source_obligation_ids": [
-        "obl-188"
+        "obl-4206"
       ],
       "source_seed_ids": [
-        "seed-188"
+        "seed-5845"
       ],
       "source_shard_ids": [
-        "shard-0047"
+        "shard-0058"
       ],
-      "path_field_status": "match"
+      "canon_label": "Make `Runtime_Artifacts_Panel.md` and other artifact-bearing surfaces consume the same sub",
+      "row_type": "layout_blocker",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Make `Runtime_Artifacts_Panel.md` and other artifact-bearing surfaces consume the same subject-open resolver rather than bespoke artifact-opening rules.",
+        "Runtime_Artifacts_Panel.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-694",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:205-208 requires artifact index families to index attempt_id/thread_id for attempt-native artifact routing",
-        "Plans/storage-plan.md:541-545 lists artifacts_index.v1 by project/artifact id"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Artifact index family is present, but registration/ownership details are incomplete.",
+      "coverage_id": "cov-04978",
       "source_obligation_ids": [
-        "obl-191"
+        "obl-4754"
       ],
       "source_seed_ids": [
-        "seed-191"
-      ],
-      "source_shard_ids": [
-        "shard-0048"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-696",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:523-525 lists worktree_record and lane_record key families"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Worktree/lane families exist, but lifecycle split and receipt non-impersonation are incomplete.",
-      "source_obligation_ids": [
-        "obl-192"
-      ],
-      "source_seed_ids": [
-        "seed-192"
-      ],
-      "source_shard_ids": [
-        "shard-0048"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-708",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:603-614 introduces execution_unit_context, demotes TierContext, persists context with runtime artifacts/receipts/usage joins, and defines attribution packet ownership",
-        "Plans/storage-plan.md:617-618 makes runtime artifacts attempt-native and opens by artifact_id linked envelope refs"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Execution context and artifact indexing are covered, but blocked_sequence minting, worktree/lane lifecycle, and validation/wizard/interview lineage bridge are incomplete.",
-      "source_obligation_ids": [
-        "obl-195"
-      ],
-      "source_seed_ids": [
-        "seed-195"
-      ],
-      "source_shard_ids": [
-        "shard-0049"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-731",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:610-614 says storage-plan owns persistence/projection of attempt/usage/receipt/artifact joins",
-        "Plans/storage-plan.md:731-733 defines canonical attempt_record and blocked_projection keys and makes older variants migration-read aliases"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "attempt_record and blocked_projection are covered, but tier_runtime_record and usage_record ownership/demotion is incomplete.",
-      "source_obligation_ids": [
-        "obl-200"
-      ],
-      "source_seed_ids": [
-        "seed-200"
-      ],
-      "source_shard_ids": [
-        "shard-0050"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-737",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:603-612 introduces execution_unit_context and says TierContext/tier_id decomposition is compatibility-only"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "execution_unit_context/tier_id are covered, but runtime contract field set and tier_runtime_record handling are incomplete.",
-      "source_obligation_ids": [
-        "obl-203"
-      ],
-      "source_seed_ids": [
-        "seed-203"
-      ],
-      "source_shard_ids": [
-        "shard-0051"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-747",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:1248-1262 defines activity payload execution_role, effective_account_id, operational_identity, and bridge refs",
-        "Plans/storage-plan.md:613-614 gives Contracts_V0 cross-family attribution ownership"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "execution_role/operational_identity appear in activity payload, but coverage across attempt records, receipts, artifacts, and tool payloads is incomplete.",
-      "source_obligation_ids": [
-        "obl-206"
-      ],
-      "source_seed_ids": [
-        "seed-206"
-      ],
-      "source_shard_ids": [
-        "shard-0052"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-771",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:617-618 makes runtime artifacts attempt-native and resolves artifact open flows by artifact_id",
-        "Plans/storage-plan.md:541-545 lists artifacts_index by artifact_id"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "artifact_id/open flow exists, but runtime-artifact envelope/common field contract is incomplete.",
-      "source_obligation_ids": [
-        "obl-213"
-      ],
-      "source_seed_ids": [
-        "seed-213"
-      ],
-      "source_shard_ids": [
-        "shard-0054"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-926",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:619-620 lets Contracts_V0 own route_target/OpenSubject, keeps Crosswalk primitive-boundary ownership, and keeps FileManager OpenFile path-based"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Owner split is referenced, but storage consumer-only status and resume_url handling are incomplete.",
-      "source_obligation_ids": [
-        "obl-260"
-      ],
-      "source_seed_ids": [
-        "seed-260"
+        "seed-6847"
       ],
       "source_shard_ids": [
         "shard-0066"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-939",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Plans/storage-plan.md does not directly define OpenSubject with subject_id and open_intent or exclude resolver metadata.",
-      "source_obligation_ids": [
-        "obl-264"
-      ],
-      "source_seed_ids": [
-        "seed-264"
-      ],
-      "source_shard_ids": [
-        "shard-0067"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-948",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Plans/storage-plan.md does not directly define route_target minimum target_kind/project_id/selector fields.",
-      "source_obligation_ids": [
-        "obl-265"
-      ],
-      "source_seed_ids": [
-        "seed-265"
-      ],
-      "source_shard_ids": [
-        "shard-0067"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-953",
+      "canon_label": "Deprecated aliases and stable wrappers need different lifecycle rules.",
+      "row_type": "layout_blocker",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "Deprecated aliases and stable wrappers need different lifecycle rules."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/storage-plan.md:619-620 keeps FileManager OpenFile narrow and path-based while Contracts_V0 owns route_target/OpenSubject"
+        "Plans/DRY_Rules.md:L1"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Path-based OpenFile is covered, but line/range exclusion from route_target is incomplete.",
-      "source_obligation_ids": [
-        "obl-266"
-      ],
-      "source_seed_ids": [
-        "seed-266"
-      ],
-      "source_shard_ids": [
-        "shard-0067"
-      ],
-      "path_field_status": "match"
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-958",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Plans/storage-plan.md does not directly define the target_kind enum values primary_view, side_panel, bottom_panel, embedded_surface, and page_tab.",
+      "coverage_id": "cov-05045",
       "source_obligation_ids": [
-        "obl-268"
+        "obl-4821"
       ],
       "source_seed_ids": [
-        "seed-268"
+        "seed-6942"
       ],
       "source_shard_ids": [
-        "shard-0068"
+        "shard-0066"
       ],
-      "path_field_status": "match"
+      "canon_label": "Treat `resume_url` as a derived serialization of `route_target`, with decoding rules ancho",
+      "row_type": "layout_blocker",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "Treat `resume_url` as a derived serialization of `route_target`, with decoding rules anchored back to `Contracts_V0.md`.",
+        "resume_url",
+        "route_target",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L3",
+        "Plans/DRY_Rules.md:L51",
+        "Plans/DRY_Rules.md:L56",
+        "Plans/DRY_Rules.md:L65",
+        "Plans/DRY_Rules.md:L66"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-963",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:616-621 carries route/open linkage by reference, resolves artifacts by artifact_id, and lets Contracts_V0 own route_target/OpenSubject"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Route/open ownership exists, but selector precedence, multi-selector rejection, and subject_id/object_kind normalization are incomplete.",
+      "coverage_id": "cov-05251",
       "source_obligation_ids": [
-        "obl-269"
+        "obl-5027"
       ],
       "source_seed_ids": [
-        "seed-269"
-      ],
-      "source_shard_ids": [
-        "shard-0068"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-966",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:616-621 lets Contracts_V0 own route_target/OpenSubject and carries route/open linkage by reference"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "route_target ownership exists, but resume_url serialized-transport semantics are absent.",
-      "source_obligation_ids": [
-        "obl-270"
-      ],
-      "source_seed_ids": [
-        "seed-270"
-      ],
-      "source_shard_ids": [
-        "shard-0068"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-969",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:616-621 lets Contracts_V0 own route_target/OpenSubject and carries route/open linkage by reference"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "route_target ownership exists, but serialized data classes and wizard-step narrow anchor text are absent.",
-      "source_obligation_ids": [
-        "obl-271"
-      ],
-      "source_seed_ids": [
-        "seed-271"
+        "seed-7333"
       ],
       "source_shard_ids": [
         "shard-0069"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-973",
+      "canon_label": "Keep all message-step-line-range style anchors out of `inspector_target`.",
+      "row_type": "layout_blocker",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "## 8. Reference style",
       "status": "partial",
+      "exact_items": [
+        "Keep all message-step-line-range style anchors out of `inspector_target`.",
+        "inspector_target"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/storage-plan.md:517-536 defines a shared record envelope with attempt_record, blocked_projection, concern_record, and blocked episode distinction"
+        "Plans/DRY_Rules.md:L155"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Blocked episode related records exist, but object_kind enum and blocked_episode identity fields are absent.",
-      "source_obligation_ids": [
-        "obl-272"
-      ],
-      "source_seed_ids": [
-        "seed-272"
-      ],
-      "source_shard_ids": [
-        "shard-0069"
-      ],
-      "path_field_status": "match"
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-1054",
+      "coverage_id": "cov-06771",
+      "source_obligation_ids": [
+        "obl-6407"
+      ],
+      "source_seed_ids": [
+        "seed-9786"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Missing cleanup/lifecycle rules will produce destructive ambiguity between archive/remove/",
+      "row_type": "layout_blocker",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "Missing cleanup/lifecycle rules will produce destructive ambiguity between archive/remove/prune/recover behaviors."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/storage-plan.md:616-621 carries route/open linkage by reference rather than redefining route payload shapes locally"
+        "Plans/DRY_Rules.md:L1"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Route/open linkage by reference exists, but refs-in-record-payloads and resume_url transport rules are incomplete.",
-      "source_obligation_ids": [
-        "obl-299"
-      ],
-      "source_seed_ids": [
-        "seed-299"
-      ],
-      "source_shard_ids": [
-        "shard-0076"
-      ],
-      "path_field_status": "match"
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-1055",
+      "coverage_id": "cov-06167",
+      "source_obligation_ids": [
+        "obl-5939"
+      ],
+      "source_seed_ids": [
+        "seed-8838"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`DRY_Rules.md` cross-checks surfaced duplicated canonical sections, malformed/uncategorize",
+      "row_type": "layout_blocker",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`DRY_Rules.md` cross-checks surfaced duplicated canonical sections, malformed/uncategorized `ContractRef`s, lowercase normative text that evades traceability gates, and alias-canonicalization rules that now contradict owner docs.",
+        "DRY_Rules.md",
+        "ContractRef"
+      ],
+      "stale_tokens": [
+        "ContractRef",
+        "DRY_Rules.md"
+      ],
+      "evidence": [
+        "Plans/DRY_Rules.md:L3",
+        "Plans/DRY_Rules.md:L17",
+        "Plans/DRY_Rules.md:L19",
+        "Plans/DRY_Rules.md:L31",
+        "Plans/DRY_Rules.md:L45"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00284",
+      "source_obligation_ids": [
+        "obl-156"
+      ],
+      "source_seed_ids": [
+        "seed-163"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "likely issue: tier-boundary and single-Overseer audit rules are too rigid for package/seam",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "likely issue: tier-boundary and single-Overseer audit rules are too rigid for package/seam overseers and automation-first execution."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/storage-plan.md:610-614 makes execution_unit_context canonical and demotes TierContext/tier_id from runtime canon/storage keys/join identity"
+        "Plans/DRY_Rules.md:L1"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "tier_id demotion exists, but tier_runtime_record replacement and usage/evidence primary-key demotion are incomplete.",
-      "source_obligation_ids": [
-        "obl-300"
-      ],
-      "source_seed_ids": [
-        "seed-300"
-      ],
-      "source_shard_ids": [
-        "shard-0076"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1060",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Plans/storage-plan.md does not directly define cross-family blocked minimums or reconcile wizard.blocked.",
+      "coverage_id": "cov-01068",
       "source_obligation_ids": [
-        "obl-301"
+        "obl-925"
       ],
       "source_seed_ids": [
-        "seed-301"
+        "seed-1089"
       ],
       "source_shard_ids": [
-        "shard-0076"
+        "shard-0019"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1069",
+      "canon_label": "provider-gap disclosure rules (`honored`, `skipped`, `clamped`)",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "provider-gap disclosure rules (`honored`, `skipped`, `clamped`)",
+        "honored",
+        "skipped",
+        "clamped"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/storage-plan.md:1526-1554 defines canonical scheduler.pass, node.blocked/node.unblocked, safe_point, remediation, and blocked_projection supersession events"
+        "Plans/DRY_Rules.md:L1"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Some canonical event-family split is present, but the full canon-split stale record list is incomplete.",
-      "source_obligation_ids": [
-        "obl-304"
-      ],
-      "source_seed_ids": [
-        "seed-304"
-      ],
-      "source_shard_ids": [
-        "shard-0077"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1136",
+      "coverage_id": "cov-01139",
+      "source_obligation_ids": [
+        "obl-996"
+      ],
+      "source_seed_ids": [
+        "seed-1164"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "canon_label": "Manual override lifecycle exists for Persona, but similar presentation rules are less expl",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "Manual override lifecycle exists for Persona, but similar presentation rules are less explicit for provider/model/account/worker-policy overrides."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/storage-plan.md:1649-1652 defines permission_snapshot_record and attempt_record.permission_snapshot_id with query fields not redefining nested snapshots"
+        "Plans/DRY_Rules.md:L1"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Stronger attempt/blocked identity appears, but tier_runtime_record/tier-keyed usage/evidence demotion is incomplete.",
-      "source_obligation_ids": [
-        "obl-331"
-      ],
-      "source_seed_ids": [
-        "seed-331"
-      ],
-      "source_shard_ids": [
-        "shard-0084"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1165",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Plans/storage-plan.md does not directly classify docs as MUST CHANGE, MUST RECONCILE, or MUST VERIFY.",
+      "coverage_id": "cov-01148",
       "source_obligation_ids": [
-        "obl-339"
+        "obl-1005"
       ],
       "source_seed_ids": [
-        "seed-339"
+        "seed-1173"
       ],
       "source_shard_ids": [
-        "shard-0086"
+        "shard-0020"
       ],
-      "path_field_status": "match"
+      "canon_label": "Research Progress - 2026-03-16 - Auto Persona Resolution Rules",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-16 - Auto Persona Resolution Rules"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01568",
+      "source_obligation_ids": [
+        "obl-1425"
+      ],
+      "source_seed_ids": [
+        "seed-1764"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Terms that need explicit distinction rules",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Terms that need explicit distinction rules"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01850",
+      "source_obligation_ids": [
+        "obl-1707"
+      ],
+      "source_seed_ids": [
+        "seed-2154"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "concerns need exact identity, lineage, source linking, status, and interaction rules",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "concerns need exact identity, lineage, source linking, status, and interaction rules"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01875",
+      "source_obligation_ids": [
+        "obl-1732"
+      ],
+      "source_seed_ids": [
+        "seed-2207"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "Concern lineage now needs more exact rules.",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Concern lineage now needs more exact rules."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01938",
+      "source_obligation_ids": [
+        "obl-1795"
+      ],
+      "source_seed_ids": [
+        "seed-2303"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "`Decision_Policy.md` still lacks first-class concern/corroboration/promotion objects and t",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`Decision_Policy.md` still lacks first-class concern/corroboration/promotion objects and their authority/lifecycle rules",
+        "Decision_Policy.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L3",
+        "Plans/DRY_Rules.md:L29",
+        "Plans/DRY_Rules.md:L31",
+        "Plans/DRY_Rules.md:L45",
+        "Plans/DRY_Rules.md:L80"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02167",
+      "source_obligation_ids": [
+        "obl-2024"
+      ],
+      "source_seed_ids": [
+        "seed-2632"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "still needs explicit account-switch history semantics and tighter binding between canonica",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "still needs explicit account-switch history semantics and tighter binding between canonical snapshot rules and downstream event/record families"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02261",
+      "source_obligation_ids": [
+        "obl-2114"
+      ],
+      "source_seed_ids": [
+        "seed-2746"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "`usage_event_ref?` is treated as the canonical bridge name in storage/receipt rules, but n",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`usage_event_ref?` is treated as the canonical bridge name in storage/receipt rules, but no doc actually defines what it is.",
+        "usage_event_ref?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     }
   ]
 }

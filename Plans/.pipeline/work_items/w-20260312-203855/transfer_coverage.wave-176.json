@@ -1,0 +1,1219 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-176",
+  "row_group_ids": [
+    "rowgrp-0701",
+    "rowgrp-0702",
+    "rowgrp-0703",
+    "rowgrp-0704"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-00592",
+      "source_obligation_ids": [
+        "obl-449"
+      ],
+      "source_seed_ids": [
+        "seed-519",
+        "seed-1521",
+        "seed-1527",
+        "seed-1763"
+      ],
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0024",
+        "shard-0026"
+      ],
+      "canon_label": "`unavailable`",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### 8.7 MCP server unavailable",
+      "status": "present",
+      "exact_items": [
+        "`unavailable`",
+        "unavailable"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L212",
+        "Plans/Tools.md:L246",
+        "Plans/Tools.md:L392",
+        "Plans/Tools.md:L493",
+        "Plans/Tools.md:L497"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01184",
+      "source_obligation_ids": [
+        "obl-1041"
+      ],
+      "source_seed_ids": [
+        "seed-1219"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "canon_label": "`task`",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### 3.6 Task tool and the 42 subagents (Plans)",
+      "status": "present",
+      "exact_items": [
+        "`task`",
+        "task"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L184",
+        "Plans/Tools.md:L690",
+        "Plans/Tools.md:L692",
+        "Plans/Tools.md:L718",
+        "Plans/Tools.md:L724"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01827",
+      "source_obligation_ids": [
+        "obl-1684"
+      ],
+      "source_seed_ids": [
+        "seed-2115"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "`failed`",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### 2. blocked vs failed",
+      "status": "present",
+      "exact_items": [
+        "`failed`",
+        "failed"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L283",
+        "Plans/Tools.md:L457",
+        "Plans/Tools.md:L711",
+        "Plans/Tools.md:L931",
+        "Plans/Tools.md:L1210"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02680",
+      "source_obligation_ids": [
+        "obl-2527"
+      ],
+      "source_seed_ids": [
+        "seed-3318",
+        "seed-3733",
+        "seed-3751",
+        "seed-4018",
+        "seed-4090",
+        "seed-4147",
+        "seed-4204",
+        "seed-4255",
+        "seed-4288",
+        "seed-4374",
+        "seed-5146",
+        "seed-5211",
+        "seed-6712",
+        "seed-7456",
+        "seed-8888",
+        "seed-8980",
+        "seed-9074",
+        "seed-9629",
+        "seed-9670",
+        "seed-9722",
+        "seed-9935",
+        "seed-10013",
+        "seed-10054",
+        "seed-10090",
+        "seed-10147",
+        "seed-10181",
+        "seed-10220",
+        "seed-10361"
+      ],
+      "source_shard_ids": [
+        "shard-0039",
+        "shard-0042",
+        "shard-0044",
+        "shard-0045",
+        "shard-0046",
+        "shard-0047",
+        "shard-0052",
+        "shard-0053",
+        "shard-0064",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082",
+        "shard-0086",
+        "shard-0087",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/Tools.md`",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Tools.md`",
+        "Plans/Tools.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L860",
+        "Plans/Tools.md:L1500",
+        "Plans/Tools.md:L1596",
+        "Plans/Tools.md:L1688"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02736",
+      "source_obligation_ids": [
+        "obl-2583"
+      ],
+      "source_seed_ids": [
+        "seed-3385"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "Still needs research decisions**",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "# Adding Tool Support -- Research & Plan",
+      "status": "partial",
+      "exact_items": [
+        "Still needs research decisions**"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02761",
+      "source_obligation_ids": [
+        "obl-2608"
+      ],
+      "source_seed_ids": [
+        "seed-3416"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "Add canonical requested-side fields:",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "## 6. Ways to add tools (implementation angles)",
+      "status": "partial",
+      "exact_items": [
+        "Add canonical requested-side fields:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L829"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02897",
+      "source_obligation_ids": [
+        "obl-2744"
+      ],
+      "source_seed_ids": [
+        "seed-3603"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "Add `execution_role` to:",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "## 6. Ways to add tools (implementation angles)",
+      "status": "present",
+      "exact_items": [
+        "Add `execution_role` to:",
+        "execution_role"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1824",
+        "Plans/Tools.md:L1828"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02993",
+      "source_obligation_ids": [
+        "obl-2839"
+      ],
+      "source_seed_ids": [
+        "seed-3744"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "`tool.invoked` / `tool.denied` still omit node/attempt/actor/account context",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### `tool.denied` requirements",
+      "status": "present",
+      "exact_items": [
+        "`tool.invoked` / `tool.denied` still omit node/attempt/actor/account context",
+        "tool.invoked",
+        "tool.denied"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L52",
+        "Plans/Tools.md:L876",
+        "Plans/Tools.md:L877",
+        "Plans/Tools.md:L973",
+        "Plans/Tools.md:L974"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02994",
+      "source_obligation_ids": [
+        "obl-2840"
+      ],
+      "source_seed_ids": [
+        "seed-3745"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "the tool outcome taxonomy still diverges from canonical blocked reason taxonomy",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "## Tool Policy Outcome Taxonomy Addendum (2026-03-08)",
+      "status": "partial",
+      "exact_items": [
+        "the tool outcome taxonomy still diverges from canonical blocked reason taxonomy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1197"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03002",
+      "source_obligation_ids": [
+        "obl-2848"
+      ],
+      "source_seed_ids": [
+        "seed-3758"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "Tool events remain under-attributed for node/actor/account-aware audit.",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "# Adding Tool Support -- Research & Plan",
+      "status": "partial",
+      "exact_items": [
+        "Tool events remain under-attributed for node/actor/account-aware audit."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03007",
+      "source_obligation_ids": [
+        "obl-2853"
+      ],
+      "source_seed_ids": [
+        "seed-3763"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "Extend tool events with node/attempt/actor/account context and reconcile tool outcomes wit",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "## Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)",
+      "status": "partial",
+      "exact_items": [
+        "Extend tool events with node/attempt/actor/account context and reconcile tool outcomes with canonical blocked codes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1254"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03246",
+      "source_obligation_ids": [
+        "obl-3092"
+      ],
+      "source_seed_ids": [
+        "seed-4107"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "`Tools.md` still leaves tool events under-attributed (`node_id`, `attempt_id`, actor/accou",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "## Tool Policy Outcome Taxonomy Addendum (2026-03-08)",
+      "status": "present",
+      "exact_items": [
+        "`Tools.md` still leaves tool events under-attributed (`node_id`, `attempt_id`, actor/account/role, lane context missing), keeps the normalized outcome taxonomy unwired to actual event fields, and still lacks any real DAE post-hoc tool-event contract.",
+        "Tools.md",
+        "node_id",
+        "attempt_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L5",
+        "Plans/Tools.md:L24",
+        "Plans/Tools.md:L27",
+        "Plans/Tools.md:L75",
+        "Plans/Tools.md:L187"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03320",
+      "source_obligation_ids": [
+        "obl-3166"
+      ],
+      "source_seed_ids": [
+        "seed-4219"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`Tools.md` now looks even more bifurcated: scheduler-impacting denials and pending approva",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "## Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)",
+      "status": "present",
+      "exact_items": [
+        "`Tools.md` now looks even more bifurcated: scheduler-impacting denials and pending approvals can only be modeled correctly if they map into canonical blocked episodes, not as a standalone minimal `tool.denied` payload.",
+        "Tools.md",
+        "tool.denied"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L5",
+        "Plans/Tools.md:L24",
+        "Plans/Tools.md:L27",
+        "Plans/Tools.md:L52",
+        "Plans/Tools.md:L187"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03342",
+      "source_obligation_ids": [
+        "obl-3188"
+      ],
+      "source_seed_ids": [
+        "seed-4248"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "Treat scheduler-impacting tool denials/pending approvals as blocked-runtime episodes rathe",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### `tool.denied` requirements",
+      "status": "present",
+      "exact_items": [
+        "Treat scheduler-impacting tool denials/pending approvals as blocked-runtime episodes rather than a weak standalone `tool.denied` path.",
+        "tool.denied"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L52",
+        "Plans/Tools.md:L877",
+        "Plans/Tools.md:L974",
+        "Plans/Tools.md:L1165",
+        "Plans/Tools.md:L1167"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03349",
+      "source_obligation_ids": [
+        "obl-3195"
+      ],
+      "source_seed_ids": [
+        "seed-4260"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`tool.invoked` = `tool_name`, `run_id`, optional `thread_id`, `latency_ms`, `success`, `er",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "# Adding Tool Support -- Research & Plan",
+      "status": "present",
+      "exact_items": [
+        "`tool.invoked` = `tool_name`, `run_id`, optional `thread_id`, `latency_ms`, `success`, `error`",
+        "tool.invoked",
+        "tool_name",
+        "run_id",
+        "thread_id",
+        "latency_ms",
+        "success",
+        "error"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L37",
+        "Plans/Tools.md:L69",
+        "Plans/Tools.md:L70",
+        "Plans/Tools.md:L71",
+        "Plans/Tools.md:L72"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03350",
+      "source_obligation_ids": [
+        "obl-3196"
+      ],
+      "source_seed_ids": [
+        "seed-4261"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`tool.denied` = `tool_name`, `run_id`, optional `thread_id`, `reason`",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### `tool.denied` requirements",
+      "status": "present",
+      "exact_items": [
+        "`tool.denied` = `tool_name`, `run_id`, optional `thread_id`, `reason`",
+        "tool.denied",
+        "tool_name",
+        "run_id",
+        "thread_id",
+        "reason"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L37",
+        "Plans/Tools.md:L52",
+        "Plans/Tools.md:L69",
+        "Plans/Tools.md:L70",
+        "Plans/Tools.md:L71"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03351",
+      "source_obligation_ids": [
+        "obl-3197"
+      ],
+      "source_seed_ids": [
+        "seed-4262"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`tool.denied` must carry `blocked_reason_code`, `failure_class`, ordered `allowed_action_i",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "#### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval",
+      "status": "present",
+      "exact_items": [
+        "`tool.denied` must carry `blocked_reason_code`, `failure_class`, ordered `allowed_action_ids[]`, `headless_denied`, and effective permission snapshot id when scheduler state is affected",
+        "tool.denied",
+        "blocked_reason_code",
+        "failure_class",
+        "allowed_action_ids[]",
+        "headless_denied"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L52",
+        "Plans/Tools.md:L877",
+        "Plans/Tools.md:L974",
+        "Plans/Tools.md:L999",
+        "Plans/Tools.md:L1104"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03369",
+      "source_obligation_ids": [
+        "obl-3215"
+      ],
+      "source_seed_ids": [
+        "seed-4296"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`Tools.md` still says `tool.denied` should not emit for FileSafe blocks, but the normalize",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "## Tool Policy Outcome Taxonomy Addendum (2026-03-08)",
+      "status": "present",
+      "exact_items": [
+        "`Tools.md` still says `tool.denied` should not emit for FileSafe blocks, but the normalized terminal outcome taxonomy in the same doc already includes `filesafe_blocked`. That means the event family and the normalized outcome story are not yet aligned.",
+        "Tools.md",
+        "tool.denied",
+        "filesafe_blocked"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L5",
+        "Plans/Tools.md:L24",
+        "Plans/Tools.md:L27",
+        "Plans/Tools.md:L52",
+        "Plans/Tools.md:L126"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03370",
+      "source_obligation_ids": [
+        "obl-3216"
+      ],
+      "source_seed_ids": [
+        "seed-4297"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`Contracts_V0.md` upgrades `tool.denied` when scheduler state is affected, but `Tools.md`",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### `tool.denied` requirements",
+      "status": "present",
+      "exact_items": [
+        "`Contracts_V0.md` upgrades `tool.denied` when scheduler state is affected, but `Tools.md` and `storage-plan.md` still publish the thinner payloads as if they were sufficient canon.",
+        "Contracts_V0.md",
+        "tool.denied",
+        "Tools.md",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L3",
+        "Plans/Tools.md:L5",
+        "Plans/Tools.md:L9",
+        "Plans/Tools.md:L24",
+        "Plans/Tools.md:L27"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03375",
+      "source_obligation_ids": [
+        "obl-3221"
+      ],
+      "source_seed_ids": [
+        "seed-4302"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "add effective account/runtime attribution where tool execution depends on provider identit",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "#### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval",
+      "status": "partial",
+      "exact_items": [
+        "add effective account/runtime attribution where tool execution depends on provider identity or permission state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L218"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03376",
+      "source_obligation_ids": [
+        "obl-3222"
+      ],
+      "source_seed_ids": [
+        "seed-4303"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "Normalize tool denial/execution outcomes so `permission_denied`, `user_declined`, `headles",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "# Adding Tool Support -- Research & Plan",
+      "status": "present",
+      "exact_items": [
+        "Normalize tool denial/execution outcomes so `permission_denied`, `user_declined`, `headless_ask_denied`, and `filesafe_blocked` can all be explained through one durable event/result story.",
+        "permission_denied",
+        "user_declined",
+        "headless_ask_denied",
+        "filesafe_blocked"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L123",
+        "Plans/Tools.md:L124",
+        "Plans/Tools.md:L125",
+        "Plans/Tools.md:L126",
+        "Plans/Tools.md:L280"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03379",
+      "source_obligation_ids": [
+        "obl-3225"
+      ],
+      "source_seed_ids": [
+        "seed-4306"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "the real problem is not only missing fields; it is that tool events are still described as",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### 3.5A `skill` tool runtime contract",
+      "status": "partial",
+      "exact_items": [
+        "the real problem is not only missing fields; it is that tool events are still described as analytics exhaust while other docs already want them to carry runtime truth"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L465"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03381",
+      "source_obligation_ids": [
+        "obl-3227"
+      ],
+      "source_seed_ids": [
+        "seed-4308"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "FileSafe blocks still need a durable attributed outcome path even if the old `tool.denied`",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "## Tool Policy Outcome Taxonomy Addendum (2026-03-08)",
+      "status": "present",
+      "exact_items": [
+        "FileSafe blocks still need a durable attributed outcome path even if the old `tool.denied` wording excluded them",
+        "tool.denied"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L52",
+        "Plans/Tools.md:L877",
+        "Plans/Tools.md:L974",
+        "Plans/Tools.md:L1165",
+        "Plans/Tools.md:L1167"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03426",
+      "source_obligation_ids": [
+        "obl-3272"
+      ],
+      "source_seed_ids": [
+        "seed-4386"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "Artifact / HITL / tool contracts remain under-owned at the exact file/field level:",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "# Adding Tool Support -- Research & Plan",
+      "status": "partial",
+      "exact_items": [
+        "Artifact / HITL / tool contracts remain under-owned at the exact file/field level:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03429",
+      "source_obligation_ids": [
+        "obl-3275"
+      ],
+      "source_seed_ids": [
+        "seed-4389"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "`Tools.md` is now a fully visible three-way SSOT split (`Tools.md` / `Contracts_V0.md` / `",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### 3.5A `skill` tool runtime contract",
+      "status": "present",
+      "exact_items": [
+        "`Tools.md` is now a fully visible three-way SSOT split (`Tools.md` / `Contracts_V0.md` / `storage-plan.md`) for `tool.denied`, still allows `pending-HITL` without a legal persisted tool-approval contract, and still lacks durable event families for unavailable/degraded tool truth.",
+        "Tools.md",
+        "Contracts_V0.md",
+        "storage-plan.md",
+        "tool.denied",
+        "pending-HITL"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L3",
+        "Plans/Tools.md:L5",
+        "Plans/Tools.md:L9",
+        "Plans/Tools.md:L24",
+        "Plans/Tools.md:L27"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03595",
+      "source_obligation_ids": [
+        "obl-3441"
+      ],
+      "source_seed_ids": [
+        "seed-4634"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "Still needs research / owner decisions**",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "# Adding Tool Support -- Research & Plan",
+      "status": "partial",
+      "exact_items": [
+        "Still needs research / owner decisions**"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03858",
+      "source_obligation_ids": [
+        "obl-3703"
+      ],
+      "source_seed_ids": [
+        "seed-5026"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "add `execution_role` to:",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "## 6. Ways to add tools (implementation angles)",
+      "status": "present",
+      "exact_items": [
+        "add `execution_role` to:",
+        "execution_role"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1824",
+        "Plans/Tools.md:L1828"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03860",
+      "source_obligation_ids": [
+        "obl-3705"
+      ],
+      "source_seed_ids": [
+        "seed-5030"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "add `operational_identity?` to:",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "## 6. Ways to add tools (implementation angles)",
+      "status": "partial",
+      "exact_items": [
+        "add `operational_identity?` to:",
+        "operational_identity?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L829"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03861",
+      "source_obligation_ids": [
+        "obl-3706"
+      ],
+      "source_seed_ids": [
+        "seed-5032"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "relevant `tool.invoked` / `tool.denied` / runtime artifact payloads when side effects occu",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### 3.5A `skill` tool runtime contract",
+      "status": "present",
+      "exact_items": [
+        "relevant `tool.invoked` / `tool.denied` / runtime artifact payloads when side effects occur",
+        "tool.invoked",
+        "tool.denied"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L52",
+        "Plans/Tools.md:L876",
+        "Plans/Tools.md:L877",
+        "Plans/Tools.md:L973",
+        "Plans/Tools.md:L974"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03926",
+      "source_obligation_ids": [
+        "obl-3770"
+      ],
+      "source_seed_ids": [
+        "seed-5153"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "`Tools.md` still treats `tool.invoked` primarily as analytics data:",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "# Adding Tool Support -- Research & Plan",
+      "status": "present",
+      "exact_items": [
+        "`Tools.md` still treats `tool.invoked` primarily as analytics data:",
+        "Tools.md",
+        "tool.invoked"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L5",
+        "Plans/Tools.md:L24",
+        "Plans/Tools.md:L27",
+        "Plans/Tools.md:L187",
+        "Plans/Tools.md:L836"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03937",
+      "source_obligation_ids": [
+        "obl-3781"
+      ],
+      "source_seed_ids": [
+        "seed-5168"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "`Contracts_V0.md` already tightens `tool.denied` when scheduler state is affected, but `to",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### `tool.denied` requirements",
+      "status": "present",
+      "exact_items": [
+        "`Contracts_V0.md` already tightens `tool.denied` when scheduler state is affected, but `tool.invoked` and runtime-artifact docs still lag behind that attribution level.",
+        "Contracts_V0.md",
+        "tool.denied",
+        "tool.invoked"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L3",
+        "Plans/Tools.md:L9",
+        "Plans/Tools.md:L52",
+        "Plans/Tools.md:L67",
+        "Plans/Tools.md:L119"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03939",
+      "source_obligation_ids": [
+        "obl-3783"
+      ],
+      "source_seed_ids": [
+        "seed-5170"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "`tool.invoked`",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "# Adding Tool Support -- Research & Plan",
+      "status": "present",
+      "exact_items": [
+        "`tool.invoked`",
+        "tool.invoked"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L876",
+        "Plans/Tools.md:L973",
+        "Plans/Tools.md:L974",
+        "Plans/Tools.md:L1167",
+        "Plans/Tools.md:L1557"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03940",
+      "source_obligation_ids": [
+        "obl-3784"
+      ],
+      "source_seed_ids": [
+        "seed-5171"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "`tool.denied`",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### `tool.denied` requirements",
+      "status": "present",
+      "exact_items": [
+        "`tool.denied`",
+        "tool.denied"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L52",
+        "Plans/Tools.md:L877",
+        "Plans/Tools.md:L974",
+        "Plans/Tools.md:L1165",
+        "Plans/Tools.md:L1167"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03961",
+      "source_obligation_ids": [
+        "obl-3805"
+      ],
+      "source_seed_ids": [
+        "seed-5217"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "`tool.invoked` remains under-attributed compared with `tool.denied`; it is still documente",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### 3.5A `skill` tool runtime contract",
+      "status": "present",
+      "exact_items": [
+        "`tool.invoked` remains under-attributed compared with `tool.denied`; it is still documented mainly as analytics exhaust rather than as a first-class runtime trace record.",
+        "tool.invoked",
+        "tool.denied"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L52",
+        "Plans/Tools.md:L876",
+        "Plans/Tools.md:L877",
+        "Plans/Tools.md:L973",
+        "Plans/Tools.md:L974"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03965",
+      "source_obligation_ids": [
+        "obl-3809"
+      ],
+      "source_seed_ids": [
+        "seed-5221"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "Expand `tool.invoked` so it can carry runtime attribution on parity with side-effect-relev",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "### 3.5A `skill` tool runtime contract",
+      "status": "present",
+      "exact_items": [
+        "Expand `tool.invoked` so it can carry runtime attribution on parity with side-effect-relevant `tool.denied`.",
+        "tool.invoked",
+        "tool.denied"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L52",
+        "Plans/Tools.md:L876",
+        "Plans/Tools.md:L877",
+        "Plans/Tools.md:L973",
+        "Plans/Tools.md:L974"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03989",
+      "source_obligation_ids": [
+        "obl-3833"
+      ],
+      "source_seed_ids": [
+        "seed-5252"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "tool traces that originate from a provider-backed attempt should carry `provider_attempt_r",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "# Adding Tool Support -- Research & Plan",
+      "status": "partial",
+      "exact_items": [
+        "tool traces that originate from a provider-backed attempt should carry `provider_attempt_ref?` whenever that provider/runtime handle exists",
+        "provider_attempt_ref?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04219",
+      "source_obligation_ids": [
+        "obl-4059"
+      ],
+      "source_seed_ids": [
+        "seed-5598"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "GPT-5.4 did not flatten out; it is still adding precision beyond Sonnet, especially where",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "# Adding Tool Support -- Research & Plan",
+      "status": "partial",
+      "exact_items": [
+        "GPT-5.4 did not flatten out; it is still adding precision beyond Sonnet, especially where the owner docs themselves remain structurally weak."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04308",
+      "source_obligation_ids": [
+        "obl-4148"
+      ],
+      "source_seed_ids": [
+        "seed-5748"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "This means the docs currently describe stronger verifiability than the gate/evidence contr",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "# Adding Tool Support -- Research & Plan",
+      "status": "partial",
+      "exact_items": [
+        "This means the docs currently describe stronger verifiability than the gate/evidence contracts can actually support once navigation ceases to be a set of one-off command handlers."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04495",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04655",
+      "source_obligation_ids": [
+        "obl-4433"
+      ],
+      "source_seed_ids": [
+        "seed-6278"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "Avoid adding a generic nested \u201cextra args\u201d bag to `route_target`; that would recreate the",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "# Adding Tool Support -- Research & Plan",
+      "status": "partial",
+      "exact_items": [
+        "Avoid adding a generic nested \u201cextra args\u201d bag to `route_target`; that would recreate the same drift under a different name.",
+        "route_target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1319",
+  "group_ids": [
+    "discgrp-5273",
+    "discgrp-5274",
+    "discgrp-5275",
+    "discgrp-5276"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05708",
+      "source_obligation_ids": [
+        "obl-5480"
+      ],
+      "source_seed_ids": [
+        "seed-8132"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/00-plans-index.md",
+      "new_heading_hint": "### Instant Grep canon reconciliation note (2026-03-30)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/00-plans-index.md:L57"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05709",
+      "source_obligation_ids": [
+        "obl-5481"
+      ],
+      "source_seed_ids": [
+        "seed-8133"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05710",
+      "source_obligation_ids": [
+        "obl-5482"
+      ],
+      "source_seed_ids": [
+        "seed-8134"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05711",
+      "source_obligation_ids": [
+        "obl-5483"
+      ],
+      "source_seed_ids": [
+        "seed-8140"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L91"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

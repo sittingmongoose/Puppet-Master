@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-131",
+  "group_ids": [
+    "discgrp-0521",
+    "discgrp-0522",
+    "discgrp-0523",
+    "discgrp-0524"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00768",
+      "source_obligation_ids": [
+        "obl-625"
+      ],
+      "source_seed_ids": [
+        "seed-720"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Progression_Gates.md",
+      "new_heading_hint": "### Fidelity recovery cov-034: Promotion classes and gate evidence",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Progression_Gates.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00769",
+      "source_obligation_ids": [
+        "obl-626"
+      ],
+      "source_seed_ids": [
+        "seed-721"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00770",
+      "source_obligation_ids": [
+        "obl-627"
+      ],
+      "source_seed_ids": [
+        "seed-722"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00771",
+      "source_obligation_ids": [
+        "obl-628"
+      ],
+      "source_seed_ids": [
+        "seed-723"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

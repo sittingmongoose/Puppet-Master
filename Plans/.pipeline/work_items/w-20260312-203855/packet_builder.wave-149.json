@@ -1,0 +1,285 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-149",
+  "group_ids": [
+    "pktgrp-0593",
+    "pktgrp-0594",
+    "pktgrp-0595",
+    "pktgrp-0596"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0038",
+      "source_reconciliation_target_id": "target-0095",
+      "source_reconciliation_target_ids": [
+        "target-0095"
+      ],
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "operation": "observe_only",
+      "live_anchor": "### Browser/device login execution contract (Plans/Containers_Registry_and_Unraid.md:L163)",
+      "coverage_row_ids": [
+        "cov-04109"
+      ],
+      "source_obligation_ids": [
+        "obl-3949"
+      ],
+      "source_seed_ids": [
+        "seed-5413"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3949"
+        ],
+        "source_seed_ids": [
+          "seed-5413"
+        ],
+        "source_shard_ids": [
+          "shard-0054"
+        ]
+      },
+      "gap_ids": [
+        "gap-03193"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`FinalGUISpec.md` still states one unified `OpenFile { path... }` contract for all file-open actions across the app.",
+        "FinalGUISpec.md",
+        "OpenFile { path... }"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-c94d25aa6938",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0039",
+      "source_reconciliation_target_id": "target-0097",
+      "source_reconciliation_target_ids": [
+        "target-0097"
+      ],
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "operation": "observe_only",
+      "live_anchor": "### Missing repository behavior (Plans/Containers_Registry_and_Unraid.md:L250)",
+      "coverage_row_ids": [
+        "cov-02244",
+        "cov-04788"
+      ],
+      "source_obligation_ids": [
+        "obl-2098",
+        "obl-4565"
+      ],
+      "source_seed_ids": [
+        "seed-2726",
+        "seed-6515"
+      ],
+      "source_shard_ids": [
+        "shard-0035",
+        "shard-0062"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-2098",
+          "obl-4565"
+        ],
+        "source_seed_ids": [
+          "seed-2726",
+          "seed-6515"
+        ],
+        "source_shard_ids": [
+          "shard-0035",
+          "shard-0062"
+        ]
+      },
+      "gap_ids": [
+        "gap-01741",
+        "gap-03741"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Orchestrator_Page.md` TOC sections 13\u201317 are genuinely missing, not relocated",
+        "Orchestrator_Page.md",
+        "`UI_Command_Catalog.md` now has the missing Gemini pass, which removes a weird asymmetry from the most central command-owner doc.",
+        "UI_Command_Catalog.md"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-ee2a2acc36ae",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0040",
+      "source_reconciliation_target_id": "target-0099",
+      "source_reconciliation_target_ids": [
+        "target-0099"
+      ],
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "operation": "observe_only",
+      "live_anchor": "### Supported authentication inputs (Plans/Containers_Registry_and_Unraid.md:L149)",
+      "coverage_row_ids": [
+        "cov-06589"
+      ],
+      "source_obligation_ids": [
+        "obl-6230"
+      ],
+      "source_seed_ids": [
+        "seed-9420"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-6230"
+        ],
+        "source_seed_ids": [
+          "seed-9420"
+        ],
+        "source_shard_ids": [
+          "shard-0085"
+        ]
+      },
+      "gap_ids": [
+        "gap-05114"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "still cites `PuppetMasterEvent::TierChanged` and `PuppetMasterEvent::UserInteractionRequired` as primary live-state inputs",
+        "PuppetMasterEvent::TierChanged",
+        "PuppetMasterEvent::UserInteractionRequired"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-e10046618b6b",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0041",
+      "source_reconciliation_target_id": "target-0100",
+      "source_reconciliation_target_ids": [
+        "target-0100"
+      ],
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "operation": "observe_only",
+      "live_anchor": "#### Canonical DockerHub effective capability enum (Plans/Containers_Registry_and_Unraid.md:L188)",
+      "coverage_row_ids": [
+        "cov-02523"
+      ],
+      "source_obligation_ids": [
+        "obl-2372"
+      ],
+      "source_seed_ids": [
+        "seed-3085"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-2372"
+        ],
+        "source_seed_ids": [
+          "seed-3085"
+        ],
+        "source_shard_ids": [
+          "shard-0037"
+        ]
+      },
+      "gap_ids": [
+        "gap-01968"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "bridged-provider sections still do not expose equivalent capability blocks"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-ff825dd7598f",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-04109",
+    "cov-02244",
+    "cov-04788",
+    "cov-06589",
+    "cov-02523"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-3949",
+    "obl-2098",
+    "obl-4565",
+    "obl-6230",
+    "obl-2372"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-5413",
+    "seed-2726",
+    "seed-6515",
+    "seed-9420",
+    "seed-3085"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0054",
+    "shard-0035",
+    "shard-0062",
+    "shard-0085",
+    "shard-0037"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "`FinalGUISpec.md` still states one unified `OpenFile { path... }` contract for all file-open actions across the app.",
+    "FinalGUISpec.md",
+    "OpenFile { path... }",
+    "`Orchestrator_Page.md` TOC sections 13\u201317 are genuinely missing, not relocated",
+    "Orchestrator_Page.md",
+    "`UI_Command_Catalog.md` now has the missing Gemini pass, which removes a weird asymmetry from the most central command-owner doc.",
+    "UI_Command_Catalog.md",
+    "still cites `PuppetMasterEvent::TierChanged` and `PuppetMasterEvent::UserInteractionRequired` as primary live-state inputs",
+    "PuppetMasterEvent::TierChanged",
+    "PuppetMasterEvent::UserInteractionRequired",
+    "bridged-provider sections still do not expose equivalent capability blocks"
+  ],
+  "blocked_targets": []
+}

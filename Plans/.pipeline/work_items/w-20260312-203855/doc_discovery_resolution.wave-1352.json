@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1352",
+  "group_ids": [
+    "discgrp-5405",
+    "discgrp-5406",
+    "discgrp-5407",
+    "discgrp-5408"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05852",
+      "source_obligation_ids": [
+        "obl-5624"
+      ],
+      "source_seed_ids": [
+        "seed-8345"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## 16. Migration Mapping",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1739"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05853",
+      "source_obligation_ids": [
+        "obl-5625"
+      ],
+      "source_seed_ids": [
+        "seed-8346"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1409"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05854",
+      "source_obligation_ids": [
+        "obl-5626"
+      ],
+      "source_seed_ids": [
+        "seed-8347"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "#### Stable subagent and crew event families",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1512"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05855",
+      "source_obligation_ids": [
+        "obl-5627"
+      ],
+      "source_seed_ids": [
+        "seed-8348"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-033: Concern linkage to adjacent families",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L83"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

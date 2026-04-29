@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-471",
+  "group_ids": [
+    "discgrp-1881",
+    "discgrp-1882",
+    "discgrp-1883",
+    "discgrp-1884"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02138",
+      "source_obligation_ids": [
+        "obl-1995"
+      ],
+      "source_seed_ids": [
+        "seed-2592"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02139",
+      "source_obligation_ids": [
+        "obl-1996"
+      ],
+      "source_seed_ids": [
+        "seed-2593"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "# Usage Feature -- App/GUI Plan",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02140",
+      "source_obligation_ids": [
+        "obl-1997"
+      ],
+      "source_seed_ids": [
+        "seed-2594"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## 16. Migration Mapping",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1739"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02141",
+      "source_obligation_ids": [
+        "obl-1998"
+      ],
+      "source_seed_ids": [
+        "seed-2595"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

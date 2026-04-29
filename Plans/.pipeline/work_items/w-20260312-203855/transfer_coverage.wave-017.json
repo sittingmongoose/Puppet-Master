@@ -1,655 +1,845 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-017",
-  "timestamp_utc": "2026-04-28T19:58:38Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-065",
-    "coverage-rowgrp-066",
-    "coverage-rowgrp-067",
-    "coverage-rowgrp-068"
+  "row_group_ids": [
+    "rowgrp-0065",
+    "rowgrp-0066",
+    "rowgrp-0067",
+    "rowgrp-0068"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-065 cov-895,cov-927,cov-1198,cov-1205 Plans/FinalGUISpec.md",
-    "rowgrp-066 cov-121,cov-201,cov-217,cov-223,cov-233,cov-249,cov-252,cov-259,cov-299,cov-310 Plans/FinalGUISpec.md",
-    "rowgrp-067 cov-359,cov-374,cov-387,cov-394,cov-410,cov-500,cov-573,cov-597,cov-700,cov-783 Plans/FinalGUISpec.md",
-    "rowgrp-068 cov-917,cov-984,cov-1026,cov-1100,cov-1233 Plans/FinalGUISpec.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-065": "completed_reduced_conservatively",
-    "coverage-rowgrp-066": "completed_reduced_conservatively",
-    "coverage-rowgrp-067": "completed_reduced_conservatively",
-    "coverage-rowgrp-068": "completed_reduced_conservatively"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-895",
-    "cov-927",
-    "cov-1198",
-    "cov-1205",
-    "cov-121",
-    "cov-201",
-    "cov-217",
-    "cov-223",
-    "cov-233",
-    "cov-249",
-    "cov-252",
-    "cov-259",
-    "cov-299",
-    "cov-310",
-    "cov-359",
-    "cov-374",
-    "cov-387",
-    "cov-394",
-    "cov-410",
-    "cov-500",
-    "cov-573",
-    "cov-597",
-    "cov-700",
-    "cov-783",
-    "cov-917",
-    "cov-984",
-    "cov-1026",
-    "cov-1100",
-    "cov-1233"
-  ],
-  "coverage_ids_completed": [
-    "cov-895",
-    "cov-927",
-    "cov-1198",
-    "cov-1205",
-    "cov-121",
-    "cov-201",
-    "cov-217",
-    "cov-223",
-    "cov-233",
-    "cov-249",
-    "cov-252",
-    "cov-259",
-    "cov-299",
-    "cov-310",
-    "cov-359",
-    "cov-374",
-    "cov-387",
-    "cov-394",
-    "cov-410",
-    "cov-500",
-    "cov-573",
-    "cov-597",
-    "cov-700",
-    "cov-783",
-    "cov-917",
-    "cov-984",
-    "cov-1026",
-    "cov-1100",
-    "cov-1233"
-  ],
-  "path_groups_assigned": [
-    "Plans/FinalGUISpec.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-895",
-      "status": "partial",
-      "evidence": [
-        "Plans/FinalGUISpec.md:935 all search results, palette actions, widgets, recovery links, and cross-surface pivots emit one shared route/deep-link payload",
-        "Plans/FinalGUISpec.md:937 concern search results route as object-first results with focused-run and target-tab context"
+      "coverage_id": "cov-02278",
+      "source_obligation_ids": [
+        "obl-2131"
       ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Shared route/deep-link payload behavior is present, but override-only-what-is-necessary destination/object/context boundaries are not fully stated.",
+      "source_seed_ids": [
+        "seed-2771"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "hard `exactly 2 reviewer subagents`",
+      "row_type": "consumer",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "### Probe-layer order (hard requirement)",
+      "status": "partial",
+      "exact_items": [
+        "hard `exactly 2 reviewer subagents`",
+        "exactly 2 reviewer subagents"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L86"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05863",
+      "source_obligation_ids": [
+        "obl-5635"
+      ],
+      "source_seed_ids": [
+        "seed-8356"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "consumer docs mirror whichever era they happened to read first",
+      "row_type": "consumer",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "### Cache read policy",
+      "status": "partial",
+      "exact_items": [
+        "consumer docs mirror whichever era they happened to read first"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L250"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06308",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00395",
       "source_obligation_ids": [
         "obl-253"
       ],
       "source_seed_ids": [
-        "seed-253"
+        "seed-286"
       ],
       "source_shard_ids": [
-        "shard-0064"
+        "shard-0011"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-927",
+      "canon_label": "`effective_account_id` is the stable internal identity",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "## Error taxonomy (stable codes)",
       "status": "partial",
+      "exact_items": [
+        "`effective_account_id` is the stable internal identity",
+        "effective_account_id"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:900 canonical concern definitions, approval scope semantics, and route/open ownership are defined in Plans/Contracts_V0.md while this section owns visible widgets/interactions",
-        "Plans/FinalGUISpec.md:935 shared route/deep-link payload is emitted by search results, palette actions, widgets, recovery links, and cross-surface pivots"
+        "Plans/BinaryLocator_Spec.md:L261"
       ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "FinalGUISpec references the route contract boundary, but primitive-boundary and wiring-matrix boundary consumption are not fully covered.",
-      "source_obligation_ids": [
-        "obl-261"
-      ],
-      "source_seed_ids": [
-        "seed-261"
-      ],
-      "source_shard_ids": [
-        "shard-0066"
-      ],
-      "path_field_status": "match"
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-1198",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no matching mixed-era request/tier-era canon coexistence coverage found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Older request/tier-era canon coexistence is not evidenced in the assigned path.",
+      "coverage_id": "cov-00420",
       "source_obligation_ids": [
-        "obl-342"
+        "obl-278"
       ],
       "source_seed_ids": [
-        "seed-342"
+        "seed-316"
       ],
       "source_shard_ids": [
-        "shard-0087"
+        "shard-0011"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1205",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no matching three-way export taxonomy or shared Orchestrator export manifest contract found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Export taxonomy resolver display is absent from the assigned path.",
-      "source_obligation_ids": [
-        "obl-344"
-      ],
-      "source_seed_ids": [
-        "seed-344"
-      ],
-      "source_shard_ids": [
-        "shard-0088"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-121",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no matching impacted-doc bundle and old/new model pressure coverage found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned stale-token consumer evidence is not present in the assigned path.",
-      "source_obligation_ids": [
-        "obl-036"
-      ],
-      "source_seed_ids": [
-        "seed-036"
-      ],
-      "source_shard_ids": [
-        "shard-0008"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-201",
+      "canon_label": "or explicitly define it as provider-native metadata subordinate to stable internal `effect",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "## Error taxonomy (stable codes)",
       "status": "partial",
+      "exact_items": [
+        "or explicitly define it as provider-native metadata subordinate to stable internal `effective_account_id`",
+        "effective_account_id"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:904 Orchestrator renders projection states and gates sensitive actions based on current data or canonical revalidation",
-        "Plans/FinalGUISpec.md:959 project_summary is the reusable summary object for Orchestrator-facing project surfaces"
+        "Plans/BinaryLocator_Spec.md:L261"
       ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Projection-backed project summary exists, but the lane/worktree summary, health/state badges, and Source Control deep-link rules are not fully covered.",
-      "source_obligation_ids": [
-        "obl-054"
-      ],
-      "source_seed_ids": [
-        "seed-054"
-      ],
-      "source_shard_ids": [
-        "shard-0012"
-      ],
-      "path_field_status": "match"
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-217",
-      "status": "partial",
-      "evidence": [
-        "Plans/FinalGUISpec.md:47-48 projection states and sensitive-action gating are required",
-        "Plans/FinalGUISpec.md:904 Orchestrator uses current/refreshing/stale/degraded/unavailable projection states and gates mutation affordances",
-        "Plans/FinalGUISpec.md:959 project_summary discloses projection trust so the operator can see current/degraded state"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Projection state and gating are covered, but last-updated time and degraded/stale reason disclosure are not fully stated for every projection-backed surface.",
+      "coverage_id": "cov-00882",
       "source_obligation_ids": [
-        "obl-059"
+        "obl-739"
       ],
       "source_seed_ids": [
-        "seed-059"
-      ],
-      "source_shard_ids": [
-        "shard-0013"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-223",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md:937 focused_run_id appears in concern search routing, but Historical Run Mode and focused historical run_id UI gating are absent"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned historical run mode gating is not present in the assigned path.",
-      "source_obligation_ids": [
-        "obl-061"
-      ],
-      "source_seed_ids": [
-        "seed-061"
-      ],
-      "source_shard_ids": [
-        "shard-0013"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-233",
-      "status": "partial",
-      "evidence": [
-        "Plans/FinalGUISpec.md:935 shared route/deep-link payload is emitted by search results and cross-surface pivots",
-        "Plans/FinalGUISpec.md:937 concern search results route as object-first results with focused-run and target-tab context"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Object-first concern search routing is present, but a complete unified Orchestrator search contract and global-vs-tab-local filtering split are not fully covered.",
-      "source_obligation_ids": [
-        "obl-065"
-      ],
-      "source_seed_ids": [
-        "seed-065"
-      ],
-      "source_shard_ids": [
-        "shard-0014"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-249",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no matching attempt supersession/stale_historical visibility coverage found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned attempt supersession visibility is not present in the assigned path.",
-      "source_obligation_ids": [
-        "obl-069"
-      ],
-      "source_seed_ids": [
-        "seed-069"
-      ],
-      "source_shard_ids": [
-        "shard-0015"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-252",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no matching historical/related/derived run lineage semantics found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned run lineage semantics are not present in the assigned path.",
-      "source_obligation_ids": [
-        "obl-070"
-      ],
-      "source_seed_ids": [
-        "seed-070"
-      ],
-      "source_shard_ids": [
-        "shard-0015"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-259",
-      "status": "partial",
-      "evidence": [
-        "Plans/FinalGUISpec.md:935 shared route/deep-link payload is emitted by search results, palette actions, widgets, recovery links, and cross-surface pivots",
-        "Plans/FinalGUISpec.md:937 concern search results route as object-first results"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Concern routing is object-first, but the exact Progress/Seams/Evidence/History/Ledger target routing split is not fully represented.",
-      "source_obligation_ids": [
-        "obl-073"
-      ],
-      "source_seed_ids": [
-        "seed-073"
+        "seed-844"
       ],
       "source_shard_ids": [
         "shard-0016"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-299",
+      "canon_label": "Concerns should not duplicate endlessly when the same underlying issue reappears.",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "### Canonical sources (reference, don't duplicate)",
       "status": "partial",
+      "exact_items": [
+        "Concerns should not duplicate endlessly when the same underlying issue reappears."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:955 resolver display grammar is deterministic and defines a resolver matrix for required/preferred/none bindings"
+        "Plans/BinaryLocator_Spec.md:L23"
       ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "A deterministic resolver matrix is present, but ranked candidate sets, explanation metadata, and persona/seam-overseer ambiguity handling are not fully covered.",
-      "source_obligation_ids": [
-        "obl-085"
-      ],
-      "source_seed_ids": [
-        "seed-085"
-      ],
-      "source_shard_ids": [
-        "shard-0020"
-      ],
-      "path_field_status": "match"
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-310",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md:959 project_summary fields exist, but project name/path card fields are not covered"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned top-level project card fields are absent from the assigned path.",
+      "coverage_id": "cov-01206",
       "source_obligation_ids": [
-        "obl-089"
+        "obl-1063"
       ],
       "source_seed_ids": [
-        "seed-089"
+        "seed-1250"
       ],
       "source_shard_ids": [
         "shard-0021"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-359",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md:167-179 projection freshness/health recovery section exists, but no Weak Integration or Corroboration help-system entries were found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "No explicit help-system entries for the distinction-heavy concepts in the assigned row.",
-      "source_obligation_ids": [
-        "obl-106"
-      ],
-      "source_seed_ids": [
-        "seed-106"
-      ],
-      "source_shard_ids": [
-        "shard-0026"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-374",
+      "canon_label": "keep canonical names stable",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "## Error taxonomy (stable codes)",
       "status": "partial",
+      "exact_items": [
+        "keep canonical names stable"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:955 resolver display grammar shows source, request, and execution snapshots"
+        "Plans/BinaryLocator_Spec.md:L261"
       ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Source/request/execution snapshot display is present, but shared requested/effective runtime identity grammar across surfaces is not fully covered.",
-      "source_obligation_ids": [
-        "obl-110"
-      ],
-      "source_seed_ids": [
-        "seed-110"
-      ],
-      "source_shard_ids": [
-        "shard-0027"
-      ],
-      "path_field_status": "match"
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-387",
+      "coverage_id": "cov-01327",
+      "source_obligation_ids": [
+        "obl-1184"
+      ],
+      "source_seed_ids": [
+        "seed-1410"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "per-generation layout caching",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "## Caching and invalidation",
+      "status": "partial",
+      "exact_items": [
+        "per-generation layout caching"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L243"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-01343",
+      "source_obligation_ids": [
+        "obl-1200"
+      ],
+      "source_seed_ids": [
+        "seed-1435"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "filtered query + paging + stable sort are required",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "## Error taxonomy (stable codes)",
+      "status": "partial",
+      "exact_items": [
+        "filtered query + paging + stable sort are required"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L261"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02158",
+      "source_obligation_ids": [
+        "obl-2015"
+      ],
+      "source_seed_ids": [
+        "seed-2621"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "Routing/action contracts are now stronger in `UI_Command_Catalog.md` than in the page spec",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "# BinaryLocator Spec (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Routing/action contracts are now stronger in `UI_Command_Catalog.md` than in the page specs that consume them:",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02185",
+      "source_obligation_ids": [
+        "obl-2040"
+      ],
+      "source_seed_ids": [
+        "seed-2649"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "replace login-keyed durable identity with stable internal `account_id`",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "## Error taxonomy (stable codes)",
+      "status": "partial",
+      "exact_items": [
+        "replace login-keyed durable identity with stable internal `account_id`",
+        "account_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L261"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03368",
+      "source_obligation_ids": [
+        "obl-3214"
+      ],
+      "source_seed_ids": [
+        "seed-4287"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`usage_event_ref?` is useful but not sufficient as the only drill-through anchor",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "### Legacy-code anchor note (read-only)",
+      "status": "partial",
+      "exact_items": [
+        "`usage_event_ref?` is useful but not sufficient as the only drill-through anchor",
+        "usage_event_ref?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L31"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03933",
+      "source_obligation_ids": [
+        "obl-3777"
+      ],
+      "source_seed_ids": [
+        "seed-5164"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "`storage-plan.md` is the strongest current anchor:",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "### Legacy-code anchor note (read-only)",
       "status": "present",
-      "evidence": [
-        "Plans/FinalGUISpec.md:935 all search results, palette actions, widgets, recovery links, and cross-surface pivots emit one shared route/deep-link payload"
+      "exact_items": [
+        "`storage-plan.md` is the strongest current anchor:",
+        "storage-plan.md"
       ],
-      "required_action": "none",
-      "unresolved_reason": "",
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L28",
+        "Plans/BinaryLocator_Spec.md:L184",
+        "Plans/BinaryLocator_Spec.md:L325"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04700",
       "source_obligation_ids": [
-        "obl-116"
+        "obl-4478"
       ],
       "source_seed_ids": [
-        "seed-116"
+        "seed-6367"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "object-family-specific anchor fields only when the anchor is truly domain-local and not re",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "### Legacy-code anchor note (read-only)",
+      "status": "partial",
+      "exact_items": [
+        "object-family-specific anchor fields only when the anchor is truly domain-local and not reusable"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L31"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04794",
+      "source_obligation_ids": [
+        "obl-4571"
+      ],
+      "source_seed_ids": [
+        "seed-6525"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "canon_label": "stable sharable identity",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "## Error taxonomy (stable codes)",
+      "status": "partial",
+      "exact_items": [
+        "stable sharable identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L261"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05080",
+      "source_obligation_ids": [
+        "obl-4856"
+      ],
+      "source_seed_ids": [
+        "seed-6993"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "Keep `subject_id` canonical and stable:",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "## Error taxonomy (stable codes)",
+      "status": "partial",
+      "exact_items": [
+        "Keep `subject_id` canonical and stable:",
+        "subject_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L261"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05140",
+      "source_obligation_ids": [
+        "obl-4916"
+      ],
+      "source_seed_ids": [
+        "seed-7110"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "`usage_event_ref` should normalize into a stable `usage_event` object identity rather than",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "## Error taxonomy (stable codes)",
+      "status": "partial",
+      "exact_items": [
+        "`usage_event_ref` should normalize into a stable `usage_event` object identity rather than remain a top-level special-case field.",
+        "usage_event_ref",
+        "usage_event"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L261"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05741",
+      "source_obligation_ids": [
+        "obl-5513"
+      ],
+      "source_seed_ids": [
+        "seed-8185"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "`message_id` and `thread_id` are stable conversational object identity",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "## Error taxonomy (stable codes)",
+      "status": "partial",
+      "exact_items": [
+        "`message_id` and `thread_id` are stable conversational object identity",
+        "message_id",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L261"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05799",
+      "source_obligation_ids": [
+        "obl-5571"
+      ],
+      "source_seed_ids": [
+        "seed-8276"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "stable blocked-episode identity or family-local equivalent",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "## Error taxonomy (stable codes)",
+      "status": "partial",
+      "exact_items": [
+        "stable blocked-episode identity or family-local equivalent"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L261"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05882",
+      "source_obligation_ids": [
+        "obl-5654"
+      ],
+      "source_seed_ids": [
+        "seed-8386"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "`FinalGUISpec.md`, `UI_Command_Catalog.md`, `Widget_System.md`, and promoted-shell docs as",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "### Locked decisions (no drift)",
+      "status": "present",
+      "exact_items": [
+        "`FinalGUISpec.md`, `UI_Command_Catalog.md`, `Widget_System.md`, and promoted-shell docs as drift amplifiers",
+        "FinalGUISpec.md",
+        "UI_Command_Catalog.md",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L276",
+        "Plans/BinaryLocator_Spec.md:L297",
+        "Plans/BinaryLocator_Spec.md:L298"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05887",
+      "source_obligation_ids": [
+        "obl-5659"
+      ],
+      "source_seed_ids": [
+        "seed-8415"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "duplicate numbering and `ContractRef` failures in owner docs",
+      "row_type": "layout_blocker",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "### Canonical sources (reference, don't duplicate)",
+      "status": "present",
+      "exact_items": [
+        "duplicate numbering and `ContractRef` failures in owner docs",
+        "ContractRef"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L7",
+        "Plans/BinaryLocator_Spec.md:L10",
+        "Plans/BinaryLocator_Spec.md:L11",
+        "Plans/BinaryLocator_Spec.md:L12",
+        "Plans/BinaryLocator_Spec.md:L19"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01787",
+      "source_obligation_ids": [
+        "obl-1644"
+      ],
+      "source_seed_ids": [
+        "seed-2051"
       ],
       "source_shard_ids": [
         "shard-0029"
       ],
-      "path_field_status": "match"
+      "canon_label": "`bundle`",
+      "row_type": "owner",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "#### Cursor Agent versioned bundle resolution (required)",
+      "status": "present",
+      "exact_items": [
+        "`bundle`",
+        "bundle"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L153",
+        "Plans/BinaryLocator_Spec.md:L158",
+        "Plans/BinaryLocator_Spec.md:L262",
+        "Plans/BinaryLocator_Spec.md:L286",
+        "Plans/BinaryLocator_Spec.md:L312"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-394",
-      "status": "partial",
-      "evidence": [
-        "Plans/FinalGUISpec.md:937 concern search results route as object-first results using object_kind, object_id, focused_run_id, and target_tab",
-        "Plans/FinalGUISpec.md:939 route_target is subject_id-based identity or object_kind/object_id identity"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Object-kind routing vocabulary is present for concern routing, but the full candidate object-kind vocabulary list is not covered.",
+      "coverage_id": "cov-03009",
       "source_obligation_ids": [
-        "obl-117"
+        "obl-2855"
       ],
       "source_seed_ids": [
-        "seed-117"
-      ],
-      "source_shard_ids": [
-        "shard-0029"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-410",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md:938 mentions historical views generally, but no ledger/search inspector current-vs-historical or superseded-vs-revoked distinction contract was found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned ledger/search inspector distinction contract is absent from the assigned path.",
-      "source_obligation_ids": [
-        "obl-121"
-      ],
-      "source_seed_ids": [
-        "seed-121"
-      ],
-      "source_shard_ids": [
-        "shard-0030"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-500",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no usage_event_ref or cross-surface receipt/usage identity coverage found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned receipt/usage identity contract is absent from the assigned path.",
-      "source_obligation_ids": [
-        "obl-144"
-      ],
-      "source_seed_ids": [
-        "seed-144"
-      ],
-      "source_shard_ids": [
-        "shard-0036"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-573",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no manual_preferred_account_id or manual account semantics coverage found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned manual account semantics coverage is absent from the assigned path.",
-      "source_obligation_ids": [
-        "obl-161"
-      ],
-      "source_seed_ids": [
-        "seed-161"
-      ],
-      "source_shard_ids": [
-        "shard-0040"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-597",
-      "status": "partial",
-      "evidence": [
-        "Plans/FinalGUISpec.md:955 preferred binding falls back with an explicit switch_reason"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "switch_reason is present, but append-only switch/pressure history families are not fully covered.",
-      "source_obligation_ids": [
-        "obl-167"
-      ],
-      "source_seed_ids": [
-        "seed-167"
+        "seed-3765"
       ],
       "source_shard_ids": [
         "shard-0042"
       ],
-      "path_field_status": "match"
+      "canon_label": "DAE runs still need a clear post-hoc tool-event story or their analytics/blocked truth wil",
+      "row_type": "owner",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "### Locked decisions (no drift)",
+      "status": "partial",
+      "exact_items": [
+        "DAE runs still need a clear post-hoc tool-event story or their analytics/blocked truth will drift immediately."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L18"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-700",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no orchestrator.receipt lifecycle-bridge coverage found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned orchestrator receipt lifecycle bridge contract is absent from the assigned path.",
+      "coverage_id": "cov-03332",
       "source_obligation_ids": [
-        "obl-193"
+        "obl-3178"
       ],
       "source_seed_ids": [
-        "seed-193"
+        "seed-4236"
       ],
       "source_shard_ids": [
-        "shard-0048"
+        "shard-0046"
       ],
-      "path_field_status": "match"
+      "canon_label": "still contains both field-name drift and pseudo-tier execution-key bugs.",
+      "row_type": "owner",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "### Locked decisions (no drift)",
+      "status": "partial",
+      "exact_items": [
+        "still contains both field-name drift and pseudo-tier execution-key bugs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L18"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-783",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no OpenFile/OpenSubject GUI contract coverage found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned OpenFile vs OpenSubject GUI contract is absent from the assigned path.",
+      "coverage_id": "cov-04454",
       "source_obligation_ids": [
-        "obl-217"
+        "obl-4292"
       ],
       "source_seed_ids": [
-        "seed-217"
+        "seed-6001"
       ],
       "source_shard_ids": [
-        "shard-0055"
+        "shard-0059"
       ],
-      "path_field_status": "match"
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-917",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md:375 and 904 contain stale/projection wording, but no cmd.panel.switch, cmd.source_control.switch_subview, or route-consuming command split was found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned pure-shell vs route-consuming command distinction is absent from the assigned path.",
+      "coverage_id": "cov-04646",
       "source_obligation_ids": [
-        "obl-257"
+        "obl-4424"
       ],
       "source_seed_ids": [
-        "seed-257"
+        "seed-6260"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "step selection should ride in a specialized subtarget/detail field or in serialized `resum",
+      "row_type": "owner",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "### Command selection (SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "step selection should ride in a specialized subtarget/detail field or in serialized `resume_url`, not as a universal base field",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L205"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04736",
+      "source_obligation_ids": [
+        "obl-4514"
+      ],
+      "source_seed_ids": [
+        "seed-6419"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "wrappers normalize their args into canonical target/subject forms internally",
+      "row_type": "owner",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "#### Windows launcher wrappers (required)",
+      "status": "partial",
+      "exact_items": [
+        "wrappers normalize their args into canonical target/subject forms internally"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L172"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04885",
+      "source_obligation_ids": [
+        "obl-4662"
+      ],
+      "source_seed_ids": [
+        "seed-6679",
+        "seed-6698",
+        "seed-7381",
+        "seed-7426",
+        "seed-8817",
+        "seed-8858",
+        "seed-8912",
+        "seed-8950",
+        "seed-9010",
+        "seed-9044"
+      ],
+      "source_shard_ids": [
+        "shard-0064",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "canon_label": "`Plans/BinaryLocator_Spec.md`",
+      "row_type": "owner",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/BinaryLocator_Spec.md`",
+        "Plans/BinaryLocator_Spec.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L294",
+        "Plans/BinaryLocator_Spec.md:L295",
+        "Plans/BinaryLocator_Spec.md:L296",
+        "Plans/BinaryLocator_Spec.md:L299",
+        "Plans/BinaryLocator_Spec.md:L300"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04904",
+      "source_obligation_ids": [
+        "obl-4681"
+      ],
+      "source_seed_ids": [
+        "seed-6731"
       ],
       "source_shard_ids": [
         "shard-0065"
       ],
-      "path_field_status": "match"
+      "canon_label": "with `Plans/DRY_Rules.md` important as a mechanical-integrity forcing function and `Plans/",
+      "row_type": "owner",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "with `Plans/DRY_Rules.md` important as a mechanical-integrity forcing function and `Plans/BinaryLocator_Spec.md` lower-risk but still non-zero.",
+        "Plans/DRY_Rules.md",
+        "Plans/BinaryLocator_Spec.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L3",
+        "Plans/BinaryLocator_Spec.md:L25",
+        "Plans/BinaryLocator_Spec.md:L239",
+        "Plans/BinaryLocator_Spec.md:L294",
+        "Plans/BinaryLocator_Spec.md:L295"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-984",
+      "coverage_id": "cov-04994",
+      "source_obligation_ids": [
+        "obl-4770"
+      ],
+      "source_seed_ids": [
+        "seed-6868"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "`normalizes_to_contract` for wrappers",
+      "row_type": "owner",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "#### Windows launcher wrappers (required)",
       "status": "partial",
+      "exact_items": [
+        "`normalizes_to_contract` for wrappers",
+        "normalizes_to_contract"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:939 route_target is either subject_id-based identity or object_kind/object_id identity",
-        "Plans/FinalGUISpec.md:940 subject_id families are limited to doc: and artifact:"
+        "Plans/BinaryLocator_Spec.md:L172"
       ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "subject_id and object_kind/object_id split is present, but the full runtime/governance/conversational/workflow object guidance is not covered.",
-      "source_obligation_ids": [
-        "obl-274"
-      ],
-      "source_seed_ids": [
-        "seed-274"
-      ],
-      "source_shard_ids": [
-        "shard-0069"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1026",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no Tiers, active tier, or TierChanged tab-drift coverage found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned Orchestrator_Page tier-era tab drift is absent from the assigned path.",
+      "coverage_id": "cov-05160",
       "source_obligation_ids": [
-        "obl-288"
+        "obl-4936"
       ],
       "source_seed_ids": [
-        "seed-288"
+        "seed-7152"
       ],
       "source_shard_ids": [
-        "shard-0073"
+        "shard-0068"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1100",
+      "canon_label": "repo/worktree selection",
+      "row_type": "owner",
+      "path": "Plans/BinaryLocator_Spec.md",
+      "heading_hint": "### Command selection (SSOT)",
       "status": "partial",
+      "exact_items": [
+        "repo/worktree selection"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:906 Only Progress is widget-composed inside Orchestrator and orchestrator:progress layout persists independently from Dashboard and Usage layout keys"
+        "Plans/BinaryLocator_Spec.md:L205"
       ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Progress-only Orchestrator hostability is stated, but the full stale widget catalog and non-Progress Orchestrator layout retirement list is not covered.",
-      "source_obligation_ids": [
-        "obl-318"
-      ],
-      "source_seed_ids": [
-        "seed-318"
-      ],
-      "source_shard_ids": [
-        "shard-0080"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1233",
-      "status": "partial",
-      "evidence": [
-        "Plans/FinalGUISpec.md:2470-2477 wizard_blocked card fields include report_ref and resume_url",
-        "Plans/FinalGUISpec.md:2510-2511 blocked cards use card_type, wizard_id, wizard_step, blocked_reason_code, report_ref, resume_url, and optional thread_id",
-        "Plans/FinalGUISpec.md:2571-2572 blocked node list is sorted by blocked_sequence and shows allowed_action_ids[] as action buttons"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Some blocked packet fields are present, but approval_scope_key, startup_recovered, action_available, escalation_level, and usage/assistant consumer sections are not fully covered.",
-      "source_obligation_ids": [
-        "obl-348"
-      ],
-      "source_seed_ids": [
-        "seed-348"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     }
   ]
 }

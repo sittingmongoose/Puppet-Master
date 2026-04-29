@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-311",
+  "group_ids": [
+    "discgrp-1241",
+    "discgrp-1242",
+    "discgrp-1243",
+    "discgrp-1244"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01491",
+      "source_obligation_ids": [
+        "obl-1348"
+      ],
+      "source_seed_ids": [
+        "seed-1644"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-023: Concern lifecycle and resolution kinds",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L59"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01492",
+      "source_obligation_ids": [
+        "obl-1349"
+      ],
+      "source_seed_ids": [
+        "seed-1645"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01493",
+      "source_obligation_ids": [
+        "obl-1350"
+      ],
+      "source_seed_ids": [
+        "seed-1646"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01494",
+      "source_obligation_ids": [
+        "obl-1351"
+      ],
+      "source_seed_ids": [
+        "seed-1647"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### Fidelity recovery cov-059: Lane vs worktree lifecycle split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L19"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

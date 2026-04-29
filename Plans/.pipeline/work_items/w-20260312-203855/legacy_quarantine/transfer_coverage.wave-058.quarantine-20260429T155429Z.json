@@ -1,0 +1,123 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-058",
+  "timestamp_utc": "2026-04-28T21:29:15Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-229",
+    "coverage-rowgrp-230",
+    "coverage-rowgrp-231",
+    "coverage-rowgrp-232"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-229 cov-930 Plans/Wiring_Matrix.schema.json",
+    "rowgrp-230 cov-936 Plans/Wiring_Matrix.schema.json",
+    "rowgrp-231 cov-805 Plans/Wiring_Matrix.schema.json",
+    "rowgrp-232 cov-684 Plans/WorktreeGitImprovement.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-229": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-230": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-231": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-232": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-930",
+    "cov-936",
+    "cov-805",
+    "cov-684"
+  ],
+  "coverage_ids_completed": [
+    "cov-930",
+    "cov-936",
+    "cov-805",
+    "cov-684"
+  ],
+  "path_groups_assigned": [
+    "Plans/Wiring_Matrix.schema.json",
+    "Plans/WorktreeGitImprovement.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-930",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Wiring_Matrix.schema.json defines wiring-entry shape only; it does not state FinalGUISpec/FileManager/UI_Command_Catalog consumer propagation, route contract/primitive boundary ownership, or wiring-matrix-only binding scope.",
+      "source_obligation_ids": [
+        "obl-261"
+      ],
+      "source_seed_ids": [
+        "seed-261"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-936",
+      "status": "partial",
+      "evidence": [
+        "Plans/Wiring_Matrix.schema.json:67-71 defines ui_command_id as the UICommand ID dispatched by an element",
+        "Plans/Wiring_Matrix.schema.json:72-77 defines handler_location as the canonical Rust module/function path"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "ui_command_id and handler_location fields exist, but the small normalization contract, gate logic, and explicit non-inlining of route payload/object-kind/argument rules are absent.",
+      "source_obligation_ids": [
+        "obl-263"
+      ],
+      "source_seed_ids": [
+        "seed-263"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-805",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Wiring_Matrix.schema.json has no correlation_id field, passthrough obligations, subject IDs, or correlation-continuity verification rule.",
+      "source_obligation_ids": [
+        "obl-224"
+      ],
+      "source_seed_ids": [
+        "seed-224"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-684",
+      "status": "partial",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:293 references Executor_Protocol and FileSafe",
+        "Plans/WorktreeGitImprovement.md:307 references storage-plan and Run_Modes",
+        "Plans/WorktreeGitImprovement.md:389 points cross-references at Orchestrator_Page Source Control boundary",
+        "Plans/WorktreeGitImprovement.md:402 discusses storage-plan redb projection for branching/worktree/Git settings",
+        "Plans/WorktreeGitImprovement.md:418 references orchestrator-subagent-integration, interview-subagent-integration, and human-in-the-loop",
+        "Plans/WorktreeGitImprovement.md:679 references orchestrator-subagent-integration for worktree isolation",
+        "Plans/WorktreeGitImprovement.md:729 references Orchestrator_Page Source Control boundary"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Several impacted docs are referenced, but the complete downstream/high-risk impacted set is not present in the assigned file.",
+      "source_obligation_ids": [
+        "obl-189"
+      ],
+      "source_seed_ids": [
+        "seed-189"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

@@ -1,5 +1,127 @@
 # Runtime Artifacts Panel — SSOT
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0486
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - evidence vs artifacts
+  - `Evidence` and `Artifacts` panes should remain distinct even when both link back to the same underlying record.
+  - Evidence
+  - Artifacts
+  - parent-summary artifacts and UI evidence summaries are not interchangeable and should not be collapsed.
+  - evidence records and artifacts need independent virtualization/paging
+  - heavy artifacts should stay metadata-first until opened
+  - Keep artifacts and rendered summaries linked but separate from canonical records.
+  - `Plans/Runtime_Artifacts_Panel.md`
+  - Plans/Runtime_Artifacts_Panel.md
+  - artifacts stay on canonical runtime identity
+  - artifacts should preserve canonical run/thread/attempt linkage
+  - usage-linked artifacts should continue to route through canonical usage identity
+  - `cmd.artifacts.open_panel`
+  - cmd.artifacts.open_panel
+  - runtime recovery already uses `blocked_sequence` and canonical `cmd.runtime.*` actions
+  - blocked_sequence
+  - cmd.runtime.*
+  - Research Progress - 2026-03-16 - Sonnet Expanded Identity / Runtime SSOT Batch
+  - `Plans/Run_Graph_View.md` + `Plans/Runtime_Artifacts_Panel.md`
+  - Plans/Run_Graph_View.md
+  - `Plans/UI_Command_Catalog.md` + `Plans/Runtime_Artifacts_Panel.md`
+  - Plans/UI_Command_Catalog.md
+  - the SSOT requires requested/effective capability truth
+  - receipt-like artifacts are explicitly told to stay on canonical runtime identity, which is stronger than the current artifact id guidance
+  - `Runtime_Artifacts_Panel.md` says receipt-like artifacts must preserve canonical run/attempt identity, but its own canonical ID set still omits `attempt_id`.
+  - Runtime_Artifacts_Panel.md
+  - attempt_id
+  - Resolve the payload-owner triangle for runtime artifacts and either add the missing schema family/registration or soften the mandate explicitly.
+  - Validation-pass reports are already treated as canonical first-class artifacts:
+  - That contract is structurally better than many adjacent artifacts, but it still stops too early on identity:
+  - These reports are upstream artifacts, not execution attempts, so they should not pretend to be run/node/attempt records. But they now need a stronger bridge so runtime/history/ledger/search can answer:
+  - Keep validation-pass reports distinct from runtime attempts, but stop leaving them as isolated artifacts with only local workflow identity.
+  - validation-pass reports are one of the few upstream artifacts already treated as hard-gating canon, so weak identity here will propagate confusion downstream
+  - payload/schema-owner triangle for runtime artifacts
+  - still cannot open runtime artifacts by identity or preserve attempt/worktree lineage coherently.
+  - Define `operational_identity` as a separate optional field family for receipts, artifacts, and side-effect-bearing attempt/tool records.
+  - operational_identity
+  - Tool events, runtime artifacts, receipts, and usage now want one shared attribution packet, but the docs still describe them as separate identity worlds.
+  - runtime artifacts that are derived from or emitted during an attempt should carry:
+  - `Runtime_Artifacts_Panel.md` insists receipt-like artifacts preserve canonical linkage, but it still does not spell out the precedence between `attempt_id`, `provider_attempt_ref`, and `usage_event_ref`.
+  - provider_attempt_ref
+  - usage_event_ref
+  - wizard/report identity for upstream planning artifacts if those are ever surfaced here
+  - spot-checks against `Plans/storage-plan.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/usage-feature.md`
+  - Plans/storage-plan.md
+  - Plans/usage-feature.md
+  - `cmd.artifacts.show_in_ledger`
+  - cmd.artifacts.show_in_ledger
+  - `cmd.artifacts.show_in_usage`
+  - cmd.artifacts.show_in_usage
+  - `cmd.artifacts.show_in_ledger` and `cmd.artifacts.show_in_usage` are useful, but they still encode feature-local semantics that should likely route through the same canonical usage/route target model.
+  - dispatcher still lacks an explicit runtime rule that `cmd.runtime.*` recovery actions must be admitted only when the current blocked episode exposes the corresponding ordered `allowed_action_ids[]`.
+  - allowed_action_ids[]
+  - `CustomHeadlessTool` still lacks stable config/identity/permission ownership and still conflicts with state/config SSOT.
+  - CustomHeadlessTool
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - surface-specific commands like `cmd.artifacts.show_in_usage` or `cmd.orchestrator.open_in_source_control` may remain user-facing wrappers
+  - cmd.orchestrator.open_in_source_control
+  - `Document_Packaging_Policy.md` still has no place for glossary artifacts, requirements-staging seglog artifacts, or package-generation lineage states.
+  - Document_Packaging_Policy.md
+  - `cmd.runtime.open_queue_analysis`, `cmd.runtime.open_remediation_lineage`, and `cmd.runtime.open_safe_point_history` already imply these route identities, but the general route contract still does not own the examples.
+  - cmd.runtime.open_queue_analysis
+  - cmd.runtime.open_remediation_lineage
+  - cmd.runtime.open_safe_point_history
+  - `cost_usage` artifacts already require `Show in Ledger` and `Show in Usage`
+  - cost_usage
+  - Show in Ledger
+  - Show in Usage
+  - `OpenFile` is still overclaimed as a universal open contract even though generated artifacts, draft documents, checkpoints, search hits, and runtime artifacts already require identity-native resolution.
+  - OpenFile
+  - `Plans/Runtime_Artifacts_Panel.md` is partly aligned:
+  - Runtime artifacts already require canonical cross-surface routing, but the shared contract is still missing from the owner docs.
+  - `task_id` language in the artifacts doc is lagging the broader node/package/seam/lane rewrite and will keep dragging artifact identity toward older decomposition terms unless reconciled.
+  - task_id
+  - `report_ref` points to canonical quality/governance report artifacts
+  - report_ref
+  - `Plans/Runtime_Artifacts_Panel.md` is already stronger than these docs on the usage side:
+  - canonical enough for Ledger and cost artifacts
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings.
+  - Plans/Project_Output_Artifacts.md
+  - Plans/interview-subagent-integration.md
+  - validation artifact lineage
+  - bridge-field viewer
+  - validation/report section
+  - `Plans/Runtime_Artifacts_Panel.md:63-93`
+  - Plans/Runtime_Artifacts_Panel.md:63-93
+  - Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.
+  - gap-003
+  - gap-004
+  - gap-005
+  - `Plans/Runtime_Artifacts_Panel.md:61-93`
+  - Plans/Runtime_Artifacts_Panel.md:61-93
+  - `gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missing `Plans/storage-plan.md#Cross-surface receipt record` anchor, so the receipt blocker now includes a live broken consumer reference rather than only missing owner/consumer headings.
+  - Plans/storage-plan.md#Cross-surface receipt record
+  - `Plans/Runtime_Artifacts_Panel.md:57-65`
+  - Plans/Runtime_Artifacts_Panel.md:57-65
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 ## Fidelity recovery addendum
 
 This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
@@ -39,6 +161,33 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-191` repair is in the owner section for `Plans/Runtime_Artifacts_Panel.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-202: Artifact envelope routing preference
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0494
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `attempt_id` is increasingly looking like a cross-surface anchor, not an optional artifact detail
+  - attempt_id
+  - `orchestrator-subagent-integration.md` constructs `TierContext` without clear run/node/attempt/lane identity, which means downstream hook, artifact, and retry logic can inherit a context object that is not a trustworthy canonical anchor.
+  - orchestrator-subagent-integration.md
+  - TierContext
+  - `FileManager.md` needs stable identity and open-by-identity semantics, but the artifact docs still do not define enough envelope routing data to support that cleanly.
+  - FileManager.md
+  - Search results, artifact pivots, and usage pivots all carry enough identity to benefit from a shared routing model, but they are still encoded as local behavior text or per-command payloads.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-202
 - Fidelity gap refs: cov-202
 - Required fidelity items:
@@ -82,6 +231,37 @@ Behavioral rules:
 - Runtime artifact lookup/indexing remains a projection concern rather than canonical artifact truth.
 ## 3. Mechanism: one event type per artifact type
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0487
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Evidence and artifact exports should not collapse into one undifferentiated zip of files
+  - stable live identity now centers on `attempt_id`, receipt refs, `scheduler_lane`, `worktree_id`, and requested/effective identity per attempt
+  - attempt_id
+  - scheduler_lane
+  - worktree_id
+  - A bare `requested_account_id` alone is still slightly insufficient, because it leaves one ambiguity unresolved:
+  - requested_account_id
+  - collapse duplicate runtime/gate addenda into one numbered canonical section per owner.
+  - `OpenSubject(subject_id = artifact:...)` resolves to real document source if one exists
+  - OpenSubject(subject_id = artifact:...)
+  - `FinalGUISpec.md` aligns with only one of those outcomes.
+  - FinalGUISpec.md
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 **Option 2 only:** One seglog event type per artifact type. No single generic `runtime_artifact` event with a subtype field. Each event uses the standard EventRecord envelope (schema, ts, seq, type, run_id, thread_id, payload). The `type` value is exactly one of the 19 event type names below.
 
 **Canonical 19 artifact types and event type names:**
@@ -109,6 +289,28 @@ Behavioral rules:
 
 ### 4A Artifacts index families and projector checkpoints
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0491
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - artifacts index and worktree lifecycle look like the clearest missing families right now
+  - The v2 `open_gaps.json` keeps only unresolved blocker families and their exact missing items.
+  - open_gaps.json
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 #### Acceptance carry-through
 - Register artifacts_index, artifacts_project_state, and runtime_artifacts projector checkpoint families
 - Make the artifact index rebuildable from canonical runtime evidence
@@ -127,6 +329,32 @@ Behavioral rules:
 - Require runtime artifacts summarizing external operations to carry receipt linkage
 
 ## 5A. Debug investigation grouping, manifests, and exports
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0488
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - what old assumption is present: `TierTree`, `tier_type`, `View in Tiers`, phase/task/subtask grouping.
+  - TierTree
+  - tier_type
+  - View in Tiers
+  - Keep CSV/table exports as convenience view exports, not as canonical archival exports.
+  - Require manifests for non-trivial bundle exports, and make those manifests preserve canonical IDs/refs rather than export-local surrogate identities.
+  - Bundle manifests and route/subject normalization fit together naturally; exports should preserve the same object vocabulary the UI uses.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Runtime artifacts may participate in a shared Debug investigation without changing artifact-family ownership.
 
@@ -240,6 +468,37 @@ All artifact differentiators identified in the research are MVP and required; no
 - Plans/FileManager.md (open by artifact identity)
 
 ## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0490
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Normalize cross-surface receipt records so `project_id`, actor refs, `created_at_utc`, and `usage_event_ref` are required whenever a surface may pivot historically or across projects.
+  - project_id
+  - created_at_utc
+  - usage_event_ref
+  - stable `cmd.*` IDs exist for many cross-surface pivots
+  - cmd.*
+  - Keep cross-surface receipt refs, but treat them as linkage, not as the sole operational-identity disclosure model.
+  - `UsageRecord` still keeps `tier_id` as a required cross-surface field
+  - UsageRecord
+  - tier_id
+  - cross-surface receipt linkage already says runtime artifacts must stay on canonical runtime identity
+  - lane/worktree, receipt, and cross-surface lineage concepts are present
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Receipt-like artifacts keep canonical runtime identity and bridge fields instead of inventing artifact-local lineage.
 
 ### bridge-field viewer

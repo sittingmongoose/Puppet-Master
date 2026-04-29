@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1140",
+  "group_ids": [
+    "discgrp-4557",
+    "discgrp-4558",
+    "discgrp-4559",
+    "discgrp-4560"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04955",
+      "source_obligation_ids": [
+        "obl-4731"
+      ],
+      "source_seed_ids": [
+        "seed-6817"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "### 6.8 Canonical media model alias table",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Models_System.md:L458"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04956",
+      "source_obligation_ids": [
+        "obl-4732"
+      ],
+      "source_seed_ids": [
+        "seed-6818"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04957",
+      "source_obligation_ids": [
+        "obl-4733"
+      ],
+      "source_seed_ids": [
+        "seed-6819"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Wiring_Rules.md",
+      "new_heading_hint": "# UI Wiring Rules (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Wiring_Rules.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04958",
+      "source_obligation_ids": [
+        "obl-4734"
+      ],
+      "source_seed_ids": [
+        "seed-6820"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

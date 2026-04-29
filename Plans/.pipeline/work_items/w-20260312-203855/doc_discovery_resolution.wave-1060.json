@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1060",
+  "group_ids": [
+    "discgrp-4237",
+    "discgrp-4238",
+    "discgrp-4239",
+    "discgrp-4240"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04614",
+      "source_obligation_ids": [
+        "obl-4392"
+      ],
+      "source_seed_ids": [
+        "seed-6207"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "## 2. Primitive index (definitions are DRY)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L66"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04615",
+      "source_obligation_ids": [
+        "obl-4393"
+      ],
+      "source_seed_ids": [
+        "seed-6208"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-071: Canonical route payload",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L113"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04616",
+      "source_obligation_ids": [
+        "obl-4394"
+      ],
+      "source_seed_ids": [
+        "seed-6209"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-011 -- UI command dispatch only (Rule 1)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L108"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04617",
+      "source_obligation_ids": [
+        "obl-4395"
+      ],
+      "source_seed_ids": [
+        "seed-6210"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Recommended minimum concern record shape",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L203"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

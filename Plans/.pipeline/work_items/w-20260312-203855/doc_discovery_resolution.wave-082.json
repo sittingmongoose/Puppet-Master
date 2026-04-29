@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-082",
+  "group_ids": [
+    "discgrp-0325",
+    "discgrp-0326",
+    "discgrp-0327",
+    "discgrp-0328"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00572",
+      "source_obligation_ids": [
+        "obl-429"
+      ],
+      "source_seed_ids": [
+        "seed-494"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "#### Explicit editability contract for all fields",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L435"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00573",
+      "source_obligation_ids": [
+        "obl-430"
+      ],
+      "source_seed_ids": [
+        "seed-495"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00574",
+      "source_obligation_ids": [
+        "obl-431"
+      ],
+      "source_seed_ids": [
+        "seed-496"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00575",
+      "source_obligation_ids": [
+        "obl-432"
+      ],
+      "source_seed_ids": [
+        "seed-497"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "## 2. Hostability and data contracts",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Widget_System.md:L36"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

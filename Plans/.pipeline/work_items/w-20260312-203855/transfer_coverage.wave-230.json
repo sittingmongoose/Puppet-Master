@@ -1,0 +1,1094 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-230",
+  "row_group_ids": [
+    "rowgrp-0917",
+    "rowgrp-0918",
+    "rowgrp-0919",
+    "rowgrp-0920"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-00564",
+      "source_obligation_ids": [
+        "obl-421"
+      ],
+      "source_seed_ids": [
+        "seed-483"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "`widget_layout:v1:usage`",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "`widget_layout:v1:usage`",
+        "widget_layout:v1:usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-01105",
+      "source_obligation_ids": [
+        "obl-962"
+      ],
+      "source_seed_ids": [
+        "seed-1129"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "canon_label": "if they differ, the UI must expand/disclose the difference visibly",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### Problem 4: 5h/7d semantics differ by platform",
+      "status": "partial",
+      "exact_items": [
+        "if they differ, the UI must expand/disclose the difference visibly"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L515"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-01326",
+      "source_obligation_ids": [
+        "obl-1183"
+      ],
+      "source_seed_ids": [
+        "seed-1409"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "layout under 500ms at 500 nodes",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### 3. Event ledger (existing concept, under Usage umbrella)",
+      "status": "partial",
+      "exact_items": [
+        "layout under 500ms at 500 nodes"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L187"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02139",
+      "source_obligation_ids": [
+        "obl-1996"
+      ],
+      "source_seed_ids": [
+        "seed-2593"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "`usage` may need explicit app-wide vs project-scoped mode rather than silently reusing one",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "present",
+      "exact_items": [
+        "`usage` may need explicit app-wide vs project-scoped mode rather than silently reusing one layout for both contexts",
+        "usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1",
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L35"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02237",
+      "source_obligation_ids": [
+        "obl-2091"
+      ],
+      "source_seed_ids": [
+        "seed-2719"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "`Runtime_Artifacts_Panel.md` requires `Show in Ledger` / `Show in Usage` for `cost_usage`,",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
+      "status": "present",
+      "exact_items": [
+        "`Runtime_Artifacts_Panel.md` requires `Show in Ledger` / `Show in Usage` for `cost_usage`, but the promised runtime-artifact schemas are not present and no concrete usage identity payload is pinned",
+        "Runtime_Artifacts_Panel.md",
+        "Show in Ledger",
+        "Show in Usage",
+        "cost_usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L221",
+        "Plans/usage-feature.md:L229",
+        "Plans/usage-feature.md:L328",
+        "Plans/usage-feature.md:L329",
+        "Plans/usage-feature.md:L331"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02812",
+      "source_obligation_ids": [
+        "obl-2659"
+      ],
+      "source_seed_ids": [
+        "seed-3493"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "Extend canonical usage records with `account_switch_reason?` plus `switch_event_ref?` or e",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "Extend canonical usage records with `account_switch_reason?` plus `switch_event_ref?` or equivalent durable linkage.",
+        "account_switch_reason?",
+        "switch_event_ref?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04106",
+      "source_obligation_ids": [
+        "obl-3946"
+      ],
+      "source_seed_ids": [
+        "seed-5409"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "spot-checks against `Plans/storage-plan.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plan",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "spot-checks against `Plans/storage-plan.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/usage-feature.md`",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L37",
+        "Plans/usage-feature.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04158",
+      "source_obligation_ids": [
+        "obl-3998"
+      ],
+      "source_seed_ids": [
+        "seed-5490"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "resolves canonical Usage/Ledger identity from `usage_event_ref` or equivalent usage target",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "present",
+      "exact_items": [
+        "resolves canonical Usage/Ledger identity from `usage_event_ref` or equivalent usage target",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L67",
+        "Plans/usage-feature.md:L71",
+        "Plans/usage-feature.md:L89",
+        "Plans/usage-feature.md:L93",
+        "Plans/usage-feature.md:L431"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04518",
+      "source_obligation_ids": [
+        "obl-4296"
+      ],
+      "source_seed_ids": [
+        "seed-6011"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "`usage-feature.md` and `Runtime_Artifacts_Panel.md` both describe `Show in Ledger` / `Show",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
+      "status": "present",
+      "exact_items": [
+        "`usage-feature.md` and `Runtime_Artifacts_Panel.md` both describe `Show in Ledger` / `Show in Usage` behavior using identifiers like:",
+        "usage-feature.md",
+        "Runtime_Artifacts_Panel.md",
+        "Show in Ledger",
+        "Show in Usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L37",
+        "Plans/usage-feature.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04648",
+      "source_obligation_ids": [
+        "obl-4426"
+      ],
+      "source_seed_ids": [
+        "seed-6262"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "`object_id = <usage_event_ref or stable usage id>`",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "`object_id = <usage_event_ref or stable usage id>`",
+        "object_id = <usage_event_ref or stable usage id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04874",
+      "source_obligation_ids": [
+        "obl-4651"
+      ],
+      "source_seed_ids": [
+        "seed-6658"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "may reuse current Usage layout/filter chrome if it still reveals the requested usage targe",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "may reuse current Usage layout/filter chrome if it still reveals the requested usage target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05314",
+      "source_obligation_ids": [
+        "obl-5086"
+      ],
+      "source_seed_ids": [
+        "seed-7486"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`thread_id = <thread_id>` when thread-scoped usage is required",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "`thread_id = <thread_id>` when thread-scoped usage is required",
+        "thread_id = <thread_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05317",
+      "source_obligation_ids": [
+        "obl-5089"
+      ],
+      "source_seed_ids": [
+        "seed-7493",
+        "seed-7641"
+      ],
+      "source_shard_ids": [
+        "shard-0070",
+        "shard-0071"
+      ],
+      "canon_label": "`tab_id = ledger`",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### 3. Event ledger (existing concept, under Usage umbrella)",
+      "status": "partial",
+      "exact_items": [
+        "`tab_id = ledger`",
+        "tab_id = ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L187"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05384",
+      "source_obligation_ids": [
+        "obl-5156"
+      ],
+      "source_seed_ids": [
+        "seed-7634"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`tab_id = evidence` or `tab_id = ledger`",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### 3. Event ledger (existing concept, under Usage umbrella)",
+      "status": "partial",
+      "exact_items": [
+        "`tab_id = evidence` or `tab_id = ledger`",
+        "tab_id = evidence",
+        "tab_id = ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L187"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05497",
+      "source_obligation_ids": [
+        "obl-5269"
+      ],
+      "source_seed_ids": [
+        "seed-7827"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "Usage pivots still describe `tier_id` filters in graph/detail docs even though the routing",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "##### Usage and receipt lineage routing",
+      "status": "present",
+      "exact_items": [
+        "Usage pivots still describe `tier_id` filters in graph/detail docs even though the routing and identity work now requires object-first `usage_event` and runtime-object pivots.",
+        "tier_id",
+        "usage_event"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L67",
+        "Plans/usage-feature.md:L71",
+        "Plans/usage-feature.md:L89",
+        "Plans/usage-feature.md:L93",
+        "Plans/usage-feature.md:L281"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05697",
+      "source_obligation_ids": [
+        "obl-5469"
+      ],
+      "source_seed_ids": [
+        "seed-8117"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "`Plans/usage-feature.md` duplicates the entire `Cost_usage runtime artifact and Show in Le",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/usage-feature.md` duplicates the entire `Cost_usage runtime artifact and Show in Ledger / Show in Usage` section back-to-back.",
+        "Plans/usage-feature.md",
+        "Cost_usage runtime artifact and Show in Ledger / Show in Usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L37",
+        "Plans/usage-feature.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05707",
+      "source_obligation_ids": [
+        "obl-5479"
+      ],
+      "source_seed_ids": [
+        "seed-8131"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "Collapse the duplicated `cost_usage` section in `usage-feature.md` during the same pass th",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
+      "status": "present",
+      "exact_items": [
+        "Collapse the duplicated `cost_usage` section in `usage-feature.md` during the same pass that normalizes Usage routing.",
+        "cost_usage",
+        "usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L37",
+        "Plans/usage-feature.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06816",
+      "source_obligation_ids": [
+        "obl-6435"
+      ],
+      "source_seed_ids": [
+        "seed-9814"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L37",
+        "Plans/usage-feature.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06936",
+      "source_obligation_ids": [
+        "obl-6536"
+      ],
+      "source_seed_ids": [
+        "seed-9928"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`gap-008` is overstated as `missing_data_shape`: the owner and adjacent consumer docs alre",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`gap-008` is overstated as `missing_data_shape`: the owner and adjacent consumer docs already carry much of the account-history and projection-health canon, so the unresolved work is now over-summarized transfer centered on `Plans/usage-feature.md` plus missing discoverable owner/consumer anchors.",
+        "gap-008",
+        "missing_data_shape",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L37",
+        "Plans/usage-feature.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07003",
+      "source_obligation_ids": [
+        "obl-6599"
+      ],
+      "source_seed_ids": [
+        "seed-10063"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "summary: Ran another narrow evidence pass against the remaining exact-missing items and fo",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### Problem 3: Two usage tracker types and ad-hoc Ledger parsing",
+      "status": "partial",
+      "exact_items": [
+        "summary: Ran another narrow evidence pass against the remaining exact-missing items and found two more bundle-level precision fixes: gap-001 was under-reporting Interview as an affected consumer, and gap-004 still needed the missing Usage drill-through anchor recorded as an exact missing item rather than only in blocker prose."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L504"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07006",
+      "source_obligation_ids": [
+        "obl-6602"
+      ],
+      "source_seed_ids": [
+        "seed-10066"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/usage-feature.md` still does not contain an exact `artifact drill-through section`",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/usage-feature.md` still does not contain an exact `artifact drill-through section` heading.",
+        "Plans/usage-feature.md",
+        "artifact drill-through section"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L37",
+        "Plans/usage-feature.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07062",
+      "source_obligation_ids": [
+        "obl-6643"
+      ],
+      "source_seed_ids": [
+        "seed-10135"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-0",
+      "row_type": "layout_blocker",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.",
+        "gap-003",
+        "gap-004",
+        "gap-005",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L37",
+        "Plans/usage-feature.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00304",
+      "source_obligation_ids": [
+        "obl-171"
+      ],
+      "source_seed_ids": [
+        "seed-197",
+        "seed-325",
+        "seed-442",
+        "seed-504",
+        "seed-1019",
+        "seed-1299",
+        "seed-1363",
+        "seed-1506",
+        "seed-1575",
+        "seed-1860",
+        "seed-1934",
+        "seed-1994",
+        "seed-2241",
+        "seed-2264",
+        "seed-2339",
+        "seed-2362",
+        "seed-2388",
+        "seed-2414",
+        "seed-2443",
+        "seed-2602",
+        "seed-2709",
+        "seed-2809",
+        "seed-2835",
+        "seed-3032",
+        "seed-3270",
+        "seed-3399",
+        "seed-3433",
+        "seed-3463",
+        "seed-3481",
+        "seed-3548",
+        "seed-3596",
+        "seed-3619",
+        "seed-3675",
+        "seed-3695",
+        "seed-4292",
+        "seed-4517",
+        "seed-5007",
+        "seed-5041",
+        "seed-5150",
+        "seed-5213",
+        "seed-5228",
+        "seed-5255",
+        "seed-5448",
+        "seed-5467",
+        "seed-5508",
+        "seed-6003",
+        "seed-6020",
+        "seed-6048",
+        "seed-6062",
+        "seed-6739",
+        "seed-6757",
+        "seed-6956",
+        "seed-6982",
+        "seed-7059",
+        "seed-7119",
+        "seed-7168",
+        "seed-7193",
+        "seed-7244",
+        "seed-7286",
+        "seed-7341",
+        "seed-7370",
+        "seed-7476",
+        "seed-7521",
+        "seed-7765",
+        "seed-7780",
+        "seed-7850",
+        "seed-7861",
+        "seed-7990",
+        "seed-8110",
+        "seed-8125",
+        "seed-8285",
+        "seed-8308",
+        "seed-8369",
+        "seed-9280",
+        "seed-9451",
+        "seed-9492",
+        "seed-9582",
+        "seed-9611",
+        "seed-9650",
+        "seed-9749",
+        "seed-9773",
+        "seed-9933",
+        "seed-9981",
+        "seed-10009",
+        "seed-10070",
+        "seed-10092",
+        "seed-10108",
+        "seed-10124",
+        "seed-10146",
+        "seed-10179",
+        "seed-10218",
+        "seed-10265",
+        "seed-10298",
+        "seed-10359"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0011",
+        "shard-0012",
+        "shard-0018",
+        "shard-0021",
+        "shard-0022",
+        "shard-0024",
+        "shard-0025",
+        "shard-0027",
+        "shard-0028",
+        "shard-0029",
+        "shard-0031",
+        "shard-0032",
+        "shard-0033",
+        "shard-0034",
+        "shard-0035",
+        "shard-0037",
+        "shard-0039",
+        "shard-0040",
+        "shard-0041",
+        "shard-0042",
+        "shard-0046",
+        "shard-0048",
+        "shard-0051",
+        "shard-0052",
+        "shard-0053",
+        "shard-0055",
+        "shard-0059",
+        "shard-0065",
+        "shard-0066",
+        "shard-0067",
+        "shard-0068",
+        "shard-0069",
+        "shard-0070",
+        "shard-0071",
+        "shard-0072",
+        "shard-0073",
+        "shard-0074",
+        "shard-0075",
+        "shard-0076",
+        "shard-0077",
+        "shard-0084",
+        "shard-0085",
+        "shard-0086",
+        "shard-0087",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/usage-feature.md`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/usage-feature.md`",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L37",
+        "Plans/usage-feature.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00357",
+      "source_obligation_ids": [
+        "obl-215"
+      ],
+      "source_seed_ids": [
+        "seed-247",
+        "seed-1254",
+        "seed-1740",
+        "seed-2503",
+        "seed-2529"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0021",
+        "shard-0026",
+        "shard-0033"
+      ],
+      "canon_label": "`Feature Seam`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "`Feature Seam`",
+        "Feature Seam"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00401",
+      "source_obligation_ids": [
+        "obl-259"
+      ],
+      "source_seed_ids": [
+        "seed-292"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "`Provider_Stream_Mapping_External_Reference_A2A.md` maps usage and diagnostics without eff",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "`Provider_Stream_Mapping_External_Reference_A2A.md` maps usage and diagnostics without effective-account attribution",
+        "Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00535",
+      "source_obligation_ids": [
+        "obl-392"
+      ],
+      "source_seed_ids": [
+        "seed-454"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "`Usage`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "present",
+      "exact_items": [
+        "`Usage`",
+        "Usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1",
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L35"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00609",
+      "source_obligation_ids": [
+        "obl-466"
+      ],
+      "source_seed_ids": [
+        "seed-536",
+        "seed-874",
+        "seed-1419",
+        "seed-1433",
+        "seed-1545",
+        "seed-2222",
+        "seed-7836"
+      ],
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0016",
+        "shard-0023",
+        "shard-0024",
+        "shard-0031",
+        "shard-0073"
+      ],
+      "canon_label": "`Ledger`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### 3. Event ledger (existing concept, under Usage umbrella)",
+      "status": "present",
+      "exact_items": [
+        "`Ledger`",
+        "Ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L45",
+        "Plans/usage-feature.md:L48",
+        "Plans/usage-feature.md:L89",
+        "Plans/usage-feature.md:L93",
+        "Plans/usage-feature.md:L110"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00797",
+      "source_obligation_ids": [
+        "obl-654"
+      ],
+      "source_seed_ids": [
+        "seed-749"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "canon_label": "`shares feature seam with run ...`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "`shares feature seam with run ...`",
+        "shares feature seam with run ..."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00946",
+      "source_obligation_ids": [
+        "obl-803"
+      ],
+      "source_seed_ids": [
+        "seed-927"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "`strong` confirm should show:",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
+      "status": "present",
+      "exact_items": [
+        "`strong` confirm should show:",
+        "strong"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L167",
+        "Plans/usage-feature.md:L358"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00947",
+      "source_obligation_ids": [
+        "obl-804"
+      ],
+      "source_seed_ids": [
+        "seed-928"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "`hard_gate` should show:",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
+      "status": "partial",
+      "exact_items": [
+        "`hard_gate` should show:",
+        "hard_gate"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L328"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01121",
+      "source_obligation_ids": [
+        "obl-978"
+      ],
+      "source_seed_ids": [
+        "seed-1146"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "canon_label": "`Authentication` / `Usage`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "present",
+      "exact_items": [
+        "`Authentication` / `Usage`",
+        "Authentication",
+        "Usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1",
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L35"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01207",
+      "source_obligation_ids": [
+        "obl-1064"
+      ],
+      "source_seed_ids": [
+        "seed-1251"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "keep `Feature Seam`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "keep `Feature Seam`",
+        "Feature Seam"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

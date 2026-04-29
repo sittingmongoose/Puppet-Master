@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-039",
+  "group_ids": [
+    "discgrp-0153",
+    "discgrp-0154",
+    "discgrp-0155",
+    "discgrp-0156"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00395",
+      "source_obligation_ids": [
+        "obl-253"
+      ],
+      "source_seed_ids": [
+        "seed-286"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/BinaryLocator_Spec.md",
+      "new_heading_hint": "## Error taxonomy (stable codes)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L261"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00396",
+      "source_obligation_ids": [
+        "obl-254"
+      ],
+      "source_seed_ids": [
+        "seed-287"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "#### Gap 1: ExecutionRequest Metadata",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L2215"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00397",
+      "source_obligation_ids": [
+        "obl-255"
+      ],
+      "source_seed_ids": [
+        "seed-288"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00398",
+      "source_obligation_ids": [
+        "obl-256"
+      ],
+      "source_seed_ids": [
+        "seed-289"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Cross-surface runtime, concern, and route/open contracts",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L251"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

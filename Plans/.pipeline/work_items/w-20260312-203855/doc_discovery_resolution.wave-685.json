@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-685",
+  "group_ids": [
+    "discgrp-2737",
+    "discgrp-2738",
+    "discgrp-2739",
+    "discgrp-2740"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03017",
+      "source_obligation_ids": [
+        "obl-2863"
+      ],
+      "source_seed_ids": [
+        "seed-3780"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Cross-surface runtime, concern, and route/open contracts",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L251"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03018",
+      "source_obligation_ids": [
+        "obl-2864"
+      ],
+      "source_seed_ids": [
+        "seed-3781"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03019",
+      "source_obligation_ids": [
+        "obl-2865"
+      ],
+      "source_seed_ids": [
+        "seed-3782"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03020",
+      "source_obligation_ids": [
+        "obl-2866"
+      ],
+      "source_seed_ids": [
+        "seed-3783"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/00-plans-index.md",
+      "new_heading_hint": "## Change Summary",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/00-plans-index.md:L6"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

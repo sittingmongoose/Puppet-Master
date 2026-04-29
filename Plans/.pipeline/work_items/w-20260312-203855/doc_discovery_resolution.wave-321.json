@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-321",
+  "group_ids": [
+    "discgrp-1281",
+    "discgrp-1282",
+    "discgrp-1283",
+    "discgrp-1284"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01531",
+      "source_obligation_ids": [
+        "obl-1388"
+      ],
+      "source_seed_ids": [
+        "seed-1705"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "new_heading_hint": "### Concern cleanup and retention",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L131"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01532",
+      "source_obligation_ids": [
+        "obl-1389"
+      ],
+      "source_seed_ids": [
+        "seed-1706"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01533",
+      "source_obligation_ids": [
+        "obl-1390"
+      ],
+      "source_seed_ids": [
+        "seed-1707"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01534",
+      "source_obligation_ids": [
+        "obl-1391"
+      ],
+      "source_seed_ids": [
+        "seed-1708"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "### Fidelity recovery cov-032: Concern linkage to adjacent families",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L7"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

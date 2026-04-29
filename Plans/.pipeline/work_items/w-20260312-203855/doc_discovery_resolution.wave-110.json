@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-110",
+  "group_ids": [
+    "discgrp-0437",
+    "discgrp-0438",
+    "discgrp-0439",
+    "discgrp-0440"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00684",
+      "source_obligation_ids": [
+        "obl-541"
+      ],
+      "source_seed_ids": [
+        "seed-622"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-026: Concern routing and object-first search behavior",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L55"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00685",
+      "source_obligation_ids": [
+        "obl-542"
+      ],
+      "source_seed_ids": [
+        "seed-623"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00686",
+      "source_obligation_ids": [
+        "obl-543"
+      ],
+      "source_seed_ids": [
+        "seed-624"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00687",
+      "source_obligation_ids": [
+        "obl-544"
+      ],
+      "source_seed_ids": [
+        "seed-625"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L19"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-739",
+  "group_ids": [
+    "discgrp-2953",
+    "discgrp-2954",
+    "discgrp-2955",
+    "discgrp-2956"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03233",
+      "source_obligation_ids": [
+        "obl-3079"
+      ],
+      "source_seed_ids": [
+        "seed-4082"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03234",
+      "source_obligation_ids": [
+        "obl-3080"
+      ],
+      "source_seed_ids": [
+        "seed-4083"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03235",
+      "source_obligation_ids": [
+        "obl-3081"
+      ],
+      "source_seed_ids": [
+        "seed-4084"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03236",
+      "source_obligation_ids": [
+        "obl-3082"
+      ],
+      "source_seed_ids": [
+        "seed-4097"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "# Glossary (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Glossary.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,414 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-173",
+  "row_group_ids": [
+    "rowgrp-0689",
+    "rowgrp-0690",
+    "rowgrp-0691",
+    "rowgrp-0692"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-04546",
+      "source_obligation_ids": [
+        "obl-4324"
+      ],
+      "source_seed_ids": [
+        "seed-6080"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The biggest risk is that export features get implemented as \u201cdump whatever the current vie",
+      "row_type": "layout_blocker",
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "heading_hint": "# Section 15 Promoted Features Spec",
+      "status": "partial",
+      "exact_items": [
+        "The biggest risk is that export features get implemented as \u201cdump whatever the current view shows\u201d and quietly lose canonical identity."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06580",
+      "source_obligation_ids": [
+        "obl-6221"
+      ],
+      "source_seed_ids": [
+        "seed-9407"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "still defines a six-tab page with `Tiers`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "heading_hint": "#### Action tiers",
+      "status": "present",
+      "exact_items": [
+        "still defines a six-tab page with `Tiers`",
+        "Tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L72",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L193",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L251",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L409"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06179",
+      "source_obligation_ids": [
+        "obl-5951"
+      ],
+      "source_seed_ids": [
+        "seed-8850"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`feature-list.md` / `newfeatures.md` still mix promoted shell/runtime language with pre-pr",
+      "row_type": "layout_blocker",
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "heading_hint": "#### Persistence and recovery guarantees",
+      "status": "partial",
+      "exact_items": [
+        "`feature-list.md` / `newfeatures.md` still mix promoted shell/runtime language with pre-promotion page/title-bar/recovery models, and now also show internal contradictions around persistence identity and recovery anchors.",
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "stale_tokens": [
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L408"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-01905",
+      "source_obligation_ids": [
+        "obl-1762"
+      ],
+      "source_seed_ids": [
+        "seed-2256"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "`Orchestrator_Page.md` still centers `Tiers`",
+      "row_type": "owner",
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "heading_hint": "#### Action tiers",
+      "status": "present",
+      "exact_items": [
+        "`Orchestrator_Page.md` still centers `Tiers`",
+        "Orchestrator_Page.md",
+        "Tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L72",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L193",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L251",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L409"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01916",
+      "source_obligation_ids": [
+        "obl-1773"
+      ],
+      "source_seed_ids": [
+        "seed-2277"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "`tier_id` remains an important field in usage/storage thinking",
+      "row_type": "owner",
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "heading_hint": "### 3.6 Interleaved Thinking Toggle",
+      "status": "partial",
+      "exact_items": [
+        "`tier_id` remains an important field in usage/storage thinking",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L343"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04493",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04539",
+      "source_obligation_ids": [
+        "obl-4317"
+      ],
+      "source_seed_ids": [
+        "seed-6070"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Exports are frequently described as output-format features, but not yet as identity-preser",
+      "row_type": "owner",
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "heading_hint": "# Section 15 Promoted Features Spec",
+      "status": "partial",
+      "exact_items": [
+        "Exports are frequently described as output-format features, but not yet as identity-preserving artifacts in their own right."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04564",
+      "source_obligation_ids": [
+        "obl-4342"
+      ],
+      "source_seed_ids": [
+        "seed-6117"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "The docs already know what fields matter; they just do not normalize them yet.",
+      "row_type": "owner",
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "heading_hint": "### 3.12 Know Where Your Tokens Go (Analytics Framing)",
+      "status": "partial",
+      "exact_items": [
+        "The docs already know what fields matter; they just do not normalize them yet."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L382"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04756",
+      "source_obligation_ids": [
+        "obl-4534"
+      ],
+      "source_seed_ids": [
+        "seed-6451",
+        "seed-6488",
+        "seed-6512",
+        "seed-6716",
+        "seed-7395",
+        "seed-7440",
+        "seed-7467",
+        "seed-8400",
+        "seed-8831",
+        "seed-8872",
+        "seed-8900",
+        "seed-8926",
+        "seed-8964",
+        "seed-8999",
+        "seed-9024",
+        "seed-9058",
+        "seed-9524",
+        "seed-9546",
+        "seed-9586",
+        "seed-9618",
+        "seed-9669"
+      ],
+      "source_shard_ids": [
+        "shard-0062",
+        "shard-0064",
+        "shard-0070",
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0085",
+        "shard-0086"
+      ],
+      "canon_label": "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "row_type": "owner",
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05699",
+      "source_obligation_ids": [
+        "obl-5471"
+      ],
+      "source_seed_ids": [
+        "seed-8119"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "section `7.7 Tiers`",
+      "row_type": "owner",
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "heading_hint": "#### Action tiers",
+      "status": "partial",
+      "exact_items": [
+        "section `7.7 Tiers`",
+        "7.7 Tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L72"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05846",
+      "source_obligation_ids": [
+        "obl-5618"
+      ],
+      "source_seed_ids": [
+        "seed-8337"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Then the canonical-record section partially regresses again by keeping:",
+      "row_type": "owner",
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "heading_hint": "### 3.2 Branching Conversations (Restore Then Fork)",
+      "status": "partial",
+      "exact_items": [
+        "Then the canonical-record section partially regresses again by keeping:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L316"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06262",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06656",
+      "source_obligation_ids": [
+        "obl-6297"
+      ],
+      "source_seed_ids": [
+        "seed-9528"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Plans/Section15_MVP_Promoted_Features_Spec.md` is comparatively disciplined in this seam:",
+      "row_type": "owner",
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md` is comparatively disciplined in this seam:",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06682",
+      "source_obligation_ids": [
+        "obl-6323"
+      ],
+      "source_seed_ids": [
+        "seed-9565"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "`feature-list.md` and `newfeatures.md` are broad drift amplifiers because they condense ma",
+      "row_type": "owner",
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "heading_hint": "# Section 15 Promoted Features Spec",
+      "status": "partial",
+      "exact_items": [
+        "`feature-list.md` and `newfeatures.md` are broad drift amplifiers because they condense many features into short summaries that users and implementers often read first.",
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

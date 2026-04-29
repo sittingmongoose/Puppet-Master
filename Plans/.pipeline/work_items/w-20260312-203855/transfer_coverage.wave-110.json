@@ -1,0 +1,721 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-110",
+  "row_group_ids": [
+    "rowgrp-0437",
+    "rowgrp-0438",
+    "rowgrp-0439",
+    "rowgrp-0440"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-06743",
+      "source_obligation_ids": [
+        "obl-6382"
+      ],
+      "source_seed_ids": [
+        "seed-9744"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "`Orchestrator rewrite terms` remains effectively empty relative to the ledger's terminolog",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "partial",
+      "exact_items": [
+        "`Orchestrator rewrite terms` remains effectively empty relative to the ledger's terminology transfer.",
+        "Orchestrator rewrite terms"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00039",
+      "source_obligation_ids": [
+        "obl-013"
+      ],
+      "source_seed_ids": [
+        "seed-013"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "requested-vs-effective identity display",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "New execution-policy settings requirement",
+      "status": "missing",
+      "exact_items": [
+        "cover agent vs subagent",
+        "cover fresh vs reused retry worker",
+        "cover overseer delegation on/off",
+        "cover delegated-worker provider/model/effort policy",
+        "ensure consistent requested-vs-effective identity display across chat actors and orchestration actors"
+      ],
+      "stale_tokens": [
+        "delegated worker"
+      ],
+      "evidence": [
+        "Plans/FinalGUISpec.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00068",
+      "source_obligation_ids": [
+        "obl-028"
+      ],
+      "source_seed_ids": [
+        "seed-028"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Orchestrator ownership boundaries / projection-vs-canonical split",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "Orchestrator ownership boundaries",
+      "status": "missing",
+      "exact_items": [
+        "Define what Orchestrator is allowed to own: page layout and controls, view-model/projections, run control intents; exclude canonical runtime enums, event semantics, scheduler truth.",
+        "Pin the primary discussion seam first: UI surface/IA vs runtime state model vs cross-surface lineage/receipts vs blocked/recovery/remediation UX.",
+        "Record explicit boundary between canonical runtime facts, orchestrator projections, and widget/page presentation.",
+        "Carry forward requested-vs-effective state wherever persona/provider/model fallback can occur."
+      ],
+      "stale_tokens": [
+        "tier model",
+        "super-agent",
+        "owner of execution truth"
+      ],
+      "evidence": [
+        "Plans/FinalGUISpec.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00084",
+      "source_obligation_ids": [
+        "obl-032"
+      ],
+      "source_seed_ids": [
+        "seed-032"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "provider/model precedence and delegation policy",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "runtime/model precedence",
+      "status": "missing",
+      "exact_items": [
+        "provider/model precedence order across run, seam, package, node, overseer, and delegated-subagent levels",
+        "whether seam/package/node provider-model settings are hard constraints, defaults, or hints",
+        "whether an overseer can do direct node work or only delegate/review",
+        "if direct node work is allowed, whether it uses overseer-effective settings or node-effective settings",
+        "how dynamic node personas interact with explicit node overrides and overseer-controlled delegation"
+      ],
+      "stale_tokens": [
+        "Overseer",
+        "persona",
+        "effective settings"
+      ],
+      "evidence": [
+        "Plans/FinalGUISpec.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00091",
+      "source_obligation_ids": [
+        "obl-035"
+      ],
+      "source_seed_ids": [
+        "seed-035"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "multi-account settings structure and auto-switch policy",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "multi-account settings",
+      "status": "missing",
+      "exact_items": [
+        "multi-account settings structure across project settings, run snapshot, attempt record",
+        "precedence between provider/account/execution-role rules",
+        "user-configurable threshold that determines when automatic account switching occurs",
+        "multi-account auto-switch should be on by default for every execution role that uses a provider",
+        "thresholding/policy granularity by provider, account, execution role"
+      ],
+      "stale_tokens": [
+        "multi-account",
+        "auto-switch",
+        "execution role"
+      ],
+      "evidence": [
+        "Plans/FinalGUISpec.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00066",
+      "source_obligation_ids": [
+        "obl-027"
+      ],
+      "source_seed_ids": [
+        "seed-027"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "tier vocabulary retirement",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "Current docs are not fully simplified to \"graph only\"",
+      "status": "missing",
+      "exact_items": [
+        "execution is documented against graph nodes",
+        "orchestration identity, UI labels, and persona defaults still retain a tier hierarchy as a first-class overlay"
+      ],
+      "stale_tokens": [
+        "Phase",
+        "Task",
+        "Subtask",
+        "Iteration",
+        "tier_id"
+      ],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L693",
+        "Plans/FinalGUISpec.md:L913",
+        "Plans/FinalGUISpec.md:L1089",
+        "Plans/FinalGUISpec.md:L1137",
+        "Plans/FinalGUISpec.md:L1620"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-00580",
+      "source_obligation_ids": [
+        "obl-437"
+      ],
+      "source_seed_ids": [
+        "seed-502"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "Research Progress - 2026-03-16 - Projection Freshness / Stale-Trust Model",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-096: Projection freshness vs projection health",
+      "status": "present",
+      "exact_items": [
+        "Research Progress - 2026-03-16 - Projection Freshness / Stale-Trust Model"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1-L2883 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00616",
+      "source_obligation_ids": [
+        "obl-473"
+      ],
+      "source_seed_ids": [
+        "seed-543"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "`Progress`: show run-level trust banner or chip when projections are stale/degraded",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "status": "missing",
+      "exact_items": [
+        "`Progress`: show run-level trust banner or chip when projections are stale/degraded",
+        "Progress"
+      ],
+      "stale_tokens": [
+        "Progress"
+      ],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L55",
+        "Plans/FinalGUISpec.md:L59",
+        "Plans/FinalGUISpec.md:L60",
+        "Plans/FinalGUISpec.md:L62",
+        "Plans/FinalGUISpec.md:L63"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-01351",
+      "source_obligation_ids": [
+        "obl-1208"
+      ],
+      "source_seed_ids": [
+        "seed-1444"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "When projections are stale or degraded:",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 15.2 seglog Projections (for Usage)",
+      "status": "present",
+      "exact_items": [
+        "When projections are stale or degraded:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1-L2883 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01415",
+      "source_obligation_ids": [
+        "obl-1272"
+      ],
+      "source_seed_ids": [
+        "seed-1533"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "If a surface is `stale` or `degraded`, the GUI must not present mutation controls that imp",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "missing",
+      "exact_items": [
+        "If a surface is `stale` or `degraded`, the GUI must not present mutation controls that imply hidden confidence.",
+        "stale",
+        "degraded"
+      ],
+      "stale_tokens": [
+        "degraded",
+        "stale"
+      ],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L47",
+        "Plans/FinalGUISpec.md:L48",
+        "Plans/FinalGUISpec.md:L51",
+        "Plans/FinalGUISpec.md:L52",
+        "Plans/FinalGUISpec.md:L375"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-01420",
+      "source_obligation_ids": [
+        "obl-1277"
+      ],
+      "source_seed_ids": [
+        "seed-1542"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "evidence/artifact browsing can often survive stale projections because records/artifacts a",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 15.2 seglog Projections (for Usage)",
+      "status": "present",
+      "exact_items": [
+        "evidence/artifact browsing can often survive stale projections because records/artifacts are durable"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1-L2883 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01426",
+      "source_obligation_ids": [
+        "obl-1283"
+      ],
+      "source_seed_ids": [
+        "seed-1550"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "The GUI should never guess that a previously visible `allowed_action_ids[]` set is still v",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)",
+      "status": "missing",
+      "exact_items": [
+        "The GUI should never guess that a previously visible `allowed_action_ids[]` set is still valid if the blocked projection is stale.",
+        "allowed_action_ids[]"
+      ],
+      "stale_tokens": [
+        "allowed_action_ids[]"
+      ],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2517",
+        "Plans/FinalGUISpec.md:L2572",
+        "Plans/FinalGUISpec.md:L2762",
+        "Plans/FinalGUISpec.md:L2776",
+        "Plans/FinalGUISpec.md:L2864"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-01684",
+      "source_obligation_ids": [
+        "obl-1541"
+      ],
+      "source_seed_ids": [
+        "seed-1918",
+        "seed-2067"
+      ],
+      "source_shard_ids": [
+        "shard-0028",
+        "shard-0029"
+      ],
+      "canon_label": "Trust / stale-data implication",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "status": "present",
+      "exact_items": [
+        "Trust / stale-data implication"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1-L2883 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01685",
+      "source_obligation_ids": [
+        "obl-1542"
+      ],
+      "source_seed_ids": [
+        "seed-1919"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "canon_label": "exports derived from stale/degraded projections must either:",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 15.2 seglog Projections (for Usage)",
+      "status": "present",
+      "exact_items": [
+        "exports derived from stale/degraded projections must either:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1-L2883 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01703",
+      "source_obligation_ids": [
+        "obl-1560"
+      ],
+      "source_seed_ids": [
+        "seed-1947"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "canon_label": "how stale/degraded trust should suppress or qualify notifications",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "status": "present",
+      "exact_items": [
+        "how stale/degraded trust should suppress or qualify notifications"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1-L2883 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01714",
+      "source_obligation_ids": [
+        "obl-1571"
+      ],
+      "source_seed_ids": [
+        "seed-1961"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "canon_label": "stale or degraded projections must not generate overconfident notifications",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 15.2 seglog Projections (for Usage)",
+      "status": "present",
+      "exact_items": [
+        "stale or degraded projections must not generate overconfident notifications"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1-L2883 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01733",
+      "source_obligation_ids": [
+        "obl-1590"
+      ],
+      "source_seed_ids": [
+        "seed-1982"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "canon_label": "`View may be stale; refresh before acting`",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 10.7 Event-driven refresh rule",
+      "status": "present",
+      "exact_items": [
+        "`View may be stale; refresh before acting`",
+        "View may be stale; refresh before acting"
+      ],
+      "stale_tokens": [
+        "View may be stale; refresh before acting"
+      ],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1-L2883 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01739",
+      "source_obligation_ids": [
+        "obl-1596"
+      ],
+      "source_seed_ids": [
+        "seed-1988"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "canon_label": "Require degraded/stale disclosure or canonical revalidation before strong notification cla",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Concern, escalation, notification, and help surfaces",
+      "status": "present",
+      "exact_items": [
+        "Require degraded/stale disclosure or canonical revalidation before strong notification claims are emitted from projection-heavy surfaces."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1-L2883 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01988",
+      "source_obligation_ids": [
+        "obl-1845"
+      ],
+      "source_seed_ids": [
+        "seed-2376"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "Opus confirms that widget/page/graph docs still do not make degraded/stale projection stat",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "status": "present",
+      "exact_items": [
+        "Opus confirms that widget/page/graph docs still do not make degraded/stale projection states operational enough for mutation gating and historical-run rendering"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1-L2883 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02104",
+      "source_obligation_ids": [
+        "obl-1961"
+      ],
+      "source_seed_ids": [
+        "seed-2550"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "legacy `tier` wording still present in docs is now both a data-model risk and a user-copy/",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## 16. Migration Mapping",
+      "status": "missing",
+      "exact_items": [
+        "legacy `tier` wording still present in docs is now both a data-model risk and a user-copy/help migration risk",
+        "tier"
+      ],
+      "stale_tokens": [
+        "tier"
+      ],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L527",
+        "Plans/FinalGUISpec.md:L540",
+        "Plans/FinalGUISpec.md:L555",
+        "Plans/FinalGUISpec.md:L904",
+        "Plans/FinalGUISpec.md:L1666"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-02441",
+      "source_obligation_ids": [
+        "obl-2291"
+      ],
+      "source_seed_ids": [
+        "seed-2968"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "stale/degraded trust modifies confidence/disclosure, not the underlying canonical status b",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "status": "present",
+      "exact_items": [
+        "stale/degraded trust modifies confidence/disclosure, not the underlying canonical status by itself"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1-L2883 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02982",
+      "source_obligation_ids": [
+        "obl-2828"
+      ],
+      "source_seed_ids": [
+        "seed-3726"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "Normalize GUI consumers onto canonical persona/account/role naming and stop allowing stale",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "present",
+      "exact_items": [
+        "Normalize GUI consumers onto canonical persona/account/role naming and stop allowing stale local variants."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1-L2883 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04233",
+      "source_obligation_ids": [
+        "obl-4073"
+      ],
+      "source_seed_ids": [
+        "seed-5635"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "stale-projection safety still has no canonical revalidation handshake even though GUI docs",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### GUI behavior rules",
+      "status": "present",
+      "exact_items": [
+        "stale-projection safety still has no canonical revalidation handshake even though GUI docs already promise disable-with-reason behavior."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1-L2883 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04785",
+      "source_obligation_ids": [
+        "obl-4563"
+      ],
+      "source_seed_ids": [
+        "seed-6505"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "Multiple supporting docs still silently inherit stale assumptions from earlier docs rather",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "present",
+      "exact_items": [
+        "Multiple supporting docs still silently inherit stale assumptions from earlier docs rather than independently reflecting the rewrite model."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1-L2883 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05292",
+      "source_obligation_ids": [
+        "obl-5068"
+      ],
+      "source_seed_ids": [
+        "seed-7416"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`Section15_MVP_Promoted_Features_Spec.md` still points at stale Final GUI body text, missi",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "missing",
+      "exact_items": [
+        "`Section15_MVP_Promoted_Features_Spec.md` still points at stale Final GUI body text, missing project/session browser and attention-center surface ownership, and ungated promoted-feature command families.",
+        "Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "stale_tokens": [
+        "Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L273",
+        "Plans/FinalGUISpec.md:L390",
+        "Plans/FinalGUISpec.md:L596",
+        "Plans/FinalGUISpec.md:L643",
+        "Plans/FinalGUISpec.md:L1652"
+      ],
+      "required_action": "stale_retirement"
+    }
+  ]
+}

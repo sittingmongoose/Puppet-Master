@@ -1,45 +1,93 @@
 {
-  "schema_id": "pm.doc_discovery_resolution_wave.v3",
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-003",
-  "timestamp_utc": "2026-04-29T00:35:45Z",
-  "subagent_tasks": [
-    "docdisc-cov012-confirm",
-    "docdisc-cov012-clarify"
-  ],
-  "assigned_input_boundaries": [
-    "single-row confirmation and clarification for cov-012"
-  ],
-  "subagent_result_status": {
-    "docdisc-cov012-confirm": "completed_reduced",
-    "docdisc-cov012-clarify": "completed_reduced"
-  },
-  "completed_task_count": 2,
-  "failed_task_count": 0,
-  "coverage_row_ids_assigned": [
-    "cov-012"
-  ],
-  "coverage_row_ids_completed": [
-    "cov-012"
+  "group_ids": [
+    "discgrp-0009",
+    "discgrp-0010",
+    "discgrp-0011",
+    "discgrp-0012"
   ],
   "resolutions": [
     {
-      "coverage_id": "cov-012",
+      "coverage_id": "cov-00156",
       "source_obligation_ids": [
-        "obl-012"
+        "obl-053"
       ],
       "source_seed_ids": [
-        "seed-012"
+        "seed-053"
       ],
       "source_shard_ids": [
-        "shard-0002"
+        "shard-0009"
       ],
       "old_path": "__DOC_DISCOVERY_REQUIRED__",
-      "new_path": "Plans/usage-feature.md",
-      "new_heading_hint": "Out of Scope for This Plan",
-      "resolution_basis": "stale-retirement surface",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "owner surface",
       "evidence": [
-        "Plans/usage-feature.md:640-648"
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00157",
+      "source_obligation_ids": [
+        "obl-054"
+      ],
+      "source_seed_ids": [
+        "seed-054",
+        "seed-168"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00158",
+      "source_obligation_ids": [
+        "obl-055"
+      ],
+      "source_seed_ids": [
+        "seed-055"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "## Avoiding \"Built but Not Wired\"",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L1186"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00159",
+      "source_obligation_ids": [
+        "obl-056"
+      ],
+      "source_seed_ids": [
+        "seed-056"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### Fidelity recovery cov-041: Source Control and worktree handshake",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L7"
       ],
       "confidence": "high"
     }

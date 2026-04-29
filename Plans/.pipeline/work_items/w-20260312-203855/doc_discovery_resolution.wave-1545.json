@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1545",
+  "group_ids": [
+    "discgrp-6177",
+    "discgrp-6178",
+    "discgrp-6179",
+    "discgrp-6180"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06860",
+      "source_obligation_ids": [
+        "obl-6463"
+      ],
+      "source_seed_ids": [
+        "seed-9842"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "#### `scheduler.pass`",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1116"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06861",
+      "source_obligation_ids": [
+        "obl-6464"
+      ],
+      "source_seed_ids": [
+        "seed-9843"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-001: Owner-first fidelity recovery order",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06870",
+      "source_obligation_ids": [
+        "obl-6473"
+      ],
+      "source_seed_ids": [
+        "seed-9852"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06871",
+      "source_obligation_ids": [
+        "obl-6474"
+      ],
+      "source_seed_ids": [
+        "seed-9853"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Surface inventory impact",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2155"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

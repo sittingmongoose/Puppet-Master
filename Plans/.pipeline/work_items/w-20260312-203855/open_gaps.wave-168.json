@@ -1,0 +1,2576 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-168",
+  "group_ids": [
+    "gapgrp-0669",
+    "gapgrp-0670",
+    "gapgrp-0671",
+    "gapgrp-0672"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-00340",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00435 is partial for `usage-feature.md` still aggregates around `tier_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00435"
+      ],
+      "source_obligation_ids": [
+        "obl-293"
+      ],
+      "source_seed_ids": [
+        "seed-338"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`usage-feature.md` still aggregates around `tier_id`",
+        "usage-feature.md",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00493",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00639 is partial for Proposed fields conceptually:",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00639"
+      ],
+      "source_obligation_ids": [
+        "obl-496"
+      ],
+      "source_seed_ids": [
+        "seed-571"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "Proposed fields conceptually:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00590",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00758 is partial for lifecycle already includes `active`, `acknowledged`, `resolved`, `dismissed`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00758"
+      ],
+      "source_obligation_ids": [
+        "obl-615"
+      ],
+      "source_seed_ids": [
+        "seed-710"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "exact_missing_items": [
+        "lifecycle already includes `active`, `acknowledged`, `resolved`, `dismissed`",
+        "active",
+        "acknowledged",
+        "resolved",
+        "dismissed"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00631",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00804 is partial for lifecycle includes `active`, `acknowledged`, `resolved`, `dismissed`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00804"
+      ],
+      "source_obligation_ids": [
+        "obl-661"
+      ],
+      "source_seed_ids": [
+        "seed-761"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "exact_missing_items": [
+        "lifecycle includes `active`, `acknowledged`, `resolved`, `dismissed`",
+        "active",
+        "acknowledged",
+        "resolved",
+        "dismissed"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00726",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00957 is partial for revoke should likely be `strong`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans likely needing the most rewrite-aware edits"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00957"
+      ],
+      "source_obligation_ids": [
+        "obl-814"
+      ],
+      "source_seed_ids": [
+        "seed-938"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "exact_missing_items": [
+        "revoke should likely be `strong`",
+        "strong"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01425",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01820 is partial for `active -> acknowledged -> resolved -> dismissed`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01820"
+      ],
+      "source_obligation_ids": [
+        "obl-1677"
+      ],
+      "source_seed_ids": [
+        "seed-2106"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "exact_missing_items": [
+        "`active -> acknowledged -> resolved -> dismissed`",
+        "active -> acknowledged -> resolved -> dismissed"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01483",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01901 is partial for but downstream docs still do not consistently model `requested identity` alongside verifie",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01901"
+      ],
+      "source_obligation_ids": [
+        "obl-1758"
+      ],
+      "source_seed_ids": [
+        "seed-2252"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "but downstream docs still do not consistently model `requested identity` alongside verified/effective identity",
+        "requested identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01536",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01969 is partial for but downstream docs still use those names normatively or mix them with canonical names",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01969"
+      ],
+      "source_obligation_ids": [
+        "obl-1826"
+      ],
+      "source_seed_ids": [
+        "seed-2349"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "but downstream docs still use those names normatively or mix them with canonical names"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01546",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01982 is partial for some docs still normalize around `requested_persona_id` / `effective_persona_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01982"
+      ],
+      "source_obligation_ids": [
+        "obl-1839"
+      ],
+      "source_seed_ids": [
+        "seed-2370"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "some docs still normalize around `requested_persona_id` / `effective_persona_id`",
+        "requested_persona_id",
+        "effective_persona_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01583",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02030 is partial for `provider_account_id` remains risky because Sonnet reinforces that it still conflicts conc",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02030"
+      ],
+      "source_obligation_ids": [
+        "obl-1887"
+      ],
+      "source_seed_ids": [
+        "seed-2434"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "`provider_account_id` remains risky because Sonnet reinforces that it still conflicts conceptually with `effective_provider_identity`",
+        "provider_account_id",
+        "effective_provider_identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01713",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02200 is partial for `persona_override_owner_id` still allows `tier_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02200"
+      ],
+      "source_obligation_ids": [
+        "obl-2055"
+      ],
+      "source_seed_ids": [
+        "seed-2671",
+        "seed-8449",
+        "seed-8479",
+        "seed-9310"
+      ],
+      "source_shard_ids": [
+        "shard-0034",
+        "shard-0078",
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`persona_override_owner_id` still allows `tier_id`",
+        "persona_override_owner_id",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01890",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02426 is partial for `activity_state` (`idle | active | background_active | historical_only`)",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02426"
+      ],
+      "source_obligation_ids": [
+        "obl-2276"
+      ],
+      "source_seed_ids": [
+        "seed-2953"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "`activity_state` (`idle | active | background_active | historical_only`)",
+        "activity_state",
+        "idle | active | background_active | historical_only"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01946",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02488 is partial for `Prompt_Pipeline.md` still lacks `actor_kind` / `execution_role`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02488"
+      ],
+      "source_obligation_ids": [
+        "obl-2338"
+      ],
+      "source_seed_ids": [
+        "seed-3039"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "`Prompt_Pipeline.md` still lacks `actor_kind` / `execution_role`",
+        "Prompt_Pipeline.md",
+        "actor_kind",
+        "execution_role"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02026",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02586 is partial for optional `project_attention_index.v1:{project_id}` if needed for efficient active ordering",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02586"
+      ],
+      "source_obligation_ids": [
+        "obl-2434"
+      ],
+      "source_seed_ids": [
+        "seed-3158"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "optional `project_attention_index.v1:{project_id}` if needed for efficient active ordering/counts",
+        "project_attention_index.v1:{project_id}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02178",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02769 is partial for `requested_account_policy` still remains necessary.",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02769"
+      ],
+      "source_obligation_ids": [
+        "obl-2616"
+      ],
+      "source_seed_ids": [
+        "seed-3426"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "`requested_account_policy` still remains necessary.",
+        "requested_account_policy"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02200",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02795 is partial for but prompt/runtime/storage schemas still have no parallel operational-identity block",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02795"
+      ],
+      "source_obligation_ids": [
+        "obl-2642"
+      ],
+      "source_seed_ids": [
+        "seed-3471"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "but prompt/runtime/storage schemas still have no parallel operational-identity block"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02315",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02935 is partial for `status` (`active | cooled_down | resolved | invalidated`)",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02935"
+      ],
+      "source_obligation_ids": [
+        "obl-2782"
+      ],
+      "source_seed_ids": [
+        "seed-3655"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "`status` (`active | cooled_down | resolved | invalidated`)",
+        "status",
+        "active | cooled_down | resolved | invalidated"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02666",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03414 is partial for likely `wizard_id -> run_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans likely needing the most rewrite-aware edits"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03414"
+      ],
+      "source_obligation_ids": [
+        "obl-3260"
+      ],
+      "source_seed_ids": [
+        "seed-4363"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "likely `wizard_id -> run_id`",
+        "wizard_id -> run_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02680",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "owner coverage row cov-03431 is partial for `orchestrator-subagent-integration.md` now shows an explicit same-file contradiction: `Tie",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Future mobile/web clients (impacts architecture now)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03431"
+      ],
+      "source_obligation_ids": [
+        "obl-3277"
+      ],
+      "source_seed_ids": [
+        "seed-4391"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`orchestrator-subagent-integration.md` now shows an explicit same-file contradiction: `TierContext` declares fields that its own constructor does not populate, while file-based coordination is simultaneously described as canonical and as a derived/debug mirror.",
+        "orchestrator-subagent-integration.md",
+        "TierContext"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "orchestrator-subagent-integration.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02786",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03558 is partial for lifecycle state (`active | suspect | restoring | retained | cleanup_eligible | archived |",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03558"
+      ],
+      "source_obligation_ids": [
+        "obl-3404"
+      ],
+      "source_seed_ids": [
+        "seed-4584"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "lifecycle state (`active | suspect | restoring | retained | cleanup_eligible | archived | removed`)",
+        "active | suspect | restoring | retained | cleanup_eligible | archived | removed"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03210",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04131 is partial for likely owner docs:",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans likely needing the most rewrite-aware edits"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04131"
+      ],
+      "source_obligation_ids": [
+        "obl-3971"
+      ],
+      "source_seed_ids": [
+        "seed-5449",
+        "seed-5509"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "likely owner docs:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03404",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04360 is partial for `generated://<artifact_id>` is discussed as a transport/resulting buffer, but the docs sti",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04360"
+      ],
+      "source_obligation_ids": [
+        "obl-4200"
+      ],
+      "source_seed_ids": [
+        "seed-5839"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "`generated://<artifact_id>` is discussed as a transport/resulting buffer, but the docs still need to guard against treating it like the durable identity.",
+        "generated://<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03544",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04512 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04512"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03608",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04599 is partial for likely fields:",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans likely needing the most rewrite-aware edits"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04599"
+      ],
+      "source_obligation_ids": [
+        "obl-4377"
+      ],
+      "source_seed_ids": [
+        "seed-6170"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "likely fields:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03737",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04783 is partial for Remaining Gemini-only docs are not low-value leftovers; many still hide active owner gaps",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04783"
+      ],
+      "source_obligation_ids": [
+        "obl-4561"
+      ],
+      "source_seed_ids": [
+        "seed-6503"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "Remaining Gemini-only docs are not low-value leftovers; many still hide active owner gaps in indices/checklists/policies and subsystem plans."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03828",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04892 is missing for `Plans/rewrite-tie-in-memo.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04892"
+      ],
+      "source_obligation_ids": [
+        "obl-4669"
+      ],
+      "source_seed_ids": [
+        "seed-6688",
+        "seed-6707",
+        "seed-6730",
+        "seed-7400",
+        "seed-7445",
+        "seed-7470",
+        "seed-8836",
+        "seed-8877",
+        "seed-8905",
+        "seed-8931",
+        "seed-8969",
+        "seed-9003",
+        "seed-9029",
+        "seed-9063",
+        "seed-9336",
+        "seed-9365",
+        "seed-9572",
+        "seed-9600",
+        "seed-9639"
+      ],
+      "source_shard_ids": [
+        "shard-0064",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082",
+        "shard-0084",
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "`Plans/rewrite-tie-in-memo.md`",
+        "Plans/rewrite-tie-in-memo.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03954",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05066 is partial for `OpenFile` remains narrower still:",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05066"
+      ],
+      "source_obligation_ids": [
+        "obl-4842"
+      ],
+      "source_seed_ids": [
+        "seed-6971"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "exact_missing_items": [
+        "`OpenFile` remains narrower still:",
+        "OpenFile"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04285",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05504 is partial for `Orchestrator_Page.md` mixes newer blocked/remediation lineage work with older `TierChange",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05504"
+      ],
+      "source_obligation_ids": [
+        "obl-5276"
+      ],
+      "source_seed_ids": [
+        "seed-7846"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator_Page.md` mixes newer blocked/remediation lineage work with older `TierChanged` / `active tier` assumptions.",
+        "Orchestrator_Page.md",
+        "TierChanged",
+        "active tier"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04481",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05769 is partial for `thread_blocked_notice` and `wizard_runtime_state` are also still mixed:",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05769"
+      ],
+      "source_obligation_ids": [
+        "obl-5541"
+      ],
+      "source_seed_ids": [
+        "seed-8225"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "`thread_blocked_notice` and `wizard_runtime_state` are also still mixed:",
+        "thread_blocked_notice",
+        "wizard_runtime_state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04510",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05821 is partial for worker output filtered by active `tier_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05821"
+      ],
+      "source_obligation_ids": [
+        "obl-5593"
+      ],
+      "source_seed_ids": [
+        "seed-8303"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "worker output filtered by active `tier_id`",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04599",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05940 is partial for `tier_runtime_record` is still named as canonical",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05940"
+      ],
+      "source_obligation_ids": [
+        "obl-5712"
+      ],
+      "source_seed_ids": [
+        "seed-8486"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "`tier_runtime_record` is still named as canonical",
+        "tier_runtime_record"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04797",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06203 is partial for Provider/runtime identity findings are still active:",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06203"
+      ],
+      "source_obligation_ids": [
+        "obl-5972"
+      ],
+      "source_seed_ids": [
+        "seed-8940"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "Provider/runtime identity findings are still active:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04867",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06281 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06281"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05066",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06533 is missing for `Plans/rewrite-tie-in-memo.md` is comparatively ahead on provider/runtime identity:",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06533"
+      ],
+      "source_obligation_ids": [
+        "obl-6174"
+      ],
+      "source_seed_ids": [
+        "seed-9339"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`Plans/rewrite-tie-in-memo.md` is comparatively ahead on provider/runtime identity:",
+        "Plans/rewrite-tie-in-memo.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05170",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06674 is partial for This tranche mostly inherits contradictions from stronger owner docs instead of inventing",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Immediate contradictions to resolve in Plans (so requirements do not fight each other)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06674"
+      ],
+      "source_obligation_ids": [
+        "obl-6315"
+      ],
+      "source_seed_ids": [
+        "seed-9556"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "This tranche mostly inherits contradictions from stronger owner docs instead of inventing new ones."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05306",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06835 is partial for GATE-010 text improved, but the supporting evidence schema/matrix model still lags",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06835"
+      ],
+      "source_obligation_ids": [
+        "obl-6447"
+      ],
+      "source_seed_ids": [
+        "seed-9826"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "GATE-010 text improved, but the supporting evidence schema/matrix model still lags"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00435",
+    "cov-00639",
+    "cov-00758",
+    "cov-00804",
+    "cov-00957",
+    "cov-01820",
+    "cov-01901",
+    "cov-01969",
+    "cov-01982",
+    "cov-02030",
+    "cov-02200",
+    "cov-02426",
+    "cov-02488",
+    "cov-02586",
+    "cov-02769",
+    "cov-02795",
+    "cov-02935",
+    "cov-03414",
+    "cov-03431",
+    "cov-03558",
+    "cov-04131",
+    "cov-04360",
+    "cov-04512",
+    "cov-04599",
+    "cov-04783",
+    "cov-04892",
+    "cov-05066",
+    "cov-05504",
+    "cov-05769",
+    "cov-05821",
+    "cov-05940",
+    "cov-06203",
+    "cov-06281",
+    "cov-06533",
+    "cov-06674",
+    "cov-06835"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1677",
+    "obl-1758",
+    "obl-1826",
+    "obl-1839",
+    "obl-1887",
+    "obl-2055",
+    "obl-2276",
+    "obl-2338",
+    "obl-2434",
+    "obl-2616",
+    "obl-2642",
+    "obl-2782",
+    "obl-293",
+    "obl-3260",
+    "obl-3277",
+    "obl-3404",
+    "obl-3971",
+    "obl-4200",
+    "obl-4292",
+    "obl-4377",
+    "obl-4561",
+    "obl-4669",
+    "obl-4842",
+    "obl-496",
+    "obl-5276",
+    "obl-5541",
+    "obl-5593",
+    "obl-5712",
+    "obl-5972",
+    "obl-5986",
+    "obl-615",
+    "obl-6174",
+    "obl-6315",
+    "obl-6447",
+    "obl-661",
+    "obl-814"
+  ],
+  "source_seed_ids_represented": [
+    "seed-2106",
+    "seed-2252",
+    "seed-2349",
+    "seed-2370",
+    "seed-2434",
+    "seed-2671",
+    "seed-2953",
+    "seed-3039",
+    "seed-3158",
+    "seed-338",
+    "seed-3426",
+    "seed-3471",
+    "seed-3655",
+    "seed-4363",
+    "seed-4391",
+    "seed-4584",
+    "seed-5449",
+    "seed-5509",
+    "seed-571",
+    "seed-5839",
+    "seed-6001",
+    "seed-6170",
+    "seed-6503",
+    "seed-6688",
+    "seed-6707",
+    "seed-6730",
+    "seed-6971",
+    "seed-710",
+    "seed-7400",
+    "seed-7445",
+    "seed-7470",
+    "seed-761",
+    "seed-7846",
+    "seed-8225",
+    "seed-8303",
+    "seed-8449",
+    "seed-8479",
+    "seed-8486",
+    "seed-8836",
+    "seed-8877",
+    "seed-8905",
+    "seed-8931",
+    "seed-8940",
+    "seed-8969",
+    "seed-9003",
+    "seed-9006",
+    "seed-9029",
+    "seed-9063",
+    "seed-9310",
+    "seed-9336",
+    "seed-9339",
+    "seed-9365",
+    "seed-938",
+    "seed-9556",
+    "seed-9572",
+    "seed-9600",
+    "seed-9639",
+    "seed-9826"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0011",
+    "shard-0013",
+    "shard-0015",
+    "shard-0017",
+    "shard-0030",
+    "shard-0031",
+    "shard-0032",
+    "shard-0034",
+    "shard-0036",
+    "shard-0037",
+    "shard-0038",
+    "shard-0040",
+    "shard-0042",
+    "shard-0047",
+    "shard-0048",
+    "shard-0055",
+    "shard-0058",
+    "shard-0059",
+    "shard-0060",
+    "shard-0062",
+    "shard-0064",
+    "shard-0066",
+    "shard-0070",
+    "shard-0073",
+    "shard-0076",
+    "shard-0078",
+    "shard-0081",
+    "shard-0082",
+    "shard-0084",
+    "shard-0086",
+    "shard-0088"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-00340",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00435 is partial for `usage-feature.md` still aggregates around `tier_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00435"
+      ],
+      "source_obligation_ids": [
+        "obl-293"
+      ],
+      "source_seed_ids": [
+        "seed-338"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`usage-feature.md` still aggregates around `tier_id`",
+        "usage-feature.md",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00493",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00639 is partial for Proposed fields conceptually:",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00639"
+      ],
+      "source_obligation_ids": [
+        "obl-496"
+      ],
+      "source_seed_ids": [
+        "seed-571"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "Proposed fields conceptually:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00590",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00758 is partial for lifecycle already includes `active`, `acknowledged`, `resolved`, `dismissed`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00758"
+      ],
+      "source_obligation_ids": [
+        "obl-615"
+      ],
+      "source_seed_ids": [
+        "seed-710"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "exact_missing_items": [
+        "lifecycle already includes `active`, `acknowledged`, `resolved`, `dismissed`",
+        "active",
+        "acknowledged",
+        "resolved",
+        "dismissed"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00631",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00804 is partial for lifecycle includes `active`, `acknowledged`, `resolved`, `dismissed`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00804"
+      ],
+      "source_obligation_ids": [
+        "obl-661"
+      ],
+      "source_seed_ids": [
+        "seed-761"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "exact_missing_items": [
+        "lifecycle includes `active`, `acknowledged`, `resolved`, `dismissed`",
+        "active",
+        "acknowledged",
+        "resolved",
+        "dismissed"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00726",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00957 is partial for revoke should likely be `strong`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans likely needing the most rewrite-aware edits"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00957"
+      ],
+      "source_obligation_ids": [
+        "obl-814"
+      ],
+      "source_seed_ids": [
+        "seed-938"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "exact_missing_items": [
+        "revoke should likely be `strong`",
+        "strong"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01425",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01820 is partial for `active -> acknowledged -> resolved -> dismissed`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01820"
+      ],
+      "source_obligation_ids": [
+        "obl-1677"
+      ],
+      "source_seed_ids": [
+        "seed-2106"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "exact_missing_items": [
+        "`active -> acknowledged -> resolved -> dismissed`",
+        "active -> acknowledged -> resolved -> dismissed"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01483",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01901 is partial for but downstream docs still do not consistently model `requested identity` alongside verifie",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01901"
+      ],
+      "source_obligation_ids": [
+        "obl-1758"
+      ],
+      "source_seed_ids": [
+        "seed-2252"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "but downstream docs still do not consistently model `requested identity` alongside verified/effective identity",
+        "requested identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01536",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01969 is partial for but downstream docs still use those names normatively or mix them with canonical names",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01969"
+      ],
+      "source_obligation_ids": [
+        "obl-1826"
+      ],
+      "source_seed_ids": [
+        "seed-2349"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "but downstream docs still use those names normatively or mix them with canonical names"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01546",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01982 is partial for some docs still normalize around `requested_persona_id` / `effective_persona_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01982"
+      ],
+      "source_obligation_ids": [
+        "obl-1839"
+      ],
+      "source_seed_ids": [
+        "seed-2370"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "some docs still normalize around `requested_persona_id` / `effective_persona_id`",
+        "requested_persona_id",
+        "effective_persona_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01583",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02030 is partial for `provider_account_id` remains risky because Sonnet reinforces that it still conflicts conc",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02030"
+      ],
+      "source_obligation_ids": [
+        "obl-1887"
+      ],
+      "source_seed_ids": [
+        "seed-2434"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "`provider_account_id` remains risky because Sonnet reinforces that it still conflicts conceptually with `effective_provider_identity`",
+        "provider_account_id",
+        "effective_provider_identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01713",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02200 is partial for `persona_override_owner_id` still allows `tier_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02200"
+      ],
+      "source_obligation_ids": [
+        "obl-2055"
+      ],
+      "source_seed_ids": [
+        "seed-2671",
+        "seed-8449",
+        "seed-8479",
+        "seed-9310"
+      ],
+      "source_shard_ids": [
+        "shard-0034",
+        "shard-0078",
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`persona_override_owner_id` still allows `tier_id`",
+        "persona_override_owner_id",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01890",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02426 is partial for `activity_state` (`idle | active | background_active | historical_only`)",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02426"
+      ],
+      "source_obligation_ids": [
+        "obl-2276"
+      ],
+      "source_seed_ids": [
+        "seed-2953"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "`activity_state` (`idle | active | background_active | historical_only`)",
+        "activity_state",
+        "idle | active | background_active | historical_only"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01946",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02488 is partial for `Prompt_Pipeline.md` still lacks `actor_kind` / `execution_role`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02488"
+      ],
+      "source_obligation_ids": [
+        "obl-2338"
+      ],
+      "source_seed_ids": [
+        "seed-3039"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "`Prompt_Pipeline.md` still lacks `actor_kind` / `execution_role`",
+        "Prompt_Pipeline.md",
+        "actor_kind",
+        "execution_role"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02026",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02586 is partial for optional `project_attention_index.v1:{project_id}` if needed for efficient active ordering",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02586"
+      ],
+      "source_obligation_ids": [
+        "obl-2434"
+      ],
+      "source_seed_ids": [
+        "seed-3158"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "optional `project_attention_index.v1:{project_id}` if needed for efficient active ordering/counts",
+        "project_attention_index.v1:{project_id}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02178",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02769 is partial for `requested_account_policy` still remains necessary.",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02769"
+      ],
+      "source_obligation_ids": [
+        "obl-2616"
+      ],
+      "source_seed_ids": [
+        "seed-3426"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "`requested_account_policy` still remains necessary.",
+        "requested_account_policy"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02200",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02795 is partial for but prompt/runtime/storage schemas still have no parallel operational-identity block",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02795"
+      ],
+      "source_obligation_ids": [
+        "obl-2642"
+      ],
+      "source_seed_ids": [
+        "seed-3471"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "but prompt/runtime/storage schemas still have no parallel operational-identity block"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02315",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02935 is partial for `status` (`active | cooled_down | resolved | invalidated`)",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02935"
+      ],
+      "source_obligation_ids": [
+        "obl-2782"
+      ],
+      "source_seed_ids": [
+        "seed-3655"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "`status` (`active | cooled_down | resolved | invalidated`)",
+        "status",
+        "active | cooled_down | resolved | invalidated"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02666",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03414 is partial for likely `wizard_id -> run_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans likely needing the most rewrite-aware edits"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03414"
+      ],
+      "source_obligation_ids": [
+        "obl-3260"
+      ],
+      "source_seed_ids": [
+        "seed-4363"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "likely `wizard_id -> run_id`",
+        "wizard_id -> run_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02680",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "owner coverage row cov-03431 is partial for `orchestrator-subagent-integration.md` now shows an explicit same-file contradiction: `Tie",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Future mobile/web clients (impacts architecture now)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03431"
+      ],
+      "source_obligation_ids": [
+        "obl-3277"
+      ],
+      "source_seed_ids": [
+        "seed-4391"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`orchestrator-subagent-integration.md` now shows an explicit same-file contradiction: `TierContext` declares fields that its own constructor does not populate, while file-based coordination is simultaneously described as canonical and as a derived/debug mirror.",
+        "orchestrator-subagent-integration.md",
+        "TierContext"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "orchestrator-subagent-integration.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02786",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03558 is partial for lifecycle state (`active | suspect | restoring | retained | cleanup_eligible | archived |",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03558"
+      ],
+      "source_obligation_ids": [
+        "obl-3404"
+      ],
+      "source_seed_ids": [
+        "seed-4584"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "lifecycle state (`active | suspect | restoring | retained | cleanup_eligible | archived | removed`)",
+        "active | suspect | restoring | retained | cleanup_eligible | archived | removed"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03210",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04131 is partial for likely owner docs:",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans likely needing the most rewrite-aware edits"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04131"
+      ],
+      "source_obligation_ids": [
+        "obl-3971"
+      ],
+      "source_seed_ids": [
+        "seed-5449",
+        "seed-5509"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "likely owner docs:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03404",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04360 is partial for `generated://<artifact_id>` is discussed as a transport/resulting buffer, but the docs sti",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04360"
+      ],
+      "source_obligation_ids": [
+        "obl-4200"
+      ],
+      "source_seed_ids": [
+        "seed-5839"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "`generated://<artifact_id>` is discussed as a transport/resulting buffer, but the docs still need to guard against treating it like the durable identity.",
+        "generated://<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03544",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04512 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04512"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03608",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04599 is partial for likely fields:",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans likely needing the most rewrite-aware edits"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04599"
+      ],
+      "source_obligation_ids": [
+        "obl-4377"
+      ],
+      "source_seed_ids": [
+        "seed-6170"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "likely fields:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03737",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04783 is partial for Remaining Gemini-only docs are not low-value leftovers; many still hide active owner gaps",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04783"
+      ],
+      "source_obligation_ids": [
+        "obl-4561"
+      ],
+      "source_seed_ids": [
+        "seed-6503"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "Remaining Gemini-only docs are not low-value leftovers; many still hide active owner gaps in indices/checklists/policies and subsystem plans."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03828",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04892 is missing for `Plans/rewrite-tie-in-memo.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04892"
+      ],
+      "source_obligation_ids": [
+        "obl-4669"
+      ],
+      "source_seed_ids": [
+        "seed-6688",
+        "seed-6707",
+        "seed-6730",
+        "seed-7400",
+        "seed-7445",
+        "seed-7470",
+        "seed-8836",
+        "seed-8877",
+        "seed-8905",
+        "seed-8931",
+        "seed-8969",
+        "seed-9003",
+        "seed-9029",
+        "seed-9063",
+        "seed-9336",
+        "seed-9365",
+        "seed-9572",
+        "seed-9600",
+        "seed-9639"
+      ],
+      "source_shard_ids": [
+        "shard-0064",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082",
+        "shard-0084",
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "`Plans/rewrite-tie-in-memo.md`",
+        "Plans/rewrite-tie-in-memo.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03954",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05066 is partial for `OpenFile` remains narrower still:",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05066"
+      ],
+      "source_obligation_ids": [
+        "obl-4842"
+      ],
+      "source_seed_ids": [
+        "seed-6971"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "exact_missing_items": [
+        "`OpenFile` remains narrower still:",
+        "OpenFile"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04285",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05504 is partial for `Orchestrator_Page.md` mixes newer blocked/remediation lineage work with older `TierChange",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05504"
+      ],
+      "source_obligation_ids": [
+        "obl-5276"
+      ],
+      "source_seed_ids": [
+        "seed-7846"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator_Page.md` mixes newer blocked/remediation lineage work with older `TierChanged` / `active tier` assumptions.",
+        "Orchestrator_Page.md",
+        "TierChanged",
+        "active tier"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04481",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05769 is partial for `thread_blocked_notice` and `wizard_runtime_state` are also still mixed:",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05769"
+      ],
+      "source_obligation_ids": [
+        "obl-5541"
+      ],
+      "source_seed_ids": [
+        "seed-8225"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "`thread_blocked_notice` and `wizard_runtime_state` are also still mixed:",
+        "thread_blocked_notice",
+        "wizard_runtime_state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04510",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05821 is partial for worker output filtered by active `tier_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05821"
+      ],
+      "source_obligation_ids": [
+        "obl-5593"
+      ],
+      "source_seed_ids": [
+        "seed-8303"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "worker output filtered by active `tier_id`",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04599",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05940 is partial for `tier_runtime_record` is still named as canonical",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05940"
+      ],
+      "source_obligation_ids": [
+        "obl-5712"
+      ],
+      "source_seed_ids": [
+        "seed-8486"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "`tier_runtime_record` is still named as canonical",
+        "tier_runtime_record"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04797",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06203 is partial for Provider/runtime identity findings are still active:",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "# Puppet Master Rewrite Tie-In Contract (Active)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06203"
+      ],
+      "source_obligation_ids": [
+        "obl-5972"
+      ],
+      "source_seed_ids": [
+        "seed-8940"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "Provider/runtime identity findings are still active:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04867",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06281 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06281"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05066",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06533 is missing for `Plans/rewrite-tie-in-memo.md` is comparatively ahead on provider/runtime identity:",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06533"
+      ],
+      "source_obligation_ids": [
+        "obl-6174"
+      ],
+      "source_seed_ids": [
+        "seed-9339"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`Plans/rewrite-tie-in-memo.md` is comparatively ahead on provider/runtime identity:",
+        "Plans/rewrite-tie-in-memo.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05170",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06674 is partial for This tranche mostly inherits contradictions from stronger owner docs instead of inventing",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Immediate contradictions to resolve in Plans (so requirements do not fight each other)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06674"
+      ],
+      "source_obligation_ids": [
+        "obl-6315"
+      ],
+      "source_seed_ids": [
+        "seed-9556"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "This tranche mostly inherits contradictions from stronger owner docs instead of inventing new ones."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05306",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06835 is partial for GATE-010 text improved, but the supporting evidence schema/matrix model still lags",
+      "affected_targets": [
+        {
+          "path": "Plans/rewrite-tie-in-memo.md",
+          "heading": "### Plans that are still conceptually valid (but should be reworded)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06835"
+      ],
+      "source_obligation_ids": [
+        "obl-6447"
+      ],
+      "source_seed_ids": [
+        "seed-9826"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "GATE-010 text improved, but the supporting evidence schema/matrix model still lags"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

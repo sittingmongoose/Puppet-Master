@@ -1,0 +1,783 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-062",
+  "group_ids": [
+    "pktgrp-0245",
+    "pktgrp-0246",
+    "pktgrp-0247",
+    "pktgrp-0248"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "packet-target-0245",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "#### Drag-and-drop contract (Plans/FinalGUISpec.md:L627)",
+      "path": "Plans/FinalGUISpec.md",
+      "coverage_row_ids": [
+        "cov-01965"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-01965"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-1822"
+      ],
+      "source_seed_ids": [
+        "seed-2337"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1822"
+        ],
+        "source_seed_ids": [
+          "seed-2337"
+        ],
+        "source_shard_ids": [
+          "shard-0032"
+        ]
+      },
+      "gap_ids": [
+        "gap-01533"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Research Progress - 2026-03-16 - Opus broader second-sweep delta cluster (canonical contract drift and native-surface ownership)"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-6d73949318c0",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0319",
+      "source_reconciliation_target_ids": [
+        "target-0319"
+      ],
+      "source_target_ids": [
+        "target-0319"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0319\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Research Progress - 2026-03-16 - Opus broader second-sweep delta cluster (canonical contract drift and native-surface ownership)\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0246",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "#### Progress catalog source and default drills (Plans/FinalGUISpec.md:L910)",
+      "path": "Plans/FinalGUISpec.md",
+      "coverage_row_ids": [
+        "cov-00557",
+        "cov-01180",
+        "cov-01998",
+        "cov-02481",
+        "cov-02639",
+        "cov-03038",
+        "cov-03068",
+        "cov-03458",
+        "cov-03654",
+        "cov-03759",
+        "cov-03876",
+        "cov-04103",
+        "cov-04142",
+        "cov-04174",
+        "cov-04221",
+        "cov-04342",
+        "cov-04410",
+        "cov-04530",
+        "cov-04692",
+        "cov-04831",
+        "cov-04846",
+        "cov-04859",
+        "cov-05022",
+        "cov-05053",
+        "cov-05153",
+        "cov-05168",
+        "cov-05230",
+        "cov-05371",
+        "cov-05859"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-00557",
+          "cov-01180",
+          "cov-01998",
+          "cov-02481",
+          "cov-02639",
+          "cov-03038",
+          "cov-03068",
+          "cov-03458",
+          "cov-03654",
+          "cov-03759",
+          "cov-03876",
+          "cov-04103",
+          "cov-04142",
+          "cov-04174",
+          "cov-04221",
+          "cov-04342",
+          "cov-04410",
+          "cov-04530",
+          "cov-04692",
+          "cov-04831",
+          "cov-04846",
+          "cov-04859",
+          "cov-05022",
+          "cov-05053",
+          "cov-05153",
+          "cov-05168",
+          "cov-05230",
+          "cov-05371",
+          "cov-05859"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-414",
+        "obl-1037",
+        "obl-1855",
+        "obl-2331",
+        "obl-2487",
+        "obl-2884",
+        "obl-2914",
+        "obl-3304",
+        "obl-3500",
+        "obl-3604",
+        "obl-3721",
+        "obl-3945",
+        "obl-3982",
+        "obl-4014",
+        "obl-4061",
+        "obl-4182",
+        "obl-4250",
+        "obl-4308",
+        "obl-4470",
+        "obl-4608",
+        "obl-4623",
+        "obl-4636",
+        "obl-4798",
+        "obl-4829",
+        "obl-4929",
+        "obl-4944",
+        "obl-5006",
+        "obl-5143",
+        "obl-5631"
+      ],
+      "source_seed_ids": [
+        "seed-476",
+        "seed-1215",
+        "seed-2386",
+        "seed-3023",
+        "seed-3261",
+        "seed-3805",
+        "seed-3846",
+        "seed-4426",
+        "seed-4710",
+        "seed-4870",
+        "seed-5056",
+        "seed-5404",
+        "seed-5462",
+        "seed-5521",
+        "seed-5611",
+        "seed-5808",
+        "seed-5922",
+        "seed-6045",
+        "seed-6354",
+        "seed-6585",
+        "seed-6612",
+        "seed-6635",
+        "seed-6905",
+        "seed-6950",
+        "seed-7131",
+        "seed-7165",
+        "seed-7301",
+        "seed-7611",
+        "seed-8352"
+      ],
+      "source_shard_ids": [
+        "shard-0012",
+        "shard-0020",
+        "shard-0032",
+        "shard-0037",
+        "shard-0039",
+        "shard-0043",
+        "shard-0047",
+        "shard-0049",
+        "shard-0050",
+        "shard-0052",
+        "shard-0054",
+        "shard-0055",
+        "shard-0056",
+        "shard-0057",
+        "shard-0058",
+        "shard-0059",
+        "shard-0061",
+        "shard-0063",
+        "shard-0064",
+        "shard-0066",
+        "shard-0068",
+        "shard-0069",
+        "shard-0071",
+        "shard-0077"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-414",
+          "obl-1037",
+          "obl-1855",
+          "obl-2331",
+          "obl-2487",
+          "obl-2884",
+          "obl-2914",
+          "obl-3304",
+          "obl-3500",
+          "obl-3604",
+          "obl-3721",
+          "obl-3945",
+          "obl-3982",
+          "obl-4014",
+          "obl-4061",
+          "obl-4182",
+          "obl-4250",
+          "obl-4308",
+          "obl-4470",
+          "obl-4608",
+          "obl-4623",
+          "obl-4636",
+          "obl-4798",
+          "obl-4829",
+          "obl-4929",
+          "obl-4944",
+          "obl-5006",
+          "obl-5143",
+          "obl-5631"
+        ],
+        "source_seed_ids": [
+          "seed-476",
+          "seed-1215",
+          "seed-2386",
+          "seed-3023",
+          "seed-3261",
+          "seed-3805",
+          "seed-3846",
+          "seed-4426",
+          "seed-4710",
+          "seed-4870",
+          "seed-5056",
+          "seed-5404",
+          "seed-5462",
+          "seed-5521",
+          "seed-5611",
+          "seed-5808",
+          "seed-5922",
+          "seed-6045",
+          "seed-6354",
+          "seed-6585",
+          "seed-6612",
+          "seed-6635",
+          "seed-6905",
+          "seed-6950",
+          "seed-7131",
+          "seed-7165",
+          "seed-7301",
+          "seed-7611",
+          "seed-8352"
+        ],
+        "source_shard_ids": [
+          "shard-0012",
+          "shard-0020",
+          "shard-0032",
+          "shard-0037",
+          "shard-0039",
+          "shard-0043",
+          "shard-0047",
+          "shard-0049",
+          "shard-0050",
+          "shard-0052",
+          "shard-0054",
+          "shard-0055",
+          "shard-0056",
+          "shard-0057",
+          "shard-0058",
+          "shard-0059",
+          "shard-0061",
+          "shard-0063",
+          "shard-0064",
+          "shard-0066",
+          "shard-0068",
+          "shard-0069",
+          "shard-0071",
+          "shard-0077"
+        ]
+      },
+      "gap_ids": [
+        "gap-00440",
+        "gap-00924",
+        "gap-01558",
+        "gap-01941",
+        "gap-02073",
+        "gap-02399",
+        "gap-02415",
+        "gap-02703",
+        "gap-02858",
+        "gap-02936",
+        "gap-03023",
+        "gap-03187",
+        "gap-03219",
+        "gap-03250",
+        "gap-03289",
+        "gap-03388",
+        "gap-03446",
+        "gap-03559",
+        "gap-03665",
+        "gap-03775",
+        "gap-03790",
+        "gap-03801",
+        "gap-03933",
+        "gap-03947",
+        "gap-04008",
+        "gap-04019",
+        "gap-04063",
+        "gap-04174",
+        "gap-04537"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "many `Progress` widgets may also be hostable on `Dashboard`",
+        "Progress",
+        "Dashboard",
+        "The UI should not expose a noisy \u201cscored all candidates\u201d explanation by default.",
+        "Research Progress - 2026-03-16 - Sonnet broader second-sweep delta cluster (requested-account asymmetry and event-schema precision)",
+        "Research Progress - 2026-03-16 - GPT-5.4 Identity / Actor Envelope Deepening",
+        "Research Progress - 2026-03-16 - GPT-5.2 Identity Semantics / Role-Routing Clarifications",
+        "Research Progress - 2026-03-16 - projection-freshness vocabulary and owner cluster",
+        "Research Progress - 2026-03-16 - remaining-owner-doc convergence cluster",
+        "Research Progress - 2026-03-16 - Validation-pass report identity and lineage",
+        "Research Progress - 2026-03-16 - Opus owner-doc tranche synthesis",
+        "Research Progress - 2026-03-16 - `tier_runtime_record` as derived overlay and downstream surface drift",
+        "tier_runtime_record",
+        "Research Progress - 2026-03-16 - Sonnet owner-doc tranche synthesis",
+        "Research Progress - 2026-03-16 - Routing/deep-link normalization with `OpenSubject`",
+        "OpenSubject",
+        "Research Progress - 2026-03-16 - Command-catalog implications of route/subject normalization",
+        "Research Progress - 2026-03-16 - GPT-5.4 owner-doc tranche synthesis",
+        "Research Progress - 2026-03-16 - GPT-5.2 owner-doc tranche synthesis",
+        "Research Progress - 2026-03-16 - Storage/routing handshake for subject-open and preview identity",
+        "Research Progress - 2026-03-16 - GPT-5.3-Codex owner-doc tranche synthesis",
+        "Research Progress - 2026-03-16 - Exports still need identity-preserving manifest discipline",
+        "Research Progress - 2026-03-16 - Sub-selection and `inspector_target` should stay secondary",
+        "inspector_target",
+        "Research Progress - 2026-03-16 - Destination-surface vocabulary should stay controlled and coarse",
+        "Research Progress - 2026-03-16 - Subviews and panel-local selectors belong to view state, not target identity",
+        "Research Progress - 2026-03-16 - Override rule: route-target should override only what is necessary",
+        "Research Progress - 2026-03-17 - `route_target` owner placement",
+        "route_target",
+        "Research Progress - 2026-03-17 - `route_target` vs `OpenSubject`",
+        "Research Progress - 2026-03-17 - Exact `target_kind` vocabulary",
+        "target_kind",
+        "Research Progress - 2026-03-17 - Selector precedence inside `route_target`",
+        "Research Progress - 2026-03-17 - Exact `inspector_target` vocabulary",
+        "`tab_id = progress` or `tab_id = seams`",
+        "tab_id = progress",
+        "tab_id = seams",
+        "Research Progress - 2026-03-17 - Current cleanup posture after extended owner-pass"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-4043f9c67012",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0320",
+      "source_reconciliation_target_ids": [
+        "target-0320"
+      ],
+      "source_target_ids": [
+        "target-0320"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0320\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - many `Progress` widgets may also be hostable on `Dashboard`\n  - Progress\n  - Dashboard\n  - The UI should not expose a noisy \u201cscored all candidates\u201d explanation by default.\n  - Research Progress - 2026-03-16 - Sonnet broader second-sweep delta cluster (requested-account asymmetry and event-schema precision)\n  - Research Progress - 2026-03-16 - GPT-5.4 Identity / Actor Envelope Deepening\n  - Research Progress - 2026-03-16 - GPT-5.2 Identity Semantics / Role-Routing Clarifications\n  - Research Progress - 2026-03-16 - projection-freshness vocabulary and owner cluster\n  - Research Progress - 2026-03-16 - remaining-owner-doc convergence cluster\n  - Research Progress - 2026-03-16 - Validation-pass report identity and lineage\n  - Research Progress - 2026-03-16 - Opus owner-doc tranche synthesis\n  - Research Progress - 2026-03-16 - `tier_runtime_record` as derived overlay and downstream surface drift\n  - tier_runtime_record\n  - Research Progress - 2026-03-16 - Sonnet owner-doc tranche synthesis\n  - Research Progress - 2026-03-16 - Routing/deep-link normalization with `OpenSubject`\n  - OpenSubject\n  - Research Progress - 2026-03-16 - Command-catalog implications of route/subject normalization\n  - Research Progress - 2026-03-16 - GPT-5.4 owner-doc tranche synthesis\n  - Research Progress - 2026-03-16 - GPT-5.2 owner-doc tranche synthesis\n  - Research Progress - 2026-03-16 - Storage/routing handshake for subject-open and preview identity\n  - Research Progress - 2026-03-16 - GPT-5.3-Codex owner-doc tranche synthesis\n  - Research Progress - 2026-03-16 - Exports still need identity-preserving manifest discipline\n  - Research Progress - 2026-03-16 - Sub-selection and `inspector_target` should stay secondary\n  - inspector_target\n  - Research Progress - 2026-03-16 - Destination-surface vocabulary should stay controlled and coarse\n  - Research Progress - 2026-03-16 - Subviews and panel-local selectors belong to view state, not target identity\n  - Research Progress - 2026-03-16 - Override rule: route-target should override only what is necessary\n  - Research Progress - 2026-03-17 - `route_target` owner placement\n  - route_target\n  - Research Progress - 2026-03-17 - `route_target` vs `OpenSubject`\n  - Research Progress - 2026-03-17 - Exact `target_kind` vocabulary\n  - target_kind\n  - Research Progress - 2026-03-17 - Selector precedence inside `route_target`\n  - Research Progress - 2026-03-17 - Exact `inspector_target` vocabulary\n  - `tab_id = progress` or `tab_id = seams`\n  - tab_id = progress\n  - tab_id = seams\n  - Research Progress - 2026-03-17 - Current cleanup posture after extended owner-pass\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0247",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "#### Progress labels and taxonomy (Plans/FinalGUISpec.md:L926)",
+      "path": "Plans/FinalGUISpec.md",
+      "coverage_row_ids": [
+        "cov-03706",
+        "cov-07045"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-03706",
+          "cov-07045"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-3551",
+        "obl-6636"
+      ],
+      "source_seed_ids": [
+        "seed-4782",
+        "seed-10121"
+      ],
+      "source_shard_ids": [
+        "shard-0050",
+        "shard-0090"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3551",
+          "obl-6636"
+        ],
+        "source_seed_ids": [
+          "seed-4782",
+          "seed-10121"
+        ],
+        "source_shard_ids": [
+          "shard-0050",
+          "shard-0090"
+        ]
+      },
+      "gap_ids": [
+        "gap-02895",
+        "gap-05460"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "decomposition/view identity (`tier_type`, `tier_id`, titles, focus labels)",
+        "tier_type",
+        "tier_id",
+        "`gap-008` now points at the real storage/usage/interview sections that currently carry the partial account-history and requested/effective identity transfer, rather than pseudo owner-section labels that do not yet exist verbatim.",
+        "gap-008"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-601b04e8149a",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0321",
+      "source_reconciliation_target_ids": [
+        "target-0321"
+      ],
+      "source_target_ids": [
+        "target-0321"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0321\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - decomposition/view identity (`tier_type`, `tier_id`, titles, focus labels)\n  - tier_type\n  - tier_id\n  - `gap-008` now points at the real storage/usage/interview sections that currently carry the partial account-history and requested/effective identity transfer, rather than pseudo owner-section labels that do not yet exist verbatim.\n  - gap-008\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0248",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "#### Split grid and editor embeddings (Plans/FinalGUISpec.md:L614)",
+      "path": "Plans/FinalGUISpec.md",
+      "coverage_row_ids": [
+        "cov-03701",
+        "cov-05539",
+        "cov-05549"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-03701",
+          "cov-05539",
+          "cov-05549"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-3546",
+        "obl-5311",
+        "obl-5321"
+      ],
+      "source_seed_ids": [
+        "seed-4769",
+        "seed-7889",
+        "seed-7906"
+      ],
+      "source_shard_ids": [
+        "shard-0050",
+        "shard-0073"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3546",
+          "obl-5311",
+          "obl-5321"
+        ],
+        "source_seed_ids": [
+          "seed-4769",
+          "seed-7889",
+          "seed-7906"
+        ],
+        "source_shard_ids": [
+          "shard-0050",
+          "shard-0073"
+        ]
+      },
+      "gap_ids": [
+        "gap-02892",
+        "gap-04315",
+        "gap-04325"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Research Progress - 2026-03-16 - Execution-context owner split and `TierContext` replacement",
+        "TierContext",
+        "The result is a clear consumer split:",
+        "`assistant-chat-design.md` already proves the subject-open split is required.",
+        "assistant-chat-design.md"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-77855357c99e",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0322",
+      "source_reconciliation_target_ids": [
+        "target-0322"
+      ],
+      "source_target_ids": [
+        "target-0322"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0322\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Research Progress - 2026-03-16 - Execution-context owner split and `TierContext` replacement\n  - TierContext\n  - The result is a clear consumer split:\n  - `assistant-chat-design.md` already proves the subject-open split is required.\n  - assistant-chat-design.md\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-01965",
+    "cov-00557",
+    "cov-01180",
+    "cov-01998",
+    "cov-02481",
+    "cov-02639",
+    "cov-03038",
+    "cov-03068",
+    "cov-03458",
+    "cov-03654",
+    "cov-03759",
+    "cov-03876",
+    "cov-04103",
+    "cov-04142",
+    "cov-04174",
+    "cov-04221",
+    "cov-04342",
+    "cov-04410",
+    "cov-04530",
+    "cov-04692",
+    "cov-04831",
+    "cov-04846",
+    "cov-04859",
+    "cov-05022",
+    "cov-05053",
+    "cov-05153",
+    "cov-05168",
+    "cov-05230",
+    "cov-05371",
+    "cov-05859",
+    "cov-03706",
+    "cov-07045",
+    "cov-03701",
+    "cov-05539",
+    "cov-05549"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-1822",
+    "obl-414",
+    "obl-1037",
+    "obl-1855",
+    "obl-2331",
+    "obl-2487",
+    "obl-2884",
+    "obl-2914",
+    "obl-3304",
+    "obl-3500",
+    "obl-3604",
+    "obl-3721",
+    "obl-3945",
+    "obl-3982",
+    "obl-4014",
+    "obl-4061",
+    "obl-4182",
+    "obl-4250",
+    "obl-4308",
+    "obl-4470",
+    "obl-4608",
+    "obl-4623",
+    "obl-4636",
+    "obl-4798",
+    "obl-4829",
+    "obl-4929",
+    "obl-4944",
+    "obl-5006",
+    "obl-5143",
+    "obl-5631",
+    "obl-3551",
+    "obl-6636",
+    "obl-3546",
+    "obl-5311",
+    "obl-5321"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-2337",
+    "seed-476",
+    "seed-1215",
+    "seed-2386",
+    "seed-3023",
+    "seed-3261",
+    "seed-3805",
+    "seed-3846",
+    "seed-4426",
+    "seed-4710",
+    "seed-4870",
+    "seed-5056",
+    "seed-5404",
+    "seed-5462",
+    "seed-5521",
+    "seed-5611",
+    "seed-5808",
+    "seed-5922",
+    "seed-6045",
+    "seed-6354",
+    "seed-6585",
+    "seed-6612",
+    "seed-6635",
+    "seed-6905",
+    "seed-6950",
+    "seed-7131",
+    "seed-7165",
+    "seed-7301",
+    "seed-7611",
+    "seed-8352",
+    "seed-4782",
+    "seed-10121",
+    "seed-4769",
+    "seed-7889",
+    "seed-7906"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0032",
+    "shard-0012",
+    "shard-0020",
+    "shard-0037",
+    "shard-0039",
+    "shard-0043",
+    "shard-0047",
+    "shard-0049",
+    "shard-0050",
+    "shard-0052",
+    "shard-0054",
+    "shard-0055",
+    "shard-0056",
+    "shard-0057",
+    "shard-0058",
+    "shard-0059",
+    "shard-0061",
+    "shard-0063",
+    "shard-0064",
+    "shard-0066",
+    "shard-0068",
+    "shard-0069",
+    "shard-0071",
+    "shard-0077",
+    "shard-0090",
+    "shard-0073"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "Research Progress - 2026-03-16 - Opus broader second-sweep delta cluster (canonical contract drift and native-surface ownership)",
+    "many `Progress` widgets may also be hostable on `Dashboard`",
+    "Progress",
+    "Dashboard",
+    "The UI should not expose a noisy \u201cscored all candidates\u201d explanation by default.",
+    "Research Progress - 2026-03-16 - Sonnet broader second-sweep delta cluster (requested-account asymmetry and event-schema precision)",
+    "Research Progress - 2026-03-16 - GPT-5.4 Identity / Actor Envelope Deepening",
+    "Research Progress - 2026-03-16 - GPT-5.2 Identity Semantics / Role-Routing Clarifications",
+    "Research Progress - 2026-03-16 - projection-freshness vocabulary and owner cluster",
+    "Research Progress - 2026-03-16 - remaining-owner-doc convergence cluster",
+    "Research Progress - 2026-03-16 - Validation-pass report identity and lineage",
+    "Research Progress - 2026-03-16 - Opus owner-doc tranche synthesis",
+    "Research Progress - 2026-03-16 - `tier_runtime_record` as derived overlay and downstream surface drift",
+    "tier_runtime_record",
+    "Research Progress - 2026-03-16 - Sonnet owner-doc tranche synthesis",
+    "Research Progress - 2026-03-16 - Routing/deep-link normalization with `OpenSubject`",
+    "OpenSubject",
+    "Research Progress - 2026-03-16 - Command-catalog implications of route/subject normalization",
+    "Research Progress - 2026-03-16 - GPT-5.4 owner-doc tranche synthesis",
+    "Research Progress - 2026-03-16 - GPT-5.2 owner-doc tranche synthesis",
+    "Research Progress - 2026-03-16 - Storage/routing handshake for subject-open and preview identity",
+    "Research Progress - 2026-03-16 - GPT-5.3-Codex owner-doc tranche synthesis",
+    "Research Progress - 2026-03-16 - Exports still need identity-preserving manifest discipline",
+    "Research Progress - 2026-03-16 - Sub-selection and `inspector_target` should stay secondary",
+    "inspector_target",
+    "Research Progress - 2026-03-16 - Destination-surface vocabulary should stay controlled and coarse",
+    "Research Progress - 2026-03-16 - Subviews and panel-local selectors belong to view state, not target identity",
+    "Research Progress - 2026-03-16 - Override rule: route-target should override only what is necessary",
+    "Research Progress - 2026-03-17 - `route_target` owner placement",
+    "route_target",
+    "Research Progress - 2026-03-17 - `route_target` vs `OpenSubject`",
+    "Research Progress - 2026-03-17 - Exact `target_kind` vocabulary",
+    "target_kind",
+    "Research Progress - 2026-03-17 - Selector precedence inside `route_target`",
+    "Research Progress - 2026-03-17 - Exact `inspector_target` vocabulary",
+    "`tab_id = progress` or `tab_id = seams`",
+    "tab_id = progress",
+    "tab_id = seams",
+    "Research Progress - 2026-03-17 - Current cleanup posture after extended owner-pass",
+    "decomposition/view identity (`tier_type`, `tier_id`, titles, focus labels)",
+    "tier_type",
+    "tier_id",
+    "`gap-008` now points at the real storage/usage/interview sections that currently carry the partial account-history and requested/effective identity transfer, rather than pseudo owner-section labels that do not yet exist verbatim.",
+    "gap-008",
+    "Research Progress - 2026-03-16 - Execution-context owner split and `TierContext` replacement",
+    "TierContext",
+    "The result is a clear consumer split:",
+    "`assistant-chat-design.md` already proves the subject-open split is required.",
+    "assistant-chat-design.md"
+  ],
+  "blocked_targets": []
+}

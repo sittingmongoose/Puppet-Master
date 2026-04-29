@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-363",
+  "group_ids": [
+    "discgrp-1449",
+    "discgrp-1450",
+    "discgrp-1451",
+    "discgrp-1452"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01701",
+      "source_obligation_ids": [
+        "obl-1558"
+      ],
+      "source_seed_ids": [
+        "seed-1945"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01702",
+      "source_obligation_ids": [
+        "obl-1559"
+      ],
+      "source_seed_ids": [
+        "seed-1946"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Runtime and routing terms",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L70"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01703",
+      "source_obligation_ids": [
+        "obl-1560"
+      ],
+      "source_seed_ids": [
+        "seed-1947"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L43"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01704",
+      "source_obligation_ids": [
+        "obl-1561"
+      ],
+      "source_seed_ids": [
+        "seed-1948"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

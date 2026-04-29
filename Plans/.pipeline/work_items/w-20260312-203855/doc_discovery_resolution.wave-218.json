@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-218",
+  "group_ids": [
+    "discgrp-0869",
+    "discgrp-0870",
+    "discgrp-0871",
+    "discgrp-0872"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01116",
+      "source_obligation_ids": [
+        "obl-973"
+      ],
+      "source_seed_ids": [
+        "seed-1140"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01117",
+      "source_obligation_ids": [
+        "obl-974"
+      ],
+      "source_seed_ids": [
+        "seed-1141"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Media_Generation_and_Capabilities.md",
+      "new_heading_hint": "### 2.2 Request envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Media_Generation_and_Capabilities.md:L165"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01118",
+      "source_obligation_ids": [
+        "obl-975"
+      ],
+      "source_seed_ids": [
+        "seed-1143"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Prompt_Pipeline.md",
+      "new_heading_hint": "### Fidelity recovery cov-009: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01119",
+      "source_obligation_ids": [
+        "obl-976"
+      ],
+      "source_seed_ids": [
+        "seed-1144",
+        "seed-1285"
+      ],
+      "source_shard_ids": [
+        "shard-0019",
+        "shard-0021"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Account pressure, history, and runtime attribution baseline",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L491"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

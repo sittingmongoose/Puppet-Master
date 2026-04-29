@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-497",
+  "group_ids": [
+    "discgrp-1985",
+    "discgrp-1986",
+    "discgrp-1987",
+    "discgrp-1988"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02248",
+      "source_obligation_ids": [
+        "obl-2102"
+      ],
+      "source_seed_ids": [
+        "seed-2730"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-096: Projection freshness vs projection health",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L167"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02249",
+      "source_obligation_ids": [
+        "obl-2103"
+      ],
+      "source_seed_ids": [
+        "seed-2731"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "# Models System (Canonical SSOT)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Models_System.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02250",
+      "source_obligation_ids": [
+        "obl-2104"
+      ],
+      "source_seed_ids": [
+        "seed-2732"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02251",
+      "source_obligation_ids": [
+        "obl-2105"
+      ],
+      "source_seed_ids": [
+        "seed-2733"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

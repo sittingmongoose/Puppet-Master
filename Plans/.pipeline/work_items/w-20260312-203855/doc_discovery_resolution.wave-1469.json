@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1469",
+  "group_ids": [
+    "discgrp-5873",
+    "discgrp-5874",
+    "discgrp-5875",
+    "discgrp-5876"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06489",
+      "source_obligation_ids": [
+        "obl-6130"
+      ],
+      "source_seed_ids": [
+        "seed-9265"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "### Fidelity recovery cov-004: Retire tier-era canon and shadow fields",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06490",
+      "source_obligation_ids": [
+        "obl-6131"
+      ],
+      "source_seed_ids": [
+        "seed-9266"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1409"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06491",
+      "source_obligation_ids": [
+        "obl-6132"
+      ],
+      "source_seed_ids": [
+        "seed-9268"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06492",
+      "source_obligation_ids": [
+        "obl-6133"
+      ],
+      "source_seed_ids": [
+        "seed-9272"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### 2.5 Branch already exists when recreating worktree",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L205"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

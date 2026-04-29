@@ -1,128 +1,3007 @@
 {
   "schema_id": "pm.ledger_obligation_seed_noise.v1",
   "work_id": "w-20260312-203855",
-  "wave_id": "wave-003",
+  "noise_file_id": "noise-003",
   "noise_items": [
-    "Ledger is execution memory only; it is not canonical and must not be cited in planning docs.",
-    "Do not write planning-doc changes during work-item stewardship.",
-    "pass completed",
     {
-      "source_evidence": "working_ledger.md:L207-L215",
-      "item": "alert level / dashboard / orchestrator / chat-thread direction bullets"
+      "source_evidence": [
+        "working_ledger.md:L004574"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
     },
     {
-      "source_evidence": "working_ledger.md:L217-L240",
-      "item": "event family / visibility / badge sparse-count direction bullets"
+      "source_evidence": [
+        "working_ledger.md:L004575"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
     },
     {
-      "source_evidence": "working_ledger.md:L241-L257",
-      "item": "condition-aging / resolved / dismissed / acknowledged semantics"
+      "source_evidence": [
+        "working_ledger.md:L004577"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
     },
     {
-      "source_evidence": "working_ledger.md:L275-L304",
-      "item": "concern creation / projection / action-model direction bullets"
+      "source_evidence": [
+        "working_ledger.md:L004578"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
     },
     {
-      "source_evidence": "working_ledger.md:L328-L341",
-      "item": "projection freshness / degradation policy bullets"
+      "source_evidence": [
+        "working_ledger.md:L004581"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
     },
     {
-      "source_evidence": "working_ledger.md:L364-L370",
-      "item": "sorting/grouping defaults bullets"
+      "source_evidence": [
+        "working_ledger.md:L004582"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
     },
     {
-      "source_evidence": "working_ledger.md:L371-L400",
-      "item": "dashboard/projects/orchestrator split and override-display direction bullets"
-    },
-    "working_ledger.md:L570-L573 topic confirmation / prior work-item note",
-    "working_ledger.md:L577-L579 targeted repo reads list",
-    "working_ledger.md:L580-L594 architecture split / hybrid recommendation discussion",
-    "working_ledger.md:L595-L600 unresolved control-loop discussion",
-    "L000679-L000691 packet emission blocker / contradiction class",
-    "L000709-L000719 lifecycle/event-model topic progression",
-    "L000722-L000780 external research notes / product references",
-    "L000781-L000799 persisted object field-shape proposals",
-    "Mode for this work item is `research`.",
-    "Work item status should remain `active` until research is ready for reconciliation.",
-    "A new work item is being used rather than updating the unrelated existing packetized item.",
-    "User explicitly wants to keep researching in this thread; prior readiness marker should not be treated as a handoff decision.",
-    "workflow completeness / UX coherence / architectural coherence bullets",
-    "candidate seam review loop shape and output taxonomy without doc target",
-    "packetization status/history and stewardship refresh notes",
-    "section fidelity audit count / blocked-state recovery framing",
-    "generic next-subtopic reminders and process-only guidance",
-    "Model-wave synthesis / sweep framing",
-    "general severity labels (P0/P1/P2/P3, Priority 1/2/3)",
-    "process-only lines about addenda counts or sweep provenance",
-    "generic summary statements without concrete doc/field/action deltas",
-    "Model-wave synthesis / sweep framing",
-    "priority numbering beyond the concrete contract actions",
-    "generic risk language without a specific token or doc",
-    "Lines about GPT-5.4/5.3 sweep provenance",
-    "General impact summaries without exact field or doc drift",
-    "Pure priority ordering / cleanup ranking",
-    "Metrics-like phrasing about prevalence/coverage",
-    "Process-only statements about findings",
-    "Existing docs already establish a strong surface split",
-    "Settings > Branching and Settings > Health expose config/diagnostics",
-    "Storage direction is already close to what the rewrite needs",
-    "Recommended boundary / practical interpretation paragraphs",
-    "Lifecycle vocabulary list",
-    "Research Progress headings and descriptive status text",
-    "Doc list at L002001-L002007",
-    "General status phrasing and research-progress headers",
-    "Metrics/count/process-only prose",
-    "Background commentary about strongest owner / highest-risk docs without a concrete gap",
-    "Do-not-forget details that restate already captured obligations without adding new fields",
-    "project/dashboard interaction docs",
-    "widget/projection contracts",
-    "glossary/help/labels for lane/worktree terminology",
-    "Targeted docs read list",
-    "status-only framing around confirmed decision/progress"
-  ],
-  "uncertain_items": [
-    {
-      "source_evidence": "working_ledger.md:L201-L206",
-      "item": "whether the listed labels are stale tokens to retire or canonical headings to preserve"
+      "source_evidence": [
+        "working_ledger.md:L004585"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
     },
     {
-      "source_evidence": "working_ledger.md:L308-L327",
-      "item": "whether projection family names map to existing Plans/** doc sections or only future surfaces"
+      "source_evidence": [
+        "working_ledger.md:L004586"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
     },
     {
-      "source_evidence": "working_ledger.md:L381-L397",
-      "item": "whether settings hierarchy names are canonical headings or draft groupings"
+      "source_evidence": [
+        "working_ledger.md:L004588"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
     },
-    "FIDELITY-ID/evidence bullets were not present in this shard excerpt",
-    "No exact section headings were emitted in the shard text; only inline doc refs were available",
-    "Whether the shard expects one seed per missing doc surface or per missing field cluster",
-    "Whether feature seam/work package should be modeled as owner or consumer seeds in downstream extraction",
-    "Whether Plans/Orchestrator_Page.md and Plans/Run_Graph_View.md are canonical targets or only hints for follow-on discovery",
-    "No decision yet on the primary discussion seam for this research pass: page/surface design, runtime state model, cross-surface lineage and receipts, or blocked/recovery/remediation UX.",
-    "Exact artifact shapes for package review, seam review, corroboration packets, graph patch requests, and state transition reports remain unspecified.",
-    "The desired mental model remains unresolved: Orchestrator executes the canonical node graph directly, uses projections derived from the node graph plus runtime attempts, or owns a higher-level tier model layered on top of graph nodes.",
-    "Whether Overseer should be fully collapsed into Orchestrator/runtime language or preserved as a distinct visible concept",
-    "Whether package/seam/node provider-model settings are hard constraints, defaults, or hints",
-    "Exact canonical doc for multi-account threshold policy and account-switch precedence",
-    "Whether Orchestrator_Page.md is in-scope for direct rename vs. indirect navigation update",
-    "Whether chain-wizard-flexibility.md is a canonical doc target or only a contradiction reference",
-    "Whether active-agents.json should be retired or superseded in-place by a new event-sourced state contract",
-    "Whether 00-plans-index.md belongs in canonical ownership updates vs index-only coordination",
-    "Whether blocked_reason_code / allowed_action_ids[] are already canonical in some downstream anchor section not visible in this shard",
-    "Exact section titles within each affected doc; shard only names files, not section refs",
-    "Whether requested/effective account should be modeled as separate fields or under existing identity objects",
-    "Exact canonical doc that should own package/seam/lane/promotion definitions",
-    "Whether blocked-node/runtime-overlay HITL is the final canonical model or one of several variants",
-    "Whether worktree lane pools belong in SCM docs, orchestrator docs, or both",
-    "Whether package/seam overseer authority needs a dedicated owner seed or is subsumed under the lane/worktree blocker",
-    "Whether Plans/Orchestrator_Page.md is a layout blocker or stale-retirement target",
-    "Whether requested/effective platform/model/persona should be split from account identity into separate seeds",
-    "Whether provider_account_id should be retired entirely or retained as subordinate provider-native metadata",
-    "Whether upstream account identity behind bridged runtimes is capturable or intentionally opaque",
-    "Exact canonical field name for the requested-side concrete-account anchor",
-    "Whether permission carryover should be session-scoped, lane-scoped, or package-scoped in final form",
-    "Whether Plans/Orchestrator_Page.md needs a separate explicit ownership field beyond package/lane summary",
-    "Whether Plans/GitHub_Integration.md or Plans/FinalGUISpec.md is the primary doc for the Source Control narrow-panel layout rule",
-    "Exact replacement names for deprecated widget layouts"
+    {
+      "source_evidence": [
+        "working_ledger.md:L004589"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004590"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004591"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004592"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004594"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004598"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004599"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004600"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004602"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004603"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004604"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004605"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004609"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004610"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004612"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004613"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004614"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004615"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004616"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004618"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004626"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004627"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004628"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004629"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004630"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004634"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004636"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004650"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004651"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004652"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004653"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004654"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004656"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004659"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004660"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004661"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004662"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004663"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004664"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004665"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004672"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004684"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004688"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004693"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004694"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004699"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004700"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004706"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004708"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004710"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004714"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004719"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004721"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004722"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004724"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004726"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004737"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004741"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004745"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004749"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004751"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004763"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004770"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004771"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004772"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004773"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004774"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004780"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004784"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004785"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004804"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004813"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004819"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004820"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004821"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004822"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004823"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004824"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004825"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004829"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004830"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004853"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004855"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004856"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004858"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004859"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004860"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004861"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004862"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004863"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004866"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004867"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004868"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004869"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004871"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004873"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004874"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004875"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004877"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004879"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004883"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004884"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004885"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004886"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004887"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004888"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004893"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004903"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004905"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004910"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004911"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004928"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004935"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004940"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004941"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004944"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004946"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004949"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004964"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004968"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004970"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004972"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004974"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004976"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004982"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L004999"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005014"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005015"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005025"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005027"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005029"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005030"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005032"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005039"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005040"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005041"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005042"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005045"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005047"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005049"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005056"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005057"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005062"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005063"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005064"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005068"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005092"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005094"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005095"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005096"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005098"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005101"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005121"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005129"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005140"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005143"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005144"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005146"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005148"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005161"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005164"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005165"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005166"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005168"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005173"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005174"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005175"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005176"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005177"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005183"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005184"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005187"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005192"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005219"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005225"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005227"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005228"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005230"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005231"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005233"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005234"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005247"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005248"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005252"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005254"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005259"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005261"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005262"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005263"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005267"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005269"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005279"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005281"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005283"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005284"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005285"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005286"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005287"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005288"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005289"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005293"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005295"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005296"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005297"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005298"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005299"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005300"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005301"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005304"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005305"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005306"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005307"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005309"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005312"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005315"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005322"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005335"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005338"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005339"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005341"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005346"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005349"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005351"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005355"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005356"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005360"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005366"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005369"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005371"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005372"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005373"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005374"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005375"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005376"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005382"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005383"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005384"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005385"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005388"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005409"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005413"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005423"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005424"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005426"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005428"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005429"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005430"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005431"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005432"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005436"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005437"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005439"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005444"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005445"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005446"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005447"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005448"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005449"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005450"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005451"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005452"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005453"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005457"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005476"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005482"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005486"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005489"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005494"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005497"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005498"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005500"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005508"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005510"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005512"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005516"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005518"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005522"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005524"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005528"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005530"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005535"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005539"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005543"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005547"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005551"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005552"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005554"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005556"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005557"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005558"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005562"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005563"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005564"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005570"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005575"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005576"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005580"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005581"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005583"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005584"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005587"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005588"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005589"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005591"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005592"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005614"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005618"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005619"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005621"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005627"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005628"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005630"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005632"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005633"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005634"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005635"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005638"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005640"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005641"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005643"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005644"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005645"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005646"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005647"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005674"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005693"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005697"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005698"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005700"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005704"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005705"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005706"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005707"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005709"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005710"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005711"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005712"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005716"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005719"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005722"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005723"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005730"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005735"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005736"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005738"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005739"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005742"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005743"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005744"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005745"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005752"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005753"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005772"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005777"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005778"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005780"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005783"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005784"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005786"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005787"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005790"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005798"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005800"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005802"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005806"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005808"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005810"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005815"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005816"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005817"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005818"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005820"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005822"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005828"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005833"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005837"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005838"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005841"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005843"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005849"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005851"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005858"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005862"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005863"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005864"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005865"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005870"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005871"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005873"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005874"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005876"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005877"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005881"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005883"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005884"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005885"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005886"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005887"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005891"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005895"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005903"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005905"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005908"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005921"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005925"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005927"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005929"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005930"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005932"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005933"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005934"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005939"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005940"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005941"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005942"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005944"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005945"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005946"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005947"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005948"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005949"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005950"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005953"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005954"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005958"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005991"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L005996"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006012"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006018"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006020"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006025"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006026"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006030"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006032"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006033"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006034"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006035"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006036"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006037"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006038"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006041"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006042"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006043"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006044"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006045"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006046"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006047"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006048"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006049"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006050"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006051"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006052"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006053"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006055"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006059"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006061"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006067"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006069"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006071"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006072"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006073"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006074"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006088"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006115"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006122"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006125"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006126"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006154"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006164"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006165"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006166"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006169"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006174"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006175"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006182"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006194"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006197"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006201"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006202"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006210"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006230"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006231"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006232"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006233"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006235"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006267"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006271"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006274"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L006297"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    }
   ]
 }

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1142",
+  "group_ids": [
+    "discgrp-4565",
+    "discgrp-4566",
+    "discgrp-4567",
+    "discgrp-4568"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04963",
+      "source_obligation_ids": [
+        "obl-4739"
+      ],
+      "source_seed_ids": [
+        "seed-6825"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04964",
+      "source_obligation_ids": [
+        "obl-4740"
+      ],
+      "source_seed_ids": [
+        "seed-6826"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "### 6.7 Model aliases (friendly names)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Models_System.md:L447"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04965",
+      "source_obligation_ids": [
+        "obl-4741"
+      ],
+      "source_seed_ids": [
+        "seed-6827"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## Table of Contents",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L224"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04966",
+      "source_obligation_ids": [
+        "obl-4742"
+      ],
+      "source_seed_ids": [
+        "seed-6835"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

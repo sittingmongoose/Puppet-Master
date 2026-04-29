@@ -1,0 +1,100 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1277",
+  "group_ids": [
+    "discgrp-5105",
+    "discgrp-5106",
+    "discgrp-5107",
+    "discgrp-5108"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05514",
+      "source_obligation_ids": [
+        "obl-5286"
+      ],
+      "source_seed_ids": [
+        "seed-7857"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05515",
+      "source_obligation_ids": [
+        "obl-5287"
+      ],
+      "source_seed_ids": [
+        "seed-7858"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1068"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05516",
+      "source_obligation_ids": [
+        "obl-5288"
+      ],
+      "source_seed_ids": [
+        "seed-7859"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Runtime artifact and projection storage scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05517",
+      "source_obligation_ids": [
+        "obl-5289"
+      ],
+      "source_seed_ids": [
+        "seed-7860",
+        "seed-7891",
+        "seed-7921",
+        "seed-8733",
+        "seed-8753"
+      ],
+      "source_shard_ids": [
+        "shard-0073",
+        "shard-0074",
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Document_Packaging_Policy.md",
+      "new_heading_hint": "### 2.1 Primary split rule",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

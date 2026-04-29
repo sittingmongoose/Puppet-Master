@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-845",
+  "group_ids": [
+    "discgrp-3377",
+    "discgrp-3378",
+    "discgrp-3379",
+    "discgrp-3380"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03663",
+      "source_obligation_ids": [
+        "obl-3509"
+      ],
+      "source_seed_ids": [
+        "seed-4725"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03664",
+      "source_obligation_ids": [
+        "obl-3510"
+      ],
+      "source_seed_ids": [
+        "seed-4726"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 10.7 Event-driven refresh rule",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1251"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03665",
+      "source_obligation_ids": [
+        "obl-3511"
+      ],
+      "source_seed_ids": [
+        "seed-4727"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "### W.11 Command catalog",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L2649"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03666",
+      "source_obligation_ids": [
+        "obl-3512"
+      ],
+      "source_seed_ids": [
+        "seed-4728"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Cross-surface runtime, concern, and route/open contracts",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L251"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

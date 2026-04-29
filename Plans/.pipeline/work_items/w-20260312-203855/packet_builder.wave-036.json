@@ -1,0 +1,550 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-036",
+  "group_ids": [
+    "pktgrp-0141",
+    "pktgrp-0142",
+    "pktgrp-0143",
+    "pktgrp-0144"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "packet-target-0141",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### 6.4 Requirements quality report boundary, severity, and persistence (Plans/Decision_Policy.md:L198)",
+      "path": "Plans/Decision_Policy.md",
+      "coverage_row_ids": [
+        "cov-01303",
+        "cov-01317"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-01303",
+          "cov-01317"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-1160",
+        "obl-1174"
+      ],
+      "source_seed_ids": [
+        "seed-1382",
+        "seed-1396"
+      ],
+      "source_shard_ids": [
+        "shard-0022",
+        "shard-0023"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1160",
+          "obl-1174"
+        ],
+        "source_seed_ids": [
+          "seed-1382",
+          "seed-1396"
+        ],
+        "source_shard_ids": [
+          "shard-0022",
+          "shard-0023"
+        ]
+      },
+      "gap_ids": [
+        "gap-01015",
+        "gap-01028"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "unresolved conditions should resurface based on severity and persistence, not on every heartbeat/update",
+        "concern severity + blocking effect + owner + persistence decide escalation"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-e97cf544502c",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0187",
+      "source_reconciliation_target_ids": [
+        "target-0187"
+      ],
+      "source_target_ids": [
+        "target-0187"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0187\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - unresolved conditions should resurface based on severity and persistence, not on every heartbeat/update\n  - concern severity + blocking effect + owner + persistence decide escalation\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0142",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### Field-level override (Plans/Decision_Policy.md:L286)",
+      "path": "Plans/Decision_Policy.md",
+      "coverage_row_ids": [
+        "cov-01125",
+        "cov-01147",
+        "cov-04866"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-01125",
+          "cov-01147",
+          "cov-04866"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-982",
+        "obl-1004",
+        "obl-4643"
+      ],
+      "source_seed_ids": [
+        "seed-1150",
+        "seed-1172",
+        "seed-6649"
+      ],
+      "source_shard_ids": [
+        "shard-0019",
+        "shard-0020",
+        "shard-0064"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-982",
+          "obl-1004",
+          "obl-4643"
+        ],
+        "source_seed_ids": [
+          "seed-1150",
+          "seed-1172",
+          "seed-6649"
+        ],
+        "source_shard_ids": [
+          "shard-0019",
+          "shard-0020",
+          "shard-0064"
+        ]
+      },
+      "gap_ids": [
+        "gap-00874",
+        "gap-00895",
+        "gap-03808"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "source: project/package/node override source",
+        "provider-gap disclosure (`honored` / `skipped` / `clamped`) is a third concept, not just another word for override",
+        "honored",
+        "skipped",
+        "clamped",
+        "MUST override:"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-babf469087bf",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0188",
+      "source_reconciliation_target_ids": [
+        "target-0188"
+      ],
+      "source_target_ids": [
+        "target-0188"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0188\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - source: project/package/node override source\n  - provider-gap disclosure (`honored` / `skipped` / `clamped`) is a third concept, not just another word for override\n  - honored\n  - skipped\n  - clamped\n  - MUST override:\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0143",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "# Document Packaging Policy (Canonical) (Plans/Document_Packaging_Policy.md:L1)",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "coverage_row_ids": [
+        "cov-00262",
+        "cov-04085",
+        "cov-04346",
+        "cov-04396",
+        "cov-04463",
+        "cov-04605",
+        "cov-04777",
+        "cov-05269",
+        "cov-06232",
+        "cov-06317",
+        "cov-06390"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-00262",
+          "cov-04085",
+          "cov-04346",
+          "cov-04396",
+          "cov-04463",
+          "cov-04605",
+          "cov-04777",
+          "cov-05269",
+          "cov-06232",
+          "cov-06317",
+          "cov-06390"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-143",
+        "obl-3927",
+        "obl-4186",
+        "obl-4236",
+        "obl-4292",
+        "obl-4383",
+        "obl-4555",
+        "obl-5045",
+        "obl-5986",
+        "obl-6009",
+        "obl-6031"
+      ],
+      "source_seed_ids": [
+        "seed-149",
+        "seed-5381",
+        "seed-5816",
+        "seed-5899",
+        "seed-6001",
+        "seed-6187",
+        "seed-6472",
+        "seed-7362",
+        "seed-9006",
+        "seed-9092",
+        "seed-9118"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0054",
+        "shard-0057",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060",
+        "shard-0062",
+        "shard-0070",
+        "shard-0082"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-143",
+          "obl-3927",
+          "obl-4186",
+          "obl-4236",
+          "obl-4292",
+          "obl-4383",
+          "obl-4555",
+          "obl-5045",
+          "obl-5986",
+          "obl-6009",
+          "obl-6031"
+        ],
+        "source_seed_ids": [
+          "seed-149",
+          "seed-5381",
+          "seed-5816",
+          "seed-5899",
+          "seed-6001",
+          "seed-6187",
+          "seed-6472",
+          "seed-7362",
+          "seed-9006",
+          "seed-9092",
+          "seed-9118"
+        ],
+        "source_shard_ids": [
+          "shard-0009",
+          "shard-0054",
+          "shard-0057",
+          "shard-0058",
+          "shard-0059",
+          "shard-0060",
+          "shard-0062",
+          "shard-0070",
+          "shard-0082"
+        ]
+      },
+      "gap_ids": [
+        "gap-00231",
+        "gap-03171",
+        "gap-03391",
+        "gap-03432",
+        "gap-03495",
+        "gap-03614",
+        "gap-03732",
+        "gap-04086",
+        "gap-04821",
+        "gap-04896",
+        "gap-04963"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "likely issue: `allowed_actions[]` and `allowed_action_ids[]` both appear as canonical depending on document, which will break blocked-action parity.",
+        "allowed_actions[]",
+        "allowed_action_ids[]",
+        "if file-backed canonical document exists:",
+        "artifact-backed reopen into transient `generated://<artifact_id>` buffers when there is no backing document yet",
+        "generated://<artifact_id>",
+        "`chain-wizard-flexibility.md`, `interview-subagent-integration.md`, and `FinalGUISpec.md` all assume staged or non-persisted document bundles that may be opened before they have stable workspace paths.",
+        "chain-wizard-flexibility.md",
+        "interview-subagent-integration.md",
+        "FinalGUISpec.md",
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md",
+        "may realize as workspace document, transient `generated://` buffer, or routed non-editor surface",
+        "generated://",
+        "Packaging / evidence / artifact lineage gaps are broader than just Project_Output_Artifacts:",
+        "evidence source document:",
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "22",
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "61",
+        "the duplicated headings appear after the `## References` block, which breaks the document\u2019s own structure and weakens deterministic anchor targeting",
+        "## References"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-4ed4f0d779c3",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0189",
+      "source_reconciliation_target_ids": [
+        "target-0189"
+      ],
+      "source_target_ids": [
+        "target-0189"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0189\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - likely issue: `allowed_actions[]` and `allowed_action_ids[]` both appear as canonical depending on document, which will break blocked-action parity.\n  - allowed_actions[]\n  - allowed_action_ids[]\n  - if file-backed canonical document exists:\n  - artifact-backed reopen into transient `generated://<artifact_id>` buffers when there is no backing document yet\n  - generated://<artifact_id>\n  - `chain-wizard-flexibility.md`, `interview-subagent-integration.md`, and `FinalGUISpec.md` all assume staged or non-persisted document bundles that may be opened before they have stable workspace paths.\n  - chain-wizard-flexibility.md\n  - interview-subagent-integration.md\n  - FinalGUISpec.md\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - may realize as workspace document, transient `generated://` buffer, or routed non-editor surface\n  - generated://\n  - Packaging / evidence / artifact lineage gaps are broader than just Project_Output_Artifacts:\n  - evidence source document:\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.\n  - 61\n  - the duplicated headings appear after the `## References` block, which breaks the document\u2019s own structure and weakens deterministic anchor targeting\n  - ## References\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0144",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## 5. Three independent audits (full coverage, no sampling) (Plans/Document_Packaging_Policy.md:L121)",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "coverage_row_ids": [
+        "cov-03464",
+        "cov-06214"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-03464",
+          "cov-06214"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-3310",
+        "obl-5983"
+      ],
+      "source_seed_ids": [
+        "seed-4437",
+        "seed-8991"
+      ],
+      "source_shard_ids": [
+        "shard-0047",
+        "shard-0082"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3310",
+          "obl-5983"
+        ],
+        "source_seed_ids": [
+          "seed-4437",
+          "seed-8991"
+        ],
+        "source_shard_ids": [
+          "shard-0047",
+          "shard-0082"
+        ]
+      },
+      "gap_ids": [
+        "gap-02709",
+        "gap-04807"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "it links the three passes together with `workflow_run_id`",
+        "workflow_run_id",
+        "Continue the ordered sequence on this same 22-doc tranche into `GPT-5.3-Codex`; `GPT-5.2` still produced enough novel signal to justify finishing the full tranche intact.",
+        "GPT-5.3-Codex",
+        "GPT-5.2"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-1ecaa4656fab",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0191",
+      "source_reconciliation_target_ids": [
+        "target-0191"
+      ],
+      "source_target_ids": [
+        "target-0191"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0191\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - it links the three passes together with `workflow_run_id`\n  - workflow_run_id\n  - Continue the ordered sequence on this same 22-doc tranche into `GPT-5.3-Codex`; `GPT-5.2` still produced enough novel signal to justify finishing the full tranche intact.\n  - GPT-5.3-Codex\n  - GPT-5.2\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-01303",
+    "cov-01317",
+    "cov-01125",
+    "cov-01147",
+    "cov-04866",
+    "cov-00262",
+    "cov-04085",
+    "cov-04346",
+    "cov-04396",
+    "cov-04463",
+    "cov-04605",
+    "cov-04777",
+    "cov-05269",
+    "cov-06232",
+    "cov-06317",
+    "cov-06390",
+    "cov-03464",
+    "cov-06214"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-1160",
+    "obl-1174",
+    "obl-982",
+    "obl-1004",
+    "obl-4643",
+    "obl-143",
+    "obl-3927",
+    "obl-4186",
+    "obl-4236",
+    "obl-4292",
+    "obl-4383",
+    "obl-4555",
+    "obl-5045",
+    "obl-5986",
+    "obl-6009",
+    "obl-6031",
+    "obl-3310",
+    "obl-5983"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-1382",
+    "seed-1396",
+    "seed-1150",
+    "seed-1172",
+    "seed-6649",
+    "seed-149",
+    "seed-5381",
+    "seed-5816",
+    "seed-5899",
+    "seed-6001",
+    "seed-6187",
+    "seed-6472",
+    "seed-7362",
+    "seed-9006",
+    "seed-9092",
+    "seed-9118",
+    "seed-4437",
+    "seed-8991"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0022",
+    "shard-0023",
+    "shard-0019",
+    "shard-0020",
+    "shard-0064",
+    "shard-0009",
+    "shard-0054",
+    "shard-0057",
+    "shard-0058",
+    "shard-0059",
+    "shard-0060",
+    "shard-0062",
+    "shard-0070",
+    "shard-0082",
+    "shard-0047"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "unresolved conditions should resurface based on severity and persistence, not on every heartbeat/update",
+    "concern severity + blocking effect + owner + persistence decide escalation",
+    "source: project/package/node override source",
+    "provider-gap disclosure (`honored` / `skipped` / `clamped`) is a third concept, not just another word for override",
+    "honored",
+    "skipped",
+    "clamped",
+    "MUST override:",
+    "likely issue: `allowed_actions[]` and `allowed_action_ids[]` both appear as canonical depending on document, which will break blocked-action parity.",
+    "allowed_actions[]",
+    "allowed_action_ids[]",
+    "if file-backed canonical document exists:",
+    "artifact-backed reopen into transient `generated://<artifact_id>` buffers when there is no backing document yet",
+    "generated://<artifact_id>",
+    "`chain-wizard-flexibility.md`, `interview-subagent-integration.md`, and `FinalGUISpec.md` all assume staged or non-persisted document bundles that may be opened before they have stable workspace paths.",
+    "chain-wizard-flexibility.md",
+    "interview-subagent-integration.md",
+    "FinalGUISpec.md",
+    "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+    "Plans/*.md",
+    "may realize as workspace document, transient `generated://` buffer, or routed non-editor surface",
+    "generated://",
+    "Packaging / evidence / artifact lineage gaps are broader than just Project_Output_Artifacts:",
+    "evidence source document:",
+    "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+    "39",
+    "22",
+    "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+    "61",
+    "the duplicated headings appear after the `## References` block, which breaks the document\u2019s own structure and weakens deterministic anchor targeting",
+    "## References",
+    "it links the three passes together with `workflow_run_id`",
+    "workflow_run_id",
+    "Continue the ordered sequence on this same 22-doc tranche into `GPT-5.3-Codex`; `GPT-5.2` still produced enough novel signal to justify finishing the full tranche intact.",
+    "GPT-5.3-Codex",
+    "GPT-5.2"
+  ],
+  "blocked_targets": []
+}

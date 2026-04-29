@@ -1,0 +1,1075 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-225",
+  "row_group_ids": [
+    "rowgrp-0897",
+    "rowgrp-0898",
+    "rowgrp-0899",
+    "rowgrp-0900"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-04235",
+      "source_obligation_ids": [
+        "obl-4075"
+      ],
+      "source_seed_ids": [
+        "seed-5637"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "`project_id` omission is now clearly a determinism problem in app-global seglog mode becau",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "status": "present",
+      "exact_items": [
+        "`project_id` omission is now clearly a determinism problem in app-global seglog mode because artifact events cannot be partitioned safely by project otherwise.",
+        "project_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L48",
+        "Plans/storage-plan.md:L52",
+        "Plans/storage-plan.md:L269",
+        "Plans/storage-plan.md:L270",
+        "Plans/storage-plan.md:L296"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04248",
+      "source_obligation_ids": [
+        "obl-4088"
+      ],
+      "source_seed_ids": [
+        "seed-5650"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "`pm.evidence.schema.v1` still cannot encode the tri-state or machine-readable arrays that",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 2.3 redb: schema, migrations, key patterns",
+      "status": "partial",
+      "exact_items": [
+        "`pm.evidence.schema.v1` still cannot encode the tri-state or machine-readable arrays that GATE-011/GATE-012 now demand.",
+        "pm.evidence.schema.v1"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L455"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04349",
+      "source_obligation_ids": [
+        "obl-4189"
+      ],
+      "source_seed_ids": [
+        "seed-5819"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "planning drafts and unsaved/generated content use `artifact:<artifact_id>`",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "partial",
+      "exact_items": [
+        "planning drafts and unsaved/generated content use `artifact:<artifact_id>`",
+        "artifact:<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04353",
+      "source_obligation_ids": [
+        "obl-4193"
+      ],
+      "source_seed_ids": [
+        "seed-5823"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "canonical persisted subject identity = `doc:<document_id>` / `artifact:<artifact_id>`",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "partial",
+      "exact_items": [
+        "canonical persisted subject identity = `doc:<document_id>` / `artifact:<artifact_id>`",
+        "doc:<document_id>",
+        "artifact:<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04356",
+      "source_obligation_ids": [
+        "obl-4196"
+      ],
+      "source_seed_ids": [
+        "seed-5826"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "`generated://<artifact_id>` should remain an ephemeral source buffer transport, not become",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "partial",
+      "exact_items": [
+        "`generated://<artifact_id>` should remain an ephemeral source buffer transport, not become the canonical persisted identity. The canonical identity is still `artifact:<artifact_id>`.",
+        "generated://<artifact_id>",
+        "artifact:<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04364",
+      "source_obligation_ids": [
+        "obl-4204"
+      ],
+      "source_seed_ids": [
+        "seed-5843"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "subject kinds should at minimum include `doc:<document_id>` and `artifact:<artifact_id>`",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Fidelity recovery cov-025: Concern lifecycle and resolution kinds",
+      "status": "partial",
+      "exact_items": [
+        "subject kinds should at minimum include `doc:<document_id>` and `artifact:<artifact_id>`",
+        "doc:<document_id>",
+        "artifact:<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L55",
+        "Plans/storage-plan.md:L62"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04368",
+      "source_obligation_ids": [
+        "obl-4208"
+      ],
+      "source_seed_ids": [
+        "seed-5847"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "This seam is one of the cleaner ones: storage already contains most of the right model; th",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "status": "partial",
+      "exact_items": [
+        "This seam is one of the cleaner ones: storage already contains most of the right model; the lag is mainly in the universal-open/file-centric docs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04369",
+      "source_obligation_ids": [
+        "obl-4209"
+      ],
+      "source_seed_ids": [
+        "seed-5848"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "`doc:` / `artifact:` should be treated as canonical persisted subject IDs, while `generate",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "present",
+      "exact_items": [
+        "`doc:` / `artifact:` should be treated as canonical persisted subject IDs, while `generated://` stays an implementation-level transient representation.",
+        "doc:",
+        "artifact:",
+        "generated://"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L11",
+        "Plans/storage-plan.md:L15",
+        "Plans/storage-plan.md:L23",
+        "Plans/storage-plan.md:L24",
+        "Plans/storage-plan.md:L27"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04399",
+      "source_obligation_ids": [
+        "obl-4239"
+      ],
+      "source_seed_ids": [
+        "seed-5902"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "first-class identity is the staged/generated artifact",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "partial",
+      "exact_items": [
+        "first-class identity is the staged/generated artifact"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04406",
+      "source_obligation_ids": [
+        "obl-4246"
+      ],
+      "source_seed_ids": [
+        "seed-5918"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "Keep `generated://<artifact_id>` as the transient editor/source realization for those subj",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Scope split (durable store boundaries)",
+      "status": "partial",
+      "exact_items": [
+        "Keep `generated://<artifact_id>` as the transient editor/source realization for those subjects, not the durable identity.",
+        "generated://<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L577"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04427",
+      "source_obligation_ids": [
+        "obl-4267"
+      ],
+      "source_seed_ids": [
+        "seed-5951"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "Runtime-governance closeout sharpened a few final owner gaps:",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## 5. Gaps and how we address them",
+      "status": "partial",
+      "exact_items": [
+        "Runtime-governance closeout sharpened a few final owner gaps:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1291"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04435",
+      "source_obligation_ids": [
+        "obl-4275"
+      ],
+      "source_seed_ids": [
+        "seed-5959"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "`newtools.md` and assistant-memory still ended with unresolved canonicalization gaps:",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## 5. Gaps and how we address them",
+      "status": "partial",
+      "exact_items": [
+        "`newtools.md` and assistant-memory still ended with unresolved canonicalization gaps:",
+        "newtools.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L681"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04447",
+      "source_obligation_ids": [
+        "obl-4287"
+      ],
+      "source_seed_ids": [
+        "seed-5996"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "command/event namespace unification,",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## Permission Snapshot Storage and Safe-Point Namespace Addendum",
+      "status": "partial",
+      "exact_items": [
+        "command/event namespace unification,"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1643"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04513",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04515",
+      "source_obligation_ids": [
+        "obl-4293"
+      ],
+      "source_seed_ids": [
+        "seed-6008"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Search, attention, and usage/artifact pivots all preserve useful local identity, but they",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.3 Search and Source Control keep separate projection state",
+      "status": "partial",
+      "exact_items": [
+        "Search, attention, and usage/artifact pivots all preserve useful local identity, but they still do so in separate feature-specific ways rather than through a shared route-target model."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1327"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04525",
+      "source_obligation_ids": [
+        "obl-4303"
+      ],
+      "source_seed_ids": [
+        "seed-6031"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Route search-result activation, attention-item activation, artifact `Show in *` actions, a",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "partial",
+      "exact_items": [
+        "Route search-result activation, attention-item activation, artifact `Show in *` actions, and Usage pivots through the same canonical route-target model rather than separate ad hoc behaviors.",
+        "Show in *"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04535",
+      "source_obligation_ids": [
+        "obl-4313"
+      ],
+      "source_seed_ids": [
+        "seed-6057"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "`storage-plan.md` mentions export of thread/run history to JSONL/JSON, but only at a coars",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Fidelity recovery cov-018: Export taxonomy and manifest contract",
+      "status": "present",
+      "exact_items": [
+        "`storage-plan.md` mentions export of thread/run history to JSONL/JSON, but only at a coarse enhancement level.",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04538",
+      "source_obligation_ids": [
+        "obl-4316"
+      ],
+      "source_seed_ids": [
+        "seed-6060"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "any non-trivial bundle export should preserve canonical IDs/refs and include a manifest",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Fidelity recovery cov-018: Export taxonomy and manifest contract",
+      "status": "partial",
+      "exact_items": [
+        "any non-trivial bundle export should preserve canonical IDs/refs and include a manifest"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L31",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04544",
+      "source_obligation_ids": [
+        "obl-4322"
+      ],
+      "source_seed_ids": [
+        "seed-6078"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Reuse `Project_Output_Artifacts.md` manifest discipline as the strongest model for general",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Fidelity recovery cov-018: Export taxonomy and manifest contract",
+      "status": "partial",
+      "exact_items": [
+        "Reuse `Project_Output_Artifacts.md` manifest discipline as the strongest model for general export bundles.",
+        "Project_Output_Artifacts.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L31",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04553",
+      "source_obligation_ids": [
+        "obl-4331"
+      ],
+      "source_seed_ids": [
+        "seed-6094"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "`assistant-chat-design.md` likewise treats thread attention and blocked notices as persist",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Fidelity recovery cov-080: Project attention projection",
+      "status": "present",
+      "exact_items": [
+        "`assistant-chat-design.md` likewise treats thread attention and blocked notices as persistent shell behaviors, but the activation path is still described behaviorally instead of via a reusable route payload.",
+        "assistant-chat-design.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L225",
+        "Plans/storage-plan.md:L279",
+        "Plans/storage-plan.md:L947",
+        "Plans/storage-plan.md:L1083",
+        "Plans/storage-plan.md:L1090"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04557",
+      "source_obligation_ids": [
+        "obl-4335"
+      ],
+      "source_seed_ids": [
+        "seed-6106"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "There is still no canonical statement that a CtA card or blocked notice should restore bot",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "partial",
+      "exact_items": [
+        "There is still no canonical statement that a CtA card or blocked notice should restore both destination and scope using the same internal payload model as search results, artifact pivots, and thread usage jumps."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04591",
+      "source_obligation_ids": [
+        "obl-4369"
+      ],
+      "source_seed_ids": [
+        "seed-6162"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "`storage-plan.md` already owns subject identity (`doc:<document_id>`, `artifact:<artifact_",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Fidelity recovery cov-018: Export taxonomy and manifest contract",
+      "status": "present",
+      "exact_items": [
+        "`storage-plan.md` already owns subject identity (`doc:<document_id>`, `artifact:<artifact_id>`) and restore rules, which argues for an identity-native contract above path opening, not a replacement of path opening.",
+        "storage-plan.md",
+        "doc:<document_id>",
+        "artifact:<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04620",
+      "source_obligation_ids": [
+        "obl-4398"
+      ],
+      "source_seed_ids": [
+        "seed-6219"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "keep the canonical target object small",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.3 Search and Source Control keep separate projection state",
+      "status": "partial",
+      "exact_items": [
+        "keep the canonical target object small"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1327"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04640",
+      "source_obligation_ids": [
+        "obl-4418"
+      ],
+      "source_seed_ids": [
+        "seed-6253",
+        "seed-6254",
+        "seed-7364"
+      ],
+      "source_shard_ids": [
+        "shard-0060",
+        "shard-0061",
+        "shard-0070"
+      ],
+      "canon_label": "`subject_id = artifact:<artifact_id>`",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "partial",
+      "exact_items": [
+        "`subject_id = artifact:<artifact_id>`",
+        "subject_id = artifact:<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04663",
+      "source_obligation_ids": [
+        "obl-4441"
+      ],
+      "source_seed_ids": [
+        "seed-6292"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "Keep the initial canonical set deliberately small:",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Additional shell/runtime identities required by the promoted Section 15 feature set",
+      "status": "partial",
+      "exact_items": [
+        "Keep the initial canonical set deliberately small:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L251"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04684",
+      "source_obligation_ids": [
+        "obl-4462"
+      ],
+      "source_seed_ids": [
+        "seed-6346"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "`subject_id` will become muddy if it expands beyond renderable/openable content too early.",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## 8. Web content caching persistence",
+      "status": "present",
+      "exact_items": [
+        "`subject_id` will become muddy if it expands beyond renderable/openable content too early.",
+        "subject_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L714",
+        "Plans/storage-plan.md:L717"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04720",
+      "source_obligation_ids": [
+        "obl-4498"
+      ],
+      "source_seed_ids": [
+        "seed-6397"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "Keep line/range under `OpenFile`.",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.3 Search and Source Control keep separate projection state",
+      "status": "partial",
+      "exact_items": [
+        "Keep line/range under `OpenFile`.",
+        "OpenFile"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L620"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04739",
+      "source_obligation_ids": [
+        "obl-4517"
+      ],
+      "source_seed_ids": [
+        "seed-6422"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "migration aliases MUST NOT become permanent parallel canon",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Concern record and lifecycle canon",
+      "status": "partial",
+      "exact_items": [
+        "migration aliases MUST NOT become permanent parallel canon"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L462"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04767",
+      "source_obligation_ids": [
+        "obl-4545"
+      ],
+      "source_seed_ids": [
+        "seed-6462"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "`MiscPlan.md` still embeds sequential tier-era cleanup/remediation assumptions, including",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## Scheduler Runtime, Safe-Point, and Remediation Storage Addendum (2026-03-08)",
+      "status": "partial",
+      "exact_items": [
+        "`MiscPlan.md` still embeds sequential tier-era cleanup/remediation assumptions, including a cleanup-remediation loop outside the canonical runtime failure matrix and prepare/cleanup ordering that can erase safe-point baselines.",
+        "MiscPlan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1520"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04791",
+      "source_obligation_ids": [
+        "obl-4568"
+      ],
+      "source_seed_ids": [
+        "seed-6522"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "canon_label": "That is useful, but it should be treated as one serialized transport form of the broader r",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Fidelity recovery cov-039: Focused run and historical routing contract",
+      "status": "partial",
+      "exact_items": [
+        "That is useful, but it should be treated as one serialized transport form of the broader routing model, not as the hidden canonical navigation contract."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L67",
+        "Plans/storage-plan.md:L74"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04882",
+      "source_obligation_ids": [
+        "obl-4659"
+      ],
+      "source_seed_ids": [
+        "seed-6676"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "Make destination-local state reuse conditional on not obscuring the requested target.",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "status": "partial",
+      "exact_items": [
+        "Make destination-local state reuse conditional on not obscuring the requested target."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1310"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04906",
+      "source_obligation_ids": [
+        "obl-4682"
+      ],
+      "source_seed_ids": [
+        "seed-6732"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "`meta.json` must remain active; the broader sweep is still not ready for reconciliation.",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Canonical records (owner reconciliation)",
+      "status": "present",
+      "exact_items": [
+        "`meta.json` must remain active; the broader sweep is still not ready for reconciliation.",
+        "meta.json"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L312",
+        "Plans/storage-plan.md:L339",
+        "Plans/storage-plan.md:L358",
+        "Plans/storage-plan.md:L1452"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04911",
+      "source_obligation_ids": [
+        "obl-4687"
+      ],
+      "source_seed_ids": [
+        "seed-6745"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "Domain mutation/runtime commands remain separate again. They act on canonical runtime or d",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "status": "partial",
+      "exact_items": [
+        "Domain mutation/runtime commands remain separate again. They act on canonical runtime or domain identity and are not just navigation with a side effect."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1310"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04961",
+      "source_obligation_ids": [
+        "obl-4737"
+      ],
+      "source_seed_ids": [
+        "seed-6823"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "`evidence.schema.json` is also very generic here. It can store pass/fail checks, but it ha",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 2.3 redb: schema, migrations, key patterns",
+      "status": "partial",
+      "exact_items": [
+        "`evidence.schema.json` is also very generic here. It can store pass/fail checks, but it has no structured slot for wrapper-normalization or alias-resolution evidence.",
+        "evidence.schema.json"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L225"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04984",
+      "source_obligation_ids": [
+        "obl-4760"
+      ],
+      "source_seed_ids": [
+        "seed-6857"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "the route schema remains the owner of actual route-target structure",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 2.3 redb: schema, migrations, key patterns",
+      "status": "partial",
+      "exact_items": [
+        "the route schema remains the owner of actual route-target structure"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L455"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05003",
+      "source_obligation_ids": [
+        "obl-4779"
+      ],
+      "source_seed_ids": [
+        "seed-6885"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "`Wiring_Matrix.schema.json` is intentionally lean, which is good, but it means verificatio",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 2.3 redb: schema, migrations, key patterns",
+      "status": "partial",
+      "exact_items": [
+        "`Wiring_Matrix.schema.json` is intentionally lean, which is good, but it means verification must mostly derive normalization expectations from the catalog rather than from repeated row-local metadata.",
+        "Wiring_Matrix.schema.json"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L455"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05007",
+      "source_obligation_ids": [
+        "obl-4783"
+      ],
+      "source_seed_ids": [
+        "seed-6890"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "Keep wrapper metadata contract-level and narrow:",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.3 Search and Source Control keep separate projection state",
+      "status": "partial",
+      "exact_items": [
+        "Keep wrapper metadata contract-level and narrow:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1327"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05044",
+      "source_obligation_ids": [
+        "obl-4820"
+      ],
+      "source_seed_ids": [
+        "seed-6941"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "Keep `OpenFile` separate and narrow:",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.3 Search and Source Control keep separate projection state",
+      "status": "partial",
+      "exact_items": [
+        "Keep `OpenFile` separate and narrow:",
+        "OpenFile"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L620"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05048",
+      "source_obligation_ids": [
+        "obl-4824"
+      ],
+      "source_seed_ids": [
+        "seed-6945"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "The owner question is settled:",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 4.2 Question and clarification state",
+      "status": "partial",
+      "exact_items": [
+        "The owner question is settled:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1187"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05051",
+      "source_obligation_ids": [
+        "obl-4827"
+      ],
+      "source_seed_ids": [
+        "seed-6948"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "storage owns persisted refs",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "status": "partial",
+      "exact_items": [
+        "storage owns persisted refs"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

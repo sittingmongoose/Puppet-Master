@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-690",
+  "group_ids": [
+    "discgrp-2757",
+    "discgrp-2758",
+    "discgrp-2759",
+    "discgrp-2760"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03037",
+      "source_obligation_ids": [
+        "obl-2883"
+      ],
+      "source_seed_ids": [
+        "seed-3804"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### Fidelity recovery cov-059: Lane vs worktree lifecycle split",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03038",
+      "source_obligation_ids": [
+        "obl-2884"
+      ],
+      "source_seed_ids": [
+        "seed-3805"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### Progress catalog source and default drills",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L910"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03039",
+      "source_obligation_ids": [
+        "obl-2885"
+      ],
+      "source_seed_ids": [
+        "seed-3809"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### 2.5 Branch already exists when recreating worktree",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L205"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03040",
+      "source_obligation_ids": [
+        "obl-2886"
+      ],
+      "source_seed_ids": [
+        "seed-3810"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "# Adding Tool Support -- Research & Plan",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Tools.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

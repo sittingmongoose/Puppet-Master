@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-897",
+  "group_ids": [
+    "discgrp-3585",
+    "discgrp-3586",
+    "discgrp-3587",
+    "discgrp-3588"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03880",
+      "source_obligation_ids": [
+        "obl-3725"
+      ],
+      "source_seed_ids": [
+        "seed-5072"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "# Assistant & Chat UI -- Design Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03881",
+      "source_obligation_ids": [
+        "obl-3726"
+      ],
+      "source_seed_ids": [
+        "seed-5073"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03882",
+      "source_obligation_ids": [
+        "obl-3727"
+      ],
+      "source_seed_ids": [
+        "seed-5074"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "# Assistant & Chat UI -- Design Plan",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03883",
+      "source_obligation_ids": [
+        "obl-3728"
+      ],
+      "source_seed_ids": [
+        "seed-5075"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "### Fidelity recovery cov-160: Identity and blocked-policy transfer cluster",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L28"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

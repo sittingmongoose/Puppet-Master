@@ -1,0 +1,2617 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-060",
+  "group_ids": [
+    "gapgrp-0237",
+    "gapgrp-0238",
+    "gapgrp-0239",
+    "gapgrp-0240"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-00244",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00284 is partial for likely issue: tier-boundary and single-Overseer audit rules are too rigid for package/seam",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00284"
+      ],
+      "source_obligation_ids": [
+        "obl-156"
+      ],
+      "source_seed_ids": [
+        "seed-163"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "likely issue: tier-boundary and single-Overseer audit rules are too rigid for package/seam overseers and automation-first execution."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00829",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01068 is partial for provider-gap disclosure rules (`honored`, `skipped`, `clamped`)",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01068"
+      ],
+      "source_obligation_ids": [
+        "obl-925"
+      ],
+      "source_seed_ids": [
+        "seed-1089"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "provider-gap disclosure rules (`honored`, `skipped`, `clamped`)",
+        "honored",
+        "skipped",
+        "clamped"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00887",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01139 is partial for Manual override lifecycle exists for Persona, but similar presentation rules are less expl",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01139"
+      ],
+      "source_obligation_ids": [
+        "obl-996"
+      ],
+      "source_seed_ids": [
+        "seed-1164"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "Manual override lifecycle exists for Persona, but similar presentation rules are less explicit for provider/model/account/worker-policy overrides."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00896",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01148 is partial for Research Progress - 2026-03-16 - Auto Persona Resolution Rules",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01148"
+      ],
+      "source_obligation_ids": [
+        "obl-1005"
+      ],
+      "source_seed_ids": [
+        "seed-1173"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - Auto Persona Resolution Rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01233",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01568 is partial for Terms that need explicit distinction rules",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01568"
+      ],
+      "source_obligation_ids": [
+        "obl-1425"
+      ],
+      "source_seed_ids": [
+        "seed-1764"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "exact_missing_items": [
+        "Terms that need explicit distinction rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01442",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01850 is partial for concerns need exact identity, lineage, source linking, status, and interaction rules",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01850"
+      ],
+      "source_obligation_ids": [
+        "obl-1707"
+      ],
+      "source_seed_ids": [
+        "seed-2154"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "exact_missing_items": [
+        "concerns need exact identity, lineage, source linking, status, and interaction rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01462",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01875 is partial for Concern lineage now needs more exact rules.",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01875"
+      ],
+      "source_obligation_ids": [
+        "obl-1732"
+      ],
+      "source_seed_ids": [
+        "seed-2207"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "Concern lineage now needs more exact rules."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01688",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02167 is partial for still needs explicit account-switch history semantics and tighter binding between canonica",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02167"
+      ],
+      "source_obligation_ids": [
+        "obl-2024"
+      ],
+      "source_seed_ids": [
+        "seed-2632"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "still needs explicit account-switch history semantics and tighter binding between canonical snapshot rules and downstream event/record families"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01756",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02261 is partial for `usage_event_ref?` is treated as the canonical bridge name in storage/receipt rules, but n",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02261"
+      ],
+      "source_obligation_ids": [
+        "obl-2114"
+      ],
+      "source_seed_ids": [
+        "seed-2746"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`usage_event_ref?` is treated as the canonical bridge name in storage/receipt rules, but no doc actually defines what it is.",
+        "usage_event_ref?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01908",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02445 is partial for title-bar project badges, Projects page cards, command-palette summaries, and attention-ce",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02445"
+      ],
+      "source_obligation_ids": [
+        "obl-2295"
+      ],
+      "source_seed_ids": [
+        "seed-2972"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "title-bar project badges, Projects page cards, command-palette summaries, and attention-center rows should all reuse the same status vocabulary and precedence rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02112",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02690 is partial for session-scoped `always` approvals and reject-cascade rules have no actor/lane/run/account",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02690"
+      ],
+      "source_obligation_ids": [
+        "obl-2537"
+      ],
+      "source_seed_ids": [
+        "seed-3330"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "session-scoped `always` approvals and reject-cascade rules have no actor/lane/run/account scope key",
+        "always"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02118",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02696 is partial for needs immediate correction of canonical `thread_id` semantics and explicit upstream-accoun",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02696"
+      ],
+      "source_obligation_ids": [
+        "obl-2543"
+      ],
+      "source_seed_ids": [
+        "seed-3337"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "needs immediate correction of canonical `thread_id` semantics and explicit upstream-account opacity rules",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02209",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02804 is partial for now clearly needs its operational-identity rules bound into the shared runtime grammar",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02804"
+      ],
+      "source_obligation_ids": [
+        "obl-2651"
+      ],
+      "source_seed_ids": [
+        "seed-3484"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "now clearly needs its operational-identity rules bound into the shared runtime grammar"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02384",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03021 is partial for Worktree/source-control contracts still need rewrite-native authority rules:",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03021"
+      ],
+      "source_obligation_ids": [
+        "obl-2867"
+      ],
+      "source_seed_ids": [
+        "seed-3784"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "Worktree/source-control contracts still need rewrite-native authority rules:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02599",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03321 is partial for Execution-core seams are now pinned to specific missing mint/ownership rules:",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03321"
+      ],
+      "source_obligation_ids": [
+        "obl-3167"
+      ],
+      "source_seed_ids": [
+        "seed-4220"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "Execution-core seams are now pinned to specific missing mint/ownership rules:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02608",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03331 is partial for still lacks the mint/ownership rules that blocked/runtime recovery now depend on.",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03331"
+      ],
+      "source_obligation_ids": [
+        "obl-3177"
+      ],
+      "source_seed_ids": [
+        "seed-4234"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "still lacks the mint/ownership rules that blocked/runtime recovery now depend on."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03370",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04320 is partial for If route-aware navigation becomes canonical, keeping `GATE-010` unchanged will make the st",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04320"
+      ],
+      "source_obligation_ids": [
+        "obl-4160"
+      ],
+      "source_seed_ids": [
+        "seed-5770"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "If route-aware navigation becomes canonical, keeping `GATE-010` unchanged will make the strongest navigation rules effectively unenforced.",
+        "GATE-010"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03451",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04415 is partial for reserved-name ownership remains split across three docs, with `/compact` still showing why",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04415"
+      ],
+      "source_obligation_ids": [
+        "obl-4255"
+      ],
+      "source_seed_ids": [
+        "seed-5939"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "reserved-name ownership remains split across three docs, with `/compact` still showing why copied lists and copied rules are unsafe.",
+        "/compact"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03492",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04460 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04460"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03613",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04604 is partial for resolves through canonical subject/open rules",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04604"
+      ],
+      "source_obligation_ids": [
+        "obl-4382"
+      ],
+      "source_seed_ids": [
+        "seed-6186"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "resolves through canonical subject/open rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03645",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04654 is partial for `OpenSubject` owns `subject_id` and subject realization rules",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04654"
+      ],
+      "source_obligation_ids": [
+        "obl-4432"
+      ],
+      "source_seed_ids": [
+        "seed-6277"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "`OpenSubject` owns `subject_id` and subject realization rules",
+        "OpenSubject",
+        "subject_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04196",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05393 is partial for Research Progress - 2026-03-17 - Canonical route validation and rejection rules",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05393"
+      ],
+      "source_obligation_ids": [
+        "obl-5165"
+      ],
+      "source_seed_ids": [
+        "seed-7653"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - Canonical route validation and rejection rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04197",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05394 is partial for The route layer now needs explicit invalid-combination rules.",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05394"
+      ],
+      "source_obligation_ids": [
+        "obl-5166"
+      ],
+      "source_seed_ids": [
+        "seed-7658"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "The route layer now needs explicit invalid-combination rules."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04198",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05395 is partial for Canonical route validation rules are:",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05395"
+      ],
+      "source_obligation_ids": [
+        "obl-5167"
+      ],
+      "source_seed_ids": [
+        "seed-7659"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "Canonical route validation rules are:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04209",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05410 is partial for A bounded contract needs rejection rules.",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05410"
+      ],
+      "source_obligation_ids": [
+        "obl-5182"
+      ],
+      "source_seed_ids": [
+        "seed-7678"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "A bounded contract needs rejection rules."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04230",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05433 is partial for Scoped identity rules:",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05433"
+      ],
+      "source_obligation_ids": [
+        "obl-5205"
+      ],
+      "source_seed_ids": [
+        "seed-7714"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "Scoped identity rules:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04237",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05440 is partial for Resolver logic must be responsible for applying the correct scoped lookup rules.",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05440"
+      ],
+      "source_obligation_ids": [
+        "obl-5212"
+      ],
+      "source_seed_ids": [
+        "seed-7731"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "Resolver logic must be responsible for applying the correct scoped lookup rules."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04669",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06033 is partial for Later canonical correction text says:",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "## 9. No unreferenced operational text"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06033"
+      ],
+      "source_obligation_ids": [
+        "obl-5805"
+      ],
+      "source_seed_ids": [
+        "seed-8631"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "exact_missing_items": [
+        "Later canonical correction text says:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04712",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06095 is partial for Reconcile worker output and evidence update rules so they align with attempt/node/runtime",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06095"
+      ],
+      "source_obligation_ids": [
+        "obl-5867"
+      ],
+      "source_seed_ids": [
+        "seed-8711"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "Reconcile worker output and evidence update rules so they align with attempt/node/runtime lineage rather than `TierChanged`-driven active-tier state.",
+        "TierChanged"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04719",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06105 is partial for queue-analysis and blocked-state rendering rules keyed to canonical runtime records",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06105"
+      ],
+      "source_obligation_ids": [
+        "obl-5877"
+      ],
+      "source_seed_ids": [
+        "seed-8732"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "queue-analysis and blocked-state rendering rules keyed to canonical runtime records"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04818",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06229 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06229"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04948",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06371 is partial for Research Progress - 2026-03-17 - owner-traceability seam: Decision Log, DRY Rules, Crosswa",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06371"
+      ],
+      "source_obligation_ids": [
+        "obl-6012"
+      ],
+      "source_seed_ids": [
+        "seed-9095"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - owner-traceability seam: Decision Log, DRY Rules, Crosswalk"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05197",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06709 is partial for project-summary, escalation, blocked-owner, and resurfacing rules",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06709"
+      ],
+      "source_obligation_ids": [
+        "obl-6350"
+      ],
+      "source_seed_ids": [
+        "seed-9697"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "project-summary, escalation, blocked-owner, and resurfacing rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05199",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06711 is partial for route/open-subject/bridge-field refinement and verification rules",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06711"
+      ],
+      "source_obligation_ids": [
+        "obl-6352"
+      ],
+      "source_seed_ids": [
+        "seed-9699"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "route/open-subject/bridge-field refinement and verification rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05200",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06712 is partial for Example pattern: `route_target` / `OpenSubject` exist, but precedence, reject rules, examp",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06712"
+      ],
+      "source_obligation_ids": [
+        "obl-6353"
+      ],
+      "source_seed_ids": [
+        "seed-9700"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Example pattern: `route_target` / `OpenSubject` exist, but precedence, reject rules, examples, and scoped-resolution rules are still missing.",
+        "route_target",
+        "OpenSubject"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05209",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06722 is partial for Bridge fields exist, but precedence/join semantics and compatibility fallback rules remain",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06722"
+      ],
+      "source_obligation_ids": [
+        "obl-6363"
+      ],
+      "source_seed_ids": [
+        "seed-9714"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Bridge fields exist, but precedence/join semantics and compatibility fallback rules remain under-specified."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05210",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06723 is partial for Envelope fields landed, but per-family behavior rules and stronger bridge-governance seman",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06723"
+      ],
+      "source_obligation_ids": [
+        "obl-6364"
+      ],
+      "source_seed_ids": [
+        "seed-9716"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Envelope fields landed, but per-family behavior rules and stronger bridge-governance semantics were not fully transferred."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05248",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06770 is partial for Missing blocked-owner / escalation / resurfacing rules will produce inconsistent UX and in",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06770"
+      ],
+      "source_obligation_ids": [
+        "obl-6406"
+      ],
+      "source_seed_ids": [
+        "seed-9785"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Missing blocked-owner / escalation / resurfacing rules will produce inconsistent UX and inconsistent persistence semantics."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05253",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06775 is partial for detailed rules, examples, field schemas, or operational policies often did not",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06775"
+      ],
+      "source_obligation_ids": [
+        "obl-6411"
+      ],
+      "source_seed_ids": [
+        "seed-9790"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "detailed rules, examples, field schemas, or operational policies often did not"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00284",
+    "cov-01068",
+    "cov-01139",
+    "cov-01148",
+    "cov-01568",
+    "cov-01850",
+    "cov-01875",
+    "cov-02167",
+    "cov-02261",
+    "cov-02445",
+    "cov-02690",
+    "cov-02696",
+    "cov-02804",
+    "cov-03021",
+    "cov-03321",
+    "cov-03331",
+    "cov-04320",
+    "cov-04415",
+    "cov-04460",
+    "cov-04604",
+    "cov-04654",
+    "cov-05393",
+    "cov-05394",
+    "cov-05395",
+    "cov-05410",
+    "cov-05433",
+    "cov-05440",
+    "cov-06033",
+    "cov-06095",
+    "cov-06105",
+    "cov-06229",
+    "cov-06371",
+    "cov-06709",
+    "cov-06711",
+    "cov-06712",
+    "cov-06722",
+    "cov-06723",
+    "cov-06770",
+    "cov-06775"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1005",
+    "obl-1425",
+    "obl-156",
+    "obl-1707",
+    "obl-1732",
+    "obl-2024",
+    "obl-2114",
+    "obl-2295",
+    "obl-2537",
+    "obl-2543",
+    "obl-2651",
+    "obl-2867",
+    "obl-3167",
+    "obl-3177",
+    "obl-4160",
+    "obl-4255",
+    "obl-4292",
+    "obl-4382",
+    "obl-4432",
+    "obl-5165",
+    "obl-5166",
+    "obl-5167",
+    "obl-5182",
+    "obl-5205",
+    "obl-5212",
+    "obl-5805",
+    "obl-5867",
+    "obl-5877",
+    "obl-5986",
+    "obl-6012",
+    "obl-6350",
+    "obl-6352",
+    "obl-6353",
+    "obl-6363",
+    "obl-6364",
+    "obl-6406",
+    "obl-6411",
+    "obl-925",
+    "obl-996"
+  ],
+  "source_seed_ids_represented": [
+    "seed-1089",
+    "seed-1164",
+    "seed-1173",
+    "seed-163",
+    "seed-1764",
+    "seed-2154",
+    "seed-2207",
+    "seed-2632",
+    "seed-2746",
+    "seed-2972",
+    "seed-3330",
+    "seed-3337",
+    "seed-3484",
+    "seed-3784",
+    "seed-4220",
+    "seed-4234",
+    "seed-5770",
+    "seed-5939",
+    "seed-6001",
+    "seed-6186",
+    "seed-6277",
+    "seed-7653",
+    "seed-7658",
+    "seed-7659",
+    "seed-7678",
+    "seed-7714",
+    "seed-7731",
+    "seed-8631",
+    "seed-8711",
+    "seed-8732",
+    "seed-9006",
+    "seed-9095",
+    "seed-9697",
+    "seed-9699",
+    "seed-9700",
+    "seed-9714",
+    "seed-9716",
+    "seed-9785",
+    "seed-9790"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0010",
+    "shard-0019",
+    "shard-0020",
+    "shard-0026",
+    "shard-0030",
+    "shard-0031",
+    "shard-0034",
+    "shard-0035",
+    "shard-0036",
+    "shard-0039",
+    "shard-0040",
+    "shard-0042",
+    "shard-0046",
+    "shard-0057",
+    "shard-0058",
+    "shard-0059",
+    "shard-0060",
+    "shard-0061",
+    "shard-0072",
+    "shard-0079",
+    "shard-0080",
+    "shard-0082",
+    "shard-0087"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-00244",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00284 is partial for likely issue: tier-boundary and single-Overseer audit rules are too rigid for package/seam",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00284"
+      ],
+      "source_obligation_ids": [
+        "obl-156"
+      ],
+      "source_seed_ids": [
+        "seed-163"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "likely issue: tier-boundary and single-Overseer audit rules are too rigid for package/seam overseers and automation-first execution."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00829",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01068 is partial for provider-gap disclosure rules (`honored`, `skipped`, `clamped`)",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01068"
+      ],
+      "source_obligation_ids": [
+        "obl-925"
+      ],
+      "source_seed_ids": [
+        "seed-1089"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "provider-gap disclosure rules (`honored`, `skipped`, `clamped`)",
+        "honored",
+        "skipped",
+        "clamped"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00887",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01139 is partial for Manual override lifecycle exists for Persona, but similar presentation rules are less expl",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01139"
+      ],
+      "source_obligation_ids": [
+        "obl-996"
+      ],
+      "source_seed_ids": [
+        "seed-1164"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "Manual override lifecycle exists for Persona, but similar presentation rules are less explicit for provider/model/account/worker-policy overrides."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00896",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01148 is partial for Research Progress - 2026-03-16 - Auto Persona Resolution Rules",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01148"
+      ],
+      "source_obligation_ids": [
+        "obl-1005"
+      ],
+      "source_seed_ids": [
+        "seed-1173"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - Auto Persona Resolution Rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01233",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01568 is partial for Terms that need explicit distinction rules",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01568"
+      ],
+      "source_obligation_ids": [
+        "obl-1425"
+      ],
+      "source_seed_ids": [
+        "seed-1764"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "exact_missing_items": [
+        "Terms that need explicit distinction rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01442",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01850 is partial for concerns need exact identity, lineage, source linking, status, and interaction rules",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01850"
+      ],
+      "source_obligation_ids": [
+        "obl-1707"
+      ],
+      "source_seed_ids": [
+        "seed-2154"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "exact_missing_items": [
+        "concerns need exact identity, lineage, source linking, status, and interaction rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01462",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01875 is partial for Concern lineage now needs more exact rules.",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01875"
+      ],
+      "source_obligation_ids": [
+        "obl-1732"
+      ],
+      "source_seed_ids": [
+        "seed-2207"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "Concern lineage now needs more exact rules."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01688",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02167 is partial for still needs explicit account-switch history semantics and tighter binding between canonica",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02167"
+      ],
+      "source_obligation_ids": [
+        "obl-2024"
+      ],
+      "source_seed_ids": [
+        "seed-2632"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "still needs explicit account-switch history semantics and tighter binding between canonical snapshot rules and downstream event/record families"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01756",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02261 is partial for `usage_event_ref?` is treated as the canonical bridge name in storage/receipt rules, but n",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02261"
+      ],
+      "source_obligation_ids": [
+        "obl-2114"
+      ],
+      "source_seed_ids": [
+        "seed-2746"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`usage_event_ref?` is treated as the canonical bridge name in storage/receipt rules, but no doc actually defines what it is.",
+        "usage_event_ref?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01908",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02445 is partial for title-bar project badges, Projects page cards, command-palette summaries, and attention-ce",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02445"
+      ],
+      "source_obligation_ids": [
+        "obl-2295"
+      ],
+      "source_seed_ids": [
+        "seed-2972"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "title-bar project badges, Projects page cards, command-palette summaries, and attention-center rows should all reuse the same status vocabulary and precedence rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02112",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02690 is partial for session-scoped `always` approvals and reject-cascade rules have no actor/lane/run/account",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02690"
+      ],
+      "source_obligation_ids": [
+        "obl-2537"
+      ],
+      "source_seed_ids": [
+        "seed-3330"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "session-scoped `always` approvals and reject-cascade rules have no actor/lane/run/account scope key",
+        "always"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02118",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02696 is partial for needs immediate correction of canonical `thread_id` semantics and explicit upstream-accoun",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02696"
+      ],
+      "source_obligation_ids": [
+        "obl-2543"
+      ],
+      "source_seed_ids": [
+        "seed-3337"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "needs immediate correction of canonical `thread_id` semantics and explicit upstream-account opacity rules",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02209",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02804 is partial for now clearly needs its operational-identity rules bound into the shared runtime grammar",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02804"
+      ],
+      "source_obligation_ids": [
+        "obl-2651"
+      ],
+      "source_seed_ids": [
+        "seed-3484"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "now clearly needs its operational-identity rules bound into the shared runtime grammar"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02384",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03021 is partial for Worktree/source-control contracts still need rewrite-native authority rules:",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03021"
+      ],
+      "source_obligation_ids": [
+        "obl-2867"
+      ],
+      "source_seed_ids": [
+        "seed-3784"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "Worktree/source-control contracts still need rewrite-native authority rules:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02599",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03321 is partial for Execution-core seams are now pinned to specific missing mint/ownership rules:",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03321"
+      ],
+      "source_obligation_ids": [
+        "obl-3167"
+      ],
+      "source_seed_ids": [
+        "seed-4220"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "Execution-core seams are now pinned to specific missing mint/ownership rules:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02608",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03331 is partial for still lacks the mint/ownership rules that blocked/runtime recovery now depend on.",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03331"
+      ],
+      "source_obligation_ids": [
+        "obl-3177"
+      ],
+      "source_seed_ids": [
+        "seed-4234"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "still lacks the mint/ownership rules that blocked/runtime recovery now depend on."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03370",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04320 is partial for If route-aware navigation becomes canonical, keeping `GATE-010` unchanged will make the st",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04320"
+      ],
+      "source_obligation_ids": [
+        "obl-4160"
+      ],
+      "source_seed_ids": [
+        "seed-5770"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "If route-aware navigation becomes canonical, keeping `GATE-010` unchanged will make the strongest navigation rules effectively unenforced.",
+        "GATE-010"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03451",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04415 is partial for reserved-name ownership remains split across three docs, with `/compact` still showing why",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04415"
+      ],
+      "source_obligation_ids": [
+        "obl-4255"
+      ],
+      "source_seed_ids": [
+        "seed-5939"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "reserved-name ownership remains split across three docs, with `/compact` still showing why copied lists and copied rules are unsafe.",
+        "/compact"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03492",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04460 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04460"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03613",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04604 is partial for resolves through canonical subject/open rules",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04604"
+      ],
+      "source_obligation_ids": [
+        "obl-4382"
+      ],
+      "source_seed_ids": [
+        "seed-6186"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "resolves through canonical subject/open rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03645",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04654 is partial for `OpenSubject` owns `subject_id` and subject realization rules",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04654"
+      ],
+      "source_obligation_ids": [
+        "obl-4432"
+      ],
+      "source_seed_ids": [
+        "seed-6277"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "`OpenSubject` owns `subject_id` and subject realization rules",
+        "OpenSubject",
+        "subject_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04196",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05393 is partial for Research Progress - 2026-03-17 - Canonical route validation and rejection rules",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05393"
+      ],
+      "source_obligation_ids": [
+        "obl-5165"
+      ],
+      "source_seed_ids": [
+        "seed-7653"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - Canonical route validation and rejection rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04197",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05394 is partial for The route layer now needs explicit invalid-combination rules.",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05394"
+      ],
+      "source_obligation_ids": [
+        "obl-5166"
+      ],
+      "source_seed_ids": [
+        "seed-7658"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "The route layer now needs explicit invalid-combination rules."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04198",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05395 is partial for Canonical route validation rules are:",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05395"
+      ],
+      "source_obligation_ids": [
+        "obl-5167"
+      ],
+      "source_seed_ids": [
+        "seed-7659"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "Canonical route validation rules are:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04209",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05410 is partial for A bounded contract needs rejection rules.",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05410"
+      ],
+      "source_obligation_ids": [
+        "obl-5182"
+      ],
+      "source_seed_ids": [
+        "seed-7678"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "A bounded contract needs rejection rules."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04230",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05433 is partial for Scoped identity rules:",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05433"
+      ],
+      "source_obligation_ids": [
+        "obl-5205"
+      ],
+      "source_seed_ids": [
+        "seed-7714"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "Scoped identity rules:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04237",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05440 is partial for Resolver logic must be responsible for applying the correct scoped lookup rules.",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05440"
+      ],
+      "source_obligation_ids": [
+        "obl-5212"
+      ],
+      "source_seed_ids": [
+        "seed-7731"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "Resolver logic must be responsible for applying the correct scoped lookup rules."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04669",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06033 is partial for Later canonical correction text says:",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "## 9. No unreferenced operational text"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06033"
+      ],
+      "source_obligation_ids": [
+        "obl-5805"
+      ],
+      "source_seed_ids": [
+        "seed-8631"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "exact_missing_items": [
+        "Later canonical correction text says:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04712",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06095 is partial for Reconcile worker output and evidence update rules so they align with attempt/node/runtime",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06095"
+      ],
+      "source_obligation_ids": [
+        "obl-5867"
+      ],
+      "source_seed_ids": [
+        "seed-8711"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "Reconcile worker output and evidence update rules so they align with attempt/node/runtime lineage rather than `TierChanged`-driven active-tier state.",
+        "TierChanged"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04719",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06105 is partial for queue-analysis and blocked-state rendering rules keyed to canonical runtime records",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06105"
+      ],
+      "source_obligation_ids": [
+        "obl-5877"
+      ],
+      "source_seed_ids": [
+        "seed-8732"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "queue-analysis and blocked-state rendering rules keyed to canonical runtime records"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04818",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06229 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06229"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04948",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06371 is partial for Research Progress - 2026-03-17 - owner-traceability seam: Decision Log, DRY Rules, Crosswa",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06371"
+      ],
+      "source_obligation_ids": [
+        "obl-6012"
+      ],
+      "source_seed_ids": [
+        "seed-9095"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - owner-traceability seam: Decision Log, DRY Rules, Crosswalk"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05197",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06709 is partial for project-summary, escalation, blocked-owner, and resurfacing rules",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06709"
+      ],
+      "source_obligation_ids": [
+        "obl-6350"
+      ],
+      "source_seed_ids": [
+        "seed-9697"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "project-summary, escalation, blocked-owner, and resurfacing rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05199",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06711 is partial for route/open-subject/bridge-field refinement and verification rules",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06711"
+      ],
+      "source_obligation_ids": [
+        "obl-6352"
+      ],
+      "source_seed_ids": [
+        "seed-9699"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "route/open-subject/bridge-field refinement and verification rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05200",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06712 is partial for Example pattern: `route_target` / `OpenSubject` exist, but precedence, reject rules, examp",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06712"
+      ],
+      "source_obligation_ids": [
+        "obl-6353"
+      ],
+      "source_seed_ids": [
+        "seed-9700"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Example pattern: `route_target` / `OpenSubject` exist, but precedence, reject rules, examples, and scoped-resolution rules are still missing.",
+        "route_target",
+        "OpenSubject"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05209",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06722 is partial for Bridge fields exist, but precedence/join semantics and compatibility fallback rules remain",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06722"
+      ],
+      "source_obligation_ids": [
+        "obl-6363"
+      ],
+      "source_seed_ids": [
+        "seed-9714"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Bridge fields exist, but precedence/join semantics and compatibility fallback rules remain under-specified."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05210",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06723 is partial for Envelope fields landed, but per-family behavior rules and stronger bridge-governance seman",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06723"
+      ],
+      "source_obligation_ids": [
+        "obl-6364"
+      ],
+      "source_seed_ids": [
+        "seed-9716"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Envelope fields landed, but per-family behavior rules and stronger bridge-governance semantics were not fully transferred."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05248",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06770 is partial for Missing blocked-owner / escalation / resurfacing rules will produce inconsistent UX and in",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06770"
+      ],
+      "source_obligation_ids": [
+        "obl-6406"
+      ],
+      "source_seed_ids": [
+        "seed-9785"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Missing blocked-owner / escalation / resurfacing rules will produce inconsistent UX and inconsistent persistence semantics."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05253",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06775 is partial for detailed rules, examples, field schemas, or operational policies often did not",
+      "affected_targets": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "heading": "# DRY Rules (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06775"
+      ],
+      "source_obligation_ids": [
+        "obl-6411"
+      ],
+      "source_seed_ids": [
+        "seed-9790"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "detailed rules, examples, field schemas, or operational policies often did not"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

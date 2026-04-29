@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1011",
+  "group_ids": [
+    "discgrp-4041",
+    "discgrp-4042",
+    "discgrp-4043",
+    "discgrp-4044"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04352",
+      "source_obligation_ids": [
+        "obl-4192"
+      ],
+      "source_seed_ids": [
+        "seed-5822"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileManager.md",
+      "new_heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FileManager.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04353",
+      "source_obligation_ids": [
+        "obl-4193"
+      ],
+      "source_seed_ids": [
+        "seed-5823"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Runtime artifact and projection storage scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04354",
+      "source_obligation_ids": [
+        "obl-4194"
+      ],
+      "source_seed_ids": [
+        "seed-5824"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "### 7.2 Manual \"Prune\" / \"Clean Workspace\" Action",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L429"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04355",
+      "source_obligation_ids": [
+        "obl-4195"
+      ],
+      "source_seed_ids": [
+        "seed-5825"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "#### Open subject navigation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

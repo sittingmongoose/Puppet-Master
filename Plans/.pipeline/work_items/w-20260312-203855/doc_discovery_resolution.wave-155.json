@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-155",
+  "group_ids": [
+    "discgrp-0617",
+    "discgrp-0618",
+    "discgrp-0619",
+    "discgrp-0620"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00864",
+      "source_obligation_ids": [
+        "obl-721"
+      ],
+      "source_seed_ids": [
+        "seed-821",
+        "seed-2043"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0029"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00865",
+      "source_obligation_ids": [
+        "obl-722"
+      ],
+      "source_seed_ids": [
+        "seed-822"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Fidelity recovery addendum",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00866",
+      "source_obligation_ids": [
+        "obl-723"
+      ],
+      "source_seed_ids": [
+        "seed-823"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00867",
+      "source_obligation_ids": [
+        "obl-724"
+      ],
+      "source_seed_ids": [
+        "seed-824"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

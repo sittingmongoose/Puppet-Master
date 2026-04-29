@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-468",
+  "group_ids": [
+    "discgrp-1869",
+    "discgrp-1870",
+    "discgrp-1871",
+    "discgrp-1872"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02126",
+      "source_obligation_ids": [
+        "obl-1983"
+      ],
+      "source_seed_ids": [
+        "seed-2580"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "## 4. Orchestrator Progress widget scope and catalog linkage",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Widget_System.md:L57"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02127",
+      "source_obligation_ids": [
+        "obl-1984"
+      ],
+      "source_seed_ids": [
+        "seed-2581"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 10.7 Event-driven refresh rule",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1251"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02128",
+      "source_obligation_ids": [
+        "obl-1985"
+      ],
+      "source_seed_ids": [
+        "seed-2582"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02129",
+      "source_obligation_ids": [
+        "obl-1986"
+      ],
+      "source_seed_ids": [
+        "seed-2583"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

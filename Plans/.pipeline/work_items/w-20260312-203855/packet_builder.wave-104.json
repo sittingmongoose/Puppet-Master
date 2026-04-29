@@ -1,0 +1,456 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-104",
+  "group_ids": [
+    "pktgrp-0413",
+    "pktgrp-0414",
+    "pktgrp-0415",
+    "pktgrp-0416"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "packet-target-0413",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### 2.0 Command entry contract (doc-level) (Plans/UI_Command_Catalog.md:L68)",
+      "path": "Plans/UI_Command_Catalog.md",
+      "coverage_row_ids": [
+        "cov-00193",
+        "cov-04302",
+        "cov-04372",
+        "cov-04378",
+        "cov-05030",
+        "cov-06059"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-00193",
+          "cov-04302",
+          "cov-04372",
+          "cov-04378",
+          "cov-05030",
+          "cov-06059"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-089",
+        "obl-4142",
+        "obl-4212",
+        "obl-4218",
+        "obl-4806",
+        "obl-5831"
+      ],
+      "source_seed_ids": [
+        "seed-089",
+        "seed-5742",
+        "seed-5855",
+        "seed-5861",
+        "seed-6920",
+        "seed-8664"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0057",
+        "shard-0058",
+        "shard-0066",
+        "shard-0079"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-089",
+          "obl-4142",
+          "obl-4212",
+          "obl-4218",
+          "obl-4806",
+          "obl-5831"
+        ],
+        "source_seed_ids": [
+          "seed-089",
+          "seed-5742",
+          "seed-5855",
+          "seed-5861",
+          "seed-6920",
+          "seed-8664"
+        ],
+        "source_shard_ids": [
+          "shard-0009",
+          "shard-0057",
+          "shard-0058",
+          "shard-0066",
+          "shard-0079"
+        ]
+      },
+      "gap_ids": [
+        "gap-00176",
+        "gap-03361",
+        "gap-03413",
+        "gap-03416",
+        "gap-03936",
+        "gap-04688"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Why it matters: the user can otherwise see one command family while runtime/event contracts expect another.",
+        "That is enough for a flat `element -> command -> handler` contract, but not for the route-aware/navigation-aware model the rewrite is moving toward.",
+        "element -> command -> handler",
+        "`Contracts_V0.md` currently gives the app only a very thin canonical UI command contract:",
+        "Contracts_V0.md",
+        "That is enough to standardize command dispatch mechanically, but not enough to standardize navigation semantics. There is still no canonical contract for:",
+        "keeps `OpenFile` as the path-based file-open contract reference point for UI command work",
+        "OpenFile",
+        "Remove the graph-specific approval command contract as a primary action model."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-71b38ed5fc65",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0518",
+      "source_reconciliation_target_ids": [
+        "target-0518"
+      ],
+      "source_target_ids": [
+        "target-0518"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0518\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Why it matters: the user can otherwise see one command family while runtime/event contracts expect another.\n  - That is enough for a flat `element -> command -> handler` contract, but not for the route-aware/navigation-aware model the rewrite is moving toward.\n  - element -> command -> handler\n  - `Contracts_V0.md` currently gives the app only a very thin canonical UI command contract:\n  - Contracts_V0.md\n  - That is enough to standardize command dispatch mechanically, but not enough to standardize navigation semantics. There is still no canonical contract for:\n  - keeps `OpenFile` as the path-based file-open contract reference point for UI command work\n  - OpenFile\n  - Remove the graph-specific approval command contract as a primary action model.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0414",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### 2.0.1 Acceptance hooks contract (wiring verification) (Plans/UI_Command_Catalog.md:L146)",
+      "path": "Plans/UI_Command_Catalog.md",
+      "coverage_row_ids": [
+        "cov-03877",
+        "cov-05644"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-03877",
+          "cov-05644"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-3722",
+        "obl-5416"
+      ],
+      "source_seed_ids": [
+        "seed-5069",
+        "seed-8045"
+      ],
+      "source_shard_ids": [
+        "shard-0052",
+        "shard-0074"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3722",
+          "obl-5416"
+        ],
+        "source_seed_ids": [
+          "seed-5069",
+          "seed-8045"
+        ],
+        "source_shard_ids": [
+          "shard-0052",
+          "shard-0074"
+        ]
+      },
+      "gap_ids": [
+        "gap-03024",
+        "gap-04394"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "The owner-doc tranche deepened from generic drift into hard SSOT-integrity failures across command registration, wiring verification, and dispatcher/runtime gating.",
+        "The catalog already has a stable command-entry contract and wiring hooks, so the missing piece is command classification and normalization metadata, not a new catalog structure."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-1045e208ce4c",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0519",
+      "source_reconciliation_target_ids": [
+        "target-0519"
+      ],
+      "source_target_ids": [
+        "target-0519"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0519\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - The owner-doc tranche deepened from generic drift into hard SSOT-integrity failures across command registration, wiring verification, and dispatcher/runtime gating.\n  - The catalog already has a stable command-entry contract and wiring hooks, so the missing piece is command classification and normalization metadata, not a new catalog structure.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0415",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### 2.0A Promoted Section 15 command families (Plans/UI_Command_Catalog.md:L65)",
+      "path": "Plans/UI_Command_Catalog.md",
+      "coverage_row_ids": [
+        "cov-03293",
+        "cov-03907",
+        "cov-04726",
+        "cov-06673"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-03293",
+          "cov-03907",
+          "cov-04726",
+          "cov-06673"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-3139",
+        "obl-3752",
+        "obl-4504",
+        "obl-6314"
+      ],
+      "source_seed_ids": [
+        "seed-4176",
+        "seed-5119",
+        "seed-6407",
+        "seed-9545"
+      ],
+      "source_shard_ids": [
+        "shard-0045",
+        "shard-0052",
+        "shard-0062",
+        "shard-0086"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3139",
+          "obl-3752",
+          "obl-4504",
+          "obl-6314"
+        ],
+        "source_seed_ids": [
+          "seed-4176",
+          "seed-5119",
+          "seed-6407",
+          "seed-9545"
+        ],
+        "source_shard_ids": [
+          "shard-0045",
+          "shard-0052",
+          "shard-0062",
+          "shard-0086"
+        ]
+      },
+      "gap_ids": [
+        "gap-02576",
+        "gap-03045",
+        "gap-03691",
+        "gap-05169"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "still internally split on blocked/HITL mutator ownership and still missing command families for account/concern/promotion flows.",
+        "Register/fix the missing command families and remove false catalog/wiring claims:",
+        "canonical runtime recovery command consolidation in `UI_Command_Catalog.md`, where legacy command families become deprecated aliases but consumers map to one shared namespace",
+        "UI_Command_Catalog.md",
+        "it also lists command families that now need revalidation against the newer runtime recovery and route/open model"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "UI_Command_Catalog.md"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "UI_Command_Catalog.md"
+      ],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-7461667c941a",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0520",
+      "source_reconciliation_target_ids": [
+        "target-0520"
+      ],
+      "source_target_ids": [
+        "target-0520"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0520\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - still internally split on blocked/HITL mutator ownership and still missing command families for account/concern/promotion flows.\n  - Register/fix the missing command families and remove false catalog/wiring claims:\n  - canonical runtime recovery command consolidation in `[retired-token-1]`, where legacy command families become deprecated aliases but consumers map to one shared namespace\n  - [retired-token-1]\n  - it also lists command families that now need revalidation against the newer runtime recovery and route/open model\n- Legacy token retirement handling:\n  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0416",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### 2.8A Side-panel and artifacts navigation commands (Plans/UI_Command_Catalog.md:L664)",
+      "path": "Plans/UI_Command_Catalog.md",
+      "coverage_row_ids": [
+        "cov-04907"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-04907"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-4683"
+      ],
+      "source_seed_ids": [
+        "seed-6733"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4683"
+        ],
+        "source_seed_ids": [
+          "seed-6733"
+        ],
+        "source_shard_ids": [
+          "shard-0065"
+        ]
+      },
+      "gap_ids": [
+        "gap-03835"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Research Progress - 2026-03-16 - Command boundary: pure view commands vs route-consuming navigation"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-6f05094320ac",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0522",
+      "source_reconciliation_target_ids": [
+        "target-0522"
+      ],
+      "source_target_ids": [
+        "target-0522"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0522\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Research Progress - 2026-03-16 - Command boundary: pure view commands vs route-consuming navigation\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-00193",
+    "cov-04302",
+    "cov-04372",
+    "cov-04378",
+    "cov-05030",
+    "cov-06059",
+    "cov-03877",
+    "cov-05644",
+    "cov-03293",
+    "cov-03907",
+    "cov-04726",
+    "cov-06673",
+    "cov-04907"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-089",
+    "obl-4142",
+    "obl-4212",
+    "obl-4218",
+    "obl-4806",
+    "obl-5831",
+    "obl-3722",
+    "obl-5416",
+    "obl-3139",
+    "obl-3752",
+    "obl-4504",
+    "obl-6314",
+    "obl-4683"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-089",
+    "seed-5742",
+    "seed-5855",
+    "seed-5861",
+    "seed-6920",
+    "seed-8664",
+    "seed-5069",
+    "seed-8045",
+    "seed-4176",
+    "seed-5119",
+    "seed-6407",
+    "seed-9545",
+    "seed-6733"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0009",
+    "shard-0057",
+    "shard-0058",
+    "shard-0066",
+    "shard-0079",
+    "shard-0052",
+    "shard-0074",
+    "shard-0045",
+    "shard-0062",
+    "shard-0086",
+    "shard-0065"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "preserved_exact_required_items": [
+    "Why it matters: the user can otherwise see one command family while runtime/event contracts expect another.",
+    "That is enough for a flat `element -> command -> handler` contract, but not for the route-aware/navigation-aware model the rewrite is moving toward.",
+    "element -> command -> handler",
+    "`Contracts_V0.md` currently gives the app only a very thin canonical UI command contract:",
+    "Contracts_V0.md",
+    "That is enough to standardize command dispatch mechanically, but not enough to standardize navigation semantics. There is still no canonical contract for:",
+    "keeps `OpenFile` as the path-based file-open contract reference point for UI command work",
+    "OpenFile",
+    "Remove the graph-specific approval command contract as a primary action model.",
+    "The owner-doc tranche deepened from generic drift into hard SSOT-integrity failures across command registration, wiring verification, and dispatcher/runtime gating.",
+    "The catalog already has a stable command-entry contract and wiring hooks, so the missing piece is command classification and normalization metadata, not a new catalog structure.",
+    "still internally split on blocked/HITL mutator ownership and still missing command families for account/concern/promotion flows.",
+    "Register/fix the missing command families and remove false catalog/wiring claims:",
+    "canonical runtime recovery command consolidation in `UI_Command_Catalog.md`, where legacy command families become deprecated aliases but consumers map to one shared namespace",
+    "UI_Command_Catalog.md",
+    "it also lists command families that now need revalidation against the newer runtime recovery and route/open model",
+    "Research Progress - 2026-03-16 - Command boundary: pure view commands vs route-consuming navigation"
+  ],
+  "blocked_targets": []
+}

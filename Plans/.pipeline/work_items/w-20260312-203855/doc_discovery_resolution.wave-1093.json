@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1093",
+  "group_ids": [
+    "discgrp-4369",
+    "discgrp-4370",
+    "discgrp-4371",
+    "discgrp-4372"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04746",
+      "source_obligation_ids": [
+        "obl-4524"
+      ],
+      "source_seed_ids": [
+        "seed-6437"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04747",
+      "source_obligation_ids": [
+        "obl-4525"
+      ],
+      "source_seed_ids": [
+        "seed-6438"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04748",
+      "source_obligation_ids": [
+        "obl-4526"
+      ],
+      "source_seed_ids": [
+        "seed-6439"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04749",
+      "source_obligation_ids": [
+        "obl-4527"
+      ],
+      "source_seed_ids": [
+        "seed-6440"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Progression_Gates.md",
+      "new_heading_hint": "## GATE-014 -- Document Set packaging verification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Progression_Gates.md:L414"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

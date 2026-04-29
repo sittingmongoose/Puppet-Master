@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-951",
+  "group_ids": [
+    "discgrp-3801",
+    "discgrp-3802",
+    "discgrp-3803",
+    "discgrp-3804"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04103",
+      "source_obligation_ids": [
+        "obl-3945"
+      ],
+      "source_seed_ids": [
+        "seed-5404"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### Progress catalog source and default drills",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L910"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04107",
+      "source_obligation_ids": [
+        "obl-3947"
+      ],
+      "source_seed_ids": [
+        "seed-5411"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "## 2. Canonical command IDs",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L64"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04108",
+      "source_obligation_ids": [
+        "obl-3948"
+      ],
+      "source_seed_ids": [
+        "seed-5412"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04109",
+      "source_obligation_ids": [
+        "obl-3949"
+      ],
+      "source_seed_ids": [
+        "seed-5413"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "### Browser/device login execution contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L163"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1529",
+  "group_ids": [
+    "discgrp-6113",
+    "discgrp-6114",
+    "discgrp-6115",
+    "discgrp-6116"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06754",
+      "source_obligation_ids": [
+        "obl-6390"
+      ],
+      "source_seed_ids": [
+        "seed-9754"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Additional shell/runtime identities required by the promoted Section 15 feature set",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L251"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06755",
+      "source_obligation_ids": [
+        "obl-6391"
+      ],
+      "source_seed_ids": [
+        "seed-9755"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "## 6. Ambiguity vs. Missing User Intent",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06757",
+      "source_obligation_ids": [
+        "obl-6393"
+      ],
+      "source_seed_ids": [
+        "seed-9757"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06758",
+      "source_obligation_ids": [
+        "obl-6394"
+      ],
+      "source_seed_ids": [
+        "seed-9758"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-016 -- Token fields are never aggregated at storage layer",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L148"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

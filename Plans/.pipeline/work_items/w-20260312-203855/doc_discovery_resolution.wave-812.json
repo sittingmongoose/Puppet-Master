@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-812",
+  "group_ids": [
+    "discgrp-3245",
+    "discgrp-3246",
+    "discgrp-3247",
+    "discgrp-3248"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03525",
+      "source_obligation_ids": [
+        "obl-3371"
+      ],
+      "source_seed_ids": [
+        "seed-4536"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Runtime artifact and projection storage scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03526",
+      "source_obligation_ids": [
+        "obl-3372"
+      ],
+      "source_seed_ids": [
+        "seed-4541"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-033: Concern linkage to adjacent families",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L83"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03527",
+      "source_obligation_ids": [
+        "obl-3373"
+      ],
+      "source_seed_ids": [
+        "seed-4542"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Worktree/lane lifecycle, handshake, and cleanup lineage baseline",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L501"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03528",
+      "source_obligation_ids": [
+        "obl-3374"
+      ],
+      "source_seed_ids": [
+        "seed-4543"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

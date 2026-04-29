@@ -1,0 +1,114 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-086",
+  "group_ids": [
+    "discgrp-0341",
+    "discgrp-0342",
+    "discgrp-0343",
+    "discgrp-0344"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00588",
+      "source_obligation_ids": [
+        "obl-445"
+      ],
+      "source_seed_ids": [
+        "seed-515",
+        "seed-1517",
+        "seed-1522",
+        "seed-1759"
+      ],
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0024",
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00589",
+      "source_obligation_ids": [
+        "obl-446"
+      ],
+      "source_seed_ids": [
+        "seed-516",
+        "seed-1518",
+        "seed-1523",
+        "seed-1760"
+      ],
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0024",
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00590",
+      "source_obligation_ids": [
+        "obl-447"
+      ],
+      "source_seed_ids": [
+        "seed-517",
+        "seed-1519",
+        "seed-1524",
+        "seed-1761"
+      ],
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0024",
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "# Glossary (Canonical)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Glossary.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00591",
+      "source_obligation_ids": [
+        "obl-448"
+      ],
+      "source_seed_ids": [
+        "seed-518",
+        "seed-1520",
+        "seed-1526",
+        "seed-1762"
+      ],
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0024",
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Degraded draft warning",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2500"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

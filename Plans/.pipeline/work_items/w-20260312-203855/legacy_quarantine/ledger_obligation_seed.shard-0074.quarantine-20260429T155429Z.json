@@ -1,0 +1,118 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0074",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0074-L014601-L014800.md",
+  "source_line_range": "L014601-L014800",
+  "seed_candidates": [
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "primitive ownership consumption split",
+      "exact_items": [
+        "Plans/Contracts_V0.md owns route/open contract shapes",
+        "storage-plan.md owns persisted refs like preview_subject_id and resume_url",
+        "FileManager.md owns OpenFile",
+        "consumer docs only realize those primitives"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/storage-plan.md",
+        "Plans/FileManager.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "preview_subject_id",
+        "resume_url",
+        "OpenFile"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L14745-L14759"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Contracts chapter route_target OpenSubject placement",
+      "exact_items": [
+        "add canonical route_target contract section under chapter 7",
+        "add canonical OpenSubject contract section under chapter 7",
+        "keep WiringEntry after them"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "route_target",
+        "OpenSubject",
+        "WiringEntry"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L14773-L14785"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Crosswalk route-open primitive boundary",
+      "exact_items": [
+        "add a primitive boundary for route-target / open-by-identity navigation",
+        "update UICommand boundary text so command IDs stay stable while route/open semantics live in Contracts",
+        "update stale OrchestratorPage boundary text to the rewrite tab model"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "UICommand",
+        "OrchestratorPage"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L14778-L14781"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "catalog stale navigation command examples",
+      "exact_items": [
+        "cmd.source_control.select_worktree",
+        "cmd.chat.open_thread_usage",
+        "cmd.chat.focus_thread_usage",
+        "cmd.panel.switch with contextual object refs"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "cmd.source_control.select_worktree",
+        "cmd.chat.open_thread_usage",
+        "cmd.chat.focus_thread_usage",
+        "cmd.panel.switch"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L14794-L14799"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "working_ledger.md:L14601-L14610 surface-boundary summary",
+    "working_ledger.md:L14623-L14637 contradiction/gap commentary",
+    "working_ledger.md:L14648-L14684 preview-subject identity discussion",
+    "working_ledger.md:L14689-L14731 tranche closure discussion",
+    "working_ledger.md:L14793-L14800 catalog/GUI seam summary"
+  ],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0074"
+}

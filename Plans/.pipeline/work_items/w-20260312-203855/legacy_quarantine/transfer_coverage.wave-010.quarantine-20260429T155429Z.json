@@ -1,0 +1,273 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-010",
+  "timestamp_utc": "2026-04-28T19:38:34Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-037",
+    "coverage-rowgrp-038",
+    "coverage-rowgrp-039",
+    "coverage-rowgrp-040"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-037 cov-172,cov-405,cov-728,cov-866,cov-880,cov-1127 Plans/Crosswalk.md",
+    "rowgrp-038 cov-1118 Plans/DRY_Rules.md",
+    "rowgrp-039 cov-1105,cov-1130,cov-1170 Plans/DRY_Rules.md",
+    "rowgrp-040 cov-1126 Plans/DRY_Rules.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-037": "completed_reduced_conservatively",
+    "coverage-rowgrp-038": "completed_reduced_conservatively",
+    "coverage-rowgrp-039": "completed",
+    "coverage-rowgrp-040": "completed_reduced_conservatively"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-172",
+    "cov-405",
+    "cov-728",
+    "cov-866",
+    "cov-880",
+    "cov-1127",
+    "cov-1118",
+    "cov-1105",
+    "cov-1130",
+    "cov-1170",
+    "cov-1126"
+  ],
+  "coverage_ids_completed": [
+    "cov-172",
+    "cov-405",
+    "cov-728",
+    "cov-866",
+    "cov-880",
+    "cov-1127",
+    "cov-1118",
+    "cov-1105",
+    "cov-1130",
+    "cov-1170",
+    "cov-1126"
+  ],
+  "path_groups_assigned": [
+    "Plans/Crosswalk.md",
+    "Plans/DRY_Rules.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-172",
+      "status": "missing",
+      "evidence": [
+        "Plans/Crosswalk.md: assigned file reviewed; no live tier-boundary, single-Overseer, or tier-terms cleanup coverage found"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "No live stale-token occurrence or row-specific cleanup coverage was found in Plans/Crosswalk.md.",
+      "source_obligation_ids": [
+        "obl-046"
+      ],
+      "source_seed_ids": [
+        "seed-046"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-405",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:199 historical projection behavior is referenced"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Only adjacent historical vocabulary appears; the full shared historical-semantic vocabulary is not covered in Crosswalk.md.",
+      "source_obligation_ids": [
+        "obl-119"
+      ],
+      "source_seed_ids": [
+        "seed-119"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-728",
+      "status": "missing",
+      "evidence": [
+        "Plans/Crosswalk.md: assigned file reviewed; no matching tier-era consumer or old worktree/tier cleanup coverage found"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "No live stale-token occurrence or row-specific cleanup coverage was found in Plans/Crosswalk.md.",
+      "source_obligation_ids": [
+        "obl-198"
+      ],
+      "source_seed_ids": [
+        "seed-198"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-866",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:88 route_target strings resolve through a cascade"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "route_target appears in Crosswalk.md, but route-local surrogate ID retirement is not fully covered.",
+      "source_obligation_ids": [
+        "obl-243"
+      ],
+      "source_seed_ids": [
+        "seed-243"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-880",
+      "status": "missing",
+      "evidence": [
+        "Plans/Crosswalk.md: assigned file reviewed; no live cmd.runtime.*, subject_id, object_kind, or object_id migration-discipline coverage found"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "No row-specific raw local ID migration discipline coverage was found in Plans/Crosswalk.md.",
+      "source_obligation_ids": [
+        "obl-247"
+      ],
+      "source_seed_ids": [
+        "seed-247"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1127",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:50 ContractRef is present",
+        "Plans/Crosswalk.md:81 ContractRef uses ContractName:Contracts_V0.md without the Plans/ path form"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "ContractRef anchor cleanup pressure is visible, but duplicate-number and section-anchor cleanup are not fully covered.",
+      "source_obligation_ids": [
+        "obl-326"
+      ],
+      "source_seed_ids": [
+        "seed-326"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1118",
+      "status": "partial",
+      "evidence": [
+        "Plans/DRY_Rules.md:56 ContractName:Plans/Contracts_V0.md is used in section 2",
+        "Plans/DRY_Rules.md:105 ContractName:<path>#<anchor> is allowed by taxonomy",
+        "Plans/DRY_Rules.md:126 ContractRef references GATE-009",
+        "Plans/DRY_Rules.md:185-197 references GATE-011 in the coverage/reference area"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "The traceability-format weakness is evidenced, but the blocker is not fully resolved in DRY_Rules.md.",
+      "source_obligation_ids": [
+        "obl-324"
+      ],
+      "source_seed_ids": [
+        "seed-324"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1105",
+      "status": "missing",
+      "evidence": [
+        "Plans/DRY_Rules.md:41 stale canonical text must be replaced or retired"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Only generic stale-canon guidance appears; the duplicated canonical sections, malformed ContractRefs, lowercase normative text, and OpenCode/GUI checklist owner gaps are not covered.",
+      "source_obligation_ids": [
+        "obl-320"
+      ],
+      "source_seed_ids": [
+        "seed-320"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1130",
+      "status": "missing",
+      "evidence": [
+        "Plans/DRY_Rules.md:100-115 ContractRef taxonomy is defined"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "DRY_Rules.md defines the taxonomy but does not contain or resolve the assigned Progression_Gates taxonomy violation.",
+      "source_obligation_ids": [
+        "obl-328"
+      ],
+      "source_seed_ids": [
+        "seed-328"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1170",
+      "status": "missing",
+      "evidence": [
+        "Plans/DRY_Rules.md: assigned file reviewed; no matching MUST CHANGE / MUST RECONCILE / MUST VERIFY packet inclusion category coverage found"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Assigned packet inclusion categories are absent from Plans/DRY_Rules.md.",
+      "source_obligation_ids": [
+        "obl-339"
+      ],
+      "source_seed_ids": [
+        "seed-339"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1126",
+      "status": "partial",
+      "evidence": [
+        "Plans/DRY_Rules.md:19 ContractRef is present",
+        "Plans/DRY_Rules.md:126 ContractRef anchors GATE-009",
+        "Plans/DRY_Rules.md:185-197 GATE-011 and requirement coverage references appear"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "ContractRef anchor cleanup pressure is visible, but duplicate-number and section-anchor cleanup prioritization is not fully covered.",
+      "source_obligation_ids": [
+        "obl-326"
+      ],
+      "source_seed_ids": [
+        "seed-326"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

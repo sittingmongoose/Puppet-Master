@@ -1,0 +1,121 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-346",
+  "group_ids": [
+    "discgrp-1381",
+    "discgrp-1382",
+    "discgrp-1383",
+    "discgrp-1384"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01632",
+      "source_obligation_ids": [
+        "obl-1489"
+      ],
+      "source_seed_ids": [
+        "seed-1841"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "# Assistant & Chat UI -- Design Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01633",
+      "source_obligation_ids": [
+        "obl-1490"
+      ],
+      "source_seed_ids": [
+        "seed-1844",
+        "seed-4657",
+        "seed-8255",
+        "seed-8728"
+      ],
+      "source_shard_ids": [
+        "shard-0027",
+        "shard-0049",
+        "shard-0076",
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01634",
+      "source_obligation_ids": [
+        "obl-1491"
+      ],
+      "source_seed_ids": [
+        "seed-1845",
+        "seed-4659",
+        "seed-4703",
+        "seed-8257",
+        "seed-8729",
+        "seed-9466"
+      ],
+      "source_shard_ids": [
+        "shard-0027",
+        "shard-0049",
+        "shard-0076",
+        "shard-0080",
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01635",
+      "source_obligation_ids": [
+        "obl-1492"
+      ],
+      "source_seed_ids": [
+        "seed-1846",
+        "seed-5410",
+        "seed-5479",
+        "seed-6088",
+        "seed-6191",
+        "seed-6319",
+        "seed-7214"
+      ],
+      "source_shard_ids": [
+        "shard-0027",
+        "shard-0054",
+        "shard-0055",
+        "shard-0059",
+        "shard-0060",
+        "shard-0061",
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

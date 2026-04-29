@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1008",
+  "group_ids": [
+    "discgrp-4029",
+    "discgrp-4030",
+    "discgrp-4031",
+    "discgrp-4032"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04340",
+      "source_obligation_ids": [
+        "obl-4180"
+      ],
+      "source_seed_ids": [
+        "seed-5806"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04341",
+      "source_obligation_ids": [
+        "obl-4181"
+      ],
+      "source_seed_ids": [
+        "seed-5807"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04342",
+      "source_obligation_ids": [
+        "obl-4182"
+      ],
+      "source_seed_ids": [
+        "seed-5808"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### Progress catalog source and default drills",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L910"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04343",
+      "source_obligation_ids": [
+        "obl-4183"
+      ],
+      "source_seed_ids": [
+        "seed-5813"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "#### Open subject navigation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

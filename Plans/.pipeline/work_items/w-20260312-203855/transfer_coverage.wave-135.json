@@ -1,0 +1,566 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-135",
+  "row_group_ids": [
+    "rowgrp-0537",
+    "rowgrp-0538",
+    "rowgrp-0539",
+    "rowgrp-0540"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-05685",
+      "source_obligation_ids": [
+        "obl-5457"
+      ],
+      "source_seed_ids": [
+        "seed-8100"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "The matrix schema cannot represent \u201cthis command is a wrapper over canonical route/open se",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "# OpenCode Coverage Matrix (Audit)",
+      "status": "partial",
+      "exact_items": [
+        "The matrix schema cannot represent \u201cthis command is a wrapper over canonical route/open semantics\u201d without smuggling that meaning into prose."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05691",
+      "source_obligation_ids": [
+        "obl-5463"
+      ],
+      "source_seed_ids": [
+        "seed-8107"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "The matrix schema limitation and the evidence schema limitation are different problems.",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "# OpenCode Coverage Matrix (Audit)",
+      "status": "partial",
+      "exact_items": [
+        "The matrix schema limitation and the evidence schema limitation are different problems."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06248",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L60",
+        "Plans/OpenCode_Coverage_Matrix.md:L77"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06417",
+      "source_obligation_ids": [
+        "obl-6058"
+      ],
+      "source_seed_ids": [
+        "seed-9156"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "`GATE-010` still validates flat wiring coverage only. It does not validate:",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "# OpenCode Coverage Matrix (Audit)",
+      "status": "partial",
+      "exact_items": [
+        "`GATE-010` still validates flat wiring coverage only. It does not validate:",
+        "GATE-010"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06431",
+      "source_obligation_ids": [
+        "obl-6072"
+      ],
+      "source_seed_ids": [
+        "seed-9178"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "extend `GATE-010` coverage so routing/wrapper normalization can be verified through comman",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "# OpenCode Coverage Matrix (Audit)",
+      "status": "partial",
+      "exact_items": [
+        "extend `GATE-010` coverage so routing/wrapper normalization can be verified through command-definition metadata plus wiring evidence",
+        "GATE-010"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06811",
+      "source_obligation_ids": [
+        "obl-6434"
+      ],
+      "source_seed_ids": [
+        "seed-9813"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "deterministic resolver matrix and actor\u2192persona defaults",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "# OpenCode Coverage Matrix (Audit)",
+      "status": "partial",
+      "exact_items": [
+        "deterministic resolver matrix and actor\u2192persona defaults"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06967",
+      "source_obligation_ids": [
+        "obl-6567"
+      ],
+      "source_seed_ids": [
+        "seed-9996"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "The current unresolved set is sharp enough that another broad audit pass would mostly reco",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "# OpenCode Coverage Matrix (Audit)",
+      "status": "partial",
+      "exact_items": [
+        "The current unresolved set is sharp enough that another broad audit pass would mostly reconfirm existing evidence."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07100",
+      "source_obligation_ids": [
+        "obl-6680"
+      ],
+      "source_seed_ids": [
+        "seed-10251"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "The next useful stage is `Ledger Condenser`, not another immediate audit wave.",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "# OpenCode Coverage Matrix (Audit)",
+      "status": "partial",
+      "exact_items": [
+        "The next useful stage is `Ledger Condenser`, not another immediate audit wave.",
+        "Ledger Condenser"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04419",
+      "source_obligation_ids": [
+        "obl-4259"
+      ],
+      "source_seed_ids": [
+        "seed-5943"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "`UI_Wiring_Rules.md` still has no deterministic alias/deprecated-ID handling, no enforced",
+      "row_type": "stale_retirement",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "# OpenCode Coverage Matrix (Audit)",
+      "status": "present",
+      "exact_items": [
+        "`UI_Wiring_Rules.md` still has no deterministic alias/deprecated-ID handling, no enforced stale revalidation handshake, and no inverse owner-doc-to-catalog coverage rule.",
+        "UI_Wiring_Rules.md"
+      ],
+      "stale_tokens": [
+        "UI_Wiring_Rules.md"
+      ],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L1-L210 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04900",
+      "source_obligation_ids": [
+        "obl-4677"
+      ],
+      "source_seed_ids": [
+        "seed-6696"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "`OpenCode_Coverage_Matrix.md` is no longer broad enough to audit current rewrite concerns",
+      "row_type": "stale_retirement",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "# OpenCode Coverage Matrix (Audit)",
+      "status": "present",
+      "exact_items": [
+        "`OpenCode_Coverage_Matrix.md` is no longer broad enough to audit current rewrite concerns because it omits multi-account/runtime-correlation coverage dimensions and now contains stale fix recommendations.",
+        "OpenCode_Coverage_Matrix.md"
+      ],
+      "stale_tokens": [
+        "OpenCode_Coverage_Matrix.md"
+      ],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L1-L210 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06169",
+      "source_obligation_ids": [
+        "obl-5941"
+      ],
+      "source_seed_ids": [
+        "seed-8840"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`OpenCode_Coverage_Matrix.md` is now stale both structurally and procedurally: missing aud",
+      "row_type": "stale_retirement",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "# OpenCode Coverage Matrix (Audit)",
+      "status": "present",
+      "exact_items": [
+        "`OpenCode_Coverage_Matrix.md` is now stale both structurally and procedurally: missing audit rows it claims to cover, stale fix-status entries, and matrix assumptions that no longer match current OpenCode / bridged-provider identity contracts.",
+        "OpenCode_Coverage_Matrix.md"
+      ],
+      "stale_tokens": [
+        "OpenCode_Coverage_Matrix.md"
+      ],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L1-L210 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06956",
+      "source_obligation_ids": [
+        "obl-6556"
+      ],
+      "source_seed_ids": [
+        "seed-9966"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "This pass keeps all `8` blocker families open, but it sharpens the unresolved set so follo",
+      "row_type": "stale_retirement",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "### 3.2 SSOT docs missing stable anchors",
+      "status": "missing",
+      "exact_items": [
+        "This pass keeps all `8` blocker families open, but it sharpens the unresolved set so follow-on audit work can target exact missing anchors and stale survivors instead of re-auditing already transferred fields.",
+        "8"
+      ],
+      "stale_tokens": [
+        "8"
+      ],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L9",
+        "Plans/OpenCode_Coverage_Matrix.md:L26",
+        "Plans/OpenCode_Coverage_Matrix.md:L30",
+        "Plans/OpenCode_Coverage_Matrix.md:L46",
+        "Plans/OpenCode_Coverage_Matrix.md:L56"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-01481",
+      "source_obligation_ids": [
+        "obl-1338"
+      ],
+      "source_seed_ids": [
+        "seed-1629"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "canonical findings summaries and prose summaries are artifacts/views that must still resol",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "#### 7B.5 Compaction triggers and continuation summaries",
+      "status": "partial",
+      "exact_items": [
+        "canonical findings summaries and prose summaries are artifacts/views that must still resolve back to exact records"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L189"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01743",
+      "source_obligation_ids": [
+        "obl-1600"
+      ],
+      "source_seed_ids": [
+        "seed-1999"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "`resume_url` deep links for wizard/interview recovery",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "# OpenCode Deep Extraction (for Puppet Master)",
+      "status": "partial",
+      "exact_items": [
+        "`resume_url` deep links for wizard/interview recovery",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04367",
+      "source_obligation_ids": [
+        "obl-4207"
+      ],
+      "source_seed_ids": [
+        "seed-5846"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "Keep route payloads and subject-open semantics aligned so deep links, preview restore, art",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "# OpenCode Deep Extraction (for Puppet Master)",
+      "status": "partial",
+      "exact_items": [
+        "Keep route payloads and subject-open semantics aligned so deep links, preview restore, artifact opens, and cross-surface pivots all resolve through the same identity model."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05648",
+      "source_obligation_ids": [
+        "obl-5420"
+      ],
+      "source_seed_ids": [
+        "seed-8049"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "`resume_url` as a strong standalone deep-link mechanism",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "#### 7B.2 Subagent invocation mechanism",
+      "status": "partial",
+      "exact_items": [
+        "`resume_url` as a strong standalone deep-link mechanism",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L147"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05949",
+      "source_obligation_ids": [
+        "obl-5721"
+      ],
+      "source_seed_ids": [
+        "seed-8501"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "canon_label": "This is the upstream language source for several downstream consumer drifts already logged",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "## 5. Output format (for downstream agents)",
+      "status": "partial",
+      "exact_items": [
+        "This is the upstream language source for several downstream consumer drifts already logged."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L59"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06334",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L88"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00723",
+      "source_obligation_ids": [
+        "obl-580"
+      ],
+      "source_seed_ids": [
+        "seed-661"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "There is no current canonical routing payload shared across search, deep links, and cross-",
+      "row_type": "layout_blocker",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "# OpenCode Deep Extraction (for Puppet Master)",
+      "status": "partial",
+      "exact_items": [
+        "There is no current canonical routing payload shared across search, deep links, and cross-tab navigation."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02103",
+      "source_obligation_ids": [
+        "obl-1960"
+      ],
+      "source_seed_ids": [
+        "seed-2549"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "search results, deep links, and inspector panes should reuse the same canonical term label",
+      "row_type": "layout_blocker",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "# OpenCode Deep Extraction (for Puppet Master)",
+      "status": "partial",
+      "exact_items": [
+        "search results, deep links, and inspector panes should reuse the same canonical term labels as help entries"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02965",
+      "source_obligation_ids": [
+        "obl-2812"
+      ],
+      "source_seed_ids": [
+        "seed-3707"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "`cost_usage` still does not require a durable usage/switch join key strongly enough to bac",
+      "row_type": "layout_blocker",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "# OpenCode Deep Extraction (for Puppet Master)",
+      "status": "partial",
+      "exact_items": [
+        "`cost_usage` still does not require a durable usage/switch join key strongly enough to back the promised Usage/Ledger deep links",
+        "cost_usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    }
+  ]
+}

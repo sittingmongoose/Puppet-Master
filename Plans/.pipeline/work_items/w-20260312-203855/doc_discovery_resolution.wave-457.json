@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-457",
+  "group_ids": [
+    "discgrp-1825",
+    "discgrp-1826",
+    "discgrp-1827",
+    "discgrp-1828"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02082",
+      "source_obligation_ids": [
+        "obl-1939"
+      ],
+      "source_seed_ids": [
+        "seed-2509"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-075: Historical semantic consistency",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L107"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02083",
+      "source_obligation_ids": [
+        "obl-1940"
+      ],
+      "source_seed_ids": [
+        "seed-2512"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Account pressure, history, and runtime attribution baseline",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L491"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02084",
+      "source_obligation_ids": [
+        "obl-1941"
+      ],
+      "source_seed_ids": [
+        "seed-2518"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Orchestrator rewrite terms",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L56"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02085",
+      "source_obligation_ids": [
+        "obl-1942"
+      ],
+      "source_seed_ids": [
+        "seed-2519"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-011 -- UI command dispatch only (Rule 1)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L108"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

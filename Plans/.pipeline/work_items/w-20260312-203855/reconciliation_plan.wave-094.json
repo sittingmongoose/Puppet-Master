@@ -1,0 +1,370 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-094",
+  "group_ids": [
+    "recgrp-0373",
+    "recgrp-0374",
+    "recgrp-0375",
+    "recgrp-0376"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0373",
+      "path": "Plans/Models_System.md",
+      "mapped_owner_heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)",
+      "live_anchor": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06) (Plans/Models_System.md:L586)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-01158",
+        "cov-01160",
+        "cov-01162",
+        "cov-01163",
+        "cov-01164",
+        "cov-01165",
+        "cov-01166",
+        "cov-01169",
+        "cov-01170",
+        "cov-01189",
+        "cov-01195",
+        "cov-01556",
+        "cov-03008",
+        "cov-03875"
+      ],
+      "source_obligation_ids": [
+        "obl-1015",
+        "obl-1017",
+        "obl-1019",
+        "obl-1020",
+        "obl-1021",
+        "obl-1022",
+        "obl-1023",
+        "obl-1026",
+        "obl-1027",
+        "obl-1046",
+        "obl-1052",
+        "obl-1413",
+        "obl-2854",
+        "obl-3720"
+      ],
+      "source_seed_ids": [
+        "seed-1189",
+        "seed-1192",
+        "seed-1195",
+        "seed-1196",
+        "seed-1197",
+        "seed-1198",
+        "seed-1199",
+        "seed-1202",
+        "seed-1205",
+        "seed-1224",
+        "seed-1230",
+        "seed-1735",
+        "seed-3764",
+        "seed-5055"
+      ],
+      "source_shard_ids": [
+        "shard-0020",
+        "shard-0021",
+        "shard-0026",
+        "shard-0042",
+        "shard-0052"
+      ],
+      "gap_ids": [
+        "gap-00902",
+        "gap-00904",
+        "gap-00906",
+        "gap-00907",
+        "gap-00908",
+        "gap-00909",
+        "gap-00910",
+        "gap-00913",
+        "gap-00914",
+        "gap-00927",
+        "gap-00931",
+        "gap-01226",
+        "gap-02375",
+        "gap-03022"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "a reviewer/reviewer-pass should not silently become a coding persona just because the repo is Rust-heavy",
+        "execution/governance persona biased toward package-local delivery and readiness truth",
+        "implementation persona biased by language/framework/work type",
+        "review persona distinct from drafting/implementation persona",
+        "review/challenge persona distinct from original claimer",
+        "troubleshooting/recovery persona",
+        "planning/architecture persona",
+        "do not block solely because a preferred Persona is unavailable",
+        "skipped Persona controls where relevant",
+        "historical runs keep their frozen effective Persona state",
+        "historical runs must preserve the resolved effective Persona and reason from the time of execution.",
+        "skipped vs honored/clamped Persona controls",
+        "Persona display is not a substitute for actor/role identity.",
+        "The strongest existing anchor for `operational_identity` is the receipt/bridge family, not the persona snapshot family.",
+        "operational_identity"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-8bac2fbe92fa",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0374",
+      "path": "Plans/Models_System.md",
+      "mapped_owner_heading": "## 6. Variants system",
+      "live_anchor": "## 6. Variants system (Plans/Models_System.md:L373)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-01230",
+        "cov-02074"
+      ],
+      "source_obligation_ids": [
+        "obl-1087",
+        "obl-1931"
+      ],
+      "source_seed_ids": [
+        "seed-1281",
+        "seed-2495"
+      ],
+      "source_shard_ids": [
+        "shard-0021",
+        "shard-0033"
+      ],
+      "gap_ids": [
+        "gap-00952",
+        "gap-01612"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "expert and ELI5 variants should share the same concept skeleton",
+        "The app already has a strong authored-copy mechanism for `Expert` vs `ELI5` variants.",
+        "Expert",
+        "ELI5"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-ec465e5b9b9c",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0375",
+      "path": "Plans/Models_System.md",
+      "mapped_owner_heading": "## Model Selection Versus Runtime Retry Ownership Consolidation Addendum (2026-03-09)",
+      "live_anchor": "## Model Selection Versus Runtime Retry Ownership Consolidation Addendum (2026-03-09) (Plans/Models_System.md:L882)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00462",
+        "cov-02328"
+      ],
+      "source_obligation_ids": [
+        "obl-319",
+        "obl-2180"
+      ],
+      "source_seed_ids": [
+        "seed-368",
+        "seed-2832"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0035"
+      ],
+      "gap_ids": [
+        "gap-00361",
+        "gap-01808"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Contracts_V0.md` is closer to the target than many downstream docs, but it still needs addendum consolidation to stop reintroducing ambiguity from inside the supposed SSOT.",
+        "Contracts_V0.md",
+        "still the primary SSOT for canonical payloads, but now clearly needs addendum consolidation plus actor-envelope ownership"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-252a00ebcbba",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0376",
+      "path": "Plans/Models_System.md",
+      "mapped_owner_heading": "## Provider/model precedence and settings resolution",
+      "live_anchor": "## Provider/model precedence and settings resolution (Plans/Models_System.md:L42)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-03465",
+        "cov-06797"
+      ],
+      "source_obligation_ids": [
+        "obl-3311",
+        "obl-6426"
+      ],
+      "source_seed_ids": [
+        "seed-4438",
+        "seed-9805"
+      ],
+      "source_shard_ids": [
+        "shard-0047",
+        "shard-0088"
+      ],
+      "gap_ids": [
+        "gap-02710",
+        "gap-05272"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "it links to provider/model settings",
+        "Export / settings / persona transfer gaps are broader than first summarized"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-27d3362fdc90",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-01158",
+    "cov-01160",
+    "cov-01162",
+    "cov-01163",
+    "cov-01164",
+    "cov-01165",
+    "cov-01166",
+    "cov-01169",
+    "cov-01170",
+    "cov-01189",
+    "cov-01195",
+    "cov-01556",
+    "cov-03008",
+    "cov-03875",
+    "cov-01230",
+    "cov-02074",
+    "cov-00462",
+    "cov-02328",
+    "cov-03465",
+    "cov-06797"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1015",
+    "obl-1017",
+    "obl-1019",
+    "obl-1020",
+    "obl-1021",
+    "obl-1022",
+    "obl-1023",
+    "obl-1026",
+    "obl-1027",
+    "obl-1046",
+    "obl-1052",
+    "obl-1413",
+    "obl-2854",
+    "obl-3720",
+    "obl-1087",
+    "obl-1931",
+    "obl-319",
+    "obl-2180",
+    "obl-3311",
+    "obl-6426"
+  ],
+  "source_seed_ids_represented": [
+    "seed-1189",
+    "seed-1192",
+    "seed-1195",
+    "seed-1196",
+    "seed-1197",
+    "seed-1198",
+    "seed-1199",
+    "seed-1202",
+    "seed-1205",
+    "seed-1224",
+    "seed-1230",
+    "seed-1735",
+    "seed-3764",
+    "seed-5055",
+    "seed-1281",
+    "seed-2495",
+    "seed-368",
+    "seed-2832",
+    "seed-4438",
+    "seed-9805"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0020",
+    "shard-0021",
+    "shard-0026",
+    "shard-0042",
+    "shard-0052",
+    "shard-0033",
+    "shard-0011",
+    "shard-0035",
+    "shard-0047",
+    "shard-0088"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": []
+}

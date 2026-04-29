@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1531",
+  "group_ids": [
+    "discgrp-6121",
+    "discgrp-6122",
+    "discgrp-6123",
+    "discgrp-6124"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06763",
+      "source_obligation_ids": [
+        "obl-6399"
+      ],
+      "source_seed_ids": [
+        "seed-9771"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06764",
+      "source_obligation_ids": [
+        "obl-6400"
+      ],
+      "source_seed_ids": [
+        "seed-9779"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1409"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06765",
+      "source_obligation_ids": [
+        "obl-6401"
+      ],
+      "source_seed_ids": [
+        "seed-9780"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06766",
+      "source_obligation_ids": [
+        "obl-6402"
+      ],
+      "source_seed_ids": [
+        "seed-9781"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "new_heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

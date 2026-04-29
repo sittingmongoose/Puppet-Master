@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-890",
+  "group_ids": [
+    "discgrp-3557",
+    "discgrp-3558",
+    "discgrp-3559",
+    "discgrp-3560"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03852",
+      "source_obligation_ids": [
+        "obl-3697"
+      ],
+      "source_seed_ids": [
+        "seed-5020"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03853",
+      "source_obligation_ids": [
+        "obl-3698"
+      ],
+      "source_seed_ids": [
+        "seed-5021"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03854",
+      "source_obligation_ids": [
+        "obl-3699"
+      ],
+      "source_seed_ids": [
+        "seed-5022"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03855",
+      "source_obligation_ids": [
+        "obl-3700"
+      ],
+      "source_seed_ids": [
+        "seed-5023"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "new_heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

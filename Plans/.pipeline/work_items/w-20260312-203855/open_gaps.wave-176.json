@@ -1,0 +1,2711 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-176",
+  "group_ids": [
+    "gapgrp-0701",
+    "gapgrp-0702",
+    "gapgrp-0703",
+    "gapgrp-0704"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-04506",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05814 is partial for `usage.jsonl` aggregation is tier-based",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05814"
+      ],
+      "source_obligation_ids": [
+        "obl-5586"
+      ],
+      "source_seed_ids": [
+        "seed-8296"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "`usage.jsonl` aggregation is tier-based",
+        "usage.jsonl"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04590",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05928 is partial for Research Progress - 2026-03-17 - Owner docs still leak tier-era scope language into canoni",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Runtime artifact and projection storage scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05928"
+      ],
+      "source_obligation_ids": [
+        "obl-5700"
+      ],
+      "source_seed_ids": [
+        "seed-8468"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - Owner docs still leak tier-era scope language into canonical runtime wording"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04625",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05974 is partial for Reconcile owner docs so canonical approval/blocking semantics are runtime-native first.",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 8.4 First run / empty state"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05974"
+      ],
+      "source_obligation_ids": [
+        "obl-5746"
+      ],
+      "source_seed_ids": [
+        "seed-8543"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "Reconcile owner docs so canonical approval/blocking semantics are runtime-native first."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04628",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05977 is partial for Reconcile `allowed_actions[]` versus `allowed_action_ids[]` language so owner docs do not",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 5.3 Search and Source Control keep separate projection state"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05977"
+      ],
+      "source_obligation_ids": [
+        "obl-5749"
+      ],
+      "source_seed_ids": [
+        "seed-8546"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "Reconcile `allowed_actions[]` versus `allowed_action_ids[]` language so owner docs do not keep teaching two peer action vocabularies.",
+        "allowed_actions[]",
+        "allowed_action_ids[]"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04671",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06035 is partial for deprecated field names such as `allowed_actions[]` must not appear in new canonical schema",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 2.3 redb: schema, migrations, key patterns"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06035"
+      ],
+      "source_obligation_ids": [
+        "obl-5807"
+      ],
+      "source_seed_ids": [
+        "seed-8634"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "exact_missing_items": [
+        "deprecated field names such as `allowed_actions[]` must not appear in new canonical schemas",
+        "allowed_actions[]"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04690",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06061 is partial for If graph-local wrappers remain for UX readability, their normalization target and arg deri",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 5.2 Requested vs effective runtime state must remain visible"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06061"
+      ],
+      "source_obligation_ids": [
+        "obl-5833"
+      ],
+      "source_seed_ids": [
+        "seed-8666"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "exact_missing_items": [
+        "If graph-local wrappers remain for UX readability, their normalization target and arg derivation must be explicit and consistent with `cmd.runtime.approve` / `cmd.runtime.decline`.",
+        "cmd.runtime.approve",
+        "cmd.runtime.decline"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04733",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06120 is partial for terminal instances can be pinned to a specific `tier_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Canonical terminal persistence decomposition"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06120"
+      ],
+      "source_obligation_ids": [
+        "obl-5892"
+      ],
+      "source_seed_ids": [
+        "seed-8750"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "terminal instances can be pinned to a specific `tier_id`",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04967",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06395 is partial for `Decision_Log.md` is presented as the place for final plan decisions, but it does not reco",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06395"
+      ],
+      "source_obligation_ids": [
+        "obl-6036"
+      ],
+      "source_seed_ids": [
+        "seed-9131"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "`Decision_Log.md` is presented as the place for final plan decisions, but it does not record the rewrite decisions that now govern multiple owner docs",
+        "Decision_Log.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04978",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06411 is partial for `Decision_Log.md` currently gives downstream reconciliation no durable place to point when",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Runtime Attempt / Safe Point / Queue Analysis Reconciliation Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06411"
+      ],
+      "source_obligation_ids": [
+        "obl-6052"
+      ],
+      "source_seed_ids": [
+        "seed-9147"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "`Decision_Log.md` currently gives downstream reconciliation no durable place to point when explaining why rewrite-era ownership changed.",
+        "Decision_Log.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04984",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06421 is partial for `Runtime Recovery Canonicalization Gate Addendum` appears twice with the same body",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06421"
+      ],
+      "source_obligation_ids": [
+        "obl-6062"
+      ],
+      "source_seed_ids": [
+        "seed-9160"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "`Runtime Recovery Canonicalization Gate Addendum` appears twice with the same body",
+        "Runtime Recovery Canonicalization Gate Addendum"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04989",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06427 is partial for The routing and command-normalization model now depends on checks that `GATE-010` cannot e",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-039: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06427"
+      ],
+      "source_obligation_ids": [
+        "obl-6068"
+      ],
+      "source_seed_ids": [
+        "seed-9174"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "The routing and command-normalization model now depends on checks that `GATE-010` cannot express, which means the gate layer is behind the owner contract layer.",
+        "GATE-010"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05017",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06473 is partial for redb persistence text keyed to `request_id`, `tier_id`, `tier_type`, `request_kind`, and `",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06473"
+      ],
+      "source_obligation_ids": [
+        "obl-6114"
+      ],
+      "source_seed_ids": [
+        "seed-9238"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "redb persistence text keyed to `request_id`, `tier_id`, `tier_type`, `request_kind`, and `allowed_actions`",
+        "request_id",
+        "tier_id",
+        "tier_type",
+        "request_kind",
+        "allowed_actions"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05021",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06477 is partial for The persistence section still instructs storage to persist request-era fields that later s",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06477"
+      ],
+      "source_obligation_ids": [
+        "obl-6118"
+      ],
+      "source_seed_ids": [
+        "seed-9249"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "The persistence section still instructs storage to persist request-era fields that later sections explicitly demote."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05038",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06498 is partial for Storage already has the stronger blocked and attempt identities, but still preserves tier-",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Runtime Attempt / Safe Point / Queue Analysis Storage Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06498"
+      ],
+      "source_obligation_ids": [
+        "obl-6139"
+      ],
+      "source_seed_ids": [
+        "seed-9286"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "Storage already has the stronger blocked and attempt identities, but still preserves tier-era keys as peer canonical records."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05043",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06504 is partial for Storage family ownership still needs explicit additions for:",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06504"
+      ],
+      "source_obligation_ids": [
+        "obl-6145"
+      ],
+      "source_seed_ids": [
+        "seed-9292"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "Storage family ownership still needs explicit additions for:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05054",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06518 is partial for operational identity / side-effect target identity",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Projection freshness, health, and startup rehydration (operational rules)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06518"
+      ],
+      "source_obligation_ids": [
+        "obl-6159"
+      ],
+      "source_seed_ids": [
+        "seed-9313"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "operational identity / side-effect target identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05116",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06592 is partial for requested vs effective identity is called out later",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 5.2 Requested vs effective runtime state must remain visible"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06592"
+      ],
+      "source_obligation_ids": [
+        "obl-6233"
+      ],
+      "source_seed_ids": [
+        "seed-9423"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "requested vs effective identity is called out later"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05171",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06676 is partial for upstream owner docs first",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 8.4 First run / empty state"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06676"
+      ],
+      "source_obligation_ids": [
+        "obl-6317"
+      ],
+      "source_seed_ids": [
+        "seed-9559"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "upstream owner docs first"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05182",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06691 is partial for Mirror docs should be updated only after their owner docs are reconciled.",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06691"
+      ],
+      "source_obligation_ids": [
+        "obl-6332"
+      ],
+      "source_seed_ids": [
+        "seed-9594"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "Mirror docs should be updated only after their owner docs are reconciled."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05194",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06706 is partial for state / storage / command / audit-trail behavior",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06706"
+      ],
+      "source_obligation_ids": [
+        "obl-6347"
+      ],
+      "source_seed_ids": [
+        "seed-9694"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "state / storage / command / audit-trail behavior"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05202",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06715 is partial for Storage or key registration landed without the **field schema / value-shape contract**.",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 2.3 redb: schema, migrations, key patterns"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06715"
+      ],
+      "source_obligation_ids": [
+        "obl-6356"
+      ],
+      "source_seed_ids": [
+        "seed-9703"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Storage or key registration landed without the **field schema / value-shape contract**."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05207",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06720 is partial for Cluster B - Storage / governance / record-schema transfer misses",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06720"
+      ],
+      "source_obligation_ids": [
+        "obl-6361"
+      ],
+      "source_seed_ids": [
+        "seed-9711"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Cluster B - Storage / governance / record-schema transfer misses"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05226",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06746 is partial for Older request/tier-era canon still coexists with newer blocked-runtime canon.",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Concern record and lifecycle canon"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06746"
+      ],
+      "source_obligation_ids": [
+        "obl-6385"
+      ],
+      "source_seed_ids": [
+        "seed-9748"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Older request/tier-era canon still coexists with newer blocked-runtime canon."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05234",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06754 is partial for These should be treated as **secondary** findings behind the ledger-backed missed-transfer",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Additional shell/runtime identities required by the promoted Section 15 feature set"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06754"
+      ],
+      "source_obligation_ids": [
+        "obl-6390"
+      ],
+      "source_seed_ids": [
+        "seed-9754"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "These should be treated as **secondary** findings behind the ledger-backed missed-transfer set above."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05280",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06806 is partial for shared Orchestrator export manifest contract",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-018: Export taxonomy and manifest contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06806"
+      ],
+      "source_obligation_ids": [
+        "obl-6429"
+      ],
+      "source_seed_ids": [
+        "seed-9808"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "shared Orchestrator export manifest contract"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05281",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06807 is partial for export-family distinctions (Evidence / Artifact / Ledger / Run / Record)",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-013: Shared governance/runtime record envelope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06807"
+      ],
+      "source_obligation_ids": [
+        "obl-6430"
+      ],
+      "source_seed_ids": [
+        "seed-9809"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "export-family distinctions (Evidence / Artifact / Ledger / Run / Record)"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05293",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06820 is partial for primary attention reason field",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-080: Project attention projection"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06820"
+      ],
+      "source_obligation_ids": [
+        "obl-6439"
+      ],
+      "source_seed_ids": [
+        "seed-9818"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "primary attention reason field"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05311",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06856 is partial for account-pressure and account-switch key families remain present; the missing transfer is s",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 2.3 redb: schema, migrations, key patterns"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06856"
+      ],
+      "source_obligation_ids": [
+        "obl-6459"
+      ],
+      "source_seed_ids": [
+        "seed-9838"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "account-pressure and account-switch key families remain present; the missing transfer is schema and contract ownership, not simple existence."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05321",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06874 is partial for `**Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (\u00a723.4). No",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06874"
+      ],
+      "source_obligation_ids": [
+        "obl-6477"
+      ],
+      "source_seed_ids": [
+        "seed-9856"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`**Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (\u00a723.4). No remaining gaps; **accessibility** is explicitly not MVP.`",
+        "**Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (\u00a723.4). No remaining gaps; **accessibility** is explicitly not MVP."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05327",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06881 is missing for `Plans/storage-plan.md:879-910` confirms partial transfer for bridge/activity payload cano",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06881"
+      ],
+      "source_obligation_ids": [
+        "obl-6483"
+      ],
+      "source_seed_ids": [
+        "seed-9862"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:879-910` confirms partial transfer for bridge/activity payload canon:",
+        "Plans/storage-plan.md:879-910"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05358",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06916 is missing for `Plans/storage-plan.md:325`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06916"
+      ],
+      "source_obligation_ids": [
+        "obl-6516"
+      ],
+      "source_seed_ids": [
+        "seed-9907"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:325`",
+        "Plans/storage-plan.md:325"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05359",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06917 is missing for `Plans/storage-plan.md:894-897`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06917"
+      ],
+      "source_obligation_ids": [
+        "obl-6517"
+      ],
+      "source_seed_ids": [
+        "seed-9908"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:894-897`",
+        "Plans/storage-plan.md:894-897"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05360",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06918 is missing for `Plans/storage-plan.md:1335-1383`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06918"
+      ],
+      "source_obligation_ids": [
+        "obl-6518"
+      ],
+      "source_seed_ids": [
+        "seed-9909"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:1335-1383`",
+        "Plans/storage-plan.md:1335-1383"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05377",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06938 is missing for `Plans/storage-plan.md:330-337`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06938"
+      ],
+      "source_obligation_ids": [
+        "obl-6538"
+      ],
+      "source_seed_ids": [
+        "seed-9941",
+        "seed-9988"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:330-337`",
+        "Plans/storage-plan.md:330-337"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05378",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06939 is missing for `Plans/storage-plan.md:468-590`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06939"
+      ],
+      "source_obligation_ids": [
+        "obl-6539"
+      ],
+      "source_seed_ids": [
+        "seed-9942",
+        "seed-9989"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:468-590`",
+        "Plans/storage-plan.md:468-590"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05379",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06940 is missing for `Plans/storage-plan.md:788-817`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06940"
+      ],
+      "source_obligation_ids": [
+        "obl-6540"
+      ],
+      "source_seed_ids": [
+        "seed-9943"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:788-817`",
+        "Plans/storage-plan.md:788-817"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05380",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06941 is missing for `Plans/storage-plan.md:1330-1391`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06941"
+      ],
+      "source_obligation_ids": [
+        "obl-6541"
+      ],
+      "source_seed_ids": [
+        "seed-9944",
+        "seed-9990",
+        "seed-10021"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:1330-1391`",
+        "Plans/storage-plan.md:1330-1391"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05416",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06982 is missing for `Plans/storage-plan.md:1548-1568`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06982"
+      ],
+      "source_obligation_ids": [
+        "obl-6578"
+      ],
+      "source_seed_ids": [
+        "seed-10022",
+        "seed-10158"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:1548-1568`",
+        "Plans/storage-plan.md:1548-1568"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05462",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07047 is missing for `Plans/storage-plan.md:322-337`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07047"
+      ],
+      "source_obligation_ids": [
+        "obl-6638"
+      ],
+      "source_seed_ids": [
+        "seed-10129"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:322-337`",
+        "Plans/storage-plan.md:322-337"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05463",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07048 is missing for `Plans/storage-plan.md:941-956`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07048"
+      ],
+      "source_obligation_ids": [
+        "obl-6639"
+      ],
+      "source_seed_ids": [
+        "seed-10130"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:941-956`",
+        "Plans/storage-plan.md:941-956"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-05814",
+    "cov-05928",
+    "cov-05974",
+    "cov-05977",
+    "cov-06035",
+    "cov-06061",
+    "cov-06120",
+    "cov-06395",
+    "cov-06411",
+    "cov-06421",
+    "cov-06427",
+    "cov-06473",
+    "cov-06477",
+    "cov-06498",
+    "cov-06504",
+    "cov-06518",
+    "cov-06592",
+    "cov-06676",
+    "cov-06691",
+    "cov-06706",
+    "cov-06715",
+    "cov-06720",
+    "cov-06746",
+    "cov-06754",
+    "cov-06806",
+    "cov-06807",
+    "cov-06820",
+    "cov-06856",
+    "cov-06874",
+    "cov-06881",
+    "cov-06916",
+    "cov-06917",
+    "cov-06918",
+    "cov-06938",
+    "cov-06939",
+    "cov-06940",
+    "cov-06941",
+    "cov-06982",
+    "cov-07047",
+    "cov-07048"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-5586",
+    "obl-5700",
+    "obl-5746",
+    "obl-5749",
+    "obl-5807",
+    "obl-5833",
+    "obl-5892",
+    "obl-6036",
+    "obl-6052",
+    "obl-6062",
+    "obl-6068",
+    "obl-6114",
+    "obl-6118",
+    "obl-6139",
+    "obl-6145",
+    "obl-6159",
+    "obl-6233",
+    "obl-6317",
+    "obl-6332",
+    "obl-6347",
+    "obl-6356",
+    "obl-6361",
+    "obl-6385",
+    "obl-6390",
+    "obl-6429",
+    "obl-6430",
+    "obl-6439",
+    "obl-6459",
+    "obl-6477",
+    "obl-6483",
+    "obl-6516",
+    "obl-6517",
+    "obl-6518",
+    "obl-6538",
+    "obl-6539",
+    "obl-6540",
+    "obl-6541",
+    "obl-6578",
+    "obl-6638",
+    "obl-6639"
+  ],
+  "source_seed_ids_represented": [
+    "seed-10021",
+    "seed-10022",
+    "seed-10129",
+    "seed-10130",
+    "seed-10158",
+    "seed-8296",
+    "seed-8468",
+    "seed-8543",
+    "seed-8546",
+    "seed-8634",
+    "seed-8666",
+    "seed-8750",
+    "seed-9131",
+    "seed-9147",
+    "seed-9160",
+    "seed-9174",
+    "seed-9238",
+    "seed-9249",
+    "seed-9286",
+    "seed-9292",
+    "seed-9313",
+    "seed-9423",
+    "seed-9559",
+    "seed-9594",
+    "seed-9694",
+    "seed-9703",
+    "seed-9711",
+    "seed-9748",
+    "seed-9754",
+    "seed-9808",
+    "seed-9809",
+    "seed-9818",
+    "seed-9838",
+    "seed-9856",
+    "seed-9862",
+    "seed-9907",
+    "seed-9908",
+    "seed-9909",
+    "seed-9941",
+    "seed-9942",
+    "seed-9943",
+    "seed-9944",
+    "seed-9988",
+    "seed-9989",
+    "seed-9990"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0076",
+    "shard-0078",
+    "shard-0079",
+    "shard-0080",
+    "shard-0082",
+    "shard-0083",
+    "shard-0084",
+    "shard-0085",
+    "shard-0086",
+    "shard-0087",
+    "shard-0088",
+    "shard-0089",
+    "shard-0090"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-04506",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05814 is partial for `usage.jsonl` aggregation is tier-based",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05814"
+      ],
+      "source_obligation_ids": [
+        "obl-5586"
+      ],
+      "source_seed_ids": [
+        "seed-8296"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "`usage.jsonl` aggregation is tier-based",
+        "usage.jsonl"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04590",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05928 is partial for Research Progress - 2026-03-17 - Owner docs still leak tier-era scope language into canoni",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Runtime artifact and projection storage scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05928"
+      ],
+      "source_obligation_ids": [
+        "obl-5700"
+      ],
+      "source_seed_ids": [
+        "seed-8468"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - Owner docs still leak tier-era scope language into canonical runtime wording"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04625",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05974 is partial for Reconcile owner docs so canonical approval/blocking semantics are runtime-native first.",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 8.4 First run / empty state"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05974"
+      ],
+      "source_obligation_ids": [
+        "obl-5746"
+      ],
+      "source_seed_ids": [
+        "seed-8543"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "Reconcile owner docs so canonical approval/blocking semantics are runtime-native first."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04628",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05977 is partial for Reconcile `allowed_actions[]` versus `allowed_action_ids[]` language so owner docs do not",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 5.3 Search and Source Control keep separate projection state"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05977"
+      ],
+      "source_obligation_ids": [
+        "obl-5749"
+      ],
+      "source_seed_ids": [
+        "seed-8546"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "Reconcile `allowed_actions[]` versus `allowed_action_ids[]` language so owner docs do not keep teaching two peer action vocabularies.",
+        "allowed_actions[]",
+        "allowed_action_ids[]"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04671",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06035 is partial for deprecated field names such as `allowed_actions[]` must not appear in new canonical schema",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 2.3 redb: schema, migrations, key patterns"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06035"
+      ],
+      "source_obligation_ids": [
+        "obl-5807"
+      ],
+      "source_seed_ids": [
+        "seed-8634"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "exact_missing_items": [
+        "deprecated field names such as `allowed_actions[]` must not appear in new canonical schemas",
+        "allowed_actions[]"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04690",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06061 is partial for If graph-local wrappers remain for UX readability, their normalization target and arg deri",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 5.2 Requested vs effective runtime state must remain visible"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06061"
+      ],
+      "source_obligation_ids": [
+        "obl-5833"
+      ],
+      "source_seed_ids": [
+        "seed-8666"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "exact_missing_items": [
+        "If graph-local wrappers remain for UX readability, their normalization target and arg derivation must be explicit and consistent with `cmd.runtime.approve` / `cmd.runtime.decline`.",
+        "cmd.runtime.approve",
+        "cmd.runtime.decline"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04733",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06120 is partial for terminal instances can be pinned to a specific `tier_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Canonical terminal persistence decomposition"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06120"
+      ],
+      "source_obligation_ids": [
+        "obl-5892"
+      ],
+      "source_seed_ids": [
+        "seed-8750"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "terminal instances can be pinned to a specific `tier_id`",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04967",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06395 is partial for `Decision_Log.md` is presented as the place for final plan decisions, but it does not reco",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06395"
+      ],
+      "source_obligation_ids": [
+        "obl-6036"
+      ],
+      "source_seed_ids": [
+        "seed-9131"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "`Decision_Log.md` is presented as the place for final plan decisions, but it does not record the rewrite decisions that now govern multiple owner docs",
+        "Decision_Log.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04978",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06411 is partial for `Decision_Log.md` currently gives downstream reconciliation no durable place to point when",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Runtime Attempt / Safe Point / Queue Analysis Reconciliation Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06411"
+      ],
+      "source_obligation_ids": [
+        "obl-6052"
+      ],
+      "source_seed_ids": [
+        "seed-9147"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "`Decision_Log.md` currently gives downstream reconciliation no durable place to point when explaining why rewrite-era ownership changed.",
+        "Decision_Log.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04984",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06421 is partial for `Runtime Recovery Canonicalization Gate Addendum` appears twice with the same body",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06421"
+      ],
+      "source_obligation_ids": [
+        "obl-6062"
+      ],
+      "source_seed_ids": [
+        "seed-9160"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "`Runtime Recovery Canonicalization Gate Addendum` appears twice with the same body",
+        "Runtime Recovery Canonicalization Gate Addendum"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04989",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06427 is partial for The routing and command-normalization model now depends on checks that `GATE-010` cannot e",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-039: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06427"
+      ],
+      "source_obligation_ids": [
+        "obl-6068"
+      ],
+      "source_seed_ids": [
+        "seed-9174"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "The routing and command-normalization model now depends on checks that `GATE-010` cannot express, which means the gate layer is behind the owner contract layer.",
+        "GATE-010"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05017",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06473 is partial for redb persistence text keyed to `request_id`, `tier_id`, `tier_type`, `request_kind`, and `",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06473"
+      ],
+      "source_obligation_ids": [
+        "obl-6114"
+      ],
+      "source_seed_ids": [
+        "seed-9238"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "redb persistence text keyed to `request_id`, `tier_id`, `tier_type`, `request_kind`, and `allowed_actions`",
+        "request_id",
+        "tier_id",
+        "tier_type",
+        "request_kind",
+        "allowed_actions"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05021",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06477 is partial for The persistence section still instructs storage to persist request-era fields that later s",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06477"
+      ],
+      "source_obligation_ids": [
+        "obl-6118"
+      ],
+      "source_seed_ids": [
+        "seed-9249"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "The persistence section still instructs storage to persist request-era fields that later sections explicitly demote."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05038",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06498 is partial for Storage already has the stronger blocked and attempt identities, but still preserves tier-",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Runtime Attempt / Safe Point / Queue Analysis Storage Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06498"
+      ],
+      "source_obligation_ids": [
+        "obl-6139"
+      ],
+      "source_seed_ids": [
+        "seed-9286"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "Storage already has the stronger blocked and attempt identities, but still preserves tier-era keys as peer canonical records."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05043",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06504 is partial for Storage family ownership still needs explicit additions for:",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06504"
+      ],
+      "source_obligation_ids": [
+        "obl-6145"
+      ],
+      "source_seed_ids": [
+        "seed-9292"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "Storage family ownership still needs explicit additions for:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05054",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06518 is partial for operational identity / side-effect target identity",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Projection freshness, health, and startup rehydration (operational rules)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06518"
+      ],
+      "source_obligation_ids": [
+        "obl-6159"
+      ],
+      "source_seed_ids": [
+        "seed-9313"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "operational identity / side-effect target identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05116",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06592 is partial for requested vs effective identity is called out later",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 5.2 Requested vs effective runtime state must remain visible"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06592"
+      ],
+      "source_obligation_ids": [
+        "obl-6233"
+      ],
+      "source_seed_ids": [
+        "seed-9423"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "requested vs effective identity is called out later"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05171",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06676 is partial for upstream owner docs first",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 8.4 First run / empty state"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06676"
+      ],
+      "source_obligation_ids": [
+        "obl-6317"
+      ],
+      "source_seed_ids": [
+        "seed-9559"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "upstream owner docs first"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05182",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06691 is partial for Mirror docs should be updated only after their owner docs are reconciled.",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06691"
+      ],
+      "source_obligation_ids": [
+        "obl-6332"
+      ],
+      "source_seed_ids": [
+        "seed-9594"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "Mirror docs should be updated only after their owner docs are reconciled."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05194",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06706 is partial for state / storage / command / audit-trail behavior",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06706"
+      ],
+      "source_obligation_ids": [
+        "obl-6347"
+      ],
+      "source_seed_ids": [
+        "seed-9694"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "state / storage / command / audit-trail behavior"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05202",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06715 is partial for Storage or key registration landed without the **field schema / value-shape contract**.",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 2.3 redb: schema, migrations, key patterns"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06715"
+      ],
+      "source_obligation_ids": [
+        "obl-6356"
+      ],
+      "source_seed_ids": [
+        "seed-9703"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Storage or key registration landed without the **field schema / value-shape contract**."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05207",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06720 is partial for Cluster B - Storage / governance / record-schema transfer misses",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06720"
+      ],
+      "source_obligation_ids": [
+        "obl-6361"
+      ],
+      "source_seed_ids": [
+        "seed-9711"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Cluster B - Storage / governance / record-schema transfer misses"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05226",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06746 is partial for Older request/tier-era canon still coexists with newer blocked-runtime canon.",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Concern record and lifecycle canon"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06746"
+      ],
+      "source_obligation_ids": [
+        "obl-6385"
+      ],
+      "source_seed_ids": [
+        "seed-9748"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Older request/tier-era canon still coexists with newer blocked-runtime canon."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05234",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06754 is partial for These should be treated as **secondary** findings behind the ledger-backed missed-transfer",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Additional shell/runtime identities required by the promoted Section 15 feature set"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06754"
+      ],
+      "source_obligation_ids": [
+        "obl-6390"
+      ],
+      "source_seed_ids": [
+        "seed-9754"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "These should be treated as **secondary** findings behind the ledger-backed missed-transfer set above."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05280",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06806 is partial for shared Orchestrator export manifest contract",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-018: Export taxonomy and manifest contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06806"
+      ],
+      "source_obligation_ids": [
+        "obl-6429"
+      ],
+      "source_seed_ids": [
+        "seed-9808"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "shared Orchestrator export manifest contract"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05281",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06807 is partial for export-family distinctions (Evidence / Artifact / Ledger / Run / Record)",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-013: Shared governance/runtime record envelope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06807"
+      ],
+      "source_obligation_ids": [
+        "obl-6430"
+      ],
+      "source_seed_ids": [
+        "seed-9809"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "export-family distinctions (Evidence / Artifact / Ledger / Run / Record)"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05293",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06820 is partial for primary attention reason field",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-080: Project attention projection"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06820"
+      ],
+      "source_obligation_ids": [
+        "obl-6439"
+      ],
+      "source_seed_ids": [
+        "seed-9818"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "primary attention reason field"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05311",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06856 is partial for account-pressure and account-switch key families remain present; the missing transfer is s",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 2.3 redb: schema, migrations, key patterns"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06856"
+      ],
+      "source_obligation_ids": [
+        "obl-6459"
+      ],
+      "source_seed_ids": [
+        "seed-9838"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "account-pressure and account-switch key families remain present; the missing transfer is schema and contract ownership, not simple existence."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05321",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06874 is partial for `**Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (\u00a723.4). No",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06874"
+      ],
+      "source_obligation_ids": [
+        "obl-6477"
+      ],
+      "source_seed_ids": [
+        "seed-9856"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`**Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (\u00a723.4). No remaining gaps; **accessibility** is explicitly not MVP.`",
+        "**Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (\u00a723.4). No remaining gaps; **accessibility** is explicitly not MVP."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05327",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06881 is missing for `Plans/storage-plan.md:879-910` confirms partial transfer for bridge/activity payload cano",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06881"
+      ],
+      "source_obligation_ids": [
+        "obl-6483"
+      ],
+      "source_seed_ids": [
+        "seed-9862"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:879-910` confirms partial transfer for bridge/activity payload canon:",
+        "Plans/storage-plan.md:879-910"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05358",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06916 is missing for `Plans/storage-plan.md:325`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06916"
+      ],
+      "source_obligation_ids": [
+        "obl-6516"
+      ],
+      "source_seed_ids": [
+        "seed-9907"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:325`",
+        "Plans/storage-plan.md:325"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05359",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06917 is missing for `Plans/storage-plan.md:894-897`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06917"
+      ],
+      "source_obligation_ids": [
+        "obl-6517"
+      ],
+      "source_seed_ids": [
+        "seed-9908"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:894-897`",
+        "Plans/storage-plan.md:894-897"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05360",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06918 is missing for `Plans/storage-plan.md:1335-1383`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06918"
+      ],
+      "source_obligation_ids": [
+        "obl-6518"
+      ],
+      "source_seed_ids": [
+        "seed-9909"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:1335-1383`",
+        "Plans/storage-plan.md:1335-1383"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05377",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06938 is missing for `Plans/storage-plan.md:330-337`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06938"
+      ],
+      "source_obligation_ids": [
+        "obl-6538"
+      ],
+      "source_seed_ids": [
+        "seed-9941",
+        "seed-9988"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:330-337`",
+        "Plans/storage-plan.md:330-337"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05378",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06939 is missing for `Plans/storage-plan.md:468-590`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06939"
+      ],
+      "source_obligation_ids": [
+        "obl-6539"
+      ],
+      "source_seed_ids": [
+        "seed-9942",
+        "seed-9989"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:468-590`",
+        "Plans/storage-plan.md:468-590"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05379",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06940 is missing for `Plans/storage-plan.md:788-817`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06940"
+      ],
+      "source_obligation_ids": [
+        "obl-6540"
+      ],
+      "source_seed_ids": [
+        "seed-9943"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:788-817`",
+        "Plans/storage-plan.md:788-817"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05380",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06941 is missing for `Plans/storage-plan.md:1330-1391`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06941"
+      ],
+      "source_obligation_ids": [
+        "obl-6541"
+      ],
+      "source_seed_ids": [
+        "seed-9944",
+        "seed-9990",
+        "seed-10021"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:1330-1391`",
+        "Plans/storage-plan.md:1330-1391"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05416",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06982 is missing for `Plans/storage-plan.md:1548-1568`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06982"
+      ],
+      "source_obligation_ids": [
+        "obl-6578"
+      ],
+      "source_seed_ids": [
+        "seed-10022",
+        "seed-10158"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:1548-1568`",
+        "Plans/storage-plan.md:1548-1568"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05462",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07047 is missing for `Plans/storage-plan.md:322-337`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07047"
+      ],
+      "source_obligation_ids": [
+        "obl-6638"
+      ],
+      "source_seed_ids": [
+        "seed-10129"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:322-337`",
+        "Plans/storage-plan.md:322-337"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05463",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07048 is missing for `Plans/storage-plan.md:941-956`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07048"
+      ],
+      "source_obligation_ids": [
+        "obl-6639"
+      ],
+      "source_seed_ids": [
+        "seed-10130"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:941-956`",
+        "Plans/storage-plan.md:941-956"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

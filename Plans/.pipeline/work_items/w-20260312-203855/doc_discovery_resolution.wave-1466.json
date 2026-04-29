@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1466",
+  "group_ids": [
+    "discgrp-5861",
+    "discgrp-5862",
+    "discgrp-5863",
+    "discgrp-5864"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06476",
+      "source_obligation_ids": [
+        "obl-6117"
+      ],
+      "source_seed_ids": [
+        "seed-9248"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileManager.md",
+      "new_heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileManager.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06477",
+      "source_obligation_ids": [
+        "obl-6118"
+      ],
+      "source_seed_ids": [
+        "seed-9249"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06478",
+      "source_obligation_ids": [
+        "obl-6119"
+      ],
+      "source_seed_ids": [
+        "seed-9250"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileManager.md",
+      "new_heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FileManager.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06479",
+      "source_obligation_ids": [
+        "obl-6120"
+      ],
+      "source_seed_ids": [
+        "seed-9251"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileManager.md",
+      "new_heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/FileManager.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1467",
+  "group_ids": [
+    "discgrp-5865",
+    "discgrp-5866",
+    "discgrp-5867",
+    "discgrp-5868"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06480",
+      "source_obligation_ids": [
+        "obl-6121"
+      ],
+      "source_seed_ids": [
+        "seed-9252"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-033: Concern linkage to adjacent families",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L83"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06481",
+      "source_obligation_ids": [
+        "obl-6122"
+      ],
+      "source_seed_ids": [
+        "seed-9253"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06482",
+      "source_obligation_ids": [
+        "obl-6123"
+      ],
+      "source_seed_ids": [
+        "seed-9254"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06483",
+      "source_obligation_ids": [
+        "obl-6124"
+      ],
+      "source_seed_ids": [
+        "seed-9255"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

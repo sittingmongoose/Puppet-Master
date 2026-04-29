@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-492",
+  "group_ids": [
+    "discgrp-1965",
+    "discgrp-1966",
+    "discgrp-1967",
+    "discgrp-1968"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02228",
+      "source_obligation_ids": [
+        "obl-2082"
+      ],
+      "source_seed_ids": [
+        "seed-2702"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "### Fidelity recovery cov-092: Account switch and pressure history",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/usage-feature.md:L41"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02229",
+      "source_obligation_ids": [
+        "obl-2083"
+      ],
+      "source_seed_ids": [
+        "seed-2703"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02230",
+      "source_obligation_ids": [
+        "obl-2084"
+      ],
+      "source_seed_ids": [
+        "seed-2704"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_OpenCode.md",
+      "new_heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02231",
+      "source_obligation_ids": [
+        "obl-2085"
+      ],
+      "source_seed_ids": [
+        "seed-2705"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

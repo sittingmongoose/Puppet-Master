@@ -1,0 +1,100 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1292",
+  "group_ids": [
+    "discgrp-5165",
+    "discgrp-5166",
+    "discgrp-5167",
+    "discgrp-5168"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05581",
+      "source_obligation_ids": [
+        "obl-5353"
+      ],
+      "source_seed_ids": [
+        "seed-7953",
+        "seed-8153",
+        "seed-8306"
+      ],
+      "source_shard_ids": [
+        "shard-0074",
+        "shard-0075",
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Document_Packaging_Policy.md",
+      "new_heading_hint": "### 2.1 Primary split rule",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05582",
+      "source_obligation_ids": [
+        "obl-5354"
+      ],
+      "source_seed_ids": [
+        "seed-7956",
+        "seed-8270"
+      ],
+      "source_shard_ids": [
+        "shard-0074",
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05583",
+      "source_obligation_ids": [
+        "obl-5355"
+      ],
+      "source_seed_ids": [
+        "seed-7958"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05584",
+      "source_obligation_ids": [
+        "obl-5356"
+      ],
+      "source_seed_ids": [
+        "seed-7960"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "#### Open subject navigation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-789",
+  "group_ids": [
+    "discgrp-3153",
+    "discgrp-3154",
+    "discgrp-3155",
+    "discgrp-3156"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03433",
+      "source_obligation_ids": [
+        "obl-3279"
+      ],
+      "source_seed_ids": [
+        "seed-4393"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Personas.md",
+      "new_heading_hint": "## 10. Persona Runtime Contract Expansion (2026-03-06)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Personas.md:L393"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03434",
+      "source_obligation_ids": [
+        "obl-3280"
+      ],
+      "source_seed_ids": [
+        "seed-4394"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03435",
+      "source_obligation_ids": [
+        "obl-3281"
+      ],
+      "source_seed_ids": [
+        "seed-4395"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## 1. Events (persisted)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L334"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03436",
+      "source_obligation_ids": [
+        "obl-3282"
+      ],
+      "source_seed_ids": [
+        "seed-4397"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L193"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

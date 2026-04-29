@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1451",
+  "group_ids": [
+    "discgrp-5801",
+    "discgrp-5802",
+    "discgrp-5803",
+    "discgrp-5804"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06411",
+      "source_obligation_ids": [
+        "obl-6052"
+      ],
+      "source_seed_ids": [
+        "seed-9147"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "## Runtime Attempt / Safe Point / Queue Analysis Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1571"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06412",
+      "source_obligation_ids": [
+        "obl-6053"
+      ],
+      "source_seed_ids": [
+        "seed-9148"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Progression_Gates.md",
+      "new_heading_hint": "# Progression Gates (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Progression_Gates.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06413",
+      "source_obligation_ids": [
+        "obl-6054"
+      ],
+      "source_seed_ids": [
+        "seed-9150"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-033: Concern linkage to adjacent families",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L83"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06417",
+      "source_obligation_ids": [
+        "obl-6058"
+      ],
+      "source_seed_ids": [
+        "seed-9156"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/OpenCode_Coverage_Matrix.md",
+      "new_heading_hint": "# OpenCode Coverage Matrix (Audit)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

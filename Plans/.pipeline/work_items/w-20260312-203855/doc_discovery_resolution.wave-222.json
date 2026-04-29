@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-222",
+  "group_ids": [
+    "discgrp-0885",
+    "discgrp-0886",
+    "discgrp-0887",
+    "discgrp-0888"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01132",
+      "source_obligation_ids": [
+        "obl-989"
+      ],
+      "source_seed_ids": [
+        "seed-1157"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01133",
+      "source_obligation_ids": [
+        "obl-990"
+      ],
+      "source_seed_ids": [
+        "seed-1158"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01134",
+      "source_obligation_ids": [
+        "obl-991"
+      ],
+      "source_seed_ids": [
+        "seed-1159"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "### Selection reason and audit trail",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Models_System.md:L954"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01135",
+      "source_obligation_ids": [
+        "obl-992"
+      ],
+      "source_seed_ids": [
+        "seed-1160"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "### Fidelity recovery cov-038: Focused run and historical routing contract",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L19"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

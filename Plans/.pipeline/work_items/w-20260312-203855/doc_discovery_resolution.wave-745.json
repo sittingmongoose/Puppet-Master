@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-745",
+  "group_ids": [
+    "discgrp-2977",
+    "discgrp-2978",
+    "discgrp-2979",
+    "discgrp-2980"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03257",
+      "source_obligation_ids": [
+        "obl-3103"
+      ],
+      "source_seed_ids": [
+        "seed-4126"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "# Containers, Registry, and Unraid Integration",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03258",
+      "source_obligation_ids": [
+        "obl-3104"
+      ],
+      "source_seed_ids": [
+        "seed-4127"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 2.3 redb: schema, migrations, key patterns",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L455"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03259",
+      "source_obligation_ids": [
+        "obl-3105"
+      ],
+      "source_seed_ids": [
+        "seed-4128"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03260",
+      "source_obligation_ids": [
+        "obl-3106"
+      ],
+      "source_seed_ids": [
+        "seed-4129"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## 0. Scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L14"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

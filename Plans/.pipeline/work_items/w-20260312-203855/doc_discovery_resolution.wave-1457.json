@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1457",
+  "group_ids": [
+    "discgrp-5825",
+    "discgrp-5826",
+    "discgrp-5827",
+    "discgrp-5828"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06438",
+      "source_obligation_ids": [
+        "obl-6079"
+      ],
+      "source_seed_ids": [
+        "seed-9185"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06440",
+      "source_obligation_ids": [
+        "obl-6081"
+      ],
+      "source_seed_ids": [
+        "seed-9190"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "### Fidelity recovery cov-101: Provider-native correlation and approval scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L28"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06441",
+      "source_obligation_ids": [
+        "obl-6082"
+      ],
+      "source_seed_ids": [
+        "seed-9191"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06442",
+      "source_obligation_ids": [
+        "obl-6083"
+      ],
+      "source_seed_ids": [
+        "seed-9192"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

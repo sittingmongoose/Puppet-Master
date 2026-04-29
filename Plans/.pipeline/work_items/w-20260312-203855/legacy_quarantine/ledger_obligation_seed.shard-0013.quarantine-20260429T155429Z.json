@@ -1,0 +1,192 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0013",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0013-L002401-L002600.md",
+  "source_line_range": "L002401-L002600",
+  "covered_shard_id": "shard-0013",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "shared projection trust contract",
+      "exact_items": [
+        "What is still missing is an explicit shared trust policy for all projection-backed surfaces",
+        "Add a shared projection health/trust contract used by: Orchestrator, Usage, Source Control, other projection-backed surfaces",
+        "Make trust state and last updated first-class UI fields for projection-backed surfaces."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Recommended trust-state model",
+        "Contradictions / gaps surfaced",
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "trust state",
+        "last updated",
+        "projection-backed surfaces"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L2412-L2413"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "projection-backed operational surface status UI",
+      "exact_items": [
+        "Every projection-backed operational surface should expose at least: trust state, last updated time, degraded/stale reason when not current, whether actions are partially gated",
+        "Progress: show run-level trust banner or chip when projections are stale/degraded",
+        "Seams: allow browsing, but gate actions that depend on current promotion/blocker truth",
+        "Node Graph: keep historical graph and current selections visible, but flag when live node state may be stale"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "UI contract direction",
+        "Fallback-view direction"
+      ],
+      "stale_tokens": [
+        "trust banner",
+        "stale/degraded",
+        "partially gated"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L2458-L2469"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "record-backed fallback hierarchy",
+      "exact_items": [
+        "when necessary, fall back to canonical record-backed views: History, Ledger, direct evidence/record inspectors",
+        "History = chronological durable story",
+        "Ledger = exact record inspection",
+        "projection-backed operational views can degrade without erasing auditability"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Fallback-view direction"
+      ],
+      "stale_tokens": [
+        "History",
+        "Ledger",
+        "direct evidence/record inspectors"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L2441-L2456"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "historical run mode gating",
+      "exact_items": [
+        "Historical Run Mode",
+        "all tabs clearly show the focused historical run_id",
+        "controls that only make sense for the active run are disabled or removed",
+        "Actions that should generally be disabled in historical mode: pause / resume / cancel active execution"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [
+        "Historical-run mode direction"
+      ],
+      "stale_tokens": [
+        "Historical Run Mode",
+        "focused historical run_id",
+        "disabled or removed"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L2536-L2555"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "orchestrator project-state persistence",
+      "exact_items": [
+        "Likely missing project-state record: orchestrator.project_state.{project_id}",
+        "Candidate fields: focused_run_id?, focus_mode, last_live_run_id?, selected_tab, per-tab view state refs",
+        "persist the last focused run per project"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Persistence direction"
+      ],
+      "stale_tokens": [
+        "orchestrator.project_state.{project_id}",
+        "focused_run_id",
+        "focus_mode"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L2581-L2595"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "no silent stale truth",
+      "exact_items": [
+        "page state must not silently stand in for runtime state when freshness/trust is insufficient",
+        "the system should never quietly present stale operational truth as if it were live truth.",
+        "refreshing should continue showing the last committed projection rather than blanking the page."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Action-gating direction",
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [
+        "silently stand in",
+        "stale operational truth",
+        "last committed projection"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L2428-L2439"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "L002401-L002402 projection/disposable/target_seq lines",
+    "L002494-L002520 research progress and targeted docs list",
+    "L002570-L002579 background-runs interaction summary",
+    "L002597-L002600 cross-tab behavior direction header"
+  ],
+  "uncertain_items": [
+    "Whether History/Ledger should be treated as layout_blocker versus consumer in downstream specs.",
+    "Whether refreshing belongs in a shared schema or only in Orchestrator-specific copy.",
+    "Whether orchestrator.project_state.{project_id} is intended as a concrete key name or only a placeholder."
+  ]
+}

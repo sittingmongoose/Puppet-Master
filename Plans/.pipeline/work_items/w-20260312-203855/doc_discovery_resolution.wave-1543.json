@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1543",
+  "group_ids": [
+    "discgrp-6169",
+    "discgrp-6170",
+    "discgrp-6171",
+    "discgrp-6172"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06852",
+      "source_obligation_ids": [
+        "obl-6455"
+      ],
+      "source_seed_ids": [
+        "seed-9834"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06853",
+      "source_obligation_ids": [
+        "obl-6456"
+      ],
+      "source_seed_ids": [
+        "seed-9835"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06854",
+      "source_obligation_ids": [
+        "obl-6457"
+      ],
+      "source_seed_ids": [
+        "seed-9836"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### route_target, OpenSubject, and command normalization",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L315"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06855",
+      "source_obligation_ids": [
+        "obl-6458"
+      ],
+      "source_seed_ids": [
+        "seed-9837"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L43"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-027",
+  "group_ids": [
+    "discgrp-0105",
+    "discgrp-0106",
+    "discgrp-0107",
+    "discgrp-0108"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00340",
+      "source_obligation_ids": [
+        "obl-198"
+      ],
+      "source_seed_ids": [
+        "seed-230"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00341",
+      "source_obligation_ids": [
+        "obl-199"
+      ],
+      "source_seed_ids": [
+        "seed-231"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00342",
+      "source_obligation_ids": [
+        "obl-200"
+      ],
+      "source_seed_ids": [
+        "seed-232"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00343",
+      "source_obligation_ids": [
+        "obl-201"
+      ],
+      "source_seed_ids": [
+        "seed-233"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### 2.5 Branch already exists when recreating worktree",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L205"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

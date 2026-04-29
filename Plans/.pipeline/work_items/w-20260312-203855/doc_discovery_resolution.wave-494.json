@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-494",
+  "group_ids": [
+    "discgrp-1973",
+    "discgrp-1974",
+    "discgrp-1975",
+    "discgrp-1976"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02236",
+      "source_obligation_ids": [
+        "obl-2090"
+      ],
+      "source_seed_ids": [
+        "seed-2718"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Cross-surface receipt record baseline",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/storage-plan.md:L481"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02237",
+      "source_obligation_ids": [
+        "obl-2091"
+      ],
+      "source_seed_ids": [
+        "seed-2719"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/usage-feature.md:L328"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02238",
+      "source_obligation_ids": [
+        "obl-2092"
+      ],
+      "source_seed_ids": [
+        "seed-2720"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "# Usage Feature -- App/GUI Plan",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02239",
+      "source_obligation_ids": [
+        "obl-2093"
+      ],
+      "source_seed_ids": [
+        "seed-2721"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_Integration.md",
+      "new_heading_hint": "# GitHub Integration -- Spec",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

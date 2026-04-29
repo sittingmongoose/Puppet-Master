@@ -1,0 +1,426 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-145",
+  "group_ids": [
+    "pktgrp-0577",
+    "pktgrp-0578",
+    "pktgrp-0579",
+    "pktgrp-0580"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0022",
+      "source_reconciliation_target_id": "target-0022",
+      "source_reconciliation_target_ids": [
+        "target-0022"
+      ],
+      "path": "Plans/.../settings*",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../settings*:L1",
+      "coverage_row_ids": [
+        "cov-00015"
+      ],
+      "source_obligation_ids": [
+        "obl-006"
+      ],
+      "source_seed_ids": [
+        "seed-006"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-006"
+        ],
+        "source_seed_ids": [
+          "seed-006"
+        ],
+        "source_shard_ids": [
+          "shard-0002"
+        ]
+      },
+      "gap_ids": [
+        "gap-00015"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`App / Global` = broad product defaults/catalogs/capabilities",
+        "`Project` = main execution policy owner",
+        "`Seam` = meaningful feature-level overrides only",
+        "`Package` = useful local execution/recovery overrides",
+        "`Node` = rare targeted override only",
+        "`Actor / Role` = cross-cutting provider/account/persona/worker policy"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "isolated orchestrator-only settings area"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "isolated orchestrator-only settings area"
+      ],
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "Settings scope hierarchy direction now clarified"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-ca02f68cb898",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0023",
+      "source_reconciliation_target_id": "target-0023",
+      "source_reconciliation_target_ids": [
+        "target-0023"
+      ],
+      "path": "Plans/.../widget*",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../widget*:L1",
+      "coverage_row_ids": [
+        "cov-00018"
+      ],
+      "source_obligation_ids": [
+        "obl-007"
+      ],
+      "source_seed_ids": [
+        "seed-007"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-007"
+        ],
+        "source_seed_ids": [
+          "seed-007"
+        ],
+        "source_shard_ids": [
+          "shard-0002"
+        ]
+      },
+      "gap_ids": [
+        "gap-00018"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Orchestrator widgets should consume stable shared projections rather than raw event streams or bespoke queries",
+        "widget shell needs widget identity/type, scope, filter/sort/display config, projection ref",
+        "Run Summary, Seam Summary, Concern Summary, Account / Usage Pressure, Recent Major Events should be broadly reusable across Orchestrator / Dashboard / Projects"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "raw event streams",
+        "bespoke queries"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "raw event streams",
+        "bespoke queries"
+      ],
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "Widget-system data-contract direction now clarified"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-287303c84ecb",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0024",
+      "source_reconciliation_target_id": "target-0024",
+      "source_reconciliation_target_ids": [
+        "target-0024"
+      ],
+      "path": "Plans/.../working_ledger.md",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../working_ledger.md:L1",
+      "coverage_row_ids": [
+        "cov-00011",
+        "cov-00014",
+        "cov-00017",
+        "cov-00021",
+        "cov-00024",
+        "cov-00027",
+        "cov-00030"
+      ],
+      "source_obligation_ids": [
+        "obl-005",
+        "obl-006",
+        "obl-007",
+        "obl-008",
+        "obl-009",
+        "obl-010",
+        "obl-011"
+      ],
+      "source_seed_ids": [
+        "seed-005",
+        "seed-006",
+        "seed-007",
+        "seed-008",
+        "seed-009",
+        "seed-010",
+        "seed-011"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-005",
+          "obl-006",
+          "obl-007",
+          "obl-008",
+          "obl-009",
+          "obl-010",
+          "obl-011"
+        ],
+        "source_seed_ids": [
+          "seed-005",
+          "seed-006",
+          "seed-007",
+          "seed-008",
+          "seed-009",
+          "seed-010",
+          "seed-011"
+        ],
+        "source_shard_ids": [
+          "shard-0002"
+        ]
+      },
+      "gap_ids": [
+        "gap-00011",
+        "gap-00014",
+        "gap-00017",
+        "gap-00021",
+        "gap-00024",
+        "gap-00027",
+        "gap-00030"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Retire/replace legacy locality tokens with explicit scope labels: `Inherited`, `Explicit`, `Computed`",
+        "Treat `Runtime only` as computed truth, not user configuration",
+        "`App / Global` = broad product defaults/catalogs/capabilities",
+        "`Project` = main execution policy owner",
+        "`Seam` = meaningful feature-level overrides only",
+        "`Package` = useful local execution/recovery overrides",
+        "`Node` = rare targeted override only",
+        "`Actor / Role` = cross-cutting provider/account/persona/worker policy",
+        "Orchestrator widgets should consume stable shared projections rather than raw event streams or bespoke queries",
+        "widget shell needs widget identity/type, scope, filter/sort/display config, projection ref",
+        "Run Summary, Seam Summary, Concern Summary, Account / Usage Pressure, Recent Major Events should be broadly reusable across Orchestrator / Dashboard / Projects",
+        "Degrade from summary/projection surfaces to direct record-backed inspection",
+        "Ledger and direct record views become the trust anchor under degraded projection health",
+        "Only certain current/generation-matched direct records should support action",
+        "Direct record views that allow action should explicitly show currentness, generation match, superseded yes/no, actionable yes/no",
+        "Actions that change execution/promotion/recovery/approval truth require fresh-enough projection state",
+        "UI should explain gating inline: what is stale, why it matters, what the user can do next",
+        "Projection health becoming an operational concern must mint a real concern rather than stay a silent widget problem",
+        "`concern` should be a first-class record, not just a field buried in review/alert logic",
+        "Concern records should carry identity, scope, severity, category, owner, lifecycle state, meaning/summary, linkage to evidence/artifacts/history/source records, visibility/attention flags",
+        "Canonical concerns should be created by runtime, package overseer, seam overseer, corroboration outcome, graph patch/state-transition logic",
+        "All major surfaces should project the same concern model rather than inventing local versions",
+        "`Progress` = operational attention projection",
+        "`Seams` = integration/governance projection",
+        "`Evidence` = proof-backed concern projection",
+        "`History` = concern lifecycle timeline projection",
+        "`Ledger` = exact structured concern-record projection"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "Runtime only",
+        "Inherited",
+        "Explicit",
+        "Computed",
+        "isolated orchestrator-only settings area",
+        "raw event streams",
+        "bespoke queries",
+        "summary/projection surfaces",
+        "direct record views",
+        "silent widget problem",
+        "review/alert logic",
+        "local versions"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "Runtime only",
+        "Inherited",
+        "Explicit",
+        "Computed",
+        "isolated orchestrator-only settings area",
+        "raw event streams",
+        "bespoke queries",
+        "summary/projection surfaces",
+        "direct record views",
+        "silent widget problem",
+        "review/alert logic",
+        "local versions"
+      ],
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "Override-display direction now clarified",
+        "Settings scope hierarchy direction now clarified",
+        "Widget-system data-contract direction now clarified",
+        "Fallback path under stale projections is now clearer",
+        "Action-gating direction under degraded projections now clarified",
+        "Concern-model direction now clarified",
+        "Shared concern projection rule now clarified"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-f9ac599ee800",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0025",
+      "source_reconciliation_target_id": "target-0025",
+      "source_reconciliation_target_ids": [
+        "target-0025"
+      ],
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json:L1",
+      "coverage_row_ids": [
+        "cov-06893"
+      ],
+      "source_obligation_ids": [
+        "obl-6495"
+      ],
+      "source_seed_ids": [
+        "seed-9874",
+        "seed-9877"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-6495"
+        ],
+        "source_seed_ids": [
+          "seed-9874",
+          "seed-9877"
+        ],
+        "source_shard_ids": [
+          "shard-0088"
+        ]
+      },
+      "gap_ids": [
+        "gap-05339"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json`",
+        "Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-73de50fa4fde",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-00015",
+    "cov-00018",
+    "cov-00011",
+    "cov-00014",
+    "cov-00017",
+    "cov-00021",
+    "cov-00024",
+    "cov-00027",
+    "cov-00030",
+    "cov-06893"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-006",
+    "obl-007",
+    "obl-005",
+    "obl-008",
+    "obl-009",
+    "obl-010",
+    "obl-011",
+    "obl-6495"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-006",
+    "seed-007",
+    "seed-005",
+    "seed-008",
+    "seed-009",
+    "seed-010",
+    "seed-011",
+    "seed-9874",
+    "seed-9877"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0002",
+    "shard-0088"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "preserved_exact_required_items": [
+    "`App / Global` = broad product defaults/catalogs/capabilities",
+    "`Project` = main execution policy owner",
+    "`Seam` = meaningful feature-level overrides only",
+    "`Package` = useful local execution/recovery overrides",
+    "`Node` = rare targeted override only",
+    "`Actor / Role` = cross-cutting provider/account/persona/worker policy",
+    "Orchestrator widgets should consume stable shared projections rather than raw event streams or bespoke queries",
+    "widget shell needs widget identity/type, scope, filter/sort/display config, projection ref",
+    "Run Summary, Seam Summary, Concern Summary, Account / Usage Pressure, Recent Major Events should be broadly reusable across Orchestrator / Dashboard / Projects",
+    "Retire/replace legacy locality tokens with explicit scope labels: `Inherited`, `Explicit`, `Computed`",
+    "Treat `Runtime only` as computed truth, not user configuration",
+    "Degrade from summary/projection surfaces to direct record-backed inspection",
+    "Ledger and direct record views become the trust anchor under degraded projection health",
+    "Only certain current/generation-matched direct records should support action",
+    "Direct record views that allow action should explicitly show currentness, generation match, superseded yes/no, actionable yes/no",
+    "Actions that change execution/promotion/recovery/approval truth require fresh-enough projection state",
+    "UI should explain gating inline: what is stale, why it matters, what the user can do next",
+    "Projection health becoming an operational concern must mint a real concern rather than stay a silent widget problem",
+    "`concern` should be a first-class record, not just a field buried in review/alert logic",
+    "Concern records should carry identity, scope, severity, category, owner, lifecycle state, meaning/summary, linkage to evidence/artifacts/history/source records, visibility/attention flags",
+    "Canonical concerns should be created by runtime, package overseer, seam overseer, corroboration outcome, graph patch/state-transition logic",
+    "All major surfaces should project the same concern model rather than inventing local versions",
+    "`Progress` = operational attention projection",
+    "`Seams` = integration/governance projection",
+    "`Evidence` = proof-backed concern projection",
+    "`History` = concern lifecycle timeline projection",
+    "`Ledger` = exact structured concern-record projection",
+    "`Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json`",
+    "Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json"
+  ],
+  "blocked_targets": []
+}

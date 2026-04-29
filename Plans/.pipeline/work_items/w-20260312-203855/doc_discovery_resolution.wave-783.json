@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-783",
+  "group_ids": [
+    "discgrp-3129",
+    "discgrp-3130",
+    "discgrp-3131",
+    "discgrp-3132"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03409",
+      "source_obligation_ids": [
+        "obl-3255"
+      ],
+      "source_seed_ids": [
+        "seed-4349"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03410",
+      "source_obligation_ids": [
+        "obl-3256"
+      ],
+      "source_seed_ids": [
+        "seed-4350"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03411",
+      "source_obligation_ids": [
+        "obl-3257"
+      ],
+      "source_seed_ids": [
+        "seed-4354"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03412",
+      "source_obligation_ids": [
+        "obl-3258"
+      ],
+      "source_seed_ids": [
+        "seed-4355"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

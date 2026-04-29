@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-708",
+  "group_ids": [
+    "discgrp-2829",
+    "discgrp-2830",
+    "discgrp-2831",
+    "discgrp-2832"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03109",
+      "source_obligation_ids": [
+        "obl-2955"
+      ],
+      "source_seed_ids": [
+        "seed-3899"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Requested/effective account and execution identity",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L270"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03110",
+      "source_obligation_ids": [
+        "obl-2956"
+      ],
+      "source_seed_ids": [
+        "seed-3900"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Prompt_Pipeline.md",
+      "new_heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03111",
+      "source_obligation_ids": [
+        "obl-2957"
+      ],
+      "source_seed_ids": [
+        "seed-3901"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L774"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03112",
+      "source_obligation_ids": [
+        "obl-2958"
+      ],
+      "source_seed_ids": [
+        "seed-3902"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.3 Search and Source Control keep separate projection state",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1327"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

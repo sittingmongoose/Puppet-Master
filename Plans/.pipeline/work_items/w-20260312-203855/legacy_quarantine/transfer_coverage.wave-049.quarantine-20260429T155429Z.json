@@ -1,0 +1,144 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-049",
+  "timestamp_utc": "2026-04-28T21:14:48Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-193",
+    "coverage-rowgrp-194",
+    "coverage-rowgrp-195",
+    "coverage-rowgrp-196"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-193 cov-605,cov-759 Plans/Tools.md",
+    "rowgrp-194 cov-1247 Plans/Tools.md",
+    "rowgrp-195 cov-752 Plans/Tools.md",
+    "rowgrp-196 cov-1220 Plans/Tools.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-193": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-194": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-195": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-196": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-605",
+    "cov-759",
+    "cov-1247",
+    "cov-752",
+    "cov-1220"
+  ],
+  "coverage_ids_completed": [
+    "cov-605",
+    "cov-759",
+    "cov-1247",
+    "cov-752",
+    "cov-1220"
+  ],
+  "path_groups_assigned": [
+    "Plans/Tools.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-605",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Tools.md contains tool-policy/runtime-taxonomy and denied-event requirements, but no direct coverage that conversational docs lag shared runtime identity, HITL requests/resolutions carry actor/lane/account identity, or tool events omit node/attempt/actor/account context.",
+      "source_obligation_ids": [
+        "obl-169"
+      ],
+      "source_seed_ids": [
+        "seed-169"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-759",
+      "status": "partial",
+      "evidence": [
+        "Plans/Tools.md:1166-1169 defines tool.invoked/tool.denied event emission and tool usage rollups through redb tool_usage windows",
+        "Plans/Tools.md:1201-1208 maps immediate tool-policy decisions into the shared runtime taxonomy",
+        "Plans/Tools.md:1280-1286 requires allowed_action_ids-only blocked payloads and mutation_capable on each tool definition"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Tools.md has related tool-event, shared-taxonomy, usage, and blocked-payload guidance, but it does not directly say Tools stops at tool-specific semantics and consumes a shared runtime attribution packet; Runtime_Artifacts_Panel and usage-feature propagation are outside the assigned file.",
+      "source_obligation_ids": [
+        "obl-210"
+      ],
+      "source_seed_ids": [
+        "seed-210"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1247",
+      "status": "partial",
+      "evidence": [
+        "Plans/Tools.md:1104 includes action_available in blocked_notice pending approval payloads",
+        "Plans/Tools.md:1810-1816 requires consumer propagation of escalation_level, action_available ownership, and usage observability through blocked surfaces and blocked_notice handling"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "action_available and escalation_level are present in Tools.md, but report_ref and startup_recovered are absent from the assigned file and the full blocked-packet consumer surface propagation is incomplete.",
+      "source_obligation_ids": [
+        "obl-352"
+      ],
+      "source_seed_ids": [
+        "seed-352"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-752",
+      "status": "partial",
+      "evidence": [
+        "Plans/Tools.md:867-877 exposes blocked and denied tool packets through shared runtime-facing blocked payloads and names canonical tool.invoked/tool.denied events",
+        "Plans/Tools.md:1167-1169 defines tool.invoked/tool.denied emission and tool_usage rollups",
+        "Plans/Tools.md:1282-1286 defines canonical blocked reasons and mutation_capable requirements"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Tools.md has related tool-event, blocked-payload, and usage text, but not the unified attribution packet across tool events, runtime artifacts, receipts, and usage records, nor direct bridge fields such as provider_attempt_ref, orchestrator.receipt, usage_record, or cost_usage.",
+      "source_obligation_ids": [
+        "obl-208"
+      ],
+      "source_seed_ids": [
+        "seed-208"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1220",
+      "status": "partial",
+      "evidence": [
+        "Plans/Tools.md:1104 includes blocked_sequence in blocked_notice pending approval payloads",
+        "Plans/Tools.md:1824-1828 requires transfer of execution_role, requested_account_id, operational_identity, account-switch/pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner/consumer docs"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Tools.md names execution_role, requested_account_id, operational_identity, and blocked_sequence in transfer directives, but the content is still a transfer instruction rather than complete owner/consumer live-doc coverage.",
+      "source_obligation_ids": [
+        "obl-346"
+      ],
+      "source_seed_ids": [
+        "seed-346"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

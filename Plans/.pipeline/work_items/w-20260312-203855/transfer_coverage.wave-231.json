@@ -1,0 +1,1113 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-231",
+  "row_group_ids": [
+    "rowgrp-0921",
+    "rowgrp-0922",
+    "rowgrp-0923",
+    "rowgrp-0924"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-01208",
+      "source_obligation_ids": [
+        "obl-1065"
+      ],
+      "source_seed_ids": [
+        "seed-1252"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "ELI5/help can say \u201cA feature seam is where related packages have to work together cleanly\u201d",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "ELI5/help can say \u201cA feature seam is where related packages have to work together cleanly\u201d"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01271",
+      "source_obligation_ids": [
+        "obl-1128"
+      ],
+      "source_seed_ids": [
+        "seed-1340"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Project cards likely need compact pressure signals, not full usage details.",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### Enhancement 5: Usage in header (compact)",
+      "status": "partial",
+      "exact_items": [
+        "Project cards likely need compact pressure signals, not full usage details."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L599"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01614",
+      "source_obligation_ids": [
+        "obl-1471"
+      ],
+      "source_seed_ids": [
+        "seed-1823"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "`Feature Seams`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "`Feature Seams`",
+        "Feature Seams"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01744",
+      "source_obligation_ids": [
+        "obl-1601"
+      ],
+      "source_seed_ids": [
+        "seed-2000"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "`Show in Ledger` / `Show in Usage`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
+      "status": "present",
+      "exact_items": [
+        "`Show in Ledger` / `Show in Usage`",
+        "Show in Ledger",
+        "Show in Usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L328",
+        "Plans/usage-feature.md:L332",
+        "Plans/usage-feature.md:L333",
+        "Plans/usage-feature.md:L620",
+        "Plans/usage-feature.md:L795"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01792",
+      "source_obligation_ids": [
+        "obl-1649"
+      ],
+      "source_seed_ids": [
+        "seed-2056"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "`Show in Ledger`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
+      "status": "present",
+      "exact_items": [
+        "`Show in Ledger`",
+        "Show in Ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L328",
+        "Plans/usage-feature.md:L332",
+        "Plans/usage-feature.md:L620",
+        "Plans/usage-feature.md:L795"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01793",
+      "source_obligation_ids": [
+        "obl-1650"
+      ],
+      "source_seed_ids": [
+        "seed-2057",
+        "seed-6642"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0064"
+      ],
+      "canon_label": "`Show in Usage`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
+      "status": "present",
+      "exact_items": [
+        "`Show in Usage`",
+        "Show in Usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L328",
+        "Plans/usage-feature.md:L333",
+        "Plans/usage-feature.md:L795"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01795",
+      "source_obligation_ids": [
+        "obl-1652"
+      ],
+      "source_seed_ids": [
+        "seed-2059"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "preserve canonical usage identity",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "preserve canonical usage identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01826",
+      "source_obligation_ids": [
+        "obl-1683"
+      ],
+      "source_seed_ids": [
+        "seed-2114"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "`success`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "## Success Criteria",
+      "status": "partial",
+      "exact_items": [
+        "`success`",
+        "success"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L650"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02026",
+      "source_obligation_ids": [
+        "obl-1883"
+      ],
+      "source_seed_ids": [
+        "seed-2430"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "`usage.event`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### 3. Event ledger (existing concept, under Usage umbrella)",
+      "status": "present",
+      "exact_items": [
+        "`usage.event`",
+        "usage.event"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L67",
+        "Plans/usage-feature.md:L71",
+        "Plans/usage-feature.md:L89",
+        "Plans/usage-feature.md:L93",
+        "Plans/usage-feature.md:L281"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02086",
+      "source_obligation_ids": [
+        "obl-1943"
+      ],
+      "source_seed_ids": [
+        "seed-2520"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "for example, `Feature Seam` should remain the term in both modes even if the ELI5 explanat",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "for example, `Feature Seam` should remain the term in both modes even if the ELI5 explanation is plainer",
+        "Feature Seam"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02176",
+      "source_obligation_ids": [
+        "obl-2031"
+      ],
+      "source_seed_ids": [
+        "seed-2640"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "`storage-plan.md` `usage.event` row still omits effective auth/account/model identity even",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### 3. Event ledger (existing concept, under Usage umbrella)",
+      "status": "present",
+      "exact_items": [
+        "`storage-plan.md` `usage.event` row still omits effective auth/account/model identity even though `usage-feature.md` `UsageRecord` expects those fields downstream.",
+        "storage-plan.md",
+        "usage.event",
+        "usage-feature.md",
+        "UsageRecord"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L37",
+        "Plans/usage-feature.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02266",
+      "source_obligation_ids": [
+        "obl-2119"
+      ],
+      "source_seed_ids": [
+        "seed-2751"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "Define `usage_event_ref` explicitly and make all `Show in Usage` / `Show in Ledger` pivots",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
+      "status": "present",
+      "exact_items": [
+        "Define `usage_event_ref` explicitly and make all `Show in Usage` / `Show in Ledger` pivots prefer receipt + attempt + usage-event identity over run-only or tier-only filters.",
+        "usage_event_ref",
+        "Show in Usage",
+        "Show in Ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L67",
+        "Plans/usage-feature.md:L71",
+        "Plans/usage-feature.md:L89",
+        "Plans/usage-feature.md:L93",
+        "Plans/usage-feature.md:L328"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02300",
+      "source_obligation_ids": [
+        "obl-2152"
+      ],
+      "source_seed_ids": [
+        "seed-2796"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "`usage` and `auth_state` events still cannot support correct multi-account attribution or",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "##### Usage and receipt lineage routing",
+      "status": "present",
+      "exact_items": [
+        "`usage` and `auth_state` events still cannot support correct multi-account attribution or failover routing.",
+        "usage",
+        "auth_state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1",
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L35"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02347",
+      "source_obligation_ids": [
+        "obl-2198"
+      ],
+      "source_seed_ids": [
+        "seed-2853"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Thread Usage stays canonical in-shell, but app Usage pivots still need the same shared sco",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "## Scope of the Usage Feature",
+      "status": "partial",
+      "exact_items": [
+        "Thread Usage stays canonical in-shell, but app Usage pivots still need the same shared scope envelope."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L172"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02668",
+      "source_obligation_ids": [
+        "obl-2515"
+      ],
+      "source_seed_ids": [
+        "seed-3302"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "Role-scoped routing exists in policy/storage but not in effective-resolution or usage sche",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "##### Usage and receipt lineage routing",
+      "status": "partial",
+      "exact_items": [
+        "Role-scoped routing exists in policy/storage but not in effective-resolution or usage schemas."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L436"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02783",
+      "source_obligation_ids": [
+        "obl-2630"
+      ],
+      "source_seed_ids": [
+        "seed-3450"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "usage is still attributed to `effective_account_id`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "usage is still attributed to `effective_account_id`",
+        "effective_account_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02797",
+      "source_obligation_ids": [
+        "obl-2644"
+      ],
+      "source_seed_ids": [
+        "seed-3473"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "but canonical usage records still omit `account_switch_reason` and any durable switch/sign",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "but canonical usage records still omit `account_switch_reason` and any durable switch/signal pointer",
+        "account_switch_reason"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02807",
+      "source_obligation_ids": [
+        "obl-2654"
+      ],
+      "source_seed_ids": [
+        "seed-3488"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "Usage still wants switch explanations without carrying switch lineage in its canonical rec",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "##### Usage and receipt lineage routing",
+      "status": "partial",
+      "exact_items": [
+        "Usage still wants switch explanations without carrying switch lineage in its canonical records."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L436"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02857",
+      "source_obligation_ids": [
+        "obl-2704"
+      ],
+      "source_seed_ids": [
+        "seed-3557"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "but the shared effective-resolution/runtime records and usage records still do not identif",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "but the shared effective-resolution/runtime records and usage records still do not identify which role actually executed the attempt/message"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03960",
+      "source_obligation_ids": [
+        "obl-3804"
+      ],
+      "source_seed_ids": [
+        "seed-5208"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "keep canonical Usage routing on shared usage identity, not feature-local cost or receipt n",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "##### Usage and receipt lineage routing",
+      "status": "partial",
+      "exact_items": [
+        "keep canonical Usage routing on shared usage identity, not feature-local cost or receipt notions"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L436"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03964",
+      "source_obligation_ids": [
+        "obl-3808"
+      ],
+      "source_seed_ids": [
+        "seed-5220"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "`Orchestrator_Page.md` still describes worker identity and per-node usage in terms that la",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "`Orchestrator_Page.md` still describes worker identity and per-node usage in terms that lag the stronger runtime/account/attempt model.",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04056",
+      "source_obligation_ids": [
+        "obl-3898"
+      ],
+      "source_seed_ids": [
+        "seed-5352"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "spot-checks against `Plans/Orchestrator_Page.md` and `Plans/usage-feature.md`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "spot-checks against `Plans/Orchestrator_Page.md` and `Plans/usage-feature.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L37",
+        "Plans/usage-feature.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04121",
+      "source_obligation_ids": [
+        "obl-3961"
+      ],
+      "source_seed_ids": [
+        "seed-5425"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "Usage with `usage_event_ref`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "present",
+      "exact_items": [
+        "Usage with `usage_event_ref`",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L67",
+        "Plans/usage-feature.md:L71",
+        "Plans/usage-feature.md:L89",
+        "Plans/usage-feature.md:L93",
+        "Plans/usage-feature.md:L431"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04170",
+      "source_obligation_ids": [
+        "obl-4010"
+      ],
+      "source_seed_ids": [
+        "seed-5517"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "align `Show in Ledger`, `Show in Usage`, and artifact/report opens around the same target",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
+      "status": "present",
+      "exact_items": [
+        "align `Show in Ledger`, `Show in Usage`, and artifact/report opens around the same target schema instead of per-feature payloads",
+        "Show in Ledger",
+        "Show in Usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L328",
+        "Plans/usage-feature.md:L332",
+        "Plans/usage-feature.md:L333",
+        "Plans/usage-feature.md:L620",
+        "Plans/usage-feature.md:L795"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04514",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04873",
+      "source_obligation_ids": [
+        "obl-4650"
+      ],
+      "source_seed_ids": [
+        "seed-6657"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "must open/focus Usage in the correct project/thread/run scope",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "## Scope of the Usage Feature",
+      "status": "partial",
+      "exact_items": [
+        "must open/focus Usage in the correct project/thread/run scope"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L172"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05236",
+      "source_obligation_ids": [
+        "obl-5012"
+      ],
+      "source_seed_ids": [
+        "seed-7313"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "`usage`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "present",
+      "exact_items": [
+        "`usage`",
+        "usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1",
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L35"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05247",
+      "source_obligation_ids": [
+        "obl-5023"
+      ],
+      "source_seed_ids": [
+        "seed-7324"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "Use `inspector_target = usage` for graph/node/attempt pivots that keep the same object but",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "Use `inspector_target = usage` for graph/node/attempt pivots that keep the same object but focus the usage section.",
+        "inspector_target = usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05268",
+      "source_obligation_ids": [
+        "obl-5044"
+      ],
+      "source_seed_ids": [
+        "seed-7357",
+        "seed-7485",
+        "seed-7491"
+      ],
+      "source_shard_ids": [
+        "shard-0069",
+        "shard-0070"
+      ],
+      "canon_label": "`object_id = <canonical usage event id>`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### 3. Event ledger (existing concept, under Usage umbrella)",
+      "status": "partial",
+      "exact_items": [
+        "`object_id = <canonical usage event id>`",
+        "object_id = <canonical usage event id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L187"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05285",
+      "source_obligation_ids": [
+        "obl-5061"
+      ],
+      "source_seed_ids": [
+        "seed-7409"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "Provider/runtime/account seams got materially sharper under Sonnet:",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### 3. Event ledger (existing concept, under Usage umbrella)",
+      "status": "partial",
+      "exact_items": [
+        "Provider/runtime/account seams got materially sharper under Sonnet:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L187"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05315",
+      "source_obligation_ids": [
+        "obl-5087"
+      ],
+      "source_seed_ids": [
+        "seed-7487"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`inspector_target = usage`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "`inspector_target = usage`",
+        "inspector_target = usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05327",
+      "source_obligation_ids": [
+        "obl-5099"
+      ],
+      "source_seed_ids": [
+        "seed-7511"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`inspector_target = details | evidence | usage | history`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "`inspector_target = details | evidence | usage | history`",
+        "inspector_target = details | evidence | usage | history"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05330",
+      "source_obligation_ids": [
+        "obl-5102"
+      ],
+      "source_seed_ids": [
+        "seed-7518"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`inspector_target = details | evidence | usage | lineage`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "##### Usage and receipt lineage routing",
+      "status": "partial",
+      "exact_items": [
+        "`inspector_target = details | evidence | usage | lineage`",
+        "inspector_target = details | evidence | usage | lineage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L436"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05373",
+      "source_obligation_ids": [
+        "obl-5145"
+      ],
+      "source_seed_ids": [
+        "seed-7613"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "feature seam:",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "feature seam:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05417",
+      "source_obligation_ids": [
+        "obl-5189"
+      ],
+      "source_seed_ids": [
+        "seed-7690"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "`ledger`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### 3. Event ledger (existing concept, under Usage umbrella)",
+      "status": "present",
+      "exact_items": [
+        "`ledger`",
+        "ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L45",
+        "Plans/usage-feature.md:L48",
+        "Plans/usage-feature.md:L89",
+        "Plans/usage-feature.md:L93",
+        "Plans/usage-feature.md:L110"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05508",
+      "source_obligation_ids": [
+        "obl-5280"
+      ],
+      "source_seed_ids": [
+        "seed-7851"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "`Plans/usage-feature.md` is partially aligned with the routing rewrite and partially still",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/usage-feature.md` is partially aligned with the routing rewrite and partially still tied to older usage-local and tier-local identity patterns.",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L37",
+        "Plans/usage-feature.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05522",
+      "source_obligation_ids": [
+        "obl-5294"
+      ],
+      "source_seed_ids": [
+        "seed-7870"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "`object_id = canonical usage event id`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "### 3. Event ledger (existing concept, under Usage umbrella)",
+      "status": "partial",
+      "exact_items": [
+        "`object_id = canonical usage event id`",
+        "object_id = canonical usage event id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L187"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05739",
+      "source_obligation_ids": [
+        "obl-5511"
+      ],
+      "source_seed_ids": [
+        "seed-8183"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "`usage_event_ref` points to canonical usage identity",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "present",
+      "exact_items": [
+        "`usage_event_ref` points to canonical usage identity",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L67",
+        "Plans/usage-feature.md:L71",
+        "Plans/usage-feature.md:L89",
+        "Plans/usage-feature.md:L93",
+        "Plans/usage-feature.md:L431"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05812",
+      "source_obligation_ids": [
+        "obl-5584"
+      ],
+      "source_seed_ids": [
+        "seed-8294"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "`Plans/usage-feature.md` still says:",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/usage-feature.md` still says:",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L14",
+        "Plans/usage-feature.md:L17",
+        "Plans/usage-feature.md:L26",
+        "Plans/usage-feature.md:L37",
+        "Plans/usage-feature.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05817",
+      "source_obligation_ids": [
+        "obl-5589"
+      ],
+      "source_seed_ids": [
+        "seed-8299"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "usage correlation is explicitly by `tier_id`",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "# Usage Feature -- App/GUI Plan",
+      "status": "partial",
+      "exact_items": [
+        "usage correlation is explicitly by `tier_id`",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L586"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

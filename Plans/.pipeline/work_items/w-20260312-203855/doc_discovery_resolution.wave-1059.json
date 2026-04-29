@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1059",
+  "group_ids": [
+    "discgrp-4233",
+    "discgrp-4234",
+    "discgrp-4235",
+    "discgrp-4236"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04610",
+      "source_obligation_ids": [
+        "obl-4388"
+      ],
+      "source_seed_ids": [
+        "seed-6203"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## 4. Navigation Architecture",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L452"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04611",
+      "source_obligation_ids": [
+        "obl-4389"
+      ],
+      "source_seed_ids": [
+        "seed-6204"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04612",
+      "source_obligation_ids": [
+        "obl-4390"
+      ],
+      "source_seed_ids": [
+        "seed-6205"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "# Crosswalk (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04613",
+      "source_obligation_ids": [
+        "obl-4391"
+      ],
+      "source_seed_ids": [
+        "seed-6206"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### route_target, OpenSubject, and command normalization",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L315"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1304",
+  "group_ids": [
+    "discgrp-5213",
+    "discgrp-5214",
+    "discgrp-5215",
+    "discgrp-5216"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05637",
+      "source_obligation_ids": [
+        "obl-5409"
+      ],
+      "source_seed_ids": [
+        "seed-8034"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05638",
+      "source_obligation_ids": [
+        "obl-5410"
+      ],
+      "source_seed_ids": [
+        "seed-8035"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-001: Owner-first fidelity recovery order",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05639",
+      "source_obligation_ids": [
+        "obl-5411"
+      ],
+      "source_seed_ids": [
+        "seed-8036"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Cross-surface runtime, concern, and route/open contracts",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L251"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05640",
+      "source_obligation_ids": [
+        "obl-5412"
+      ],
+      "source_seed_ids": [
+        "seed-8037"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

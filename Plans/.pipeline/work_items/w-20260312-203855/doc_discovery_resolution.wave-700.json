@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-700",
+  "group_ids": [
+    "discgrp-2797",
+    "discgrp-2798",
+    "discgrp-2799",
+    "discgrp-2800"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03077",
+      "source_obligation_ids": [
+        "obl-2923"
+      ],
+      "source_seed_ids": [
+        "seed-3865"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-090: Execution role and operational identity",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L157"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03078",
+      "source_obligation_ids": [
+        "obl-2924"
+      ],
+      "source_seed_ids": [
+        "seed-3866"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "### Fidelity recovery cov-072: Canonical route payload",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L28"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03079",
+      "source_obligation_ids": [
+        "obl-2925"
+      ],
+      "source_seed_ids": [
+        "seed-3867"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Requested/effective account and execution identity",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L270"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03080",
+      "source_obligation_ids": [
+        "obl-2926"
+      ],
+      "source_seed_ids": [
+        "seed-3868"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

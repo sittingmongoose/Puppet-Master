@@ -1,0 +1,120 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0076",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0076-L015001-L015200.md",
+  "source_line_range": "L015001-L015200",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "route-open identity versus record provenance refs",
+      "exact_items": [
+        "Make the owner-doc distinction explicit: inspection/provenance refs stay in event and record payloads; route/open contracts own navigation identity.",
+        "Keep detail_ref, report_ref, evidence_ref, usage_event_ref, workflow_refs, docker_refs, kubernetes_refs as record/provenance families, not route payload surrogates.",
+        "Keep resume_url only as serialized transport derived from canonical route identity."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "detail_ref",
+        "report_ref",
+        "evidence_ref",
+        "usage_event_ref",
+        "workflow_refs",
+        "docker_refs",
+        "kubernetes_refs",
+        "resume_url"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L15035-L15047"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "storage blocked runtime node-native reconciliation",
+      "exact_items": [
+        "Reconcile storage-plan.md so blocked/runtime families stay node-native.",
+        "Reconcile storage-plan.md so stale tier_runtime_record framing is reduced to derived compatibility state or replaced by rewrite-era execution-context projections.",
+        "Reconcile storage-plan.md so usage and evidence families stop using tier_id as their primary cross-surface key.",
+        "Keep thread/wizard blocked state on canonical blocked/wizard identity and derived route/object identity, not on stored resume_url as if it were primary."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "tier_runtime_record",
+        "tier_id",
+        "resume_url"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L15098-L15103"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "blocked family cross-family minimum fields",
+      "exact_items": [
+        "Define a cross-family blocked minimum for canonical blocked objects: blocked reason; ordered allowed actions where applicable; preserved-work / local-state disclosure where applicable; stable blocked-episode identity or family-local equivalent; detail/report inspection refs.",
+        "Keep family-local additions separate: node-blocked keeps blocked_sequence, attempt_id, failure_class; wizard-blocked keeps wizard-specific clarification/report fields; thread blocked notices stay as rendered/persisted consumer state, not canonical blocked ownership.",
+        "Reconcile the early thin wizard.blocked definition out of Contracts_V0.md."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "blocked_sequence",
+        "attempt_id",
+        "failure_class",
+        "wizard.blocked"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L15154-L15165"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "blocked cross-family field split",
+      "exact_items": [
+        "The docs do not yet say clearly which blocked fields are cross-family minimums versus family-local additions.",
+        "This makes wizard-blocked behavior look like a special deep-link flow instead of a peer member of the canonical blocked family."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L15150-L15152"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "working_ledger.md:L15001 blank",
+    "working_ledger.md:L15002 section heading",
+    "working_ledger.md:L15003-L15032 descriptive findings/doc lists",
+    "working_ledger.md:L15049-L15051 reminder notes",
+    "working_ledger.md:L15053-L15200 mixed research blocks"
+  ],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0076"
+}

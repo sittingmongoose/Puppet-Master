@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1386",
+  "group_ids": [
+    "discgrp-5541",
+    "discgrp-5542",
+    "discgrp-5543",
+    "discgrp-5544"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05999",
+      "source_obligation_ids": [
+        "obl-5771"
+      ],
+      "source_seed_ids": [
+        "seed-8587"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "### Canonical HITL request contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L81"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06000",
+      "source_obligation_ids": [
+        "obl-5772"
+      ],
+      "source_seed_ids": [
+        "seed-8588"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06001",
+      "source_obligation_ids": [
+        "obl-5773"
+      ],
+      "source_seed_ids": [
+        "seed-8589"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06002",
+      "source_obligation_ids": [
+        "obl-5774"
+      ],
+      "source_seed_ids": [
+        "seed-8590"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

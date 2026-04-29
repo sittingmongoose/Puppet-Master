@@ -1,0 +1,326 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-150",
+  "group_ids": [
+    "pktgrp-0597",
+    "pktgrp-0598",
+    "pktgrp-0599",
+    "pktgrp-0600"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0042",
+      "source_reconciliation_target_id": "target-0105",
+      "source_reconciliation_target_ids": [
+        "target-0105"
+      ],
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "operation": "observe_only",
+      "live_anchor": "#### Runtime access URL resolution (Plans/Containers_Registry_and_Unraid.md:L295)",
+      "coverage_row_ids": [
+        "cov-00330",
+        "cov-01365"
+      ],
+      "source_obligation_ids": [
+        "obl-188",
+        "obl-1222"
+      ],
+      "source_seed_ids": [
+        "seed-214",
+        "seed-1463"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0023"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-188",
+          "obl-1222"
+        ],
+        "source_seed_ids": [
+          "seed-214",
+          "seed-1463"
+        ],
+        "source_shard_ids": [
+          "shard-0010",
+          "shard-0023"
+        ]
+      },
+      "gap_ids": [
+        "gap-00269",
+        "gap-01070"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "why it matters: unify blocked/recovery action families so UI, runtime, and chat-thread resolution all point to the same canonical actions.",
+        "`UI_Command_Catalog.md` already requires blocked-state actions to map from `allowed_action_ids[]` to canonical runtime commands rather than surface-local variants.",
+        "UI_Command_Catalog.md",
+        "allowed_action_ids[]"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-7603141b970a",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0043",
+      "source_reconciliation_target_id": "target-0121",
+      "source_reconciliation_target_ids": [
+        "target-0121"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "operation": "observe_only",
+      "live_anchor": "### 7.2 UICommand envelope rules (Plans/Contracts_V0.md:L884)",
+      "coverage_row_ids": [
+        "cov-04572",
+        "cov-05001",
+        "cov-05611",
+        "cov-05615"
+      ],
+      "source_obligation_ids": [
+        "obl-4350",
+        "obl-4777",
+        "obl-5383",
+        "obl-5387"
+      ],
+      "source_seed_ids": [
+        "seed-6129",
+        "seed-6883",
+        "seed-8003",
+        "seed-8007"
+      ],
+      "source_shard_ids": [
+        "shard-0060",
+        "shard-0066",
+        "shard-0074"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4350",
+          "obl-4777",
+          "obl-5383",
+          "obl-5387"
+        ],
+        "source_seed_ids": [
+          "seed-6129",
+          "seed-6883",
+          "seed-8003",
+          "seed-8007"
+        ],
+        "source_shard_ids": [
+          "shard-0060",
+          "shard-0066",
+          "shard-0074"
+        ]
+      },
+      "gap_ids": [
+        "gap-03592",
+        "gap-03916",
+        "gap-04372",
+        "gap-04376"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Contracts_V0.md` owns only a thin `UICommand` envelope",
+        "Contracts_V0.md",
+        "UICommand",
+        "`Contracts_V0.md` still defines only a very thin `UICommand` envelope and has nowhere to express command-normalization metadata.",
+        "subsection `7.1 UICommand envelope`",
+        "7.1 UICommand envelope",
+        "keep `7.1 UICommand envelope`"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-a7abc1ab48aa",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0044",
+      "source_reconciliation_target_id": "target-0138",
+      "source_reconciliation_target_ids": [
+        "target-0138"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "operation": "observe_only",
+      "live_anchor": "### Fidelity recovery cov-164: Coverage blocker concern lifecycle owner section (Plans/Contracts_V0.md:L119)",
+      "coverage_row_ids": [
+        "cov-07066"
+      ],
+      "source_obligation_ids": [
+        "obl-6647"
+      ],
+      "source_seed_ids": [
+        "seed-10166"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-6647"
+        ],
+        "source_seed_ids": [
+          "seed-10166"
+        ],
+        "source_shard_ids": [
+          "shard-0090"
+        ]
+      },
+      "gap_ids": [
+        "gap-05480"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "The blocker bundle remains materially blocked, but the next useful stage is now `Ledger Condenser`, not another Audit Mode sweep.",
+        "Ledger Condenser"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-c6acd37586de",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0045",
+      "source_reconciliation_target_id": "target-0172",
+      "source_reconciliation_target_ids": [
+        "target-0172"
+      ],
+      "path": "Plans/DRY_Rules.md",
+      "operation": "observe_only",
+      "live_anchor": "## 8. Reference style (Plans/DRY_Rules.md:L155)",
+      "coverage_row_ids": [
+        "cov-05251"
+      ],
+      "source_obligation_ids": [
+        "obl-5027"
+      ],
+      "source_seed_ids": [
+        "seed-7333"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-5027"
+        ],
+        "source_seed_ids": [
+          "seed-7333"
+        ],
+        "source_shard_ids": [
+          "shard-0069"
+        ]
+      },
+      "gap_ids": [
+        "gap-04076"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Keep all message-step-line-range style anchors out of `inspector_target`.",
+        "inspector_target"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-a08e454409b7",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-00330",
+    "cov-01365",
+    "cov-04572",
+    "cov-05001",
+    "cov-05611",
+    "cov-05615",
+    "cov-07066",
+    "cov-05251"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-188",
+    "obl-1222",
+    "obl-4350",
+    "obl-4777",
+    "obl-5383",
+    "obl-5387",
+    "obl-6647",
+    "obl-5027"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-214",
+    "seed-1463",
+    "seed-6129",
+    "seed-6883",
+    "seed-8003",
+    "seed-8007",
+    "seed-10166",
+    "seed-7333"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0010",
+    "shard-0023",
+    "shard-0060",
+    "shard-0066",
+    "shard-0074",
+    "shard-0090",
+    "shard-0069"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "why it matters: unify blocked/recovery action families so UI, runtime, and chat-thread resolution all point to the same canonical actions.",
+    "`UI_Command_Catalog.md` already requires blocked-state actions to map from `allowed_action_ids[]` to canonical runtime commands rather than surface-local variants.",
+    "UI_Command_Catalog.md",
+    "allowed_action_ids[]",
+    "`Contracts_V0.md` owns only a thin `UICommand` envelope",
+    "Contracts_V0.md",
+    "UICommand",
+    "`Contracts_V0.md` still defines only a very thin `UICommand` envelope and has nowhere to express command-normalization metadata.",
+    "subsection `7.1 UICommand envelope`",
+    "7.1 UICommand envelope",
+    "keep `7.1 UICommand envelope`",
+    "The blocker bundle remains materially blocked, but the next useful stage is now `Ledger Condenser`, not another Audit Mode sweep.",
+    "Ledger Condenser",
+    "Keep all message-step-line-range style anchors out of `inspector_target`.",
+    "inspector_target"
+  ],
+  "blocked_targets": []
+}

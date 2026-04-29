@@ -1,0 +1,103 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1067",
+  "group_ids": [
+    "discgrp-4265",
+    "discgrp-4266",
+    "discgrp-4267",
+    "discgrp-4268"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04642",
+      "source_obligation_ids": [
+        "obl-4420"
+      ],
+      "source_seed_ids": [
+        "seed-6256"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "### Thread Lifecycle State Machine",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L850"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04643",
+      "source_obligation_ids": [
+        "obl-4421"
+      ],
+      "source_seed_ids": [
+        "seed-6257"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-04644",
+      "source_obligation_ids": [
+        "obl-4422"
+      ],
+      "source_seed_ids": [
+        "seed-6258",
+        "seed-6378",
+        "seed-7360",
+        "seed-7496"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0069",
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04645",
+      "source_obligation_ids": [
+        "obl-4423"
+      ],
+      "source_seed_ids": [
+        "seed-6259",
+        "seed-6379",
+        "seed-7361",
+        "seed-7497"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-991",
+  "group_ids": [
+    "discgrp-3961",
+    "discgrp-3962",
+    "discgrp-3963",
+    "discgrp-3964"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04268",
+      "source_obligation_ids": [
+        "obl-4108"
+      ],
+      "source_seed_ids": [
+        "seed-5693"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Wiring_Matrix.md",
+      "new_heading_hint": "# Wiring Matrix (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Wiring_Matrix.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04270",
+      "source_obligation_ids": [
+        "obl-4110"
+      ],
+      "source_seed_ids": [
+        "seed-5698"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Wiring_Rules.md",
+      "new_heading_hint": "# UI Wiring Rules (Canonical)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/UI_Wiring_Rules.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04271",
+      "source_obligation_ids": [
+        "obl-4111"
+      ],
+      "source_seed_ids": [
+        "seed-5699"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04272",
+      "source_obligation_ids": [
+        "obl-4112"
+      ],
+      "source_seed_ids": [
+        "seed-5700"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "## 2. Primitive index (definitions are DRY)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L66"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

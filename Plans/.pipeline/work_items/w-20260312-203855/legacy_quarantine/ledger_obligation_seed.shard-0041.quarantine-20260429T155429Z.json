@@ -1,0 +1,112 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0041",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0041-L008001-L008200.md",
+  "source_line_range": "L008001-L008200",
+  "covered_shard_id": "shard-0041",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "OpenCode thread_id correlation ownership",
+      "exact_items": [
+        "OpenCode thread_id collision",
+        "canonical thread_id remains PM correlation",
+        "OpenCode session ID is still being treated as if it were that canonical field",
+        "this must move into provider-native correlation before shared-runtime event joins become trustworthy"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_OpenCode.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "thread_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8001-L8004"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "permission scope key for parallel actors",
+      "exact_items": [
+        "Permission control is still unsafe for parallel actors unless it gets a canonical scope key",
+        "always, reject-cascade, and doom-loop behavior still hinge on vague same session semantics",
+        "shared-runtime actors, lanes, and accounts now make that ambiguity a correctness bug"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "same session",
+        "always",
+        "reject-cascade"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8012-L8018"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "append-only switch/pressure episode families",
+      "exact_items": [
+        "The missing piece is an append-only switch/pressure episode family",
+        "one family for why routing pressure existed",
+        "one family for what switch decision actually happened",
+        "rewrite now cares about projected pressure before hard failure, soft vs hard switching, role/account interactions"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "switch/pressure episode"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8170-L8196"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "bridged correlation/account/trust metadata gaps",
+      "exact_items": [
+        "Bridged contracts still cannot legally carry all correlation/account/trust metadata their addenda already imply",
+        "A2A still blocks clean category growth despite rewrite-era semantics needing first-class stream representation",
+        "Permission mode override semantics still conflict on remote side effects",
+        "Permission snapshots still do not project requested/effective identity richly enough"
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Permissions_System.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L8033-L8038"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "L008020-L008030 highest-risk impacted docs list",
+    "L008040-L008046 candidate fixes list",
+    "L008053-L008060 research target-doc list",
+    "L008111-L008117 impacted docs list",
+    "L008127-L008145 candidate fixes list",
+    "L008147-L008156 research target-doc list"
+  ],
+  "uncertain_items": []
+}

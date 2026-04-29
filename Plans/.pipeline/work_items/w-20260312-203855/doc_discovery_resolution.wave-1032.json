@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1032",
+  "group_ids": [
+    "discgrp-4125",
+    "discgrp-4126",
+    "discgrp-4127",
+    "discgrp-4128"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04439",
+      "source_obligation_ids": [
+        "obl-4279"
+      ],
+      "source_seed_ids": [
+        "seed-5963"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-memory-subsystem.md",
+      "new_heading_hint": "# Assistant-Only Memory Subsystem (Canonical SSOT)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04440",
+      "source_obligation_ids": [
+        "obl-4280"
+      ],
+      "source_seed_ids": [
+        "seed-5976"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "## 17. Implementation Order and Dependencies",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L2418"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04441",
+      "source_obligation_ids": [
+        "obl-4281"
+      ],
+      "source_seed_ids": [
+        "seed-5990"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/LSPSupport.md",
+      "new_heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/LSPSupport.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04442",
+      "source_obligation_ids": [
+        "obl-4282"
+      ],
+      "source_seed_ids": [
+        "seed-5991"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-010 -- Platform naming compliance",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L99"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-927",
+  "group_ids": [
+    "discgrp-3705",
+    "discgrp-3706",
+    "discgrp-3707",
+    "discgrp-3708"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04003",
+      "source_obligation_ids": [
+        "obl-3847"
+      ],
+      "source_seed_ids": [
+        "seed-5271"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "#### Route target navigation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04004",
+      "source_obligation_ids": [
+        "obl-3848"
+      ],
+      "source_seed_ids": [
+        "seed-5272"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "# Runtime Artifacts Panel \u2014 SSOT",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04005",
+      "source_obligation_ids": [
+        "obl-3849"
+      ],
+      "source_seed_ids": [
+        "seed-5273"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04008",
+      "source_obligation_ids": [
+        "obl-3851"
+      ],
+      "source_seed_ids": [
+        "seed-5278"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileManager.md",
+      "new_heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileManager.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

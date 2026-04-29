@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1114",
+  "group_ids": [
+    "discgrp-4453",
+    "discgrp-4454",
+    "discgrp-4455",
+    "discgrp-4456"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04841",
+      "source_obligation_ids": [
+        "obl-4618"
+      ],
+      "source_seed_ids": [
+        "seed-6599"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04842",
+      "source_obligation_ids": [
+        "obl-4619"
+      ],
+      "source_seed_ids": [
+        "seed-6608"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04843",
+      "source_obligation_ids": [
+        "obl-4620"
+      ],
+      "source_seed_ids": [
+        "seed-6609"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 3.1 IDE Shell Structure",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L335"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04844",
+      "source_obligation_ids": [
+        "obl-4621"
+      ],
+      "source_seed_ids": [
+        "seed-6610"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 2.1 Core Stack",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L277"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

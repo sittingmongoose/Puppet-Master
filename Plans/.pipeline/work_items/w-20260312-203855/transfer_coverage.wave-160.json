@@ -1,0 +1,1064 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-160",
+  "row_group_ids": [
+    "rowgrp-0637",
+    "rowgrp-0638",
+    "rowgrp-0639",
+    "rowgrp-0640"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-01145",
+      "source_obligation_ids": [
+        "obl-1002"
+      ],
+      "source_seed_ids": [
+        "seed-1170"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "canon_label": "historical run views must stay frozen to historical requested/effective state",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "### Fidelity recovery cov-038: Focused run and historical routing contract",
+      "status": "partial",
+      "exact_items": [
+        "historical run views must stay frozen to historical requested/effective state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L19",
+        "Plans/Run_Graph_View.md:L26"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01177",
+      "source_obligation_ids": [
+        "obl-1034"
+      ],
+      "source_seed_ids": [
+        "seed-1212"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "canon_label": "`Review pass default`",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`Review pass default`",
+        "Review pass default"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01226",
+      "source_obligation_ids": [
+        "obl-1083"
+      ],
+      "source_seed_ids": [
+        "seed-1277"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "`Corroboration` <-> `Concern` <-> `Review`",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "### Fidelity recovery cov-032: Concern linkage to adjacent families",
+      "status": "present",
+      "exact_items": [
+        "`Corroboration` <-> `Concern` <-> `Review`",
+        "Corroboration",
+        "Concern",
+        "Review"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L7",
+        "Plans/Run_Graph_View.md:L11",
+        "Plans/Run_Graph_View.md:L12",
+        "Plans/Run_Graph_View.md:L14",
+        "Plans/Run_Graph_View.md:L15"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01349",
+      "source_obligation_ids": [
+        "obl-1206"
+      ],
+      "source_seed_ids": [
+        "seed-1442"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "So the rewrite should not assume the graph is the only heavy surface.",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "So the rewrite should not assume the graph is the only heavy surface."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01382",
+      "source_obligation_ids": [
+        "obl-1239"
+      ],
+      "source_seed_ids": [
+        "seed-1480"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "This seam reinforces the earlier search/deep-link work:",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "This seam reinforces the earlier search/deep-link work:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01473",
+      "source_obligation_ids": [
+        "obl-1330"
+      ],
+      "source_seed_ids": [
+        "seed-1615"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "review scope, findings counts, unresolved findings, verdict, canonical findings summary re",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "## 1. Scope and canonical role",
+      "status": "partial",
+      "exact_items": [
+        "review scope, findings counts, unresolved findings, verdict, canonical findings summary ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L31"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01629",
+      "source_obligation_ids": [
+        "obl-1486"
+      ],
+      "source_seed_ids": [
+        "seed-1838"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "an Interview run may have runtime identity and blocked/remediation state",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "an Interview run may have runtime identity and blocked/remediation state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01631",
+      "source_obligation_ids": [
+        "obl-1488"
+      ],
+      "source_seed_ids": [
+        "seed-1840"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "when multiple surfaces present the same active conversational/document-production run, the",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "when multiple surfaces present the same active conversational/document-production run, they should consume the same underlying runtime state and expose the same requested/effective visibility fields"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01780",
+      "source_obligation_ids": [
+        "obl-1637"
+      ],
+      "source_seed_ids": [
+        "seed-2042"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "`review`",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "present",
+      "exact_items": [
+        "`review`",
+        "review"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L11",
+        "Plans/Run_Graph_View.md:L15",
+        "Plans/Run_Graph_View.md:L57"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01851",
+      "source_obligation_ids": [
+        "obl-1708"
+      ],
+      "source_seed_ids": [
+        "seed-2155"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "they should not just be badges, notes, or review leftovers",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "they should not just be badges, notes, or review leftovers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01894",
+      "source_obligation_ids": [
+        "obl-1751"
+      ],
+      "source_seed_ids": [
+        "seed-2236"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "Keep concern separate from review findings, annotations, blocked episodes, and recovery re",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "### Fidelity recovery cov-032: Concern linkage to adjacent families",
+      "status": "partial",
+      "exact_items": [
+        "Keep concern separate from review findings, annotations, blocked episodes, and recovery records while allowing rich cross-linking."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L7",
+        "Plans/Run_Graph_View.md:L14"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01931",
+      "source_obligation_ids": [
+        "obl-1788"
+      ],
+      "source_seed_ids": [
+        "seed-2292"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "`effective_provider_identity` / display labels are audit/display fields, not routing keys",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`effective_provider_identity` / display labels are audit/display fields, not routing keys",
+        "effective_provider_identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01975",
+      "source_obligation_ids": [
+        "obl-1832"
+      ],
+      "source_seed_ids": [
+        "seed-2355"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "Opus strongly reinforces the ledger direction that only `Progress` should remain widget-he",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Opus strongly reinforces the ledger direction that only `Progress` should remain widget-heavy while Graph / Seams / Evidence / History / Ledger become stronger native surfaces",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02111",
+      "source_obligation_ids": [
+        "obl-1968"
+      ],
+      "source_seed_ids": [
+        "seed-2561"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "widgets may add presentation or sub-filter choices, but they must not secretly select a di",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "widgets may add presentation or sub-filter choices, but they must not secretly select a different run or redefine the operational scope"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02129",
+      "source_obligation_ids": [
+        "obl-1986"
+      ],
+      "source_seed_ids": [
+        "seed-2583"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "`Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` become native surfaces with the",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` become native surfaces with their own state contracts",
+        "Seams",
+        "Node Graph",
+        "Evidence",
+        "History",
+        "Ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02134",
+      "source_obligation_ids": [
+        "obl-1991"
+      ],
+      "source_seed_ids": [
+        "seed-2588"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "widgets may not invent independent semantic scope such as their own run selection, their o",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "widgets may not invent independent semantic scope such as their own run selection, their own lane universe, or their own concern-state semantics"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02143",
+      "source_obligation_ids": [
+        "obl-2000"
+      ],
+      "source_seed_ids": [
+        "seed-2597"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "historical-run mode will feel broken if some `Progress` widgets silently follow live event",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "### Fidelity recovery cov-038: Focused run and historical routing contract",
+      "status": "partial",
+      "exact_items": [
+        "historical-run mode will feel broken if some `Progress` widgets silently follow live events while others honor the focused historical run",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L19",
+        "Plans/Run_Graph_View.md:L26"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02156",
+      "source_obligation_ids": [
+        "obl-2013"
+      ],
+      "source_seed_ids": [
+        "seed-2619"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "`GitHub_Integration.md` still lacks effective-account / switch-reason display and requeste",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`GitHub_Integration.md` still lacks effective-account / switch-reason display and requested-vs-effective admin-capability UX",
+        "GitHub_Integration.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02170",
+      "source_obligation_ids": [
+        "obl-2026"
+      ],
+      "source_seed_ids": [
+        "seed-2635"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "`Plans/Run_Graph_View.md` + `Plans/Orchestrator_Page.md`",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md` + `Plans/Orchestrator_Page.md`",
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L14",
+        "Plans/Run_Graph_View.md:L26",
+        "Plans/Run_Graph_View.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02186",
+      "source_obligation_ids": [
+        "obl-2041"
+      ],
+      "source_seed_ids": [
+        "seed-2650"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "add effective-account / switch-reason display",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "add effective-account / switch-reason display"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02339",
+      "source_obligation_ids": [
+        "obl-2190"
+      ],
+      "source_seed_ids": [
+        "seed-2845"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "Projection trust and node concern posture still lack a compact canonical contract that pag",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Projection trust and node concern posture still lack a compact canonical contract that page/widget consumers can reuse."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02348",
+      "source_obligation_ids": [
+        "obl-2199"
+      ],
+      "source_seed_ids": [
+        "seed-2854"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "`usage_event_ref` should be a structured locator, not just a display string.",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`usage_event_ref` should be a structured locator, not just a display string.",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02485",
+      "source_obligation_ids": [
+        "obl-2335"
+      ],
+      "source_seed_ids": [
+        "seed-3036"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "GPT-5.4 sharpened that this now blocks truthful requested-vs-effective runtime inspectors",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "GPT-5.4 sharpened that this now blocks truthful requested-vs-effective runtime inspectors for Orchestrator, Run Graph, and conversational actor surfaces"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02493",
+      "source_obligation_ids": [
+        "obl-2343"
+      ],
+      "source_seed_ids": [
+        "seed-3044"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "Orchestrator/Run Graph identity consumers are still materially below the contract the upst",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator/Run Graph identity consumers are still materially below the contract the upstream docs now imply:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02505",
+      "source_obligation_ids": [
+        "obl-2354"
+      ],
+      "source_seed_ids": [
+        "seed-3059",
+        "seed-3298"
+      ],
+      "source_shard_ids": [
+        "shard-0037",
+        "shard-0039"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md` + `Plans/Run_Graph_View.md`",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` + `Plans/Run_Graph_View.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L14",
+        "Plans/Run_Graph_View.md:L26",
+        "Plans/Run_Graph_View.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03278",
+      "source_obligation_ids": [
+        "obl-3124"
+      ],
+      "source_seed_ids": [
+        "seed-4158"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "account/auth controls, concern actions, and promotion actions still have no canonical comm",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "### Fidelity recovery cov-032: Concern linkage to adjacent families",
+      "status": "partial",
+      "exact_items": [
+        "account/auth controls, concern actions, and promotion actions still have no canonical command-family owner, and command/wiring schemas still cannot encode projection-freshness/health gating for mutating actions."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L7",
+        "Plans/Run_Graph_View.md:L14"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03409",
+      "source_obligation_ids": [
+        "obl-3255"
+      ],
+      "source_seed_ids": [
+        "seed-4349"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "Wizard/interview docs are good on blocked/degraded planning lineage, but still weak on the",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Wizard/interview docs are good on blocked/degraded planning lineage, but still weak on the bridge from that lineage into the eventual execution run identity."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03548",
+      "source_obligation_ids": [
+        "obl-3394"
+      ],
+      "source_seed_ids": [
+        "seed-4570"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "canon_label": "current lane lifecycle/status projection",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "current lane lifecycle/status projection"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03778",
+      "source_obligation_ids": [
+        "obl-3623"
+      ],
+      "source_seed_ids": [
+        "seed-4897"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "Tier-shaped surfaces may still display and group by `tier_id`, but they should resolve thr",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Tier-shaped surfaces may still display and group by `tier_id`, but they should resolve through pointers to canonical execution objects rather than using `tier_id` as if it were the durable execution key.",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03779",
+      "source_obligation_ids": [
+        "obl-3624"
+      ],
+      "source_seed_ids": [
+        "seed-4903"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "`Run_Graph_View.md` calls itself a node graph but still uses `tier_id` for major data-sour",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`Run_Graph_View.md` calls itself a node graph but still uses `tier_id` for major data-source joins, including Usage and Output filtering.",
+        "Run_Graph_View.md",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L14",
+        "Plans/Run_Graph_View.md:L26"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03785",
+      "source_obligation_ids": [
+        "obl-3630"
+      ],
+      "source_seed_ids": [
+        "seed-4909"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "Retarget Run Graph and Usage links toward `node_id` / `attempt_id` semantics, with `tier_i",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Retarget Run Graph and Usage links toward `node_id` / `attempt_id` semantics, with `tier_id` surviving only as a display/grouping label where needed.",
+        "node_id",
+        "attempt_id",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03872",
+      "source_obligation_ids": [
+        "obl-3717"
+      ],
+      "source_seed_ids": [
+        "seed-5052"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "Keep usage attribution schema shared across all run kinds, but permit execution-role displ",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Keep usage attribution schema shared across all run kinds, but permit execution-role display/filtering without creating a second usage system."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04037",
+      "source_obligation_ids": [
+        "obl-3880"
+      ],
+      "source_seed_ids": [
+        "seed-5326"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "should be attempt-native whenever produced by a node worker/verifier/reviewer flow",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "should be attempt-native whenever produced by a node worker/verifier/reviewer flow"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04723",
+      "source_obligation_ids": [
+        "obl-4501"
+      ],
+      "source_seed_ids": [
+        "seed-6400"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "This seam is what prevents the new route-target contract from immediately turning back int",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "### Fidelity recovery cov-038: Focused run and historical routing contract",
+      "status": "partial",
+      "exact_items": [
+        "This seam is what prevents the new route-target contract from immediately turning back into per-surface deep-link spaghetti."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L19",
+        "Plans/Run_Graph_View.md:L26"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04847",
+      "source_obligation_ids": [
+        "obl-4624"
+      ],
+      "source_seed_ids": [
+        "seed-6616"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "Source Control: `active_subview`, selected repo/worktree, compare target, graph filters",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Source Control: `active_subview`, selected repo/worktree, compare target, graph filters",
+        "active_subview"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05092",
+      "source_obligation_ids": [
+        "obl-4868"
+      ],
+      "source_seed_ids": [
+        "seed-7015"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "`open_intent` is the caller\u2019s direct purpose for opening the subject. It belongs to the su",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "### Fidelity recovery cov-038: Focused run and historical routing contract",
+      "status": "partial",
+      "exact_items": [
+        "`open_intent` is the caller\u2019s direct purpose for opening the subject. It belongs to the subject-open contract because the same subject can be opened as source, preview, or review entry.",
+        "open_intent"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L19",
+        "Plans/Run_Graph_View.md:L26"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05483",
+      "source_obligation_ids": [
+        "obl-5255"
+      ],
+      "source_seed_ids": [
+        "seed-7807"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "`Plans/Run_Graph_View.md` has a direct internal contract split:",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md` has a direct internal contract split:",
+        "Plans/Run_Graph_View.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L14",
+        "Plans/Run_Graph_View.md:L26"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05785",
+      "source_obligation_ids": [
+        "obl-5557"
+      ],
+      "source_seed_ids": [
+        "seed-8246"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - Blocked-family contracts are still uneven across node, wi",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - Blocked-family contracts are still uneven across node, wizard, and thread surfaces"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05815",
+      "source_obligation_ids": [
+        "obl-5587"
+      ],
+      "source_seed_ids": [
+        "seed-8297"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "`Plans/Run_Graph_View.md` still routes Usage by node-through-tier:",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md` still routes Usage by node-through-tier:",
+        "Plans/Run_Graph_View.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L14",
+        "Plans/Run_Graph_View.md:L26"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05825",
+      "source_obligation_ids": [
+        "obl-5597"
+      ],
+      "source_seed_ids": [
+        "seed-8315"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "cross-surface node usage via `tier_id`",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "cross-surface node usage via `tier_id`",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    }
+  ]
+}

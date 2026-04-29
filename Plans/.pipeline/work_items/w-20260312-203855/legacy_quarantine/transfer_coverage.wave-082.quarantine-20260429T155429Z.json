@@ -1,0 +1,181 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-082",
+  "timestamp_utc": "2026-04-28T22:14:28Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-325",
+    "coverage-rowgrp-326"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-325 cov-003,cov-006 __DOC_DISCOVERY_REQUIRED__",
+    "rowgrp-326 cov-004,cov-005,cov-012,cov-018,cov-352,cov-381 __DOC_DISCOVERY_REQUIRED__"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-325": "completed_reduced_conservatively_with_action_and_path_normalization",
+    "coverage-rowgrp-326": "completed_reduced_conservatively_with_action_and_path_normalization"
+  },
+  "completed_task_count": 2,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-003",
+    "cov-006",
+    "cov-004",
+    "cov-005",
+    "cov-012",
+    "cov-018",
+    "cov-352",
+    "cov-381"
+  ],
+  "coverage_ids_completed": [
+    "cov-003",
+    "cov-006",
+    "cov-004",
+    "cov-005",
+    "cov-012",
+    "cov-018",
+    "cov-352",
+    "cov-381"
+  ],
+  "path_groups_assigned": [
+    "__DOC_DISCOVERY_REQUIRED__"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-003",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-003"
+      ],
+      "source_seed_ids": [
+        "seed-003"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-006",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-006"
+      ],
+      "source_seed_ids": [
+        "seed-006"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-004",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-004"
+      ],
+      "source_seed_ids": [
+        "seed-004"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-005",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-005"
+      ],
+      "source_seed_ids": [
+        "seed-005"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-012",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-012"
+      ],
+      "source_seed_ids": [
+        "seed-012"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-018",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-016"
+      ],
+      "source_seed_ids": [
+        "seed-016"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-352",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-104"
+      ],
+      "source_seed_ids": [
+        "seed-104"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-381",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-114"
+      ],
+      "source_seed_ids": [
+        "seed-114"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    }
+  ]
+}

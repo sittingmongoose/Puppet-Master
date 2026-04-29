@@ -1,5 +1,54 @@
 # Provider: OpenCode (Server-Bridged)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0471
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Plans/Provider_OpenCode.md`
+  - Plans/Provider_OpenCode.md
+  - `Plans/Permissions_System.md` + `Plans/Provider_OpenCode.md`
+  - Plans/Permissions_System.md
+  - Re-scope permission session cache / reject cascade and OpenCode SSE/session isolation rules to actor/lane-aware boundaries.
+  - GPT-5.4 sharpened that the OpenCode transport platform vs upstream provider identity split now needs explicit ownership
+  - OpenCode still exposes transport platform/model without clear ownership of upstream provider/account identity.
+  - Extend OpenCode and bridged request/runtime bundles with the full auth/account identity block plus explicit upstream-provider identity rules.
+  - OpenCode must preserve its split between transport realm and upstream provider/account realm.
+  - OpenCode session ID is still being treated as if it were that canonical field
+  - Move OpenCode session IDs into provider-native correlation fields.
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - `BinaryLocator_Spec.md` sharpens an ownership vacuum around OpenCode `cli_launcher`, has a dangling/false ContractRef to a non-existent four-tier naming rule, and still uses ambiguous Session wording.
+  - BinaryLocator_Spec.md
+  - cli_launcher
+  - OpenCode limitations are now source-verified enough that they should be treated as hard architectural constraints unless the bridge changes:
+  - `BinaryLocator_Spec.md` now has a sharper ownership gap around OpenCode launcher discovery and an explicitly dangling `Spec_Lock` naming-rule claim.
+  - Spec_Lock
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - OpenCode limits and provider identity seams are now final-pass concrete:
+  - `OpenCode_Deep_Extraction.md`, `OpenCode_Coverage_Matrix.md`, and `Provider_OpenCode` adjacencies still lack a canonical SSE filter discriminator, stable mapping of OpenCode session IDs into provider-native identity fields, and parity for requested/effective account/auth identity.
+  - OpenCode_Deep_Extraction.md
+  - OpenCode_Coverage_Matrix.md
+  - Provider_OpenCode
+  - OpenCode provider-native identity / SSE correlation / requested-effective disclosure cleanup fourth
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 ## Change Summary
@@ -565,6 +614,27 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 - OpenCode repository: https://github.com/anomalyco/opencode
 
 ## OpenCode Runtime Retry / Blocked-State / Packet Reconciliation Addendum (2026-03-09)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0472
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - OpenCode still preserves the older model/permission snapshot view of runtime identity, not the newer auth/account bundle:
+  - There are still unresolved architectural edges around DAE enforcement, OpenCode bridge limits, promoted-feature shell ownership, and runtime identity provenance.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 OpenCode-specific runtime behavior must remain aligned with the canonical runtime scheduler, retry taxonomy, safe-point contract, remediation lineage, runtime packet, and usage pipeline.
 
 ### Required OpenCode runtime fields

@@ -1,0 +1,261 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-175",
+  "group_ids": [
+    "recgrp-0697",
+    "recgrp-0698",
+    "recgrp-0699",
+    "recgrp-0700"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0697",
+      "path": "Plans/usage-feature.md",
+      "mapped_owner_heading": "### 5. Per-thread usage in Chat (OpenCode-style)",
+      "live_anchor": "### 5. Per-thread usage in Chat (OpenCode-style) (Plans/usage-feature.md:L198)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-06630"
+      ],
+      "source_obligation_ids": [
+        "obl-6271"
+      ],
+      "source_seed_ids": [
+        "seed-9487"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "gap_ids": [
+        "gap-05142"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "per-thread usage is already one canonical detail surface"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-abd656a1a01a",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0698",
+      "path": "Plans/usage-feature.md",
+      "mapped_owner_heading": "### Codex -- Direct provider",
+      "live_anchor": "### Codex -- Direct provider (Plans/usage-feature.md:L248)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-06705"
+      ],
+      "source_obligation_ids": [
+        "obl-6346"
+      ],
+      "source_seed_ids": [
+        "seed-9693"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "gap_ids": [
+        "gap-05193"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "prior direct reads of current owner docs and late-straggler route/records slices"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-4679c04bf09d",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0699",
+      "path": "Plans/usage-feature.md",
+      "mapped_owner_heading": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
+      "live_anchor": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage (Plans/usage-feature.md:L328)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00947",
+        "cov-02237",
+        "cov-04518",
+        "cov-05707"
+      ],
+      "source_obligation_ids": [
+        "obl-804",
+        "obl-2091",
+        "obl-4296",
+        "obl-5479"
+      ],
+      "source_seed_ids": [
+        "seed-928",
+        "seed-2719",
+        "seed-6011",
+        "seed-8131"
+      ],
+      "source_shard_ids": [
+        "shard-0017",
+        "shard-0035",
+        "shard-0059",
+        "shard-0075"
+      ],
+      "gap_ids": [
+        "gap-00719",
+        "gap-01736",
+        "gap-03549",
+        "gap-04445"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`hard_gate` should show:",
+        "hard_gate",
+        "`Runtime_Artifacts_Panel.md` requires `Show in Ledger` / `Show in Usage` for `cost_usage`, but the promised runtime-artifact schemas are not present and no concrete usage identity payload is pinned",
+        "Runtime_Artifacts_Panel.md",
+        "Show in Ledger",
+        "Show in Usage",
+        "cost_usage",
+        "`usage-feature.md` and `Runtime_Artifacts_Panel.md` both describe `Show in Ledger` / `Show in Usage` behavior using identifiers like:",
+        "usage-feature.md",
+        "Collapse the duplicated `cost_usage` section in `usage-feature.md` during the same pass that normalizes Usage routing."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-ee60e6b98230",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0700",
+      "path": "Plans/usage-feature.md",
+      "mapped_owner_heading": "### Enhancement 3: Per-run and execution-scope usage in Config",
+      "live_anchor": "### Enhancement 3: Per-run and execution-scope usage in Config (Plans/usage-feature.md:L581)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-06666"
+      ],
+      "source_obligation_ids": [
+        "obl-6307"
+      ],
+      "source_seed_ids": [
+        "seed-9538"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "gap_ids": [
+        "gap-05163"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "still describes Usage by `tier/session` and says tier config shows current usage",
+        "tier/session"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-cbf69348d522",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-06630",
+    "cov-06705",
+    "cov-00947",
+    "cov-02237",
+    "cov-04518",
+    "cov-05707",
+    "cov-06666"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-6271",
+    "obl-6346",
+    "obl-804",
+    "obl-2091",
+    "obl-4296",
+    "obl-5479",
+    "obl-6307"
+  ],
+  "source_seed_ids_represented": [
+    "seed-9487",
+    "seed-9693",
+    "seed-928",
+    "seed-2719",
+    "seed-6011",
+    "seed-8131",
+    "seed-9538"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0085",
+    "shard-0087",
+    "shard-0017",
+    "shard-0035",
+    "shard-0059",
+    "shard-0075"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": []
+}

@@ -1,0 +1,1182 @@
+{
+  "schema_id": "pm.canonical_obligations_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-113",
+  "seed_group_ids": [
+    "seedgrp-449",
+    "seedgrp-450",
+    "seedgrp-451",
+    "seedgrp-452"
+  ],
+  "obligation_candidates": [
+    {
+      "source_seed_id": "seed-6721",
+      "canon_label": "The remaining partial surface is now fully confirmed as meaningful; none of these docs sho",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "The remaining partial surface is now fully confirmed as meaningful; none of these docs should be treated as low-signal leftovers."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0064",
+      "source_evidence": [
+        "working_ledger.md:L012786"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6722",
+      "canon_label": "Multiple \"owner-of-owners\" docs (`Decision_Log`, `rewrite-tie-in-memo`, `feature-list`, `n",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Multiple \"owner-of-owners\" docs (`Decision_Log`, `rewrite-tie-in-memo`, `feature-list`, `newfeatures`, `OpenCode_Coverage_Matrix`, `DRY_Rules`) are stale enough that they amplify downstream drift rather than containing it.",
+        "Decision_Log",
+        "rewrite-tie-in-memo",
+        "feature-list",
+        "newfeatures",
+        "OpenCode_Coverage_Matrix",
+        "DRY_Rules"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "DRY_Rules",
+        "Decision_Log",
+        "OpenCode_Coverage_Matrix",
+        "feature-list",
+        "newfeatures",
+        "rewrite-tie-in-memo"
+      ],
+      "source_shard_id": "shard-0064",
+      "source_evidence": [
+        "working_ledger.md:L012787"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6723",
+      "canon_label": "`Plans/Decision_Log.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Decision_Log.md`",
+        "Plans/Decision_Log.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Decision_Log.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0064",
+      "source_evidence": [
+        "working_ledger.md:L012793"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6724",
+      "canon_label": "`Plans/Formatters_System.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Formatters_System.md`",
+        "Plans/Formatters_System.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Formatters_System.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0064",
+      "source_evidence": [
+        "working_ledger.md:L012794"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6725",
+      "canon_label": "`Plans/OpenCode_Coverage_Matrix.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/OpenCode_Coverage_Matrix.md`",
+        "Plans/OpenCode_Coverage_Matrix.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/OpenCode_Coverage_Matrix.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0064",
+      "source_evidence": [
+        "working_ledger.md:L012795"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6726",
+      "canon_label": "`Plans/Plugins_System.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Plugins_System.md`",
+        "Plans/Plugins_System.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Plugins_System.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0064",
+      "source_evidence": [
+        "working_ledger.md:L012796"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6727",
+      "canon_label": "`Plans/Skills_System.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Skills_System.md`",
+        "Plans/Skills_System.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Skills_System.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0064",
+      "source_evidence": [
+        "working_ledger.md:L012797"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6728",
+      "canon_label": "`Plans/feature-list.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/feature-list.md`",
+        "Plans/feature-list.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/feature-list.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0064",
+      "source_evidence": [
+        "working_ledger.md:L012798"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6729",
+      "canon_label": "`Plans/newfeatures.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/newfeatures.md`",
+        "Plans/newfeatures.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/newfeatures.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0064",
+      "source_evidence": [
+        "working_ledger.md:L012799"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6730",
+      "canon_label": "`Plans/rewrite-tie-in-memo.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/rewrite-tie-in-memo.md`",
+        "Plans/rewrite-tie-in-memo.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/rewrite-tie-in-memo.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0064",
+      "source_evidence": [
+        "working_ledger.md:L012800"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6731",
+      "canon_label": "with `Plans/DRY_Rules.md` important as a mechanical-integrity forcing function and `Plans/",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "with `Plans/DRY_Rules.md` important as a mechanical-integrity forcing function and `Plans/BinaryLocator_Spec.md` lower-risk but still non-zero.",
+        "Plans/DRY_Rules.md",
+        "Plans/BinaryLocator_Spec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/BinaryLocator_Spec.md",
+        "Plans/DRY_Rules.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012801"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6732",
+      "canon_label": "`meta.json` must remain active; the broader sweep is still not ready for reconciliation.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`meta.json` must remain active; the broader sweep is still not ready for reconciliation.",
+        "meta.json"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012806"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6733",
+      "canon_label": "Research Progress - 2026-03-16 - Command boundary: pure view commands vs route-consuming n",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Research Progress - 2026-03-16 - Command boundary: pure view commands vs route-consuming navigation"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012808"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6734",
+      "canon_label": "`Plans/UI_Command_Catalog.md`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Plans/UI_Command_Catalog.md`",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012811"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6735",
+      "canon_label": "`Plans/Contracts_V0.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Contracts_V0.md`",
+        "Plans/Contracts_V0.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012812"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6736",
+      "canon_label": "`Plans/Crosswalk.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Crosswalk.md`",
+        "Plans/Crosswalk.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012813"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6737",
+      "canon_label": "`Plans/FinalGUISpec.md`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Plans/FinalGUISpec.md`",
+        "Plans/FinalGUISpec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012814"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6738",
+      "canon_label": "`Plans/FileManager.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/FileManager.md`",
+        "Plans/FileManager.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012815"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6739",
+      "canon_label": "`Plans/usage-feature.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/usage-feature.md`",
+        "Plans/usage-feature.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012816"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6740",
+      "canon_label": "`Plans/assistant-chat-design.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/assistant-chat-design.md`",
+        "Plans/assistant-chat-design.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012817"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6741",
+      "canon_label": "`Plans/storage-plan.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/storage-plan.md`",
+        "Plans/storage-plan.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012818"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6742",
+      "canon_label": "The command layer wants a three-way split, not a binary split:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The command layer wants a three-way split, not a binary split:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012821"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6743",
+      "canon_label": "Pure shell/view-state commands should stay local and lightweight. They change what panel/s",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Pure shell/view-state commands should stay local and lightweight. They change what panel/subview/layout is visible, but they do not own canonical target identity."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012825"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6744",
+      "canon_label": "Route-consuming navigation commands are the ones that must reveal a specific object or sco",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Route-consuming navigation commands are the ones that must reveal a specific object or scope. They should normalize through the emerging `route_target` model even if the user-facing command name stays domain-specific.",
+        "route_target"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012826"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6745",
+      "canon_label": "Domain mutation/runtime commands remain separate again. They act on canonical runtime or d",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Domain mutation/runtime commands remain separate again. They act on canonical runtime or domain identity and are not just navigation with a side effect."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012827"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6746",
+      "canon_label": "`cmd.panel.switch` is the clearest pure shell command in the current catalog. It selects a",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`cmd.panel.switch` is the clearest pure shell command in the current catalog. It selects a side-panel destination. Its current optional `context` payload is the main drift risk because it makes a shell command look like an object-targeting navigation command.",
+        "cmd.panel.switch",
+        "context"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012828"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6747",
+      "canon_label": "`cmd.source_control.switch_subview` is also a pure shell/view-state command. It chooses a",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`cmd.source_control.switch_subview` is also a pure shell/view-state command. It chooses a Source Control subview; it should not become the carrier for repo/worktree/compare target identity.",
+        "cmd.source_control.switch_subview"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012829"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6748",
+      "canon_label": "`cmd.chat.open_thread_usage` and `cmd.chat.focus_thread_usage` sit on the boundary. They s",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`cmd.chat.open_thread_usage` and `cmd.chat.focus_thread_usage` sit on the boundary. They should remain wrapper navigation commands, not pure shell toggles, because they are trying to reveal the Usage surface for a specific thread. They should normalize to canonical route context underneath.",
+        "cmd.chat.open_thread_usage",
+        "cmd.chat.focus_thread_usage"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012830"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6749",
+      "canon_label": "`cmd.source_control.select_worktree` is not just a generic shell toggle. It is an object-t",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`cmd.source_control.select_worktree` is not just a generic shell toggle. It is an object-targeting selection command. If it remains canonical, it should resolve through normalized target identity rather than stay a one-off ad hoc selection primitive.",
+        "cmd.source_control.select_worktree"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012831"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6750",
+      "canon_label": "`cmd.project.open` is already implicitly route-consuming navigation rather than shell-stat",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`cmd.project.open` is already implicitly route-consuming navigation rather than shell-state mutation; the docs just do not say that in one shared place.",
+        "cmd.project.open"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012832"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6751",
+      "canon_label": "`OpenFile { path... }` remains a legitimate specialized open contract, but only for real w",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`OpenFile { path... }` remains a legitimate specialized open contract, but only for real workspace documents. The surrounding command layer still lacks the parallel identity-native `OpenSubject` / `route_target` owner contract.",
+        "OpenFile { path... }",
+        "OpenSubject",
+        "route_target"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012833"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6752",
+      "canon_label": "`Plans/UI_Command_Catalog.md`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Plans/UI_Command_Catalog.md`",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012837"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6753",
+      "canon_label": "`Plans/Contracts_V0.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Contracts_V0.md`",
+        "Plans/Contracts_V0.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012838"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6754",
+      "canon_label": "`Plans/Crosswalk.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Crosswalk.md`",
+        "Plans/Crosswalk.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012839"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6755",
+      "canon_label": "`Plans/FinalGUISpec.md`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Plans/FinalGUISpec.md`",
+        "Plans/FinalGUISpec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012841"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6756",
+      "canon_label": "`Plans/FileManager.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/FileManager.md`",
+        "Plans/FileManager.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012842"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6757",
+      "canon_label": "`Plans/usage-feature.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/usage-feature.md`",
+        "Plans/usage-feature.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012843"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6758",
+      "canon_label": "`Plans/assistant-chat-design.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/assistant-chat-design.md`",
+        "Plans/assistant-chat-design.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012844"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6759",
+      "canon_label": "`Plans/storage-plan.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/storage-plan.md`",
+        "Plans/storage-plan.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012845"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6760",
+      "canon_label": "`UI_Command_Catalog.md` currently mixes shell commands and object-targeting navigation com",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`UI_Command_Catalog.md` currently mixes shell commands and object-targeting navigation commands in the same \"layout/UI state only\" bucket, even when payloads already carry object identity.",
+        "UI_Command_Catalog.md"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012848"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6761",
+      "canon_label": "`cmd.panel.switch` currently accepts contextual object refs (`repo_id`, `worktree_id`, `wo",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`cmd.panel.switch` currently accepts contextual object refs (`repo_id`, `worktree_id`, `workflow_run_id`, `publish_result_id`, `k8s_ref`) even though the shell model increasingly wants object targeting to route through a shared target contract instead of the panel-switch primitive.",
+        "cmd.panel.switch",
+        "repo_id",
+        "worktree_id",
+        "workflow_run_id",
+        "publish_result_id",
+        "k8s_ref"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012849"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6762",
+      "canon_label": "`Crosswalk.md` still names `Primitive:UICommand` and `Primitive:DocumentPane`, but it has",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Crosswalk.md` still names `Primitive:UICommand` and `Primitive:DocumentPane`, but it has no primitive boundary for route-target navigation or identity-native open/focus behavior.",
+        "Crosswalk.md",
+        "Primitive:UICommand",
+        "Primitive:DocumentPane"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012850"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6763",
+      "canon_label": "`Contracts_V0.md` still has no canonical route-target/open-subject contract, which is why",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Contracts_V0.md` still has no canonical route-target/open-subject contract, which is why command docs keep improvising local payload semantics.",
+        "Contracts_V0.md"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012851"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6764",
+      "canon_label": "`FinalGUISpec.md` correctly treats activity-bar navigation as a shell concern, but local d",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`FinalGUISpec.md` correctly treats activity-bar navigation as a shell concern, but local docs elsewhere keep slipping object context into the same command family.",
+        "FinalGUISpec.md"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012852"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6765",
+      "canon_label": "Formalize the three-way command taxonomy:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Formalize the three-way command taxonomy:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012855"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6766",
+      "canon_label": "Keep `cmd.panel.switch` and `cmd.source_control.switch_subview` as pure shell/view-state c",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Keep `cmd.panel.switch` and `cmd.source_control.switch_subview` as pure shell/view-state commands with controlled destination vocabularies.",
+        "cmd.panel.switch",
+        "cmd.source_control.switch_subview"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012859"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6767",
+      "canon_label": "Move object-targeting payload semantics out of `cmd.panel.switch` and into canonical route",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Move object-targeting payload semantics out of `cmd.panel.switch` and into canonical route-consuming commands or normalized `route_target` wrappers.",
+        "cmd.panel.switch",
+        "route_target"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012860"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6768",
+      "canon_label": "Treat `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, `cmd.project.open`, `cm",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Treat `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, `cmd.project.open`, `cmd.artifacts.show_in_*`, and cross-surface Orchestrator pivots as wrapper navigation commands over canonical route targeting rather than as generic layout toggles.",
+        "cmd.chat.open_thread_usage",
+        "cmd.chat.focus_thread_usage",
+        "cmd.project.open",
+        "cmd.artifacts.show_in_*"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012861"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6769",
+      "canon_label": "Treat commands like `cmd.source_control.select_worktree` as object-selection/navigation co",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Treat commands like `cmd.source_control.select_worktree` as object-selection/navigation commands that should normalize through canonical target identity if they remain first-class.",
+        "cmd.source_control.select_worktree"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012862"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6770",
+      "canon_label": "Add a Crosswalk primitive boundary for route-target / open-subject ownership so the split",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add a Crosswalk primitive boundary for route-target / open-subject ownership so the split between shell-state and canonical navigation is explicit."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012863"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6771",
+      "canon_label": "Shell commands should not accumulate object identity until they quietly become undocumente",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Shell commands should not accumulate object identity until they quietly become undocumented route commands."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012868"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6772",
+      "canon_label": "The catalog can keep UX-facing wrapper names; the important change is the canonical contra",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The catalog can keep UX-facing wrapper names; the important change is the canonical contract beneath them."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012869"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6773",
+      "canon_label": "Research Progress - 2026-03-16 - Wrapper commands vs explicit `cmd.nav.*` family",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Research Progress - 2026-03-16 - Wrapper commands vs explicit `cmd.nav.*` family",
+        "cmd.nav.*"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012871"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6774",
+      "canon_label": "`Plans/UI_Command_Catalog.md`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Plans/UI_Command_Catalog.md`",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012874"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6775",
+      "canon_label": "`Plans/Contracts_V0.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Contracts_V0.md`",
+        "Plans/Contracts_V0.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012875"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6776",
+      "canon_label": "`Plans/Crosswalk.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Crosswalk.md`",
+        "Plans/Crosswalk.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012876"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6777",
+      "canon_label": "`Plans/UI_Wiring_Rules.md`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Plans/UI_Wiring_Rules.md`",
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012877"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6778",
+      "canon_label": "`Plans/Wiring_Matrix.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Wiring_Matrix.md`",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012878"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6779",
+      "canon_label": "`Plans/FinalGUISpec.md`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Plans/FinalGUISpec.md`",
+        "Plans/FinalGUISpec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012879"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6780",
+      "canon_label": "The command/wiring system is biased toward stable user-facing command IDs with explicit su",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "The command/wiring system is biased toward stable user-facing command IDs with explicit surface meaning."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012882"
+      ]
+    }
+  ],
+  "represented_seed_ids": [
+    "seed-6721",
+    "seed-6722",
+    "seed-6723",
+    "seed-6724",
+    "seed-6725",
+    "seed-6726",
+    "seed-6727",
+    "seed-6728",
+    "seed-6729",
+    "seed-6730",
+    "seed-6731",
+    "seed-6732",
+    "seed-6733",
+    "seed-6734",
+    "seed-6735",
+    "seed-6736",
+    "seed-6737",
+    "seed-6738",
+    "seed-6739",
+    "seed-6740",
+    "seed-6741",
+    "seed-6742",
+    "seed-6743",
+    "seed-6744",
+    "seed-6745",
+    "seed-6746",
+    "seed-6747",
+    "seed-6748",
+    "seed-6749",
+    "seed-6750",
+    "seed-6751",
+    "seed-6752",
+    "seed-6753",
+    "seed-6754",
+    "seed-6755",
+    "seed-6756",
+    "seed-6757",
+    "seed-6758",
+    "seed-6759",
+    "seed-6760",
+    "seed-6761",
+    "seed-6762",
+    "seed-6763",
+    "seed-6764",
+    "seed-6765",
+    "seed-6766",
+    "seed-6767",
+    "seed-6768",
+    "seed-6769",
+    "seed-6770",
+    "seed-6771",
+    "seed-6772",
+    "seed-6773",
+    "seed-6774",
+    "seed-6775",
+    "seed-6776",
+    "seed-6777",
+    "seed-6778",
+    "seed-6779",
+    "seed-6780"
+  ],
+  "represented_source_shard_ids": [
+    "shard-0064",
+    "shard-0065"
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "affected_doc_discovery_notes": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-190",
+  "group_ids": [
+    "discgrp-0757",
+    "discgrp-0758",
+    "discgrp-0759",
+    "discgrp-0760"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01004",
+      "source_obligation_ids": [
+        "obl-861"
+      ],
+      "source_seed_ids": [
+        "seed-1006"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01005",
+      "source_obligation_ids": [
+        "obl-862"
+      ],
+      "source_seed_ids": [
+        "seed-1007"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L35"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01006",
+      "source_obligation_ids": [
+        "obl-863"
+      ],
+      "source_seed_ids": [
+        "seed-1008"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "### 4. Safe-point interaction",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L2497"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01007",
+      "source_obligation_ids": [
+        "obl-864"
+      ],
+      "source_seed_ids": [
+        "seed-1009"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L2518"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

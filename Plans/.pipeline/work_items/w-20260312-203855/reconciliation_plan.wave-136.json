@@ -1,0 +1,323 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-136",
+  "group_ids": [
+    "recgrp-0541",
+    "recgrp-0542",
+    "recgrp-0543",
+    "recgrp-0544"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0541",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "mapped_owner_heading": "## Runtime Worktree Conflict Reconciliation Addendum (2026-03-09)",
+      "live_anchor": "## Runtime Worktree Conflict Reconciliation Addendum (2026-03-09) (Plans/WorktreeGitImprovement.md:L715)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-03123",
+        "cov-03625"
+      ],
+      "source_obligation_ids": [
+        "obl-2969",
+        "obl-3471"
+      ],
+      "source_seed_ids": [
+        "seed-3917",
+        "seed-4673"
+      ],
+      "source_shard_ids": [
+        "shard-0044",
+        "shard-0049"
+      ],
+      "gap_ids": [
+        "gap-02452",
+        "gap-02839"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "newer model: scored ready set, `scheduler_lane`, `replan_generation`, runnable-unit fields like `attempt_id`, blocked reason codes, worktree conflict classification",
+        "scheduler_lane",
+        "replan_generation",
+        "attempt_id",
+        "worktree conflict / dirty-worktree block"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-fa903cf016d0",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0542",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "mapped_owner_heading": "## Safe Point / Worktree Recovery Alignment Addendum (2026-03-09)",
+      "live_anchor": "## Safe Point / Worktree Recovery Alignment Addendum (2026-03-09) (Plans/WorktreeGitImprovement.md:L706)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00951",
+        "cov-01516",
+        "cov-01574",
+        "cov-01581"
+      ],
+      "source_obligation_ids": [
+        "obl-808",
+        "obl-1373",
+        "obl-1431",
+        "obl-1438"
+      ],
+      "source_seed_ids": [
+        "seed-932",
+        "seed-1690",
+        "seed-1773",
+        "seed-1784"
+      ],
+      "source_shard_ids": [
+        "shard-0017",
+        "shard-0026"
+      ],
+      "gap_ids": [
+        "gap-00720",
+        "gap-01195",
+        "gap-01234",
+        "gap-01237"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Retry from Safe Point`",
+        "Retry from Safe Point",
+        "attempt to restore or reconcile a suspect/orphaned/conflicted worktree into a safe known state",
+        "`retry from safe point` vs `start fresh attempt`",
+        "retry from safe point",
+        "start fresh attempt",
+        "`safe point vs restore point`",
+        "safe point vs restore point"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-db1896ae0342",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0543",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "mapped_owner_heading": "### 2.0 Symlink resolution in worktree paths",
+      "live_anchor": "### 2.0 Symlink resolution in worktree paths (Plans/WorktreeGitImprovement.md:L162)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-03578",
+        "cov-04422",
+        "cov-05553"
+      ],
+      "source_obligation_ids": [
+        "obl-3424",
+        "obl-4262",
+        "obl-5325"
+      ],
+      "source_seed_ids": [
+        "seed-4611",
+        "seed-5946",
+        "seed-7913"
+      ],
+      "source_shard_ids": [
+        "shard-0048",
+        "shard-0058",
+        "shard-0073"
+      ],
+      "gap_ids": [
+        "gap-02802",
+        "gap-03456",
+        "gap-04327"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Align worktree docs around `worktree_id` as durable identity and `lane_id` as operational lineage, rather than continuing to let tier IDs or raw paths carry canonical meaning.",
+        "worktree_id",
+        "lane_id",
+        "open-by-identity routing now clearly needs richer envelopes (safe point/worktree/baseline/artifact refs), not scalar IDs or plain paths.",
+        "worktree paths and branches keyed by `tier_id`",
+        "tier_id"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-30f6fb5366b0",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0544",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "mapped_owner_heading": "### 2.3 Merge conflicts: worktree kept but re-run can destroy it",
+      "live_anchor": "### 2.3 Merge conflicts: worktree kept but re-run can destroy it (Plans/WorktreeGitImprovement.md:L191)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00220",
+        "cov-01015",
+        "cov-01628",
+        "cov-05491"
+      ],
+      "source_obligation_ids": [
+        "obl-115",
+        "obl-872",
+        "obl-1485",
+        "obl-5263"
+      ],
+      "source_seed_ids": [
+        "seed-119",
+        "seed-1022",
+        "seed-1837",
+        "seed-7815"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0018",
+        "shard-0027",
+        "shard-0073"
+      ],
+      "gap_ids": [
+        "gap-00198",
+        "gap-00778",
+        "gap-01274",
+        "gap-04273"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "what old assumption is present: `tier_id` / subtask worktree ownership, branch-per-tier flow, merge fallback posture, parallel subtasks as primary parallelism model.",
+        "tier_id",
+        "Evidence items can be exported",
+        "These can be linked, but should not be collapsed into one object model.",
+        "`cmd.source_control.select_worktree` still claims `layout/UI state only`, which conflicts with object-first routing and worktree identity",
+        "cmd.source_control.select_worktree",
+        "layout/UI state only"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-6c96e2f84443",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-03123",
+    "cov-03625",
+    "cov-00951",
+    "cov-01516",
+    "cov-01574",
+    "cov-01581",
+    "cov-03578",
+    "cov-04422",
+    "cov-05553",
+    "cov-00220",
+    "cov-01015",
+    "cov-01628",
+    "cov-05491"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-2969",
+    "obl-3471",
+    "obl-808",
+    "obl-1373",
+    "obl-1431",
+    "obl-1438",
+    "obl-3424",
+    "obl-4262",
+    "obl-5325",
+    "obl-115",
+    "obl-872",
+    "obl-1485",
+    "obl-5263"
+  ],
+  "source_seed_ids_represented": [
+    "seed-3917",
+    "seed-4673",
+    "seed-932",
+    "seed-1690",
+    "seed-1773",
+    "seed-1784",
+    "seed-4611",
+    "seed-5946",
+    "seed-7913",
+    "seed-119",
+    "seed-1022",
+    "seed-1837",
+    "seed-7815"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0044",
+    "shard-0049",
+    "shard-0017",
+    "shard-0026",
+    "shard-0048",
+    "shard-0058",
+    "shard-0073",
+    "shard-0009",
+    "shard-0018",
+    "shard-0027"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": []
+}

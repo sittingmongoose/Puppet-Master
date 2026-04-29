@@ -1,0 +1,228 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-002",
+  "timestamp_utc": "2026-04-28T19:17:32Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-005",
+    "coverage-rowgrp-006",
+    "coverage-rowgrp-007",
+    "coverage-rowgrp-008"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-005 cov-446 Plans/Architecture_Invariants.md",
+    "rowgrp-006 cov-547 Plans/CLI_Bridged_Providers.md",
+    "rowgrp-007 cov-189,cov-474 Plans/CLI_Bridged_Providers.md",
+    "rowgrp-008 cov-589 Plans/CLI_Bridged_Providers.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-005": "completed",
+    "coverage-rowgrp-006": "completed",
+    "coverage-rowgrp-007": "completed",
+    "coverage-rowgrp-008": "completed"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-446",
+    "cov-547",
+    "cov-189",
+    "cov-474",
+    "cov-589"
+  ],
+  "coverage_ids_completed": [
+    "cov-446",
+    "cov-547",
+    "cov-189",
+    "cov-474",
+    "cov-589"
+  ],
+  "path_groups_assigned": [
+    "Plans/Architecture_Invariants.md",
+    "Plans/CLI_Bridged_Providers.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-189",
+      "source_obligation_ids": [
+        "obl-050"
+      ],
+      "source_seed_ids": [
+        "seed-050"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "bridged-provider auth/account envelope parity",
+      "row_type": "consumer",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "Key findings",
+      "status": "partial",
+      "exact_items": [
+        "CLI_Bridged_Providers.md request and persistence envelopes still omit requested/effective auth/account fields",
+        "Provider_OpenCode.md never explains how PM obtains upstream account identity from behind the server bridge",
+        "Provider_Stream_Mapping_External_Reference_A2A.md maps usage and diagnostics without effective-account attribution",
+        "Unify bridged-provider request/persistence envelopes around the same auth/account fields already used by Contracts_V0.md and Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [
+        "bridged-provider",
+        "effective-account attribution"
+      ],
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:27-33 bridged-provider goals and boundaries",
+        "Plans/CLI_Bridged_Providers.md:49-70 request envelope includes account_id"
+      ],
+      "required_action": "consumer_propagation",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "concrete",
+      "unresolved_reason": "File includes account_id in request envelope, but does not define requested/effective auth/account propagation or persistence/permission envelope alignment."
+    },
+    {
+      "coverage_id": "cov-446",
+      "source_obligation_ids": [
+        "obl-130"
+      ],
+      "source_seed_ids": [
+        "seed-130"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "Monolithic authority / tier-era ownership language",
+      "row_type": "stale_retirement",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "Authority is still framed too monolithically in several places",
+      "status": "partial",
+      "exact_items": [
+        "stronger single \"Puppet Master\" authority center",
+        "seam/package overseer scopes",
+        "blocked-owner attribution",
+        "runtime/system/user authority",
+        "tier context",
+        "less precise ownership terms"
+      ],
+      "stale_tokens": [
+        "Puppet Master",
+        "tier context"
+      ],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:3 generic Puppet Master title/context",
+        "Plans/Architecture_Invariants.md:10 architecture invariants context",
+        "Plans/Architecture_Invariants.md:100 invariant context",
+        "Plans/Architecture_Invariants.md:223-226 runtime identity/blocked-state language"
+      ],
+      "required_action": "stale_retirement",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Generic Puppet Master naming and runtime identity/blocked-state language exist, but seam/package overseer scopes, blocked-owner attribution, runtime/system/user authority, and tier-context retirement are not fully evidenced."
+    },
+    {
+      "coverage_id": "cov-474",
+      "source_obligation_ids": [
+        "obl-139"
+      ],
+      "source_seed_ids": [
+        "seed-139"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "multi-account + bridged-provider durable identity gaps",
+      "row_type": "consumer",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "Research Progress",
+      "status": "missing",
+      "exact_items": [
+        "CLI_Bridged_Providers.md imposes shared-runtime snapshot language and multi-account capability declarations on direct providers but leaves bridged providers exempt by omission.",
+        "Multi-Account.md requires switch notifications/history semantics that storage-plan.md, Prompt_Pipeline.md, and bridged-provider stream contracts still cannot represent durably.",
+        "Permissions_System.md still treats session cache and reject-cascade as globally session-scoped, which directly conflicts with multi-lane isolation and shared-runtime actor separation."
+      ],
+      "stale_tokens": [
+        "shared-runtime snapshot language",
+        "multi-account capability declarations",
+        "switch notifications/history semantics",
+        "session cache",
+        "reject-cascade",
+        "globally session-scoped"
+      ],
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:27-33 bridged-provider goals and boundaries reviewed",
+        "Plans/CLI_Bridged_Providers.md:37-43 non-goals reviewed",
+        "Plans/CLI_Bridged_Providers.md:49-70 request envelope reviewed"
+      ],
+      "required_action": "consumer_propagation",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "unknown_pending_doc_discovery",
+      "unresolved_reason": "No shared-runtime snapshot language, multi-account capability declarations, switch notification/history semantics, session cache, or reject-cascade behavior found."
+    },
+    {
+      "coverage_id": "cov-547",
+      "source_obligation_ids": [
+        "obl-156"
+      ],
+      "source_seed_ids": [
+        "seed-156"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "provider/open-code and permission identity gaps",
+      "row_type": "consumer",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Provider_OpenCode.md contains a direct identity-mapping bug at the contract level",
+        "Bridge/event contracts are still too thin for rewrite-era correlation",
+        "Permissions are still under-specified for parallel actors",
+        "Permission snapshots still do not satisfy rewrite-era requested/effective disclosure"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:31 mentions Tool-call correlation + reconciliation",
+        "Plans/CLI_Bridged_Providers.md:49-70 includes account_id and execution_role in BRIDGE_INVOKE_OPTIONS"
+      ],
+      "required_action": "consumer_propagation",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Generic correlation and schema fields exist, but the four exact identity/permission gap requirements are not directly evidenced."
+    },
+    {
+      "coverage_id": "cov-589",
+      "source_obligation_ids": [
+        "obl-166"
+      ],
+      "source_seed_ids": [
+        "seed-166"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "bridged correlation/account/trust metadata gaps",
+      "row_type": "layout_blocker",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Bridged contracts still cannot legally carry all correlation/account/trust metadata their addenda already imply",
+        "A2A still blocks clean category growth despite rewrite-era semantics needing first-class stream representation",
+        "Permission mode override semantics still conflict on remote side effects",
+        "Permission snapshots still do not project requested/effective identity richly enough"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:26-37 related bridged-provider contract area reviewed",
+        "Plans/CLI_Bridged_Providers.md:45-73 related invoke options reviewed"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "No exact row text found; only related identity/correlation contract fields exist."
+    }
+  ]
+}

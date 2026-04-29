@@ -1,0 +1,1612 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-147",
+  "group_ids": [
+    "gapgrp-0585",
+    "gapgrp-0586",
+    "gapgrp-0587",
+    "gapgrp-0588"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-00223",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00250 is present for `Plans/UI_Command_Catalog.md`, `Plans/Wiring_Matrix.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00250"
+      ],
+      "source_obligation_ids": [
+        "obl-133"
+      ],
+      "source_seed_ids": [
+        "seed-138"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "`Plans/UI_Command_Catalog.md`, `Plans/Wiring_Matrix.md`",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03256",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04181 is partial for canonical `cmd.runtime.*` recovery commands are still absent from real matrix rows even wh",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "## Runtime Recovery Wiring Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04181"
+      ],
+      "source_obligation_ids": [
+        "obl-4021"
+      ],
+      "source_seed_ids": [
+        "seed-5540"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "canonical `cmd.runtime.*` recovery commands are still absent from real matrix rows even where page/docs require the corresponding CTAs.",
+        "cmd.runtime.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03296",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04229 is present for wildcard command-family requirements in Wiring Matrix still cannot be represented by `Wiri",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "# Wiring Matrix (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04229"
+      ],
+      "source_obligation_ids": [
+        "obl-4069"
+      ],
+      "source_seed_ids": [
+        "seed-5631"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "wildcard command-family requirements in Wiring Matrix still cannot be represented by `Wiring_Matrix.schema.json` as written.",
+        "Wiring_Matrix.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03356",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04296 is partial for Decide whether the matrix remains strictly UI-element wiring plus a separate producer/cons",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "# Wiring Matrix (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04296"
+      ],
+      "source_obligation_ids": [
+        "obl-4136"
+      ],
+      "source_seed_ids": [
+        "seed-5733"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "Decide whether the matrix remains strictly UI-element wiring plus a separate producer/consumer matrix, or whether the schema is intentionally widened to cover both."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03365",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04310 is present for `GATE-010` claims the wiring matrix is \u201ccomplete, valid, and testable,\u201d but completeness i",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "# Wiring Matrix (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04310"
+      ],
+      "source_obligation_ids": [
+        "obl-4150"
+      ],
+      "source_seed_ids": [
+        "seed-5760"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "`GATE-010` claims the wiring matrix is \u201ccomplete, valid, and testable,\u201d but completeness is currently defined too narrowly for route/subject-aware navigation.",
+        "GATE-010"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03928",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05016 is partial for wiring matrix owns UI element to command/handler binding only",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "# Wiring Matrix (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05016"
+      ],
+      "source_obligation_ids": [
+        "obl-4792"
+      ],
+      "source_seed_ids": [
+        "seed-6899"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "exact_missing_items": [
+        "wiring matrix owns UI element to command/handler binding only"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05302",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06829 is present for `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Cr",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06829"
+      ],
+      "source_obligation_ids": [
+        "obl-6442"
+      ],
+      "source_seed_ids": [
+        "seed-9821"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Crosswalk.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md",
+        "Plans/FileManager.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03295",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04228 is partial for Wiring Matrix example/evidence strings also contain `cmd.*.json` filename fragments that c",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "# Wiring Matrix (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04228"
+      ],
+      "source_obligation_ids": [
+        "obl-4068"
+      ],
+      "source_seed_ids": [
+        "seed-5630"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "Wiring Matrix example/evidence strings also contain `cmd.*.json` filename fragments that can poison naive ID extraction separately from real command rows.",
+        "cmd.*.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03329",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04268 is partial for Research Progress - 2026-03-16 - Wiring matrix route/subject contract limits",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "# Wiring Matrix (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04268"
+      ],
+      "source_obligation_ids": [
+        "obl-4108"
+      ],
+      "source_seed_ids": [
+        "seed-5693"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - Wiring matrix route/subject contract limits"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03531",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04499 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04499"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04411",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05666 is partial for Research Progress - 2026-03-17 - Wiring, matrix, and evidence normalization limits",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "# Wiring Matrix (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05666"
+      ],
+      "source_obligation_ids": [
+        "obl-5438"
+      ],
+      "source_seed_ids": [
+        "seed-8070"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - Wiring, matrix, and evidence normalization limits"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04856",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06268 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06268"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03330",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04269 is missing for `Plans/Wiring_Matrix.schema.json`",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04269"
+      ],
+      "source_obligation_ids": [
+        "obl-4109"
+      ],
+      "source_seed_ids": [
+        "seed-5696",
+        "seed-5711",
+        "seed-5755",
+        "seed-6852",
+        "seed-6879",
+        "seed-8072",
+        "seed-8094",
+        "seed-9171"
+      ],
+      "source_shard_ids": [
+        "shard-0056",
+        "shard-0057",
+        "shard-0066",
+        "shard-0075",
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "`Plans/Wiring_Matrix.schema.json`",
+        "Plans/Wiring_Matrix.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04420",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05675 is missing for `Plans/Wiring_Matrix.schema.json` currently has no fields for command-kind or normalizatio",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05675"
+      ],
+      "source_obligation_ids": [
+        "obl-5447"
+      ],
+      "source_seed_ids": [
+        "seed-8084"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "`Plans/Wiring_Matrix.schema.json` currently has no fields for command-kind or normalization metadata.",
+        "Plans/Wiring_Matrix.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00406",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00516 is partial for keep worktree references contextual, actionable, and deep-linkable",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "# Worktree & Git Improvement -- Implementation Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00516"
+      ],
+      "source_obligation_ids": [
+        "obl-373"
+      ],
+      "source_seed_ids": [
+        "seed-430"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "keep worktree references contextual, actionable, and deep-linkable"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00993",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01276 is partial for This should stay short and deep-link into Usage/Authentication/Orchestrator as needed.",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "### GUI updates needed"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01276"
+      ],
+      "source_obligation_ids": [
+        "obl-1133"
+      ],
+      "source_seed_ids": [
+        "seed-1345"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "exact_missing_items": [
+        "This should stay short and deep-link into Usage/Authentication/Orchestrator as needed."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01096",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01392 is partial for Bulk worktree cleanup/archive/remove should remain preview-heavy and explicit.",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "# Worktree & Git Improvement -- Implementation Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01392"
+      ],
+      "source_obligation_ids": [
+        "obl-1249"
+      ],
+      "source_seed_ids": [
+        "seed-1494"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "exact_missing_items": [
+        "Bulk worktree cleanup/archive/remove should remain preview-heavy and explicit."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01749",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02254 is partial for still missing core persistence/acceptance sections and still under-specifies historical mo",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "# Worktree & Git Improvement -- Implementation Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02254"
+      ],
+      "source_obligation_ids": [
+        "obl-2108"
+      ],
+      "source_seed_ids": [
+        "seed-2737"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "still missing core persistence/acceptance sections and still under-specifies historical mode, worktree partitioning, and precise usage/deep-link behavior"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02396",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03035 is partial for Move worktree docs onto node/lane-aware vocabulary and define projection authority between",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "### Fidelity recovery cov-041: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03035"
+      ],
+      "source_obligation_ids": [
+        "obl-2881"
+      ],
+      "source_seed_ids": [
+        "seed-3802"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "Move worktree docs onto node/lane-aware vocabulary and define projection authority between Source Control and Orchestrator receipt lineage."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02400",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03039 is partial for `trust_tier` already exists in preview/browser state",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "### 2.5 Branch already exists when recreating worktree"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03039"
+      ],
+      "source_obligation_ids": [
+        "obl-2885"
+      ],
+      "source_seed_ids": [
+        "seed-3809"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "`trust_tier` already exists in preview/browser state",
+        "trust_tier"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02774",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03546 is partial for current lifecycle/status projection for the worktree",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "# Worktree & Git Improvement -- Implementation Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03546"
+      ],
+      "source_obligation_ids": [
+        "obl-3392"
+      ],
+      "source_seed_ids": [
+        "seed-4568"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "current lifecycle/status projection for the worktree"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04326",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05551 is partial for Research Progress - 2026-03-17 - Worktree and SCM routing consumers",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "# Worktree & Git Improvement -- Implementation Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05551"
+      ],
+      "source_obligation_ids": [
+        "obl-5323"
+      ],
+      "source_seed_ids": [
+        "seed-7908"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - Worktree and SCM routing consumers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04932",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06354 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06354"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00250",
+    "cov-04181",
+    "cov-04229",
+    "cov-04296",
+    "cov-04310",
+    "cov-05016",
+    "cov-06829",
+    "cov-04228",
+    "cov-04268",
+    "cov-04499",
+    "cov-05666",
+    "cov-06268",
+    "cov-04269",
+    "cov-05675",
+    "cov-00516",
+    "cov-01276",
+    "cov-01392",
+    "cov-02254",
+    "cov-03035",
+    "cov-03039",
+    "cov-03546",
+    "cov-05551",
+    "cov-06354"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1133",
+    "obl-1249",
+    "obl-133",
+    "obl-2108",
+    "obl-2881",
+    "obl-2885",
+    "obl-3392",
+    "obl-373",
+    "obl-4021",
+    "obl-4068",
+    "obl-4069",
+    "obl-4108",
+    "obl-4109",
+    "obl-4136",
+    "obl-4150",
+    "obl-4292",
+    "obl-4792",
+    "obl-5323",
+    "obl-5438",
+    "obl-5447",
+    "obl-5986",
+    "obl-6009",
+    "obl-6442"
+  ],
+  "source_seed_ids_represented": [
+    "seed-1345",
+    "seed-138",
+    "seed-1494",
+    "seed-2737",
+    "seed-3802",
+    "seed-3809",
+    "seed-430",
+    "seed-4568",
+    "seed-5540",
+    "seed-5630",
+    "seed-5631",
+    "seed-5693",
+    "seed-5696",
+    "seed-5711",
+    "seed-5733",
+    "seed-5755",
+    "seed-5760",
+    "seed-6001",
+    "seed-6852",
+    "seed-6879",
+    "seed-6899",
+    "seed-7908",
+    "seed-8070",
+    "seed-8072",
+    "seed-8084",
+    "seed-8094",
+    "seed-9006",
+    "seed-9092",
+    "seed-9171",
+    "seed-9821"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0009",
+    "shard-0012",
+    "shard-0022",
+    "shard-0024",
+    "shard-0035",
+    "shard-0043",
+    "shard-0048",
+    "shard-0055",
+    "shard-0056",
+    "shard-0057",
+    "shard-0059",
+    "shard-0066",
+    "shard-0073",
+    "shard-0075",
+    "shard-0082",
+    "shard-0083",
+    "shard-0088"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-00223",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00250 is present for `Plans/UI_Command_Catalog.md`, `Plans/Wiring_Matrix.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00250"
+      ],
+      "source_obligation_ids": [
+        "obl-133"
+      ],
+      "source_seed_ids": [
+        "seed-138"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "`Plans/UI_Command_Catalog.md`, `Plans/Wiring_Matrix.md`",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03256",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04181 is partial for canonical `cmd.runtime.*` recovery commands are still absent from real matrix rows even wh",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "## Runtime Recovery Wiring Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04181"
+      ],
+      "source_obligation_ids": [
+        "obl-4021"
+      ],
+      "source_seed_ids": [
+        "seed-5540"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "canonical `cmd.runtime.*` recovery commands are still absent from real matrix rows even where page/docs require the corresponding CTAs.",
+        "cmd.runtime.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03296",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04229 is present for wildcard command-family requirements in Wiring Matrix still cannot be represented by `Wiri",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "# Wiring Matrix (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04229"
+      ],
+      "source_obligation_ids": [
+        "obl-4069"
+      ],
+      "source_seed_ids": [
+        "seed-5631"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "wildcard command-family requirements in Wiring Matrix still cannot be represented by `Wiring_Matrix.schema.json` as written.",
+        "Wiring_Matrix.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03356",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04296 is partial for Decide whether the matrix remains strictly UI-element wiring plus a separate producer/cons",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "# Wiring Matrix (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04296"
+      ],
+      "source_obligation_ids": [
+        "obl-4136"
+      ],
+      "source_seed_ids": [
+        "seed-5733"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "Decide whether the matrix remains strictly UI-element wiring plus a separate producer/consumer matrix, or whether the schema is intentionally widened to cover both."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03365",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04310 is present for `GATE-010` claims the wiring matrix is \u201ccomplete, valid, and testable,\u201d but completeness i",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "# Wiring Matrix (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04310"
+      ],
+      "source_obligation_ids": [
+        "obl-4150"
+      ],
+      "source_seed_ids": [
+        "seed-5760"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "`GATE-010` claims the wiring matrix is \u201ccomplete, valid, and testable,\u201d but completeness is currently defined too narrowly for route/subject-aware navigation.",
+        "GATE-010"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03928",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05016 is partial for wiring matrix owns UI element to command/handler binding only",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "# Wiring Matrix (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05016"
+      ],
+      "source_obligation_ids": [
+        "obl-4792"
+      ],
+      "source_seed_ids": [
+        "seed-6899"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "exact_missing_items": [
+        "wiring matrix owns UI element to command/handler binding only"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05302",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06829 is present for `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Cr",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06829"
+      ],
+      "source_obligation_ids": [
+        "obl-6442"
+      ],
+      "source_seed_ids": [
+        "seed-9821"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Crosswalk.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md",
+        "Plans/FileManager.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03295",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04228 is partial for Wiring Matrix example/evidence strings also contain `cmd.*.json` filename fragments that c",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "# Wiring Matrix (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04228"
+      ],
+      "source_obligation_ids": [
+        "obl-4068"
+      ],
+      "source_seed_ids": [
+        "seed-5630"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "Wiring Matrix example/evidence strings also contain `cmd.*.json` filename fragments that can poison naive ID extraction separately from real command rows.",
+        "cmd.*.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03329",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04268 is partial for Research Progress - 2026-03-16 - Wiring matrix route/subject contract limits",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "# Wiring Matrix (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04268"
+      ],
+      "source_obligation_ids": [
+        "obl-4108"
+      ],
+      "source_seed_ids": [
+        "seed-5693"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - Wiring matrix route/subject contract limits"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03531",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04499 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04499"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04411",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05666 is partial for Research Progress - 2026-03-17 - Wiring, matrix, and evidence normalization limits",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "# Wiring Matrix (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05666"
+      ],
+      "source_obligation_ids": [
+        "obl-5438"
+      ],
+      "source_seed_ids": [
+        "seed-8070"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - Wiring, matrix, and evidence normalization limits"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04856",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06268 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06268"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03330",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04269 is missing for `Plans/Wiring_Matrix.schema.json`",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04269"
+      ],
+      "source_obligation_ids": [
+        "obl-4109"
+      ],
+      "source_seed_ids": [
+        "seed-5696",
+        "seed-5711",
+        "seed-5755",
+        "seed-6852",
+        "seed-6879",
+        "seed-8072",
+        "seed-8094",
+        "seed-9171"
+      ],
+      "source_shard_ids": [
+        "shard-0056",
+        "shard-0057",
+        "shard-0066",
+        "shard-0075",
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "`Plans/Wiring_Matrix.schema.json`",
+        "Plans/Wiring_Matrix.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04420",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05675 is missing for `Plans/Wiring_Matrix.schema.json` currently has no fields for command-kind or normalizatio",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05675"
+      ],
+      "source_obligation_ids": [
+        "obl-5447"
+      ],
+      "source_seed_ids": [
+        "seed-8084"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "`Plans/Wiring_Matrix.schema.json` currently has no fields for command-kind or normalization metadata.",
+        "Plans/Wiring_Matrix.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00406",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00516 is partial for keep worktree references contextual, actionable, and deep-linkable",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "# Worktree & Git Improvement -- Implementation Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00516"
+      ],
+      "source_obligation_ids": [
+        "obl-373"
+      ],
+      "source_seed_ids": [
+        "seed-430"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "keep worktree references contextual, actionable, and deep-linkable"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00993",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01276 is partial for This should stay short and deep-link into Usage/Authentication/Orchestrator as needed.",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "### GUI updates needed"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01276"
+      ],
+      "source_obligation_ids": [
+        "obl-1133"
+      ],
+      "source_seed_ids": [
+        "seed-1345"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "exact_missing_items": [
+        "This should stay short and deep-link into Usage/Authentication/Orchestrator as needed."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01096",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01392 is partial for Bulk worktree cleanup/archive/remove should remain preview-heavy and explicit.",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "# Worktree & Git Improvement -- Implementation Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01392"
+      ],
+      "source_obligation_ids": [
+        "obl-1249"
+      ],
+      "source_seed_ids": [
+        "seed-1494"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "exact_missing_items": [
+        "Bulk worktree cleanup/archive/remove should remain preview-heavy and explicit."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01749",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02254 is partial for still missing core persistence/acceptance sections and still under-specifies historical mo",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "# Worktree & Git Improvement -- Implementation Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02254"
+      ],
+      "source_obligation_ids": [
+        "obl-2108"
+      ],
+      "source_seed_ids": [
+        "seed-2737"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "still missing core persistence/acceptance sections and still under-specifies historical mode, worktree partitioning, and precise usage/deep-link behavior"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02396",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03035 is partial for Move worktree docs onto node/lane-aware vocabulary and define projection authority between",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "### Fidelity recovery cov-041: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03035"
+      ],
+      "source_obligation_ids": [
+        "obl-2881"
+      ],
+      "source_seed_ids": [
+        "seed-3802"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "Move worktree docs onto node/lane-aware vocabulary and define projection authority between Source Control and Orchestrator receipt lineage."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02400",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03039 is partial for `trust_tier` already exists in preview/browser state",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "### 2.5 Branch already exists when recreating worktree"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03039"
+      ],
+      "source_obligation_ids": [
+        "obl-2885"
+      ],
+      "source_seed_ids": [
+        "seed-3809"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "`trust_tier` already exists in preview/browser state",
+        "trust_tier"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02774",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03546 is partial for current lifecycle/status projection for the worktree",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "# Worktree & Git Improvement -- Implementation Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03546"
+      ],
+      "source_obligation_ids": [
+        "obl-3392"
+      ],
+      "source_seed_ids": [
+        "seed-4568"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "current lifecycle/status projection for the worktree"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04326",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05551 is partial for Research Progress - 2026-03-17 - Worktree and SCM routing consumers",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "# Worktree & Git Improvement -- Implementation Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05551"
+      ],
+      "source_obligation_ids": [
+        "obl-5323"
+      ],
+      "source_seed_ids": [
+        "seed-7908"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - Worktree and SCM routing consumers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04932",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06354 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06354"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

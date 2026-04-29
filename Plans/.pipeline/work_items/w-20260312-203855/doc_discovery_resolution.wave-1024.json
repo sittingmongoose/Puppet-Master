@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1024",
+  "group_ids": [
+    "discgrp-4093",
+    "discgrp-4094",
+    "discgrp-4095",
+    "discgrp-4096"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04407",
+      "source_obligation_ids": [
+        "obl-4247"
+      ],
+      "source_seed_ids": [
+        "seed-5919"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04408",
+      "source_obligation_ids": [
+        "obl-4248"
+      ],
+      "source_seed_ids": [
+        "seed-5920"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "## Rewrite alignment (2026-02-21)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L65"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04409",
+      "source_obligation_ids": [
+        "obl-4249"
+      ],
+      "source_seed_ids": [
+        "seed-5921"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## 2. Provider normalized stream (non-persisted contract)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L368"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04410",
+      "source_obligation_ids": [
+        "obl-4250"
+      ],
+      "source_seed_ids": [
+        "seed-5922"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### Progress catalog source and default drills",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L910"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

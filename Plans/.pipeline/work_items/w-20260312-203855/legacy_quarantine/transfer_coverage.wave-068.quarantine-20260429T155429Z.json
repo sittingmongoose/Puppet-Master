@@ -1,0 +1,116 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-068",
+  "timestamp_utc": "2026-04-28T21:45:57Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-269",
+    "coverage-rowgrp-270",
+    "coverage-rowgrp-271",
+    "coverage-rowgrp-272"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-269 cov-376 Plans/interview-subagent-integration.md",
+    "rowgrp-270 cov-285 Plans/ledger.md",
+    "rowgrp-271 cov-1113 Plans/newfeatures.md",
+    "rowgrp-272 cov-090 Plans/newfeatures.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-269": "completed_reduced_conservatively_with_evidence_stripping",
+    "coverage-rowgrp-270": "completed_missing_assigned_path",
+    "coverage-rowgrp-271": "completed_reduced_conservatively_with_evidence_stripping",
+    "coverage-rowgrp-272": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-376",
+    "cov-285",
+    "cov-1113",
+    "cov-090"
+  ],
+  "coverage_ids_completed": [
+    "cov-376",
+    "cov-285",
+    "cov-1113",
+    "cov-090"
+  ],
+  "path_groups_assigned": [
+    "Plans/interview-subagent-integration.md",
+    "Plans/ledger.md",
+    "Plans/newfeatures.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-376",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Plans/interview-subagent-integration.md does not directly cover non-Orchestrator-exclusive blocked semantics or the stale tokens attention_required, blocked_reason_code, allowed_action_ids, and resume_url.",
+      "source_obligation_ids": [
+        "obl-111"
+      ],
+      "source_seed_ids": [
+        "seed-111"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-285",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Plans/ledger.md is not present in the workspace, so no direct historical-run frozen requested/effective state or policy snapshot coverage could be verified.",
+      "source_obligation_ids": [
+        "obl-083"
+      ],
+      "source_seed_ids": [
+        "seed-083"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1113",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/newfeatures.md does not directly cover Section15 missing command rows, shell-surface ownership, persistence identity/recovery-anchor contradictions, or Formatters_System DAE attribution.",
+      "source_obligation_ids": [
+        "obl-322"
+      ],
+      "source_seed_ids": [
+        "seed-322"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-090",
+      "status": "partial",
+      "evidence": [
+        "Plans/newfeatures.md:8-13 says node graph is the execution model, Feature Seam and Work Package replace tiers as first-class orchestration objects, runtime blocked identity replaces request-centric approval identity, shared requested/effective runtime identity spans assistant/interview/builders/overseers/node workers, and Orchestrator carries lane/package/seam operational context",
+        "Plans/newfeatures.md:22-24 defines Package Overseer and Seam Overseer governance plus promotion/corroboration/concern/graph-patch/recovery records as first-class governance/runtime objects"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Rewrite-era terminology exists, but canonical ownership/terminology authority coverage for Glossary/Crosswalk/Decision_Policy/index, orchestrator-subagent split-brain cleanup, and explicit stale-token retirement are incomplete.",
+      "source_obligation_ids": [
+        "obl-033"
+      ],
+      "source_seed_ids": [
+        "seed-033"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

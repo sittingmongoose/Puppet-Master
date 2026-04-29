@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1287",
+  "group_ids": [
+    "discgrp-5145",
+    "discgrp-5146",
+    "discgrp-5147",
+    "discgrp-5148"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05557",
+      "source_obligation_ids": [
+        "obl-5329"
+      ],
+      "source_seed_ids": [
+        "seed-7917"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05558",
+      "source_obligation_ids": [
+        "obl-5330"
+      ],
+      "source_seed_ids": [
+        "seed-7918"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### Fidelity recovery cov-041: Source Control and worktree handshake",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05559",
+      "source_obligation_ids": [
+        "obl-5331"
+      ],
+      "source_seed_ids": [
+        "seed-7919"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05560",
+      "source_obligation_ids": [
+        "obl-5332"
+      ],
+      "source_seed_ids": [
+        "seed-7920"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Source Control boundary",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L447"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

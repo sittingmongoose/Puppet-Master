@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-196",
+  "group_ids": [
+    "discgrp-0781",
+    "discgrp-0782",
+    "discgrp-0783",
+    "discgrp-0784"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01028",
+      "source_obligation_ids": [
+        "obl-885"
+      ],
+      "source_seed_ids": [
+        "seed-1038"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01029",
+      "source_obligation_ids": [
+        "obl-886"
+      ],
+      "source_seed_ids": [
+        "seed-1040"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01030",
+      "source_obligation_ids": [
+        "obl-887"
+      ],
+      "source_seed_ids": [
+        "seed-1041"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-018: Export taxonomy and manifest contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L31"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01031",
+      "source_obligation_ids": [
+        "obl-888"
+      ],
+      "source_seed_ids": [
+        "seed-1042",
+        "seed-1893"
+      ],
+      "source_shard_ids": [
+        "shard-0018",
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

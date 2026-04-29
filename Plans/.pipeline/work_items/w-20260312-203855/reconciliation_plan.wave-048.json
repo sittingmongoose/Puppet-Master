@@ -1,0 +1,352 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-048",
+  "group_ids": [
+    "recgrp-0189",
+    "recgrp-0190",
+    "recgrp-0191",
+    "recgrp-0192"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0189",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "mapped_owner_heading": "# Document Packaging Policy (Canonical)",
+      "live_anchor": "# Document Packaging Policy (Canonical) (Plans/Document_Packaging_Policy.md:L1)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00262",
+        "cov-04085",
+        "cov-04346",
+        "cov-04396",
+        "cov-04463",
+        "cov-04605",
+        "cov-04777",
+        "cov-05269",
+        "cov-06232",
+        "cov-06317",
+        "cov-06390"
+      ],
+      "source_obligation_ids": [
+        "obl-143",
+        "obl-3927",
+        "obl-4186",
+        "obl-4236",
+        "obl-4292",
+        "obl-4383",
+        "obl-4555",
+        "obl-5045",
+        "obl-5986",
+        "obl-6009",
+        "obl-6031"
+      ],
+      "source_seed_ids": [
+        "seed-149",
+        "seed-5381",
+        "seed-5816",
+        "seed-5899",
+        "seed-6001",
+        "seed-6187",
+        "seed-6472",
+        "seed-7362",
+        "seed-9006",
+        "seed-9092",
+        "seed-9118"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0054",
+        "shard-0057",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060",
+        "shard-0062",
+        "shard-0070",
+        "shard-0082"
+      ],
+      "gap_ids": [
+        "gap-00231",
+        "gap-03171",
+        "gap-03391",
+        "gap-03432",
+        "gap-03495",
+        "gap-03614",
+        "gap-03732",
+        "gap-04086",
+        "gap-04821",
+        "gap-04896",
+        "gap-04963"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "likely issue: `allowed_actions[]` and `allowed_action_ids[]` both appear as canonical depending on document, which will break blocked-action parity.",
+        "allowed_actions[]",
+        "allowed_action_ids[]",
+        "if file-backed canonical document exists:",
+        "artifact-backed reopen into transient `generated://<artifact_id>` buffers when there is no backing document yet",
+        "generated://<artifact_id>",
+        "`chain-wizard-flexibility.md`, `interview-subagent-integration.md`, and `FinalGUISpec.md` all assume staged or non-persisted document bundles that may be opened before they have stable workspace paths.",
+        "chain-wizard-flexibility.md",
+        "interview-subagent-integration.md",
+        "FinalGUISpec.md",
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md",
+        "may realize as workspace document, transient `generated://` buffer, or routed non-editor surface",
+        "generated://",
+        "Packaging / evidence / artifact lineage gaps are broader than just Project_Output_Artifacts:",
+        "evidence source document:",
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "22",
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "61",
+        "the duplicated headings appear after the `## References` block, which breaks the document\u2019s own structure and weakens deterministic anchor targeting",
+        "## References"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-4ed4f0d779c3",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0190",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "mapped_owner_heading": "## 1. Document Set contract",
+      "live_anchor": "## 1. Document Set contract (Plans/Document_Packaging_Policy.md:L16)",
+      "action": "layout_repair_reference",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00431"
+      ],
+      "source_obligation_ids": [
+        "obl-289"
+      ],
+      "source_seed_ids": [
+        "seed-334"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "gap_ids": [
+        "gap-00337"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "downstream usage/storage/UI docs still weaken or rename the canonical field set"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-525f05ced6cf",
+      "packet_writer_role": "observe_only",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Observe-only layout repair reference: target records packetizable layout backlog without creating an overlapping mutation writer."
+      ]
+    },
+    {
+      "target_id": "target-0191",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "mapped_owner_heading": "## 5. Three independent audits (full coverage, no sampling)",
+      "live_anchor": "## 5. Three independent audits (full coverage, no sampling) (Plans/Document_Packaging_Policy.md:L121)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-03464",
+        "cov-06214"
+      ],
+      "source_obligation_ids": [
+        "obl-3310",
+        "obl-5983"
+      ],
+      "source_seed_ids": [
+        "seed-4437",
+        "seed-8991"
+      ],
+      "source_shard_ids": [
+        "shard-0047",
+        "shard-0082"
+      ],
+      "gap_ids": [
+        "gap-02709",
+        "gap-04807"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "it links the three passes together with `workflow_run_id`",
+        "workflow_run_id",
+        "Continue the ordered sequence on this same 22-doc tranche into `GPT-5.3-Codex`; `GPT-5.2` still produced enough novel signal to justify finishing the full tranche intact.",
+        "GPT-5.3-Codex",
+        "GPT-5.2"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-1ecaa4656fab",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0192",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "mapped_owner_heading": "## 7. On-disk path convention and pointer stub contract",
+      "live_anchor": "## 7. On-disk path convention and pointer stub contract (Plans/Document_Packaging_Policy.md:L171)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-02319"
+      ],
+      "source_obligation_ids": [
+        "obl-2171"
+      ],
+      "source_seed_ids": [
+        "seed-2822"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "gap_ids": [
+        "gap-01800"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`usage-feature.md` sharpened that the canonical pointer should be `usage_event_ref`, not a new opaque `usage_event_id`",
+        "usage-feature.md",
+        "usage_event_ref",
+        "usage_event_id"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-093271f8bde1",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00262",
+    "cov-04085",
+    "cov-04346",
+    "cov-04396",
+    "cov-04463",
+    "cov-04605",
+    "cov-04777",
+    "cov-05269",
+    "cov-06232",
+    "cov-06317",
+    "cov-06390",
+    "cov-00431",
+    "cov-03464",
+    "cov-06214",
+    "cov-02319"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-143",
+    "obl-3927",
+    "obl-4186",
+    "obl-4236",
+    "obl-4292",
+    "obl-4383",
+    "obl-4555",
+    "obl-5045",
+    "obl-5986",
+    "obl-6009",
+    "obl-6031",
+    "obl-289",
+    "obl-3310",
+    "obl-5983",
+    "obl-2171"
+  ],
+  "source_seed_ids_represented": [
+    "seed-149",
+    "seed-5381",
+    "seed-5816",
+    "seed-5899",
+    "seed-6001",
+    "seed-6187",
+    "seed-6472",
+    "seed-7362",
+    "seed-9006",
+    "seed-9092",
+    "seed-9118",
+    "seed-334",
+    "seed-4437",
+    "seed-8991",
+    "seed-2822"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0009",
+    "shard-0054",
+    "shard-0057",
+    "shard-0058",
+    "shard-0059",
+    "shard-0060",
+    "shard-0062",
+    "shard-0070",
+    "shard-0082",
+    "shard-0011",
+    "shard-0047",
+    "shard-0035"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": [
+    {
+      "target_id": "target-0190",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "reason": "observe_only non-packetizable source path"
+    }
+  ]
+}

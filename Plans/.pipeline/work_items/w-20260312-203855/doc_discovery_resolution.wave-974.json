@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-974",
+  "group_ids": [
+    "discgrp-3893",
+    "discgrp-3894",
+    "discgrp-3895",
+    "discgrp-3896"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04198",
+      "source_obligation_ids": [
+        "obl-4038"
+      ],
+      "source_seed_ids": [
+        "seed-5557"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "# Containers, Registry, and Unraid Integration",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04199",
+      "source_obligation_ids": [
+        "obl-4039"
+      ],
+      "source_seed_ids": [
+        "seed-5558"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "## 17. Assistant / Deep Plan Escalation into Chain Wizard (2026-03-08)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L1890"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04200",
+      "source_obligation_ids": [
+        "obl-4040"
+      ],
+      "source_seed_ids": [
+        "seed-5559"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Recommended minimum concern record shape",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L203"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04201",
+      "source_obligation_ids": [
+        "obl-4041"
+      ],
+      "source_seed_ids": [
+        "seed-5560"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Plugins_System.md",
+      "new_heading_hint": "#### `tool.execute.after`",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Plugins_System.md:L205"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

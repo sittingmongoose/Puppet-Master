@@ -1,0 +1,303 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-029",
+  "timestamp_utc": "2026-04-28T20:31:46Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-113",
+    "coverage-rowgrp-114",
+    "coverage-rowgrp-115",
+    "coverage-rowgrp-116"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-113 cov-1110 Plans/OpenCode_Coverage_Matrix.md",
+    "rowgrp-114 cov-1107 Plans/OpenCode_Coverage_Matrix.md",
+    "rowgrp-115 cov-1108 Plans/OpenCode_Deep_Extraction.md",
+    "rowgrp-116 cov-032,cov-274,cov-330,cov-333,cov-453,cov-469,cov-629,cov-675,cov-852,cov-899 Plans/Orchestrator_Page.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-113": "completed_reduced_conservatively",
+    "coverage-rowgrp-114": "completed_reduced_conservatively",
+    "coverage-rowgrp-115": "completed_reduced_conservatively",
+    "coverage-rowgrp-116": "completed_reduced_conservatively"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-1110",
+    "cov-1107",
+    "cov-1108",
+    "cov-032",
+    "cov-274",
+    "cov-330",
+    "cov-333",
+    "cov-453",
+    "cov-469",
+    "cov-629",
+    "cov-675",
+    "cov-852",
+    "cov-899"
+  ],
+  "coverage_ids_completed": [
+    "cov-1110",
+    "cov-1107",
+    "cov-1108",
+    "cov-032",
+    "cov-274",
+    "cov-330",
+    "cov-333",
+    "cov-453",
+    "cov-469",
+    "cov-629",
+    "cov-675",
+    "cov-852",
+    "cov-899"
+  ],
+  "path_groups_assigned": [
+    "Plans/OpenCode_Coverage_Matrix.md",
+    "Plans/OpenCode_Deep_Extraction.md",
+    "Plans/Orchestrator_Page.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-1110",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "OpenCode_Coverage_Matrix.md contains only general matrix criteria/header material, not direct caller-scoped identity, server-global SSE, or media capability request/event surface coverage.",
+      "source_obligation_ids": [
+        "obl-321"
+      ],
+      "source_seed_ids": [
+        "seed-321"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1107",
+      "status": "partial",
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:76 shows a partial GUI Skills wiring row",
+        "Plans/OpenCode_Coverage_Matrix.md:93-101 lists missing stable anchors",
+        "Plans/OpenCode_Coverage_Matrix.md:173-181 lists anchor additions still needed"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "The matrix exposes incomplete/stale coverage and fix items, but does not directly complete the owner cleanup for duplicated sections, malformed ContractRefs, phantom command IDs, and current identity-contract assumptions.",
+      "source_obligation_ids": [
+        "obl-320"
+      ],
+      "source_seed_ids": [
+        "seed-320"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1108",
+      "status": "partial",
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:644-646 covers session-scoped approvals and GUI approval flow wiring",
+        "Plans/OpenCode_Deep_Extraction.md:691-699 covers permission/route handling plus provider/model transform and error layers"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "OpenCode_Deep_Extraction.md covers related session-scoped approvals and provider transform/error layers, but not the full caller-scoped identity, server-global SSE, or media capability request/event surface obligations.",
+      "source_obligation_ids": [
+        "obl-321"
+      ],
+      "source_seed_ids": [
+        "seed-321"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-032",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:450-455 defines promotion classes, evidence expectations, Source Control/worktree handshake, and worktree rows with package/lane/run refs",
+        "Plans/Orchestrator_Page.md:421-431 defines project summary, attention, escalation, and scale sections"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Package/seam promotion, worktree rows, and project summary areas are related, but the full GUI surface set, seam-level acceptance/weak-integration/corroboration affordance, and project-summary aggregation details are incomplete.",
+      "source_obligation_ids": [
+        "obl-023"
+      ],
+      "source_seed_ids": [
+        "seed-023"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-274",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:471-473 defines a shared record envelope and keeps record objects distinct from artifacts, receipts, and rendered summaries",
+        "Plans/Orchestrator_Page.md:492-497 separates source events, durable records, projections, evidence refs, artifact refs, and lineage refs"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-078"
+      ],
+      "source_seed_ids": [
+        "seed-078"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-330",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not directly define object-specific context-menu action policy or canonical runtime labels for valid object actions.",
+      "source_obligation_ids": [
+        "obl-098"
+      ],
+      "source_seed_ids": [
+        "seed-098"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-333",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not directly define a shared destination payload model across command palette, shortcuts, context menus, and widgets with the requested fields.",
+      "source_obligation_ids": [
+        "obl-099"
+      ],
+      "source_seed_ids": [
+        "seed-099"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-453",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:173-183 states inline help, context help, canonical help-entry layers, and stable canonical term names",
+        "Plans/Orchestrator_Page.md:461 states help is layered while canonical term names stay stable"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "The help layers and stable naming are present, but the click/hover behavior that chooses tooltip, side explanation, or dedicated help entry is not fully direct.",
+      "source_obligation_ids": [
+        "obl-132"
+      ],
+      "source_seed_ids": [
+        "seed-132"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-469",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:375-388 maps Progress widgets to focused_run_id-scoped run, lane, concern, artifact, worktree, account, and attention projections",
+        "Plans/Orchestrator_Page.md:396-398 defines focused_run_id with live/historical focus_mode and keeps cross-tab pivots coherent on the focused run"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-137"
+      ],
+      "source_seed_ids": [
+        "seed-137"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-629",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not directly list multiple downstream docs as impacted consumers of execution-context changes.",
+      "source_obligation_ids": [
+        "obl-176"
+      ],
+      "source_seed_ids": [
+        "seed-176"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-675",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not directly list the requested truthful-lineage downstream/highest-risk consumer docs.",
+      "source_obligation_ids": [
+        "obl-189"
+      ],
+      "source_seed_ids": [
+        "seed-189"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-852",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not directly require surface docs to consume shared navigation primitives instead of local semantics.",
+      "source_obligation_ids": [
+        "obl-237"
+      ],
+      "source_seed_ids": [
+        "seed-237"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-899",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not directly define route activation override boundaries or persisted-state reuse constraints.",
+      "source_obligation_ids": [
+        "obl-253"
+      ],
+      "source_seed_ids": [
+        "seed-253"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

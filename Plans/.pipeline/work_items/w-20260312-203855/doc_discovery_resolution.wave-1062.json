@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1062",
+  "group_ids": [
+    "discgrp-4245",
+    "discgrp-4246",
+    "discgrp-4247",
+    "discgrp-4248"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04622",
+      "source_obligation_ids": [
+        "obl-4400"
+      ],
+      "source_seed_ids": [
+        "seed-6221",
+        "seed-6250"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-04623",
+      "source_obligation_ids": [
+        "obl-4401"
+      ],
+      "source_seed_ids": [
+        "seed-6222"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04624",
+      "source_obligation_ids": [
+        "obl-4402"
+      ],
+      "source_seed_ids": [
+        "seed-6223"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Recommended minimum concern record shape",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L199"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04625",
+      "source_obligation_ids": [
+        "obl-4403"
+      ],
+      "source_seed_ids": [
+        "seed-6224"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

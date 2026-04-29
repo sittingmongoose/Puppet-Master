@@ -1,0 +1,541 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-027",
+  "group_ids": [
+    "pktgrp-0105",
+    "pktgrp-0106",
+    "pktgrp-0107",
+    "pktgrp-0108"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "packet-target-0105",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### Token bucket contract (Plans/Contracts_V0.md:L1060)",
+      "path": "Plans/Contracts_V0.md",
+      "coverage_row_ids": [
+        "cov-02890"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-02890"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-2737"
+      ],
+      "source_seed_ids": [
+        "seed-3591"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-2737"
+        ],
+        "source_seed_ids": [
+          "seed-3591"
+        ],
+        "source_shard_ids": [
+          "shard-0041"
+        ]
+      },
+      "gap_ids": [
+        "gap-02278"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "but it must not be implied to share the same ownership or token source unless the owning auth contract says so"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-1629bab277e1",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0149",
+      "source_reconciliation_target_ids": [
+        "target-0149"
+      ],
+      "source_target_ids": [
+        "target-0149"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0149\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - but it must not be implied to share the same ownership or token source unless the owning auth contract says so\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0106",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### `attempt.started` (Plans/Contracts_V0.md:L1353)",
+      "path": "Plans/Contracts_V0.md",
+      "coverage_row_ids": [
+        "cov-03849"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-03849"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-3694"
+      ],
+      "source_seed_ids": [
+        "seed-5016",
+        "seed-5027"
+      ],
+      "source_shard_ids": [
+        "shard-0051",
+        "shard-0052"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3694"
+        ],
+        "source_seed_ids": [
+          "seed-5016",
+          "seed-5027"
+        ],
+        "source_shard_ids": [
+          "shard-0051",
+          "shard-0052"
+        ]
+      },
+      "gap_ids": [
+        "gap-03002"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`attempt.started`",
+        "attempt.started"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-2ff085d1ebd0",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0150",
+      "source_reconciliation_target_ids": [
+        "target-0150"
+      ],
+      "source_target_ids": [
+        "target-0150"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0150\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `attempt.started`\n  - attempt.started\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0107",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### `tool.denied` alignment (Plans/Contracts_V0.md:L1399)",
+      "path": "Plans/Contracts_V0.md",
+      "coverage_row_ids": [
+        "cov-03688",
+        "cov-05592"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-03688",
+          "cov-05592"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-3533",
+        "obl-5364"
+      ],
+      "source_seed_ids": [
+        "seed-4756",
+        "seed-7968"
+      ],
+      "source_shard_ids": [
+        "shard-0050",
+        "shard-0074"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3533",
+          "obl-5364"
+        ],
+        "source_seed_ids": [
+          "seed-4756",
+          "seed-7968"
+        ],
+        "source_shard_ids": [
+          "shard-0050",
+          "shard-0074"
+        ]
+      },
+      "gap_ids": [
+        "gap-02882",
+        "gap-04359"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Several owner docs claim EventRecord/runtime alignment but still omit project/thread/run/attempt/account identity in their own schemas.",
+        "This is now a clear owner-doc gap, not a vague alignment issue."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-5aae96f4c188",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0151",
+      "source_reconciliation_target_ids": [
+        "target-0151"
+      ],
+      "source_target_ids": [
+        "target-0151"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0151\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Several owner docs claim EventRecord/runtime alignment but still omit project/thread/run/attempt/account identity in their own schemas.\n  - This is now a clear owner-doc gap, not a vague alignment issue.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0108",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### route_target, OpenSubject, and command normalization (Plans/Contracts_V0.md:L315)",
+      "path": "Plans/Contracts_V0.md",
+      "coverage_row_ids": [
+        "cov-02171",
+        "cov-04071",
+        "cov-04120",
+        "cov-04261",
+        "cov-04743",
+        "cov-04925",
+        "cov-05006",
+        "cov-05115",
+        "cov-05596",
+        "cov-05692",
+        "cov-06304",
+        "cov-06435",
+        "cov-06460",
+        "cov-06834"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-02171",
+          "cov-04071",
+          "cov-04120",
+          "cov-04261",
+          "cov-04743",
+          "cov-04925",
+          "cov-05006",
+          "cov-05115",
+          "cov-05596",
+          "cov-05692",
+          "cov-06304",
+          "cov-06435",
+          "cov-06460",
+          "cov-06834"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-2027",
+        "obl-3913",
+        "obl-3960",
+        "obl-4101",
+        "obl-4521",
+        "obl-4701",
+        "obl-4782",
+        "obl-4891",
+        "obl-5368",
+        "obl-5464",
+        "obl-6007",
+        "obl-6076",
+        "obl-6101",
+        "obl-6446"
+      ],
+      "source_seed_ids": [
+        "seed-2636",
+        "seed-5367",
+        "seed-5424",
+        "seed-5686",
+        "seed-6434",
+        "seed-6767",
+        "seed-6889",
+        "seed-7050",
+        "seed-7972",
+        "seed-8108",
+        "seed-9090",
+        "seed-9182",
+        "seed-9219",
+        "seed-9825"
+      ],
+      "source_shard_ids": [
+        "shard-0034",
+        "shard-0054",
+        "shard-0055",
+        "shard-0056",
+        "shard-0062",
+        "shard-0065",
+        "shard-0066",
+        "shard-0067",
+        "shard-0074",
+        "shard-0075",
+        "shard-0082",
+        "shard-0083",
+        "shard-0088"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-2027",
+          "obl-3913",
+          "obl-3960",
+          "obl-4101",
+          "obl-4521",
+          "obl-4701",
+          "obl-4782",
+          "obl-4891",
+          "obl-5368",
+          "obl-5464",
+          "obl-6007",
+          "obl-6076",
+          "obl-6101",
+          "obl-6446"
+        ],
+        "source_seed_ids": [
+          "seed-2636",
+          "seed-5367",
+          "seed-5424",
+          "seed-5686",
+          "seed-6434",
+          "seed-6767",
+          "seed-6889",
+          "seed-7050",
+          "seed-7972",
+          "seed-8108",
+          "seed-9090",
+          "seed-9182",
+          "seed-9219",
+          "seed-9825"
+        ],
+        "source_shard_ids": [
+          "shard-0034",
+          "shard-0054",
+          "shard-0055",
+          "shard-0056",
+          "shard-0062",
+          "shard-0065",
+          "shard-0066",
+          "shard-0067",
+          "shard-0074",
+          "shard-0075",
+          "shard-0082",
+          "shard-0083",
+          "shard-0088"
+        ]
+      },
+      "gap_ids": [
+        "gap-01690",
+        "gap-03159",
+        "gap-03202",
+        "gap-03323",
+        "gap-03705",
+        "gap-03851",
+        "gap-03920",
+        "gap-03982",
+        "gap-04362",
+        "gap-04436",
+        "gap-04883",
+        "gap-04994",
+        "gap-05009",
+        "gap-05305"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "still lag behind command/catalog normalization and still encode compatibility-era identity/action fields",
+        "`OpenSubject { subject_id, target_group?, open_mode?, location? }`",
+        "OpenSubject { subject_id, target_group?, open_mode?, location? }",
+        "uses `OpenSubject { subject_id, target_group?, open_mode?, location? }`",
+        "Proceed to the final `GPT-5.3-Codex` pass because GPT-5.2 still found concrete mechanical deltas, especially around extraction hazards, event naming, gate-schema mismatch, and missing final command IDs.",
+        "GPT-5.3-Codex",
+        "Reuse the event-alias and recovery-command migration style as the template for navigation normalization.",
+        "Move object-targeting payload semantics out of `cmd.panel.switch` and into canonical route-consuming commands or normalized `route_target` wrappers.",
+        "cmd.panel.switch",
+        "route_target",
+        "optional `normalization { kind, normalizes_to_contract? | alias_of_command_id? }`",
+        "normalization { kind, normalizes_to_contract? | alias_of_command_id? }",
+        "`OpenSubject(subject_id = doc:...)` resolves to workspace-backed source opening",
+        "OpenSubject(subject_id = doc:...)",
+        "one command/wiring normalization gap",
+        "The clean fix is catalog-owned normalization metadata consumed by wiring/gates, not a second routing schema inside the matrix.",
+        "promoted-shell command-family completeness and persistence-scope normalization second",
+        "evidence structures that can encode normalization and alias failures",
+        "insert `route_target` and `OpenSubject` into the UI-command/navigation section",
+        "OpenSubject",
+        "`Wiring_Matrix.md` still cannot structurally express wrapper/canonical normalization or route-aware fields",
+        "Wiring_Matrix.md"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-dd9892151ff0",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0152",
+      "source_reconciliation_target_ids": [
+        "target-0152"
+      ],
+      "source_target_ids": [
+        "target-0152"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0152\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - still lag behind command/catalog normalization and still encode compatibility-era identity/action fields\n  - `OpenSubject { subject_id, target_group?, open_mode?, location? }`\n  - OpenSubject { subject_id, target_group?, open_mode?, location? }\n  - uses `OpenSubject { subject_id, target_group?, open_mode?, location? }`\n  - Proceed to the final `GPT-5.3-Codex` pass because GPT-5.2 still found concrete mechanical deltas, especially around extraction hazards, event naming, gate-schema mismatch, and missing final command IDs.\n  - GPT-5.3-Codex\n  - Reuse the event-alias and recovery-command migration style as the template for navigation normalization.\n  - Move object-targeting payload semantics out of `cmd.panel.switch` and into canonical route-consuming commands or normalized `route_target` wrappers.\n  - cmd.panel.switch\n  - route_target\n  - optional `normalization { kind, normalizes_to_contract? | alias_of_command_id? }`\n  - normalization { kind, normalizes_to_contract? | alias_of_command_id? }\n  - `OpenSubject(subject_id = doc:...)` resolves to workspace-backed source opening\n  - OpenSubject(subject_id = doc:...)\n  - one command/wiring normalization gap\n  - The clean fix is catalog-owned normalization metadata consumed by wiring/gates, not a second routing schema inside the matrix.\n  - promoted-shell command-family completeness and persistence-scope normalization second\n  - evidence structures that can encode normalization and alias failures\n  - insert `route_target` and `OpenSubject` into the UI-command/navigation section\n  - OpenSubject\n  - `Wiring_Matrix.md` still cannot structurally express wrapper/canonical normalization or route-aware fields\n  - Wiring_Matrix.md\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-02890",
+    "cov-03849",
+    "cov-03688",
+    "cov-05592",
+    "cov-02171",
+    "cov-04071",
+    "cov-04120",
+    "cov-04261",
+    "cov-04743",
+    "cov-04925",
+    "cov-05006",
+    "cov-05115",
+    "cov-05596",
+    "cov-05692",
+    "cov-06304",
+    "cov-06435",
+    "cov-06460",
+    "cov-06834"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-2737",
+    "obl-3694",
+    "obl-3533",
+    "obl-5364",
+    "obl-2027",
+    "obl-3913",
+    "obl-3960",
+    "obl-4101",
+    "obl-4521",
+    "obl-4701",
+    "obl-4782",
+    "obl-4891",
+    "obl-5368",
+    "obl-5464",
+    "obl-6007",
+    "obl-6076",
+    "obl-6101",
+    "obl-6446"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-3591",
+    "seed-5016",
+    "seed-5027",
+    "seed-4756",
+    "seed-7968",
+    "seed-2636",
+    "seed-5367",
+    "seed-5424",
+    "seed-5686",
+    "seed-6434",
+    "seed-6767",
+    "seed-6889",
+    "seed-7050",
+    "seed-7972",
+    "seed-8108",
+    "seed-9090",
+    "seed-9182",
+    "seed-9219",
+    "seed-9825"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0041",
+    "shard-0051",
+    "shard-0052",
+    "shard-0050",
+    "shard-0074",
+    "shard-0034",
+    "shard-0054",
+    "shard-0055",
+    "shard-0056",
+    "shard-0062",
+    "shard-0065",
+    "shard-0066",
+    "shard-0067",
+    "shard-0075",
+    "shard-0082",
+    "shard-0083",
+    "shard-0088"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "but it must not be implied to share the same ownership or token source unless the owning auth contract says so",
+    "`attempt.started`",
+    "attempt.started",
+    "Several owner docs claim EventRecord/runtime alignment but still omit project/thread/run/attempt/account identity in their own schemas.",
+    "This is now a clear owner-doc gap, not a vague alignment issue.",
+    "still lag behind command/catalog normalization and still encode compatibility-era identity/action fields",
+    "`OpenSubject { subject_id, target_group?, open_mode?, location? }`",
+    "OpenSubject { subject_id, target_group?, open_mode?, location? }",
+    "uses `OpenSubject { subject_id, target_group?, open_mode?, location? }`",
+    "Proceed to the final `GPT-5.3-Codex` pass because GPT-5.2 still found concrete mechanical deltas, especially around extraction hazards, event naming, gate-schema mismatch, and missing final command IDs.",
+    "GPT-5.3-Codex",
+    "Reuse the event-alias and recovery-command migration style as the template for navigation normalization.",
+    "Move object-targeting payload semantics out of `cmd.panel.switch` and into canonical route-consuming commands or normalized `route_target` wrappers.",
+    "cmd.panel.switch",
+    "route_target",
+    "optional `normalization { kind, normalizes_to_contract? | alias_of_command_id? }`",
+    "normalization { kind, normalizes_to_contract? | alias_of_command_id? }",
+    "`OpenSubject(subject_id = doc:...)` resolves to workspace-backed source opening",
+    "OpenSubject(subject_id = doc:...)",
+    "one command/wiring normalization gap",
+    "The clean fix is catalog-owned normalization metadata consumed by wiring/gates, not a second routing schema inside the matrix.",
+    "promoted-shell command-family completeness and persistence-scope normalization second",
+    "evidence structures that can encode normalization and alias failures",
+    "insert `route_target` and `OpenSubject` into the UI-command/navigation section",
+    "OpenSubject",
+    "`Wiring_Matrix.md` still cannot structurally express wrapper/canonical normalization or route-aware fields",
+    "Wiring_Matrix.md"
+  ],
+  "blocked_targets": []
+}

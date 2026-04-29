@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-518",
+  "group_ids": [
+    "discgrp-2069",
+    "discgrp-2070",
+    "discgrp-2071",
+    "discgrp-2072"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02338",
+      "source_obligation_ids": [
+        "obl-2189"
+      ],
+      "source_seed_ids": [
+        "seed-2844"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "## Canonical HITL Recovery Action Alignment Addendum (2026-03-09)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L324"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02339",
+      "source_obligation_ids": [
+        "obl-2190"
+      ],
+      "source_seed_ids": [
+        "seed-2845"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02340",
+      "source_obligation_ids": [
+        "obl-2191"
+      ],
+      "source_seed_ids": [
+        "seed-2846"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L774"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02341",
+      "source_obligation_ids": [
+        "obl-2192"
+      ],
+      "source_seed_ids": [
+        "seed-2847"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Shared governance and runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L260"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

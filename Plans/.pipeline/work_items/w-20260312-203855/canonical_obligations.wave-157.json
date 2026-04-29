@@ -1,0 +1,1175 @@
+{
+  "schema_id": "pm.canonical_obligations_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-157",
+  "seed_group_ids": [
+    "seedgrp-625",
+    "seedgrp-626",
+    "seedgrp-627",
+    "seedgrp-628"
+  ],
+  "obligation_candidates": [
+    {
+      "source_seed_id": "seed-9361",
+      "canon_label": "`wizard_attention_required` still treats `resume_url` as the primary navigation object",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`wizard_attention_required` still treats `resume_url` as the primary navigation object",
+        "wizard_attention_required",
+        "resume_url"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016753"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9362",
+      "canon_label": "section `7.7 Tiers` still exists as a primary content surface",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "section `7.7 Tiers` still exists as a primary content surface",
+        "7.7 Tiers"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016754"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9363",
+      "canon_label": "Appendix C still expands widgetization around Dashboard and references `Orchestrator tabs`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Appendix C still expands widgetization around Dashboard and references `Orchestrator tabs` through the widget system",
+        "Orchestrator tabs"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016755"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9364",
+      "canon_label": "the Settings tab inventory still includes `Tiers` and tier-oriented settings language",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "the Settings tab inventory still includes `Tiers` and tier-oriented settings language",
+        "Tiers"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016756"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9365",
+      "canon_label": "`Plans/rewrite-tie-in-memo.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/rewrite-tie-in-memo.md`",
+        "Plans/rewrite-tie-in-memo.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/rewrite-tie-in-memo.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016760"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9366",
+      "canon_label": "`Plans/UI_Command_Catalog.md`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Plans/UI_Command_Catalog.md`",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016761"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9367",
+      "canon_label": "`Plans/FinalGUISpec.md`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Plans/FinalGUISpec.md`",
+        "Plans/FinalGUISpec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016762"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9368",
+      "canon_label": "`Plans/Contracts_V0.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Contracts_V0.md`",
+        "Plans/Contracts_V0.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016764"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9369",
+      "canon_label": "`Plans/Crosswalk.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Crosswalk.md`",
+        "Plans/Crosswalk.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016765"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9370",
+      "canon_label": "`Plans/Orchestrator_Page.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md`",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016766"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9371",
+      "canon_label": "`Plans/Widget_System.md`",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Widget_System.md`",
+        "Plans/Widget_System.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016767"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9372",
+      "canon_label": "`Plans/Run_Graph_View.md`",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Run_Graph_View.md`",
+        "Plans/Run_Graph_View.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016768"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9373",
+      "canon_label": "`Plans/storage-plan.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/storage-plan.md`",
+        "Plans/storage-plan.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016769"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9374",
+      "canon_label": "The rewrite-root memo already locks provider/runtime architecture, but it does not yet rec",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "The rewrite-root memo already locks provider/runtime architecture, but it does not yet record the newer Orchestrator/routing/projection decisions that downstream GUI docs now need."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016772"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9375",
+      "canon_label": "`UI_Command_Catalog.md` contains both the stale graph-HITL command family and the newer ca",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`UI_Command_Catalog.md` contains both the stale graph-HITL command family and the newer canonical `cmd.runtime.*` family in the same file.",
+        "UI_Command_Catalog.md",
+        "cmd.runtime.*"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "UI_Command_Catalog.md",
+        "cmd.runtime.*"
+      ],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016773"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9376",
+      "canon_label": "`FinalGUISpec.md` still turns stale Orchestrator ontology into visible product structure,",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`FinalGUISpec.md` still turns stale Orchestrator ontology into visible product structure, which then re-amplifies drift into widgets, settings, dashboard copy, and route handling.",
+        "FinalGUISpec.md"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "FinalGUISpec.md"
+      ],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016774"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9377",
+      "canon_label": "Reconciliation order for this seam should be:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Reconciliation order for this seam should be:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016777"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9378",
+      "canon_label": "`rewrite-tie-in-memo.md` first as rewrite-root routing",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`rewrite-tie-in-memo.md` first as rewrite-root routing",
+        "rewrite-tie-in-memo.md"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016778"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9379",
+      "canon_label": "`UI_Command_Catalog.md` second for command-family cleanup",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`UI_Command_Catalog.md` second for command-family cleanup",
+        "UI_Command_Catalog.md"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016779"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9380",
+      "canon_label": "`FinalGUISpec.md` third for visible shell/view cleanup",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`FinalGUISpec.md` third for visible shell/view cleanup",
+        "FinalGUISpec.md"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016780"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9381",
+      "canon_label": "`rewrite-tie-in-memo.md` needs explicit rewrite-root routing for:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`rewrite-tie-in-memo.md` needs explicit rewrite-root routing for:",
+        "rewrite-tie-in-memo.md"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016781"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9382",
+      "canon_label": "Orchestrator graph/seam/package governance model",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Orchestrator graph/seam/package governance model"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016782"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9383",
+      "canon_label": "`UI_Command_Catalog.md` needs:",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`UI_Command_Catalog.md` needs:",
+        "UI_Command_Catalog.md"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016786"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9384",
+      "canon_label": "normalization of routed object pivots away from `layout/UI state only`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "normalization of routed object pivots away from `layout/UI state only`",
+        "layout/UI state only"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016788"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9385",
+      "canon_label": "widget command hosting language aligned to `Progress` only inside Orchestrator",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "widget command hosting language aligned to `Progress` only inside Orchestrator",
+        "Progress"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016789"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9386",
+      "canon_label": "`FinalGUISpec.md` needs:",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`FinalGUISpec.md` needs:",
+        "FinalGUISpec.md"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016790"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9387",
+      "canon_label": "`Tiers` retired as a primary view",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`Tiers` retired as a primary view",
+        "Tiers"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "Tiers"
+      ],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016791"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9388",
+      "canon_label": "`resume_url` reduced to transport, not first-class navigation identity",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`resume_url` reduced to transport, not first-class navigation identity",
+        "resume_url"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016792"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9389",
+      "canon_label": "dashboard and settings language brought in line with the graph/seam/package model",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "dashboard and settings language brought in line with the graph/seam/package model"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016793"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9390",
+      "canon_label": "`FinalGUISpec.md` is one of the most dangerous drift multipliers because it turns stale on",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`FinalGUISpec.md` is one of the most dangerous drift multipliers because it turns stale ontology into user-visible structure.",
+        "FinalGUISpec.md"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "FinalGUISpec.md"
+      ],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016796"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9391",
+      "canon_label": "`UI_Command_Catalog.md` now has a direct same-file contradiction between graph-HITL comman",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`UI_Command_Catalog.md` now has a direct same-file contradiction between graph-HITL commands and canonical runtime recovery commands.",
+        "UI_Command_Catalog.md"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "UI_Command_Catalog.md"
+      ],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016797"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9392",
+      "canon_label": "`rewrite-tie-in-memo.md` is mostly ahead, which makes it a strong place to record the miss",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`rewrite-tie-in-memo.md` is mostly ahead, which makes it a strong place to record the missing rewrite-root decisions rather than inventing another owner doc.",
+        "rewrite-tie-in-memo.md"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0084",
+      "source_evidence": [
+        "working_ledger.md:L016798"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9393",
+      "canon_label": "Research Progress - 2026-03-17 - execution-core and main surface seam: Executor Protocol,",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Research Progress - 2026-03-17 - execution-core and main surface seam: Executor Protocol, Orchestrator Page"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016801"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9394",
+      "canon_label": "`Plans/Executor_Protocol.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Executor_Protocol.md`",
+        "Plans/Executor_Protocol.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016804"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9395",
+      "canon_label": "`Plans/Orchestrator_Page.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md`",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016805"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9396",
+      "canon_label": "`Plans/Executor_Protocol.md` is now far less tier-era than several adjacent docs:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Executor_Protocol.md` is now far less tier-era than several adjacent docs:",
+        "Plans/Executor_Protocol.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016808"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9397",
+      "canon_label": "canonical dispatch already uses scored ready-set selection, not pure lexical `node_id`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "canonical dispatch already uses scored ready-set selection, not pure lexical `node_id`",
+        "node_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016809"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9398",
+      "canon_label": "`attempt_id` is first-class",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`attempt_id` is first-class",
+        "attempt_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016810"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9399",
+      "canon_label": "`scheduler_lane` is first-class",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`scheduler_lane` is first-class",
+        "scheduler_lane"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016811"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9400",
+      "canon_label": "safe-point, remediation, worktree-conflict, and blocked/runtime state are already present",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "safe-point, remediation, worktree-conflict, and blocked/runtime state are already present"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016812"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9401",
+      "canon_label": "lexicographic `node_id` is explicitly demoted to final tiebreak only",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "lexicographic `node_id` is explicitly demoted to final tiebreak only",
+        "node_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016813"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9402",
+      "canon_label": "But `Plans/Executor_Protocol.md` still has owner-level drift in the same file:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "But `Plans/Executor_Protocol.md` still has owner-level drift in the same file:",
+        "Plans/Executor_Protocol.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016814"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9403",
+      "canon_label": "the doc title and role model still say `Overseer Protocol` with `Builder`, `Verifier`, and",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "the doc title and role model still say `Overseer Protocol` with `Builder`, `Verifier`, and `Overseer` as the primary execution framing",
+        "Overseer Protocol",
+        "Builder",
+        "Verifier",
+        "Overseer"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016815"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9404",
+      "canon_label": "the opening sections still teach node completion semantics without the newer `Package Over",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "the opening sections still teach node completion semantics without the newer `Package Overseer` / `Seam Overseer` governance split",
+        "Package Overseer",
+        "Seam Overseer"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016816"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9405",
+      "canon_label": "the canonical execution context replacement for `TierContext` still is not named here as a",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "the canonical execution context replacement for `TierContext` still is not named here as a first-class owner contract",
+        "TierContext"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016817"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9406",
+      "canon_label": "`Plans/Orchestrator_Page.md` remains one of the strongest stale surface owners:",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md` remains one of the strongest stale surface owners:",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016818"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9407",
+      "canon_label": "still defines a six-tab page with `Tiers`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "still defines a six-tab page with `Tiers`",
+        "Tiers"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016819"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9408",
+      "canon_label": "still says tabs `1, 2, 4, 5, 6` are widget-based",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "still says tabs `1, 2, 4, 5, 6` are widget-based",
+        "1, 2, 4, 5, 6"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016820"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9409",
+      "canon_label": "still makes `Tiers` the second tab and centers `widget.tier_tree`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "still makes `Tiers` the second tab and centers `widget.tier_tree`",
+        "Tiers",
+        "widget.tier_tree"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016821"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9410",
+      "canon_label": "still defines Evidence, History, and Ledger as widget tabs rather than native tabs",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "still defines Evidence, History, and Ledger as widget tabs rather than native tabs"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016822"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9411",
+      "canon_label": "`widget.current_task`",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`widget.current_task`",
+        "widget.current_task"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016824"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9412",
+      "canon_label": "`widget.progress_bars`",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`widget.progress_bars`",
+        "widget.progress_bars"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016825"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9413",
+      "canon_label": "still keys multiple surfaces and filters to `tier_id`",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "still keys multiple surfaces and filters to `tier_id`",
+        "tier_id"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016828"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9414",
+      "canon_label": "still carries stale worker identity fields:",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "still carries stale worker identity fields:"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016829"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9415",
+      "canon_label": "`requested_persona_id`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`requested_persona_id`",
+        "requested_persona_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016830"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9416",
+      "canon_label": "`effective_persona_id`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`effective_persona_id`",
+        "effective_persona_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016831"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9417",
+      "canon_label": "`provider`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`provider`",
+        "provider"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016832"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9418",
+      "canon_label": "`model`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`model`",
+        "model"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016833"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9419",
+      "canon_label": "still treats HITL requests as keyed by `request_id`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "still treats HITL requests as keyed by `request_id`",
+        "request_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016834"
+      ]
+    },
+    {
+      "source_seed_id": "seed-9420",
+      "canon_label": "still cites `PuppetMasterEvent::TierChanged` and `PuppetMasterEvent::UserInteractionRequir",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "still cites `PuppetMasterEvent::TierChanged` and `PuppetMasterEvent::UserInteractionRequired` as primary live-state inputs",
+        "PuppetMasterEvent::TierChanged",
+        "PuppetMasterEvent::UserInteractionRequired"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0085",
+      "source_evidence": [
+        "working_ledger.md:L016835"
+      ]
+    }
+  ],
+  "represented_seed_ids": [
+    "seed-9361",
+    "seed-9362",
+    "seed-9363",
+    "seed-9364",
+    "seed-9365",
+    "seed-9366",
+    "seed-9367",
+    "seed-9368",
+    "seed-9369",
+    "seed-9370",
+    "seed-9371",
+    "seed-9372",
+    "seed-9373",
+    "seed-9374",
+    "seed-9375",
+    "seed-9376",
+    "seed-9377",
+    "seed-9378",
+    "seed-9379",
+    "seed-9380",
+    "seed-9381",
+    "seed-9382",
+    "seed-9383",
+    "seed-9384",
+    "seed-9385",
+    "seed-9386",
+    "seed-9387",
+    "seed-9388",
+    "seed-9389",
+    "seed-9390",
+    "seed-9391",
+    "seed-9392",
+    "seed-9393",
+    "seed-9394",
+    "seed-9395",
+    "seed-9396",
+    "seed-9397",
+    "seed-9398",
+    "seed-9399",
+    "seed-9400",
+    "seed-9401",
+    "seed-9402",
+    "seed-9403",
+    "seed-9404",
+    "seed-9405",
+    "seed-9406",
+    "seed-9407",
+    "seed-9408",
+    "seed-9409",
+    "seed-9410",
+    "seed-9411",
+    "seed-9412",
+    "seed-9413",
+    "seed-9414",
+    "seed-9415",
+    "seed-9416",
+    "seed-9417",
+    "seed-9418",
+    "seed-9419",
+    "seed-9420"
+  ],
+  "represented_source_shard_ids": [
+    "shard-0084",
+    "shard-0085"
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "affected_doc_discovery_notes": []
+}

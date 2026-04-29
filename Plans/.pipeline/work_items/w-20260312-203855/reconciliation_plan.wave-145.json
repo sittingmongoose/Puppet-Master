@@ -1,0 +1,385 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-145",
+  "group_ids": [
+    "recgrp-0577",
+    "recgrp-0578",
+    "recgrp-0579",
+    "recgrp-0580"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0577",
+      "path": "Plans/assistant-chat-design.md",
+      "mapped_owner_heading": "### Thread Lifecycle State Machine",
+      "live_anchor": "### Thread Lifecycle State Machine (Plans/assistant-chat-design.md:L850)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-03400",
+        "cov-04642",
+        "cov-05318"
+      ],
+      "source_obligation_ids": [
+        "obl-3246",
+        "obl-4420",
+        "obl-5090"
+      ],
+      "source_seed_ids": [
+        "seed-4332",
+        "seed-6256",
+        "seed-7498"
+      ],
+      "source_shard_ids": [
+        "shard-0046",
+        "shard-0061",
+        "shard-0070"
+      ],
+      "gap_ids": [
+        "gap-02655",
+        "gap-03636",
+        "gap-04124"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`thread_id: None` in multiple handoff/coordination examples even though thread continuity is part of the surrounding model",
+        "thread_id: None",
+        "`object_kind = thread`",
+        "object_kind = thread",
+        "`thread_id = <thread_id>` when the associated thread must be restored",
+        "thread_id = <thread_id>"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-65aa4b56a615",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0578",
+      "path": "Plans/assistant-chat-design.md",
+      "mapped_owner_heading": "### W.11 Command catalog",
+      "live_anchor": "### W.11 Command catalog (Plans/assistant-chat-design.md:L2649)",
+      "action": "layout_repair_reference",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-03665"
+      ],
+      "source_obligation_ids": [
+        "obl-3511"
+      ],
+      "source_seed_ids": [
+        "seed-4727"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "gap_ids": [
+        "gap-02864"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Commands_System.md` defines `cmd.chat.run_user_command`, but the canonical catalog does not register it; the Wiring Matrix also references ghost chat/orchestrator command IDs (`cmd.chat.branch_from_restore`, `cmd.orchestrator.switch_tab`) that do not exist in the catalog.",
+        "Commands_System.md",
+        "cmd.chat.run_user_command",
+        "cmd.chat.branch_from_restore",
+        "cmd.orchestrator.switch_tab"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-75e3ba148d5f",
+      "packet_writer_role": "observe_only",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Observe-only layout repair reference: target records packetizable layout backlog without creating an overlapping mutation writer."
+      ]
+    },
+    {
+      "target_id": "target-0579",
+      "path": "Plans/assistant-chat-design.md",
+      "mapped_owner_heading": "### W.7 Cleanup flow (thread delete)",
+      "live_anchor": "### W.7 Cleanup flow (thread delete) (Plans/assistant-chat-design.md:L2442)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-05890"
+      ],
+      "source_obligation_ids": [
+        "obl-5662"
+      ],
+      "source_seed_ids": [
+        "seed-8418"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "gap_ids": [
+        "gap-04560"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Keep the current research thread focused on owner cleanup and exact consumer drift that directly depends on those owners."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-077ec25c819b",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0580",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "mapped_owner_heading": "# Assistant-Only Memory Subsystem (Canonical SSOT)",
+      "live_anchor": "# Assistant-Only Memory Subsystem (Canonical SSOT) (Plans/assistant-memory-subsystem.md:L1)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "Runtime / Storage / Contract Impacts"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [
+        "phase_id",
+        "task_id",
+        "tier-identity",
+        "requested_auth_mode",
+        "effective_capabilities[]",
+        "active-agents.json",
+        "seglog",
+        "redb"
+      ],
+      "coverage_row_ids": [
+        "cov-00107",
+        "cov-02564",
+        "cov-03695",
+        "cov-04204",
+        "cov-04240",
+        "cov-04253",
+        "cov-04439",
+        "cov-04444",
+        "cov-04503",
+        "cov-06272",
+        "cov-06357"
+      ],
+      "source_obligation_ids": [
+        "obl-037",
+        "obl-2412",
+        "obl-3540",
+        "obl-4044",
+        "obl-4080",
+        "obl-4093",
+        "obl-4279",
+        "obl-4284",
+        "obl-4292",
+        "obl-5986",
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-037",
+        "seed-3129",
+        "seed-4763",
+        "seed-5563",
+        "seed-5642",
+        "seed-5655",
+        "seed-5963",
+        "seed-5993",
+        "seed-6001",
+        "seed-9006",
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0007",
+        "shard-0038",
+        "shard-0050",
+        "shard-0056",
+        "shard-0058",
+        "shard-0059",
+        "shard-0082"
+      ],
+      "gap_ids": [
+        "gap-00104",
+        "gap-02005",
+        "gap-02888",
+        "gap-03277",
+        "gap-03304",
+        "gap-03316",
+        "gap-03471",
+        "gap-03476",
+        "gap-03535",
+        "gap-04859",
+        "gap-04935"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Add node_id",
+        "Add package_id",
+        "Add seam_id",
+        "Add lane_id",
+        "Add attempt_id",
+        "Add effective_identity",
+        "Normalize requested/effective account identity shapes",
+        "Normalize blocked_reason_code/allowed_action_ids and safe-point/restore-point/rollback terminology",
+        "Multi-account projection fixes should not create a second provider-local quota subsystem outside the shared Usage pipeline.",
+        "Register memory and live-preview/build event families, new doctor checks, and new ToolIDs in the canonical storage/tool/command owners instead of leaving them stranded in supporting docs.",
+        "`live.*` and memory auto-trigger/handoff event families still have no canonical contracts/storage registration.",
+        "live.*",
+        "`handoff` and `promotion` are now visibly polysemous across stream, UI, memory, and evidence docs.",
+        "handoff",
+        "promotion",
+        "assistant-memory still has no clear owner for whether `memory.gist.*` is a seglog event family or merely a redb-side mutation signal.",
+        "memory.gist.*",
+        "`memory.gist.*`, AutoRunBoundary/AutoMilestone, project-switch handoff, and `attention_required` durability still lack a consistent event/persistence/command ownership story.",
+        "attention_required",
+        "Newtools and memory remain the strongest examples of plan-local obligations not yet absorbed by canonical state/event/command owners.",
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md",
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "22",
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "61"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "phase_id",
+        "task_id",
+        "tier-identity",
+        "requested_auth_mode",
+        "effective_capabilities[]",
+        "active-agents.json",
+        "seglog",
+        "redb"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "packet_span_group_id": "span-400be5f3cd14",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-03400",
+    "cov-04642",
+    "cov-05318",
+    "cov-03665",
+    "cov-05890",
+    "cov-00107",
+    "cov-02564",
+    "cov-03695",
+    "cov-04204",
+    "cov-04240",
+    "cov-04253",
+    "cov-04439",
+    "cov-04444",
+    "cov-04503",
+    "cov-06272",
+    "cov-06357"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-3246",
+    "obl-4420",
+    "obl-5090",
+    "obl-3511",
+    "obl-5662",
+    "obl-037",
+    "obl-2412",
+    "obl-3540",
+    "obl-4044",
+    "obl-4080",
+    "obl-4093",
+    "obl-4279",
+    "obl-4284",
+    "obl-4292",
+    "obl-5986",
+    "obl-6009"
+  ],
+  "source_seed_ids_represented": [
+    "seed-4332",
+    "seed-6256",
+    "seed-7498",
+    "seed-4727",
+    "seed-8418",
+    "seed-037",
+    "seed-3129",
+    "seed-4763",
+    "seed-5563",
+    "seed-5642",
+    "seed-5655",
+    "seed-5963",
+    "seed-5993",
+    "seed-6001",
+    "seed-9006",
+    "seed-9092"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0046",
+    "shard-0061",
+    "shard-0070",
+    "shard-0049",
+    "shard-0077",
+    "shard-0007",
+    "shard-0038",
+    "shard-0050",
+    "shard-0056",
+    "shard-0058",
+    "shard-0059",
+    "shard-0082"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": [
+    {
+      "target_id": "target-0578",
+      "path": "Plans/assistant-chat-design.md",
+      "reason": "observe_only non-packetizable source path"
+    }
+  ]
+}

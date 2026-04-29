@@ -1,0 +1,68 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0090",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0090-L017801-L018000.md",
+  "source_line_range": "L017801-L018000",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "blocked packet fields already owned in owner docs",
+      "exact_items": [
+        "Plans/Contracts_V0.md already carries report_ref in the blocked-episode contract.",
+        "Plans/Contracts_V0.md and Plans/Executor_Protocol.md already carry startup_recovered in runtime wake canon.",
+        "Plans/Orchestrator_Page.md already carries escalation_level in the concern/notification owner fields."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "report_ref",
+        "startup_recovered",
+        "escalation_level"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17801-L17803"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "blocked packet consumer carry-through omissions",
+      "exact_items": [
+        "Plans/Tools.md, Plans/assistant-chat-design.md, and Plans/usage-feature.md still do not carry report_ref, startup_recovered, or escalation_level through the blocked-packet consumer surfaces under audit.",
+        "action_available still does not have a discoverable owner or consumer presence in the live Plans docs."
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "report_ref",
+        "startup_recovered",
+        "escalation_level",
+        "action_available"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17804-L17805"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "impacted_docs list",
+    "evidence_refs list",
+    "supersedes_prior/status notes",
+    "blocker-count / next-stage commentary",
+    "zero-finding / stop-condition commentary"
+  ],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0090"
+}

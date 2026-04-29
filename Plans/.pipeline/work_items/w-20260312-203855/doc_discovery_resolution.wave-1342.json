@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1342",
+  "group_ids": [
+    "discgrp-5365",
+    "discgrp-5366",
+    "discgrp-5367",
+    "discgrp-5368"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05806",
+      "source_obligation_ids": [
+        "obl-5578"
+      ],
+      "source_seed_ids": [
+        "seed-8283"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 6.1 Three Theme Families (Three User-Facing Choices)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L720"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05807",
+      "source_obligation_ids": [
+        "obl-5579"
+      ],
+      "source_seed_ids": [
+        "seed-8289"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "# Usage Feature -- App/GUI Plan",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05809",
+      "source_obligation_ids": [
+        "obl-5581"
+      ],
+      "source_seed_ids": [
+        "seed-8291"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05810",
+      "source_obligation_ids": [
+        "obl-5582"
+      ],
+      "source_seed_ids": [
+        "seed-8292"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-033: Concern linkage to adjacent families",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L83"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

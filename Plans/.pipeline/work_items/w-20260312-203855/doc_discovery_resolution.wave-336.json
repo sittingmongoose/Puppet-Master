@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-336",
+  "group_ids": [
+    "discgrp-1341",
+    "discgrp-1342",
+    "discgrp-1343",
+    "discgrp-1344"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01591",
+      "source_obligation_ids": [
+        "obl-1448"
+      ],
+      "source_seed_ids": [
+        "seed-1794"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Orchestrator rewrite terms",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L56"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01592",
+      "source_obligation_ids": [
+        "obl-1449"
+      ],
+      "source_seed_ids": [
+        "seed-1795"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-014 -- Shared mutable state requires RWMutex",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L129"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01593",
+      "source_obligation_ids": [
+        "obl-1450"
+      ],
+      "source_seed_ids": [
+        "seed-1796"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01594",
+      "source_obligation_ids": [
+        "obl-1451"
+      ],
+      "source_seed_ids": [
+        "seed-1797"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Orchestrator rewrite terms",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L56"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

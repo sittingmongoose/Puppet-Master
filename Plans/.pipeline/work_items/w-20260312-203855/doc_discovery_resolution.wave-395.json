@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-395",
+  "group_ids": [
+    "discgrp-1577",
+    "discgrp-1578",
+    "discgrp-1579",
+    "discgrp-1580"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01830",
+      "source_obligation_ids": [
+        "obl-1687"
+      ],
+      "source_seed_ids": [
+        "seed-2118"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01831",
+      "source_obligation_ids": [
+        "obl-1688"
+      ],
+      "source_seed_ids": [
+        "seed-2119"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "### Auth-expiry failure rule",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L183"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01832",
+      "source_obligation_ids": [
+        "obl-1689"
+      ],
+      "source_seed_ids": [
+        "seed-2120"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-075: Historical semantic consistency",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L107"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01833",
+      "source_obligation_ids": [
+        "obl-1690"
+      ],
+      "source_seed_ids": [
+        "seed-2121"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "#### `remediation.resolved`",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1262"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

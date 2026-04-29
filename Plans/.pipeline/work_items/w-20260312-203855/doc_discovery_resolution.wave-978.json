@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-978",
+  "group_ids": [
+    "discgrp-3909",
+    "discgrp-3910",
+    "discgrp-3911",
+    "discgrp-3912"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04215",
+      "source_obligation_ids": [
+        "obl-4055"
+      ],
+      "source_seed_ids": [
+        "seed-5594"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L767"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04216",
+      "source_obligation_ids": [
+        "obl-4056"
+      ],
+      "source_seed_ids": [
+        "seed-5595"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Runtime and routing terms",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L70"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04217",
+      "source_obligation_ids": [
+        "obl-4057"
+      ],
+      "source_seed_ids": [
+        "seed-5596"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1409"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04218",
+      "source_obligation_ids": [
+        "obl-4058"
+      ],
+      "source_seed_ids": [
+        "seed-5597"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-023: Concern lifecycle and resolution kinds",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L59"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

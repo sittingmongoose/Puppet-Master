@@ -1,0 +1,2750 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-012",
+  "group_ids": [
+    "gapgrp-0045",
+    "gapgrp-0046",
+    "gapgrp-0047",
+    "gapgrp-0048"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-01311",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01673 is partial for Canonical-vs-derived rule",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-011 -- UI command dispatch only (Rule 1)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01673"
+      ],
+      "source_obligation_ids": [
+        "obl-1530"
+      ],
+      "source_seed_ids": [
+        "seed-1907"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "Canonical-vs-derived rule"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01319",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01681 is partial for receipt-like exports should not invent shadow IDs",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-007 -- No stringly-typed IDs outside SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01681"
+      ],
+      "source_obligation_ids": [
+        "obl-1538"
+      ],
+      "source_seed_ids": [
+        "seed-1915"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "receipt-like exports should not invent shadow IDs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01355",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01727 is partial for The earlier \u201cdon\u2019t spam on every heartbeat\u201d rule still stands, but now it needs sharper tr",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-011 -- UI command dispatch only (Rule 1)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01727"
+      ],
+      "source_obligation_ids": [
+        "obl-1584"
+      ],
+      "source_seed_ids": [
+        "seed-1976"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "The earlier \u201cdon\u2019t spam on every heartbeat\u201d rule still stands, but now it needs sharper triggers."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01438",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01842 is partial for Shared historical semantics are important mainly because search and ledger need to render",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-014 -- Shared mutable state requires RWMutex"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01842"
+      ],
+      "source_obligation_ids": [
+        "obl-1699"
+      ],
+      "source_seed_ids": [
+        "seed-2132"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "exact_missing_items": [
+        "Shared historical semantics are important mainly because search and ledger need to render them consistently."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01461",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01872 is partial for Candidate `resolution_kind` values still look right:",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-015 -- Monetary values are integer microdollars"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01872"
+      ],
+      "source_obligation_ids": [
+        "obl-1729"
+      ],
+      "source_seed_ids": [
+        "seed-2196"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "Candidate `resolution_kind` values still look right:",
+        "resolution_kind"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01465",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01879 is partial for newer concern should carry lineage back to prior ids",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-007 -- No stringly-typed IDs outside SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01879"
+      ],
+      "source_obligation_ids": [
+        "obl-1736"
+      ],
+      "source_seed_ids": [
+        "seed-2213"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "newer concern should carry lineage back to prior ids"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01512",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01936 is partial for `Plans/Architecture_Invariants.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01936"
+      ],
+      "source_obligation_ids": [
+        "obl-1793"
+      ],
+      "source_seed_ids": [
+        "seed-2298",
+        "seed-2315",
+        "seed-2766",
+        "seed-6443",
+        "seed-6480",
+        "seed-6506",
+        "seed-7380",
+        "seed-7425",
+        "seed-7462",
+        "seed-8408",
+        "seed-8816",
+        "seed-8857",
+        "seed-8895",
+        "seed-8911",
+        "seed-8949",
+        "seed-8992",
+        "seed-9009",
+        "seed-9043"
+      ],
+      "source_shard_ids": [
+        "shard-0031",
+        "shard-0032",
+        "shard-0035",
+        "shard-0062",
+        "shard-0070",
+        "shard-0077",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "`Plans/Architecture_Invariants.md`",
+        "Plans/Architecture_Invariants.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01519",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01946 is partial for Canonical invariants are increasingly runtime-object-first:",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "# Architecture Invariants (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01946"
+      ],
+      "source_obligation_ids": [
+        "obl-1803"
+      ],
+      "source_seed_ids": [
+        "seed-2311"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "Canonical invariants are increasingly runtime-object-first:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01529",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01961 is partial for `attempt_id` must stay unique per dispatch; retry/resume should not reuse old attempt ids",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-007 -- No stringly-typed IDs outside SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01961"
+      ],
+      "source_obligation_ids": [
+        "obl-1818"
+      ],
+      "source_seed_ids": [
+        "seed-2333"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "`attempt_id` must stay unique per dispatch; retry/resume should not reuse old attempt ids",
+        "attempt_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01545",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01981 is partial for Canonical naming conflict:",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-010 -- Platform naming compliance"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01981"
+      ],
+      "source_obligation_ids": [
+        "obl-1838"
+      ],
+      "source_seed_ids": [
+        "seed-2369"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "Canonical naming conflict:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01551",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01990 is partial for Define a shared requested/effective/provider/account identity disclosure pattern reusable",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-014 -- Shared mutable state requires RWMutex"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01990"
+      ],
+      "source_obligation_ids": [
+        "obl-1847"
+      ],
+      "source_seed_ids": [
+        "seed-2378"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "Define a shared requested/effective/provider/account identity disclosure pattern reusable across:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01596",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02049 is partial for There is still no explicit rule for whether runtime/overseer actors may directly perform c",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-011 -- UI command dispatch only (Rule 1)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02049"
+      ],
+      "source_obligation_ids": [
+        "obl-1906"
+      ],
+      "source_seed_ids": [
+        "seed-2464"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "There is still no explicit rule for whether runtime/overseer actors may directly perform concern-state transitions versus only propose them through linked records."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01605",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02066 is partial for Reserve `hard_gate` for exceptional concern-affecting operations only:",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-008 -- GitHub operations are API-only"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02066"
+      ],
+      "source_obligation_ids": [
+        "obl-1923"
+      ],
+      "source_seed_ids": [
+        "seed-2481"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "Reserve `hard_gate` for exceptional concern-affecting operations only:",
+        "hard_gate"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01619",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02085 is partial for the safer rule is: simplify explanation depth, not canonical object names",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-011 -- UI command dispatch only (Rule 1)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02085"
+      ],
+      "source_obligation_ids": [
+        "obl-1942"
+      ],
+      "source_seed_ids": [
+        "seed-2519"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "the safer rule is: simplify explanation depth, not canonical object names"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01712",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02199 is partial for `plan_or_tier_default` is still a persisted enum value in `Prompt_Pipeline.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02199"
+      ],
+      "source_obligation_ids": [
+        "obl-2054"
+      ],
+      "source_seed_ids": [
+        "seed-2670"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`plan_or_tier_default` is still a persisted enum value in `Prompt_Pipeline.md`",
+        "plan_or_tier_default",
+        "Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01772",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02280 is partial for 2026-03-09 addenda say normalized streams MUST preserve `attempt_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02280"
+      ],
+      "source_obligation_ids": [
+        "obl-2133"
+      ],
+      "source_seed_ids": [
+        "seed-2773"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "2026-03-09 addenda say normalized streams MUST preserve `attempt_id`",
+        "attempt_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01873",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02406 is partial for The new blocked-owner logic sharpens the summary rule:",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-004 -- UI command boundary (no business logic in UI)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02406"
+      ],
+      "source_obligation_ids": [
+        "obl-2256"
+      ],
+      "source_seed_ids": [
+        "seed-2928"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "The new blocked-owner logic sharpens the summary rule:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01945",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02487 is partial for `Models_System.md` still frames deterministic selection around provider/model/variant and",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-005 -- Deterministic ordering from SSOT lists"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02487"
+      ],
+      "source_obligation_ids": [
+        "obl-2337"
+      ],
+      "source_seed_ids": [
+        "seed-3038"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "`Models_System.md` still frames deterministic selection around provider/model/variant and availability sets",
+        "Models_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01949",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02492 is partial for later handoff/addenda collapse the bundle back to IDs + model/permission refs and even los",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-007 -- No stringly-typed IDs outside SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02492"
+      ],
+      "source_obligation_ids": [
+        "obl-2342"
+      ],
+      "source_seed_ids": [
+        "seed-3043"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "later handoff/addenda collapse the bundle back to IDs + model/permission refs and even lose `thread_id`",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01957",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02502 is partial for now clearly under-specifies deterministic selection because provider/model selection is no",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-005 -- Deterministic ordering from SSOT lists"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02502"
+      ],
+      "source_obligation_ids": [
+        "obl-2352"
+      ],
+      "source_seed_ids": [
+        "seed-3056"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "now clearly under-specifies deterministic selection because provider/model selection is no longer enough without actor/auth/account inputs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01972",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02528 is partial for there is still no canonical envelope slot for those fields, so the doc cannot satisfy its",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-011 -- UI command dispatch only (Rule 1)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02528"
+      ],
+      "source_obligation_ids": [
+        "obl-2377"
+      ],
+      "source_seed_ids": [
+        "seed-3090"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "there is still no canonical envelope slot for those fields, so the doc cannot satisfy its own preservation rule cleanly"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01978",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02535 is partial for it still leaves no normalized path for account-switch, pressure/confidence, or actor-class",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02535"
+      ],
+      "source_obligation_ids": [
+        "obl-2384"
+      ],
+      "source_seed_ids": [
+        "seed-3097"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "it still leaves no normalized path for account-switch, pressure/confidence, or actor-class disclosure"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01979",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02536 is partial for `SelectSpeakerEvent` remains `raw_observation`, so shared conversational/runtime actor cha",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-009 -- Cursor transport is invisible to consumers"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02536"
+      ],
+      "source_obligation_ids": [
+        "obl-2385"
+      ],
+      "source_seed_ids": [
+        "seed-3098"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "`SelectSpeakerEvent` remains `raw_observation`, so shared conversational/runtime actor changes are still largely invisible as durable lineage",
+        "SelectSpeakerEvent",
+        "raw_observation"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02080",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02646 is partial for but the capability snapshot example uses `provider_id: cursor` while `model_id` already em",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-009 -- Cursor transport is invisible to consumers"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02646"
+      ],
+      "source_obligation_ids": [
+        "obl-2494"
+      ],
+      "source_seed_ids": [
+        "seed-3277"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "but the capability snapshot example uses `provider_id: cursor` while `model_id` already embeds `anthropic/...`",
+        "provider_id: cursor",
+        "model_id",
+        "anthropic/..."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02122",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02700 is partial for likely owners for canonical correlation blocks, switch/pressure episodes, and blocked/appr",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02700"
+      ],
+      "source_obligation_ids": [
+        "obl-2547"
+      ],
+      "source_seed_ids": [
+        "seed-3345"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "likely owners for canonical correlation blocks, switch/pressure episodes, and blocked/approval identity linkage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02136",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02717 is partial for shared operational identity vs provider/account identity",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-014 -- Shared mutable state requires RWMutex"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02717"
+      ],
+      "source_obligation_ids": [
+        "obl-2564"
+      ],
+      "source_seed_ids": [
+        "seed-3366"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "shared operational identity vs provider/account identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02175",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02763 is partial for Recommended `requested_account_binding` values:",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-015 -- Monetary values are integer microdollars"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02763"
+      ],
+      "source_obligation_ids": [
+        "obl-2610"
+      ],
+      "source_seed_ids": [
+        "seed-3419"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Recommended `requested_account_binding` values:",
+        "requested_account_binding"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02187",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02778 is partial for any run-start/runtime snapshot events that already carry requested/effective auth-account",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02778"
+      ],
+      "source_obligation_ids": [
+        "obl-2625"
+      ],
+      "source_seed_ids": [
+        "seed-3445"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "any run-start/runtime snapshot events that already carry requested/effective auth-account fields"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02220",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02819 is partial for canonical `thread_id` remains PM correlation",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02819"
+      ],
+      "source_obligation_ids": [
+        "obl-2666"
+      ],
+      "source_seed_ids": [
+        "seed-3508"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "canonical `thread_id` remains PM correlation",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02228",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02827 is partial for `always`, reject-cascade, and doom-loop behavior still hinge on vague \u201csame session\u201d seman",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-003 -- UI SSOT (no bespoke UI behavior)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02827"
+      ],
+      "source_obligation_ids": [
+        "obl-2674"
+      ],
+      "source_seed_ids": [
+        "seed-3516"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "`always`, reject-cascade, and doom-loop behavior still hinge on vague \u201csame session\u201d semantics",
+        "always"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02242",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02842 is partial for Add a versioned stream/provider correlation block for actor/attempt/account/trust metadata",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02842"
+      ],
+      "source_obligation_ids": [
+        "obl-2689"
+      ],
+      "source_seed_ids": [
+        "seed-3536"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Add a versioned stream/provider correlation block for actor/attempt/account/trust metadata."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02257",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02861 is partial for they are useful correlation fields",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02861"
+      ],
+      "source_obligation_ids": [
+        "obl-2708"
+      ],
+      "source_seed_ids": [
+        "seed-3561"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "they are useful correlation fields"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02259",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02863 is partial for Extend the shared effective-resolution/runtime identity model with:",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-014 -- Shared mutable state requires RWMutex"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02863"
+      ],
+      "source_obligation_ids": [
+        "obl-2710"
+      ],
+      "source_seed_ids": [
+        "seed-3564"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Extend the shared effective-resolution/runtime identity model with:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02397",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03036 is partial for `scheduler_lane` is already mandatory in some addenda but structurally homeless in the old",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-018 -- Seglog CRC32 is mandatory"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03036"
+      ],
+      "source_obligation_ids": [
+        "obl-2882"
+      ],
+      "source_seed_ids": [
+        "seed-3803"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "`scheduler_lane` is already mandatory in some addenda but structurally homeless in the older orchestration body.",
+        "scheduler_lane"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02402",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03043 is partial for on-demand refresh should leave previous rollups visible until the new scan completes",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "### Invariant B -- Visible evidence ingress only"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03043"
+      ],
+      "source_obligation_ids": [
+        "obl-2889"
+      ],
+      "source_seed_ids": [
+        "seed-3813"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "on-demand refresh should leave previous rollups visible until the new scan completes"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02457",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03128 is partial for tier-based branch/worktree naming and recovery language",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-010 -- Platform naming compliance"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03128"
+      ],
+      "source_obligation_ids": [
+        "obl-2974"
+      ],
+      "source_seed_ids": [
+        "seed-3922"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "tier-based branch/worktree naming and recovery language"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02524",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03224 is partial for No durable approver identity is defined on approval/rejection events yet.",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03224"
+      ],
+      "source_obligation_ids": [
+        "obl-3070"
+      ],
+      "source_seed_ids": [
+        "seed-4070"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "No durable approver identity is defined on approval/rejection events yet."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02549",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03260 is partial for Conversational/HITL/tooling docs still overload \u201csession\u201d with incompatible scope meanings",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## 0. Scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03260"
+      ],
+      "source_obligation_ids": [
+        "obl-3106"
+      ],
+      "source_seed_ids": [
+        "seed-4129"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Conversational/HITL/tooling docs still overload \u201csession\u201d with incompatible scope meanings, which becomes a correctness bug under multi-lane and multi-actor execution."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02631",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03366 is partial for requested/effective model snapshot ids where relevant",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-007 -- No stringly-typed IDs outside SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03366"
+      ],
+      "source_obligation_ids": [
+        "obl-3212"
+      ],
+      "source_seed_ids": [
+        "seed-4283"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "requested/effective model snapshot ids where relevant"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02701",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03456 is partial for `allowed_actions` is still alive in canonical-looking HITL/storage shapes even after the d",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## Debug investigation invariants addendum (2026-03-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03456"
+      ],
+      "source_obligation_ids": [
+        "obl-3302"
+      ],
+      "source_seed_ids": [
+        "seed-4424"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`allowed_actions` is still alive in canonical-looking HITL/storage shapes even after the deprecation addendum.",
+        "allowed_actions"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-01673",
+    "cov-01681",
+    "cov-01727",
+    "cov-01842",
+    "cov-01872",
+    "cov-01879",
+    "cov-01936",
+    "cov-01946",
+    "cov-01961",
+    "cov-01981",
+    "cov-01990",
+    "cov-02049",
+    "cov-02066",
+    "cov-02085",
+    "cov-02199",
+    "cov-02280",
+    "cov-02406",
+    "cov-02487",
+    "cov-02492",
+    "cov-02502",
+    "cov-02528",
+    "cov-02535",
+    "cov-02536",
+    "cov-02646",
+    "cov-02700",
+    "cov-02717",
+    "cov-02763",
+    "cov-02778",
+    "cov-02819",
+    "cov-02827",
+    "cov-02842",
+    "cov-02861",
+    "cov-02863",
+    "cov-03036",
+    "cov-03043",
+    "cov-03128",
+    "cov-03224",
+    "cov-03260",
+    "cov-03366",
+    "cov-03456"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1530",
+    "obl-1538",
+    "obl-1584",
+    "obl-1699",
+    "obl-1729",
+    "obl-1736",
+    "obl-1793",
+    "obl-1803",
+    "obl-1818",
+    "obl-1838",
+    "obl-1847",
+    "obl-1906",
+    "obl-1923",
+    "obl-1942",
+    "obl-2054",
+    "obl-2133",
+    "obl-2256",
+    "obl-2337",
+    "obl-2342",
+    "obl-2352",
+    "obl-2377",
+    "obl-2384",
+    "obl-2385",
+    "obl-2494",
+    "obl-2547",
+    "obl-2564",
+    "obl-2610",
+    "obl-2625",
+    "obl-2666",
+    "obl-2674",
+    "obl-2689",
+    "obl-2708",
+    "obl-2710",
+    "obl-2882",
+    "obl-2889",
+    "obl-2974",
+    "obl-3070",
+    "obl-3106",
+    "obl-3212",
+    "obl-3302"
+  ],
+  "source_seed_ids_represented": [
+    "seed-1907",
+    "seed-1915",
+    "seed-1976",
+    "seed-2132",
+    "seed-2196",
+    "seed-2213",
+    "seed-2298",
+    "seed-2311",
+    "seed-2315",
+    "seed-2333",
+    "seed-2369",
+    "seed-2378",
+    "seed-2464",
+    "seed-2481",
+    "seed-2519",
+    "seed-2670",
+    "seed-2766",
+    "seed-2773",
+    "seed-2928",
+    "seed-3038",
+    "seed-3043",
+    "seed-3056",
+    "seed-3090",
+    "seed-3097",
+    "seed-3098",
+    "seed-3277",
+    "seed-3345",
+    "seed-3366",
+    "seed-3419",
+    "seed-3445",
+    "seed-3508",
+    "seed-3516",
+    "seed-3536",
+    "seed-3561",
+    "seed-3564",
+    "seed-3803",
+    "seed-3813",
+    "seed-3922",
+    "seed-4070",
+    "seed-4129",
+    "seed-4283",
+    "seed-4424",
+    "seed-6443",
+    "seed-6480",
+    "seed-6506",
+    "seed-7380",
+    "seed-7425",
+    "seed-7462",
+    "seed-8408",
+    "seed-8816",
+    "seed-8857",
+    "seed-8895",
+    "seed-8911",
+    "seed-8949",
+    "seed-8992",
+    "seed-9009",
+    "seed-9043"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0028",
+    "shard-0030",
+    "shard-0031",
+    "shard-0032",
+    "shard-0033",
+    "shard-0034",
+    "shard-0035",
+    "shard-0036",
+    "shard-0037",
+    "shard-0039",
+    "shard-0040",
+    "shard-0041",
+    "shard-0043",
+    "shard-0044",
+    "shard-0045",
+    "shard-0046",
+    "shard-0047",
+    "shard-0062",
+    "shard-0070",
+    "shard-0077",
+    "shard-0081",
+    "shard-0082"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-01311",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01673 is partial for Canonical-vs-derived rule",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-011 -- UI command dispatch only (Rule 1)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01673"
+      ],
+      "source_obligation_ids": [
+        "obl-1530"
+      ],
+      "source_seed_ids": [
+        "seed-1907"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "Canonical-vs-derived rule"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01319",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01681 is partial for receipt-like exports should not invent shadow IDs",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-007 -- No stringly-typed IDs outside SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01681"
+      ],
+      "source_obligation_ids": [
+        "obl-1538"
+      ],
+      "source_seed_ids": [
+        "seed-1915"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "receipt-like exports should not invent shadow IDs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01355",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01727 is partial for The earlier \u201cdon\u2019t spam on every heartbeat\u201d rule still stands, but now it needs sharper tr",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-011 -- UI command dispatch only (Rule 1)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01727"
+      ],
+      "source_obligation_ids": [
+        "obl-1584"
+      ],
+      "source_seed_ids": [
+        "seed-1976"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "The earlier \u201cdon\u2019t spam on every heartbeat\u201d rule still stands, but now it needs sharper triggers."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01438",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01842 is partial for Shared historical semantics are important mainly because search and ledger need to render",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-014 -- Shared mutable state requires RWMutex"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01842"
+      ],
+      "source_obligation_ids": [
+        "obl-1699"
+      ],
+      "source_seed_ids": [
+        "seed-2132"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "exact_missing_items": [
+        "Shared historical semantics are important mainly because search and ledger need to render them consistently."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01461",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01872 is partial for Candidate `resolution_kind` values still look right:",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-015 -- Monetary values are integer microdollars"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01872"
+      ],
+      "source_obligation_ids": [
+        "obl-1729"
+      ],
+      "source_seed_ids": [
+        "seed-2196"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "Candidate `resolution_kind` values still look right:",
+        "resolution_kind"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01465",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01879 is partial for newer concern should carry lineage back to prior ids",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-007 -- No stringly-typed IDs outside SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01879"
+      ],
+      "source_obligation_ids": [
+        "obl-1736"
+      ],
+      "source_seed_ids": [
+        "seed-2213"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "newer concern should carry lineage back to prior ids"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01512",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01936 is partial for `Plans/Architecture_Invariants.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01936"
+      ],
+      "source_obligation_ids": [
+        "obl-1793"
+      ],
+      "source_seed_ids": [
+        "seed-2298",
+        "seed-2315",
+        "seed-2766",
+        "seed-6443",
+        "seed-6480",
+        "seed-6506",
+        "seed-7380",
+        "seed-7425",
+        "seed-7462",
+        "seed-8408",
+        "seed-8816",
+        "seed-8857",
+        "seed-8895",
+        "seed-8911",
+        "seed-8949",
+        "seed-8992",
+        "seed-9009",
+        "seed-9043"
+      ],
+      "source_shard_ids": [
+        "shard-0031",
+        "shard-0032",
+        "shard-0035",
+        "shard-0062",
+        "shard-0070",
+        "shard-0077",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "`Plans/Architecture_Invariants.md`",
+        "Plans/Architecture_Invariants.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01519",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01946 is partial for Canonical invariants are increasingly runtime-object-first:",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "# Architecture Invariants (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01946"
+      ],
+      "source_obligation_ids": [
+        "obl-1803"
+      ],
+      "source_seed_ids": [
+        "seed-2311"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "Canonical invariants are increasingly runtime-object-first:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01529",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01961 is partial for `attempt_id` must stay unique per dispatch; retry/resume should not reuse old attempt ids",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-007 -- No stringly-typed IDs outside SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01961"
+      ],
+      "source_obligation_ids": [
+        "obl-1818"
+      ],
+      "source_seed_ids": [
+        "seed-2333"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "`attempt_id` must stay unique per dispatch; retry/resume should not reuse old attempt ids",
+        "attempt_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01545",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01981 is partial for Canonical naming conflict:",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-010 -- Platform naming compliance"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01981"
+      ],
+      "source_obligation_ids": [
+        "obl-1838"
+      ],
+      "source_seed_ids": [
+        "seed-2369"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "Canonical naming conflict:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01551",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01990 is partial for Define a shared requested/effective/provider/account identity disclosure pattern reusable",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-014 -- Shared mutable state requires RWMutex"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01990"
+      ],
+      "source_obligation_ids": [
+        "obl-1847"
+      ],
+      "source_seed_ids": [
+        "seed-2378"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "Define a shared requested/effective/provider/account identity disclosure pattern reusable across:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01596",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02049 is partial for There is still no explicit rule for whether runtime/overseer actors may directly perform c",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-011 -- UI command dispatch only (Rule 1)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02049"
+      ],
+      "source_obligation_ids": [
+        "obl-1906"
+      ],
+      "source_seed_ids": [
+        "seed-2464"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "There is still no explicit rule for whether runtime/overseer actors may directly perform concern-state transitions versus only propose them through linked records."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01605",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02066 is partial for Reserve `hard_gate` for exceptional concern-affecting operations only:",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-008 -- GitHub operations are API-only"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02066"
+      ],
+      "source_obligation_ids": [
+        "obl-1923"
+      ],
+      "source_seed_ids": [
+        "seed-2481"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "Reserve `hard_gate` for exceptional concern-affecting operations only:",
+        "hard_gate"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01619",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02085 is partial for the safer rule is: simplify explanation depth, not canonical object names",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-011 -- UI command dispatch only (Rule 1)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02085"
+      ],
+      "source_obligation_ids": [
+        "obl-1942"
+      ],
+      "source_seed_ids": [
+        "seed-2519"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "the safer rule is: simplify explanation depth, not canonical object names"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01712",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02199 is partial for `plan_or_tier_default` is still a persisted enum value in `Prompt_Pipeline.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02199"
+      ],
+      "source_obligation_ids": [
+        "obl-2054"
+      ],
+      "source_seed_ids": [
+        "seed-2670"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`plan_or_tier_default` is still a persisted enum value in `Prompt_Pipeline.md`",
+        "plan_or_tier_default",
+        "Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01772",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02280 is partial for 2026-03-09 addenda say normalized streams MUST preserve `attempt_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02280"
+      ],
+      "source_obligation_ids": [
+        "obl-2133"
+      ],
+      "source_seed_ids": [
+        "seed-2773"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "2026-03-09 addenda say normalized streams MUST preserve `attempt_id`",
+        "attempt_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01873",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02406 is partial for The new blocked-owner logic sharpens the summary rule:",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-004 -- UI command boundary (no business logic in UI)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02406"
+      ],
+      "source_obligation_ids": [
+        "obl-2256"
+      ],
+      "source_seed_ids": [
+        "seed-2928"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "The new blocked-owner logic sharpens the summary rule:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01945",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02487 is partial for `Models_System.md` still frames deterministic selection around provider/model/variant and",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-005 -- Deterministic ordering from SSOT lists"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02487"
+      ],
+      "source_obligation_ids": [
+        "obl-2337"
+      ],
+      "source_seed_ids": [
+        "seed-3038"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "`Models_System.md` still frames deterministic selection around provider/model/variant and availability sets",
+        "Models_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01949",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02492 is partial for later handoff/addenda collapse the bundle back to IDs + model/permission refs and even los",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-007 -- No stringly-typed IDs outside SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02492"
+      ],
+      "source_obligation_ids": [
+        "obl-2342"
+      ],
+      "source_seed_ids": [
+        "seed-3043"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "later handoff/addenda collapse the bundle back to IDs + model/permission refs and even lose `thread_id`",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01957",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02502 is partial for now clearly under-specifies deterministic selection because provider/model selection is no",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-005 -- Deterministic ordering from SSOT lists"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02502"
+      ],
+      "source_obligation_ids": [
+        "obl-2352"
+      ],
+      "source_seed_ids": [
+        "seed-3056"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "now clearly under-specifies deterministic selection because provider/model selection is no longer enough without actor/auth/account inputs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01972",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02528 is partial for there is still no canonical envelope slot for those fields, so the doc cannot satisfy its",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-011 -- UI command dispatch only (Rule 1)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02528"
+      ],
+      "source_obligation_ids": [
+        "obl-2377"
+      ],
+      "source_seed_ids": [
+        "seed-3090"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "there is still no canonical envelope slot for those fields, so the doc cannot satisfy its own preservation rule cleanly"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01978",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02535 is partial for it still leaves no normalized path for account-switch, pressure/confidence, or actor-class",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02535"
+      ],
+      "source_obligation_ids": [
+        "obl-2384"
+      ],
+      "source_seed_ids": [
+        "seed-3097"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "it still leaves no normalized path for account-switch, pressure/confidence, or actor-class disclosure"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01979",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02536 is partial for `SelectSpeakerEvent` remains `raw_observation`, so shared conversational/runtime actor cha",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-009 -- Cursor transport is invisible to consumers"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02536"
+      ],
+      "source_obligation_ids": [
+        "obl-2385"
+      ],
+      "source_seed_ids": [
+        "seed-3098"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "`SelectSpeakerEvent` remains `raw_observation`, so shared conversational/runtime actor changes are still largely invisible as durable lineage",
+        "SelectSpeakerEvent",
+        "raw_observation"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02080",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02646 is partial for but the capability snapshot example uses `provider_id: cursor` while `model_id` already em",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-009 -- Cursor transport is invisible to consumers"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02646"
+      ],
+      "source_obligation_ids": [
+        "obl-2494"
+      ],
+      "source_seed_ids": [
+        "seed-3277"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "but the capability snapshot example uses `provider_id: cursor` while `model_id` already embeds `anthropic/...`",
+        "provider_id: cursor",
+        "model_id",
+        "anthropic/..."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02122",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02700 is partial for likely owners for canonical correlation blocks, switch/pressure episodes, and blocked/appr",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02700"
+      ],
+      "source_obligation_ids": [
+        "obl-2547"
+      ],
+      "source_seed_ids": [
+        "seed-3345"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "likely owners for canonical correlation blocks, switch/pressure episodes, and blocked/approval identity linkage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02136",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02717 is partial for shared operational identity vs provider/account identity",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-014 -- Shared mutable state requires RWMutex"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02717"
+      ],
+      "source_obligation_ids": [
+        "obl-2564"
+      ],
+      "source_seed_ids": [
+        "seed-3366"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "shared operational identity vs provider/account identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02175",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02763 is partial for Recommended `requested_account_binding` values:",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-015 -- Monetary values are integer microdollars"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02763"
+      ],
+      "source_obligation_ids": [
+        "obl-2610"
+      ],
+      "source_seed_ids": [
+        "seed-3419"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Recommended `requested_account_binding` values:",
+        "requested_account_binding"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02187",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02778 is partial for any run-start/runtime snapshot events that already carry requested/effective auth-account",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02778"
+      ],
+      "source_obligation_ids": [
+        "obl-2625"
+      ],
+      "source_seed_ids": [
+        "seed-3445"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "any run-start/runtime snapshot events that already carry requested/effective auth-account fields"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02220",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02819 is partial for canonical `thread_id` remains PM correlation",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02819"
+      ],
+      "source_obligation_ids": [
+        "obl-2666"
+      ],
+      "source_seed_ids": [
+        "seed-3508"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "canonical `thread_id` remains PM correlation",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02228",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02827 is partial for `always`, reject-cascade, and doom-loop behavior still hinge on vague \u201csame session\u201d seman",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-003 -- UI SSOT (no bespoke UI behavior)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02827"
+      ],
+      "source_obligation_ids": [
+        "obl-2674"
+      ],
+      "source_seed_ids": [
+        "seed-3516"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "`always`, reject-cascade, and doom-loop behavior still hinge on vague \u201csame session\u201d semantics",
+        "always"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02242",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02842 is partial for Add a versioned stream/provider correlation block for actor/attempt/account/trust metadata",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02842"
+      ],
+      "source_obligation_ids": [
+        "obl-2689"
+      ],
+      "source_seed_ids": [
+        "seed-3536"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Add a versioned stream/provider correlation block for actor/attempt/account/trust metadata."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02257",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02861 is partial for they are useful correlation fields",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02861"
+      ],
+      "source_obligation_ids": [
+        "obl-2708"
+      ],
+      "source_seed_ids": [
+        "seed-3561"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "they are useful correlation fields"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02259",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02863 is partial for Extend the shared effective-resolution/runtime identity model with:",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-014 -- Shared mutable state requires RWMutex"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02863"
+      ],
+      "source_obligation_ids": [
+        "obl-2710"
+      ],
+      "source_seed_ids": [
+        "seed-3564"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Extend the shared effective-resolution/runtime identity model with:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02397",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03036 is partial for `scheduler_lane` is already mandatory in some addenda but structurally homeless in the old",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-018 -- Seglog CRC32 is mandatory"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03036"
+      ],
+      "source_obligation_ids": [
+        "obl-2882"
+      ],
+      "source_seed_ids": [
+        "seed-3803"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "`scheduler_lane` is already mandatory in some addenda but structurally homeless in the older orchestration body.",
+        "scheduler_lane"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02402",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03043 is partial for on-demand refresh should leave previous rollups visible until the new scan completes",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "### Invariant B -- Visible evidence ingress only"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03043"
+      ],
+      "source_obligation_ids": [
+        "obl-2889"
+      ],
+      "source_seed_ids": [
+        "seed-3813"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "on-demand refresh should leave previous rollups visible until the new scan completes"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02457",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03128 is partial for tier-based branch/worktree naming and recovery language",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-010 -- Platform naming compliance"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03128"
+      ],
+      "source_obligation_ids": [
+        "obl-2974"
+      ],
+      "source_seed_ids": [
+        "seed-3922"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "tier-based branch/worktree naming and recovery language"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02524",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03224 is partial for No durable approver identity is defined on approval/rejection events yet.",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03224"
+      ],
+      "source_obligation_ids": [
+        "obl-3070"
+      ],
+      "source_seed_ids": [
+        "seed-4070"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "No durable approver identity is defined on approval/rejection events yet."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02549",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03260 is partial for Conversational/HITL/tooling docs still overload \u201csession\u201d with incompatible scope meanings",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## 0. Scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03260"
+      ],
+      "source_obligation_ids": [
+        "obl-3106"
+      ],
+      "source_seed_ids": [
+        "seed-4129"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Conversational/HITL/tooling docs still overload \u201csession\u201d with incompatible scope meanings, which becomes a correctness bug under multi-lane and multi-actor execution."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02631",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03366 is partial for requested/effective model snapshot ids where relevant",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## INV-007 -- No stringly-typed IDs outside SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03366"
+      ],
+      "source_obligation_ids": [
+        "obl-3212"
+      ],
+      "source_seed_ids": [
+        "seed-4283"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "requested/effective model snapshot ids where relevant"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02701",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03456 is partial for `allowed_actions` is still alive in canonical-looking HITL/storage shapes even after the d",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## Debug investigation invariants addendum (2026-03-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03456"
+      ],
+      "source_obligation_ids": [
+        "obl-3302"
+      ],
+      "source_seed_ids": [
+        "seed-4424"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`allowed_actions` is still alive in canonical-looking HITL/storage shapes even after the deprecation addendum.",
+        "allowed_actions"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

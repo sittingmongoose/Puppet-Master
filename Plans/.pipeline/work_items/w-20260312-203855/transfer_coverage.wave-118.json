@@ -1,0 +1,707 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-118",
+  "row_group_ids": [
+    "rowgrp-0469",
+    "rowgrp-0470",
+    "rowgrp-0471",
+    "rowgrp-0472"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-01418",
+      "source_obligation_ids": [
+        "obl-1275"
+      ],
+      "source_seed_ids": [
+        "seed-1538"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "rollups can remain browsable when slightly stale, but completion/promote/governance action",
+      "row_type": "stale_retirement",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "present",
+      "exact_items": [
+        "rollups can remain browsable when slightly stale, but completion/promote/governance actions should tighten quickly"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1-L120 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04313",
+      "source_obligation_ids": [
+        "obl-4153"
+      ],
+      "source_seed_ids": [
+        "seed-5763"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "There is still no canonical gate-level place to express revalidation obligations when UI a",
+      "row_type": "stale_retirement",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "# GitHub Integration -- Spec",
+      "status": "present",
+      "exact_items": [
+        "There is still no canonical gate-level place to express revalidation obligations when UI actions depend on stale or degraded projections."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1-L120 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03236",
+      "source_obligation_ids": [
+        "obl-3082"
+      ],
+      "source_seed_ids": [
+        "seed-4097"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "adjacent owner docs pulled by the Sonnet passes (`Contracts_V0.md`, `storage-plan.md`, `Pr",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "adjacent owner docs pulled by the Sonnet passes (`Contracts_V0.md`, `storage-plan.md`, `Prompt_Pipeline.md`, `Permissions_System.md`, `Multi-Account.md`, `Glossary.md`, `Orchestrator_Page.md`, `Run_Graph_View.md`)",
+        "Contracts_V0.md",
+        "storage-plan.md",
+        "Prompt_Pipeline.md",
+        "Permissions_System.md",
+        "Multi-Account.md",
+        "Glossary.md",
+        "Orchestrator_Page.md",
+        "Run_Graph_View.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23",
+        "Plans/Glossary.md:L27",
+        "Plans/Glossary.md:L68",
+        "Plans/Glossary.md:L90"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03673",
+      "source_obligation_ids": [
+        "obl-3519"
+      ],
+      "source_seed_ids": [
+        "seed-4735"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "`Glossary.md` now has multiple dead forward references (`Overseer`) and is missing the can",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`Glossary.md` now has multiple dead forward references (`Overseer`) and is missing the canonical rewrite vocabulary that later passes repeatedly depend on (`execution_role`, `operational_identity`, `projection_freshness`, `projection_health`, `attention item`, `concern`).",
+        "Glossary.md",
+        "Overseer",
+        "execution_role",
+        "operational_identity",
+        "projection_freshness",
+        "projection_health",
+        "attention item",
+        "concern"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23",
+        "Plans/Glossary.md:L58",
+        "Plans/Glossary.md:L59",
+        "Plans/Glossary.md:L63"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03698",
+      "source_obligation_ids": [
+        "obl-3543"
+      ],
+      "source_seed_ids": [
+        "seed-4766"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "`Project_Output_Artifacts.md` still does not align with interview-emitted `glossary` / `ev",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`Project_Output_Artifacts.md` still does not align with interview-emitted `glossary` / `evidence/<node_id>.json` artifact types.",
+        "Project_Output_Artifacts.md",
+        "glossary",
+        "evidence/<node_id>.json"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L1",
+        "Plans/Glossary.md:L7",
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23",
+        "Plans/Glossary.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06326",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L7",
+        "Plans/Glossary.md:L8",
+        "Plans/Glossary.md:L9",
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L14"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01239",
+      "source_obligation_ids": [
+        "obl-1096"
+      ],
+      "source_seed_ids": [
+        "seed-1292"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Keep canonical term names stable across Expert and ELI5.",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Keep canonical term names stable across Expert and ELI5."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-01590",
+      "source_obligation_ids": [
+        "obl-1447"
+      ],
+      "source_seed_ids": [
+        "seed-1793"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "when a more precise canonical term is required",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "when a more precise canonical term is required"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02076",
+      "source_obligation_ids": [
+        "obl-1933"
+      ],
+      "source_seed_ids": [
+        "seed-2497"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "`Glossary.md` is still too small and too pre-rewrite to anchor the newer Orchestrator voca",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`Glossary.md` is still too small and too pre-rewrite to anchor the newer Orchestrator vocabulary.",
+        "Glossary.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02098",
+      "source_obligation_ids": [
+        "obl-1955"
+      ],
+      "source_seed_ids": [
+        "seed-2544"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "Expand `Glossary.md` so it becomes the owner for the stable term list, while longer help e",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Fidelity recovery cov-061: Glossary and help governance",
+      "status": "present",
+      "exact_items": [
+        "Expand `Glossary.md` so it becomes the owner for the stable term list, while longer help entries can explain:",
+        "Glossary.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03247",
+      "source_obligation_ids": [
+        "obl-3093"
+      ],
+      "source_seed_ids": [
+        "seed-4108"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "`Executor_Protocol.md` still has a broken Glossary forward reference, an incomplete wake-r",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`Executor_Protocol.md` still has a broken Glossary forward reference, an incomplete wake-reason set, no real `blocked_reason_code` table, no `blocked_sequence` integration, and no actor/lifecycle model for reviewer/corroboration flows.",
+        "Executor_Protocol.md",
+        "blocked_reason_code",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L59"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03886",
+      "source_obligation_ids": [
+        "obl-3731"
+      ],
+      "source_seed_ids": [
+        "seed-5078"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "`glossary` and execution-evidence style artifact types remain unregistered in the canonica",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`glossary` and execution-evidence style artifact types remain unregistered in the canonical artifact-type table.",
+        "glossary"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L1",
+        "Plans/Glossary.md:L7",
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23",
+        "Plans/Glossary.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05282",
+      "source_obligation_ids": [
+        "obl-5058"
+      ],
+      "source_seed_ids": [
+        "seed-7406"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`Architecture_Invariants.md` still lacks concrete invariant ownership for execution-role i",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Projection freshness and health terms",
+      "status": "partial",
+      "exact_items": [
+        "`Architecture_Invariants.md` still lacks concrete invariant ownership for execution-role identity, run-scoped requested/effective snapshots, graph-lock degradation boundaries, projection freshness, blocked/failure classification, role-scoped account-pool contamination, and safe-point vs restore-point immutability rules.",
+        "Architecture_Invariants.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L177"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06660",
+      "source_obligation_ids": [
+        "obl-6301"
+      ],
+      "source_seed_ids": [
+        "seed-9532"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "still describes Dashboard/orchestrator layout in widget-card and tier terms",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "## 2. Core terms",
+      "status": "partial",
+      "exact_items": [
+        "still describes Dashboard/orchestrator layout in widget-card and tier terms"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L54"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06781",
+      "source_obligation_ids": [
+        "obl-6415"
+      ],
+      "source_seed_ids": [
+        "seed-9794"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md` / `Plans/Glossary.md`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md` / `Plans/Glossary.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23",
+        "Plans/Glossary.md:L68",
+        "Plans/Glossary.md:L90",
+        "Plans/Glossary.md:L103"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06813",
+      "source_obligation_ids": [
+        "obl-6435"
+      ],
+      "source_seed_ids": [
+        "seed-9814"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23",
+        "Plans/Glossary.md:L68",
+        "Plans/Glossary.md:L90",
+        "Plans/Glossary.md:L103"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06906",
+      "source_obligation_ids": [
+        "obl-6507"
+      ],
+      "source_seed_ids": [
+        "seed-9890"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Glossary.md` and `Plans/Orchestrator_Page.md` already carry real token/label/behavi",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Glossary.md` and `Plans/Orchestrator_Page.md` already carry real token/label/behavior blocks, but still lack the required discoverable owner headings in the audited canon clusters.",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23",
+        "Plans/Glossary.md:L68",
+        "Plans/Glossary.md:L103",
+        "Plans/Glossary.md:L122"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06934",
+      "source_obligation_ids": [
+        "obl-6534"
+      ],
+      "source_seed_ids": [
+        "seed-9926"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Glossary.md` already carries the labels `why it matters`, `what it is not`, and `re",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Glossary.md` already carries the labels `why it matters`, `what it is not`, and `related concepts`; `gap-006` therefore narrows to missing owner headings and instantiated help-entry rows rather than missing labels.",
+        "Plans/Glossary.md",
+        "why it matters",
+        "what it is not",
+        "related concepts",
+        "gap-006"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23",
+        "Plans/Glossary.md:L94",
+        "Plans/Glossary.md:L116"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07053",
+      "source_obligation_ids": [
+        "obl-6642"
+      ],
+      "source_seed_ids": [
+        "seed-10134"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.md`, `Plans/FinalGUISpec.md`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `restore points`, and the broken `#11. Source Control boundary` reference.",
+        "gap-002",
+        "gap-006",
+        "gap-007",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23",
+        "Plans/Glossary.md:L68",
+        "Plans/Glossary.md:L90",
+        "Plans/Glossary.md:L103"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07075",
+      "source_obligation_ids": [
+        "obl-6655"
+      ],
+      "source_seed_ids": [
+        "seed-10175"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "`Plans/Glossary.md` already carries the required help-entry field template and labels, but",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Glossary.md` already carries the required help-entry field template and labels, but still does not have the named `### Orchestrator rewrite terms` / `### Runtime and routing terms` sections or populated help-entry rows.",
+        "Plans/Glossary.md",
+        "### Orchestrator rewrite terms",
+        "### Runtime and routing terms"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23",
+        "Plans/Glossary.md:L56",
+        "Plans/Glossary.md:L70"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07106",
+      "source_obligation_ids": [
+        "obl-6685"
+      ],
+      "source_seed_ids": [
+        "seed-10257"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`gap-006` sharpened: `Plans/Glossary.md` still lacks `### Orchestrator rewrite terms` / `#",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`gap-006` sharpened: `Plans/Glossary.md` still lacks `### Orchestrator rewrite terms` / `### Runtime and routing terms`, and the live glossary still instantiates terms as two-column `Term | Definition` tables or inline bullets instead of the full help-entry field set (`canonical_name`, `short_definition`, `why_it_matters`, `what_it_is_not`, `common_related_states`, `related_concepts`, `surface_examples`).",
+        "gap-006",
+        "Plans/Glossary.md",
+        "### Orchestrator rewrite terms",
+        "### Runtime and routing terms",
+        "Term | Definition",
+        "canonical_name",
+        "short_definition",
+        "why_it_matters"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23",
+        "Plans/Glossary.md:L56",
+        "Plans/Glossary.md:L66",
+        "Plans/Glossary.md:L70"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07127",
+      "source_obligation_ids": [
+        "obl-6701"
+      ],
+      "source_seed_ids": [
+        "seed-10290"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`gap-006` sharpened: `Plans/Orchestrator_Page.md` history and concern sections still point",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`gap-006` sharpened: `Plans/Orchestrator_Page.md` history and concern sections still point at the missing `Plans/Glossary.md#Orchestrator rewrite terms` anchor, so the glossary/help blocker now includes live broken consumer references in addition to the missing owner headings and incomplete help-entry structure.",
+        "gap-006",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Glossary.md#Orchestrator rewrite terms"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L68",
+        "Plans/Glossary.md:L103",
+        "Plans/Glossary.md:L122"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07167",
+      "source_obligation_ids": [
+        "obl-6735"
+      ],
+      "source_seed_ids": [
+        "seed-10352"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Wave 1 rechecked `gap-006` and `gap-007` against live glossary and orchestrator docs and o",
+      "row_type": "layout_blocker",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Wave 1 rechecked `gap-006` and `gap-007` against live glossary and orchestrator docs and only reconfirmed the already-recorded missing glossary/orchestrator owner headings plus the broken `Plans/Glossary.md#Orchestrator rewrite terms` and `Plans/Orchestrator_Page.md#11. Source Control boundary` references.",
+        "gap-006",
+        "gap-007",
+        "Plans/Glossary.md#Orchestrator rewrite terms",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    }
+  ]
+}

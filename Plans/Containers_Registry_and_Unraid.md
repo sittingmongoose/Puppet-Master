@@ -1,5 +1,57 @@
 # Containers, Registry, and Unraid Integration
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0087
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - docs involved: `Plans/Containers_Registry_and_Unraid.md`
+  - Plans/Containers_Registry_and_Unraid.md
+  - command registry
+  - but `FinalGUISpec.md` already has project-scoped state containers like `project_state:v1:{project_id}`
+  - FinalGUISpec.md
+  - project_state:v1:{project_id}
+  - `projects:v1` is a registry
+  - projects:v1
+  - registry identity
+  - `projects:v1` currently mixes true registry fields with an under-defined `health status`.
+  - health status
+  - `Multi-Account.md` already distinguishes identities like `github_api`, registry identity, and Kubernetes context
+  - Multi-Account.md
+  - github_api
+  - still treats tier identity as the filesystem and registry key, making lane-aware recovery and audit structurally unsafe.
+  - Replace tier-keyed worktree path and registry assumptions before lane-named worktrees exist, or restart recovery will silently lose state.
+  - `GATE-007` / `GATE-008` are still missing from the registry with no tombstone/reserved handling.
+  - GATE-007
+  - GATE-008
+  - Reconcile command ownership around one enforceable registry boundary:
+  - Command/event registry drift sharpened further:
+  - Final GUI still requires side-panel targets like `Unraid` that the current canonical `cmd.panel.switch` payload cannot express.
+  - Unraid
+  - cmd.panel.switch
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - `Plans/Containers_Registry_and_Unraid.md`
+  - Container / Docker / Unraid ownership is still more fragmented than the main owner set suggested:
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 ## Purpose and scope
 This document makes Docker support first-class in the Puppet Master rewrite. The scope is broader than the current runtime/build defaults: Puppet Master must be able to build container images, run them for preview/testing, let the user open the running container when the project supports user-facing access, publish images to DockerHub, generate and maintain Unraid template XML, and manage the related Unraid template repository workflow.
 
@@ -15,6 +67,34 @@ This plan is the canonical SSOT for:
 This plan does not replace the existing preview/build/runtime sections in `Plans/newtools.md`, the settings UI in `Plans/FinalGUISpec.md`, or the orchestrator control surface in `Plans/Orchestrator_Page.md`; it supplies the canonical detailed contract those docs must reference.
 
 ## Relationship to existing plans
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0090
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Relationship must be explicit, not inferred from same-project membership.
+  - Existing UI docs have many local confirmation examples, but nothing yet defines how durable concern actions should differ from:
+  - The existing `resume_url` pattern is a strong precedent.
+  - resume_url
+  - Once this is normalized, several existing `open in X` and `show in Y` actions may turn into thin wrappers instead of independent navigation systems.
+  - open in X
+  - show in Y
+  - `GATE-010` needs an explicit relationship to:
+  - GATE-010
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - `Plans/newtools.md` remains canonical for runtime/tool/preflight/evidence behavior, but must reference this plan for DockerHub browser auth, repository management, and Unraid template publishing.
 - `Plans/FinalGUISpec.md` remains canonical for settings, controls, dialogs, and layout, but must reference this plan for Docker Manage surface requirements.
 - `Plans/Orchestrator_Page.md` remains canonical for orchestrator control widgets and UICommand IDs, but must reference this plan for container-publish and template-repo actions.
@@ -32,7 +112,48 @@ This plan does not replace the existing preview/build/runtime sections in `Plans
 
 ## User-visible surfaces
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0092
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - moving surfaces to canonical route payloads and runtime actions
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 ### 1. Settings > Advanced > Containers & Registry
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+#### Source target target-0093
+- Reconciliation action: stale_retirement
+- Replace scope: exact_section
+- Exact required items represented:
+  - `[retired-token-1]` still preserves `[retired-token-2]` as both a page concept and a settings grouping label, which will keep reintroducing stale vocabulary.
+  - [retired-token-1]
+  - [retired-token-2]
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 The existing `Containers & Registry` settings area remains the primary configuration home, but it must be expanded to include:
 
 - **Docker runtime controls**
@@ -182,9 +303,50 @@ PAT support remains mandatory even though browser login is supported.
 
 ### Auth-expiry failure rule
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0094
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `abandoned` is not the same thing as simple failure
+  - abandoned
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 If auth expires during image push, Puppet Master MUST emit `docker.publish.failed` with `reason_code: auth_expired`, preserve the local build result, and surface a re-auth + retry CTA without forcing a rebuild.
 
 ### Requested vs effective auth state
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0098
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - but snapshots still omit requested values, downgrade reasons, effective account/operational identity, and actor/surface scope
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 #### Canonical DockerHub effective capability enum
 
 `effective_capabilities[]` is a closed enum for the first implementation:
@@ -259,6 +421,37 @@ If the selected DockerHub repository does not exist:
 
 #### Repository creation confirmation flow
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0104
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - which actions need no confirmation
+  - which need light confirmation
+  - which need strong confirmation
+  - classify actions by both `confirmation level` and `reversibility`
+  - confirmation level
+  - reversibility
+  - actions that must go through a canonical approval/blocked flow and cannot be bypassed by generic UI confirmation
+  - narrow Source Control panel means destructive actions there should likely route through compact but clear confirmation patterns, not giant forms
+  - `strong` confirmation
+  - strong
+  - FileManager’s future `OpenArtifact`-style flow should resolve by:
+  - OpenArtifact
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 Repository creation is a two-step flow:
 
 1. `cmd.docker.create_repository` validates the proposed namespace/repository/privacy tuple and emits `docker.repository.create.confirmation_requested`.
@@ -269,6 +462,28 @@ Repository creation is a two-step flow:
 This confirmation is distinct from image-push approval. Approving an image push MUST NOT implicitly approve creation of a missing DockerHub repository.
 
 ### Default repository privacy
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0096
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - maybe `auto_return_to_live = false` by default
+  - auto_return_to_live = false
+  - bulk actions should default to navigation, triage, and low-risk state updates
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - default privacy for newly created repositories: private
 - the confirmation dialog must make this default explicit
 - the user may change privacy in the dialog before creation
@@ -434,6 +649,45 @@ Implementation rule:
 #### `ca_profile.xml` round-trip rule
 #### Explicit editability contract for all fields
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0102
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - likely still needs explicit cross-reference that only certain pages/tabs are widget-composed.
+  - `unavailable`: route to record-backed fallback views or explicit recovery/refresh actions
+  - unavailable
+  - Add explicit successor/predecessor links where `superseded` is possible.
+  - superseded
+  - Likely source layers that need explicit labeling:
+  - initial load should show a recent slice, with explicit load-older / jump controls
+  - explicit identity fields
+  - Historical-only projects need explicit protection against false alarm states.
+  - No explicit `approval_scope_key` or equivalent exists to separate:
+  - approval_scope_key
+  - Add an explicit `execution_unit_context` section to `Executor_Protocol.md` that names:
+  - execution_unit_context
+  - Executor_Protocol.md
+  - `GATE-010` has no explicit notion of:
+  - GATE-010
+  - Add an explicit command-catalog pattern for:
+  - `FinalGUISpec.md` is especially explicit here:
+  - FinalGUISpec.md
+  - Add an explicit command-normalization model with three layers:
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 The statement "all `ca_profile.xml` fields are editable" is satisfied by a two-layer editor model:
 
 1. **Structured editor** for the canonical known fields exposed in the standard UI.
@@ -467,6 +721,25 @@ Required behavior:
 - If Puppet Master updates an existing template and cannot map a field safely, it MUST preserve the existing field and mark the template result as `needs_review` rather than dropping data silently.
 
 #### Known-field registry and XML mapping (first implementation)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+#### Source target target-0103
+- Reconciliation action: stale_retirement
+- Replace scope: exact_section
+- Exact required items represented:
+  - `[retired-token-1]` will keep reintroducing stale page assumptions until the owner docs are reconciled first.
+  - [retired-token-1]
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 #### XML emission minima for first implementation
 
 The first implementation emits application templates with one canonical root shape:
@@ -579,6 +852,26 @@ Rationale that must be preserved in docs:
 ### Managed template-repo identity and lifecycle contract
 
 #### Default identity rules
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0101
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Higher-risk runtime actions should not default to global shortcuts unless they already pass the stronger action-policy rules.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 When the user chooses **create new template repo**, Puppet Master defaults to:
 
@@ -714,6 +1007,33 @@ Default for uploaded images:
 When `ca_profile.xml` was auto-generated, the UI must show a clear reminder that the user should configure public-facing maintainer metadata before treating the repo as final.
 
 ## Data/state model to preserve in implementation docs
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0088
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Prompt_Pipeline.md` and `Contracts_V0.md` preserve `requested_account_policy`
+  - Prompt_Pipeline.md
+  - Contracts_V0.md
+  - requested_account_policy
+  - destructive worktree/cleanup actions must preserve historical lineage even when the live object is removed
+  - It should generally NOT try to preserve:
+  - The Slint-facing `GraphNodeUI` and callbacks still preserve the same assumptions:
+  - GraphNodeUI
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 ### Canonical scope split and blocked-outcome state
 
 To keep GUI, orchestrator, storage, and post-publish behavior aligned, the following scope rules are normative:

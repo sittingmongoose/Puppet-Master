@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-345",
+  "group_ids": [
+    "discgrp-1377",
+    "discgrp-1378",
+    "discgrp-1379",
+    "discgrp-1380"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01628",
+      "source_obligation_ids": [
+        "obl-1485"
+      ],
+      "source_seed_ids": [
+        "seed-1837"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### 2.3 Merge conflicts: worktree kept but re-run can destroy it",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L191"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01629",
+      "source_obligation_ids": [
+        "obl-1486"
+      ],
+      "source_seed_ids": [
+        "seed-1838"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01630",
+      "source_obligation_ids": [
+        "obl-1487"
+      ],
+      "source_seed_ids": [
+        "seed-1839"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01631",
+      "source_obligation_ids": [
+        "obl-1488"
+      ],
+      "source_seed_ids": [
+        "seed-1840"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

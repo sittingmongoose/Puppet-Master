@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-409",
+  "group_ids": [
+    "discgrp-1633",
+    "discgrp-1634",
+    "discgrp-1635",
+    "discgrp-1636"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01886",
+      "source_obligation_ids": [
+        "obl-1743"
+      ],
+      "source_seed_ids": [
+        "seed-2225"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-067: Notification routing policy",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L101"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01887",
+      "source_obligation_ids": [
+        "obl-1744"
+      ],
+      "source_seed_ids": [
+        "seed-2226"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "### 3.2 What May Be Removed (Policy)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L97"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01888",
+      "source_obligation_ids": [
+        "obl-1745"
+      ],
+      "source_seed_ids": [
+        "seed-2227"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/rewrite-tie-in-memo.md",
+      "new_heading_hint": "# Puppet Master Rewrite Tie-In Contract (Active)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01889",
+      "source_obligation_ids": [
+        "obl-1746"
+      ],
+      "source_seed_ids": [
+        "seed-2228"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

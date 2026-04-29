@@ -1,0 +1,456 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-089",
+  "group_ids": [
+    "pktgrp-0353",
+    "pktgrp-0354",
+    "pktgrp-0355",
+    "pktgrp-0356"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "packet-target-0353",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### Fidelity recovery cov-034: Promotion classes and gate evidence (Plans/Progression_Gates.md:L7)",
+      "path": "Plans/Progression_Gates.md",
+      "coverage_row_ids": [
+        "cov-00161",
+        "cov-00218",
+        "cov-00233",
+        "cov-00244",
+        "cov-00297",
+        "cov-00768",
+        "cov-00942",
+        "cov-00953",
+        "cov-01708",
+        "cov-05385"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-00161",
+          "cov-00218",
+          "cov-00233",
+          "cov-00244",
+          "cov-00297",
+          "cov-00768",
+          "cov-00942",
+          "cov-00953",
+          "cov-01708",
+          "cov-05385"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-058",
+        "obl-113",
+        "obl-124",
+        "obl-130",
+        "obl-164",
+        "obl-625",
+        "obl-799",
+        "obl-810",
+        "obl-1565",
+        "obl-5157"
+      ],
+      "source_seed_ids": [
+        "seed-058",
+        "seed-116",
+        "seed-129",
+        "seed-135",
+        "seed-174",
+        "seed-720",
+        "seed-922",
+        "seed-934",
+        "seed-1952",
+        "seed-7639"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010",
+        "shard-0015",
+        "shard-0017",
+        "shard-0028",
+        "shard-0071"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-058",
+          "obl-113",
+          "obl-124",
+          "obl-130",
+          "obl-164",
+          "obl-625",
+          "obl-799",
+          "obl-810",
+          "obl-1565",
+          "obl-5157"
+        ],
+        "source_seed_ids": [
+          "seed-058",
+          "seed-116",
+          "seed-129",
+          "seed-135",
+          "seed-174",
+          "seed-720",
+          "seed-922",
+          "seed-934",
+          "seed-1952",
+          "seed-7639"
+        ],
+        "source_shard_ids": [
+          "shard-0009",
+          "shard-0010",
+          "shard-0015",
+          "shard-0017",
+          "shard-0028",
+          "shard-0071"
+        ]
+      },
+      "gap_ids": [
+        "gap-00158",
+        "gap-00196",
+        "gap-00209",
+        "gap-00217",
+        "gap-00252",
+        "gap-00599",
+        "gap-00716",
+        "gap-00722",
+        "gap-01341",
+        "gap-04188"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "None of these cleanly map to package/seam promotion or lane-pool capacity.",
+        "what likely new model pressure is: optional HITL boundaries at node/package/seam promotions, lane/worktree identity, mid-run blocked-resolution routing, automation-first default.",
+        "what likely new model pressure is: package/seam/lane IDs, promotion classes, safe-point and contamination lineage, requested/effective execution identity.",
+        "likely issue: UI still presents `Tiers` as a primary mental model and lacks first-class work package, feature seam, lane, promotion, contamination, and resolution-thread surfaces.",
+        "Tiers",
+        "likely issue: completion, cleanup, concurrency, and queueing are still framed around tiers, runs, and threads instead of package lanes and promotion boundaries.",
+        "`Promotion Revoked`",
+        "Promotion Revoked",
+        "revoke promotion / seam completion",
+        "`Re-request Promotion`",
+        "Re-request Promotion",
+        "concern that blocks seam completion, promotion, or recovery",
+        "`object_kind = promotion`",
+        "object_kind = promotion"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-7a25dbe05022",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0442",
+      "source_reconciliation_target_ids": [
+        "target-0442"
+      ],
+      "source_target_ids": [
+        "target-0442"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0442\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - None of these cleanly map to package/seam promotion or lane-pool capacity.\n  - what likely new model pressure is: optional HITL boundaries at node/package/seam promotions, lane/worktree identity, mid-run blocked-resolution routing, automation-first default.\n  - what likely new model pressure is: package/seam/lane IDs, promotion classes, safe-point and contamination lineage, requested/effective execution identity.\n  - likely issue: UI still presents `Tiers` as a primary mental model and lacks first-class work package, feature seam, lane, promotion, contamination, and resolution-thread surfaces.\n  - Tiers\n  - likely issue: completion, cleanup, concurrency, and queueing are still framed around tiers, runs, and threads instead of package lanes and promotion boundaries.\n  - `Promotion Revoked`\n  - Promotion Revoked\n  - revoke promotion / seam completion\n  - `Re-request Promotion`\n  - Re-request Promotion\n  - concern that blocks seam completion, promotion, or recovery\n  - `object_kind = promotion`\n  - object_kind = promotion\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0354",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### Gate rule clarification: canonical blocked-payload field name (Plans/Progression_Gates.md:L538)",
+      "path": "Plans/Progression_Gates.md",
+      "coverage_row_ids": [
+        "cov-01674"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-01674"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-1531"
+      ],
+      "source_seed_ids": [
+        "seed-1908"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1531"
+        ],
+        "source_seed_ids": [
+          "seed-1908"
+        ],
+        "source_shard_ids": [
+          "shard-0028"
+        ]
+      },
+      "gap_ids": [
+        "gap-01312"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "This seam reinforces a rule already visible elsewhere:"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-328afa84feb6",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0443",
+      "source_reconciliation_target_ids": [
+        "target-0443"
+      ],
+      "source_target_ids": [
+        "target-0443"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0443\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - This seam reinforces a rule already visible elsewhere:\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0355",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### Verifier result normalization (Plans/Progression_Gates.md:L114)",
+      "path": "Plans/Progression_Gates.md",
+      "coverage_row_ids": [
+        "cov-03486",
+        "cov-04102"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-03486",
+          "cov-04102"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-3332",
+        "obl-3944"
+      ],
+      "source_seed_ids": [
+        "seed-4480",
+        "seed-5403"
+      ],
+      "source_shard_ids": [
+        "shard-0047",
+        "shard-0054"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3332",
+          "obl-3944"
+        ],
+        "source_seed_ids": [
+          "seed-4480",
+          "seed-5403"
+        ],
+        "source_shard_ids": [
+          "shard-0047",
+          "shard-0054"
+        ]
+      },
+      "gap_ids": [
+        "gap-02727",
+        "gap-03186"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Add an explicit bridge from the accepted sweep result into the launched execution package/run, likely via a launch receipt or promoted package ref rather than by mutating the pass report afterward.",
+        "This seam now looks tightly connected to routing/deep-link normalization, not just FileManager UX."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-f6d725260174",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0444",
+      "source_reconciliation_target_ids": [
+        "target-0444"
+      ],
+      "source_target_ids": [
+        "target-0444"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0444\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Add an explicit bridge from the accepted sweep result into the launched execution package/run, likely via a launch receipt or promoted package ref rather than by mutating the pass report afterward.\n  - This seam now looks tightly connected to routing/deep-link normalization, not just FileManager UX.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0356",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### Verifier scope boundary (Plans/Progression_Gates.md:L105)",
+      "path": "Plans/Progression_Gates.md",
+      "coverage_row_ids": [
+        "cov-01535"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-01535"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-1392"
+      ],
+      "source_seed_ids": [
+        "seed-1709"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1392"
+        ],
+        "source_seed_ids": [
+          "seed-1709"
+        ],
+        "source_shard_ids": [
+          "shard-0026"
+        ]
+      },
+      "gap_ids": [
+        "gap-01207"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "This seam reinforces the earlier boundary:"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-7cb1d4cb6521",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0445",
+      "source_reconciliation_target_ids": [
+        "target-0445"
+      ],
+      "source_target_ids": [
+        "target-0445"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0445\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - This seam reinforces the earlier boundary:\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-00161",
+    "cov-00218",
+    "cov-00233",
+    "cov-00244",
+    "cov-00297",
+    "cov-00768",
+    "cov-00942",
+    "cov-00953",
+    "cov-01708",
+    "cov-05385",
+    "cov-01674",
+    "cov-03486",
+    "cov-04102",
+    "cov-01535"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-058",
+    "obl-113",
+    "obl-124",
+    "obl-130",
+    "obl-164",
+    "obl-625",
+    "obl-799",
+    "obl-810",
+    "obl-1565",
+    "obl-5157",
+    "obl-1531",
+    "obl-3332",
+    "obl-3944",
+    "obl-1392"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-058",
+    "seed-116",
+    "seed-129",
+    "seed-135",
+    "seed-174",
+    "seed-720",
+    "seed-922",
+    "seed-934",
+    "seed-1952",
+    "seed-7639",
+    "seed-1908",
+    "seed-4480",
+    "seed-5403",
+    "seed-1709"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0009",
+    "shard-0010",
+    "shard-0015",
+    "shard-0017",
+    "shard-0028",
+    "shard-0071",
+    "shard-0047",
+    "shard-0054",
+    "shard-0026"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "None of these cleanly map to package/seam promotion or lane-pool capacity.",
+    "what likely new model pressure is: optional HITL boundaries at node/package/seam promotions, lane/worktree identity, mid-run blocked-resolution routing, automation-first default.",
+    "what likely new model pressure is: package/seam/lane IDs, promotion classes, safe-point and contamination lineage, requested/effective execution identity.",
+    "likely issue: UI still presents `Tiers` as a primary mental model and lacks first-class work package, feature seam, lane, promotion, contamination, and resolution-thread surfaces.",
+    "Tiers",
+    "likely issue: completion, cleanup, concurrency, and queueing are still framed around tiers, runs, and threads instead of package lanes and promotion boundaries.",
+    "`Promotion Revoked`",
+    "Promotion Revoked",
+    "revoke promotion / seam completion",
+    "`Re-request Promotion`",
+    "Re-request Promotion",
+    "concern that blocks seam completion, promotion, or recovery",
+    "`object_kind = promotion`",
+    "object_kind = promotion",
+    "This seam reinforces a rule already visible elsewhere:",
+    "Add an explicit bridge from the accepted sweep result into the launched execution package/run, likely via a launch receipt or promoted package ref rather than by mutating the pass report afterward.",
+    "This seam now looks tightly connected to routing/deep-link normalization, not just FileManager UX.",
+    "This seam reinforces the earlier boundary:"
+  ],
+  "blocked_targets": []
+}

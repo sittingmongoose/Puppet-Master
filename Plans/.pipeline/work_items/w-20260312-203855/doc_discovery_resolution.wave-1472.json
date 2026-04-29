@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1472",
+  "group_ids": [
+    "discgrp-5885",
+    "discgrp-5886",
+    "discgrp-5887",
+    "discgrp-5888"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06501",
+      "source_obligation_ids": [
+        "obl-6142"
+      ],
+      "source_seed_ids": [
+        "seed-9289"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1409"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06502",
+      "source_obligation_ids": [
+        "obl-6143"
+      ],
+      "source_seed_ids": [
+        "seed-9290"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L2518"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06503",
+      "source_obligation_ids": [
+        "obl-6144"
+      ],
+      "source_seed_ids": [
+        "seed-9291"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Retry, reroute, replacement, and resume",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1490"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06504",
+      "source_obligation_ids": [
+        "obl-6145"
+      ],
+      "source_seed_ids": [
+        "seed-9292"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

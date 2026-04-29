@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-065",
+  "group_ids": [
+    "discgrp-0257",
+    "discgrp-0258",
+    "discgrp-0259",
+    "discgrp-0260"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00502",
+      "source_obligation_ids": [
+        "obl-359"
+      ],
+      "source_seed_ids": [
+        "seed-414"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-042: Source Control and worktree handshake",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L115"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00503",
+      "source_obligation_ids": [
+        "obl-360"
+      ],
+      "source_seed_ids": [
+        "seed-415"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "### 3.1 Autonomous decision logging contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L68"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00504",
+      "source_obligation_ids": [
+        "obl-361"
+      ],
+      "source_seed_ids": [
+        "seed-416"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### Fidelity recovery cov-041: Source Control and worktree handshake",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00505",
+      "source_obligation_ids": [
+        "obl-362"
+      ],
+      "source_seed_ids": [
+        "seed-417"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "# Puppet Master \u2014 User-Project Project Plan Package Outputs (SSOT)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

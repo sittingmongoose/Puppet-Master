@@ -1,0 +1,100 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1043",
+  "group_ids": [
+    "discgrp-4169",
+    "discgrp-4170",
+    "discgrp-4171",
+    "discgrp-4172"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04546",
+      "source_obligation_ids": [
+        "obl-4324"
+      ],
+      "source_seed_ids": [
+        "seed-6080"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "new_heading_hint": "# Section 15 Promoted Features Spec",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04547",
+      "source_obligation_ids": [
+        "obl-4325"
+      ],
+      "source_seed_ids": [
+        "seed-6081"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "## 5A. Debug investigation grouping, manifests, and exports",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L129"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04548",
+      "source_obligation_ids": [
+        "obl-4326"
+      ],
+      "source_seed_ids": [
+        "seed-6087"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 1. Dashboard cards",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2378"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04549",
+      "source_obligation_ids": [
+        "obl-4327"
+      ],
+      "source_seed_ids": [
+        "seed-6090",
+        "seed-6240",
+        "seed-7095",
+        "seed-8168"
+      ],
+      "source_shard_ids": [
+        "shard-0059",
+        "shard-0060",
+        "shard-0067",
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

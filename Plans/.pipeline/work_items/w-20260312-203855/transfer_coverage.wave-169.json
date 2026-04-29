@@ -1,0 +1,634 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-169",
+  "row_group_ids": [
+    "rowgrp-0673",
+    "rowgrp-0674",
+    "rowgrp-0675",
+    "rowgrp-0676"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-05496",
+      "source_obligation_ids": [
+        "obl-5268"
+      ],
+      "source_seed_ids": [
+        "seed-7826"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "`Tiers` survives as a primary Orchestrator tab and as a primary GUI page concept in stale",
+      "row_type": "stale_retirement",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "missing",
+      "exact_items": [
+        "`Tiers` survives as a primary Orchestrator tab and as a primary GUI page concept in stale consumer docs even though the rewrite direction is `Seams` plus `Node Graph`, with tiers reduced to derived view context.",
+        "Tiers",
+        "Seams",
+        "Node Graph"
+      ],
+      "stale_tokens": [
+        "Node Graph",
+        "Seams",
+        "Tiers"
+      ],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1",
+        "Plans/Run_Graph_View.md:L35"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-06044",
+      "source_obligation_ids": [
+        "obl-5816"
+      ],
+      "source_seed_ids": [
+        "seed-8645"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - Graph approval command shapes are now internally inconsis",
+      "row_type": "stale_retirement",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "present",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - Graph approval command shapes are now internally inconsistent as well as stale"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1-L64 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06409",
+      "source_obligation_ids": [
+        "obl-6050"
+      ],
+      "source_seed_ids": [
+        "seed-9145"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "This seam is owner-level, not consumer-level. Fixing `Orchestrator_Page.md` or `FinalGUISp",
+      "row_type": "stale_retirement",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "### Fidelity recovery cov-038: Focused run and historical routing contract",
+      "status": "missing",
+      "exact_items": [
+        "This seam is owner-level, not consumer-level. Fixing `Orchestrator_Page.md` or `FinalGUISpec.md` first would still leave stale routing at the top of the precedence stack.",
+        "Orchestrator_Page.md",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [
+        "FinalGUISpec.md",
+        "Orchestrator_Page.md"
+      ],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L39",
+        "Plans/Run_Graph_View.md:L52"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-06462",
+      "source_obligation_ids": [
+        "obl-6103"
+      ],
+      "source_seed_ids": [
+        "seed-9221"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "retire `run.tier_*` event teaching from runtime snapshot guidance",
+      "row_type": "stale_retirement",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "present",
+      "exact_items": [
+        "retire `run.tier_*` event teaching from runtime snapshot guidance",
+        "run.tier_*"
+      ],
+      "stale_tokens": [
+        "run.tier_*"
+      ],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1-L64 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06609",
+      "source_obligation_ids": [
+        "obl-6250"
+      ],
+      "source_seed_ids": [
+        "seed-9448"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - remaining high-risk stale consumers: Run Graph, Widget Sy",
+      "row_type": "stale_retirement",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "present",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - remaining high-risk stale consumers: Run Graph, Widget System, Usage, Assistant Chat"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1-L64 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06345",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/Run_Modes.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Modes.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01943",
+      "source_obligation_ids": [
+        "obl-1800"
+      ],
+      "source_seed_ids": [
+        "seed-2308"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "`chain-wizard-flexibility.md` introduces intent-specific execution modes",
+      "row_type": "owner",
+      "path": "Plans/Run_Modes.md",
+      "heading_hint": "# Run Modes (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "`chain-wizard-flexibility.md` introduces intent-specific execution modes",
+        "chain-wizard-flexibility.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Modes.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03658",
+      "source_obligation_ids": [
+        "obl-3504"
+      ],
+      "source_seed_ids": [
+        "seed-4719",
+        "seed-5065",
+        "seed-5102",
+        "seed-5141",
+        "seed-5530",
+        "seed-5572",
+        "seed-5606",
+        "seed-5620",
+        "seed-5666",
+        "seed-5931",
+        "seed-5972",
+        "seed-6495",
+        "seed-6711",
+        "seed-7455",
+        "seed-8407",
+        "seed-8472",
+        "seed-8493",
+        "seed-8887",
+        "seed-8979",
+        "seed-9073"
+      ],
+      "source_shard_ids": [
+        "shard-0049",
+        "shard-0052",
+        "shard-0055",
+        "shard-0056",
+        "shard-0058",
+        "shard-0062",
+        "shard-0064",
+        "shard-0070",
+        "shard-0077",
+        "shard-0078",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "canon_label": "`Plans/Run_Modes.md`",
+      "row_type": "owner",
+      "path": "Plans/Run_Modes.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Run_Modes.md`",
+        "Plans/Run_Modes.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Modes.md:L14",
+        "Plans/Run_Modes.md:L17",
+        "Plans/Run_Modes.md:L23",
+        "Plans/Run_Modes.md:L168",
+        "Plans/Run_Modes.md:L315"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03816",
+      "source_obligation_ids": [
+        "obl-3661"
+      ],
+      "source_seed_ids": [
+        "seed-4960"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "`mutation_capable`",
+      "row_type": "owner",
+      "path": "Plans/Run_Modes.md",
+      "heading_hint": "### Safe-point and mutation_capable alignment",
+      "status": "present",
+      "exact_items": [
+        "`mutation_capable`",
+        "mutation_capable"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Modes.md:L645",
+        "Plans/Run_Modes.md:L659",
+        "Plans/Run_Modes.md:L661"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04491",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/Run_Modes.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Modes.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05941",
+      "source_obligation_ids": [
+        "obl-5713"
+      ],
+      "source_seed_ids": [
+        "seed-8487"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "canon_label": "`Plans/Run_Modes.md` is relatively less affected, but it still references `HITL tier-bound",
+      "row_type": "owner",
+      "path": "Plans/Run_Modes.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Run_Modes.md` is relatively less affected, but it still references `HITL tier-boundary approvals`",
+        "Plans/Run_Modes.md",
+        "HITL tier-boundary approvals"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Modes.md:L14",
+        "Plans/Run_Modes.md:L17",
+        "Plans/Run_Modes.md:L23",
+        "Plans/Run_Modes.md:L38",
+        "Plans/Run_Modes.md:L168"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06260",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/Run_Modes.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Modes.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06844",
+      "source_obligation_ids": [
+        "obl-6451"
+      ],
+      "source_seed_ids": [
+        "seed-9830"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_A",
+      "row_type": "owner",
+      "path": "Plans/Run_Modes.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md`",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Tools.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Run_Modes.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Modes.md:L14",
+        "Plans/Run_Modes.md:L17",
+        "Plans/Run_Modes.md:L19",
+        "Plans/Run_Modes.md:L23",
+        "Plans/Run_Modes.md:L29"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00222",
+      "source_obligation_ids": [
+        "obl-117"
+      ],
+      "source_seed_ids": [
+        "seed-122"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "what old assumption is present: `TierTree`, `tier_type`, `View in Tiers`, phase/task/subta",
+      "row_type": "consumer",
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading_hint": "## 5A. Debug investigation grouping, manifests, and exports",
+      "status": "partial",
+      "exact_items": [
+        "what old assumption is present: `TierTree`, `tier_type`, `View in Tiers`, phase/task/subtask grouping.",
+        "TierTree",
+        "tier_type",
+        "View in Tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L129"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02901",
+      "source_obligation_ids": [
+        "obl-2748"
+      ],
+      "source_seed_ids": [
+        "seed-3609"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "Keep cross-surface receipt refs, but treat them as linkage, not as the sole operational-id",
+      "row_type": "consumer",
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading_hint": "## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)",
+      "status": "partial",
+      "exact_items": [
+        "Keep cross-surface receipt refs, but treat them as linkage, not as the sole operational-identity disclosure model."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L242"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03962",
+      "source_obligation_ids": [
+        "obl-3806"
+      ],
+      "source_seed_ids": [
+        "seed-5218"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "runtime artifacts still have no normalized place for `attempt_id`, `node_id`, `execution_r",
+      "row_type": "consumer",
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading_hint": "## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)",
+      "status": "present",
+      "exact_items": [
+        "runtime artifacts still have no normalized place for `attempt_id`, `node_id`, `execution_role`, `provider_attempt_ref`, or `operational_identity`, even though cross-surface receipt linkage already depends on that level of identity.",
+        "attempt_id",
+        "node_id",
+        "execution_role",
+        "provider_attempt_ref",
+        "operational_identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L23",
+        "Plans/Runtime_Artifacts_Panel.md:L27",
+        "Plans/Runtime_Artifacts_Panel.md:L35",
+        "Plans/Runtime_Artifacts_Panel.md:L38",
+        "Plans/Runtime_Artifacts_Panel.md:L72"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04030",
+      "source_obligation_ids": [
+        "obl-3873"
+      ],
+      "source_seed_ids": [
+        "seed-5319"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "wizard/report identity for upstream planning artifacts if those are ever surfaced here",
+      "row_type": "consumer",
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading_hint": "# Runtime Artifacts Panel \u2014 SSOT",
+      "status": "partial",
+      "exact_items": [
+        "wizard/report identity for upstream planning artifacts if those are ever surfaced here"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04735",
+      "source_obligation_ids": [
+        "obl-4513"
+      ],
+      "source_seed_ids": [
+        "seed-6418"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "surface-specific commands like `cmd.artifacts.show_in_usage` or `cmd.orchestrator.open_in_",
+      "row_type": "consumer",
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading_hint": "# Runtime Artifacts Panel \u2014 SSOT",
+      "status": "partial",
+      "exact_items": [
+        "surface-specific commands like `cmd.artifacts.show_in_usage` or `cmd.orchestrator.open_in_source_control` may remain user-facing wrappers",
+        "cmd.artifacts.show_in_usage",
+        "cmd.orchestrator.open_in_source_control"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05577",
+      "source_obligation_ids": [
+        "obl-5349"
+      ],
+      "source_seed_ids": [
+        "seed-7949"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "cross-surface receipt linkage already says runtime artifacts must stay on canonical runtim",
+      "row_type": "consumer",
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading_hint": "## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)",
+      "status": "partial",
+      "exact_items": [
+        "cross-surface receipt linkage already says runtime artifacts must stay on canonical runtime identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L242"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06346",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06593",
+      "source_obligation_ids": [
+        "obl-6234"
+      ],
+      "source_seed_ids": [
+        "seed-9424"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "lane/worktree, receipt, and cross-surface lineage concepts are present",
+      "row_type": "consumer",
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading_hint": "## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)",
+      "status": "partial",
+      "exact_items": [
+        "lane/worktree, receipt, and cross-surface lineage concepts are present"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L242"
+      ],
+      "required_action": "consumer_propagation"
+    }
+  ]
+}

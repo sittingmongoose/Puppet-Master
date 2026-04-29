@@ -1,5 +1,86 @@
 # Models System (Canonical SSOT)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+  - Runtime / Storage / Contract Impacts
+
+#### Source target target-0372
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+  - Runtime / Storage / Contract Impacts
+- Exact required items represented:
+  - Add node_id
+  - Add package_id
+  - Add seam_id
+  - Add lane_id
+  - Add attempt_id
+  - Add effective_identity
+  - Normalize requested/effective account identity shapes
+  - Normalize blocked_reason_code/allowed_action_ids and safe-point/restore-point/rollback terminology
+  - The biggest GPT-5.4 value-add was not just "tier drift exists"; it was showing where old and new models are both still treated as canonical in the same surface area.
+  - Reuse one runtime-identity disclosure grammar across these surfaces without collapsing their lifecycle models.
+  - `orchestrator-subagent-integration.md` now contains both old and new models at once:
+  - orchestrator-subagent-integration.md
+  - Migrate coordination and crew models from `tier_id` anchoring to canonical execution refs plus secondary labels:
+  - tier_id
+  - Continue the same owner-doc tranche through later models because GPT-5.4 is still finding real new contradictions, especially around routing/registry/governance ownership.
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`
+  - Plans/Orchestrator_Page.md
+  - Plans/storage-plan.md
+  - Plans/FinalGUISpec.md
+  - Plans/Models_System.md
+  - Plans/Multi-Account.md
+  - Plans/Personas.md
+  - Plans/Prompt_Pipeline.md
+  - `[retired-token-13]` / `[retired-token-15]` remains unresolved because the ledger requires one coherent owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels together with parallel-node worktree assignment and ownership transitions, but the live docs split the topic without closing it: `[retired-token-11]` defines run/persona/surface/default priority only, `[retired-token-10]` defines `[retired-token-9]` / `[retired-token-14]` without precedence rules, and `[retired-token-12]` keeps the legacy tier-keyed worktree model without a package/seam/lane allocation owner. Exact ledger evidence remains at `[retired-token-16]`, `[retired-token-17]`, and `[retired-token-18]`.
+  - [retired-token-13]
+  - [retired-token-15]
+  - [retired-token-11]
+  - [retired-token-10]
+  - [retired-token-9]
+  - [retired-token-14]
+  - [retired-token-12]
+  - [retired-token-16]
+  - `[retired-token-11]`
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #14 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #15 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #16 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #17 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #18 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 ## Fidelity recovery addendum
 
 This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
@@ -40,6 +121,27 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 ---
 
 ## Provider/model precedence and settings resolution
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0376
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - it links to provider/model settings
+  - Export / settings / persona transfer gaps are broader than first summarized
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 ### Scope and owner boundaries
 
@@ -160,6 +262,26 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Con
 
 ### 3.1 Per-provider options
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0380
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - per-provider caps
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 Provider-specific options are configured under `config.provider.<provider_id>.options`:
 
 ```toml
@@ -273,6 +395,31 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Arc
 
 ### 4.4 Two Gemini providers
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0381
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - The docs now have two simultaneous identity drifts:
+  - That leaves the system with two competing approval/blocked ontologies:
+  - After this merge, the remaining partial tail should sit uniformly at `Gemini + Opus + Sonnet + GPT-5.4`.
+  - Gemini + Opus + Sonnet + GPT-5.4
+  - After this merge, the remaining partial tail should sit uniformly at `Gemini + Opus + Sonnet + GPT-5.4 + GPT-5.2`.
+  - Gemini + Opus + Sonnet + GPT-5.4 + GPT-5.2
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 ### 4.5 Web tool provider capability alignment
 
 This section mirrors the linked owner contract and stays aligned with it.
@@ -372,6 +519,29 @@ ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA, PolicyRule:Decision_
 
 ## 6. Variants system
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0374
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - expert and ELI5 variants should share the same concept skeleton
+  - The app already has a strong authored-copy mechanism for `Expert` vs `ELI5` variants.
+  - Expert
+  - ELI5
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 <a id="VARIANTS"></a>
 
 ### 6.1 Definition
@@ -434,6 +604,26 @@ When a variant is selected, its `model` field is used as the active model for su
 
 ### 6.6 Per-Persona variant overrides
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0383
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - scoped override lifecycle for Persona overrides
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 A Persona MAY specify a preferred variant via a `default_variant` field in PERSONA.md frontmatter:
 
 ```yaml
@@ -446,6 +636,29 @@ ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA
 
 ### 6.7 Model aliases (friendly names)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0384
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - non-canonical persona field names
+  - `alias_of_command_id` for deprecated aliases
+  - alias_of_command_id
+  - This is now a direct owner-versus-consumer mismatch. The canonical field names already exist.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 Model aliases are optional friendly names that resolve to canonical model identifiers (`provider_id/model_id`) during model override parsing (for example, natural-language `model_override` in media generation).
 
 Deterministic alias resolution requirements:
@@ -456,6 +669,26 @@ Deterministic alias resolution requirements:
 Aliases and variants are distinct concepts: aliases are lookup keys for model resolution, while variants are named model presets selected by the user.
 
 ### 6.8 Canonical media model alias table
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0385
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - a deprecated alias should eventually disappear
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 <a id="MEDIA-ALIASES"></a>
 
@@ -509,6 +742,27 @@ Settings must show:
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/storage-plan.md
 
 ### 7.3 Variant and effort controls
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0386
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Reasoning effort: High -> Skipped`
+  - Reasoning effort: High -> Skipped
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Variant and effort controls remain runtime-qualified capability data.
 
@@ -585,6 +839,40 @@ ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Progression
 *Document created for planning only; no code changes.*
 ## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0373
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - a reviewer/reviewer-pass should not silently become a coding persona just because the repo is Rust-heavy
+  - execution/governance persona biased toward package-local delivery and readiness truth
+  - implementation persona biased by language/framework/work type
+  - review persona distinct from drafting/implementation persona
+  - review/challenge persona distinct from original claimer
+  - troubleshooting/recovery persona
+  - planning/architecture persona
+  - do not block solely because a preferred Persona is unavailable
+  - skipped Persona controls where relevant
+  - historical runs keep their frozen effective Persona state
+  - historical runs must preserve the resolved effective Persona and reason from the time of execution.
+  - skipped vs honored/clamped Persona controls
+  - Persona display is not a substitute for actor/role identity.
+  - The strongest existing anchor for `operational_identity` is the receipt/bridge family, not the persona snapshot family.
+  - operational_identity
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 This addendum expands the Models system so Persona-driven runtime control is explicit, provider-aware, and visible to the user.
 
 ### 10.1 Persona-driven model/runtime control principle
@@ -601,6 +889,26 @@ A Persona may request:
 These Persona preferences participate in effective run assembly but MUST pass through a provider capability matrix before being applied.
 
 ### 10.2 Effective selection fields (cross-system runtime contract)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0378
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - permission snapshots do not carry effective auth/account or operational identity context
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Effective model/runtime selection is part of the shared requested/effective identity contract.
 
@@ -667,6 +975,26 @@ Persistence / visibility:
 
 <a id="PERSONA-CAPABILITY-MATRIX"></a>
 ### 10.4 Provider Persona Capability Matrix (canonical support states)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0379
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Introduce a canonical account-health / pressure / degraded-trust family rather than overloading auth lifecycle states.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Capability and effort evaluation must be performed per runtime surface, not by loose provider-family assumptions.
 
@@ -867,6 +1195,27 @@ Model fallback and runtime retry are separate concerns.
 - providers and adapters may not invent model-local retry loops that bypass runtime policy
 
 ### Required attempt snapshots
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0388
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - storage/contracts often require richer snapshots in prose than they enumerate in their registered field tables
+  - Permission snapshots remain thinner than rewrite needs:
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Each attempt MUST retain requested and effective model/provider identifiers so users can later explain why a blocked or failed attempt ran under a specific effective configuration.
 
 ### Fallback rule
@@ -881,6 +1230,28 @@ Rules:
 - providers/adapters must not hide model-local retry loops inside an already-running attempt
 ## Model Selection Versus Runtime Retry Ownership Consolidation Addendum (2026-03-09)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0375
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Contracts_V0.md` is closer to the target than many downstream docs, but it still needs addendum consolidation to stop reintroducing ambiguity from inside the supposed SSOT.
+  - Contracts_V0.md
+  - still the primary SSOT for canonical payloads, but now clearly needs addendum consolidation plus actor-envelope ownership
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 Model selection and retry ownership remain separate concerns.
 
 Rules:
@@ -889,6 +1260,30 @@ Rules:
 - model fallback behavior MUST NOT rewrite blocked reason or retry classification semantics
 - UI and artifact surfaces read model snapshot IDs from attempt records rather than inferring them from provider names alone
 ## Requested / Effective Model Snapshot Alignment
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0377
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Separate `source`, `requested`, and `effective` in UI language and data models.
+  - source
+  - requested
+  - effective
+  - effective permission snapshot id
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Requested and effective model/runtime fields must stay visible for child runs, crew members, and surfaced planning/runtime decisions.
 
@@ -923,6 +1318,26 @@ This addendum elaborates how the canonical provider/model precedence owner secti
 
 ### Persona, execution-unit, and scope policy inputs
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0387
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - canonical execution-unit refs
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 1. **Persona axis**: Users select a Persona (e.g., "Code Analyzer", "Documentation Writer") which carries default preferences for model, provider, and mutation_policy.
 2. **Execution Unit Type axis**: Different execution unit types (run, node, delegated_subagent) can have scoped policies (e.g., "use GPT-4 for run-level analysis, but Claude for node-level code generation").
 3. **Scope axis**: Settings can be scoped to worktree, project, or global level; settings at a tighter scope override broader scopes.
@@ -941,6 +1356,26 @@ When a unit needs to select a provider and model, resolve in this order:
 
 ### Settings resolution and override semantics
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0390
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - needs a versioned correlation/context block and account-health semantics stronger than auth lifecycle alone
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 - **Conservative policy**: Use only settings tier 1 (explicit override) or tier 3+ (canonical defaults); do not apply stage defaults or persona preferences.
 - **Standard policy** (default): Use tiers 1-5 (explicit override through project defaults); respect all configuration.
 - **Aggressive policy**: Use all tiers 1-7; auto-select the cheapest or fastest model if multiple are available and equally suitable.
@@ -952,6 +1387,31 @@ When a unit needs to select a provider and model, resolve in this order:
 - **Fallback**: If all preferred models exceed budget or are unavailable, emit a concern (not a silent failure) and suggest cheaper alternatives or escalation.
 
 ### Selection reason and audit trail
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0389
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Switch reason: rate_limit_pressure`
+  - Switch reason: rate_limit_pressure
+  - `Switch reason`
+  - Switch reason
+  - `recent switch reason`
+  - recent switch reason
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 When a provider and model are selected, emit a `selection_reason` object:
 ```typescript

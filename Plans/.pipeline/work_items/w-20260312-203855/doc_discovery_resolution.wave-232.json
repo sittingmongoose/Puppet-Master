@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-232",
+  "group_ids": [
+    "discgrp-0925",
+    "discgrp-0926",
+    "discgrp-0927",
+    "discgrp-0928"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01174",
+      "source_obligation_ids": [
+        "obl-1031"
+      ],
+      "source_seed_ids": [
+        "seed-1209"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "### 1.3 Package Overseer",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L88"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01175",
+      "source_obligation_ids": [
+        "obl-1032"
+      ],
+      "source_seed_ids": [
+        "seed-1210"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "# Orchestrator Subagent Integration -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01176",
+      "source_obligation_ids": [
+        "obl-1033"
+      ],
+      "source_seed_ids": [
+        "seed-1211"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "### 7. Implementation Checklist (GUI & Backend -- Add/Expand)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L851"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01177",
+      "source_obligation_ids": [
+        "obl-1034"
+      ],
+      "source_seed_ids": [
+        "seed-1212"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

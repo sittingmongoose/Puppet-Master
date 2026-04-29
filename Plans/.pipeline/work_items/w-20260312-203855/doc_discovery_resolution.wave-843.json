@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-843",
+  "group_ids": [
+    "discgrp-3369",
+    "discgrp-3370",
+    "discgrp-3371",
+    "discgrp-3372"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03649",
+      "source_obligation_ids": [
+        "obl-3495"
+      ],
+      "source_seed_ids": [
+        "seed-4705"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03650",
+      "source_obligation_ids": [
+        "obl-3496"
+      ],
+      "source_seed_ids": [
+        "seed-4706"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03651",
+      "source_obligation_ids": [
+        "obl-3497"
+      ],
+      "source_seed_ids": [
+        "seed-4707"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "## GUI and Backend Scope (All In-Scope Now)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L795"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03652",
+      "source_obligation_ids": [
+        "obl-3498"
+      ],
+      "source_seed_ids": [
+        "seed-4708"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L193"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

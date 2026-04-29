@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1338",
+  "group_ids": [
+    "discgrp-5349",
+    "discgrp-5350",
+    "discgrp-5351",
+    "discgrp-5352"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05790",
+      "source_obligation_ids": [
+        "obl-5562"
+      ],
+      "source_seed_ids": [
+        "seed-8262"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "# Assistant & Chat UI -- Design Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05791",
+      "source_obligation_ids": [
+        "obl-5563"
+      ],
+      "source_seed_ids": [
+        "seed-8263"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "## Canonical Wizard Blocked Lifecycle",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L2175"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05792",
+      "source_obligation_ids": [
+        "obl-5564"
+      ],
+      "source_seed_ids": [
+        "seed-8264"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05793",
+      "source_obligation_ids": [
+        "obl-5565"
+      ],
+      "source_seed_ids": [
+        "seed-8265"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

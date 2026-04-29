@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-915",
+  "group_ids": [
+    "discgrp-3657",
+    "discgrp-3658",
+    "discgrp-3659",
+    "discgrp-3660"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03955",
+      "source_obligation_ids": [
+        "obl-3799"
+      ],
+      "source_seed_ids": [
+        "seed-5199"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03956",
+      "source_obligation_ids": [
+        "obl-3800"
+      ],
+      "source_seed_ids": [
+        "seed-5204"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/newtools.md",
+      "new_heading_hint": "# GUI Testing Tools & Framework Options -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/newtools.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03957",
+      "source_obligation_ids": [
+        "obl-3801"
+      ],
+      "source_seed_ids": [
+        "seed-5205"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03958",
+      "source_obligation_ids": [
+        "obl-3802"
+      ],
+      "source_seed_ids": [
+        "seed-5206"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-014 -- Shared mutable state requires RWMutex",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L129"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

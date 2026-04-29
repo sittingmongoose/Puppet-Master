@@ -1,0 +1,412 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-105",
+  "group_ids": [
+    "recgrp-0417",
+    "recgrp-0418",
+    "recgrp-0419",
+    "recgrp-0420"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0417",
+      "path": "Plans/Orchestrator_Page.md",
+      "mapped_owner_heading": "### Fidelity recovery cov-093: Account switch and pressure history",
+      "live_anchor": "### Fidelity recovery cov-093: Account switch and pressure history (Plans/Orchestrator_Page.md:L221)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-01323",
+        "cov-01676",
+        "cov-02670",
+        "cov-02924",
+        "cov-04324",
+        "cov-04741",
+        "cov-05316",
+        "cov-05338",
+        "cov-05343",
+        "cov-05387",
+        "cov-05604",
+        "cov-05643",
+        "cov-06604",
+        "cov-07040"
+      ],
+      "source_obligation_ids": [
+        "obl-1180",
+        "obl-1533",
+        "obl-2517",
+        "obl-2771",
+        "obl-4164",
+        "obl-4519",
+        "obl-5088",
+        "obl-5110",
+        "obl-5115",
+        "obl-5159",
+        "obl-5376",
+        "obl-5415",
+        "obl-6245",
+        "obl-6631"
+      ],
+      "source_seed_ids": [
+        "seed-1402",
+        "seed-1910",
+        "seed-3304",
+        "seed-3639",
+        "seed-5782",
+        "seed-6432",
+        "seed-7492",
+        "seed-7542",
+        "seed-7550",
+        "seed-7557",
+        "seed-7564",
+        "seed-7578",
+        "seed-7642",
+        "seed-7994",
+        "seed-8044",
+        "seed-9443",
+        "seed-10115"
+      ],
+      "source_shard_ids": [
+        "shard-0023",
+        "shard-0028",
+        "shard-0039",
+        "shard-0041",
+        "shard-0057",
+        "shard-0062",
+        "shard-0070",
+        "shard-0071",
+        "shard-0074",
+        "shard-0085",
+        "shard-0090"
+      ],
+      "gap_ids": [
+        "gap-01034",
+        "gap-01314",
+        "gap-02099",
+        "gap-02307",
+        "gap-03374",
+        "gap-03703",
+        "gap-04122",
+        "gap-04142",
+        "gap-04147",
+        "gap-04190",
+        "gap-04366",
+        "gap-04393",
+        "gap-05124",
+        "gap-05457"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "the system should not silently demote a persistent blocker into history just because time passed",
+        "filtered CSV is a view export, not canonical history",
+        "Switch history is still reason fields without a durable event/projection family.",
+        "it still needs both pressure cause and switch outcome fields; otherwise history will stay ambiguous",
+        "`cmd.panel.switch`",
+        "cmd.panel.switch",
+        "Without that discipline, consumer docs may either freeze old payloads forever or overclaim an immediate canonical switch that downstream docs cannot actually absorb.",
+        "`thread_id = <thread_id>` when thread-scoped history is required",
+        "thread_id = <thread_id>",
+        "`tab_id = node_graph` or `tab_id = history`",
+        "tab_id = node_graph",
+        "tab_id = history",
+        "`tab_id = history`",
+        "`inspector_target = details | history | reviews`",
+        "inspector_target = details | history | reviews",
+        "`UI_Command_Catalog.md` and `FinalGUISpec.md` are the pressure points that will either spread the canonical route/object vocabulary cleanly or re-fragment it.",
+        "UI_Command_Catalog.md",
+        "FinalGUISpec.md",
+        "`cmd.panel.switch` with contextual object refs",
+        "`Evidence`, `History`, and `Ledger` treated as native tabs",
+        "Evidence",
+        "History",
+        "Ledger",
+        "Material blocker counts, pressure docs, and next stage remain unchanged."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-4722cde2affd",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0418",
+      "path": "Plans/Orchestrator_Page.md",
+      "mapped_owner_heading": "### Fidelity recovery cov-165: Coverage blocker concern lifecycle owner section",
+      "live_anchor": "### Fidelity recovery cov-165: Coverage blocker concern lifecycle owner section (Plans/Orchestrator_Page.md:L233)",
+      "action": "layout_repair_reference",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-01305",
+        "cov-03140",
+        "cov-07001",
+        "cov-07031",
+        "cov-07049"
+      ],
+      "source_obligation_ids": [
+        "obl-1162",
+        "obl-2986",
+        "obl-6597",
+        "obl-6622",
+        "obl-6640"
+      ],
+      "source_seed_ids": [
+        "seed-1384",
+        "seed-3943",
+        "seed-10060",
+        "seed-10101",
+        "seed-10131"
+      ],
+      "source_shard_ids": [
+        "shard-0022",
+        "shard-0044",
+        "shard-0089",
+        "shard-0090"
+      ],
+      "gap_ids": [
+        "gap-01017",
+        "gap-02467",
+        "gap-05432",
+        "gap-05453",
+        "gap-05464"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Persistent blocker direction",
+        "The doc set still lacks one explicit replacement for `TierContext`. That absence is now a primary blocker because multiple seams need the same fields:",
+        "TierContext",
+        "This pass only refined heading precision and did not change blocker counts, top-pressure docs, or next stage.",
+        "Material blocker counts and next stage remain unchanged.",
+        "This pass changed target precision only; blocker counts, exact missing terms, and next stage remain unchanged."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-b6ce752a7dde",
+      "packet_writer_role": "observe_only",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Observe-only layout repair reference: target records packetizable layout backlog without creating an overlapping mutation writer."
+      ]
+    },
+    {
+      "target_id": "target-0419",
+      "path": "Plans/Orchestrator_Page.md",
+      "mapped_owner_heading": "### Fidelity recovery cov-177: Concern source-event vs record vs projection split",
+      "live_anchor": "### Fidelity recovery cov-177: Concern source-event vs record vs projection split (Plans/Orchestrator_Page.md:L257)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-02345"
+      ],
+      "source_obligation_ids": [
+        "obl-2196"
+      ],
+      "source_seed_ids": [
+        "seed-2851"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "gap_ids": [
+        "gap-01820"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Allow short-term concern rendering to piggyback on `finding_refs[]`, but define a minimal non-remediation `node_concerns[]` projection next.",
+        "finding_refs[]",
+        "node_concerns[]"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-4bbbfd73be62",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0420",
+      "path": "Plans/Orchestrator_Page.md",
+      "mapped_owner_heading": "### Fidelity recovery cov-192: Concern update heuristics",
+      "live_anchor": "### Fidelity recovery cov-192: Concern update heuristics (Plans/Orchestrator_Page.md:L279)",
+      "action": "layout_repair_reference",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-01880"
+      ],
+      "source_obligation_ids": [
+        "obl-1737"
+      ],
+      "source_seed_ids": [
+        "seed-2214"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "gap_ids": [
+        "gap-01466"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "repeated sightings of the same underlying issue should usually update an existing concern rather than minting endless duplicates"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-8fa9f03493a1",
+      "packet_writer_role": "observe_only",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Observe-only layout repair reference: target records packetizable layout backlog without creating an overlapping mutation writer."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-01323",
+    "cov-01676",
+    "cov-02670",
+    "cov-02924",
+    "cov-04324",
+    "cov-04741",
+    "cov-05316",
+    "cov-05338",
+    "cov-05343",
+    "cov-05387",
+    "cov-05604",
+    "cov-05643",
+    "cov-06604",
+    "cov-07040",
+    "cov-01305",
+    "cov-03140",
+    "cov-07001",
+    "cov-07031",
+    "cov-07049",
+    "cov-02345",
+    "cov-01880"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1180",
+    "obl-1533",
+    "obl-2517",
+    "obl-2771",
+    "obl-4164",
+    "obl-4519",
+    "obl-5088",
+    "obl-5110",
+    "obl-5115",
+    "obl-5159",
+    "obl-5376",
+    "obl-5415",
+    "obl-6245",
+    "obl-6631",
+    "obl-1162",
+    "obl-2986",
+    "obl-6597",
+    "obl-6622",
+    "obl-6640",
+    "obl-2196",
+    "obl-1737"
+  ],
+  "source_seed_ids_represented": [
+    "seed-1402",
+    "seed-1910",
+    "seed-3304",
+    "seed-3639",
+    "seed-5782",
+    "seed-6432",
+    "seed-7492",
+    "seed-7542",
+    "seed-7550",
+    "seed-7557",
+    "seed-7564",
+    "seed-7578",
+    "seed-7642",
+    "seed-7994",
+    "seed-8044",
+    "seed-9443",
+    "seed-10115",
+    "seed-1384",
+    "seed-3943",
+    "seed-10060",
+    "seed-10101",
+    "seed-10131",
+    "seed-2851",
+    "seed-2214"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0023",
+    "shard-0028",
+    "shard-0039",
+    "shard-0041",
+    "shard-0057",
+    "shard-0062",
+    "shard-0070",
+    "shard-0071",
+    "shard-0074",
+    "shard-0085",
+    "shard-0090",
+    "shard-0022",
+    "shard-0044",
+    "shard-0089",
+    "shard-0036",
+    "shard-0031"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": [
+    {
+      "target_id": "target-0418",
+      "path": "Plans/Orchestrator_Page.md",
+      "reason": "observe_only non-packetizable source path"
+    },
+    {
+      "target_id": "target-0420",
+      "path": "Plans/Orchestrator_Page.md",
+      "reason": "observe_only non-packetizable source path"
+    }
+  ]
+}

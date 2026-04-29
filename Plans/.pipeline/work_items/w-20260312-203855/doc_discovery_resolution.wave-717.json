@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-717",
+  "group_ids": [
+    "discgrp-2865",
+    "discgrp-2866",
+    "discgrp-2867",
+    "discgrp-2868"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03145",
+      "source_obligation_ids": [
+        "obl-2991"
+      ],
+      "source_seed_ids": [
+        "seed-3948"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "## Runtime Scheduler / Recovery Ownership and Precedence",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L300"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03146",
+      "source_obligation_ids": [
+        "obl-2992"
+      ],
+      "source_seed_ids": [
+        "seed-3949"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03147",
+      "source_obligation_ids": [
+        "obl-2993"
+      ],
+      "source_seed_ids": [
+        "seed-3950"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1323"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03148",
+      "source_obligation_ids": [
+        "obl-2994"
+      ],
+      "source_seed_ids": [
+        "seed-3951"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Shared governance and runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L260"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-831",
+  "group_ids": [
+    "discgrp-3321",
+    "discgrp-3322",
+    "discgrp-3323",
+    "discgrp-3324"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03601",
+      "source_obligation_ids": [
+        "obl-3447"
+      ],
+      "source_seed_ids": [
+        "seed-4640"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "# Runtime Artifacts Panel \u2014 SSOT",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03602",
+      "source_obligation_ids": [
+        "obl-3448"
+      ],
+      "source_seed_ids": [
+        "seed-4641"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "## References",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L224"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03603",
+      "source_obligation_ids": [
+        "obl-3449"
+      ],
+      "source_seed_ids": [
+        "seed-4642"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03604",
+      "source_obligation_ids": [
+        "obl-3450"
+      ],
+      "source_seed_ids": [
+        "seed-4643"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "## 12. Gaps and Potential Issues",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/FileSafe.md:L1634"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

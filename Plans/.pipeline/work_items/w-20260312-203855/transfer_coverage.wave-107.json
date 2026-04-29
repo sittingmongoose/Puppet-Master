@@ -1,0 +1,1136 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-107",
+  "row_group_ids": [
+    "rowgrp-0425",
+    "rowgrp-0426",
+    "rowgrp-0427",
+    "rowgrp-0428"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-00046",
+      "source_obligation_ids": [
+        "obl-016"
+      ],
+      "source_seed_ids": [
+        "seed-016"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "feature_seam ownership",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "Parent-object field-shape direction now discussed",
+      "status": "missing",
+      "exact_items": [
+        "`feature_seam` should own membership, lifecycle, requested settings, overseer/governance state, seam-promotion state, and seam evidence linkage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00049",
+      "source_obligation_ids": [
+        "obl-018"
+      ],
+      "source_seed_ids": [
+        "seed-018"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "project ownership",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "Parent-object field-shape direction now discussed",
+      "status": "missing",
+      "exact_items": [
+        "`project` should primarily own identity, repo/project settings/theme/account-policy linkage, active-run pointers, and coarse project status"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00336",
+      "source_obligation_ids": [
+        "obl-194"
+      ],
+      "source_seed_ids": [
+        "seed-226"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "Existing docs are still too runtime-worktree-centric for the rewrite:",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "partial",
+      "exact_items": [
+        "Existing docs are still too runtime-worktree-centric for the rewrite:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00415",
+      "source_obligation_ids": [
+        "obl-273"
+      ],
+      "source_seed_ids": [
+        "seed-311"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "`Provider_OpenCode.md` and `Provider_Stream_Mapping_External_Reference_A2A.md` both assume",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## 19. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)",
+      "status": "partial",
+      "exact_items": [
+        "`Provider_OpenCode.md` and `Provider_Stream_Mapping_External_Reference_A2A.md` both assume runtime/account disclosure obligations that their current event/API mappings cannot actually satisfy.",
+        "Provider_OpenCode.md",
+        "Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2020"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00534",
+      "source_obligation_ids": [
+        "obl-391"
+      ],
+      "source_seed_ids": [
+        "seed-453"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "`Dashboard`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 12.3 Dashboard Grid Responsive",
+      "status": "present",
+      "exact_items": [
+        "`Dashboard`",
+        "Dashboard"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L60",
+        "Plans/FinalGUISpec.md:L64",
+        "Plans/FinalGUISpec.md:L71",
+        "Plans/FinalGUISpec.md:L75",
+        "Plans/FinalGUISpec.md:L139"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00591",
+      "source_obligation_ids": [
+        "obl-448"
+      ],
+      "source_seed_ids": [
+        "seed-518",
+        "seed-1520",
+        "seed-1526",
+        "seed-1762"
+      ],
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0024",
+        "shard-0026"
+      ],
+      "canon_label": "`degraded`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Degraded draft warning",
+      "status": "present",
+      "exact_items": [
+        "`degraded`",
+        "degraded"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L47",
+        "Plans/FinalGUISpec.md:L48",
+        "Plans/FinalGUISpec.md:L51",
+        "Plans/FinalGUISpec.md:L52",
+        "Plans/FinalGUISpec.md:L904"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00610",
+      "source_obligation_ids": [
+        "obl-467"
+      ],
+      "source_seed_ids": [
+        "seed-537"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "direct evidence/record inspectors",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 7.4 Settings and inspectors",
+      "status": "partial",
+      "exact_items": [
+        "direct evidence/record inspectors"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L944"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00672",
+      "source_obligation_ids": [
+        "obl-529"
+      ],
+      "source_seed_ids": [
+        "seed-605"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "`Progress` is described as a live dashboard, but the shared run-focus model implies it may",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-052: Shared escalation ladder",
+      "status": "present",
+      "exact_items": [
+        "`Progress` is described as a live dashboard, but the shared run-focus model implies it may also need to represent historical runs coherently.",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L55",
+        "Plans/FinalGUISpec.md:L59",
+        "Plans/FinalGUISpec.md:L60",
+        "Plans/FinalGUISpec.md:L62",
+        "Plans/FinalGUISpec.md:L63"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00707",
+      "source_obligation_ids": [
+        "obl-564"
+      ],
+      "source_seed_ids": [
+        "seed-645"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "search result routing must preserve or intentionally change `focused_run_id`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "status": "present",
+      "exact_items": [
+        "search result routing must preserve or intentionally change `focused_run_id`",
+        "focused_run_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L912",
+        "Plans/FinalGUISpec.md:L937"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00720",
+      "source_obligation_ids": [
+        "obl-577"
+      ],
+      "source_seed_ids": [
+        "seed-658"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "Good result row fields:",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 15.2 Search result card widget",
+      "status": "partial",
+      "exact_items": [
+        "Good result row fields:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2658"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00871",
+      "source_obligation_ids": [
+        "obl-728"
+      ],
+      "source_seed_ids": [
+        "seed-829",
+        "seed-831",
+        "seed-2191"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0030"
+      ],
+      "canon_label": "`dismissed`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-179: Dismissed vs resolved rationale enforcement",
+      "status": "present",
+      "exact_items": [
+        "`dismissed`",
+        "dismissed"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L36",
+        "Plans/FinalGUISpec.md:L40",
+        "Plans/FinalGUISpec.md:L181",
+        "Plans/FinalGUISpec.md:L188",
+        "Plans/FinalGUISpec.md:L700"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00902",
+      "source_obligation_ids": [
+        "obl-759"
+      ],
+      "source_seed_ids": [
+        "seed-864"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "operational concern summary -> `Progress` or `Seams`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-022: Concern record family definition",
+      "status": "present",
+      "exact_items": [
+        "operational concern summary -> `Progress` or `Seams`",
+        "Progress",
+        "Seams"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L55",
+        "Plans/FinalGUISpec.md:L59",
+        "Plans/FinalGUISpec.md:L60",
+        "Plans/FinalGUISpec.md:L62",
+        "Plans/FinalGUISpec.md:L63"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00907",
+      "source_obligation_ids": [
+        "obl-764"
+      ],
+      "source_seed_ids": [
+        "seed-869",
+        "seed-1142",
+        "seed-1437",
+        "seed-1534",
+        "seed-2216",
+        "seed-7831"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0019",
+        "shard-0023",
+        "shard-0024",
+        "shard-0031",
+        "shard-0073"
+      ],
+      "canon_label": "`Progress`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Progress catalog source and default drills",
+      "status": "present",
+      "exact_items": [
+        "`Progress`",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L55",
+        "Plans/FinalGUISpec.md:L59",
+        "Plans/FinalGUISpec.md:L60",
+        "Plans/FinalGUISpec.md:L62",
+        "Plans/FinalGUISpec.md:L63"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00948",
+      "source_obligation_ids": [
+        "obl-805"
+      ],
+      "source_seed_ids": [
+        "seed-929"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "`Undo`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 10.2 Undo",
+      "status": "present",
+      "exact_items": [
+        "`Undo`",
+        "Undo"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L649",
+        "Plans/FinalGUISpec.md:L670",
+        "Plans/FinalGUISpec.md:L1227",
+        "Plans/FinalGUISpec.md:L1229",
+        "Plans/FinalGUISpec.md:L1518"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00965",
+      "source_obligation_ids": [
+        "obl-822"
+      ],
+      "source_seed_ids": [
+        "seed-946"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "`Undo` only for real undo",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 10.2 Undo",
+      "status": "present",
+      "exact_items": [
+        "`Undo` only for real undo",
+        "Undo"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L649",
+        "Plans/FinalGUISpec.md:L670",
+        "Plans/FinalGUISpec.md:L1227",
+        "Plans/FinalGUISpec.md:L1229",
+        "Plans/FinalGUISpec.md:L1518"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00993",
+      "source_obligation_ids": [
+        "obl-850"
+      ],
+      "source_seed_ids": [
+        "seed-995"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "Result should likely carry:",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 15.2 Search result card widget",
+      "status": "partial",
+      "exact_items": [
+        "Result should likely carry:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2658"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01000",
+      "source_obligation_ids": [
+        "obl-857"
+      ],
+      "source_seed_ids": [
+        "seed-1002"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "Result should carry:",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 15.2 Search result card widget",
+      "status": "partial",
+      "exact_items": [
+        "Result should carry:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2658"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01076",
+      "source_obligation_ids": [
+        "obl-933"
+      ],
+      "source_seed_ids": [
+        "seed-1100"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "canon_label": "what the provider/runtime actually used and whether controls were honored/skipped/clamped",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### 7.19.2 Bundle controls and review gate",
+      "status": "partial",
+      "exact_items": [
+        "what the provider/runtime actually used and whether controls were honored/skipped/clamped"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1105"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01182",
+      "source_obligation_ids": [
+        "obl-1039"
+      ],
+      "source_seed_ids": [
+        "seed-1217"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "canon_label": "`session`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 15.5 Session Recovery",
+      "status": "present",
+      "exact_items": [
+        "`session`",
+        "session"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L395",
+        "Plans/FinalGUISpec.md:L510",
+        "Plans/FinalGUISpec.md:L562",
+        "Plans/FinalGUISpec.md:L593",
+        "Plans/FinalGUISpec.md:L594"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01216",
+      "source_obligation_ids": [
+        "obl-1073"
+      ],
+      "source_seed_ids": [
+        "seed-1266"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "provider-specific caveats shown near the relevant controls",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### 7.19.2 Bundle controls and review gate",
+      "status": "partial",
+      "exact_items": [
+        "provider-specific caveats shown near the relevant controls"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1105"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01232",
+      "source_obligation_ids": [
+        "obl-1089"
+      ],
+      "source_seed_ids": [
+        "seed-1284"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "likely needs clickable help affordances on core concepts in `Seams`, `Progress`, and inspe",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-062: Glossary and help governance",
+      "status": "present",
+      "exact_items": [
+        "likely needs clickable help affordances on core concepts in `Seams`, `Progress`, and inspectors",
+        "Seams",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L55",
+        "Plans/FinalGUISpec.md:L59",
+        "Plans/FinalGUISpec.md:L60",
+        "Plans/FinalGUISpec.md:L62",
+        "Plans/FinalGUISpec.md:L63"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01242",
+      "source_obligation_ids": [
+        "obl-1099"
+      ],
+      "source_seed_ids": [
+        "seed-1295"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Research Progress - 2026-03-16 - Projects Page Blocked-Owner / Status Model",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-16 - Projects Page Blocked-Owner / Status Model"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L193",
+        "Plans/FinalGUISpec.md:L199"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01256",
+      "source_obligation_ids": [
+        "obl-1113"
+      ],
+      "source_seed_ids": [
+        "seed-1317"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "`Activity`: `idle | running | paused | queued | background_active`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 4.1 Activity Bar",
+      "status": "present",
+      "exact_items": [
+        "`Activity`: `idle | running | paused | queued | background_active`",
+        "Activity",
+        "idle | running | paused | queued | background_active"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L127",
+        "Plans/FinalGUISpec.md:L131",
+        "Plans/FinalGUISpec.md:L252",
+        "Plans/FinalGUISpec.md:L257",
+        "Plans/FinalGUISpec.md:L258"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01268",
+      "source_obligation_ids": [
+        "obl-1125"
+      ],
+      "source_seed_ids": [
+        "seed-1337"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "`Recovery in progress`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Fidelity recovery addendum",
+      "status": "partial",
+      "exact_items": [
+        "`Recovery in progress`",
+        "Recovery in progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L3"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01295",
+      "source_obligation_ids": [
+        "obl-1152"
+      ],
+      "source_seed_ids": [
+        "seed-1368",
+        "seed-1373",
+        "seed-1938"
+      ],
+      "source_shard_ids": [
+        "shard-0022",
+        "shard-0028"
+      ],
+      "canon_label": "`warning`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Degraded draft warning",
+      "status": "present",
+      "exact_items": [
+        "`warning`",
+        "warning"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L106",
+        "Plans/FinalGUISpec.md:L110",
+        "Plans/FinalGUISpec.md:L128",
+        "Plans/FinalGUISpec.md:L132",
+        "Plans/FinalGUISpec.md:L876"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01300",
+      "source_obligation_ids": [
+        "obl-1157"
+      ],
+      "source_seed_ids": [
+        "seed-1379",
+        "seed-1970"
+      ],
+      "source_shard_ids": [
+        "shard-0022",
+        "shard-0028"
+      ],
+      "canon_label": "`Progress` / `Dashboard`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Progress catalog source and default drills",
+      "status": "present",
+      "exact_items": [
+        "`Progress` / `Dashboard`",
+        "Progress",
+        "Dashboard"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L55",
+        "Plans/FinalGUISpec.md:L59",
+        "Plans/FinalGUISpec.md:L60",
+        "Plans/FinalGUISpec.md:L62",
+        "Plans/FinalGUISpec.md:L63"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01328",
+      "source_obligation_ids": [
+        "obl-1185"
+      ],
+      "source_seed_ids": [
+        "seed-1411"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "`storage-plan.md` already supports the broader pattern the rewrite needs:",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "present",
+      "exact_items": [
+        "`storage-plan.md` already supports the broader pattern the rewrite needs:",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L367",
+        "Plans/FinalGUISpec.md:L378",
+        "Plans/FinalGUISpec.md:L390",
+        "Plans/FinalGUISpec.md:L477",
+        "Plans/FinalGUISpec.md:L574"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01333",
+      "source_obligation_ids": [
+        "obl-1190"
+      ],
+      "source_seed_ids": [
+        "seed-1422"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "must use progressive disclosure rather than fully expanded seam/package/node trees",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## 19. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)",
+      "status": "partial",
+      "exact_items": [
+        "must use progressive disclosure rather than fully expanded seam/package/node trees"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2020"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01480",
+      "source_obligation_ids": [
+        "obl-1337"
+      ],
+      "source_seed_ids": [
+        "seed-1628"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "`detail_ref` and `*_ref` conventions already exist and should be expanded, not replaced",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 19.2 Persona editor fields (expanded)",
+      "status": "present",
+      "exact_items": [
+        "`detail_ref` and `*_ref` conventions already exist and should be expanded, not replaced",
+        "detail_ref",
+        "*_ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L9",
+        "Plans/FinalGUISpec.md:L12",
+        "Plans/FinalGUISpec.md:L16",
+        "Plans/FinalGUISpec.md:L21",
+        "Plans/FinalGUISpec.md:L29"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01509",
+      "source_obligation_ids": [
+        "obl-1366"
+      ],
+      "source_seed_ids": [
+        "seed-1680"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "`conflict`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 9.4 Conflict resolution",
+      "status": "present",
+      "exact_items": [
+        "`conflict`",
+        "conflict"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L305",
+        "Plans/FinalGUISpec.md:L710",
+        "Plans/FinalGUISpec.md:L1198",
+        "Plans/FinalGUISpec.md:L1557",
+        "Plans/FinalGUISpec.md:L1837"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01530",
+      "source_obligation_ids": [
+        "obl-1387"
+      ],
+      "source_seed_ids": [
+        "seed-1704"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Good candidate transitions into `cleanup_eligible`:",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 10.11 Loading-to-live transitions",
+      "status": "partial",
+      "exact_items": [
+        "Good candidate transitions into `cleanup_eligible`:",
+        "cleanup_eligible"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1317"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01700",
+      "source_obligation_ids": [
+        "obl-1557"
+      ],
+      "source_seed_ids": [
+        "seed-1944"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "canon_label": "all-nodes-blocked can escalate by elapsed time",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### All-nodes-blocked gating",
+      "status": "partial",
+      "exact_items": [
+        "all-nodes-blocked can escalate by elapsed time"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2503"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01706",
+      "source_obligation_ids": [
+        "obl-1563"
+      ],
+      "source_seed_ids": [
+        "seed-1950"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "canon_label": "usually `info` or `warning`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Degraded draft warning",
+      "status": "present",
+      "exact_items": [
+        "usually `info` or `warning`",
+        "info",
+        "warning"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L106",
+        "Plans/FinalGUISpec.md:L110",
+        "Plans/FinalGUISpec.md:L128",
+        "Plans/FinalGUISpec.md:L132",
+        "Plans/FinalGUISpec.md:L598"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01724",
+      "source_obligation_ids": [
+        "obl-1581"
+      ],
+      "source_seed_ids": [
+        "seed-1973"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "canon_label": "`system notification`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-067: Notification routing policy",
+      "status": "partial",
+      "exact_items": [
+        "`system notification`",
+        "system notification"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L387"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01800",
+      "source_obligation_ids": [
+        "obl-1657"
+      ],
+      "source_seed_ids": [
+        "seed-2064"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "others should be transient focus changes only",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 13.2 Focus Indicators",
+      "status": "partial",
+      "exact_items": [
+        "others should be transient focus changes only"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1418"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01829",
+      "source_obligation_ids": [
+        "obl-1686"
+      ],
+      "source_seed_ids": [
+        "seed-2117"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "remediation should use one canonical resolution family, and the richer lineage-aware enum",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "partial",
+      "exact_items": [
+        "remediation should use one canonical resolution family, and the richer lineage-aware enum looks more compatible with the rewrite than a coarse success/failed enum"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01886",
+      "source_obligation_ids": [
+        "obl-1743"
+      ],
+      "source_seed_ids": [
+        "seed-2225"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "Concerns now need to align with the newer notification model:",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-067: Notification routing policy",
+      "status": "partial",
+      "exact_items": [
+        "Concerns now need to align with the newer notification model:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L101",
+        "Plans/FinalGUISpec.md:L108"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01912",
+      "source_obligation_ids": [
+        "obl-1769"
+      ],
+      "source_seed_ids": [
+        "seed-2273"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "The rewrite now expects a stronger requested/effective/provider/account identity split tha",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "partial",
+      "exact_items": [
+        "The rewrite now expects a stronger requested/effective/provider/account identity split than several non-runtime docs currently expose:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01978",
+      "source_obligation_ids": [
+        "obl-1835"
+      ],
+      "source_seed_ids": [
+        "seed-2358"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "GitHub-facing docs still lag the identity/runtime rewrite:",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "partial",
+      "exact_items": [
+        "GitHub-facing docs still lag the identity/runtime rewrite:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01998",
+      "source_obligation_ids": [
+        "obl-1855"
+      ],
+      "source_seed_ids": [
+        "seed-2386"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "Research Progress - 2026-03-16 - Sonnet broader second-sweep delta cluster (requested-acco",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Progress catalog source and default drills",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-16 - Sonnet broader second-sweep delta cluster (requested-account asymmetry and event-schema precision)"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L910"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

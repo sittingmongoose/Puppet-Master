@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-962",
+  "group_ids": [
+    "discgrp-3845",
+    "discgrp-3846",
+    "discgrp-3847",
+    "discgrp-3848"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04150",
+      "source_obligation_ids": [
+        "obl-3990"
+      ],
+      "source_seed_ids": [
+        "seed-5478"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/OpenCode_Coverage_Matrix.md",
+      "new_heading_hint": "# OpenCode Coverage Matrix (Audit)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04151",
+      "source_obligation_ids": [
+        "obl-3991"
+      ],
+      "source_seed_ids": [
+        "seed-5480"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "### B) Project Contracts (generated per user project)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L188"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04152",
+      "source_obligation_ids": [
+        "obl-3992"
+      ],
+      "source_seed_ids": [
+        "seed-5481"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04153",
+      "source_obligation_ids": [
+        "obl-3993"
+      ],
+      "source_seed_ids": [
+        "seed-5482",
+        "seed-5486"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "#### `cmd.github.connect`",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L160"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

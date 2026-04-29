@@ -2,37 +2,19 @@
   "schema_id": "pm.ledger_obligation_seed_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-006",
-  "timestamp_utc": "2026-04-28T17:49:09Z",
-  "subagent_tasks": [
-    "seed-shard-0021",
-    "seed-shard-0022",
-    "seed-shard-0023",
-    "seed-shard-0024"
-  ],
-  "assigned_input_boundaries": [
-    "shard-0021 L004001-L004200",
-    "shard-0022 L004201-L004400",
-    "shard-0023 L004401-L004600",
-    "shard-0024 L004601-L004800"
-  ],
-  "subagent_result_status": {
-    "seed-shard-0021": "completed",
-    "seed-shard-0022": "completed",
-    "seed-shard-0023": "completed",
-    "seed-shard-0024": "completed"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "shard_ids_assigned": [
+  "shard_ids": [
     "shard-0021",
     "shard-0022",
     "shard-0023",
     "shard-0024"
   ],
-  "shard_ids_completed": [
-    "shard-0021",
-    "shard-0022",
-    "shard-0023",
-    "shard-0024"
-  ]
+  "shard_result_files": [
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0021.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0022.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0023.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0024.json"
+  ],
+  "seed_candidates_total": 353,
+  "noise_items_total": 300,
+  "uncertain_items_total": 0
 }

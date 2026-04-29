@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1392",
+  "group_ids": [
+    "discgrp-5565",
+    "discgrp-5566",
+    "discgrp-5567",
+    "discgrp-5568"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06027",
+      "source_obligation_ids": [
+        "obl-5799"
+      ],
+      "source_seed_ids": [
+        "seed-8624"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### Dependency order (implement in this order within phases)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L431"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06028",
+      "source_obligation_ids": [
+        "obl-5800"
+      ],
+      "source_seed_ids": [
+        "seed-8625"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06030",
+      "source_obligation_ids": [
+        "obl-5802"
+      ],
+      "source_seed_ids": [
+        "seed-8628"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "### Field name correction",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Tools.md:L1279"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06031",
+      "source_obligation_ids": [
+        "obl-5803"
+      ],
+      "source_seed_ids": [
+        "seed-8629"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "### Canonical HITL request contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L81"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

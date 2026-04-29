@@ -1,0 +1,908 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-091",
+  "row_group_ids": [
+    "rowgrp-0361",
+    "rowgrp-0362",
+    "rowgrp-0363",
+    "rowgrp-0364"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-02097",
+      "source_obligation_ids": [
+        "obl-1954"
+      ],
+      "source_seed_ids": [
+        "seed-2543"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "widget-specific filter fields",
+      "row_type": "consumer",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "### 11.2 Security Filter (CRITICAL)",
+      "status": "partial",
+      "exact_items": [
+        "widget-specific filter fields"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L1318"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02116",
+      "source_obligation_ids": [
+        "obl-1973"
+      ],
+      "source_seed_ids": [
+        "seed-2566"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "A second real issue surfaced inside `Widget_System.md` itself:",
+      "row_type": "consumer",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "#### Issue 1: False Positives in Documentation",
+      "status": "partial",
+      "exact_items": [
+        "A second real issue surfaced inside `Widget_System.md` itself:",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L2252"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04093",
+      "source_obligation_ids": [
+        "obl-3935"
+      ],
+      "source_seed_ids": [
+        "seed-5394"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "`generated://<artifact_id>` exists in preview restore behavior, but that identity pattern",
+      "row_type": "consumer",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "### 2.3 Pattern Loading",
+      "status": "partial",
+      "exact_items": [
+        "`generated://<artifact_id>` exists in preview restore behavior, but that identity pattern has not yet been generalized for other artifact/report opens.",
+        "generated://<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L368"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04524",
+      "source_obligation_ids": [
+        "obl-4302"
+      ],
+      "source_seed_ids": [
+        "seed-6030"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "There is still no single place to say that a result should restore not just a destination",
+      "row_type": "consumer",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "### 11.1 FileSafe: Write scope (CRITICAL)",
+      "status": "partial",
+      "exact_items": [
+        "There is still no single place to say that a result should restore not just a destination surface, but also scope such as `project_id`, `focused_run_id`, `thread_id`, selected object, and inspector target.",
+        "project_id",
+        "focused_run_id",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L1149"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04560",
+      "source_obligation_ids": [
+        "obl-4338"
+      ],
+      "source_seed_ids": [
+        "seed-6109"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Normalize attention-surface target fields so they can restore:",
+      "row_type": "consumer",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)",
+      "status": "partial",
+      "exact_items": [
+        "Normalize attention-surface target fields so they can restore:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L2518"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04574",
+      "source_obligation_ids": [
+        "obl-4352"
+      ],
+      "source_seed_ids": [
+        "seed-6131"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "`storage-plan.md` owns subject identity for preview/doc/artifact restore",
+      "row_type": "consumer",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)",
+      "status": "present",
+      "exact_items": [
+        "`storage-plan.md` owns subject identity for preview/doc/artifact restore",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L29",
+        "Plans/FileSafe.md:L43",
+        "Plans/FileSafe.md:L65",
+        "Plans/FileSafe.md:L128",
+        "Plans/FileSafe.md:L144"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05889",
+      "source_obligation_ids": [
+        "obl-5661"
+      ],
+      "source_seed_ids": [
+        "seed-8417"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "This means the branch is past the point where isolated consumer cleanup would be reliable.",
+      "row_type": "consumer",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "### 1.2 Integration Point",
+      "status": "partial",
+      "exact_items": [
+        "This means the branch is past the point where isolated consumer cleanup would be reliable."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L94"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06320",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06493",
+      "source_obligation_ids": [
+        "obl-6134"
+      ],
+      "source_seed_ids": [
+        "seed-9273"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "`preview_subject_id` gives a strong subject-first restore identity",
+      "row_type": "consumer",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)",
+      "status": "partial",
+      "exact_items": [
+        "`preview_subject_id` gives a strong subject-first restore identity",
+        "preview_subject_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L2518"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06499",
+      "source_obligation_ids": [
+        "obl-6140"
+      ],
+      "source_seed_ids": [
+        "seed-9287"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "Preview restore identity is subject-first, while the broader route/open owner docs still d",
+      "row_type": "consumer",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)",
+      "status": "partial",
+      "exact_items": [
+        "Preview restore identity is subject-first, while the broader route/open owner docs still do not define the named route/open primitives that would explain it consistently."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L2518"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00518",
+      "source_obligation_ids": [
+        "obl-375"
+      ],
+      "source_seed_ids": [
+        "seed-433"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "sharpen the asymmetry explicitly so Orchestrator does not regress into a duplicate worktre",
+      "row_type": "layout_blocker",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "### 10.1 Orchestrator Plan",
+      "status": "partial",
+      "exact_items": [
+        "sharpen the asymmetry explicitly so Orchestrator does not regress into a duplicate worktree manager"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L1170"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00918",
+      "source_obligation_ids": [
+        "obl-775"
+      ],
+      "source_seed_ids": [
+        "seed-882"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "concerns should remain shared objects across surfaces, not duplicated local alert rows",
+      "row_type": "layout_blocker",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "### Shared vs local actions",
+      "status": "partial",
+      "exact_items": [
+        "concerns should remain shared objects across surfaces, not duplicated local alert rows"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L2532"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-01526",
+      "source_obligation_ids": [
+        "obl-1383"
+      ],
+      "source_seed_ids": [
+        "seed-1700"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "no required safe-point restore targeting that worktree/baseline",
+      "row_type": "layout_blocker",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "### 4. Safe-point interaction",
+      "status": "partial",
+      "exact_items": [
+        "no required safe-point restore targeting that worktree/baseline"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L2497"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04009",
+      "source_obligation_ids": [
+        "obl-3852"
+      ],
+      "source_seed_ids": [
+        "seed-5279"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "`Runtime_Artifacts_Panel.md` currently treats the envelope mostly as an implementation hoo",
+      "row_type": "layout_blocker",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "# FileSafe -- Implementation Plan",
+      "status": "present",
+      "exact_items": [
+        "`Runtime_Artifacts_Panel.md` currently treats the envelope mostly as an implementation hook:",
+        "Runtime_Artifacts_Panel.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L37",
+        "Plans/FileSafe.md:L65",
+        "Plans/FileSafe.md:L144",
+        "Plans/FileSafe.md:L947",
+        "Plans/FileSafe.md:L970"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04716",
+      "source_obligation_ids": [
+        "obl-4494"
+      ],
+      "source_seed_ids": [
+        "seed-6393"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "Several current docs still blur \u201cwhich object\u201d and \u201cwhat part of that object\u2019s UI should b",
+      "row_type": "layout_blocker",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "### Part A -- FileSafe",
+      "status": "partial",
+      "exact_items": [
+        "Several current docs still blur \u201cwhich object\u201d and \u201cwhat part of that object\u2019s UI should be shown.\u201d"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L49",
+        "Plans/FileSafe.md:L71"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04820",
+      "source_obligation_ids": [
+        "obl-4597"
+      ],
+      "source_seed_ids": [
+        "seed-6565"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "canon_label": "restoring per-project layout and remembered local UI state",
+      "row_type": "layout_blocker",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "### Shared vs local actions",
+      "status": "partial",
+      "exact_items": [
+        "restoring per-project layout and remembered local UI state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L2532"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04826",
+      "source_obligation_ids": [
+        "obl-4603"
+      ],
+      "source_seed_ids": [
+        "seed-6580"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "canon_label": "Explicitly state that workspace-tab selection, panel docking, and per-project layout resto",
+      "row_type": "layout_blocker",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)",
+      "status": "partial",
+      "exact_items": [
+        "Explicitly state that workspace-tab selection, panel docking, and per-project layout restore are shell-state concerns layered underneath canonical routing."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L2518"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05574",
+      "source_obligation_ids": [
+        "obl-5346"
+      ],
+      "source_seed_ids": [
+        "seed-7946"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "projectors derive `preview_subject_id` deterministically for restore and UI-state joins",
+      "row_type": "layout_blocker",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "#[derive(Debug, Clone)]",
+      "status": "partial",
+      "exact_items": [
+        "projectors derive `preview_subject_id` deterministically for restore and UI-state joins",
+        "preview_subject_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L208",
+        "Plans/FileSafe.md:L496",
+        "Plans/FileSafe.md:L506",
+        "Plans/FileSafe.md:L516",
+        "Plans/FileSafe.md:L524"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06034",
+      "source_obligation_ids": [
+        "obl-5806"
+      ],
+      "source_seed_ids": [
+        "seed-8633"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "canonical runtime-facing fields are `blocked_reason_code`, ordered `allowed_action_ids[]`,",
+      "row_type": "layout_blocker",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "#### Gap 1: ExecutionRequest Metadata",
+      "status": "present",
+      "exact_items": [
+        "canonical runtime-facing fields are `blocked_reason_code`, ordered `allowed_action_ids[]`, `blocked_sequence`, preserved-local-work, prerequisite metadata, and `detail_ref?`",
+        "blocked_reason_code",
+        "allowed_action_ids[]",
+        "blocked_sequence",
+        "detail_ref?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L2470",
+        "Plans/FileSafe.md:L2494",
+        "Plans/FileSafe.md:L2512",
+        "Plans/FileSafe.md:L2524",
+        "Plans/FileSafe.md:L2525"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06434",
+      "source_obligation_ids": [
+        "obl-6075"
+      ],
+      "source_seed_ids": [
+        "seed-9181"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "wrapper metadata in `UI_Command_Catalog.md`",
+      "row_type": "layout_blocker",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "#### Gap 1: ExecutionRequest Metadata",
+      "status": "partial",
+      "exact_items": [
+        "wrapper metadata in `UI_Command_Catalog.md`",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L2215"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00116",
+      "source_obligation_ids": [
+        "obl-039"
+      ],
+      "source_seed_ids": [
+        "seed-039"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "lane/worktree pool and contamination policy",
+      "row_type": "layout_blocker",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "Worktree / SCM / Parallelism Impacts",
+      "status": "missing",
+      "exact_items": [
+        "Define lane\u2194worktree mapping",
+        "Specify contamination detection and cross-lane reuse rules",
+        "Define safe-point restore for lane/package context",
+        "Resolve no-worktrees vs per-subtask worktrees contradiction",
+        "Register PM-managed worktrees in source control visibility"
+      ],
+      "stale_tokens": [
+        "per-subtask worktrees",
+        "no-worktrees",
+        "safe points",
+        "cleanup policy",
+        "one active worktree",
+        "project-root artifact paths"
+      ],
+      "evidence": [
+        "Plans/FileSafe.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06963",
+      "source_obligation_ids": [
+        "obl-6563"
+      ],
+      "source_seed_ids": [
+        "seed-9974"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`gap-005` through `gap-008` are now audit-stable; further broad sweeps are low yield. The",
+      "row_type": "layout_blocker",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)",
+      "status": "partial",
+      "exact_items": [
+        "`gap-005` through `gap-008` are now audit-stable; further broad sweeps are low yield. The only notable caution is that `gap-007` still carries a live `restore points` contradiction in addition to missing structural headings.",
+        "gap-005",
+        "gap-008",
+        "gap-007",
+        "restore points"
+      ],
+      "stale_tokens": [
+        "gap-005",
+        "gap-007",
+        "gap-008",
+        "restore points"
+      ],
+      "evidence": [
+        "Plans/FileSafe.md:L2518"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07163",
+      "source_obligation_ids": [
+        "obl-6731"
+      ],
+      "source_seed_ids": [
+        "seed-10346"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "This invocation kept the blocker-family count at eight and the affected-doc count at twent",
+      "row_type": "layout_blocker",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)",
+      "status": "partial",
+      "exact_items": [
+        "This invocation kept the blocker-family count at eight and the affected-doc count at twenty, removed the overstated `restore points` contradiction from `gap-007`, added exact broken-anchor evidence to `gap-003` and `gap-004`, and raised the underlying evidence count to sixty-two.",
+        "restore points",
+        "gap-007",
+        "gap-003",
+        "gap-004"
+      ],
+      "stale_tokens": [
+        "gap-003",
+        "gap-004",
+        "gap-007",
+        "restore points"
+      ],
+      "evidence": [
+        "Plans/FileSafe.md:L2518"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00269",
+      "source_obligation_ids": [
+        "obl-146"
+      ],
+      "source_seed_ids": [
+        "seed-152"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "likely issue: schemas remain run/node/tier-scoped, with no seam/package/lane/promotion/acc",
+      "row_type": "owner",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "#### Issue 1: False Positives in Documentation",
+      "status": "partial",
+      "exact_items": [
+        "likely issue: schemas remain run/node/tier-scoped, with no seam/package/lane/promotion/account lineage and no contamination or safe-point restore provenance."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L2252"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00396",
+      "source_obligation_ids": [
+        "obl-254"
+      ],
+      "source_seed_ids": [
+        "seed-287"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "`effective_provider_identity` is disclosure/audit metadata",
+      "row_type": "owner",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "#### Gap 1: ExecutionRequest Metadata",
+      "status": "partial",
+      "exact_items": [
+        "`effective_provider_identity` is disclosure/audit metadata",
+        "effective_provider_identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L2215"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00883",
+      "source_obligation_ids": [
+        "obl-740"
+      ],
+      "source_seed_ids": [
+        "seed-845"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "same issue persists with more evidence:",
+      "row_type": "owner",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "#### Issue 1: False Positives in Documentation",
+      "status": "partial",
+      "exact_items": [
+        "same issue persists with more evidence:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L2252"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00950",
+      "source_obligation_ids": [
+        "obl-807"
+      ],
+      "source_seed_ids": [
+        "seed-931"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "`Restore`",
+      "row_type": "owner",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)",
+      "status": "present",
+      "exact_items": [
+        "`Restore`",
+        "Restore"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L1152",
+        "Plans/FileSafe.md:L1279",
+        "Plans/FileSafe.md:L2357",
+        "Plans/FileSafe.md:L2515",
+        "Plans/FileSafe.md:L2518"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01006",
+      "source_obligation_ids": [
+        "obl-863"
+      ],
+      "source_seed_ids": [
+        "seed-1008"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "safe-point restore",
+      "row_type": "owner",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "### 4. Safe-point interaction",
+      "status": "present",
+      "exact_items": [
+        "safe-point restore"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L2515"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01007",
+      "source_obligation_ids": [
+        "obl-864"
+      ],
+      "source_seed_ids": [
+        "seed-1009"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "lane/worktree restore",
+      "row_type": "owner",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)",
+      "status": "partial",
+      "exact_items": [
+        "lane/worktree restore"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L2518"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01014",
+      "source_obligation_ids": [
+        "obl-871"
+      ],
+      "source_seed_ids": [
+        "seed-1021"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "config bundles are clearly defined (`.pm-bundle`)",
+      "row_type": "owner",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "### 5.2 Config File Toggle",
+      "status": "partial",
+      "exact_items": [
+        "config bundles are clearly defined (`.pm-bundle`)",
+        ".pm-bundle"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L899"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01070",
+      "source_obligation_ids": [
+        "obl-927"
+      ],
+      "source_seed_ids": [
+        "seed-1091"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "canon_label": "`inherit/override` from configuration layering",
+      "row_type": "owner",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "### 2.4 Configuration Integration",
+      "status": "partial",
+      "exact_items": [
+        "`inherit/override` from configuration layering",
+        "inherit/override"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L482"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01331",
+      "source_obligation_ids": [
+        "obl-1188"
+      ],
+      "source_seed_ids": [
+        "seed-1414"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "That means the performance model must explicitly cover:",
+      "row_type": "owner",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "### 12.3 Performance Impact",
+      "status": "partial",
+      "exact_items": [
+        "That means the performance model must explicitly cover:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L1656"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01490",
+      "source_obligation_ids": [
+        "obl-1347"
+      ],
+      "source_seed_ids": [
+        "seed-1643"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "safe-point restore must target the exact worktree/baseline",
+      "row_type": "owner",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "### 4. Safe-point interaction",
+      "status": "partial",
+      "exact_items": [
+        "safe-point restore must target the exact worktree/baseline"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:L2497"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

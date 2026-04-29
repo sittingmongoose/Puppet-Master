@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-303",
+  "group_ids": [
+    "discgrp-1209",
+    "discgrp-1210",
+    "discgrp-1211",
+    "discgrp-1212"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01459",
+      "source_obligation_ids": [
+        "obl-1316"
+      ],
+      "source_seed_ids": [
+        "seed-1590"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L35"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01460",
+      "source_obligation_ids": [
+        "obl-1317"
+      ],
+      "source_seed_ids": [
+        "seed-1596",
+        "seed-2161"
+      ],
+      "source_shard_ids": [
+        "shard-0025",
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01461",
+      "source_obligation_ids": [
+        "obl-1318"
+      ],
+      "source_seed_ids": [
+        "seed-1597",
+        "seed-2162"
+      ],
+      "source_shard_ids": [
+        "shard-0025",
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01462",
+      "source_obligation_ids": [
+        "obl-1319"
+      ],
+      "source_seed_ids": [
+        "seed-1600"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

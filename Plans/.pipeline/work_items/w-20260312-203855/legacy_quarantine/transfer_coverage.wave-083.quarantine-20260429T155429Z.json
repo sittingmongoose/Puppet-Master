@@ -1,0 +1,122 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-083",
+  "timestamp_utc": "2026-04-29T00:42:07Z",
+  "purpose": "post-doc-discovery coverage refresh verification for rows whose target paths were resolved by Doc Discovery Resolver",
+  "subagent_tasks": [
+    "coverage-refresh-001",
+    "coverage-refresh-002",
+    "coverage-refresh-003",
+    "coverage-refresh-004",
+    "coverage-refresh-recheck-001",
+    "coverage-refresh-recheck-002",
+    "coverage-refresh-recheck-003",
+    "coverage-refresh-recheck-004"
+  ],
+  "assigned_input_boundaries": [
+    "cov-001..cov-005 with concrete resolved Plans paths",
+    "cov-006..cov-010 with concrete resolved Plans paths",
+    "cov-011,cov-012,cov-018,cov-021,cov-022 with concrete resolved Plans paths",
+    "cov-352,cov-379,cov-381,cov-414,cov-1096 with concrete resolved Plans paths",
+    "same four groups rechecked after reducer evidence/unresolved_reason fix"
+  ],
+  "subagent_result_status": {
+    "coverage-refresh-001": "material_findings_reduced",
+    "coverage-refresh-002": "material_findings_reduced",
+    "coverage-refresh-003": "material_findings_reduced",
+    "coverage-refresh-004": "material_findings_reduced",
+    "coverage-refresh-recheck-001": "completed_pass",
+    "coverage-refresh-recheck-002": "completed_pass_positive_findings_classified_noise",
+    "coverage-refresh-recheck-003": "completed_pass",
+    "coverage-refresh-recheck-004": "completed_pass"
+  },
+  "completed_task_count": 8,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-001",
+    "cov-002",
+    "cov-003",
+    "cov-004",
+    "cov-005",
+    "cov-006",
+    "cov-007",
+    "cov-008",
+    "cov-009",
+    "cov-010",
+    "cov-011",
+    "cov-012",
+    "cov-018",
+    "cov-021",
+    "cov-022",
+    "cov-352",
+    "cov-379",
+    "cov-381",
+    "cov-414",
+    "cov-1096"
+  ],
+  "coverage_ids_completed": [
+    "cov-001",
+    "cov-002",
+    "cov-003",
+    "cov-004",
+    "cov-005",
+    "cov-006",
+    "cov-007",
+    "cov-008",
+    "cov-009",
+    "cov-010",
+    "cov-011",
+    "cov-012",
+    "cov-018",
+    "cov-021",
+    "cov-022",
+    "cov-352",
+    "cov-379",
+    "cov-381",
+    "cov-414",
+    "cov-1096"
+  ],
+  "path_groups_assigned": [
+    "Plans/Contracts_V0.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Widget_System.md",
+    "Plans/newfeatures.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/rewrite-tie-in-memo.md",
+    "Plans/storage-plan.md",
+    "Plans/usage-feature.md"
+  ],
+  "material_coverage_updates": [
+    {
+      "coverage_ids": [
+        "cov-001",
+        "cov-002",
+        "cov-003",
+        "cov-004",
+        "cov-005",
+        "cov-006",
+        "cov-007",
+        "cov-008",
+        "cov-009",
+        "cov-010",
+        "cov-011",
+        "cov-012",
+        "cov-018",
+        "cov-021",
+        "cov-022",
+        "cov-352",
+        "cov-379",
+        "cov-381",
+        "cov-414",
+        "cov-1096"
+      ],
+      "change": "copied doc_discovery_resolution evidence into transfer_coverage and row_inventory, set doc_resolution_status=concrete, removed stale unresolved_reason fields"
+    }
+  ],
+  "noise_findings": [
+    "One recheck response labeled positive confirmations as material findings; reducer classified them as noise because no further row changes were required."
+  ]
+}

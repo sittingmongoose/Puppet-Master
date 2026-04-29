@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-957",
+  "group_ids": [
+    "discgrp-3825",
+    "discgrp-3826",
+    "discgrp-3827",
+    "discgrp-3828"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04130",
+      "source_obligation_ids": [
+        "obl-3970"
+      ],
+      "source_seed_ids": [
+        "seed-5442"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Runtime artifact and projection storage scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04131",
+      "source_obligation_ids": [
+        "obl-3971"
+      ],
+      "source_seed_ids": [
+        "seed-5449",
+        "seed-5509"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/rewrite-tie-in-memo.md",
+      "new_heading_hint": "### Plans likely needing the most rewrite-aware edits",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L99"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04132",
+      "source_obligation_ids": [
+        "obl-3972"
+      ],
+      "source_seed_ids": [
+        "seed-5452"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "## Purpose and scope",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04133",
+      "source_obligation_ids": [
+        "obl-3973"
+      ],
+      "source_seed_ids": [
+        "seed-5453"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L774"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

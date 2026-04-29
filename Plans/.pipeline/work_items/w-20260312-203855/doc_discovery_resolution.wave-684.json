@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-684",
+  "group_ids": [
+    "discgrp-2733",
+    "discgrp-2734",
+    "discgrp-2735",
+    "discgrp-2736"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03013",
+      "source_obligation_ids": [
+        "obl-2859"
+      ],
+      "source_seed_ids": [
+        "seed-3776"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "# Overseer Protocol (Canonical)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03014",
+      "source_obligation_ids": [
+        "obl-2860"
+      ],
+      "source_seed_ids": [
+        "seed-3777"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Counter semantics",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1575"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03015",
+      "source_obligation_ids": [
+        "obl-2861"
+      ],
+      "source_seed_ids": [
+        "seed-3778"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "### Fidelity recovery cov-032: Concern linkage to adjacent families",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03016",
+      "source_obligation_ids": [
+        "obl-2862"
+      ],
+      "source_seed_ids": [
+        "seed-3779"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 4. Remediation lineage events",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1243"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

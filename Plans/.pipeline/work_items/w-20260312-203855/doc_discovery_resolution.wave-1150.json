@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1150",
+  "group_ids": [
+    "discgrp-4597",
+    "discgrp-4598",
+    "discgrp-4599",
+    "discgrp-4600"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04995",
+      "source_obligation_ids": [
+        "obl-4771"
+      ],
+      "source_seed_ids": [
+        "seed-6869"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "### 6.7 Model aliases (friendly names)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Models_System.md:L447"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04996",
+      "source_obligation_ids": [
+        "obl-4772"
+      ],
+      "source_seed_ids": [
+        "seed-6870"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "# Commands System (Canonical SSOT)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04997",
+      "source_obligation_ids": [
+        "obl-4773"
+      ],
+      "source_seed_ids": [
+        "seed-6873"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04998",
+      "source_obligation_ids": [
+        "obl-4774"
+      ],
+      "source_seed_ids": [
+        "seed-6874"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "### Canonical route payload and route/open tail rules",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L95"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

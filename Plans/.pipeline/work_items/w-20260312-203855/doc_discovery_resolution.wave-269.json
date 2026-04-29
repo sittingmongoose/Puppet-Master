@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-269",
+  "group_ids": [
+    "discgrp-1073",
+    "discgrp-1074",
+    "discgrp-1075",
+    "discgrp-1076"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01323",
+      "source_obligation_ids": [
+        "obl-1180"
+      ],
+      "source_seed_ids": [
+        "seed-1402"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-093: Account switch and pressure history",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L221"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01324",
+      "source_obligation_ids": [
+        "obl-1181"
+      ],
+      "source_seed_ids": [
+        "seed-1407"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01325",
+      "source_obligation_ids": [
+        "obl-1182"
+      ],
+      "source_seed_ids": [
+        "seed-1408"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 13.5 Minimum Touch/Click Targets",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1439"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01326",
+      "source_obligation_ids": [
+        "obl-1183"
+      ],
+      "source_seed_ids": [
+        "seed-1409"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "### 3. Event ledger (existing concept, under Usage umbrella)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/usage-feature.md:L187"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

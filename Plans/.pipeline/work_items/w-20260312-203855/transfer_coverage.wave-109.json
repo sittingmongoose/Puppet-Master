@@ -1,0 +1,1096 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-109",
+  "row_group_ids": [
+    "rowgrp-0433",
+    "rowgrp-0434",
+    "rowgrp-0435",
+    "rowgrp-0436"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-04657",
+      "source_obligation_ids": [
+        "obl-4435"
+      ],
+      "source_seed_ids": [
+        "seed-6280"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "Research Progress - 2026-03-16 - Controlled vocabulary for `subject_id` families and `obje",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 6.1 Three Theme Families (Three User-Facing Choices)",
+      "status": "present",
+      "exact_items": [
+        "Research Progress - 2026-03-16 - Controlled vocabulary for `subject_id` families and `object_kind`",
+        "subject_id",
+        "object_kind"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L937",
+        "Plans/FinalGUISpec.md:L939",
+        "Plans/FinalGUISpec.md:L940",
+        "Plans/FinalGUISpec.md:L1633"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04667",
+      "source_obligation_ids": [
+        "obl-4445"
+      ],
+      "source_seed_ids": [
+        "seed-6299",
+        "seed-7248"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0069"
+      ],
+      "canon_label": "`message`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### 7.16.1 Thread header and message stream",
+      "status": "present",
+      "exact_items": [
+        "`message`",
+        "message"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L545",
+        "Plans/FinalGUISpec.md:L546",
+        "Plans/FinalGUISpec.md:L692",
+        "Plans/FinalGUISpec.md:L996",
+        "Plans/FinalGUISpec.md:L998"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04677",
+      "source_obligation_ids": [
+        "obl-4455"
+      ],
+      "source_seed_ids": [
+        "seed-6321"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "provider/runtime disclosure fields:",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## 19. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)",
+      "status": "partial",
+      "exact_items": [
+        "provider/runtime disclosure fields:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2020"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04692",
+      "source_obligation_ids": [
+        "obl-4470"
+      ],
+      "source_seed_ids": [
+        "seed-6354"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "Research Progress - 2026-03-16 - Sub-selection and `inspector_target` should stay secondar",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Progress catalog source and default drills",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-16 - Sub-selection and `inspector_target` should stay secondary",
+        "inspector_target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L941"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04705",
+      "source_obligation_ids": [
+        "obl-4483"
+      ],
+      "source_seed_ids": [
+        "seed-6372"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "`message_id` when the real target is the message itself",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### 7.16.1 Thread header and message stream",
+      "status": "partial",
+      "exact_items": [
+        "`message_id` when the real target is the message itself",
+        "message_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1012"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04708",
+      "source_obligation_ids": [
+        "obl-4486"
+      ],
+      "source_seed_ids": [
+        "seed-6375",
+        "seed-7358",
+        "seed-7503"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0069",
+        "shard-0070"
+      ],
+      "canon_label": "`object_kind = message`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### 7.16.1 Thread header and message stream",
+      "status": "partial",
+      "exact_items": [
+        "`object_kind = message`",
+        "object_kind = message"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1000"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04724",
+      "source_obligation_ids": [
+        "obl-4502"
+      ],
+      "source_seed_ids": [
+        "seed-6401"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "Research Progress - 2026-03-16 - Migration pattern for `route_target` and navigation wrapp",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## 4. Navigation Architecture",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-16 - Migration pattern for `route_target` and navigation wrappers",
+        "route_target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L939"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04810",
+      "source_obligation_ids": [
+        "obl-4587"
+      ],
+      "source_seed_ids": [
+        "seed-6551"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "canon_label": "Research Progress - 2026-03-16 - Shell/workspace state should remain adjacent to routing,",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-16 - Shell/workspace state should remain adjacent to routing, not inside it"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L19",
+        "Plans/FinalGUISpec.md:L26"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04859",
+      "source_obligation_ids": [
+        "obl-4636"
+      ],
+      "source_seed_ids": [
+        "seed-6635"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "Research Progress - 2026-03-16 - Override rule: route-target should override only what is",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Progress catalog source and default drills",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-16 - Override rule: route-target should override only what is necessary"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L910"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04931",
+      "source_obligation_ids": [
+        "obl-4707"
+      ],
+      "source_seed_ids": [
+        "seed-6773"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "Research Progress - 2026-03-16 - Wrapper commands vs explicit `cmd.nav.*` family",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-022: Concern record family definition",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-16 - Wrapper commands vs explicit `cmd.nav.*` family",
+        "cmd.nav.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L7",
+        "Plans/FinalGUISpec.md:L14"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05022",
+      "source_obligation_ids": [
+        "obl-4798"
+      ],
+      "source_seed_ids": [
+        "seed-6905"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - `route_target` owner placement",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Progress catalog source and default drills",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - `route_target` owner placement",
+        "route_target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L939"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05053",
+      "source_obligation_ids": [
+        "obl-4829"
+      ],
+      "source_seed_ids": [
+        "seed-6950"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - `route_target` vs `OpenSubject`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Progress catalog source and default drills",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - `route_target` vs `OpenSubject`",
+        "route_target",
+        "OpenSubject"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L939"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05087",
+      "source_obligation_ids": [
+        "obl-4863"
+      ],
+      "source_seed_ids": [
+        "seed-7002"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - Exact minimum field set for `OpenSubject`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Recommended minimum concern record shape",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - Exact minimum field set for `OpenSubject`",
+        "OpenSubject"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L203",
+        "Plans/FinalGUISpec.md:L210",
+        "Plans/FinalGUISpec.md:L981"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05121",
+      "source_obligation_ids": [
+        "obl-4897"
+      ],
+      "source_seed_ids": [
+        "seed-7056"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - Exact minimum field set for `route_target`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Recommended minimum concern record shape",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - Exact minimum field set for `route_target`",
+        "route_target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L939"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05153",
+      "source_obligation_ids": [
+        "obl-4929"
+      ],
+      "source_seed_ids": [
+        "seed-7131"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - Exact `target_kind` vocabulary",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Progress catalog source and default drills",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - Exact `target_kind` vocabulary",
+        "target_kind"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L910"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05168",
+      "source_obligation_ids": [
+        "obl-4944"
+      ],
+      "source_seed_ids": [
+        "seed-7165"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - Selector precedence inside `route_target`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Progress catalog source and default drills",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - Selector precedence inside `route_target`",
+        "route_target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L939"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05189",
+      "source_obligation_ids": [
+        "obl-4965"
+      ],
+      "source_seed_ids": [
+        "seed-7201"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - `resume_url` serialization boundaries",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Progress catalog source and default drills",
+      "status": "present",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - `resume_url` serialization boundaries",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L117",
+        "Plans/FinalGUISpec.md:L120",
+        "Plans/FinalGUISpec.md:L935",
+        "Plans/FinalGUISpec.md:L2476",
+        "Plans/FinalGUISpec.md:L2511"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05211",
+      "source_obligation_ids": [
+        "obl-4987"
+      ],
+      "source_seed_ids": [
+        "seed-7237"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - Refreshed canonical `object_kind` vocabulary",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Progress catalog source and default drills",
+      "status": "present",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - Refreshed canonical `object_kind` vocabulary",
+        "object_kind"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L937",
+        "Plans/FinalGUISpec.md:L939"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05228",
+      "source_obligation_ids": [
+        "obl-5004"
+      ],
+      "source_seed_ids": [
+        "seed-7299"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "`object_kind` now carries almost all non-subject navigation identity in the rewrite.",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "present",
+      "exact_items": [
+        "`object_kind` now carries almost all non-subject navigation identity in the rewrite.",
+        "object_kind"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L937",
+        "Plans/FinalGUISpec.md:L939"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05230",
+      "source_obligation_ids": [
+        "obl-5006"
+      ],
+      "source_seed_ids": [
+        "seed-7301"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - Exact `inspector_target` vocabulary",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Progress catalog source and default drills",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - Exact `inspector_target` vocabulary",
+        "inspector_target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L941"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05245",
+      "source_obligation_ids": [
+        "obl-5021"
+      ],
+      "source_seed_ids": [
+        "seed-7322"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "Use `inspector_target = evidence` when the target object is already selected and the detai",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 13.2 Focus Indicators",
+      "status": "partial",
+      "exact_items": [
+        "Use `inspector_target = evidence` when the target object is already selected and the detail focus must land on evidence.",
+        "inspector_target = evidence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1418"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05255",
+      "source_obligation_ids": [
+        "obl-5031"
+      ],
+      "source_seed_ids": [
+        "seed-7337"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - Hard rule for `subject_id` vs `object_kind`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Progress catalog source and default drills",
+      "status": "present",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - Hard rule for `subject_id` vs `object_kind`",
+        "subject_id",
+        "object_kind"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L937",
+        "Plans/FinalGUISpec.md:L939",
+        "Plans/FinalGUISpec.md:L940",
+        "Plans/FinalGUISpec.md:L1633"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05279",
+      "source_obligation_ids": [
+        "obl-5055"
+      ],
+      "source_seed_ids": [
+        "seed-7403"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`Decision_Log.md` is still essentially empty for the rewrite era while major decisions are",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "partial",
+      "exact_items": [
+        "`Decision_Log.md` is still essentially empty for the rewrite era while major decisions are being made only in downstream addenda.",
+        "Decision_Log.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05414",
+      "source_obligation_ids": [
+        "obl-5186"
+      ],
+      "source_seed_ids": [
+        "seed-7685"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "`progress`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Progress catalog source and default drills",
+      "status": "present",
+      "exact_items": [
+        "`progress`",
+        "progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L55",
+        "Plans/FinalGUISpec.md:L59",
+        "Plans/FinalGUISpec.md:L60",
+        "Plans/FinalGUISpec.md:L62",
+        "Plans/FinalGUISpec.md:L63"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05446",
+      "source_obligation_ids": [
+        "obl-5218"
+      ],
+      "source_seed_ids": [
+        "seed-7741"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - Routing owner-doc adoption map",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - Routing owner-doc adoption map"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L19",
+        "Plans/FinalGUISpec.md:L26"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05565",
+      "source_obligation_ids": [
+        "obl-5337"
+      ],
+      "source_seed_ids": [
+        "seed-7932"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "The future crew/message examples are especially risky because they would propagate `tier_i",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "partial",
+      "exact_items": [
+        "The future crew/message examples are especially risky because they would propagate `tier_id` back into git/worktree coordination even after the broader execution-context rewrite.",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05757",
+      "source_obligation_ids": [
+        "obl-5529"
+      ],
+      "source_seed_ids": [
+        "seed-8208"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "This split will make the owner-doc rewrite much easier because most refs do not need repla",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "partial",
+      "exact_items": [
+        "This split will make the owner-doc rewrite much easier because most refs do not need replacement."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05806",
+      "source_obligation_ids": [
+        "obl-5578"
+      ],
+      "source_seed_ids": [
+        "seed-8283"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - Usage and evidence families still use tier-era correlatio",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 6.1 Three Theme Families (Three User-Facing Choices)",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - Usage and evidence families still use tier-era correlation"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L720"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05835",
+      "source_obligation_ids": [
+        "obl-5607"
+      ],
+      "source_seed_ids": [
+        "seed-8325"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - `storage-plan.md` now has live canonical sections from di",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-090: Execution role and operational identity",
+      "status": "present",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - `storage-plan.md` now has live canonical sections from different execution eras",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L367",
+        "Plans/FinalGUISpec.md:L378",
+        "Plans/FinalGUISpec.md:L390",
+        "Plans/FinalGUISpec.md:L477",
+        "Plans/FinalGUISpec.md:L574"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05859",
+      "source_obligation_ids": [
+        "obl-5631"
+      ],
+      "source_seed_ids": [
+        "seed-8352"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - Current cleanup posture after extended owner-pass",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Progress catalog source and default drills",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - Current cleanup posture after extended owner-pass"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L910"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05937",
+      "source_obligation_ids": [
+        "obl-5709"
+      ],
+      "source_seed_ids": [
+        "seed-8483"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "canon_label": "its examples still include `tier_id` / `tier_type`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 19.3 Compatibility panel copy examples",
+      "status": "partial",
+      "exact_items": [
+        "its examples still include `tier_id` / `tier_type`",
+        "tier_id",
+        "tier_type"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2069"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06015",
+      "source_obligation_ids": [
+        "obl-5787"
+      ],
+      "source_seed_ids": [
+        "seed-8607"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "blocked/recovery state already binds to `blocked_sequence` and `allowed_action_ids[]`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Canonical Blocked/Recovery Behavior",
+      "status": "present",
+      "exact_items": [
+        "blocked/recovery state already binds to `blocked_sequence` and `allowed_action_ids[]`",
+        "blocked_sequence",
+        "allowed_action_ids[]"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2517",
+        "Plans/FinalGUISpec.md:L2571",
+        "Plans/FinalGUISpec.md:L2572",
+        "Plans/FinalGUISpec.md:L2762",
+        "Plans/FinalGUISpec.md:L2776"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06106",
+      "source_obligation_ids": [
+        "obl-5878"
+      ],
+      "source_seed_ids": [
+        "seed-8735"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "the base structs and callbacks still teach tier/request-era identity",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# omitted = inherit from base",
+      "status": "partial",
+      "exact_items": [
+        "the base structs and callbacks still teach tier/request-era identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L870"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06236",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L7",
+        "Plans/FinalGUISpec.md:L8",
+        "Plans/FinalGUISpec.md:L9",
+        "Plans/FinalGUISpec.md:L14",
+        "Plans/FinalGUISpec.md:L15"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06392",
+      "source_obligation_ids": [
+        "obl-6033"
+      ],
+      "source_seed_ids": [
+        "seed-9128"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "The owner-routing stack is not internally closed:",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## 2. Tech Stack and Renderer",
+      "status": "partial",
+      "exact_items": [
+        "The owner-routing stack is not internally closed:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L275"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06564",
+      "source_obligation_ids": [
+        "obl-6205"
+      ],
+      "source_seed_ids": [
+        "seed-9389"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "dashboard and settings language brought in line with the graph/seam/package model",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 7.4 Settings and inspectors",
+      "status": "partial",
+      "exact_items": [
+        "dashboard and settings language brought in line with the graph/seam/package model"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L944"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06590",
+      "source_obligation_ids": [
+        "obl-6231"
+      ],
+      "source_seed_ids": [
+        "seed-9421"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "The lower `Orchestrator_Page.md` addenda are closer to the rewrite:",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "partial",
+      "exact_items": [
+        "The lower `Orchestrator_Page.md` addenda are closer to the rewrite:",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06591",
+      "source_obligation_ids": [
+        "obl-6232"
+      ],
+      "source_seed_ids": [
+        "seed-9422"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "blocked/recovery rows use `allowed_action_ids[]`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Canonical Blocked/Recovery Behavior",
+      "status": "present",
+      "exact_items": [
+        "blocked/recovery rows use `allowed_action_ids[]`",
+        "allowed_action_ids[]"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2517",
+        "Plans/FinalGUISpec.md:L2572",
+        "Plans/FinalGUISpec.md:L2762",
+        "Plans/FinalGUISpec.md:L2776",
+        "Plans/FinalGUISpec.md:L2864"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06616",
+      "source_obligation_ids": [
+        "obl-6257"
+      ],
+      "source_seed_ids": [
+        "seed-9464"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Copy tier_id`",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### 10.9.1 Copy path and copy value",
+      "status": "partial",
+      "exact_items": [
+        "`Copy tier_id`",
+        "Copy tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1272"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06683",
+      "source_obligation_ids": [
+        "obl-6324"
+      ],
+      "source_seed_ids": [
+        "seed-9566"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Owner stack:",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## 2. Tech Stack and Renderer",
+      "status": "partial",
+      "exact_items": [
+        "Owner stack:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L275"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1526",
+  "group_ids": [
+    "discgrp-6101",
+    "discgrp-6102",
+    "discgrp-6103",
+    "discgrp-6104"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06733",
+      "source_obligation_ids": [
+        "obl-6374"
+      ],
+      "source_seed_ids": [
+        "seed-9732"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-036: Promotion classes and gate evidence",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L95"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06734",
+      "source_obligation_ids": [
+        "obl-6375"
+      ],
+      "source_seed_ids": [
+        "seed-9734"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### route_target, OpenSubject, and command normalization",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L315"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06735",
+      "source_obligation_ids": [
+        "obl-6376"
+      ],
+      "source_seed_ids": [
+        "seed-9736"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-033: Concern linkage to adjacent families",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L83"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06738",
+      "source_obligation_ids": [
+        "obl-6378"
+      ],
+      "source_seed_ids": [
+        "seed-9738"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

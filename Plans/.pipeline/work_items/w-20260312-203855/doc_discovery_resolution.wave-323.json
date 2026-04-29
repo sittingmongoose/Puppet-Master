@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-323",
+  "group_ids": [
+    "discgrp-1289",
+    "discgrp-1290",
+    "discgrp-1291",
+    "discgrp-1292"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01539",
+      "source_obligation_ids": [
+        "obl-1396"
+      ],
+      "source_seed_ids": [
+        "seed-1713"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01540",
+      "source_obligation_ids": [
+        "obl-1397"
+      ],
+      "source_seed_ids": [
+        "seed-1714"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01541",
+      "source_obligation_ids": [
+        "obl-1398"
+      ],
+      "source_seed_ids": [
+        "seed-1715"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01542",
+      "source_obligation_ids": [
+        "obl-1399"
+      ],
+      "source_seed_ids": [
+        "seed-1716"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "### 3.2 What May Be Removed (Policy)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L97"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

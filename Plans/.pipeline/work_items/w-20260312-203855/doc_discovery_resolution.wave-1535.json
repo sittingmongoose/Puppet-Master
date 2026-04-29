@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1535",
+  "group_ids": [
+    "discgrp-6137",
+    "discgrp-6138",
+    "discgrp-6139",
+    "discgrp-6140"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06786",
+      "source_obligation_ids": [
+        "obl-6418"
+      ],
+      "source_seed_ids": [
+        "seed-9797"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06787",
+      "source_obligation_ids": [
+        "obl-6419"
+      ],
+      "source_seed_ids": [
+        "seed-9798"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-052: Shared escalation ladder",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L67"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06788",
+      "source_obligation_ids": [
+        "obl-6420"
+      ],
+      "source_seed_ids": [
+        "seed-9799"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "### Fidelity recovery cov-038: Focused run and historical routing contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06793",
+      "source_obligation_ids": [
+        "obl-6422"
+      ],
+      "source_seed_ids": [
+        "seed-9801"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-033: Concern linkage to adjacent families",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L83"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

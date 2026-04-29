@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1424",
+  "group_ids": [
+    "discgrp-5693",
+    "discgrp-5694",
+    "discgrp-5695",
+    "discgrp-5696"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06164",
+      "source_obligation_ids": [
+        "obl-5936"
+      ],
+      "source_seed_ids": [
+        "seed-8813"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/BinaryLocator_Spec.md",
+      "new_heading_hint": "### Probe-layer order (hard requirement)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L86"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06165",
+      "source_obligation_ids": [
+        "obl-5937"
+      ],
+      "source_seed_ids": [
+        "seed-8814"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06166",
+      "source_obligation_ids": [
+        "obl-5938"
+      ],
+      "source_seed_ids": [
+        "seed-8837"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "## 8. OpenCode baseline and Puppet Master deltas",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Commands_System.md:L457"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06167",
+      "source_obligation_ids": [
+        "obl-5939"
+      ],
+      "source_seed_ids": [
+        "seed-8838"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/DRY_Rules.md",
+      "new_heading_hint": "# DRY Rules (Canonical)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

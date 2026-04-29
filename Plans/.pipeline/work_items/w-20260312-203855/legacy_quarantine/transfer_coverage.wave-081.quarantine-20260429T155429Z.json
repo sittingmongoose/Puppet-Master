@@ -1,0 +1,471 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-081",
+  "timestamp_utc": "2026-04-28T22:13:21Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-321",
+    "coverage-rowgrp-322",
+    "coverage-rowgrp-323",
+    "coverage-rowgrp-324"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-321 cov-996,cov-1138,cov-1179,cov-1227 Plans/usage-feature.md",
+    "rowgrp-322 cov-175,cov-207,cov-492,cov-588,cov-766,cov-1259 Plans/usage-feature.md",
+    "rowgrp-323 cov-002,cov-007,cov-008,cov-011,cov-021,cov-379,cov-1096 __DOC_DISCOVERY_REQUIRED__",
+    "rowgrp-324 cov-001,cov-009,cov-010,cov-022,cov-414 __DOC_DISCOVERY_REQUIRED__"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-321": "completed_reduced_conservatively_with_action_and_path_normalization",
+    "coverage-rowgrp-322": "completed_reduced_conservatively_with_action_and_path_normalization",
+    "coverage-rowgrp-323": "completed_reduced_conservatively_with_action_and_path_normalization",
+    "coverage-rowgrp-324": "completed_reduced_conservatively_with_action_and_path_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-996",
+    "cov-1138",
+    "cov-1179",
+    "cov-1227",
+    "cov-175",
+    "cov-207",
+    "cov-492",
+    "cov-588",
+    "cov-766",
+    "cov-1259",
+    "cov-002",
+    "cov-007",
+    "cov-008",
+    "cov-011",
+    "cov-021",
+    "cov-379",
+    "cov-1096",
+    "cov-001",
+    "cov-009",
+    "cov-010",
+    "cov-022",
+    "cov-414"
+  ],
+  "coverage_ids_completed": [
+    "cov-996",
+    "cov-1138",
+    "cov-1179",
+    "cov-1227",
+    "cov-175",
+    "cov-207",
+    "cov-492",
+    "cov-588",
+    "cov-766",
+    "cov-1259",
+    "cov-002",
+    "cov-007",
+    "cov-008",
+    "cov-011",
+    "cov-021",
+    "cov-379",
+    "cov-1096",
+    "cov-001",
+    "cov-009",
+    "cov-010",
+    "cov-022",
+    "cov-414"
+  ],
+  "path_groups_assigned": [
+    "Plans/usage-feature.md",
+    "__DOC_DISCOVERY_REQUIRED__"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-996",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:67 states usage_event_ref is the usage bridge for attempt/provider/usage/receipt joins",
+        "Plans/usage-feature.md:89 says usage_event_ref is preferred rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "usage_event_ref bridge/routing preference is covered, but object_kind=usage_event normalization and serialized anchor-detail handling are absent.",
+      "source_obligation_ids": [
+        "obl-279"
+      ],
+      "source_seed_ids": [
+        "seed-279"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1138",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "No tier_runtime_record, tier-keyed usage_record, or tier-keyed evidence_record demotion/replacement coverage was found in usage-feature.md.",
+      "source_obligation_ids": [
+        "obl-331"
+      ],
+      "source_seed_ids": [
+        "seed-331"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1179",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "No MUST CHANGE, MUST RECONCILE, or MUST VERIFY doc-canon guidance was found in usage-feature.md.",
+      "source_obligation_ids": [
+        "obl-339"
+      ],
+      "source_seed_ids": [
+        "seed-339"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1227",
+      "status": "present",
+      "evidence": [
+        "Plans/usage-feature.md:55-56 transfers execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs and carries usage switch-history/execution-role follow-through",
+        "Plans/usage-feature.md:423-427 repeats the same transfer and usage switch-history/execution-role continuity in the account-history owner section"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "The required identity, pressure, blocked_sequence, startup recovery, DAE policy, switch-history, and execution-role transfer is directly represented.",
+      "source_obligation_ids": [
+        "obl-346"
+      ],
+      "source_seed_ids": [
+        "seed-346"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-175",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "No tier-boundary, single-Overseer, package/seam overseer, automation-first execution, or tier-term deprecation/aliasing coverage was found in usage-feature.md.",
+      "source_obligation_ids": [
+        "obl-046"
+      ],
+      "source_seed_ids": [
+        "seed-046"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-207",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "No widget-catalog tier-centric cleanup, TierChanged/IterationStart/TierTree/Progress migration, or widget contract projection migration coverage was found in usage-feature.md.",
+      "source_obligation_ids": [
+        "obl-056"
+      ],
+      "source_seed_ids": [
+        "seed-056"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-492",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:431-433 defines attempt_id, provider_attempt_ref, usage_event_ref, and receipt refs as bridge fields that do not replace the primary local key",
+        "Plans/usage-feature.md:586 says aggregation should use usage_event_ref, run_id, node_id, attempt_id, and runtime attribution fields rather than tier_id"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Bridge-field and canonical identity fragments are present, but scheduler/safe-point/remediation payload gaps, provider snapshot envelope, HITL argument mismatch, graph-local recovery, and projection-trust payload remain incomplete.",
+      "source_obligation_ids": [
+        "obl-142"
+      ],
+      "source_seed_ids": [
+        "seed-142"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-588",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:416-421 adds append-only account_pressure_episode and account_switch_event families for Usage, History, Ledger, and Orchestrator"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "The pressure and switch event families are present, but explicit soft/hard switching and role/account interaction semantics are incomplete.",
+      "source_obligation_ids": [
+        "obl-165"
+      ],
+      "source_seed_ids": [
+        "seed-165"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-766",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:431-437 defines provider_attempt_ref and usage_event_ref bridge-field precedence and usage/receipt lineage routing",
+        "Plans/usage-feature.md:586 says aggregation should use canonical usage identity usage_event_ref, run_id, node_id, attempt_id, and runtime attribution fields rather than tier_id"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Bridge-field precedence is covered, but timestamp/run/thread fallback compatibility is not explicitly degraded.",
+      "source_obligation_ids": [
+        "obl-212"
+      ],
+      "source_seed_ids": [
+        "seed-212"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1259",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:466-478 expands blocked_notice beyond blocked_family/allowed_action_ids and carries escalation_level, action_available ownership, and usage observability through blocked surfaces",
+        "Plans/usage-feature.md:785 says blocked counters retain escalation_level and shared blocked-action disclosure action_available"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "blocked_notice, escalation_level, and action_available are covered, but detached_window/result_id survivors and restore-points/stale-verdict cleanup are incomplete.",
+      "source_obligation_ids": [
+        "obl-355"
+      ],
+      "source_seed_ids": [
+        "seed-355"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-002",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-002"
+      ],
+      "source_seed_ids": [
+        "seed-002"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-007",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-007"
+      ],
+      "source_seed_ids": [
+        "seed-007"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-008",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-008"
+      ],
+      "source_seed_ids": [
+        "seed-008"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-011",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-011"
+      ],
+      "source_seed_ids": [
+        "seed-011"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-021",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-018"
+      ],
+      "source_seed_ids": [
+        "seed-018"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-379",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-112"
+      ],
+      "source_seed_ids": [
+        "seed-112"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-1096",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-315"
+      ],
+      "source_seed_ids": [
+        "seed-315"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-001",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-001"
+      ],
+      "source_seed_ids": [
+        "seed-001"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-009",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-009"
+      ],
+      "source_seed_ids": [
+        "seed-009"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-010",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-010"
+      ],
+      "source_seed_ids": [
+        "seed-010"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-022",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-019"
+      ],
+      "source_seed_ids": [
+        "seed-019"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    },
+    {
+      "coverage_id": "cov-414",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "doc discovery required",
+      "source_obligation_ids": [
+        "obl-123"
+      ],
+      "source_seed_ids": [
+        "seed-123"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+    }
+  ]
+}

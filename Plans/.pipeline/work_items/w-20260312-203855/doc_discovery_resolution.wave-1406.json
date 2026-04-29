@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1406",
+  "group_ids": [
+    "discgrp-5621",
+    "discgrp-5622",
+    "discgrp-5623",
+    "discgrp-5624"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06088",
+      "source_obligation_ids": [
+        "obl-5860"
+      ],
+      "source_seed_ids": [
+        "seed-8704"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06089",
+      "source_obligation_ids": [
+        "obl-5861"
+      ],
+      "source_seed_ids": [
+        "seed-8705"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-175: Concern source-event vs record vs projection split",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L143"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06090",
+      "source_obligation_ids": [
+        "obl-5862"
+      ],
+      "source_seed_ids": [
+        "seed-8706"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06091",
+      "source_obligation_ids": [
+        "obl-5863"
+      ],
+      "source_seed_ids": [
+        "seed-8707"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "### Fidelity recovery cov-101: Provider-native correlation and approval scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L28"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

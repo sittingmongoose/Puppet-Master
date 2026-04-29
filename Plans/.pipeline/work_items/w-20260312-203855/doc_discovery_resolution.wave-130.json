@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-130",
+  "group_ids": [
+    "discgrp-0517",
+    "discgrp-0518",
+    "discgrp-0519",
+    "discgrp-0520"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00764",
+      "source_obligation_ids": [
+        "obl-621"
+      ],
+      "source_seed_ids": [
+        "seed-716"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00765",
+      "source_obligation_ids": [
+        "obl-622"
+      ],
+      "source_seed_ids": [
+        "seed-717"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "## 4. Execution semantics",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Commands_System.md:L190"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00766",
+      "source_obligation_ids": [
+        "obl-623"
+      ],
+      "source_seed_ids": [
+        "seed-718"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-075: Historical semantic consistency",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L107"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00767",
+      "source_obligation_ids": [
+        "obl-624"
+      ],
+      "source_seed_ids": [
+        "seed-719"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Media_Generation_and_Capabilities.md",
+      "new_heading_hint": "# Media Generation and Capabilities (Canonical SSOT)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Media_Generation_and_Capabilities.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

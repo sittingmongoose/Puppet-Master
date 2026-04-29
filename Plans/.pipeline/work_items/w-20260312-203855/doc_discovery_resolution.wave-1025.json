@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1025",
+  "group_ids": [
+    "discgrp-4097",
+    "discgrp-4098",
+    "discgrp-4099",
+    "discgrp-4100"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04411",
+      "source_obligation_ids": [
+        "obl-4251"
+      ],
+      "source_seed_ids": [
+        "seed-5935"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "#### `scheduler.pass`",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1116"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04412",
+      "source_obligation_ids": [
+        "obl-4252"
+      ],
+      "source_seed_ids": [
+        "seed-5936"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04413",
+      "source_obligation_ids": [
+        "obl-4253"
+      ],
+      "source_seed_ids": [
+        "seed-5937"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "## 24. Chat thread performance, virtualization, and flicker avoidance",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L1811"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04414",
+      "source_obligation_ids": [
+        "obl-4254"
+      ],
+      "source_seed_ids": [
+        "seed-5938"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

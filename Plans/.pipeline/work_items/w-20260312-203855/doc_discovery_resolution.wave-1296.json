@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1296",
+  "group_ids": [
+    "discgrp-5181",
+    "discgrp-5182",
+    "discgrp-5183",
+    "discgrp-5184"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05601",
+      "source_obligation_ids": [
+        "obl-5373"
+      ],
+      "source_seed_ids": [
+        "seed-7981"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05602",
+      "source_obligation_ids": [
+        "obl-5374"
+      ],
+      "source_seed_ids": [
+        "seed-7992"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## 4. Navigation Architecture",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L452"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05603",
+      "source_obligation_ids": [
+        "obl-5375"
+      ],
+      "source_seed_ids": [
+        "seed-7993"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05604",
+      "source_obligation_ids": [
+        "obl-5376"
+      ],
+      "source_seed_ids": [
+        "seed-7994"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-093: Account switch and pressure history",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L221"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

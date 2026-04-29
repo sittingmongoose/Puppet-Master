@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-586",
+  "group_ids": [
+    "discgrp-2341",
+    "discgrp-2342",
+    "discgrp-2343",
+    "discgrp-2344"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02616",
+      "source_obligation_ids": [
+        "obl-2464"
+      ],
+      "source_seed_ids": [
+        "seed-3216"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L774"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02617",
+      "source_obligation_ids": [
+        "obl-2465"
+      ],
+      "source_seed_ids": [
+        "seed-3217"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## 4. Navigation Architecture",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L452"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02618",
+      "source_obligation_ids": [
+        "obl-2466"
+      ],
+      "source_seed_ids": [
+        "seed-3218"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Permissions_System.md",
+      "new_heading_hint": "# Granular rules (object syntax)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Permissions_System.md:L593"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02619",
+      "source_obligation_ids": [
+        "obl-2467"
+      ],
+      "source_seed_ids": [
+        "seed-3219"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "#### GitHub Actions command family",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L322"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1306",
+  "group_ids": [
+    "discgrp-5221",
+    "discgrp-5222",
+    "discgrp-5223",
+    "discgrp-5224"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05647",
+      "source_obligation_ids": [
+        "obl-5419"
+      ],
+      "source_seed_ids": [
+        "seed-8048"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05648",
+      "source_obligation_ids": [
+        "obl-5420"
+      ],
+      "source_seed_ids": [
+        "seed-8049"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/OpenCode_Deep_Extraction.md",
+      "new_heading_hint": "#### 7B.2 Subagent invocation mechanism",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L147"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05649",
+      "source_obligation_ids": [
+        "obl-5421"
+      ],
+      "source_seed_ids": [
+        "seed-8050"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Document_Packaging_Policy.md",
+      "new_heading_hint": "### 2.1 Primary split rule",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05650",
+      "source_obligation_ids": [
+        "obl-5422"
+      ],
+      "source_seed_ids": [
+        "seed-8051"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "## 4. Orchestrator Progress widget scope and catalog linkage",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Widget_System.md:L57"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

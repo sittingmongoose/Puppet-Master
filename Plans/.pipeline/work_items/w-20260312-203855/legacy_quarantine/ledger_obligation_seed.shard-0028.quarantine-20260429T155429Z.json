@@ -1,0 +1,130 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0028",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0028-L005401-L005600.md",
+  "source_line_range": "L005401-L005600",
+  "covered_shard_id": "shard-0028",
+  "seed_candidates": [
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "shared orchestrator export taxonomy",
+      "exact_items": [
+        "Define a shared Orchestrator export taxonomy: record export, bundle export, view export.",
+        "Require manifests for non-trivial bundle exports and likely for some complex record exports.",
+        "Preserve canonical ids/refs in artifact and record exports; do not invent export-local shadow identity.",
+        "filtered JSON is not automatically a canonical record export",
+        "derived exports stay useful, but they must remain visibly derived"
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Canonical-vs-derived rule",
+        "Candidate fixes to carry forward",
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [
+        "filtered JSON",
+        "derived exports",
+        "export-local shadow identity"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L5406-L5464"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "runtime artifact export identity linkage",
+      "exact_items": [
+        "Runtime_Artifacts_Panel.md provides a good anchor for Orchestrator exports:",
+        "artifacts should preserve canonical run/thread/attempt linkage",
+        "receipt-like exports should not invent shadow IDs",
+        "usage-linked artifacts should continue to route through canonical usage identity",
+        "artifact export should remain linked to the exact record/identity model, not become a detached blob dump with lost context"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Runtime-artifact implication"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L5415-L5420"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "projection-trust disclosure or revalidation before export",
+      "exact_items": [
+        "exports derived from stale/degraded projections must either: disclose trust state in the export/manifest or re-query from canonical/current backing data before export",
+        "Export correctness now depends on the earlier projection-trust work.",
+        "Add trust-state disclosure or canonical revalidation requirements for exports built from projections."
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [
+        "Trust / stale-data implication",
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "stale/degraded projections",
+        "trust_state_at_export",
+        "trust-state disclosure",
+        "canonical/current backing data"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L5422-L5460"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "notification routing and trust-qualified surfacing",
+      "exact_items": [
+        "Define notification routing using: severity, execution impact, blocked owner, persistence, projection trust.",
+        "stale or degraded projections must not generate overconfident notifications",
+        "Keep concern acknowledgment as a noise-control mechanism, not a blocked-state suppressor.",
+        "Require degraded/stale disclosure or canonical revalidation before strong notification claims are emitted from projection-heavy surfaces."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/usage-feature.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/interview-subagent-integration.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Concern interaction direction",
+        "Blocked-owner interaction direction",
+        "Projection-trust interaction direction",
+        "Contradictions / gaps surfaced",
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "stale",
+        "degraded",
+        "overconfident notifications",
+        "quiet windows"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L5493-L5595"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "working_ledger.md:L5401-L5403",
+    "working_ledger.md:L5466-L5473",
+    "working_ledger.md:L5478-L5492",
+    "working_ledger.md:L5534-L5559",
+    "working_ledger.md:L5561-L5566",
+    "working_ledger.md:L5578-L5584",
+    "working_ledger.md:L5597-L5600"
+  ],
+  "uncertain_items": []
+}

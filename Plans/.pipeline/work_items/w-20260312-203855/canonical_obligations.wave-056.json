@@ -1,0 +1,1143 @@
+{
+  "schema_id": "pm.canonical_obligations_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-056",
+  "seed_group_ids": [
+    "seedgrp-221",
+    "seedgrp-222",
+    "seedgrp-223",
+    "seedgrp-224"
+  ],
+  "obligation_candidates": [
+    {
+      "source_seed_id": "seed-3301",
+      "canon_label": "`Models_System.md` still mixes transport host and upstream provider in one `provider_id` v",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Models_System.md` still mixes transport host and upstream provider in one `provider_id` vocabulary.",
+        "Models_System.md",
+        "provider_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007675"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3302",
+      "canon_label": "Role-scoped routing exists in policy/storage but not in effective-resolution or usage sche",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Role-scoped routing exists in policy/storage but not in effective-resolution or usage schemas."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007676"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3303",
+      "canon_label": "`requested_persona_id` / `effective_persona_id` remain embedded in consumer docs despite c",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`requested_persona_id` / `effective_persona_id` remain embedded in consumer docs despite canonical prohibition.",
+        "requested_persona_id",
+        "effective_persona_id"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007677"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3304",
+      "canon_label": "Switch history is still reason fields without a durable event/projection family.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Switch history is still reason fields without a durable event/projection family."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007678"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3305",
+      "canon_label": "`trust_tier` is already occupied by Preview, so projection-freshness trust needs a distinc",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`trust_tier` is already occupied by Preview, so projection-freshness trust needs a distinct name.",
+        "trust_tier"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007679"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3306",
+      "canon_label": "Add an OperationalIdentity block or equivalent disclosure layer to the shared runtime iden",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Add an OperationalIdentity block or equivalent disclosure layer to the shared runtime identity grammar."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007682"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3307",
+      "canon_label": "Add a canonical requested concrete-account field distinct from `requested_account_policy`.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add a canonical requested concrete-account field distinct from `requested_account_policy`.",
+        "requested_account_policy"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007683"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3308",
+      "canon_label": "Introduce `execution_role` / `actor_role` into effective-resolution, event, and usage cont",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Introduce `execution_role` / `actor_role` into effective-resolution, event, and usage contracts.",
+        "execution_role",
+        "actor_role"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007684"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3309",
+      "canon_label": "Cleanly separate transport host fields from upstream provider/model identity in `Models_Sy",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Cleanly separate transport host fields from upstream provider/model identity in `Models_System.md` and adjacent bridge docs.",
+        "Models_System.md"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007685"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3310",
+      "canon_label": "Define an append-only account-switch / pressure-episode family with shared projection cons",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Define an append-only account-switch / pressure-episode family with shared projection consumers."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007686"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3311",
+      "canon_label": "Rename or explicitly separate projection-freshness trust vocabulary from Preview `trust_ti",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Rename or explicitly separate projection-freshness trust vocabulary from Preview `trust_tier`.",
+        "trust_tier"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007687"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3312",
+      "canon_label": "Operational identities must be displayable with provider/account identity but must not imp",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Operational identities must be displayable with provider/account identity but must not imply shared token ownership."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007690"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3313",
+      "canon_label": "`usage_event_ref` + `attempt_id` remain safer pivots than `tier_id` for switch-aware usage",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`usage_event_ref` + `attempt_id` remain safer pivots than `tier_id` for switch-aware usage/history views.",
+        "usage_event_ref",
+        "attempt_id",
+        "tier_id"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007691"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3314",
+      "canon_label": "`Plans/CLI_Bridged_Providers.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/CLI_Bridged_Providers.md`",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007697"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3315",
+      "canon_label": "`Plans/Provider_OpenCode.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Provider_OpenCode.md`",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_OpenCode.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007698"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3316",
+      "canon_label": "`Plans/Provider_Stream_Mapping_External_Reference_A2A.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Provider_Stream_Mapping_External_Reference_A2A.md`",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007699"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3317",
+      "canon_label": "`Plans/Permissions_System.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Permissions_System.md`",
+        "Plans/Permissions_System.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007700"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3318",
+      "canon_label": "`Plans/Tools.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Tools.md`",
+        "Plans/Tools.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007701"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3319",
+      "canon_label": "`Plans/human-in-the-loop.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/human-in-the-loop.md`",
+        "Plans/human-in-the-loop.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007702"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3320",
+      "canon_label": "`Plans/Executor_Protocol.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Executor_Protocol.md`",
+        "Plans/Executor_Protocol.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007703"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3321",
+      "canon_label": "`Provider_OpenCode.md` contains a direct identity-mapping bug at the contract level:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Provider_OpenCode.md` contains a direct identity-mapping bug at the contract level:",
+        "Provider_OpenCode.md"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007706"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3322",
+      "canon_label": "it maps canonical `thread_id` to an OpenCode session ID",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "it maps canonical `thread_id` to an OpenCode session ID",
+        "thread_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007707"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3323",
+      "canon_label": "while `CLI_Bridged_Providers.md` treats `thread_id` as the stable PM correlation id and se",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "while `CLI_Bridged_Providers.md` treats `thread_id` as the stable PM correlation id and separately allows provider-native identifiers",
+        "CLI_Bridged_Providers.md",
+        "thread_id"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007708"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3324",
+      "canon_label": "GPT-5.2 sharpened that OpenCode session IDs belong in provider-native correlation, not in",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "GPT-5.2 sharpened that OpenCode session IDs belong in provider-native correlation, not in canonical `thread_id`",
+        "thread_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007709"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3325",
+      "canon_label": "there is still no canonical slot for actor kind, effective account, switch reason, lane/wo",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "there is still no canonical slot for actor kind, effective account, switch reason, lane/worktree identity, or pressure/trust context"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007712"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3326",
+      "canon_label": "Provider/runtime boundaries still cannot express enough account-health state for shared ac",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Provider/runtime boundaries still cannot express enough account-health state for shared account-pressure/degraded-trust UI:"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007714"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3327",
+      "canon_label": "`CLI_Bridged_Providers.md` normalizes auth lifecycle only",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`CLI_Bridged_Providers.md` normalizes auth lifecycle only",
+        "CLI_Bridged_Providers.md"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007715"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3328",
+      "canon_label": "but Multi-Account needs configuration/availability/pressure/cooldown state, and Usage/Orch",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "but Multi-Account needs configuration/availability/pressure/cooldown state, and Usage/Orchestrator need confidence-aware account-health projections"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007716"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3329",
+      "canon_label": "GPT-5.2 sharpened that this likely needs a distinct account-health / pressure event or rec",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "GPT-5.2 sharpened that this likely needs a distinct account-health / pressure event or record family instead of overloading auth-state"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007717"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3330",
+      "canon_label": "session-scoped `always` approvals and reject-cascade rules have no actor/lane/run/account",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "session-scoped `always` approvals and reject-cascade rules have no actor/lane/run/account scope key",
+        "always"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007719"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3331",
+      "canon_label": "headless `ask -> deny unless HITL at current tier boundary` still leaks tier-era gating in",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "headless `ask -> deny unless HITL at current tier boundary` still leaks tier-era gating into what should now be normal blocked-overlay routing",
+        "ask -> deny unless HITL at current tier boundary"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007721"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3332",
+      "canon_label": "Permission snapshots still do not satisfy rewrite-era requested/effective disclosure:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Permission snapshots still do not satisfy rewrite-era requested/effective disclosure:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007722"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3333",
+      "canon_label": "the SSOT requires requested/effective capability truth",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "the SSOT requires requested/effective capability truth"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007723"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3334",
+      "canon_label": "but the schema only records resolved/effective values and still omits requested state, dow",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "but the schema only records resolved/effective values and still omits requested state, downgrade reason, effective account, and actor/surface context"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007724"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3335",
+      "canon_label": "GPT-5.2 also sharpened that bridged/provider docs still lack a legal place for opaque-but-",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "GPT-5.2 also sharpened that bridged/provider docs still lack a legal place for opaque-but-real provider continuity fields like `provider_attempt_ref?`, which means reconnect/replay semantics remain under-specified even before account-switch history is added",
+        "provider_attempt_ref?"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007725"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3336",
+      "canon_label": "`Plans/Provider_OpenCode.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Provider_OpenCode.md`",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_OpenCode.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007728"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3337",
+      "canon_label": "needs immediate correction of canonical `thread_id` semantics and explicit upstream-accoun",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "needs immediate correction of canonical `thread_id` semantics and explicit upstream-account opacity rules",
+        "thread_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007729"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3338",
+      "canon_label": "`Plans/CLI_Bridged_Providers.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/CLI_Bridged_Providers.md`",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007730"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3339",
+      "canon_label": "now clearly needs a versioned correlation/context block and stronger account-health semant",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "now clearly needs a versioned correlation/context block and stronger account-health semantics"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007731"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3340",
+      "canon_label": "`Plans/Provider_Stream_Mapping_External_Reference_A2A.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Provider_Stream_Mapping_External_Reference_A2A.md`",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007732"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3341",
+      "canon_label": "now clearly needs version governance for new actor/account/trust categories or fields",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "now clearly needs version governance for new actor/account/trust categories or fields"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007733"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3342",
+      "canon_label": "`Plans/Permissions_System.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Permissions_System.md`",
+        "Plans/Permissions_System.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007734"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3343",
+      "canon_label": "needs scope-keyed approval semantics, de-tiered gating language, and richer permission sna",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "needs scope-keyed approval semantics, de-tiered gating language, and richer permission snapshots"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007735"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3344",
+      "canon_label": "`Plans/Contracts_V0.md` + `Plans/storage-plan.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Contracts_V0.md` + `Plans/storage-plan.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007736"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3345",
+      "canon_label": "likely owners for canonical correlation blocks, switch/pressure episodes, and blocked/appr",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "likely owners for canonical correlation blocks, switch/pressure episodes, and blocked/approval identity linkage"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007737"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3346",
+      "canon_label": "OpenCode still repurposes canonical `thread_id` for provider-native session identity.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "OpenCode still repurposes canonical `thread_id` for provider-native session identity.",
+        "thread_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007740"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3347",
+      "canon_label": "A2A still forbids new categories while the rewrite needs actor/account/trust/governance se",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "A2A still forbids new categories while the rewrite needs actor/account/trust/governance semantics at the stream layer."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007742"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3348",
+      "canon_label": "Permissions still use session-scoped approval logic without defining the session/actor/lan",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Permissions still use session-scoped approval logic without defining the session/actor/lane scope key."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007743"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3349",
+      "canon_label": "Permission snapshots still omit requested state and identity context despite rewrite-era r",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Permission snapshots still omit requested state and identity context despite rewrite-era requested/effective disclosure needs."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007744"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3350",
+      "canon_label": "Provider continuity fields like `provider_attempt_ref?` are named but still not owned by a",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Provider continuity fields like `provider_attempt_ref?` are named but still not owned by a stable schema slot.",
+        "provider_attempt_ref?"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007745"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3351",
+      "canon_label": "Move OpenCode session IDs to provider-native correlation fields and keep `thread_id` canon",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Move OpenCode session IDs to provider-native correlation fields and keep `thread_id` canonical to PM correlation.",
+        "thread_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007748"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3352",
+      "canon_label": "Introduce a canonical account-health / pressure / degraded-trust family rather than overlo",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Introduce a canonical account-health / pressure / degraded-trust family rather than overloading auth lifecycle states."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007750"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3353",
+      "canon_label": "Define an Approval Scope Key for permissions keyed by actor/lane/run/account context.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define an Approval Scope Key for permissions keyed by actor/lane/run/account context."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007751"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3354",
+      "canon_label": "Upgrade permission snapshots to include requested/effective values, downgrade reasons, and",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Upgrade permission snapshots to include requested/effective values, downgrade reasons, and identity context."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007752"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3355",
+      "canon_label": "Add explicit versioning/migration guidance to A2A before introducing new actor/account/tru",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Add explicit versioning/migration guidance to A2A before introducing new actor/account/trust semantics."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007753"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3356",
+      "canon_label": "`origin` is still audit-only; do not turn it into behavior-driving actor identity.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`origin` is still audit-only; do not turn it into behavior-driving actor identity.",
+        "origin"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007756"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3357",
+      "canon_label": "A2A\u2019s \u201cinput_provided\u201d resume semantics are unsafe without actor/thread binding once multi",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "A2A\u2019s \u201cinput_provided\u201d resume semantics are unsafe without actor/thread binding once multiple conversational actors share provider runtime."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007757"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3358",
+      "canon_label": "If provider continuity remains opaque, the docs need an explicit opaque contract instead o",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "If provider continuity remains opaque, the docs need an explicit opaque contract instead of silent omission."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007758"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3359",
+      "canon_label": "Permission approval state must not leak across lanes or accounts just because actors share",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Permission approval state must not leak across lanes or accounts just because actors share a UI session."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007759"
+      ]
+    },
+    {
+      "source_seed_id": "seed-3360",
+      "canon_label": "current `working_ledger.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "current `working_ledger.md`",
+        "working_ledger.md"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0039",
+      "source_evidence": [
+        "working_ledger.md:L007764"
+      ]
+    }
+  ],
+  "represented_seed_ids": [
+    "seed-3301",
+    "seed-3302",
+    "seed-3303",
+    "seed-3304",
+    "seed-3305",
+    "seed-3306",
+    "seed-3307",
+    "seed-3308",
+    "seed-3309",
+    "seed-3310",
+    "seed-3311",
+    "seed-3312",
+    "seed-3313",
+    "seed-3314",
+    "seed-3315",
+    "seed-3316",
+    "seed-3317",
+    "seed-3318",
+    "seed-3319",
+    "seed-3320",
+    "seed-3321",
+    "seed-3322",
+    "seed-3323",
+    "seed-3324",
+    "seed-3325",
+    "seed-3326",
+    "seed-3327",
+    "seed-3328",
+    "seed-3329",
+    "seed-3330",
+    "seed-3331",
+    "seed-3332",
+    "seed-3333",
+    "seed-3334",
+    "seed-3335",
+    "seed-3336",
+    "seed-3337",
+    "seed-3338",
+    "seed-3339",
+    "seed-3340",
+    "seed-3341",
+    "seed-3342",
+    "seed-3343",
+    "seed-3344",
+    "seed-3345",
+    "seed-3346",
+    "seed-3347",
+    "seed-3348",
+    "seed-3349",
+    "seed-3350",
+    "seed-3351",
+    "seed-3352",
+    "seed-3353",
+    "seed-3354",
+    "seed-3355",
+    "seed-3356",
+    "seed-3357",
+    "seed-3358",
+    "seed-3359",
+    "seed-3360"
+  ],
+  "represented_source_shard_ids": [
+    "shard-0039"
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "affected_doc_discovery_notes": []
+}

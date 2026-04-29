@@ -1,144 +1,1157 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-042",
-  "timestamp_utc": "2026-04-28T21:02:15Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-165",
-    "coverage-rowgrp-166",
-    "coverage-rowgrp-167",
-    "coverage-rowgrp-168"
+  "row_group_ids": [
+    "rowgrp-0165",
+    "rowgrp-0166",
+    "rowgrp-0167",
+    "rowgrp-0168"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-165 cov-582 Plans/Provider_OpenCode.md",
-    "rowgrp-166 cov-548 Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
-    "rowgrp-167 cov-146,cov-191 Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
-    "rowgrp-168 cov-590 Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-165": "completed_reduced_conservatively",
-    "coverage-rowgrp-166": "completed_reduced_conservatively_with_schema_normalization",
-    "coverage-rowgrp-167": "completed_reduced_conservatively_with_schema_normalization",
-    "coverage-rowgrp-168": "completed_reduced_conservatively_with_schema_normalization"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-582",
-    "cov-548",
-    "cov-146",
-    "cov-191",
-    "cov-590"
-  ],
-  "coverage_ids_completed": [
-    "cov-582",
-    "cov-548",
-    "cov-146",
-    "cov-191",
-    "cov-590"
-  ],
-  "path_groups_assigned": [
-    "Plans/Provider_OpenCode.md",
-    "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-582",
-      "status": "partial",
-      "evidence": [
-        "Plans/Provider_OpenCode.md:62-70 moves OpenCode session IDs to provider-native correlation fields instead of canonical thread_id, requires OpenCode session IDs to never replace canonical thread_id, and defines approval_scope_key over actor, lane/package/run, and account/server-profile context",
-        "Plans/Provider_OpenCode.md:191-207 preserves PM thread_id/run lineage as canonical PM lineage fields, treats OpenCode session IDs as additive provider correlation fields only, and prohibits rewriting thread_id into an OpenCode session ID"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "The thread_id collision and provider-native correlation repair are directly related, but the row-specific shared-runtime event-join trust language is not explicit.",
+      "coverage_id": "cov-01904",
       "source_obligation_ids": [
-        "obl-163"
+        "obl-1761"
       ],
       "source_seed_ids": [
-        "seed-163"
+        "seed-2255"
       ],
       "source_shard_ids": [
-        "shard-0041"
+        "shard-0031"
       ],
-      "path_field_status": "match"
+      "canon_label": "`usage-feature.md` still treats `tier_id` as a core attribution dimension and does not yet",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "status": "present",
+      "exact_items": [
+        "`usage-feature.md` still treats `tier_id` as a core attribution dimension and does not yet pivot to `seam_id` / `package_id` / `lane_id`",
+        "usage-feature.md",
+        "tier_id",
+        "seam_id",
+        "package_id",
+        "lane_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L426",
+        "Plans/Contracts_V0.md:L427",
+        "Plans/Contracts_V0.md:L450",
+        "Plans/Contracts_V0.md:L451",
+        "Plans/Contracts_V0.md:L602"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-548",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md only scopes requested/effective runtime state and permissions to other SSOTs; it does not directly cover the identity-mapping bug, bridge/event contract thinness, parallel-actor permission gaps, or requested/effective disclosure defects.",
+      "coverage_id": "cov-01917",
       "source_obligation_ids": [
-        "obl-156"
+        "obl-1774"
       ],
       "source_seed_ids": [
-        "seed-156"
+        "seed-2278"
       ],
       "source_shard_ids": [
-        "shard-0039"
+        "shard-0031"
       ],
-      "path_field_status": "match"
+      "canon_label": "seam/package/lane/worktree lineage is not yet treated as first-class storage/usage attribu",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "status": "partial",
+      "exact_items": [
+        "seam/package/lane/worktree lineage is not yet treated as first-class storage/usage attribution everywhere it needs to be"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L153",
+        "Plans/Contracts_V0.md:L160"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-146",
-      "status": "partial",
-      "evidence": [
-        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:49 references Overseer responsibilities",
-        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:99-104 defines overseer_audit_* diagnostic events with tier audit fields",
-        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:249-277 defines Overseer subjective audits at tier boundaries, reviewer spawning, consensus, verdict override, auditability, and role-boundary DRY references"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "The file contains Overseer and tier-boundary audit instrumentation, but does not directly resolve single Overseer versus package/seam overseer split or ambiguous scheduling/review/recovery/promotion ownership.",
+      "coverage_id": "cov-01924",
       "source_obligation_ids": [
-        "obl-040"
+        "obl-1781"
       ],
       "source_seed_ids": [
-        "seed-040"
+        "seed-2285"
       ],
       "source_shard_ids": [
-        "shard-0009"
+        "shard-0031"
       ],
-      "path_field_status": "match"
+      "canon_label": "Define one shared requested/effective identity disclosure contract reusable across:",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "Define one shared requested/effective identity disclosure contract reusable across:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-191",
-      "status": "partial",
-      "evidence": [
-        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:66-67 defines auth_state and diagnostic event categories",
-        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:200-204 maps authenticated metadata/card fetch barriers to auth_state and delegates auth recovery policy to the PM auth subsystem"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Auth-state mapping exists, but requested/effective auth/account fields, effective-account attribution for usage/diagnostics, and unified bridged-provider request/persistence envelopes are not directly covered.",
+      "coverage_id": "cov-01930",
       "source_obligation_ids": [
-        "obl-050"
+        "obl-1787"
       ],
       "source_seed_ids": [
-        "seed-050"
+        "seed-2291"
       ],
       "source_shard_ids": [
-        "shard-0006"
+        "shard-0031"
       ],
-      "path_field_status": "match"
+      "canon_label": "support `attempt_id` and other runtime object ids directly",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "status": "present",
+      "exact_items": [
+        "support `attempt_id` and other runtime object ids directly",
+        "attempt_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L332",
+        "Plans/Contracts_V0.md:L425",
+        "Plans/Contracts_V0.md:L432",
+        "Plans/Contracts_V0.md:L437",
+        "Plans/Contracts_V0.md:L449"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-590",
-      "status": "partial",
-      "evidence": [
-        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:27 states requested/effective runtime state and PM-native lineage are owned by orchestrator-subagent-integration, Contracts_V0, and storage-plan",
-        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:336-354 separates runtime attempt identity from provider continuity, requires provider_attempt_ref for upstream continuity, forbids provider/session IDs as runtime attempt_id, moves OpenCode/A2A session identifiers to provider-native correlation fields, and reuses approval_scope_key across permissions, HITL, doom-loop protection, and session approval caching"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "A2A bridge correlation and approval-scope coverage is present, but first-class stream representation, permission override side effects, and rich requested/effective identity projection are not directly covered.",
+      "coverage_id": "cov-01939",
       "source_obligation_ids": [
-        "obl-166"
+        "obl-1796"
       ],
       "source_seed_ids": [
-        "seed-166"
+        "seed-2304"
       ],
       "source_shard_ids": [
-        "shard-0041"
+        "shard-0031"
       ],
-      "path_field_status": "match"
+      "canon_label": "`Permissions_System.md` does not yet integrate the stricter requested/effective identity m",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "present",
+      "exact_items": [
+        "`Permissions_System.md` does not yet integrate the stricter requested/effective identity model that `Contracts_V0.md` now makes canonical",
+        "Permissions_System.md",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L14",
+        "Plans/Contracts_V0.md:L17",
+        "Plans/Contracts_V0.md:L28",
+        "Plans/Contracts_V0.md:L33",
+        "Plans/Contracts_V0.md:L42"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01944",
+      "source_obligation_ids": [
+        "obl-1801"
+      ],
+      "source_seed_ids": [
+        "seed-2309"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "`ContributePr` explicitly disables tier worktrees and forces single-branch execution",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Requested/effective account and execution identity",
+      "status": "partial",
+      "exact_items": [
+        "`ContributePr` explicitly disables tier worktrees and forces single-branch execution",
+        "ContributePr"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L270"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01945",
+      "source_obligation_ids": [
+        "obl-1802"
+      ],
+      "source_seed_ids": [
+        "seed-2310"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "adaptive phase planning and contract unification create a broader orchestration-mode matri",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "adaptive phase planning and contract unification create a broader orchestration-mode matrix than older docs assume"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01952",
+      "source_obligation_ids": [
+        "obl-1809"
+      ],
+      "source_seed_ids": [
+        "seed-2324"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "Contract unification is treated as deterministic, but the conflict-resolution authority/ru",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "Contract unification is treated as deterministic, but the conflict-resolution authority/rules are still underdefined for contradictory upstream phase outputs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01955",
+      "source_obligation_ids": [
+        "obl-1812"
+      ],
+      "source_seed_ids": [
+        "seed-2327"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "canonical runtime object families",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-033: Concern linkage to adjacent families",
+      "status": "partial",
+      "exact_items": [
+        "canonical runtime object families"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L83",
+        "Plans/Contracts_V0.md:L90"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01957",
+      "source_obligation_ids": [
+        "obl-1814"
+      ],
+      "source_seed_ids": [
+        "seed-2329"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "mutation-safe-point enforcement",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)",
+      "status": "partial",
+      "exact_items": [
+        "mutation-safe-point enforcement"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L767"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01960",
+      "source_obligation_ids": [
+        "obl-1817"
+      ],
+      "source_seed_ids": [
+        "seed-2332"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "`blocked_reason_code` should remain the SSOT instead of ad hoc blocked strings",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "status": "present",
+      "exact_items": [
+        "`blocked_reason_code` should remain the SSOT instead of ad hoc blocked strings",
+        "blocked_reason_code"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L555",
+        "Plans/Contracts_V0.md:L807",
+        "Plans/Contracts_V0.md:L1154",
+        "Plans/Contracts_V0.md:L1275",
+        "Plans/Contracts_V0.md:L1375"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01964",
+      "source_obligation_ids": [
+        "obl-1821"
+      ],
+      "source_seed_ids": [
+        "seed-2336"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "this cluster suggests reconciliation risk now lives in authority semantics as much as in s",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-029: Concern action policy and authority model",
+      "status": "partial",
+      "exact_items": [
+        "this cluster suggests reconciliation risk now lives in authority semantics as much as in storage/schema drift"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L71",
+        "Plans/Contracts_V0.md:L78"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01967",
+      "source_obligation_ids": [
+        "obl-1824"
+      ],
+      "source_seed_ids": [
+        "seed-2347"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "Canonical field-name and schema ownership drift is sharper than the earlier Gemini pass su",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "status": "partial",
+      "exact_items": [
+        "Canonical field-name and schema ownership drift is sharper than the earlier Gemini pass suggested:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L153",
+        "Plans/Contracts_V0.md:L160"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01968",
+      "source_obligation_ids": [
+        "obl-1825"
+      ],
+      "source_seed_ids": [
+        "seed-2348"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "`Contracts_V0.md` prohibits canonical `requested_persona_id` / `effective_persona_id`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`Contracts_V0.md` prohibits canonical `requested_persona_id` / `effective_persona_id`",
+        "Contracts_V0.md",
+        "requested_persona_id",
+        "effective_persona_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L14",
+        "Plans/Contracts_V0.md:L17",
+        "Plans/Contracts_V0.md:L28",
+        "Plans/Contracts_V0.md:L33",
+        "Plans/Contracts_V0.md:L42"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01973",
+      "source_obligation_ids": [
+        "obl-1830"
+      ],
+      "source_seed_ids": [
+        "seed-2353"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "`provider_account_id` now looks like a real shadow-identity risk because it appears in usa",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "present",
+      "exact_items": [
+        "`provider_account_id` now looks like a real shadow-identity risk because it appears in usage/storage without canonical contract ownership",
+        "provider_account_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L274",
+        "Plans/Contracts_V0.md:L287",
+        "Plans/Contracts_V0.md:L712",
+        "Plans/Contracts_V0.md:L729",
+        "Plans/Contracts_V0.md:L743"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01989",
+      "source_obligation_ids": [
+        "obl-1846"
+      ],
+      "source_seed_ids": [
+        "seed-2377"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "Normalize all persona/runtime identity field names to the canonical `requested_*` / `effec",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "status": "present",
+      "exact_items": [
+        "Normalize all persona/runtime identity field names to the canonical `requested_*` / `effective_*` contract from `Contracts_V0.md`, and remove drifted `_id` variants where they are being treated as canonical names.",
+        "requested_*",
+        "effective_*",
+        "Contracts_V0.md",
+        "_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L3",
+        "Plans/Contracts_V0.md:L5",
+        "Plans/Contracts_V0.md:L7",
+        "Plans/Contracts_V0.md:L9",
+        "Plans/Contracts_V0.md:L10"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01991",
+      "source_obligation_ids": [
+        "obl-1848"
+      ],
+      "source_seed_ids": [
+        "seed-2379"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "Rework usage/storage attribution around lane/package/seam/attempt/remediation dimensions i",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "status": "partial",
+      "exact_items": [
+        "Rework usage/storage attribution around lane/package/seam/attempt/remediation dimensions instead of centering `tier_id`.",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L153",
+        "Plans/Contracts_V0.md:L160"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02001",
+      "source_obligation_ids": [
+        "obl-1858"
+      ],
+      "source_seed_ids": [
+        "seed-2397"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "canonical contracts expose `requested_account_policy`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "canonical contracts expose `requested_account_policy`",
+        "requested_account_policy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L23",
+        "Plans/Contracts_V0.md:L29",
+        "Plans/Contracts_V0.md:L273",
+        "Plans/Contracts_V0.md:L276",
+        "Plans/Contracts_V0.md:L282"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02006",
+      "source_obligation_ids": [
+        "obl-1863"
+      ],
+      "source_seed_ids": [
+        "seed-2402"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "`safe_point.created`, `scheduler.pass`, and `remediation.resolved` still have multi-addend",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)",
+      "status": "present",
+      "exact_items": [
+        "`safe_point.created`, `scheduler.pass`, and `remediation.resolved` still have multi-addendum field drift inside `Contracts_V0.md`",
+        "safe_point.created",
+        "scheduler.pass",
+        "remediation.resolved",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L14",
+        "Plans/Contracts_V0.md:L17",
+        "Plans/Contracts_V0.md:L28",
+        "Plans/Contracts_V0.md:L33",
+        "Plans/Contracts_V0.md:L42"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02021",
+      "source_obligation_ids": [
+        "obl-1878"
+      ],
+      "source_seed_ids": [
+        "seed-2425"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "username rename risk is now a concrete contract inconsistency, not just a theoretical iden",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "username rename risk is now a concrete contract inconsistency, not just a theoretical identity concern"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02038",
+      "source_obligation_ids": [
+        "obl-1895"
+      ],
+      "source_seed_ids": [
+        "seed-2448"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "`acknowledge` is closest to noise-control / ownership-signaling",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`acknowledge` is closest to noise-control / ownership-signaling",
+        "acknowledge"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L63",
+        "Plans/Contracts_V0.md:L67",
+        "Plans/Contracts_V0.md:L76",
+        "Plans/Contracts_V0.md:L80",
+        "Plans/Contracts_V0.md:L123"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02039",
+      "source_obligation_ids": [
+        "obl-1896"
+      ],
+      "source_seed_ids": [
+        "seed-2449"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "`dismiss` is a durable semantic judgment and must not look like closing a toast",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-075: Historical semantic consistency",
+      "status": "present",
+      "exact_items": [
+        "`dismiss` is a durable semantic judgment and must not look like closing a toast",
+        "dismiss"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L63",
+        "Plans/Contracts_V0.md:L67",
+        "Plans/Contracts_V0.md:L76",
+        "Plans/Contracts_V0.md:L80",
+        "Plans/Contracts_V0.md:L123"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02043",
+      "source_obligation_ids": [
+        "obl-1900"
+      ],
+      "source_seed_ids": [
+        "seed-2453"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "concern \"undo\" should generally be implemented as compensating follow-up records (`reopene",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "status": "present",
+      "exact_items": [
+        "concern \"undo\" should generally be implemented as compensating follow-up records (`reopened`, reverse-merge lineage, successor concern, etc.), not history erasure",
+        "reopened"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L111",
+        "Plans/Contracts_V0.md:L115",
+        "Plans/Contracts_V0.md:L263",
+        "Plans/Contracts_V0.md:L1479"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02050",
+      "source_obligation_ids": [
+        "obl-1907"
+      ],
+      "source_seed_ids": [
+        "seed-2465"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "This matters because `acknowledged` is plausibly actor-driven",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "This matters because `acknowledged` is plausibly actor-driven",
+        "acknowledged"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L63",
+        "Plans/Contracts_V0.md:L67",
+        "Plans/Contracts_V0.md:L76",
+        "Plans/Contracts_V0.md:L80",
+        "Plans/Contracts_V0.md:L123"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02051",
+      "source_obligation_ids": [
+        "obl-1908"
+      ],
+      "source_seed_ids": [
+        "seed-2466"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "but `dismissed`, manual `accepted_risk`, and some lineage edits likely need tighter author",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-029: Concern action policy and authority model",
+      "status": "present",
+      "exact_items": [
+        "but `dismissed`, manual `accepted_risk`, and some lineage edits likely need tighter authority",
+        "dismissed",
+        "accepted_risk"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L63",
+        "Plans/Contracts_V0.md:L64",
+        "Plans/Contracts_V0.md:L67",
+        "Plans/Contracts_V0.md:L68",
+        "Plans/Contracts_V0.md:L76"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02053",
+      "source_obligation_ids": [
+        "obl-1910"
+      ],
+      "source_seed_ids": [
+        "seed-2468"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "`action`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`action`",
+        "action"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L71",
+        "Plans/Contracts_V0.md:L75",
+        "Plans/Contracts_V0.md:L76",
+        "Plans/Contracts_V0.md:L78",
+        "Plans/Contracts_V0.md:L79"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02054",
+      "source_obligation_ids": [
+        "obl-1911"
+      ],
+      "source_seed_ids": [
+        "seed-2469"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "`allowed_actor_kinds`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`allowed_actor_kinds`",
+        "allowed_actor_kinds"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02055",
+      "source_obligation_ids": [
+        "obl-1912"
+      ],
+      "source_seed_ids": [
+        "seed-2470"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "`confirmation_level`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`confirmation_level`",
+        "confirmation_level"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02057",
+      "source_obligation_ids": [
+        "obl-1914"
+      ],
+      "source_seed_ids": [
+        "seed-2472"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "`resulting_status_or_lineage`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`resulting_status_or_lineage`",
+        "resulting_status_or_lineage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02058",
+      "source_obligation_ids": [
+        "obl-1915"
+      ],
+      "source_seed_ids": [
+        "seed-2473"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "`reversibility`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`reversibility`",
+        "reversibility"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L75",
+        "Plans/Contracts_V0.md:L79",
+        "Plans/Contracts_V0.md:L299"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02059",
+      "source_obligation_ids": [
+        "obl-1916"
+      ],
+      "source_seed_ids": [
+        "seed-2474"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "`audit_fields`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`audit_fields`",
+        "audit_fields"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L75",
+        "Plans/Contracts_V0.md:L79",
+        "Plans/Contracts_V0.md:L299"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02061",
+      "source_obligation_ids": [
+        "obl-1918"
+      ],
+      "source_seed_ids": [
+        "seed-2476"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "`resolve` from a linked canonical fix/recovery/patch outcome: confirmation `none` or `ligh",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "status": "present",
+      "exact_items": [
+        "`resolve` from a linked canonical fix/recovery/patch outcome: confirmation `none` or `light`; rationale optional if the linked record is sufficient; reversibility `compensating_action_only` via `reopened`",
+        "resolve",
+        "none",
+        "light",
+        "compensating_action_only",
+        "reopened"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L63",
+        "Plans/Contracts_V0.md:L67",
+        "Plans/Contracts_V0.md:L76",
+        "Plans/Contracts_V0.md:L80",
+        "Plans/Contracts_V0.md:L111"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02064",
+      "source_obligation_ids": [
+        "obl-1921"
+      ],
+      "source_seed_ids": [
+        "seed-2479"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "`reopen`: confirmation `none` or `light`; rationale optional but recommended when reopenin",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Recommended minimum concern record shape",
+      "status": "present",
+      "exact_items": [
+        "`reopen`: confirmation `none` or `light`; rationale optional but recommended when reopening a dismissed concern; reversibility `compensating_action_only`",
+        "reopen",
+        "none",
+        "light",
+        "compensating_action_only"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L111",
+        "Plans/Contracts_V0.md:L115",
+        "Plans/Contracts_V0.md:L263",
+        "Plans/Contracts_V0.md:L277",
+        "Plans/Contracts_V0.md:L285"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02071",
+      "source_obligation_ids": [
+        "obl-1928"
+      ],
+      "source_seed_ids": [
+        "seed-2486"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "if a concern is currently tied to active blocked status, acknowledgment alone must not cle",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "status": "partial",
+      "exact_items": [
+        "if a concern is currently tied to active blocked status, acknowledgment alone must not clear the block"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L47",
+        "Plans/Contracts_V0.md:L54"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02073",
+      "source_obligation_ids": [
+        "obl-1930"
+      ],
+      "source_seed_ids": [
+        "seed-2488"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "Research Progress - 2026-03-16 - help system contract and concept-depth cluster",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-16 - help system contract and concept-depth cluster"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02082",
+      "source_obligation_ids": [
+        "obl-1939"
+      ],
+      "source_seed_ids": [
+        "seed-2509"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "`historical` vs `superseded` vs `revoked`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-075: Historical semantic consistency",
+      "status": "present",
+      "exact_items": [
+        "`historical` vs `superseded` vs `revoked`",
+        "historical",
+        "superseded",
+        "revoked"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L64",
+        "Plans/Contracts_V0.md:L68",
+        "Plans/Contracts_V0.md:L107",
+        "Plans/Contracts_V0.md:L111",
+        "Plans/Contracts_V0.md:L114"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02090",
+      "source_obligation_ids": [
+        "obl-1947"
+      ],
+      "source_seed_ids": [
+        "seed-2524"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "Define a three-depth help contract:",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "Define a three-depth help contract:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02096",
+      "source_obligation_ids": [
+        "obl-1953"
+      ],
+      "source_seed_ids": [
+        "seed-2542"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "`historical vs superseded vs revoked vs reopened`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-075: Historical semantic consistency",
+      "status": "partial",
+      "exact_items": [
+        "`historical vs superseded vs revoked vs reopened`",
+        "historical vs superseded vs revoked vs reopened"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L107",
+        "Plans/Contracts_V0.md:L114"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02124",
+      "source_obligation_ids": [
+        "obl-1981"
+      ],
+      "source_seed_ids": [
+        "seed-2578"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "no clear contract yet separates:",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "no clear contract yet separates:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02147",
+      "source_obligation_ids": [
+        "obl-2004"
+      ],
+      "source_seed_ids": [
+        "seed-2610"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "`Contracts_V0.md` and `storage-plan.md` say run/attempt state must carry full requested/ef",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "present",
+      "exact_items": [
+        "`Contracts_V0.md` and `storage-plan.md` say run/attempt state must carry full requested/effective persona/runtime/auth/account identity",
+        "Contracts_V0.md",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L14",
+        "Plans/Contracts_V0.md:L17",
+        "Plans/Contracts_V0.md:L28",
+        "Plans/Contracts_V0.md:L33",
+        "Plans/Contracts_V0.md:L42"
+      ],
+      "required_action": "none"
     }
   ]
 }

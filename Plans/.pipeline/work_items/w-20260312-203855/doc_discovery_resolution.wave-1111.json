@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1111",
+  "group_ids": [
+    "discgrp-4441",
+    "discgrp-4442",
+    "discgrp-4443",
+    "discgrp-4444"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04829",
+      "source_obligation_ids": [
+        "obl-4606"
+      ],
+      "source_seed_ids": [
+        "seed-6583"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04830",
+      "source_obligation_ids": [
+        "obl-4607"
+      ],
+      "source_seed_ids": [
+        "seed-6584"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04831",
+      "source_obligation_ids": [
+        "obl-4608"
+      ],
+      "source_seed_ids": [
+        "seed-6585"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### Progress catalog source and default drills",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L910"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04832",
+      "source_obligation_ids": [
+        "obl-4609"
+      ],
+      "source_seed_ids": [
+        "seed-6590"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "#### Route target navigation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

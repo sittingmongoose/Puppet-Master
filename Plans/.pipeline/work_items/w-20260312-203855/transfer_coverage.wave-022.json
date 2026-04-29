@@ -1,276 +1,1059 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-022",
-  "timestamp_utc": "2026-04-28T20:15:04Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-085",
-    "coverage-rowgrp-086",
-    "coverage-rowgrp-087",
-    "coverage-rowgrp-088"
+  "row_group_ids": [
+    "rowgrp-0085",
+    "rowgrp-0086",
+    "rowgrp-0087",
+    "rowgrp-0088"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-085 cov-159,cov-418,cov-1221 Plans/GitHub_API_Auth_and_Flows.md",
-    "rowgrp-086 cov-039,cov-502 Plans/GitHub_API_Auth_and_Flows.md",
-    "rowgrp-087 cov-165,cov-1253 Plans/GitHub_Integration.md",
-    "rowgrp-088 cov-148,cov-168,cov-203,cov-534 Plans/GitHub_Integration.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-085": "completed_reduced_conservatively",
-    "coverage-rowgrp-086": "completed_reduced_conservatively",
-    "coverage-rowgrp-087": "completed_reduced_conservatively",
-    "coverage-rowgrp-088": "completed_reduced_conservatively"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-159",
-    "cov-418",
-    "cov-1221",
-    "cov-039",
-    "cov-502",
-    "cov-165",
-    "cov-1253",
-    "cov-148",
-    "cov-168",
-    "cov-203",
-    "cov-534"
-  ],
-  "coverage_ids_completed": [
-    "cov-159",
-    "cov-418",
-    "cov-1221",
-    "cov-039",
-    "cov-502",
-    "cov-165",
-    "cov-1253",
-    "cov-148",
-    "cov-168",
-    "cov-203",
-    "cov-534"
-  ],
-  "path_groups_assigned": [
-    "Plans/GitHub_API_Auth_and_Flows.md",
-    "Plans/GitHub_Integration.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-159",
+      "coverage_id": "cov-00757",
+      "source_obligation_ids": [
+        "obl-614"
+      ],
+      "source_seed_ids": [
+        "seed-709"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "canon_label": "need explicit distinction between:",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "### 1.2 UICommand (internal dispatch) \u2014 distinction",
+      "status": "partial",
+      "exact_items": [
+        "need explicit distinction between:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L36"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01187",
+      "source_obligation_ids": [
+        "obl-1044"
+      ],
+      "source_seed_ids": [
+        "seed-1222"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "canon_label": "package-level overrides do not leak across unrelated runs",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "### 4.4 Mode and model overrides",
+      "status": "partial",
+      "exact_items": [
+        "package-level overrides do not leak across unrelated runs"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L232"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01612",
+      "source_obligation_ids": [
+        "obl-1469"
+      ],
+      "source_seed_ids": [
+        "seed-1821"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "conversational actors and document-production actors share provider/runtime identity seman",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "## 4. Execution semantics",
+      "status": "partial",
+      "exact_items": [
+        "conversational actors and document-production actors share provider/runtime identity semantics, but they are not orchestration execution objects"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L190"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01840",
+      "source_obligation_ids": [
+        "obl-1697"
+      ],
+      "source_seed_ids": [
+        "seed-2130"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "`reopened`, `revoked`, and `superseded` should be reserved for true lineage-changing trans",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "## 7. Reserved built-in slash commands",
+      "status": "partial",
+      "exact_items": [
+        "`reopened`, `revoked`, and `superseded` should be reserved for true lineage-changing transitions, not generic \u201cold state\u201d labels",
+        "reopened",
+        "revoked",
+        "superseded"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L371"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02214",
+      "source_obligation_ids": [
+        "obl-2069"
+      ],
+      "source_seed_ids": [
+        "seed-2686"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "still the highest-leverage SSOT for requested/effective identity, but still carries tier-e",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "## 0. Scope and SSOT status",
+      "status": "partial",
+      "exact_items": [
+        "still the highest-leverage SSOT for requested/effective identity, but still carries tier-era persisted values, missing scope fields, and no durable account-switch history model"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L5"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02217",
+      "source_obligation_ids": [
+        "obl-2072"
+      ],
+      "source_seed_ids": [
+        "seed-2692"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "still violates canonical field naming in its own SSOT and still has no structural slot for",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "still violates canonical field naming in its own SSOT and still has no structural slot for overseer-class actor types"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02716",
+      "source_obligation_ids": [
+        "obl-2563"
+      ],
+      "source_seed_ids": [
+        "seed-3365"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "reconciliation-heavy gaps where the direction exists but SSOT ownership/field naming/event",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "reconciliation-heavy gaps where the direction exists but SSOT ownership/field naming/event families still conflict**"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03655",
+      "source_obligation_ids": [
+        "obl-3501"
+      ],
+      "source_seed_ids": [
+        "seed-4711",
+        "seed-4742",
+        "seed-5057",
+        "seed-5094",
+        "seed-5135",
+        "seed-5406",
+        "seed-5522",
+        "seed-5564",
+        "seed-5599",
+        "seed-5612",
+        "seed-5658",
+        "seed-5774",
+        "seed-5923",
+        "seed-5964"
+      ],
+      "source_shard_ids": [
+        "shard-0049",
+        "shard-0052",
+        "shard-0054",
+        "shard-0055",
+        "shard-0056",
+        "shard-0057",
+        "shard-0058"
+      ],
+      "canon_label": "`Plans/Commands_System.md`",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "",
       "status": "present",
+      "exact_items": [
+        "`Plans/Commands_System.md`",
+        "Plans/Commands_System.md"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/GitHub_API_Auth_and_Flows.md:59 GitHub runtime and mutation envelopes carry requested_account_id, effective_account_id, execution_role, operational_identity, and account_switch_lineage",
-        "Plans/GitHub_API_Auth_and_Flows.md:71 usage and audit rows record execution_role, requested/effective account identity, switch history, and the account_id/credential_ref that executed the call"
+        "Plans/Commands_System.md:L7",
+        "Plans/Commands_System.md:L253",
+        "Plans/Commands_System.md:L309",
+        "Plans/Commands_System.md:L487",
+        "Plans/Commands_System.md:L519"
       ],
-      "required_action": "none",
-      "unresolved_reason": "",
-      "source_obligation_ids": [
-        "obl-043"
-      ],
-      "source_seed_ids": [
-        "seed-043"
-      ],
-      "source_shard_ids": [
-        "shard-0010"
-      ],
-      "path_field_status": "match"
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-418",
+      "coverage_id": "cov-03662",
+      "source_obligation_ids": [
+        "obl-3508"
+      ],
+      "source_seed_ids": [
+        "seed-4724"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "The next uncovered owner-doc tranche is producing high-signal deltas, not low-value tail n",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "## 8. OpenCode baseline and Puppet Master deltas",
       "status": "partial",
+      "exact_items": [
+        "The next uncovered owner-doc tranche is producing high-signal deltas, not low-value tail noise."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/GitHub_API_Auth_and_Flows.md:59 GitHub runtime and mutation envelopes carry requested/effective account identity and operational identity",
-        "Plans/GitHub_API_Auth_and_Flows.md:71 usage and audit rows record requested/effective account identity, switch history, pressure owner, account_id, and credential_ref"
+        "Plans/Commands_System.md:L457"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Requested/effective disclosure is present for GitHub usage/audit surfaces, but the shared reusable contract across graph detail, artifacts, GitHub/auth, and account-pressure surfaces is not fully stated here.",
-      "source_obligation_ids": [
-        "obl-124"
-      ],
-      "source_seed_ids": [
-        "seed-124"
-      ],
-      "source_shard_ids": [
-        "shard-0031"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1221",
-      "status": "present",
-      "evidence": [
-        "Plans/GitHub_API_Auth_and_Flows.md:64 every write-capable GitHub request carries recovery_context with blocked_sequence, recovery handshake, trust/degraded state, approval, and DAE jail posture",
-        "Plans/GitHub_API_Auth_and_Flows.md:68 transfer execution_role, requested_account_id, operational_identity, account-switch/pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
-        "Plans/GitHub_API_Auth_and_Flows.md:69-71 GitHub writes mint/reuse blocked_sequence and usage/audit rows record execution_role, requested/effective identity, switch history, pressure owner, account_id, and credential_ref"
-      ],
-      "required_action": "none",
-      "unresolved_reason": "",
+      "coverage_id": "cov-03754",
       "source_obligation_ids": [
-        "obl-346"
+        "obl-3599"
       ],
       "source_seed_ids": [
-        "seed-346"
+        "seed-4865"
       ],
       "source_shard_ids": [
-        "shard-0088"
+        "shard-0050"
       ],
-      "path_field_status": "match"
+      "canon_label": "Refactor `orchestrator-subagent-integration.md` so selector and hook APIs consume:",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "#### 6.1.1 Scope selector",
+      "status": "partial",
+      "exact_items": [
+        "Refactor `orchestrator-subagent-integration.md` so selector and hook APIs consume:",
+        "orchestrator-subagent-integration.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L311"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-039",
+      "coverage_id": "cov-04084",
+      "source_obligation_ids": [
+        "obl-3926"
+      ],
+      "source_seed_ids": [
+        "seed-5380"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "Recommended resolution order for identity opens",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "### 2.3 Resolution order",
+      "status": "partial",
+      "exact_items": [
+        "Recommended resolution order for identity opens"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L86"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04159",
+      "source_obligation_ids": [
+        "obl-3999"
+      ],
+      "source_seed_ids": [
+        "seed-5491"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "domain-specific \u201copen in X\u201d commands can still exist where they express a meaningful produ",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "domain-specific \u201copen in X\u201d commands can still exist where they express a meaningful product action, but they should be wrappers over the same route/subject model rather than custom arg families"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04161",
+      "source_obligation_ids": [
+        "obl-4001"
+      ],
+      "source_seed_ids": [
+        "seed-5493"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "it stops `resume_url` from being more capable than in-app commands",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "it stops `resume_url` from being more capable than in-app commands",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04162",
+      "source_obligation_ids": [
+        "obl-4002"
+      ],
+      "source_seed_ids": [
+        "seed-5494"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "navigation commands should be able to carry:",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "navigation commands should be able to carry:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04214",
+      "source_obligation_ids": [
+        "obl-4054"
+      ],
+      "source_seed_ids": [
+        "seed-5593"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "command execution seam for User Commands,",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "### 1.1 User Command (preset)",
+      "status": "partial",
+      "exact_items": [
+        "command execution seam for User Commands,"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L31"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04304",
+      "source_obligation_ids": [
+        "obl-4144"
+      ],
+      "source_seed_ids": [
+        "seed-5744"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "wrapper commands over a canonical navigation primitive",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "wrapper commands over a canonical navigation primitive"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04456",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "",
       "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/GitHub_API_Auth_and_Flows.md: assigned file reviewed; no direct retirement evidence for Overseer, PuppetMasterEvent::*, Phase/Task/Subtask/Iteration, TierContext, tier_id, approve_continue, or github_api:github.com/<login> found"
+        "Plans/Commands_System.md:content_absent_after_scan"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Legacy heading/runtime token retirement is not directly represented in the assigned path.",
-      "source_obligation_ids": [
-        "obl-024"
-      ],
-      "source_seed_ids": [
-        "seed-024"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-502",
+      "coverage_id": "cov-04595",
+      "source_obligation_ids": [
+        "obl-4373"
+      ],
+      "source_seed_ids": [
+        "seed-6166"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "focus/open wrapper commands in `cmd.nav.*`",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
       "status": "partial",
+      "exact_items": [
+        "focus/open wrapper commands in `cmd.nav.*`",
+        "cmd.nav.*"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/GitHub_API_Auth_and_Flows.md:58 replaces login-keyed durable GitHub identity with stable account_id / credential_ref",
-        "Plans/GitHub_API_Auth_and_Flows.md:60 account_login and provider-native handles are descriptive only while credential_ref points to the credential-store entry"
+        "Plans/Commands_System.md:L1"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Login-keyed identity retirement is covered, but superseding scheduler/safe-point payloads and terminal widget/legacy dashboard layout migration are not covered here.",
-      "source_obligation_ids": [
-        "obl-145"
-      ],
-      "source_seed_ids": [
-        "seed-145"
-      ],
-      "source_shard_ids": [
-        "shard-0036"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-165",
+      "coverage_id": "cov-04627",
+      "source_obligation_ids": [
+        "obl-4405"
+      ],
+      "source_seed_ids": [
+        "seed-6231"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "Canonical target selector:",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "#### 6.1.1 Scope selector",
       "status": "partial",
+      "exact_items": [
+        "Canonical target selector:"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/GitHub_Integration.md:105-113 GitHub workflows consume runtime identity GitHub_AuthContext, include effective_account_id, and use runtime identity resolution for cross-org capability checks",
-        "Plans/GitHub_Integration.md:115-118 provider/model selection follows scoped settings and active Persona/execution_unit_type"
+        "Plans/Commands_System.md:L311"
       ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "GitHub Integration consumes runtime account identity, but package/seam/node/delegated-subagent requested/effective carry-through is not fully specified.",
-      "source_obligation_ids": [
-        "obl-044"
-      ],
-      "source_seed_ids": [
-        "seed-044"
-      ],
-      "source_shard_ids": [
-        "shard-0010"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1253",
-      "status": "missing",
-      "evidence": [
-        "Plans/GitHub_Integration.md:76 references UI_Command_Catalog",
-        "Plans/GitHub_Integration.md:79 references storage-plan"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Only broad owner references exist; missing anchors and live result_id command consumers are not evidenced in the assigned path.",
+      "coverage_id": "cov-04638",
       "source_obligation_ids": [
-        "obl-354"
+        "obl-4416"
       ],
       "source_seed_ids": [
-        "seed-354"
+        "seed-6251"
       ],
       "source_shard_ids": [
-        "shard-0091"
+        "shard-0060"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-148",
+      "canon_label": "specialized operation payloads (`OpenFile`, `OpenSubject`, or object-specific commands)",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
       "status": "partial",
+      "exact_items": [
+        "specialized operation payloads (`OpenFile`, `OpenSubject`, or object-specific commands)",
+        "OpenFile",
+        "OpenSubject"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/GitHub_Integration.md:11 Orchestrator is lane-pool operational truth and Source Control is concrete repo/worktree operator",
-        "Plans/GitHub_Integration.md:12 worktree rows show owning package/lane/run refs plus lifecycle and blocked/recovery state"
+        "Plans/Commands_System.md:L1"
       ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Package/lane worktree handoff is represented, but run/tier/subtask retirement and package-based lane-pool conflict recovery are not fully covered.",
-      "source_obligation_ids": [
-        "obl-041"
-      ],
-      "source_seed_ids": [
-        "seed-041"
-      ],
-      "source_shard_ids": [
-        "shard-0009"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-168",
+      "coverage_id": "cov-04742",
+      "source_obligation_ids": [
+        "obl-4520"
+      ],
+      "source_seed_ids": [
+        "seed-6433"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "Wrapper commands are currently real and useful, but the docs still lack a rule for when th",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
       "status": "partial",
+      "exact_items": [
+        "Wrapper commands are currently real and useful, but the docs still lack a rule for when they are canonical UX affordances versus deprecated raw transport shapes."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/GitHub_Integration.md:11 Orchestrator is lane-pool operational truth and Source Control is concrete repo/worktree operator",
-        "Plans/GitHub_Integration.md:12 worktree rows show package/lane/run refs plus lifecycle and blocked/recovery state"
+        "Plans/Commands_System.md:L1"
       ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Lane-pool and worktree ownership language exists, but tier/subtask-native ownership collision and contamination quarantine are not directly covered.",
-      "source_obligation_ids": [
-        "obl-045"
-      ],
-      "source_seed_ids": [
-        "seed-045"
-      ],
-      "source_shard_ids": [
-        "shard-0010"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-203",
-      "status": "missing",
-      "evidence": [
-        "Plans/GitHub_Integration.md: assigned file reviewed; no Source Control narrow side-panel constraint, compact chips/icons, expandable detail, or deep-link-out layout guidance found"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "The assigned path lacks the Source Control narrow side-panel layout contract.",
+      "coverage_id": "cov-04744",
       "source_obligation_ids": [
-        "obl-055"
+        "obl-4522"
       ],
       "source_seed_ids": [
-        "seed-055"
+        "seed-6435"
       ],
       "source_shard_ids": [
-        "shard-0012"
+        "shard-0062"
       ],
-      "path_field_status": "match"
+      "canon_label": "Let wrapper commands remain if they provide real UX meaning, but make the underlying targe",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "Let wrapper commands remain if they provide real UX meaning, but make the underlying target model canonical."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-534",
-      "status": "missing",
-      "evidence": [
-        "Plans/GitHub_Integration.md: assigned file reviewed; no internal route_payload schema or navigation payload granularity evidence found"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "The assigned path lacks an internal route_payload schema or equivalent navigation contract evidence.",
+      "coverage_id": "cov-04784",
       "source_obligation_ids": [
-        "obl-153"
+        "obl-4562"
       ],
       "source_seed_ids": [
-        "seed-153"
+        "seed-6504"
       ],
       "source_shard_ids": [
-        "shard-0038"
+        "shard-0062"
       ],
-      "path_field_status": "match"
+      "canon_label": "The broader rewrite still lacks a strong single source for several cross-cutting concerns:",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "#### 3.3.3 Shell output injection (`` !`command` ``)",
+      "status": "partial",
+      "exact_items": [
+        "The broader rewrite still lacks a strong single source for several cross-cutting concerns: command namespace promotion, capability-state ownership, cleanup/remediation lineage, packaging lineage, container publish authority, and actor-scope/rules injection."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L180"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04910",
+      "source_obligation_ids": [
+        "obl-4686"
+      ],
+      "source_seed_ids": [
+        "seed-6744"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "Route-consuming navigation commands are the ones that must reveal a specific object or sco",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "Route-consuming navigation commands are the ones that must reveal a specific object or scope. They should normalize through the emerging `route_target` model even if the user-facing command name stays domain-specific.",
+        "route_target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04915",
+      "source_obligation_ids": [
+        "obl-4691"
+      ],
+      "source_seed_ids": [
+        "seed-6749"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "`cmd.source_control.select_worktree` is not just a generic shell toggle. It is an object-t",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "#### 3.3.3 Shell output injection (`` !`command` ``)",
+      "status": "partial",
+      "exact_items": [
+        "`cmd.source_control.select_worktree` is not just a generic shell toggle. It is an object-targeting selection command. If it remains canonical, it should resolve through normalized target identity rather than stay a one-off ad hoc selection primitive.",
+        "cmd.source_control.select_worktree"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L180"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04927",
+      "source_obligation_ids": [
+        "obl-4703"
+      ],
+      "source_seed_ids": [
+        "seed-6769"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "Treat commands like `cmd.source_control.select_worktree` as object-selection/navigation co",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "Treat commands like `cmd.source_control.select_worktree` as object-selection/navigation commands that should normalize through canonical target identity if they remain first-class.",
+        "cmd.source_control.select_worktree"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04941",
+      "source_obligation_ids": [
+        "obl-4717"
+      ],
+      "source_seed_ids": [
+        "seed-6797"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "There is still no canonical navigation primitive in the contract layer, so wrapper command",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "There is still no canonical navigation primitive in the contract layer, so wrapper commands remain forced to carry semantics in prose."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04942",
+      "source_obligation_ids": [
+        "obl-4718"
+      ],
+      "source_seed_ids": [
+        "seed-6798"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "The wiring/gate model is command-ID-centric, but it has no first-class notion of wrapper c",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "The wiring/gate model is command-ID-centric, but it has no first-class notion of wrapper commands normalizing to one shared route primitive."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04975",
+      "source_obligation_ids": [
+        "obl-4751"
+      ],
+      "source_seed_ids": [
+        "seed-6844"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "wrapper commands should instead declare something like `normalizes_to` / `canonical_target",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "wrapper commands should instead declare something like `normalizes_to` / `canonical_target_contract` / `canonical_route_kind`",
+        "normalizes_to",
+        "canonical_target_contract",
+        "canonical_route_kind"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04996",
+      "source_obligation_ids": [
+        "obl-4772"
+      ],
+      "source_seed_ids": [
+        "seed-6870"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "For wrapper commands, `normalizes_to_contract` should stay narrow and contract-level, for",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "For wrapper commands, `normalizes_to_contract` should stay narrow and contract-level, for example:",
+        "normalizes_to_contract"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04999",
+      "source_obligation_ids": [
+        "obl-4775"
+      ],
+      "source_seed_ids": [
+        "seed-6875"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "Deprecated alias metadata should remain explicit and separate because it implies lifecycle",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "Deprecated alias metadata should remain explicit and separate because it implies lifecycle/removal expectations that wrapper commands do not have."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05125",
+      "source_obligation_ids": [
+        "obl-4901"
+      ],
+      "source_seed_ids": [
+        "seed-7066"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "one canonical target selector:",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "#### 6.1.1 Scope selector",
+      "status": "partial",
+      "exact_items": [
+        "one canonical target selector:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L311"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05181",
+      "source_obligation_ids": [
+        "obl-4957"
+      ],
+      "source_seed_ids": [
+        "seed-7188"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "`wizard_step` is not a primary selector",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "#### 6.1.1 Scope selector",
+      "status": "partial",
+      "exact_items": [
+        "`wizard_step` is not a primary selector",
+        "wizard_step"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L311"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05182",
+      "source_obligation_ids": [
+        "obl-4958"
+      ],
+      "source_seed_ids": [
+        "seed-7189"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "`usage_event_ref` is not a primary selector field",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "#### 6.1.1 Scope selector",
+      "status": "partial",
+      "exact_items": [
+        "`usage_event_ref` is not a primary selector field",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L311"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05301",
+      "source_obligation_ids": [
+        "obl-5077"
+      ],
+      "source_seed_ids": [
+        "seed-7461"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "Continue the ordered sequence on this same 22-doc tranche into `GPT-5.4`; Sonnet still pro",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "## 8. OpenCode baseline and Puppet Master deltas",
+      "status": "partial",
+      "exact_items": [
+        "Continue the ordered sequence on this same 22-doc tranche into `GPT-5.4`; Sonnet still produced real new deltas across almost every doc.",
+        "GPT-5.4"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L457"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05400",
+      "source_obligation_ids": [
+        "obl-5172"
+      ],
+      "source_seed_ids": [
+        "seed-7664"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "reject when `inspector_target` is present but no object selector exists",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "#### 6.1.1 Scope selector",
+      "status": "partial",
+      "exact_items": [
+        "reject when `inspector_target` is present but no object selector exists",
+        "inspector_target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L311"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05748",
+      "source_obligation_ids": [
+        "obl-5520"
+      ],
+      "source_seed_ids": [
+        "seed-8198"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "Make the owner-doc distinction explicit:",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "### 1.2 UICommand (internal dispatch) \u2014 distinction",
+      "status": "partial",
+      "exact_items": [
+        "Make the owner-doc distinction explicit:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L36"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05891",
+      "source_obligation_ids": [
+        "obl-5663"
+      ],
+      "source_seed_ids": [
+        "seed-8419"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "The remaining work is now mostly about collapsing overlapping canon and fixing exact broke",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "### SSOT references (DRY)",
+      "status": "partial",
+      "exact_items": [
+        "The remaining work is now mostly about collapsing overlapping canon and fixing exact broken references, payloads, and command contracts."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L11"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06166",
+      "source_obligation_ids": [
+        "obl-5938"
+      ],
+      "source_seed_ids": [
+        "seed-8837"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "The `GPT-5.4` wave still produced substantive owner-level deltas across the entire remaini",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "## 8. OpenCode baseline and Puppet Master deltas",
+      "status": "partial",
+      "exact_items": [
+        "The `GPT-5.4` wave still produced substantive owner-level deltas across the entire remaining partial tranche. This is not yet a convergence zone.",
+        "GPT-5.4"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L457"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06182",
+      "source_obligation_ids": [
+        "obl-5954"
+      ],
+      "source_seed_ids": [
+        "seed-8853"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`Plugins_System.md` still permits read-only mode bypass via mutating plugin tools and env-",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "### 4.4 Mode and model overrides",
+      "status": "partial",
+      "exact_items": [
+        "`Plugins_System.md` still permits read-only mode bypass via mutating plugin tools and env-var mutation, plus namespace/runtime model splits.",
+        "Plugins_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L232"
+      ],
+      "required_action": "owner_create_or_rewrite"
     }
   ]
 }

@@ -1,0 +1,106 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-383",
+  "group_ids": [
+    "discgrp-1529",
+    "discgrp-1530",
+    "discgrp-1531",
+    "discgrp-1532"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01781",
+      "source_obligation_ids": [
+        "obl-1638"
+      ],
+      "source_seed_ids": [
+        "seed-2044",
+        "seed-6315",
+        "seed-7264"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0061",
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01782",
+      "source_obligation_ids": [
+        "obl-1639"
+      ],
+      "source_seed_ids": [
+        "seed-2045"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01783",
+      "source_obligation_ids": [
+        "obl-1640"
+      ],
+      "source_seed_ids": [
+        "seed-2046",
+        "seed-6306",
+        "seed-7255",
+        "seed-7715",
+        "seed-7840"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0061",
+        "shard-0069",
+        "shard-0072",
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01784",
+      "source_obligation_ids": [
+        "obl-1641"
+      ],
+      "source_seed_ids": [
+        "seed-2048"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Runtime artifact and projection storage scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1238",
+  "group_ids": [
+    "discgrp-4949",
+    "discgrp-4950",
+    "discgrp-4951",
+    "discgrp-4952"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05353",
+      "source_obligation_ids": [
+        "obl-5125"
+      ],
+      "source_seed_ids": [
+        "seed-7576"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05354",
+      "source_obligation_ids": [
+        "obl-5126"
+      ],
+      "source_seed_ids": [
+        "seed-7577"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05355",
+      "source_obligation_ids": [
+        "obl-5127"
+      ],
+      "source_seed_ids": [
+        "seed-7585"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05356",
+      "source_obligation_ids": [
+        "obl-5128"
+      ],
+      "source_seed_ids": [
+        "seed-7586"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "# Runtime Artifacts Panel \u2014 SSOT",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

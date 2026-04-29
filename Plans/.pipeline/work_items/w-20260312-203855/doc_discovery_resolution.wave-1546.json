@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1546",
+  "group_ids": [
+    "discgrp-6181",
+    "discgrp-6182",
+    "discgrp-6183",
+    "discgrp-6184"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06872",
+      "source_obligation_ids": [
+        "obl-6475"
+      ],
+      "source_seed_ids": [
+        "seed-9854"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "### Invariant B -- Visible evidence ingress only",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L213"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06874",
+      "source_obligation_ids": [
+        "obl-6477"
+      ],
+      "source_seed_ids": [
+        "seed-9856"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06875",
+      "source_obligation_ids": [
+        "obl-6478"
+      ],
+      "source_seed_ids": [
+        "seed-9857"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "# Assistant & Chat UI -- Design Plan",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06876",
+      "source_obligation_ids": [
+        "obl-6479"
+      ],
+      "source_seed_ids": [
+        "seed-9858"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L35"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

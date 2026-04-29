@@ -1,0 +1,300 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-168",
+  "group_ids": [
+    "pktgrp-0669",
+    "pktgrp-0670",
+    "pktgrp-0671",
+    "pktgrp-0672"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0114",
+      "source_reconciliation_target_id": "target-0559",
+      "source_reconciliation_target_ids": [
+        "target-0559"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "operation": "observe_only",
+      "live_anchor": "## 10. Chat History Search (Plans/assistant-chat-design.md:L764)",
+      "coverage_row_ids": [
+        "cov-05537"
+      ],
+      "source_obligation_ids": [
+        "obl-5309"
+      ],
+      "source_seed_ids": [
+        "seed-7887"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-5309"
+        ],
+        "source_seed_ids": [
+          "seed-7887"
+        ],
+        "source_shard_ids": [
+          "shard-0073"
+        ]
+      },
+      "gap_ids": [
+        "gap-04313"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "chat search and jump behavior is already stable-ID based with `thread_id` and `message_id`",
+        "thread_id",
+        "message_id"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-b95d4097dd3b",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0115",
+      "source_reconciliation_target_id": "target-0560",
+      "source_reconciliation_target_ids": [
+        "target-0560"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "operation": "observe_only",
+      "live_anchor": "## 16. Interview Phase UX (Chat Surface) (Plans/assistant-chat-design.md:L1463)",
+      "coverage_row_ids": [
+        "cov-01606",
+        "cov-01608"
+      ],
+      "source_obligation_ids": [
+        "obl-1463",
+        "obl-1465"
+      ],
+      "source_seed_ids": [
+        "seed-1815",
+        "seed-1817"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1463",
+          "obl-1465"
+        ],
+        "source_seed_ids": [
+          "seed-1815",
+          "seed-1817"
+        ],
+        "source_shard_ids": [
+          "shard-0027"
+        ]
+      },
+      "gap_ids": [
+        "gap-01257",
+        "gap-01259"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Interview activity pane and chat must show effective Persona, selection reason, effective platform/model, and skipped-control disclosure",
+        "chat subagent blocks and interview activity panes are already expected to expose the same effective-runtime fields for active work blocks"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-dcd4b59c05e4",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0116",
+      "source_reconciliation_target_id": "target-0563",
+      "source_reconciliation_target_ids": [
+        "target-0563"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "operation": "observe_only",
+      "live_anchor": "## 5. Commands (slash commands and custom commands) (Plans/assistant-chat-design.md:L254)",
+      "coverage_row_ids": [
+        "cov-03424"
+      ],
+      "source_obligation_ids": [
+        "obl-3270"
+      ],
+      "source_seed_ids": [
+        "seed-4384"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3270"
+        ],
+        "source_seed_ids": [
+          "seed-4384"
+        ],
+        "source_shard_ids": [
+          "shard-0047"
+        ]
+      },
+      "gap_ids": [
+        "gap-02675"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Commands_System.md` and `assistant-chat-design.md` still disagree on whether reserved slash commands may be overridden, while `UI_Command_Catalog.md` still lacks the corresponding `cmd.chat.run_user_command` owner row.",
+        "Commands_System.md",
+        "assistant-chat-design.md",
+        "UI_Command_Catalog.md",
+        "cmd.chat.run_user_command"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-c4f1a586134f",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0117",
+      "source_reconciliation_target_id": "target-0570",
+      "source_reconciliation_target_ids": [
+        "target-0570"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "operation": "observe_only",
+      "live_anchor": "### 17.3 Context re-pack on model switch (Resolved) (Plans/assistant-chat-design.md:L1528)",
+      "coverage_row_ids": [
+        "cov-01808",
+        "cov-02776"
+      ],
+      "source_obligation_ids": [
+        "obl-1665",
+        "obl-2623"
+      ],
+      "source_seed_ids": [
+        "seed-2073",
+        "seed-3439"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0040"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1665",
+          "obl-2623"
+        ],
+        "source_seed_ids": [
+          "seed-2073",
+          "seed-3439"
+        ],
+        "source_shard_ids": [
+          "shard-0029",
+          "shard-0040"
+        ]
+      },
+      "gap_ids": [
+        "gap-01415",
+        "gap-02185"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "route payloads need to restore context like `focused_run_id`, not merely switch tabs",
+        "focused_run_id",
+        "Without `requested_account_binding`, later consumers will infer hard-vs-soft semantics heuristically from UI context or switch reasons, which will drift immediately.",
+        "requested_account_binding"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-713d1b06c030",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-05537",
+    "cov-01606",
+    "cov-01608",
+    "cov-03424",
+    "cov-01808",
+    "cov-02776"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-5309",
+    "obl-1463",
+    "obl-1465",
+    "obl-3270",
+    "obl-1665",
+    "obl-2623"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-7887",
+    "seed-1815",
+    "seed-1817",
+    "seed-4384",
+    "seed-2073",
+    "seed-3439"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0073",
+    "shard-0027",
+    "shard-0047",
+    "shard-0029",
+    "shard-0040"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "chat search and jump behavior is already stable-ID based with `thread_id` and `message_id`",
+    "thread_id",
+    "message_id",
+    "Interview activity pane and chat must show effective Persona, selection reason, effective platform/model, and skipped-control disclosure",
+    "chat subagent blocks and interview activity panes are already expected to expose the same effective-runtime fields for active work blocks",
+    "`Commands_System.md` and `assistant-chat-design.md` still disagree on whether reserved slash commands may be overridden, while `UI_Command_Catalog.md` still lacks the corresponding `cmd.chat.run_user_command` owner row.",
+    "Commands_System.md",
+    "assistant-chat-design.md",
+    "UI_Command_Catalog.md",
+    "cmd.chat.run_user_command",
+    "route payloads need to restore context like `focused_run_id`, not merely switch tabs",
+    "focused_run_id",
+    "Without `requested_account_binding`, later consumers will infer hard-vs-soft semantics heuristically from UI context or switch reasons, which will drift immediately.",
+    "requested_account_binding"
+  ],
+  "blocked_targets": []
+}

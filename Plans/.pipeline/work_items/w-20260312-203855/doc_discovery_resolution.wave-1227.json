@@ -1,0 +1,99 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1227",
+  "group_ids": [
+    "discgrp-4905",
+    "discgrp-4906",
+    "discgrp-4907",
+    "discgrp-4908"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05309",
+      "source_obligation_ids": [
+        "obl-5081"
+      ],
+      "source_seed_ids": [
+        "seed-7475"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Active durable-store lock identity",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1045"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05310",
+      "source_obligation_ids": [
+        "obl-5082"
+      ],
+      "source_seed_ids": [
+        "seed-7480"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05311",
+      "source_obligation_ids": [
+        "obl-5083"
+      ],
+      "source_seed_ids": [
+        "seed-7481",
+        "seed-7536",
+        "seed-7599"
+      ],
+      "source_shard_ids": [
+        "shard-0070",
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "#### Route target navigation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05312",
+      "source_obligation_ids": [
+        "obl-5084"
+      ],
+      "source_seed_ids": [
+        "seed-7482",
+        "seed-7488",
+        "seed-7494"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

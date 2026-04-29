@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1261",
+  "group_ids": [
+    "discgrp-5041",
+    "discgrp-5042",
+    "discgrp-5043",
+    "discgrp-5044"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05445",
+      "source_obligation_ids": [
+        "obl-5217"
+      ],
+      "source_seed_ids": [
+        "seed-7740"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05446",
+      "source_obligation_ids": [
+        "obl-5218"
+      ],
+      "source_seed_ids": [
+        "seed-7741"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05447",
+      "source_obligation_ids": [
+        "obl-5219"
+      ],
+      "source_seed_ids": [
+        "seed-7742"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/00-plans-index.md",
+      "new_heading_hint": "# Plans Index (authoritative map)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/00-plans-index.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05448",
+      "source_obligation_ids": [
+        "obl-5220"
+      ],
+      "source_seed_ids": [
+        "seed-7743"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-175: Concern source-event vs record vs projection split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L143"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

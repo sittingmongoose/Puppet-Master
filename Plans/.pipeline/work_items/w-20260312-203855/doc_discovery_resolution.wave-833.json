@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-833",
+  "group_ids": [
+    "discgrp-3329",
+    "discgrp-3330",
+    "discgrp-3331",
+    "discgrp-3332"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03609",
+      "source_obligation_ids": [
+        "obl-3455"
+      ],
+      "source_seed_ids": [
+        "seed-4648"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03610",
+      "source_obligation_ids": [
+        "obl-3456"
+      ],
+      "source_seed_ids": [
+        "seed-4655"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03611",
+      "source_obligation_ids": [
+        "obl-3457"
+      ],
+      "source_seed_ids": [
+        "seed-4656"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03612",
+      "source_obligation_ids": [
+        "obl-3458"
+      ],
+      "source_seed_ids": [
+        "seed-4660"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

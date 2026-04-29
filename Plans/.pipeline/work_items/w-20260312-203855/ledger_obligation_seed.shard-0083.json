@@ -1,112 +1,2551 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
   "work_id": "w-20260312-203855",
   "shard_id": "shard-0083",
   "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0083-L016401-L016600.md",
   "source_line_range": "L016401-L016600",
   "seed_candidates": [
     {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Crosswalk numbering route OpenSubject primitive blocker",
+      "seed_type": "owner",
+      "canon_label_hint": "`Crosswalk.md` first",
       "exact_items": [
-        "Crosswalk.md first",
-        "Crosswalk.md needs: corrected section numbering; removal of stale Tiers and widgetized-Orchestrator wording; explicit primitive ownership for route_target and OpenSubject",
-        "The duplicated Crosswalk.md numbering is not cosmetic. It undermines ContractRef stability and gateable traceability."
+        "`Crosswalk.md` first",
+        "Crosswalk.md"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016401"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`DRY_Rules.md` second",
+      "exact_items": [
+        "`DRY_Rules.md` second",
+        "DRY_Rules.md"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016402"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Decision_Log.md` third",
+      "exact_items": [
+        "`Decision_Log.md` third",
+        "Decision_Log.md"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016403"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Crosswalk.md` needs:",
+      "exact_items": [
+        "`Crosswalk.md` needs:",
+        "Crosswalk.md"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016404"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "removal of stale `Tiers` and widgetized-Orchestrator wording",
+      "exact_items": [
+        "removal of stale `Tiers` and widgetized-Orchestrator wording",
+        "Tiers"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [
+        "Tiers"
+      ],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016406"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "explicit primitive ownership for `route_target` and `OpenSubject`",
+      "exact_items": [
+        "explicit primitive ownership for `route_target` and `OpenSubject`",
+        "route_target",
+        "OpenSubject"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016407"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`DRY_Rules.md` needs:",
+      "exact_items": [
+        "`DRY_Rules.md` needs:",
+        "DRY_Rules.md"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016408"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "one deterministic `ContractRef` shape for `ContractName`",
+      "exact_items": [
+        "one deterministic `ContractRef` shape for `ContractName`",
+        "ContractRef",
+        "ContractName"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016409"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Decision_Log.md` needs:",
+      "exact_items": [
+        "`Decision_Log.md` needs:",
+        "Decision_Log.md"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016412"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "at minimum the owner-boundary decisions that now affect routing, Orchestrator ontology, bl",
+      "exact_items": [
+        "at minimum the owner-boundary decisions that now affect routing, Orchestrator ontology, blocked identity, runtime identity, and projection-trust vocabulary"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016414"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "This seam is owner-level, not consumer-level. Fixing `Orchestrator_Page.md` or `FinalGUISp",
+      "exact_items": [
+        "This seam is owner-level, not consumer-level. Fixing `Orchestrator_Page.md` or `FinalGUISpec.md` first would still leave stale routing at the top of the precedence stack.",
+        "Orchestrator_Page.md",
+        "FinalGUISpec.md"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [
+        "FinalGUISpec.md",
+        "Orchestrator_Page.md"
+      ],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016417"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "The duplicated `Crosswalk.md` numbering is not cosmetic. It undermines `ContractRef` stabi",
+      "exact_items": [
+        "The duplicated `Crosswalk.md` numbering is not cosmetic. It undermines `ContractRef` stability and gateable traceability.",
+        "Crosswalk.md",
+        "ContractRef"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016418"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Decision_Log.md` currently gives downstream reconciliation no durable place to point when",
+      "exact_items": [
+        "`Decision_Log.md` currently gives downstream reconciliation no durable place to point when explaining why rewrite-era ownership changed.",
+        "Decision_Log.md"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016419"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Research Progress - 2026-03-17 - owner-traceability seam: Progression Gates",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - owner-traceability seam: Progression Gates"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016422"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/Progression_Gates.md`",
+      "exact_items": [
+        "`Plans/Progression_Gates.md`",
+        "Plans/Progression_Gates.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016425"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Adjacent references checked through existing owner docs:",
+      "exact_items": [
+        "Adjacent references checked through existing owner docs:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016426"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/DRY_Rules.md`",
+      "exact_items": [
+        "`Plans/DRY_Rules.md`",
+        "Plans/DRY_Rules.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/DRY_Rules.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016427"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/Crosswalk.md`",
+      "exact_items": [
+        "`Plans/Crosswalk.md`",
+        "Plans/Crosswalk.md"
       ],
       "affected_doc_hints": [
         "Plans/Crosswalk.md"
       ],
-      "doc_resolution_status": "concrete",
       "heading_hints": [],
-      "stale_tokens": [
-        "Tiers",
-        "route_target",
-        "OpenSubject",
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016428"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/Progression_Gates.md` contains a direct `ContractRef` syntax violation inside canon",
+      "exact_items": [
+        "`Plans/Progression_Gates.md` contains a direct `ContractRef` syntax violation inside canonical gate text:",
+        "Plans/Progression_Gates.md",
         "ContractRef"
       ],
-      "source_evidence": [
-        "working_ledger.md:L16401-L16419"
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
       ],
-      "notes": []
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016431"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
     },
     {
       "seed_type": "owner",
-      "canon_label_hint": "Progression Gates ContractRef taxonomy violation",
+      "canon_label_hint": "`ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invariants.md#I",
       "exact_items": [
-        "Plans/Progression_Gates.md contains a direct ContractRef syntax violation inside canonical gate text",
-        "ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invariants.md#INV-010, SchemaID:evidence.schema.json",
-        "This bypasses the ContractName: taxonomy that Plans/DRY_Rules.md says is canonical.",
-        "The gate doc enforces ContractRef rigor while violating the same ContractRef taxonomy in its own canonical text."
+        "`ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invariants.md#INV-010, SchemaID:evidence.schema.json`",
+        "ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invariants.md#INV-010, SchemaID:evidence.schema.json"
       ],
       "affected_doc_hints": [
-        "Plans/Progression_Gates.md",
+        "Plans/Architecture_Invariants.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016432"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "This bypasses the `ContractName:` taxonomy that `Plans/DRY_Rules.md` says is canonical.",
+      "exact_items": [
+        "This bypasses the `ContractName:` taxonomy that `Plans/DRY_Rules.md` says is canonical.",
+        "ContractName:",
         "Plans/DRY_Rules.md"
       ],
-      "doc_resolution_status": "concrete",
+      "affected_doc_hints": [
+        "Plans/DRY_Rules.md"
+      ],
       "heading_hints": [],
-      "stale_tokens": [
-        "ContractRef",
-        "SchemaID:evidence.schema.json",
-        "ContractName:"
-      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
       "source_evidence": [
-        "working_ledger.md:L16422-L16479"
+        "working_ledger.md:L016433"
       ],
-      "notes": []
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
     },
     {
       "seed_type": "owner",
-      "canon_label_hint": "Contracts route_target OpenSubject missing named contracts",
+      "canon_label_hint": "`GATE-010` still validates flat wiring coverage only. It does not validate:",
       "exact_items": [
-        "Plans/Contracts_V0.md still lacks named canonical contracts for: route_target and OpenSubject",
-        "The owner doc is ahead in late addenda and behind in its main body, which makes it a direct source of downstream drift across Orchestrator, Graph, HITL, storage, and command docs.",
-        "insert route_target and OpenSubject into the UI-command/navigation section"
+        "`GATE-010` still validates flat wiring coverage only. It does not validate:",
+        "GATE-010"
       ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md",
-        "Plans/UI_Command_Catalog.md"
-      ],
-      "doc_resolution_status": "concrete",
+      "affected_doc_hints": [],
       "heading_hints": [],
-      "stale_tokens": [
-        "route_target",
-        "OpenSubject"
-      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
       "source_evidence": [
-        "working_ledger.md:L16481-L16545"
+        "working_ledger.md:L016434"
       ],
-      "notes": []
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
     },
     {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "HITL request-centric opening contract retirement",
+      "seed_type": "owner",
+      "canon_label_hint": "command wrapper normalization",
       "exact_items": [
-        "Plans/human-in-the-loop.md still opens with a canonical request contract built on: request_id, tier_id, tier_type, request_kind = tier_boundary_approval, ordered allowed_action_ids[]",
-        "The same file later moves to the stronger runtime-native model",
-        "Reconciliation should retire the request-centric opening contract and rebuild the file around: blocked/runtime approval identity; canonical runtime action families; lineage-preserving persistence through blocked records"
+        "command wrapper normalization"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016435"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`route_target` pass-through",
+      "exact_items": [
+        "`route_target` pass-through",
+        "route_target"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016436"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`OpenSubject` subject-open binding",
+      "exact_items": [
+        "`OpenSubject` subject-open binding",
+        "OpenSubject"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016437"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Runtime Recovery Canonicalization Gate Addendum` appears twice with the same body",
+      "exact_items": [
+        "`Runtime Recovery Canonicalization Gate Addendum` appears twice with the same body",
+        "Runtime Recovery Canonicalization Gate Addendum"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016440"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "The doc still uses non-deterministic phrasing in owner-level gate text:",
+      "exact_items": [
+        "The doc still uses non-deterministic phrasing in owner-level gate text:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016443"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Execution contract (recommended)`",
+      "exact_items": [
+        "`Execution contract (recommended)`",
+        "Execution contract (recommended)"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016444"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`targeted for future enforcement`",
+      "exact_items": [
+        "`targeted for future enforcement`",
+        "targeted for future enforcement"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016445"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "this weakens the deterministic posture expected from an owner gate doc",
+      "exact_items": [
+        "this weakens the deterministic posture expected from an owner gate doc"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016446"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/Progression_Gates.md`",
+      "exact_items": [
+        "`Plans/Progression_Gates.md`",
+        "Plans/Progression_Gates.md"
       ],
       "affected_doc_hints": [
-        "Plans/human-in-the-loop.md",
-        "Plans/storage-plan.md",
+        "Plans/Progression_Gates.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016450"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/DRY_Rules.md`",
+      "exact_items": [
+        "`Plans/DRY_Rules.md`",
+        "Plans/DRY_Rules.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/DRY_Rules.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016452"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/Contracts_V0.md`",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`",
+        "Plans/Contracts_V0.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016453"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/Crosswalk.md`",
+      "exact_items": [
+        "`Plans/Crosswalk.md`",
+        "Plans/Crosswalk.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016454"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "`Plans/UI_Wiring_Rules.md`",
+      "exact_items": [
+        "`Plans/UI_Wiring_Rules.md`",
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016455"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "`Plans/UI_Command_Catalog.md`",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`",
         "Plans/UI_Command_Catalog.md"
       ],
-      "doc_resolution_status": "concrete",
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
       "heading_hints": [],
-      "stale_tokens": [
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016456"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/Wiring_Matrix.schema.json`",
+      "exact_items": [
+        "`Plans/Wiring_Matrix.schema.json`",
+        "Plans/Wiring_Matrix.schema.json"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.schema.json"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016457"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/evidence.schema.json`",
+      "exact_items": [
+        "`Plans/evidence.schema.json`",
+        "Plans/evidence.schema.json"
+      ],
+      "affected_doc_hints": [
+        "Plans/evidence.schema.json"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016458"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "The gate doc enforces `ContractRef` rigor while violating the same `ContractRef` taxonomy ",
+      "exact_items": [
+        "The gate doc enforces `ContractRef` rigor while violating the same `ContractRef` taxonomy in its own canonical text.",
+        "ContractRef"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016461"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "The routing and command-normalization model now depends on checks that `GATE-010` cannot e",
+      "exact_items": [
+        "The routing and command-normalization model now depends on checks that `GATE-010` cannot express, which means the gate layer is behind the owner contract layer.",
+        "GATE-010"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016462"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "The duplicated runtime-recovery addendum means the gate doc now has same-file canon duplic",
+      "exact_items": [
+        "The duplicated runtime-recovery addendum means the gate doc now has same-file canon duplication similar to the problems already logged in `Crosswalk.md`, `human-in-the-loop.md`, and `storage-plan.md`.",
+        "Crosswalk.md",
+        "human-in-the-loop.md",
+        "storage-plan.md"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016463"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Reconciliation should normalize `Progression_Gates.md` as an owner doc, not just tidy exam",
+      "exact_items": [
+        "Reconciliation should normalize `Progression_Gates.md` as an owner doc, not just tidy examples:",
+        "Progression_Gates.md"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016466"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "fix all `ContractRef` lines to use one taxonomy",
+      "exact_items": [
+        "fix all `ContractRef` lines to use one taxonomy",
+        "ContractRef"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016467"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "extend `GATE-010` coverage so routing/wrapper normalization can be verified through comman",
+      "exact_items": [
+        "extend `GATE-010` coverage so routing/wrapper normalization can be verified through command-definition metadata plus wiring evidence",
+        "GATE-010"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016470"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`GATE-010` needs an explicit relationship to:",
+      "exact_items": [
+        "`GATE-010` needs an explicit relationship to:",
+        "GATE-010"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016471"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "route/open primitives in `Contracts_V0.md`",
+      "exact_items": [
+        "route/open primitives in `Contracts_V0.md`",
+        "Contracts_V0.md"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016472"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "wrapper metadata in `UI_Command_Catalog.md`",
+      "exact_items": [
+        "wrapper metadata in `UI_Command_Catalog.md`",
+        "UI_Command_Catalog.md"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016473"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "evidence structures that can encode normalization and alias failures",
+      "exact_items": [
+        "evidence structures that can encode normalization and alias failures"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016474"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "The routing cleanup will stay weak if `Progression_Gates.md` remains flat-command-only whi",
+      "exact_items": [
+        "The routing cleanup will stay weak if `Progression_Gates.md` remains flat-command-only while `Contracts_V0.md` and `UI_Command_Catalog.md` move to route/open primitives.",
+        "Progression_Gates.md",
+        "Contracts_V0.md",
+        "UI_Command_Catalog.md"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016477"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "The `ContractRef` syntax break in `GATE-003` is a hard owner-doc integrity defect, not a s",
+      "exact_items": [
+        "The `ContractRef` syntax break in `GATE-003` is a hard owner-doc integrity defect, not a style preference.",
+        "ContractRef",
+        "GATE-003"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016478"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Research Progress - 2026-03-17 - owner-contract seam: Contracts_V0 runtime identity, block",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - owner-contract seam: Contracts_V0 runtime identity, blocked identity, route/open ownership"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016481"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/Contracts_V0.md`",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`",
+        "Plans/Contracts_V0.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016484"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/Contracts_V0.md` still lacks named canonical contracts for:",
+      "exact_items": [
+        "`Plans/Contracts_V0.md` still lacks named canonical contracts for:",
+        "Plans/Contracts_V0.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016487"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`route_target`",
+      "exact_items": [
+        "`route_target`",
+        "route_target"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016488"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`OpenSubject`",
+      "exact_items": [
+        "`OpenSubject`",
+        "OpenSubject"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016489"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "section `6. HITLRequest` still defines approval around `request_id`, `tier_id`, `tier_type",
+      "exact_items": [
+        "section `6. HITLRequest` still defines approval around `request_id`, `tier_id`, `tier_type`, `request_kind = tier_boundary_approval`, and `allowed_actions[]`",
+        "6. HITLRequest",
         "request_id",
         "tier_id",
         "tier_type",
-        "tier_boundary_approval",
+        "request_kind = tier_boundary_approval",
+        "allowed_actions[]"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016491"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "section `1.1 EventRecord` still lists `run.tier_started` and `run.tier_completed` among ev",
+      "exact_items": [
+        "section `1.1 EventRecord` still lists `run.tier_started` and `run.tier_completed` among events that carry the runtime snapshot",
+        "1.1 EventRecord",
+        "run.tier_started",
+        "run.tier_completed"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016492"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`node.blocked` with `blocked_sequence` and ordered `allowed_action_ids[]`",
+      "exact_items": [
+        "`node.blocked` with `blocked_sequence` and ordered `allowed_action_ids[]`",
+        "node.blocked",
+        "blocked_sequence",
         "allowed_action_ids[]"
       ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
       "source_evidence": [
-        "working_ledger.md:L16547-L16598"
+        "working_ledger.md:L016494"
       ],
-      "notes": []
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`scheduler.pass`",
+      "exact_items": [
+        "`scheduler.pass`",
+        "scheduler.pass"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016495"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "stronger `wizard.blocked` fields",
+      "exact_items": [
+        "stronger `wizard.blocked` fields",
+        "wizard.blocked"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016497"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`wizard.blocked` is internally inconsistent inside the same owner doc:",
+      "exact_items": [
+        "`wizard.blocked` is internally inconsistent inside the same owner doc:",
+        "wizard.blocked"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016499"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "earlier addendum requires `resume_url`",
+      "exact_items": [
+        "earlier addendum requires `resume_url`",
+        "resume_url"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016500"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "later reconciliation addendum weakens it to `resume_url?`",
+      "exact_items": [
+        "later reconciliation addendum weakens it to `resume_url?`",
+        "resume_url?"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016501"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "neither form is grounded in a named `route_target` contract",
+      "exact_items": [
+        "neither form is grounded in a named `route_target` contract",
+        "route_target"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016502"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`remediation.resolved` is also internally inconsistent inside the same file:",
+      "exact_items": [
+        "`remediation.resolved` is also internally inconsistent inside the same file:",
+        "remediation.resolved"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016503"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "earlier addendum uses `resolution` = `success | failed | ceiling_exceeded`",
+      "exact_items": [
+        "earlier addendum uses `resolution` = `success | failed | ceiling_exceeded`",
+        "resolution",
+        "success | failed | ceiling_exceeded"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016504"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "later reconciliation addendum uses `fixed | superseded | abandoned | replan_required`",
+      "exact_items": [
+        "later reconciliation addendum uses `fixed | superseded | abandoned | replan_required`",
+        "fixed | superseded | abandoned | replan_required"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016505"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "both are presented as canonical in different sections",
+      "exact_items": [
+        "both are presented as canonical in different sections"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016506"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/Contracts_V0.md`",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`",
+        "Plans/Contracts_V0.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016510"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/Crosswalk.md`",
+      "exact_items": [
+        "`Plans/Crosswalk.md`",
+        "Plans/Crosswalk.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016512"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/storage-plan.md`",
+      "exact_items": [
+        "`Plans/storage-plan.md`",
+        "Plans/storage-plan.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016513"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/human-in-the-loop.md`",
+      "exact_items": [
+        "`Plans/human-in-the-loop.md`",
+        "Plans/human-in-the-loop.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016514"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/Executor_Protocol.md`",
+      "exact_items": [
+        "`Plans/Executor_Protocol.md`",
+        "Plans/Executor_Protocol.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016515"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "`Plans/UI_Command_Catalog.md`",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016516"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/FileManager.md`",
+      "exact_items": [
+        "`Plans/FileManager.md`",
+        "Plans/FileManager.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016517"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "`Plans/FinalGUISpec.md`",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`",
+        "Plans/FinalGUISpec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016518"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Contracts_V0.md` is now carrying two parallel approval ontologies:",
+      "exact_items": [
+        "`Contracts_V0.md` is now carrying two parallel approval ontologies:",
+        "Contracts_V0.md"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016521"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "blocked-episode runtime identity",
+      "exact_items": [
+        "blocked-episode runtime identity"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016523"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Contracts_V0.md` is also carrying two parallel navigation/open stories:",
+      "exact_items": [
+        "`Contracts_V0.md` is also carrying two parallel navigation/open stories:",
+        "Contracts_V0.md"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016524"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "raw `resume_url`",
+      "exact_items": [
+        "raw `resume_url`",
+        "resume_url"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016525"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "The owner doc is ahead in late addenda and behind in its main body, which makes it a direc",
+      "exact_items": [
+        "The owner doc is ahead in late addenda and behind in its main body, which makes it a direct source of downstream drift across Orchestrator, Graph, HITL, storage, and command docs."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016527"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Reconciliation should treat `Contracts_V0.md` as the primary collapse point for:",
+      "exact_items": [
+        "Reconciliation should treat `Contracts_V0.md` as the primary collapse point for:",
+        "Contracts_V0.md"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016530"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "blocked identity over request-centric HITL identity",
+      "exact_items": [
+        "blocked identity over request-centric HITL identity"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016531"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`allowed_action_ids[]` over `allowed_actions[]` as shared runtime canon",
+      "exact_items": [
+        "`allowed_action_ids[]` over `allowed_actions[]` as shared runtime canon",
+        "allowed_action_ids[]",
+        "allowed_actions[]"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016532"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "route/open primitive ownership through named `route_target` and `OpenSubject`",
+      "exact_items": [
+        "route/open primitive ownership through named `route_target` and `OpenSubject`",
+        "route_target",
+        "OpenSubject"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016533"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Owner adoption order from this seam:",
+      "exact_items": [
+        "Owner adoption order from this seam:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016535"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "insert `route_target` and `OpenSubject` into the UI-command/navigation section",
+      "exact_items": [
+        "insert `route_target` and `OpenSubject` into the UI-command/navigation section",
+        "route_target",
+        "OpenSubject"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016536"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "retire `HITLRequest` as peer canonical approval identity and reduce `request_id` to lineag",
+      "exact_items": [
+        "retire `HITLRequest` as peer canonical approval identity and reduce `request_id` to lineage/compatibility metadata",
+        "HITLRequest",
+        "request_id"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [
+        "HITLRequest",
+        "request_id"
+      ],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016537"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "retire `run.tier_*` event teaching from runtime snapshot guidance",
+      "exact_items": [
+        "retire `run.tier_*` event teaching from runtime snapshot guidance",
+        "run.tier_*"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [
+        "run.tier_*"
+      ],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016538"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "reconcile `wizard.blocked` and `remediation.resolved` to one field contract each",
+      "exact_items": [
+        "reconcile `wizard.blocked` and `remediation.resolved` to one field contract each",
+        "wizard.blocked",
+        "remediation.resolved"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016539"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "This is the owner doc where the route/open cleanup, blocked-identity cleanup, and tier-era",
+      "exact_items": [
+        "This is the owner doc where the route/open cleanup, blocked-identity cleanup, and tier-era runtime cleanup meet. Reconciliation elsewhere will keep bouncing until this file is normalized."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016542"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`resume_url` cannot stay a shadow primitive if `route_target` is adopted here.",
+      "exact_items": [
+        "`resume_url` cannot stay a shadow primitive if `route_target` is adopted here.",
+        "resume_url",
+        "route_target"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016543"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`request_id` can survive as compatibility lineage. It cannot remain the primary approval i",
+      "exact_items": [
+        "`request_id` can survive as compatibility lineage. It cannot remain the primary approval identity.",
+        "request_id"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016544"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Research Progress - 2026-03-17 - owner-contract seam: human-in-the-loop blocked identity c",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - owner-contract seam: human-in-the-loop blocked identity collapse"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016547"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/human-in-the-loop.md`",
+      "exact_items": [
+        "`Plans/human-in-the-loop.md`",
+        "Plans/human-in-the-loop.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016550"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "`Plans/human-in-the-loop.md` still opens with a canonical request contract built on:",
+      "exact_items": [
+        "`Plans/human-in-the-loop.md` still opens with a canonical request contract built on:",
+        "Plans/human-in-the-loop.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016553"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`request_id`",
+      "exact_items": [
+        "`request_id`",
+        "request_id"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016554"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`tier_id`",
+      "exact_items": [
+        "`tier_id`",
+        "tier_id"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016555"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`tier_type`",
+      "exact_items": [
+        "`tier_type`",
+        "tier_type"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016556"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`request_kind = tier_boundary_approval`",
+      "exact_items": [
+        "`request_kind = tier_boundary_approval`",
+        "request_kind = tier_boundary_approval"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016557"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "ordered `allowed_action_ids[]`",
+      "exact_items": [
+        "ordered `allowed_action_ids[]`",
+        "allowed_action_ids[]"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016558"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "pending approval is `blocked_reason_code = waiting_approval`",
+      "exact_items": [
+        "pending approval is `blocked_reason_code = waiting_approval`",
+        "blocked_reason_code = waiting_approval"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016560"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "action binding is through canonical runtime action families",
+      "exact_items": [
+        "action binding is through canonical runtime action families"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016561"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`blocked_sequence` is part of the runtime-facing identity",
+      "exact_items": [
+        "`blocked_sequence` is part of the runtime-facing identity",
+        "blocked_sequence"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016562"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "blocked/runtime records, not generic paused state, are the persistence surface",
+      "exact_items": [
+        "blocked/runtime records, not generic paused state, are the persistence surface"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016563"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "The middle of the file still preserves stale execution ontology:",
+      "exact_items": [
+        "The middle of the file still preserves stale execution ontology:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016564"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "redb persistence text keyed to `request_id`, `tier_id`, `tier_type`, `request_kind`, and `",
+      "exact_items": [
+        "redb persistence text keyed to `request_id`, `tier_id`, `tier_type`, `request_kind`, and `allowed_actions`",
+        "request_id",
+        "tier_id",
+        "tier_type",
+        "request_kind",
+        "allowed_actions"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016567"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "visible labels such as `Reject`, `Cancel Run`, and `Skip`",
+      "exact_items": [
+        "visible labels such as `Reject`, `Cancel Run`, and `Skip`",
+        "Reject",
+        "Cancel Run",
+        "Skip"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016569"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "later canonical families `Approve`, `Decline`, `Retry from safe point`, `Start fresh attem",
+      "exact_items": [
+        "later canonical families `Approve`, `Decline`, `Retry from safe point`, `Start fresh attempt`, `Resume after prerequisite`, `Replan`, `Skip node`, `Abort run`",
+        "Approve",
+        "Decline",
+        "Retry from safe point",
+        "Start fresh attempt",
+        "Resume after prerequisite",
+        "Replan",
+        "Skip node",
+        "Abort run"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016570"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/human-in-the-loop.md`",
+      "exact_items": [
+        "`Plans/human-in-the-loop.md`",
+        "Plans/human-in-the-loop.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016574"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/Contracts_V0.md`",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`",
+        "Plans/Contracts_V0.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016576"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/storage-plan.md`",
+      "exact_items": [
+        "`Plans/storage-plan.md`",
+        "Plans/storage-plan.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016577"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "`Plans/UI_Command_Catalog.md`",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016578"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "`Plans/Run_Graph_View.md`",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md`",
+        "Plans/Run_Graph_View.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016579"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/Orchestrator_Page.md`",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016580"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/orchestrator-subagent-integration.md`",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016581"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "The file still claims HITL semantics must not change, while later sections already change ",
+      "exact_items": [
+        "The file still claims HITL semantics must not change, while later sections already change the meaning from request-centric tier-boundary approvals to blocked/runtime overlays."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016584"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "The persistence section still instructs storage to persist request-era fields that later s",
+      "exact_items": [
+        "The persistence section still instructs storage to persist request-era fields that later sections explicitly demote."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016585"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "The file still treats tier boundaries as the approval scope anchor, while newer runtime ca",
+      "exact_items": [
+        "The file still treats tier boundaries as the approval scope anchor, while newer runtime canon requires blocked-episode identity anchored by run/node/blocked sequence."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016586"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Reconciliation should retire the request-centric opening contract and rebuild the file aro",
+      "exact_items": [
+        "Reconciliation should retire the request-centric opening contract and rebuild the file around:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016589"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "blocked/runtime approval identity",
+      "exact_items": [
+        "blocked/runtime approval identity"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016590"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "canonical runtime action families",
+      "exact_items": [
+        "canonical runtime action families"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016591"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "lineage-preserving persistence through blocked records",
+      "exact_items": [
+        "lineage-preserving persistence through blocked records"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016592"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "If tier-level settings remain as user-facing configuration, they need to be reframed as ap",
+      "exact_items": [
+        "If tier-level settings remain as user-facing configuration, they need to be reframed as approval-trigger policy, not as canonical approval object identity."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016593"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Any surviving `request_id` wording belongs only in compatibility or lineage notes.",
+      "exact_items": [
+        "Any surviving `request_id` wording belongs only in compatibility or lineage notes.",
+        "request_id"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016594"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "This file is still teaching consumers how to persist approval state. Leaving the old secti",
+      "exact_items": [
+        "This file is still teaching consumers how to persist approval state. Leaving the old section in place will keep recreating the same storage and command drift."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016597"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "The action-label cleanup depends on this file, because it still legitimizes `Reject` / `Ca",
+      "exact_items": [
+        "The action-label cleanup depends on this file, because it still legitimizes `Reject` / `Cancel Run` / `Skip` as if they were canonical action names rather than surface labels over runtime action families.",
+        "Reject",
+        "Cancel Run",
+        "Skip"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0083",
+      "source_evidence": [
+        "working_ledger.md:L016598"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
     }
   ],
   "noise_items": [
-    "research progress headings for owner traceability/contracts"
+    {
+      "source_evidence": [
+        "working_ledger.md:L016405"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016410"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016411"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016413"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016438"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016439"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016441"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016442"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016449"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016451"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016468"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016469"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016490"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016493"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016496"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016498"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016509"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016511"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016522"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016526"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016534"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016559"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016565"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016566"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016568"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016573"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L016575"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    }
   ],
   "uncertain_items": [],
   "covered_shard_id": "shard-0083"

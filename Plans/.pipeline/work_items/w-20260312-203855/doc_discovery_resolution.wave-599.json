@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-599",
+  "group_ids": [
+    "discgrp-2393",
+    "discgrp-2394",
+    "discgrp-2395",
+    "discgrp-2396"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02670",
+      "source_obligation_ids": [
+        "obl-2517"
+      ],
+      "source_seed_ids": [
+        "seed-3304"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-093: Account switch and pressure history",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L221"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02671",
+      "source_obligation_ids": [
+        "obl-2518"
+      ],
+      "source_seed_ids": [
+        "seed-3305"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L43"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02672",
+      "source_obligation_ids": [
+        "obl-2519"
+      ],
+      "source_seed_ids": [
+        "seed-3306"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Shared governance and runtime record envelope",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L260"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02673",
+      "source_obligation_ids": [
+        "obl-2520"
+      ],
+      "source_seed_ids": [
+        "seed-3307"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-086: Requested concrete-account fields",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L145"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

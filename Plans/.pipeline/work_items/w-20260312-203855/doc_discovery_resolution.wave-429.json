@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-429",
+  "group_ids": [
+    "discgrp-1713",
+    "discgrp-1714",
+    "discgrp-1715",
+    "discgrp-1716"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01970",
+      "source_obligation_ids": [
+        "obl-1827"
+      ],
+      "source_seed_ids": [
+        "seed-2350"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "## Runtime Attempt / Safe Point / Queue Analysis Storage Addendum (2026-03-09)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1557"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01971",
+      "source_obligation_ids": [
+        "obl-1828"
+      ],
+      "source_seed_ids": [
+        "seed-2351"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "### 23.5 Previously open gaps (now closed)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L1801"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01972",
+      "source_obligation_ids": [
+        "obl-1829"
+      ],
+      "source_seed_ids": [
+        "seed-2352"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-015: Shared governance/runtime record envelope",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01973",
+      "source_obligation_ids": [
+        "obl-1830"
+      ],
+      "source_seed_ids": [
+        "seed-2353"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

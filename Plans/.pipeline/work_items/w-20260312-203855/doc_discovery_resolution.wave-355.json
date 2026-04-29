@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-355",
+  "group_ids": [
+    "discgrp-1417",
+    "discgrp-1418",
+    "discgrp-1419",
+    "discgrp-1420"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01669",
+      "source_obligation_ids": [
+        "obl-1526"
+      ],
+      "source_seed_ids": [
+        "seed-1903"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01670",
+      "source_obligation_ids": [
+        "obl-1527"
+      ],
+      "source_seed_ids": [
+        "seed-1904"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01671",
+      "source_obligation_ids": [
+        "obl-1528"
+      ],
+      "source_seed_ids": [
+        "seed-1905"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01672",
+      "source_obligation_ids": [
+        "obl-1529"
+      ],
+      "source_seed_ids": [
+        "seed-1906"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "# Adding Tool Support -- Research & Plan",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Tools.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

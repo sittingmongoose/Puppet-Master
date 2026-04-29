@@ -1,0 +1,1114 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-224",
+  "row_group_ids": [
+    "rowgrp-0893",
+    "rowgrp-0894",
+    "rowgrp-0895",
+    "rowgrp-0896"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-03585",
+      "source_obligation_ids": [
+        "obl-3431"
+      ],
+      "source_seed_ids": [
+        "seed-4624"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "missing storage families for runtime-artifact indexing and worktree/lane lifecycle",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "#### Worktree/lane lifecycle, handshake, and cleanup lineage baseline",
+      "status": "partial",
+      "exact_items": [
+        "missing storage families for runtime-artifact indexing and worktree/lane lifecycle"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L501"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03588",
+      "source_obligation_ids": [
+        "obl-3434"
+      ],
+      "source_seed_ids": [
+        "seed-4627"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "missing runtime-artifact schema family / storage registration",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "status": "partial",
+      "exact_items": [
+        "missing runtime-artifact schema family / storage registration"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03598",
+      "source_obligation_ids": [
+        "obl-3444"
+      ],
+      "source_seed_ids": [
+        "seed-4637"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "worktree/lane lifecycle",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "#### Worktree/lane lifecycle, handshake, and cleanup lineage baseline",
+      "status": "present",
+      "exact_items": [
+        "worktree/lane lifecycle"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L501",
+        "Plans/storage-plan.md:L623"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03605",
+      "source_obligation_ids": [
+        "obl-3451"
+      ],
+      "source_seed_ids": [
+        "seed-4644"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "once the remaining structural owner gaps above are explicitly assigned/resolved",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## 5. Gaps and how we address them",
+      "status": "partial",
+      "exact_items": [
+        "once the remaining structural owner gaps above are explicitly assigned/resolved"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1291"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03618",
+      "source_obligation_ids": [
+        "obl-3464"
+      ],
+      "source_seed_ids": [
+        "seed-4666"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "startup recovery wakeups are named but not tied to a concrete blocked-episode restoration",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Fidelity recovery cov-188: Projection fields for startup rehydration",
+      "status": "partial",
+      "exact_items": [
+        "startup recovery wakeups are named but not tied to a concrete blocked-episode restoration rule"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L189",
+        "Plans/storage-plan.md:L196"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03646",
+      "source_obligation_ids": [
+        "obl-3492"
+      ],
+      "source_seed_ids": [
+        "seed-4700"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "`blocked_sequence` minting semantics",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Counter semantics",
+      "status": "present",
+      "exact_items": [
+        "`blocked_sequence` minting semantics",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L911",
+        "Plans/storage-plan.md:L1547",
+        "Plans/storage-plan.md:L1553"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03653",
+      "source_obligation_ids": [
+        "obl-3499"
+      ],
+      "source_seed_ids": [
+        "seed-4709"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "startup recovery should rehydrate unresolved blocked episodes, not create fresh ones oppor",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Fidelity recovery cov-188: Projection fields for startup rehydration",
+      "status": "partial",
+      "exact_items": [
+        "startup recovery should rehydrate unresolved blocked episodes, not create fresh ones opportunistically"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L189",
+        "Plans/storage-plan.md:L196"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03704",
+      "source_obligation_ids": [
+        "obl-3549"
+      ],
+      "source_seed_ids": [
+        "seed-4776"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "`storage-plan.md` already owns the canonical runtime persistence side for execution attemp",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)",
+      "status": "present",
+      "exact_items": [
+        "`storage-plan.md` already owns the canonical runtime persistence side for execution attempts and runtime overlays:",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03714",
+      "source_obligation_ids": [
+        "obl-3559"
+      ],
+      "source_seed_ids": [
+        "seed-4790"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "`Plans/storage-plan.md` should remain the owner of persisted execution/runtime record fami",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/storage-plan.md` should remain the owner of persisted execution/runtime record families.",
+        "Plans/storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03760",
+      "source_obligation_ids": [
+        "obl-3605"
+      ],
+      "source_seed_ids": [
+        "seed-4874"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "spot-checks against `Plans/storage-plan.md`",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "spot-checks against `Plans/storage-plan.md`",
+        "Plans/storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03833",
+      "source_obligation_ids": [
+        "obl-3678"
+      ],
+      "source_seed_ids": [
+        "seed-4995"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "optional disclosure fields",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.1 Unsaved editor recovery is required, not optional",
+      "status": "partial",
+      "exact_items": [
+        "optional disclosure fields"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1295"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03844",
+      "source_obligation_ids": [
+        "obl-3689"
+      ],
+      "source_seed_ids": [
+        "seed-5011"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "`effective_provider_identity` / `provider_identity` / `effective_project_id` are already t",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.1 Unsaved editor recovery is required, not optional",
+      "status": "partial",
+      "exact_items": [
+        "`effective_provider_identity` / `provider_identity` / `effective_project_id` are already treated as optional non-secret disclosure fields. That makes them the wrong place to encode actor role or side-effect target identity.",
+        "effective_provider_identity",
+        "provider_identity",
+        "effective_project_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1147",
+        "Plans/storage-plan.md:L1148"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03862",
+      "source_obligation_ids": [
+        "obl-3707"
+      ],
+      "source_seed_ids": [
+        "seed-5033"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "keep `effective_provider_identity` and `provider_identity` exactly what they already are:",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.3 Search and Source Control keep separate projection state",
+      "status": "partial",
+      "exact_items": [
+        "keep `effective_provider_identity` and `provider_identity` exactly what they already are:",
+        "effective_provider_identity",
+        "provider_identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1147"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03873",
+      "source_obligation_ids": [
+        "obl-3718"
+      ],
+      "source_seed_ids": [
+        "seed-5053"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "`execution_role` and `operational_identity` solve different problems and should not be mer",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## 6. Potential problems and solutions",
+      "status": "present",
+      "exact_items": [
+        "`execution_role` and `operational_identity` solve different problems and should not be merged.",
+        "execution_role",
+        "operational_identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L916",
+        "Plans/storage-plan.md:L1145",
+        "Plans/storage-plan.md:L1161",
+        "Plans/storage-plan.md:L1171",
+        "Plans/storage-plan.md:L1179"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03874",
+      "source_obligation_ids": [
+        "obl-3719"
+      ],
+      "source_seed_ids": [
+        "seed-5054"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "Provider/account identity stays shared-runtime truth; operational identity stays side-effe",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Projection freshness, health, and startup rehydration (operational rules)",
+      "status": "partial",
+      "exact_items": [
+        "Provider/account identity stays shared-runtime truth; operational identity stays side-effect/target truth."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L585"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03911",
+      "source_obligation_ids": [
+        "obl-3756"
+      ],
+      "source_seed_ids": [
+        "seed-5123"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "Promote artifact/memory/live/runtime-observability records to full owner status:",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "#### Canonical records baseline",
+      "status": "partial",
+      "exact_items": [
+        "Promote artifact/memory/live/runtime-observability records to full owner status:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L457"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03913",
+      "source_obligation_ids": [
+        "obl-3758"
+      ],
+      "source_seed_ids": [
+        "seed-5125"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "add missing artifact types,",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "partial",
+      "exact_items": [
+        "add missing artifact types,"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03919",
+      "source_obligation_ids": [
+        "obl-3764"
+      ],
+      "source_seed_ids": [
+        "seed-5131"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "Close the runtime-governance owner gaps:",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## 5. Gaps and how we address them",
+      "status": "partial",
+      "exact_items": [
+        "Close the runtime-governance owner gaps:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1291"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03928",
+      "source_obligation_ids": [
+        "obl-3772"
+      ],
+      "source_seed_ids": [
+        "seed-5156"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "optional `thread_id`",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.1 Unsaved editor recovery is required, not optional",
+      "status": "present",
+      "exact_items": [
+        "optional `thread_id`",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L205",
+        "Plans/storage-plan.md:L208",
+        "Plans/storage-plan.md:L723",
+        "Plans/storage-plan.md:L794",
+        "Plans/storage-plan.md:L842"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03936",
+      "source_obligation_ids": [
+        "obl-3780"
+      ],
+      "source_seed_ids": [
+        "seed-5167"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "`usage_record` already carries `run_id`, `attempt_id?`, `thread_id?`, and effective accoun",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "status": "present",
+      "exact_items": [
+        "`usage_record` already carries `run_id`, `attempt_id?`, `thread_id?`, and effective account/model/auth fields",
+        "usage_record",
+        "run_id",
+        "attempt_id?",
+        "thread_id?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L71",
+        "Plans/storage-plan.md:L75",
+        "Plans/storage-plan.md:L470",
+        "Plans/storage-plan.md:L565",
+        "Plans/storage-plan.md:L566"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03963",
+      "source_obligation_ids": [
+        "obl-3807"
+      ],
+      "source_seed_ids": [
+        "seed-5219"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "`usage_record` is closer to canonical runtime identity than several artifact and tool docs",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "partial",
+      "exact_items": [
+        "`usage_record` is closer to canonical runtime identity than several artifact and tool docs are, but it still keeps old `tier_id` joins alive.",
+        "usage_record",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L611"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03977",
+      "source_obligation_ids": [
+        "obl-3821"
+      ],
+      "source_seed_ids": [
+        "seed-5237"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "`usage_event_ref` is the canonical bridge to cost/usage history for that attempt or artifa",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "#### Account pressure, history, and runtime attribution baseline",
+      "status": "present",
+      "exact_items": [
+        "`usage_event_ref` is the canonical bridge to cost/usage history for that attempt or artifact.",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L181",
+        "Plans/storage-plan.md:L185",
+        "Plans/storage-plan.md:L560",
+        "Plans/storage-plan.md:L573",
+        "Plans/storage-plan.md:L657"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03986",
+      "source_obligation_ids": [
+        "obl-3830"
+      ],
+      "source_seed_ids": [
+        "seed-5246"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "receipt refs do not replace artifact identity",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "#### Cross-surface receipt record baseline",
+      "status": "partial",
+      "exact_items": [
+        "receipt refs do not replace artifact identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L481"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03995",
+      "source_obligation_ids": [
+        "obl-3839"
+      ],
+      "source_seed_ids": [
+        "seed-5263"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "Add a bridge-field precedence note to the canonical runtime/storage owner docs:",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Fidelity recovery cov-182: Bridge-field precedence for attempt/provider/usage/receipt joins",
+      "status": "partial",
+      "exact_items": [
+        "Add a bridge-field precedence note to the canonical runtime/storage owner docs:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L177",
+        "Plans/storage-plan.md:L184"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04007",
+      "source_obligation_ids": [
+        "obl-3850"
+      ],
+      "source_seed_ids": [
+        "seed-5277"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "spot-checks against `Plans/storage-plan.md` and `Plans/Contracts_V0.md`",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "spot-checks against `Plans/storage-plan.md` and `Plans/Contracts_V0.md`",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04016",
+      "source_obligation_ids": [
+        "obl-3859"
+      ],
+      "source_seed_ids": [
+        "seed-5286"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "they must not invent separate artifact-local identity",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.3 Search and Source Control keep separate projection state",
+      "status": "partial",
+      "exact_items": [
+        "they must not invent separate artifact-local identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1327"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04018",
+      "source_obligation_ids": [
+        "obl-3861"
+      ],
+      "source_seed_ids": [
+        "seed-5288"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "canonical artifact identity:",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "partial",
+      "exact_items": [
+        "canonical artifact identity:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04025",
+      "source_obligation_ids": [
+        "obl-3868"
+      ],
+      "source_seed_ids": [
+        "seed-5314"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "`artifact_id` is the canonical identity of the renderable artifact object itself.",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "present",
+      "exact_items": [
+        "`artifact_id` is the canonical identity of the renderable artifact object itself.",
+        "artifact_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L497",
+        "Plans/storage-plan.md:L541",
+        "Plans/storage-plan.md:L575",
+        "Plans/storage-plan.md:L617",
+        "Plans/storage-plan.md:L618"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04027",
+      "source_obligation_ids": [
+        "obl-3870"
+      ],
+      "source_seed_ids": [
+        "seed-5316"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "`attempt_id` should be present whenever the artifact came from a concrete execution attemp",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "present",
+      "exact_items": [
+        "`attempt_id` should be present whenever the artifact came from a concrete execution attempt.",
+        "attempt_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L181",
+        "Plans/storage-plan.md:L185",
+        "Plans/storage-plan.md:L205",
+        "Plans/storage-plan.md:L208",
+        "Plans/storage-plan.md:L558"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04040",
+      "source_obligation_ids": [
+        "obl-3883"
+      ],
+      "source_seed_ids": [
+        "seed-5329"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "`artifact_id` for the artifact object",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "present",
+      "exact_items": [
+        "`artifact_id` for the artifact object",
+        "artifact_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L497",
+        "Plans/storage-plan.md:L541",
+        "Plans/storage-plan.md:L575",
+        "Plans/storage-plan.md:L617",
+        "Plans/storage-plan.md:L618"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04045",
+      "source_obligation_ids": [
+        "obl-3888"
+      ],
+      "source_seed_ids": [
+        "seed-5339"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "the docs still use `task_id` language in the artifact packet even though wider execution i",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "partial",
+      "exact_items": [
+        "the docs still use `task_id` language in the artifact packet even though wider execution identity is moving toward node/package/seam/lane-native structures.",
+        "task_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04052",
+      "source_obligation_ids": [
+        "obl-3895"
+      ],
+      "source_seed_ids": [
+        "seed-5346"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "`artifact_id` should identify the artifact object, not the runtime attempt.",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "present",
+      "exact_items": [
+        "`artifact_id` should identify the artifact object, not the runtime attempt.",
+        "artifact_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L497",
+        "Plans/storage-plan.md:L541",
+        "Plans/storage-plan.md:L575",
+        "Plans/storage-plan.md:L617",
+        "Plans/storage-plan.md:L618"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04069",
+      "source_obligation_ids": [
+        "obl-3911"
+      ],
+      "source_seed_ids": [
+        "seed-5365"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "keep `OpenFile { path... }` for canonical workspace-file opens",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.3 Search and Source Control keep separate projection state",
+      "status": "partial",
+      "exact_items": [
+        "keep `OpenFile { path... }` for canonical workspace-file opens",
+        "OpenFile { path... }"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1327"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04075",
+      "source_obligation_ids": [
+        "obl-3917"
+      ],
+      "source_seed_ids": [
+        "seed-5371",
+        "seed-6294",
+        "seed-6995",
+        "seed-7014",
+        "seed-7348"
+      ],
+      "source_shard_ids": [
+        "shard-0054",
+        "shard-0061",
+        "shard-0067",
+        "shard-0069"
+      ],
+      "canon_label": "`artifact:<artifact_id>`",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "partial",
+      "exact_items": [
+        "`artifact:<artifact_id>`",
+        "artifact:<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04099",
+      "source_obligation_ids": [
+        "obl-3941"
+      ],
+      "source_seed_ids": [
+        "seed-5400"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "`Open Artifact` / `Open Report` / routed open when the target is identity-native",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "partial",
+      "exact_items": [
+        "`Open Artifact` / `Open Report` / routed open when the target is identity-native",
+        "Open Artifact",
+        "Open Report"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04112",
+      "source_obligation_ids": [
+        "obl-3952"
+      ],
+      "source_seed_ids": [
+        "seed-5416"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "`assistant-chat-design.md` already expects jump-to-message, canonical runtime action routi",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)",
+      "status": "present",
+      "exact_items": [
+        "`assistant-chat-design.md` already expects jump-to-message, canonical runtime action routing, and persistence of `resume_url?` on blocked notices. That is closer to object-first routing than to path-first opening.",
+        "assistant-chat-design.md",
+        "resume_url?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L225",
+        "Plans/storage-plan.md:L279",
+        "Plans/storage-plan.md:L947",
+        "Plans/storage-plan.md:L1083",
+        "Plans/storage-plan.md:L1090"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04130",
+      "source_obligation_ids": [
+        "obl-3970"
+      ],
+      "source_seed_ids": [
+        "seed-5442"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "it keeps `resume_url`, search jumps, palette entries, and artifact pivots semantically ali",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "partial",
+      "exact_items": [
+        "it keeps `resume_url`, search jumps, palette entries, and artifact pivots semantically aligned",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04188",
+      "source_obligation_ids": [
+        "obl-4028"
+      ],
+      "source_seed_ids": [
+        "seed-5547"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "evidence / artifact joins still lack the canonical fields needed to move from runtime/work",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Fidelity recovery cov-182: Bridge-field precedence for attempt/provider/usage/receipt joins",
+      "status": "partial",
+      "exact_items": [
+        "evidence / artifact joins still lack the canonical fields needed to move from runtime/worktree receipts to concrete artifact/evidence subjects."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L177",
+        "Plans/storage-plan.md:L184"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04189",
+      "source_obligation_ids": [
+        "obl-4029"
+      ],
+      "source_seed_ids": [
+        "seed-5548"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "Structural owner docs remain actively unsafe:",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "status": "partial",
+      "exact_items": [
+        "Structural owner docs remain actively unsafe:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1310"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04197",
+      "source_obligation_ids": [
+        "obl-4037"
+      ],
+      "source_seed_ids": [
+        "seed-5556"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "`yolo` is still overstated as approval-free even though non-bypassable step-7 guards remai",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "status": "partial",
+      "exact_items": [
+        "`yolo` is still overstated as approval-free even though non-bypassable step-7 guards remain in force.",
+        "yolo"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1310"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

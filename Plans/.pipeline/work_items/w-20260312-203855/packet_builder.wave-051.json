@@ -1,0 +1,434 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-051",
+  "group_ids": [
+    "pktgrp-0201",
+    "pktgrp-0202",
+    "pktgrp-0203",
+    "pktgrp-0204"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "packet-target-0201",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## Fidelity recovery addendum (Plans/FinalGUISpec.md:L3)",
+      "path": "Plans/FinalGUISpec.md",
+      "coverage_row_ids": [
+        "cov-00521",
+        "cov-01268",
+        "cov-02459",
+        "cov-03799",
+        "cov-06445"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-00521",
+          "cov-01268",
+          "cov-02459",
+          "cov-03799",
+          "cov-06445"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-378",
+        "obl-1125",
+        "obl-2309",
+        "obl-3644",
+        "obl-6086"
+      ],
+      "source_seed_ids": [
+        "seed-436",
+        "seed-1337",
+        "seed-2995",
+        "seed-4927",
+        "seed-9196"
+      ],
+      "source_shard_ids": [
+        "shard-0012",
+        "shard-0022",
+        "shard-0037",
+        "shard-0051",
+        "shard-0083"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-378",
+          "obl-1125",
+          "obl-2309",
+          "obl-3644",
+          "obl-6086"
+        ],
+        "source_seed_ids": [
+          "seed-436",
+          "seed-1337",
+          "seed-2995",
+          "seed-4927",
+          "seed-9196"
+        ],
+        "source_shard_ids": [
+          "shard-0012",
+          "shard-0022",
+          "shard-0037",
+          "shard-0051",
+          "shard-0083"
+        ]
+      },
+      "gap_ids": [
+        "gap-00411",
+        "gap-00985",
+        "gap-01922",
+        "gap-02962",
+        "gap-05000"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Do not assume package/lane/run/worktree metadata can all be shown at full fidelity at once in the panel.",
+        "`Recovery in progress`",
+        "Recovery in progress",
+        "`resume_url` exists for wizard/thread recovery, but no generalized equivalent is yet defined for:",
+        "resume_url",
+        "workspace/isolation refs required for side effects and recovery",
+        "earlier addendum requires `resume_url`"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-0888168489a3",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0257",
+      "source_reconciliation_target_ids": [
+        "target-0257"
+      ],
+      "source_target_ids": [
+        "target-0257"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0257\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Do not assume package/lane/run/worktree metadata can all be shown at full fidelity at once in the panel.\n  - `Recovery in progress`\n  - Recovery in progress\n  - `resume_url` exists for wizard/thread recovery, but no generalized equivalent is yet defined for:\n  - resume_url\n  - workspace/isolation refs required for side effects and recovery\n  - earlier addendum requires `resume_url`\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0202",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## Scheduler, blocked, and Remediation GUI Addendum (2026-03-08) (Plans/FinalGUISpec.md:L2374)",
+      "path": "Plans/FinalGUISpec.md",
+      "coverage_row_ids": [
+        "cov-01426",
+        "cov-04416"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-01426",
+          "cov-04416"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-1283",
+        "obl-4256"
+      ],
+      "source_seed_ids": [
+        "seed-1550",
+        "seed-5940"
+      ],
+      "source_shard_ids": [
+        "shard-0024",
+        "shard-0058"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1283",
+          "obl-4256"
+        ],
+        "source_seed_ids": [
+          "seed-1550",
+          "seed-5940"
+        ],
+        "source_shard_ids": [
+          "shard-0024",
+          "shard-0058"
+        ]
+      },
+      "gap_ids": [
+        "gap-01123",
+        "gap-03452"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "The GUI should never guess that a previously visible `allowed_action_ids[]` set is still valid if the blocked projection is stale.",
+        "allowed_action_ids[]",
+        "normative ghost IDs still survive through examples, Final GUI remediation actions, and non-catalog command references."
+      ],
+      "exact_stale_tokens_to_retire": [
+        "allowed_action_ids[]"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "allowed_action_ids[]"
+      ],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-76b506fa5306",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0259",
+      "source_reconciliation_target_ids": [
+        "target-0259"
+      ],
+      "source_target_ids": [
+        "target-0259"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0259\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - The GUI should never guess that a previously visible `[retired-token-1]` set is still valid if the blocked projection is stale.\n  - [retired-token-1]\n  - normative ghost IDs still survive through examples, Final GUI remediation actions, and non-catalog command references.\n- Legacy token retirement handling:\n  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0203",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### 1. Dashboard cards (Plans/FinalGUISpec.md:L2378)",
+      "path": "Plans/FinalGUISpec.md",
+      "coverage_row_ids": [
+        "cov-01698",
+        "cov-04548"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-01698",
+          "cov-04548"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-1555",
+        "obl-4326"
+      ],
+      "source_seed_ids": [
+        "seed-1942",
+        "seed-6087"
+      ],
+      "source_shard_ids": [
+        "shard-0028",
+        "shard-0059"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1555",
+          "obl-4326"
+        ],
+        "source_seed_ids": [
+          "seed-1942",
+          "seed-6087"
+        ],
+        "source_shard_ids": [
+          "shard-0028",
+          "shard-0059"
+        ]
+      },
+      "gap_ids": [
+        "gap-01333",
+        "gap-03572"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "wizard-blocked cards outrank wizard-attention-required",
+        "Dashboard CtA cards, thread badges, and blocked/attention notices already carry the right kinds of identity:"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-88fe88808393",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0261",
+      "source_reconciliation_target_ids": [
+        "target-0261"
+      ],
+      "source_target_ids": [
+        "target-0261"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0261\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - wizard-blocked cards outrank wizard-attention-required\n  - Dashboard CtA cards, thread badges, and blocked/attention notices already carry the right kinds of identity:\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0204",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### 10.11 Loading-to-live transitions (Plans/FinalGUISpec.md:L1317)",
+      "path": "Plans/FinalGUISpec.md",
+      "coverage_row_ids": [
+        "cov-01530",
+        "cov-02290"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-01530",
+          "cov-02290"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-1387",
+        "obl-2143"
+      ],
+      "source_seed_ids": [
+        "seed-1704",
+        "seed-2783"
+      ],
+      "source_shard_ids": [
+        "shard-0026",
+        "shard-0035"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1387",
+          "obl-2143"
+        ],
+        "source_seed_ids": [
+          "seed-1704",
+          "seed-2783"
+        ],
+        "source_shard_ids": [
+          "shard-0026",
+          "shard-0035"
+        ]
+      },
+      "gap_ids": [
+        "gap-01203",
+        "gap-01780"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Good candidate transitions into `cleanup_eligible`:",
+        "cleanup_eligible",
+        "`SelectSpeakerEvent` is demoted to `raw_observation`, which hides governance-relevant speaker/overseer transitions from downstream projections",
+        "SelectSpeakerEvent",
+        "raw_observation"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-1b0375f8ef10",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0262",
+      "source_reconciliation_target_ids": [
+        "target-0262"
+      ],
+      "source_target_ids": [
+        "target-0262"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0262\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Good candidate transitions into `cleanup_eligible`:\n  - cleanup_eligible\n  - `SelectSpeakerEvent` is demoted to `raw_observation`, which hides governance-relevant speaker/overseer transitions from downstream projections\n  - SelectSpeakerEvent\n  - raw_observation\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-00521",
+    "cov-01268",
+    "cov-02459",
+    "cov-03799",
+    "cov-06445",
+    "cov-01426",
+    "cov-04416",
+    "cov-01698",
+    "cov-04548",
+    "cov-01530",
+    "cov-02290"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-378",
+    "obl-1125",
+    "obl-2309",
+    "obl-3644",
+    "obl-6086",
+    "obl-1283",
+    "obl-4256",
+    "obl-1555",
+    "obl-4326",
+    "obl-1387",
+    "obl-2143"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-436",
+    "seed-1337",
+    "seed-2995",
+    "seed-4927",
+    "seed-9196",
+    "seed-1550",
+    "seed-5940",
+    "seed-1942",
+    "seed-6087",
+    "seed-1704",
+    "seed-2783"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0012",
+    "shard-0022",
+    "shard-0037",
+    "shard-0051",
+    "shard-0083",
+    "shard-0024",
+    "shard-0058",
+    "shard-0028",
+    "shard-0059",
+    "shard-0026",
+    "shard-0035"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "preserved_exact_required_items": [
+    "Do not assume package/lane/run/worktree metadata can all be shown at full fidelity at once in the panel.",
+    "`Recovery in progress`",
+    "Recovery in progress",
+    "`resume_url` exists for wizard/thread recovery, but no generalized equivalent is yet defined for:",
+    "resume_url",
+    "workspace/isolation refs required for side effects and recovery",
+    "earlier addendum requires `resume_url`",
+    "The GUI should never guess that a previously visible `allowed_action_ids[]` set is still valid if the blocked projection is stale.",
+    "allowed_action_ids[]",
+    "normative ghost IDs still survive through examples, Final GUI remediation actions, and non-catalog command references.",
+    "wizard-blocked cards outrank wizard-attention-required",
+    "Dashboard CtA cards, thread badges, and blocked/attention notices already carry the right kinds of identity:",
+    "Good candidate transitions into `cleanup_eligible`:",
+    "cleanup_eligible",
+    "`SelectSpeakerEvent` is demoted to `raw_observation`, which hides governance-relevant speaker/overseer transitions from downstream projections",
+    "SelectSpeakerEvent",
+    "raw_observation"
+  ],
+  "blocked_targets": []
+}

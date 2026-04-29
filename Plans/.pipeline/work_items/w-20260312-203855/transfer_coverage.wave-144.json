@@ -1,0 +1,937 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-144",
+  "row_group_ids": [
+    "rowgrp-0573",
+    "rowgrp-0574",
+    "rowgrp-0575",
+    "rowgrp-0576"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-06065",
+      "source_obligation_ids": [
+        "obl-5837"
+      ],
+      "source_seed_ids": [
+        "seed-8674"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "older `PuppetMasterEvent::*` streams from the tier-era orchestrator model",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "older `PuppetMasterEvent::*` streams from the tier-era orchestrator model",
+        "PuppetMasterEvent::*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06066",
+      "source_obligation_ids": [
+        "obl-5838"
+      ],
+      "source_seed_ids": [
+        "seed-8675"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md` still documents live status primarily through:",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` still documents live status primarily through:",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06250",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06494",
+      "source_obligation_ids": [
+        "obl-6135"
+      ],
+      "source_seed_ids": [
+        "seed-9274"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "`orchestrator.receipt.{run_id}.{attempt_id}` is attempt-native",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`orchestrator.receipt.{run_id}.{attempt_id}` is attempt-native",
+        "orchestrator.receipt.{run_id}.{attempt_id}"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06497",
+      "source_obligation_ids": [
+        "obl-6138"
+      ],
+      "source_seed_ids": [
+        "seed-9277"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "no first-class `worktree_record` / `lane_record` family even though Orchestrator and Sourc",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "no first-class `worktree_record` / `lane_record` family even though Orchestrator and Source Control now depend on durable lane/worktree lifecycle",
+        "worktree_record",
+        "lane_record"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06515",
+      "source_obligation_ids": [
+        "obl-6156"
+      ],
+      "source_seed_ids": [
+        "seed-9308"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "`Orchestrator tier override`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`Orchestrator tier override`",
+        "Orchestrator tier override"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06544",
+      "source_obligation_ids": [
+        "obl-6185"
+      ],
+      "source_seed_ids": [
+        "seed-9360"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "dashboard/current-task language still uses current tier / phase-task-subtask progress bars",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "dashboard/current-task language still uses current tier / phase-task-subtask progress bars as if that were the canonical Orchestrator model"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06557",
+      "source_obligation_ids": [
+        "obl-6198"
+      ],
+      "source_seed_ids": [
+        "seed-9382"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "Orchestrator graph/seam/package governance model",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator graph/seam/package governance model"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06786",
+      "source_obligation_ids": [
+        "obl-6418"
+      ],
+      "source_seed_ids": [
+        "seed-9797"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "`orchestrator.project_state.{project_id}` persistence record",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`orchestrator.project_state.{project_id}` persistence record",
+        "orchestrator.project_state.{project_id}"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06865",
+      "source_obligation_ids": [
+        "obl-6468"
+      ],
+      "source_seed_ids": [
+        "seed-9847"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "4. `Plans/Orchestrator_Page.md`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "4. `Plans/Orchestrator_Page.md`",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06923",
+      "source_obligation_ids": [
+        "obl-6523"
+      ],
+      "source_seed_ids": [
+        "seed-9914"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md:16-43`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:16-43`",
+        "Plans/Orchestrator_Page.md:16-43"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06924",
+      "source_obligation_ids": [
+        "obl-6524"
+      ],
+      "source_seed_ids": [
+        "seed-9915"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md:451-474`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:451-474`",
+        "Plans/Orchestrator_Page.md:451-474"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06952",
+      "source_obligation_ids": [
+        "obl-6552"
+      ],
+      "source_seed_ids": [
+        "seed-9960"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md:258-266`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:258-266`",
+        "Plans/Orchestrator_Page.md:258-266"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06953",
+      "source_obligation_ids": [
+        "obl-6553"
+      ],
+      "source_seed_ids": [
+        "seed-9961"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md:358-377`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:358-377`",
+        "Plans/Orchestrator_Page.md:358-377"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06954",
+      "source_obligation_ids": [
+        "obl-6554"
+      ],
+      "source_seed_ids": [
+        "seed-9962",
+        "seed-10037",
+        "seed-10153"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md:428-475`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:428-475`",
+        "Plans/Orchestrator_Page.md:428-475"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06989",
+      "source_obligation_ids": [
+        "obl-6585"
+      ],
+      "source_seed_ids": [
+        "seed-10036",
+        "seed-10152",
+        "seed-10201",
+        "seed-10246"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md:1-44`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:1-44`",
+        "Plans/Orchestrator_Page.md:1-44"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07021",
+      "source_obligation_ids": [
+        "obl-6614"
+      ],
+      "source_seed_ids": [
+        "seed-10084"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md` already carries `escalation_level` in the concern/notificatio",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` already carries `escalation_level` in the concern/notification owner fields.",
+        "Plans/Orchestrator_Page.md",
+        "escalation_level"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07029",
+      "source_obligation_ids": [
+        "obl-6620"
+      ],
+      "source_seed_ids": [
+        "seed-10096"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md:439-446`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:439-446`",
+        "Plans/Orchestrator_Page.md:439-446"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07084",
+      "source_obligation_ids": [
+        "obl-6664"
+      ],
+      "source_seed_ids": [
+        "seed-10202"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md:200-209`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:200-209`",
+        "Plans/Orchestrator_Page.md:200-209"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07121",
+      "source_obligation_ids": [
+        "obl-6696"
+      ],
+      "source_seed_ids": [
+        "seed-10284"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md:1-150`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:1-150`",
+        "Plans/Orchestrator_Page.md:1-150"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07133",
+      "source_obligation_ids": [
+        "obl-6706"
+      ],
+      "source_seed_ids": [
+        "seed-10302",
+        "seed-10335"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md:171-171`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:171-171`",
+        "Plans/Orchestrator_Page.md:171-171"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07134",
+      "source_obligation_ids": [
+        "obl-6707"
+      ],
+      "source_seed_ids": [
+        "seed-10303",
+        "seed-10336"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md:209-209`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:209-209`",
+        "Plans/Orchestrator_Page.md:209-209"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07135",
+      "source_obligation_ids": [
+        "obl-6708"
+      ],
+      "source_seed_ids": [
+        "seed-10304",
+        "seed-10337"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md:230-230`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:230-230`",
+        "Plans/Orchestrator_Page.md:230-230"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07136",
+      "source_obligation_ids": [
+        "obl-6709"
+      ],
+      "source_seed_ids": [
+        "seed-10305",
+        "seed-10338",
+        "seed-10378"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md:270-270`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:270-270`",
+        "Plans/Orchestrator_Page.md:270-270"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07137",
+      "source_obligation_ids": [
+        "obl-6710"
+      ],
+      "source_seed_ids": [
+        "seed-10306"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md:437-437`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:437-437`",
+        "Plans/Orchestrator_Page.md:437-437"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07176",
+      "source_obligation_ids": [
+        "obl-6743"
+      ],
+      "source_seed_ids": [
+        "seed-10377"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md:209-230`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:209-230`",
+        "Plans/Orchestrator_Page.md:209-230"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07205",
+      "source_obligation_ids": [
+        "obl-6765"
+      ],
+      "source_seed_ids": [
+        "seed-10415"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md:12-13`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:12-13`",
+        "Plans/Orchestrator_Page.md:12-13"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07219",
+      "source_obligation_ids": [
+        "obl-6775"
+      ],
+      "source_seed_ids": [
+        "seed-10425"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Crosswalk.md`, and `Plans/Orchestrator_Page.md`.",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Models_System.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Crosswalk.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00040",
+      "source_obligation_ids": [
+        "obl-013"
+      ],
+      "source_seed_ids": [
+        "seed-013"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "requested-vs-effective identity display",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "New execution-policy settings requirement",
+      "status": "missing",
+      "exact_items": [
+        "cover agent vs subagent",
+        "cover fresh vs reused retry worker",
+        "cover overseer delegation on/off",
+        "cover delegated-worker provider/model/effort policy",
+        "ensure consistent requested-vs-effective identity display across chat actors and orchestration actors"
+      ],
+      "stale_tokens": [
+        "delegated worker"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00067",
+      "source_obligation_ids": [
+        "obl-028"
+      ],
+      "source_seed_ids": [
+        "seed-028"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Orchestrator ownership boundaries / projection-vs-canonical split",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "Orchestrator ownership boundaries",
+      "status": "missing",
+      "exact_items": [
+        "Define what Orchestrator is allowed to own: page layout and controls, view-model/projections, run control intents; exclude canonical runtime enums, event semantics, scheduler truth.",
+        "Pin the primary discussion seam first: UI surface/IA vs runtime state model vs cross-surface lineage/receipts vs blocked/recovery/remediation UX.",
+        "Record explicit boundary between canonical runtime facts, orchestrator projections, and widget/page presentation.",
+        "Carry forward requested-vs-effective state wherever persona/provider/model fallback can occur."
+      ],
+      "stale_tokens": [
+        "tier model",
+        "super-agent",
+        "owner of execution truth"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00075",
+      "source_obligation_ids": [
+        "obl-030"
+      ],
+      "source_seed_ids": [
+        "seed-030"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Worktree allocation/ownership rules and scale-managed isolation",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "Worktree gap is now explicit",
+      "status": "missing",
+      "exact_items": [
+        "Decide whether worktrees are allocated/owned per node, per package, per seam, or per remediation branch.",
+        "Resolve package-based worktree preference vs per-node worktrees for scale/manageability.",
+        "Record worktree ownership/isolation rules after Orchestrator ownership boundaries are pinned.",
+        "Expose source-control/worktree handshake as a remaining blind spot."
+      ],
+      "stale_tokens": [
+        "per-node worktrees",
+        "package-based worktrees",
+        "source control / worktree handshake"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00122",
+      "source_obligation_ids": [
+        "obl-040"
+      ],
+      "source_seed_ids": [
+        "seed-040"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "runtime schema anchors",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "Cleanup Priorities",
+      "status": "missing",
+      "exact_items": [
+        "Relax or replace stale graph-schema constants `selection_rule` and tier-rooted breadcrumbs.",
+        "Add package/seam/lane/worktree/account identity fields to canonical runtime/event/envelope contracts.",
+        "Define contamination and safe-point linkage explicitly in storage and blocked-payload contracts."
+      ],
+      "stale_tokens": [
+        "selection_rule",
+        "tier-rooted breadcrumbs",
+        "reason_code",
+        "recovery_options[]",
+        "single Overseer",
+        "one worktree"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02377",
+      "source_obligation_ids": [
+        "obl-2227"
+      ],
+      "source_seed_ids": [
+        "seed-2894"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Orchestrator still uses forbidden `requested_persona_id` / `effective_persona_id` names.",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator still uses forbidden `requested_persona_id` / `effective_persona_id` names.",
+        "requested_persona_id",
+        "effective_persona_id"
+      ],
+      "stale_tokens": [
+        "effective_persona_id",
+        "requested_persona_id"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

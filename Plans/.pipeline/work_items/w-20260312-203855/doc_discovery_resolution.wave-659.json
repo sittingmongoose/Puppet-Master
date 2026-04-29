@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-659",
+  "group_ids": [
+    "discgrp-2633",
+    "discgrp-2634",
+    "discgrp-2635",
+    "discgrp-2636"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02911",
+      "source_obligation_ids": [
+        "obl-2758"
+      ],
+      "source_seed_ids": [
+        "seed-3625",
+        "seed-3648"
+      ],
+      "source_shard_ids": [
+        "shard-0041",
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-02912",
+      "source_obligation_ids": [
+        "obl-2759"
+      ],
+      "source_seed_ids": [
+        "seed-3626"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Projection freshness and health terms",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L82"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02913",
+      "source_obligation_ids": [
+        "obl-2760"
+      ],
+      "source_seed_ids": [
+        "seed-3627"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02914",
+      "source_obligation_ids": [
+        "obl-2761"
+      ],
+      "source_seed_ids": [
+        "seed-3628"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

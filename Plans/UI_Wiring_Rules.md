@@ -1,5 +1,45 @@
 # UI Wiring Rules (Canonical)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0531
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Plans/UI_Wiring_Rules.md`
+  - Plans/UI_Wiring_Rules.md
+  - The current wiring contract is still element-centric and command-centric in a narrow sense: it can prove `ui_element_id -> ui_command_id -> handler_location -> expected_event_types`, but it cannot express or verify richer navigation semantics.
+  - ui_element_id -> ui_command_id -> handler_location -> expected_event_types
+  - Extend the wiring schema and rules with route-aware fields, likely along the lines of:
+  - Research Progress - 2026-03-16 - GATE-010 and evidence limits for route-aware wiring
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - The current wiring and gate docs are too command-ID-centric to express that difference well. Right now they mostly understand:
+  - The wiring layer should stay mostly unchanged. It already keys off `ui_command_id` and handler location. The important addition is gate logic that can understand the normalization metadata, not a large wiring-schema expansion.
+  - ui_command_id
+  - Keep wiring schema expansion minimal or zero if possible.
+  - keep `WiringEntry` after those sections so the wiring layer consumes, rather than owns, route/open semantics
+  - WiringEntry
+  - The wiring layer is still built around a simple command-binding contract:
+  - Keep normalization metadata owned by the command-definition side, not by wiring rows.
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
@@ -85,6 +125,28 @@ ContractRef: ContractName:Contracts_V0.md#UICommand, ContractName:Contracts_V0.m
 
 <a id="section-4"></a>
 ## 4. Wiring Matrix Concept
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0532
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - the wiring stack still has no hard reverse-coverage boundary, so ghost IDs survive simultaneously in Final GUI, Wiring Matrix, and command-owner docs.
+  - `resume_url` already appears as a deep-link/restore concept
+  - resume_url
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 The **Wiring Matrix** is a verification artifact that binds every interactive UI element to its command handler and expected outcomes.
 

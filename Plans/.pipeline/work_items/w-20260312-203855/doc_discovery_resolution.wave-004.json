@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-004",
+  "group_ids": [
+    "discgrp-0013",
+    "discgrp-0014",
+    "discgrp-0015",
+    "discgrp-0016"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00160",
+      "source_obligation_ids": [
+        "obl-057"
+      ],
+      "source_seed_ids": [
+        "seed-057"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "### 3.1 Per-provider options",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Models_System.md:L161"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00161",
+      "source_obligation_ids": [
+        "obl-058"
+      ],
+      "source_seed_ids": [
+        "seed-058"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Progression_Gates.md",
+      "new_heading_hint": "### Fidelity recovery cov-034: Promotion classes and gate evidence",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Progression_Gates.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00162",
+      "source_obligation_ids": [
+        "obl-059"
+      ],
+      "source_seed_ids": [
+        "seed-059"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00163",
+      "source_obligation_ids": [
+        "obl-060"
+      ],
+      "source_seed_ids": [
+        "seed-060"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

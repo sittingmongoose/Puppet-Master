@@ -1,0 +1,916 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-216",
+  "row_group_ids": [
+    "rowgrp-0861",
+    "rowgrp-0862",
+    "rowgrp-0863",
+    "rowgrp-0864"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-01969",
+      "source_obligation_ids": [
+        "obl-1826"
+      ],
+      "source_seed_ids": [
+        "seed-2349"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "but downstream docs still use those names normatively or mix them with canonical names",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "status": "partial",
+      "exact_items": [
+        "but downstream docs still use those names normatively or mix them with canonical names"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L116"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01982",
+      "source_obligation_ids": [
+        "obl-1839"
+      ],
+      "source_seed_ids": [
+        "seed-2370"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "some docs still normalize around `requested_persona_id` / `effective_persona_id`",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "status": "partial",
+      "exact_items": [
+        "some docs still normalize around `requested_persona_id` / `effective_persona_id`",
+        "requested_persona_id",
+        "effective_persona_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L116"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02030",
+      "source_obligation_ids": [
+        "obl-1887"
+      ],
+      "source_seed_ids": [
+        "seed-2434"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "`provider_account_id` remains risky because Sonnet reinforces that it still conflicts conc",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "status": "partial",
+      "exact_items": [
+        "`provider_account_id` remains risky because Sonnet reinforces that it still conflicts conceptually with `effective_provider_identity`",
+        "provider_account_id",
+        "effective_provider_identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L116"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02060",
+      "source_obligation_ids": [
+        "obl-1917"
+      ],
+      "source_seed_ids": [
+        "seed-2475"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "`acknowledge`: confirmation `none`; rationale optional; reversibility `compensating_action",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "# Puppet Master Rewrite Tie-In Contract (Active)",
+      "status": "present",
+      "exact_items": [
+        "`acknowledge`: confirmation `none`; rationale optional; reversibility `compensating_action_only` via explicit return to `active`",
+        "acknowledge",
+        "none",
+        "compensating_action_only",
+        "active"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L1",
+        "Plans/rewrite-tie-in-memo.md:L224",
+        "Plans/rewrite-tie-in-memo.md:L226"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02200",
+      "source_obligation_ids": [
+        "obl-2055"
+      ],
+      "source_seed_ids": [
+        "seed-2671",
+        "seed-8449",
+        "seed-8479",
+        "seed-9310"
+      ],
+      "source_shard_ids": [
+        "shard-0034",
+        "shard-0078",
+        "shard-0084"
+      ],
+      "canon_label": "`persona_override_owner_id` still allows `tier_id`",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "status": "partial",
+      "exact_items": [
+        "`persona_override_owner_id` still allows `tier_id`",
+        "persona_override_owner_id",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L116"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02426",
+      "source_obligation_ids": [
+        "obl-2276"
+      ],
+      "source_seed_ids": [
+        "seed-2953"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "`activity_state` (`idle | active | background_active | historical_only`)",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "# Puppet Master Rewrite Tie-In Contract (Active)",
+      "status": "partial",
+      "exact_items": [
+        "`activity_state` (`idle | active | background_active | historical_only`)",
+        "activity_state",
+        "idle | active | background_active | historical_only"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02488",
+      "source_obligation_ids": [
+        "obl-2338"
+      ],
+      "source_seed_ids": [
+        "seed-3039"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "`Prompt_Pipeline.md` still lacks `actor_kind` / `execution_role`",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "status": "partial",
+      "exact_items": [
+        "`Prompt_Pipeline.md` still lacks `actor_kind` / `execution_role`",
+        "Prompt_Pipeline.md",
+        "actor_kind",
+        "execution_role"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L60",
+        "Plans/rewrite-tie-in-memo.md:L107"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02586",
+      "source_obligation_ids": [
+        "obl-2434"
+      ],
+      "source_seed_ids": [
+        "seed-3158"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "optional `project_attention_index.v1:{project_id}` if needed for efficient active ordering",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "# Puppet Master Rewrite Tie-In Contract (Active)",
+      "status": "partial",
+      "exact_items": [
+        "optional `project_attention_index.v1:{project_id}` if needed for efficient active ordering/counts",
+        "project_attention_index.v1:{project_id}"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02743",
+      "source_obligation_ids": [
+        "obl-2590"
+      ],
+      "source_seed_ids": [
+        "seed-3392"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "current posture is: significant progress, but still `active`, not handoff-ready",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "status": "present",
+      "exact_items": [
+        "current posture is: significant progress, but still `active`, not handoff-ready",
+        "active"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L1",
+        "Plans/rewrite-tie-in-memo.md:L226"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02769",
+      "source_obligation_ids": [
+        "obl-2616"
+      ],
+      "source_seed_ids": [
+        "seed-3426"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "`requested_account_policy` still remains necessary.",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "status": "partial",
+      "exact_items": [
+        "`requested_account_policy` still remains necessary.",
+        "requested_account_policy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L116"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02795",
+      "source_obligation_ids": [
+        "obl-2642"
+      ],
+      "source_seed_ids": [
+        "seed-3471"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "but prompt/runtime/storage schemas still have no parallel operational-identity block",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "status": "partial",
+      "exact_items": [
+        "but prompt/runtime/storage schemas still have no parallel operational-identity block"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L116"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02935",
+      "source_obligation_ids": [
+        "obl-2782"
+      ],
+      "source_seed_ids": [
+        "seed-3655"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "`status` (`active | cooled_down | resolved | invalidated`)",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "# Puppet Master Rewrite Tie-In Contract (Active)",
+      "status": "partial",
+      "exact_items": [
+        "`status` (`active | cooled_down | resolved | invalidated`)",
+        "status",
+        "active | cooled_down | resolved | invalidated"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L317"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03117",
+      "source_obligation_ids": [
+        "obl-2963"
+      ],
+      "source_seed_ids": [
+        "seed-3907"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "current status remains `active` because owner convergence is clearer, but not fully closed",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "# Puppet Master Rewrite Tie-In Contract (Active)",
+      "status": "present",
+      "exact_items": [
+        "current status remains `active` because owner convergence is clearer, but not fully closed",
+        "active"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L1",
+        "Plans/rewrite-tie-in-memo.md:L226"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03414",
+      "source_obligation_ids": [
+        "obl-3260"
+      ],
+      "source_seed_ids": [
+        "seed-4363"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "likely `wizard_id -> run_id`",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans likely needing the most rewrite-aware edits",
+      "status": "partial",
+      "exact_items": [
+        "likely `wizard_id -> run_id`",
+        "wizard_id -> run_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L99"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03558",
+      "source_obligation_ids": [
+        "obl-3404"
+      ],
+      "source_seed_ids": [
+        "seed-4584"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "canon_label": "lifecycle state (`active | suspect | restoring | retained | cleanup_eligible | archived |",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "# Puppet Master Rewrite Tie-In Contract (Active)",
+      "status": "partial",
+      "exact_items": [
+        "lifecycle state (`active | suspect | restoring | retained | cleanup_eligible | archived | removed`)",
+        "active | suspect | restoring | retained | cleanup_eligible | archived | removed"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03608",
+      "source_obligation_ids": [
+        "obl-3454"
+      ],
+      "source_seed_ids": [
+        "seed-4647"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "current work item posture remains `active`, but the center of gravity is shifting from exp",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "# Puppet Master Rewrite Tie-In Contract (Active)",
+      "status": "present",
+      "exact_items": [
+        "current work item posture remains `active`, but the center of gravity is shifting from exploration to owner-hardening",
+        "active"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L1",
+        "Plans/rewrite-tie-in-memo.md:L226"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04131",
+      "source_obligation_ids": [
+        "obl-3971"
+      ],
+      "source_seed_ids": [
+        "seed-5449",
+        "seed-5509"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "likely owner docs:",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans likely needing the most rewrite-aware edits",
+      "status": "partial",
+      "exact_items": [
+        "likely owner docs:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L99"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04360",
+      "source_obligation_ids": [
+        "obl-4200"
+      ],
+      "source_seed_ids": [
+        "seed-5839"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "`generated://<artifact_id>` is discussed as a transport/resulting buffer, but the docs sti",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "status": "partial",
+      "exact_items": [
+        "`generated://<artifact_id>` is discussed as a transport/resulting buffer, but the docs still need to guard against treating it like the durable identity.",
+        "generated://<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L176"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04512",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04599",
+      "source_obligation_ids": [
+        "obl-4377"
+      ],
+      "source_seed_ids": [
+        "seed-6170"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "likely fields:",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans likely needing the most rewrite-aware edits",
+      "status": "partial",
+      "exact_items": [
+        "likely fields:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L99"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04783",
+      "source_obligation_ids": [
+        "obl-4561"
+      ],
+      "source_seed_ids": [
+        "seed-6503"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "Remaining Gemini-only docs are not low-value leftovers; many still hide active owner gaps",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "status": "partial",
+      "exact_items": [
+        "Remaining Gemini-only docs are not low-value leftovers; many still hide active owner gaps in indices/checklists/policies and subsystem plans."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L116"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04892",
+      "source_obligation_ids": [
+        "obl-4669"
+      ],
+      "source_seed_ids": [
+        "seed-6688",
+        "seed-6707",
+        "seed-6730",
+        "seed-7400",
+        "seed-7445",
+        "seed-7470",
+        "seed-8836",
+        "seed-8877",
+        "seed-8905",
+        "seed-8931",
+        "seed-8969",
+        "seed-9003",
+        "seed-9029",
+        "seed-9063",
+        "seed-9336",
+        "seed-9365",
+        "seed-9572",
+        "seed-9600",
+        "seed-9639"
+      ],
+      "source_shard_ids": [
+        "shard-0064",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082",
+        "shard-0084",
+        "shard-0086"
+      ],
+      "canon_label": "`Plans/rewrite-tie-in-memo.md`",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/rewrite-tie-in-memo.md`",
+        "Plans/rewrite-tie-in-memo.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05066",
+      "source_obligation_ids": [
+        "obl-4842"
+      ],
+      "source_seed_ids": [
+        "seed-6971"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "`OpenFile` remains narrower still:",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "status": "partial",
+      "exact_items": [
+        "`OpenFile` remains narrower still:",
+        "OpenFile"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L116"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05104",
+      "source_obligation_ids": [
+        "obl-4880"
+      ],
+      "source_seed_ids": [
+        "seed-7031"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "`open_source`",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "#### `open_source` rules",
+      "status": "present",
+      "exact_items": [
+        "`open_source`",
+        "open_source"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L174",
+        "Plans/rewrite-tie-in-memo.md:L178",
+        "Plans/rewrite-tie-in-memo.md:L284",
+        "Plans/rewrite-tie-in-memo.md:L389"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05504",
+      "source_obligation_ids": [
+        "obl-5276"
+      ],
+      "source_seed_ids": [
+        "seed-7846"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "`Orchestrator_Page.md` mixes newer blocked/remediation lineage work with older `TierChange",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "# Puppet Master Rewrite Tie-In Contract (Active)",
+      "status": "partial",
+      "exact_items": [
+        "`Orchestrator_Page.md` mixes newer blocked/remediation lineage work with older `TierChanged` / `active tier` assumptions.",
+        "Orchestrator_Page.md",
+        "TierChanged",
+        "active tier"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L33"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05769",
+      "source_obligation_ids": [
+        "obl-5541"
+      ],
+      "source_seed_ids": [
+        "seed-8225"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "`thread_blocked_notice` and `wizard_runtime_state` are also still mixed:",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "status": "partial",
+      "exact_items": [
+        "`thread_blocked_notice` and `wizard_runtime_state` are also still mixed:",
+        "thread_blocked_notice",
+        "wizard_runtime_state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L116"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05821",
+      "source_obligation_ids": [
+        "obl-5593"
+      ],
+      "source_seed_ids": [
+        "seed-8303"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "worker output filtered by active `tier_id`",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "# Puppet Master Rewrite Tie-In Contract (Active)",
+      "status": "partial",
+      "exact_items": [
+        "worker output filtered by active `tier_id`",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05940",
+      "source_obligation_ids": [
+        "obl-5712"
+      ],
+      "source_seed_ids": [
+        "seed-8486"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "canon_label": "`tier_runtime_record` is still named as canonical",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "status": "partial",
+      "exact_items": [
+        "`tier_runtime_record` is still named as canonical",
+        "tier_runtime_record"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L116"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06203",
+      "source_obligation_ids": [
+        "obl-5972"
+      ],
+      "source_seed_ids": [
+        "seed-8940"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "Provider/runtime identity findings are still active:",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "# Puppet Master Rewrite Tie-In Contract (Active)",
+      "status": "partial",
+      "exact_items": [
+        "Provider/runtime identity findings are still active:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06281",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06533",
+      "source_obligation_ids": [
+        "obl-6174"
+      ],
+      "source_seed_ids": [
+        "seed-9339"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "`Plans/rewrite-tie-in-memo.md` is comparatively ahead on provider/runtime identity:",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/rewrite-tie-in-memo.md` is comparatively ahead on provider/runtime identity:",
+        "Plans/rewrite-tie-in-memo.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06674",
+      "source_obligation_ids": [
+        "obl-6315"
+      ],
+      "source_seed_ids": [
+        "seed-9556"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "This tranche mostly inherits contradictions from stronger owner docs instead of inventing",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Immediate contradictions to resolve in Plans (so requirements do not fight each other)",
+      "status": "partial",
+      "exact_items": [
+        "This tranche mostly inherits contradictions from stronger owner docs instead of inventing new ones."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L80"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06835",
+      "source_obligation_ids": [
+        "obl-6447"
+      ],
+      "source_seed_ids": [
+        "seed-9826"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "GATE-010 text improved, but the supporting evidence schema/matrix model still lags",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "status": "partial",
+      "exact_items": [
+        "GATE-010 text improved, but the supporting evidence schema/matrix model still lags"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L116"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

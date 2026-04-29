@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0052",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0052-L010201-L010400.md",
+  "source_line_range": "L010201-L010400",
+  "covered_shard_id": "shard-0052",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "execution_role and operational_identity contract additions",
+      "exact_items": [
+        "Recommended minimum contract additions: add execution_role to runtime handoff bundle, attempt.started, attempt_record, worker identity/detail inspectors; add operational_identity? to attempt_record, operational receipt/bridge records, and relevant tool/runtime artifact payloads.",
+        "Candidate fixes: make execution_role part of the canonical attempt packet in Contracts_V0.md and storage-plan.md; define operational_identity as a separate optional field family for receipts, artifacts, and side-effect-bearing attempt/tool records."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "execution_role",
+        "operational_identity"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L10208-L10217",
+        "working_ledger.md:L10239-L10251"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "execution_role UI/runtime consumers",
+      "exact_items": [
+        "Impacted docs include Orchestrator_Page.md, Run_Graph_View.md, Runtime_Artifacts_Panel.md, usage-feature.md; contradictions note Orchestrator_Page.md lacks execution_role or operational target context and usage-feature.md has no place for execution-role disclosure."
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/usage-feature.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "execution_role"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L10222-L10237"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "unified attribution packet for tools/artifacts/receipts/usage",
+      "exact_items": [
+        "Tool events, runtime artifacts, receipts, and usage want one shared attribution packet, but the docs still describe them as separate identity worlds; storage-plan.md is strongest anchor with attempt_record.provider_attempt_ref?, orchestrator.receipt.{run_id}.{attempt_id}, and usage_record bridging Source Control / GitHub Actions / Docker / Kubernetes / Usage.",
+        "Recommended unified attribution packet should be available to tool.invoked, tool.denied, runtime_artifact.*, runtime receipts, usage_record / cost_usage, and relevant evidence / trace views."
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/usage-feature.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "attempt_record.provider_attempt_ref?",
+        "orchestrator.receipt.{run_id}.{attempt_id}",
+        "tool.invoked",
+        "tool.denied",
+        "usage_record",
+        "cost_usage"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L10373-L10390",
+        "working_ledger.md:L10392-L10400"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    {
+      "line": "L010253-L010400",
+      "text": "Research Progress / targeted docs read / key findings / recommended packet sections contain process and synthesis context."
+    }
+  ],
+  "uncertain_items": []
+}

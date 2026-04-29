@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1430",
+  "group_ids": [
+    "discgrp-5717",
+    "discgrp-5718",
+    "discgrp-5719",
+    "discgrp-5720"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06192",
+      "source_obligation_ids": [
+        "obl-5961"
+      ],
+      "source_seed_ids": [
+        "seed-8907"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "### 4.4 Two Gemini providers",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Models_System.md:L274"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06193",
+      "source_obligation_ids": [
+        "obl-5962"
+      ],
+      "source_seed_ids": [
+        "seed-8908"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06194",
+      "source_obligation_ids": [
+        "obl-5963"
+      ],
+      "source_seed_ids": [
+        "seed-8909",
+        "seed-9007"
+      ],
+      "source_shard_ids": [
+        "shard-0081",
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Canonical records (owner reconciliation)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L640"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06195",
+      "source_obligation_ids": [
+        "obl-5964"
+      ],
+      "source_seed_ids": [
+        "seed-8932"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "#### `scheduler.pass`",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1116"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

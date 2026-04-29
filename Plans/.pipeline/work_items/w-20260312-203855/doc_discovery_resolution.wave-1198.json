@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1198",
+  "group_ids": [
+    "discgrp-4789",
+    "discgrp-4790",
+    "discgrp-4791",
+    "discgrp-4792"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05188",
+      "source_obligation_ids": [
+        "obl-4964"
+      ],
+      "source_seed_ids": [
+        "seed-7200"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## 0. Scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L14"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05189",
+      "source_obligation_ids": [
+        "obl-4965"
+      ],
+      "source_seed_ids": [
+        "seed-7201"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### Progress catalog source and default drills",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L910"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05190",
+      "source_obligation_ids": [
+        "obl-4966"
+      ],
+      "source_seed_ids": [
+        "seed-7206"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L91"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05191",
+      "source_obligation_ids": [
+        "obl-4967"
+      ],
+      "source_seed_ids": [
+        "seed-7207"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

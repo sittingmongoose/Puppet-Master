@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1361",
+  "group_ids": [
+    "discgrp-5441",
+    "discgrp-5442",
+    "discgrp-5443",
+    "discgrp-5444"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05888",
+      "source_obligation_ids": [
+        "obl-5660"
+      ],
+      "source_seed_ids": [
+        "seed-8416"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "## 2. Canonical command IDs",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L64"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05889",
+      "source_obligation_ids": [
+        "obl-5661"
+      ],
+      "source_seed_ids": [
+        "seed-8417"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "### 1.2 Integration Point",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FileSafe.md:L94"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05890",
+      "source_obligation_ids": [
+        "obl-5662"
+      ],
+      "source_seed_ids": [
+        "seed-8418"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "### W.7 Cleanup flow (thread delete)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L2442"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05891",
+      "source_obligation_ids": [
+        "obl-5663"
+      ],
+      "source_seed_ids": [
+        "seed-8419"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "### SSOT references (DRY)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Commands_System.md:L11"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

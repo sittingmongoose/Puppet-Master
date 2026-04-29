@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-547",
+  "group_ids": [
+    "discgrp-2185",
+    "discgrp-2186",
+    "discgrp-2187",
+    "discgrp-2188"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02456",
+      "source_obligation_ids": [
+        "obl-2306"
+      ],
+      "source_seed_ids": [
+        "seed-2988"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/00-plans-index.md",
+      "new_heading_hint": "# Plans Index (authoritative map)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/00-plans-index.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02457",
+      "source_obligation_ids": [
+        "obl-2307"
+      ],
+      "source_seed_ids": [
+        "seed-2993"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## 18. Promoted Features (Formerly Future Considerations)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1851"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02458",
+      "source_obligation_ids": [
+        "obl-2308"
+      ],
+      "source_seed_ids": [
+        "seed-2994"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "# Glossary (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02459",
+      "source_obligation_ids": [
+        "obl-2309"
+      ],
+      "source_seed_ids": [
+        "seed-2995"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## Fidelity recovery addendum",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L3"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

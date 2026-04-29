@@ -1,0 +1,100 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-955",
+  "group_ids": [
+    "discgrp-3817",
+    "discgrp-3818",
+    "discgrp-3819",
+    "discgrp-3820"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04122",
+      "source_obligation_ids": [
+        "obl-3962"
+      ],
+      "source_seed_ids": [
+        "seed-5426"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-186: Approval scope key and approver identity",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L165"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04123",
+      "source_obligation_ids": [
+        "obl-3963"
+      ],
+      "source_seed_ids": [
+        "seed-5427"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04124",
+      "source_obligation_ids": [
+        "obl-3964"
+      ],
+      "source_seed_ids": [
+        "seed-5428"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04125",
+      "source_obligation_ids": [
+        "obl-3965"
+      ],
+      "source_seed_ids": [
+        "seed-5429",
+        "seed-6171",
+        "seed-6225",
+        "seed-7064",
+        "seed-7075"
+      ],
+      "source_shard_ids": [
+        "shard-0055",
+        "shard-0060",
+        "shard-0067"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

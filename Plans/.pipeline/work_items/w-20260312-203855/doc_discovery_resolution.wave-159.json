@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-159",
+  "group_ids": [
+    "discgrp-0633",
+    "discgrp-0634",
+    "discgrp-0635",
+    "discgrp-0636"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00880",
+      "source_obligation_ids": [
+        "obl-737"
+      ],
+      "source_seed_ids": [
+        "seed-842",
+        "seed-2203"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0031"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00881",
+      "source_obligation_ids": [
+        "obl-738"
+      ],
+      "source_seed_ids": [
+        "seed-843",
+        "seed-2204"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0031"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00882",
+      "source_obligation_ids": [
+        "obl-739"
+      ],
+      "source_seed_ids": [
+        "seed-844"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/BinaryLocator_Spec.md",
+      "new_heading_hint": "### Canonical sources (reference, don't duplicate)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L23"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00883",
+      "source_obligation_ids": [
+        "obl-740"
+      ],
+      "source_seed_ids": [
+        "seed-845"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "#### Issue 1: False Positives in Documentation",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L2252"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

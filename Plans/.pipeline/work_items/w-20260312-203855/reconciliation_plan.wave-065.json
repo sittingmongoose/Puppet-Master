@@ -1,0 +1,313 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-065",
+  "group_ids": [
+    "recgrp-0257",
+    "recgrp-0258",
+    "recgrp-0259",
+    "recgrp-0260"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0257",
+      "path": "Plans/FinalGUISpec.md",
+      "mapped_owner_heading": "## Fidelity recovery addendum",
+      "live_anchor": "## Fidelity recovery addendum (Plans/FinalGUISpec.md:L3)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00521",
+        "cov-01268",
+        "cov-02459",
+        "cov-03799",
+        "cov-06445"
+      ],
+      "source_obligation_ids": [
+        "obl-378",
+        "obl-1125",
+        "obl-2309",
+        "obl-3644",
+        "obl-6086"
+      ],
+      "source_seed_ids": [
+        "seed-436",
+        "seed-1337",
+        "seed-2995",
+        "seed-4927",
+        "seed-9196"
+      ],
+      "source_shard_ids": [
+        "shard-0012",
+        "shard-0022",
+        "shard-0037",
+        "shard-0051",
+        "shard-0083"
+      ],
+      "gap_ids": [
+        "gap-00411",
+        "gap-00985",
+        "gap-01922",
+        "gap-02962",
+        "gap-05000"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Do not assume package/lane/run/worktree metadata can all be shown at full fidelity at once in the panel.",
+        "`Recovery in progress`",
+        "Recovery in progress",
+        "`resume_url` exists for wizard/thread recovery, but no generalized equivalent is yet defined for:",
+        "resume_url",
+        "workspace/isolation refs required for side effects and recovery",
+        "earlier addendum requires `resume_url`"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-0888168489a3",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0258",
+      "path": "Plans/FinalGUISpec.md",
+      "mapped_owner_heading": "## Runtime Blocked, Queue, and Recovery GUI Reconciliation Addendum (2026-03-09)",
+      "live_anchor": "## Runtime Blocked, Queue, and Recovery GUI Reconciliation Addendum (2026-03-09) (Plans/FinalGUISpec.md:L2463)",
+      "action": "layout_repair_reference",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-05527",
+        "cov-06450",
+        "cov-06697"
+      ],
+      "source_obligation_ids": [
+        "obl-5299",
+        "obl-6091",
+        "obl-6338"
+      ],
+      "source_seed_ids": [
+        "seed-7875",
+        "seed-9201",
+        "seed-9676"
+      ],
+      "source_shard_ids": [
+        "shard-0073",
+        "shard-0083",
+        "shard-0086"
+      ],
+      "gap_ids": [
+        "gap-04304",
+        "gap-05004",
+        "gap-05187"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "The duplicate `cost_usage` section is not a cosmetic issue. It is a real reconciliation hazard.",
+        "cost_usage",
+        "later reconciliation addendum uses `fixed | superseded | abandoned | replan_required`",
+        "fixed | superseded | abandoned | replan_required",
+        "`MUST VERIFY` docs stay out of the packet unless final reconciliation inspection shows that they also require edits.",
+        "MUST VERIFY"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-6db811d2d7dd",
+      "packet_writer_role": "observe_only",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Observe-only layout repair reference: target records packetizable layout backlog without creating an overlapping mutation writer."
+      ]
+    },
+    {
+      "target_id": "target-0259",
+      "path": "Plans/FinalGUISpec.md",
+      "mapped_owner_heading": "## Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)",
+      "live_anchor": "## Scheduler, blocked, and Remediation GUI Addendum (2026-03-08) (Plans/FinalGUISpec.md:L2374)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [
+        "allowed_action_ids[]"
+      ],
+      "coverage_row_ids": [
+        "cov-01426",
+        "cov-04416"
+      ],
+      "source_obligation_ids": [
+        "obl-1283",
+        "obl-4256"
+      ],
+      "source_seed_ids": [
+        "seed-1550",
+        "seed-5940"
+      ],
+      "source_shard_ids": [
+        "shard-0024",
+        "shard-0058"
+      ],
+      "gap_ids": [
+        "gap-01123",
+        "gap-03452"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "The GUI should never guess that a previously visible `allowed_action_ids[]` set is still valid if the blocked projection is stale.",
+        "allowed_action_ids[]",
+        "normative ghost IDs still survive through examples, Final GUI remediation actions, and non-catalog command references."
+      ],
+      "exact_stale_tokens_to_retire": [
+        "allowed_action_ids[]"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "packet_span_group_id": "span-76b506fa5306",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0260",
+      "path": "Plans/FinalGUISpec.md",
+      "mapped_owner_heading": "## Table of Contents",
+      "live_anchor": "## Table of Contents (Plans/FinalGUISpec.md:L224)",
+      "action": "layout_repair_reference",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-04965"
+      ],
+      "source_obligation_ids": [
+        "obl-4741"
+      ],
+      "source_seed_ids": [
+        "seed-6827"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "gap_ids": [
+        "gap-03885"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "this is close to the right thinking for navigation, but navigation still needs a wrapper layer rather than just a winner/loser alias table"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-e5a7d51faeef",
+      "packet_writer_role": "observe_only",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Observe-only layout repair reference: target records packetizable layout backlog without creating an overlapping mutation writer."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00521",
+    "cov-01268",
+    "cov-02459",
+    "cov-03799",
+    "cov-06445",
+    "cov-05527",
+    "cov-06450",
+    "cov-06697",
+    "cov-01426",
+    "cov-04416",
+    "cov-04965"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-378",
+    "obl-1125",
+    "obl-2309",
+    "obl-3644",
+    "obl-6086",
+    "obl-5299",
+    "obl-6091",
+    "obl-6338",
+    "obl-1283",
+    "obl-4256",
+    "obl-4741"
+  ],
+  "source_seed_ids_represented": [
+    "seed-436",
+    "seed-1337",
+    "seed-2995",
+    "seed-4927",
+    "seed-9196",
+    "seed-7875",
+    "seed-9201",
+    "seed-9676",
+    "seed-1550",
+    "seed-5940",
+    "seed-6827"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0012",
+    "shard-0022",
+    "shard-0037",
+    "shard-0051",
+    "shard-0083",
+    "shard-0073",
+    "shard-0086",
+    "shard-0024",
+    "shard-0058",
+    "shard-0065"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": [
+    {
+      "target_id": "target-0258",
+      "path": "Plans/FinalGUISpec.md",
+      "reason": "observe_only non-packetizable source path"
+    },
+    {
+      "target_id": "target-0260",
+      "path": "Plans/FinalGUISpec.md",
+      "reason": "observe_only non-packetizable source path"
+    }
+  ]
+}

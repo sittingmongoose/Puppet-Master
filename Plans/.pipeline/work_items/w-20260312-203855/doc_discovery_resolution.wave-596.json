@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-596",
+  "group_ids": [
+    "discgrp-2381",
+    "discgrp-2382",
+    "discgrp-2383",
+    "discgrp-2384"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02656",
+      "source_obligation_ids": [
+        "obl-2504"
+      ],
+      "source_seed_ids": [
+        "seed-3287"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02657",
+      "source_obligation_ids": [
+        "obl-2505"
+      ],
+      "source_seed_ids": [
+        "seed-3288"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-02658",
+      "source_obligation_ids": [
+        "obl-2506"
+      ],
+      "source_seed_ids": [
+        "seed-3289"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02659",
+      "source_obligation_ids": [
+        "obl-2507"
+      ],
+      "source_seed_ids": [
+        "seed-3291"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

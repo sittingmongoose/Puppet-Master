@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-172",
+  "group_ids": [
+    "discgrp-0685",
+    "discgrp-0686",
+    "discgrp-0687",
+    "discgrp-0688"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00932",
+      "source_obligation_ids": [
+        "obl-789"
+      ],
+      "source_seed_ids": [
+        "seed-902",
+        "seed-913",
+        "seed-1489"
+      ],
+      "source_shard_ids": [
+        "shard-0017",
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00933",
+      "source_obligation_ids": [
+        "obl-790"
+      ],
+      "source_seed_ids": [
+        "seed-906"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## 0. Scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L14"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00934",
+      "source_obligation_ids": [
+        "obl-791"
+      ],
+      "source_seed_ids": [
+        "seed-908"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "#### Repository creation confirmation flow",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L260"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00935",
+      "source_obligation_ids": [
+        "obl-792"
+      ],
+      "source_seed_ids": [
+        "seed-910"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_Integration.md",
+      "new_heading_hint": "# GitHub Integration -- Spec",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

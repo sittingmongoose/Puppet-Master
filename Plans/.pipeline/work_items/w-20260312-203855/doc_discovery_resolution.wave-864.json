@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-864",
+  "group_ids": [
+    "discgrp-3453",
+    "discgrp-3454",
+    "discgrp-3455",
+    "discgrp-3456"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03745",
+      "source_obligation_ids": [
+        "obl-3590"
+      ],
+      "source_seed_ids": [
+        "seed-4856"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_Integration.md",
+      "new_heading_hint": "# GitHub Integration -- Spec",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03746",
+      "source_obligation_ids": [
+        "obl-3591"
+      ],
+      "source_seed_ids": [
+        "seed-4857"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "### Fidelity recovery cov-202: Artifact envelope routing preference",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L41"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03747",
+      "source_obligation_ids": [
+        "obl-3592"
+      ],
+      "source_seed_ids": [
+        "seed-4858"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1323"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03748",
+      "source_obligation_ids": [
+        "obl-3593"
+      ],
+      "source_seed_ids": [
+        "seed-4859"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Prompt_Pipeline.md",
+      "new_heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

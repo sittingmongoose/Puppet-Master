@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-967",
+  "group_ids": [
+    "discgrp-3865",
+    "discgrp-3866",
+    "discgrp-3867",
+    "discgrp-3868"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04170",
+      "source_obligation_ids": [
+        "obl-4010"
+      ],
+      "source_seed_ids": [
+        "seed-5517"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/usage-feature.md:L328"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04171",
+      "source_obligation_ids": [
+        "obl-4011"
+      ],
+      "source_seed_ids": [
+        "seed-5518"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "#### Open subject navigation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04172",
+      "source_obligation_ids": [
+        "obl-4012"
+      ],
+      "source_seed_ids": [
+        "seed-5519"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04173",
+      "source_obligation_ids": [
+        "obl-4013"
+      ],
+      "source_seed_ids": [
+        "seed-5520"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "# Adding Tool Support -- Research & Plan",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Tools.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

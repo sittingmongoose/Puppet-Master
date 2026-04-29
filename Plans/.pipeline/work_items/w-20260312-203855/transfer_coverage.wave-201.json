@@ -1,0 +1,421 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-201",
+  "row_group_ids": [
+    "rowgrp-0801",
+    "rowgrp-0802",
+    "rowgrp-0803",
+    "rowgrp-0804"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-05714",
+      "source_obligation_ids": [
+        "obl-5486"
+      ],
+      "source_seed_ids": [
+        "seed-8143"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "a later addendum says `wizard.blocked` carries `resume_url?`",
+      "row_type": "owner",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "### 13.5 \"Run Chain Wizard Later\" Affordance",
+      "status": "present",
+      "exact_items": [
+        "a later addendum says `wizard.blocked` carries `resume_url?`",
+        "wizard.blocked",
+        "resume_url?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L2069",
+        "Plans/chain-wizard-flexibility.md:L2091",
+        "Plans/chain-wizard-flexibility.md:L2094",
+        "Plans/chain-wizard-flexibility.md:L2120",
+        "Plans/chain-wizard-flexibility.md:L2143"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05718",
+      "source_obligation_ids": [
+        "obl-5490"
+      ],
+      "source_seed_ids": [
+        "seed-8147"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "concrete `puppet-master://wizard/...` format",
+      "row_type": "owner",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows",
+      "status": "partial",
+      "exact_items": [
+        "concrete `puppet-master://wizard/...` format",
+        "puppet-master://wizard/..."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05719",
+      "source_obligation_ids": [
+        "obl-5491"
+      ],
+      "source_seed_ids": [
+        "seed-8148"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "dashboard/thread Resume Wizard behavior defined directly in terms of `resume_url`",
+      "row_type": "owner",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "### 3. Dashboard / thread / resume behavior",
+      "status": "present",
+      "exact_items": [
+        "dashboard/thread Resume Wizard behavior defined directly in terms of `resume_url`",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L1687",
+        "Plans/chain-wizard-flexibility.md:L1702",
+        "Plans/chain-wizard-flexibility.md:L2075",
+        "Plans/chain-wizard-flexibility.md:L2136",
+        "Plans/chain-wizard-flexibility.md:L2157"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05791",
+      "source_obligation_ids": [
+        "obl-5563"
+      ],
+      "source_seed_ids": [
+        "seed-8263"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "`wizard.blocked` is still the weakest member of the family in the owner docs:",
+      "row_type": "owner",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "## Canonical Wizard Blocked Lifecycle",
+      "status": "present",
+      "exact_items": [
+        "`wizard.blocked` is still the weakest member of the family in the owner docs:",
+        "wizard.blocked"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L2069",
+        "Plans/chain-wizard-flexibility.md:L2091",
+        "Plans/chain-wizard-flexibility.md:L2094",
+        "Plans/chain-wizard-flexibility.md:L2120",
+        "Plans/chain-wizard-flexibility.md:L2143"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05794",
+      "source_obligation_ids": [
+        "obl-5566"
+      ],
+      "source_seed_ids": [
+        "seed-8266"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "wizard runtime state is still comparatively thin and still carries `resume_url?`",
+      "row_type": "owner",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows",
+      "status": "present",
+      "exact_items": [
+        "wizard runtime state is still comparatively thin and still carries `resume_url?`",
+        "resume_url?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L2157",
+        "Plans/chain-wizard-flexibility.md:L2189"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05795",
+      "source_obligation_ids": [
+        "obl-5567"
+      ],
+      "source_seed_ids": [
+        "seed-8272"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "`wizard.blocked` is still partly living in a pre-runtime-escalation shape while `node.bloc",
+      "row_type": "owner",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "### 2.1 Wizard State Shape",
+      "status": "present",
+      "exact_items": [
+        "`wizard.blocked` is still partly living in a pre-runtime-escalation shape while `node.blocked` and `blocked_notice` have already moved to the stronger blocked taxonomy.",
+        "wizard.blocked",
+        "node.blocked",
+        "blocked_notice"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L2069",
+        "Plans/chain-wizard-flexibility.md:L2091",
+        "Plans/chain-wizard-flexibility.md:L2094",
+        "Plans/chain-wizard-flexibility.md:L2120",
+        "Plans/chain-wizard-flexibility.md:L2143"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05803",
+      "source_obligation_ids": [
+        "obl-5575"
+      ],
+      "source_seed_ids": [
+        "seed-8280"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "Reconcile the early thin `wizard.blocked` definition out of `Contracts_V0.md`.",
+      "row_type": "owner",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "## Canonical Wizard Blocked Lifecycle",
+      "status": "present",
+      "exact_items": [
+        "Reconcile the early thin `wizard.blocked` definition out of `Contracts_V0.md`.",
+        "wizard.blocked",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L3",
+        "Plans/chain-wizard-flexibility.md:L46",
+        "Plans/chain-wizard-flexibility.md:L358",
+        "Plans/chain-wizard-flexibility.md:L370",
+        "Plans/chain-wizard-flexibility.md:L785"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06273",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L241",
+        "Plans/chain-wizard-flexibility.md:L1213",
+        "Plans/chain-wizard-flexibility.md:L1230"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06443",
+      "source_obligation_ids": [
+        "obl-6084"
+      ],
+      "source_seed_ids": [
+        "seed-9194"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "stronger `wizard.blocked` fields",
+      "row_type": "owner",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "## Canonical Wizard Blocked Lifecycle",
+      "status": "present",
+      "exact_items": [
+        "stronger `wizard.blocked` fields",
+        "wizard.blocked"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L2069",
+        "Plans/chain-wizard-flexibility.md:L2091",
+        "Plans/chain-wizard-flexibility.md:L2094",
+        "Plans/chain-wizard-flexibility.md:L2120",
+        "Plans/chain-wizard-flexibility.md:L2143"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06444",
+      "source_obligation_ids": [
+        "obl-6085"
+      ],
+      "source_seed_ids": [
+        "seed-9195"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "`wizard.blocked` is internally inconsistent inside the same owner doc:",
+      "row_type": "owner",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "## Canonical Wizard Blocked Lifecycle",
+      "status": "present",
+      "exact_items": [
+        "`wizard.blocked` is internally inconsistent inside the same owner doc:",
+        "wizard.blocked"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L2069",
+        "Plans/chain-wizard-flexibility.md:L2091",
+        "Plans/chain-wizard-flexibility.md:L2094",
+        "Plans/chain-wizard-flexibility.md:L2120",
+        "Plans/chain-wizard-flexibility.md:L2143"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06451",
+      "source_obligation_ids": [
+        "obl-6092"
+      ],
+      "source_seed_ids": [
+        "seed-9202"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "both are presented as canonical in different sections",
+      "row_type": "owner",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "### 15.3 UI Surfaces (Mandatory \u2014 Both Required)",
+      "status": "partial",
+      "exact_items": [
+        "both are presented as canonical in different sections"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L1678"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06463",
+      "source_obligation_ids": [
+        "obl-6104"
+      ],
+      "source_seed_ids": [
+        "seed-9222"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "reconcile `wizard.blocked` and `remediation.resolved` to one field contract each",
+      "row_type": "owner",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "### Wizard state contract additions",
+      "status": "present",
+      "exact_items": [
+        "reconcile `wizard.blocked` and `remediation.resolved` to one field contract each",
+        "wizard.blocked",
+        "remediation.resolved"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L2069",
+        "Plans/chain-wizard-flexibility.md:L2091",
+        "Plans/chain-wizard-flexibility.md:L2094",
+        "Plans/chain-wizard-flexibility.md:L2120",
+        "Plans/chain-wizard-flexibility.md:L2143"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06359",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/chain-wizard.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03326",
+      "source_obligation_ids": [
+        "obl-3172"
+      ],
+      "source_seed_ids": [
+        "seed-4225"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`chain-wizard-flexibility.md` still leaves wizard normalized payloads too thin to satisfy",
+      "row_type": "layout_blocker",
+      "path": "Plans/chain-wizard.md",
+      "heading_hint": "## Wizard and launched-run lineage reconciliation",
+      "status": "partial",
+      "exact_items": [
+        "`chain-wizard-flexibility.md` still leaves wizard normalized payloads too thin to satisfy adjacent contracts that already require `thread_id`, `project_id`, and validation lineage for reproducible pre-run quality governance.",
+        "chain-wizard-flexibility.md",
+        "thread_id",
+        "project_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard.md:L6"
+      ],
+      "required_action": "packetizable_layout_repair"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-786",
+  "group_ids": [
+    "discgrp-3141",
+    "discgrp-3142",
+    "discgrp-3143",
+    "discgrp-3144"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03421",
+      "source_obligation_ids": [
+        "obl-3267"
+      ],
+      "source_seed_ids": [
+        "seed-4381"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03422",
+      "source_obligation_ids": [
+        "obl-3268"
+      ],
+      "source_seed_ids": [
+        "seed-4382"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "### 1.2 UICommand (internal dispatch) \u2014 distinction",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Commands_System.md:L36"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03423",
+      "source_obligation_ids": [
+        "obl-3269"
+      ],
+      "source_seed_ids": [
+        "seed-4383"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03424",
+      "source_obligation_ids": [
+        "obl-3270"
+      ],
+      "source_seed_ids": [
+        "seed-4384"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "## 5. Commands (slash commands and custom commands)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L254"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

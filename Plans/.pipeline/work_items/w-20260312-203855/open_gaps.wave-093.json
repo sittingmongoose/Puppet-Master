@@ -1,0 +1,1754 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-093",
+  "group_ids": [
+    "gapgrp-0369",
+    "gapgrp-0370",
+    "gapgrp-0371",
+    "gapgrp-0372"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-03285",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04216 is partial for Promote `project_id`, `attempt_id`, generated/runtime identity routing, and artifact/evide",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04216"
+      ],
+      "source_obligation_ids": [
+        "obl-4056"
+      ],
+      "source_seed_ids": [
+        "seed-5595"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "Promote `project_id`, `attempt_id`, generated/runtime identity routing, and artifact/evidence join fields to first-class owners in the artifact/file/storage docs.",
+        "project_id",
+        "attempt_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03337",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04276 is partial for freshness, mutation-risk, or blocked-action preconditions",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Projection freshness and health terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04276"
+      ],
+      "source_obligation_ids": [
+        "obl-4116"
+      ],
+      "source_seed_ids": [
+        "seed-5704"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "freshness, mutation-risk, or blocked-action preconditions"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03419",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04381 is partial for wrapper-command routing to a canonical target",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04381"
+      ],
+      "source_obligation_ids": [
+        "obl-4221"
+      ],
+      "source_seed_ids": [
+        "seed-5864"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "wrapper-command routing to a canonical target"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03440",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04404 is partial for Preserve the current seglog-first / staging-second model from `Project_Output_Artifacts.md",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04404"
+      ],
+      "source_obligation_ids": [
+        "obl-4244"
+      ],
+      "source_seed_ids": [
+        "seed-5916"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "Preserve the current seglog-first / staging-second model from `Project_Output_Artifacts.md`; it aligns well with subject-open routing.",
+        "Project_Output_Artifacts.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03458",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04424 is partial for runtime nouns like `attempt_id`, `safe_point_id`, `scheduler_lane`, `blocked_sequence`, `p",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "# Glossary (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04424"
+      ],
+      "source_obligation_ids": [
+        "obl-4264"
+      ],
+      "source_seed_ids": [
+        "seed-5948"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "runtime nouns like `attempt_id`, `safe_point_id`, `scheduler_lane`, `blocked_sequence`, `provider_attempt_ref`, and handoff/promotion namespaces still lack Glossary ownership.",
+        "attempt_id",
+        "safe_point_id",
+        "scheduler_lane",
+        "blocked_sequence",
+        "provider_attempt_ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03504",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04472 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04472"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03599",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04586 is partial for This is one of the most actionable owner fixes found in this routing tranche.",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04586"
+      ],
+      "source_obligation_ids": [
+        "obl-4364"
+      ],
+      "source_seed_ids": [
+        "seed-6153"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "This is one of the most actionable owner fixes found in this routing tranche."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04040",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05198 is partial for `resume_url` does not define a second routing ontology",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05198"
+      ],
+      "source_obligation_ids": [
+        "obl-4974"
+      ],
+      "source_seed_ids": [
+        "seed-7216"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "exact_missing_items": [
+        "`resume_url` does not define a second routing ontology",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04090",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05276 is partial for If `subject_id` expands carelessly, the whole routing model becomes muddy again.",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05276"
+      ],
+      "source_obligation_ids": [
+        "obl-5052"
+      ],
+      "source_seed_ids": [
+        "seed-7378"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "If `subject_id` expands carelessly, the whole routing model becomes muddy again.",
+        "subject_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04274",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05493 is partial for Owner docs already identified in the routing tranche:",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05493"
+      ],
+      "source_obligation_ids": [
+        "obl-5265"
+      ],
+      "source_seed_ids": [
+        "seed-7821"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "Owner docs already identified in the routing tranche:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04552",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05881 is partial for `Decision_Log.md` and rewrite-root routing gaps",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05881"
+      ],
+      "source_obligation_ids": [
+        "obl-5653"
+      ],
+      "source_seed_ids": [
+        "seed-8385"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "`Decision_Log.md` and rewrite-root routing gaps",
+        "Decision_Log.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04829",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06241 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06241"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05085",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06553 is partial for `rewrite-tie-in-memo.md` first as rewrite-root routing",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06553"
+      ],
+      "source_obligation_ids": [
+        "obl-6194"
+      ],
+      "source_seed_ids": [
+        "seed-9378"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`rewrite-tie-in-memo.md` first as rewrite-root routing",
+        "rewrite-tie-in-memo.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05088",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06556 is partial for `rewrite-tie-in-memo.md` needs explicit rewrite-root routing for:",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06556"
+      ],
+      "source_obligation_ids": [
+        "obl-6197"
+      ],
+      "source_seed_ids": [
+        "seed-9381"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`rewrite-tie-in-memo.md` needs explicit rewrite-root routing for:",
+        "rewrite-tie-in-memo.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05179",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06687 is partial for 1. Owner docs and rewrite-root routing",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06687"
+      ],
+      "source_obligation_ids": [
+        "obl-6328"
+      ],
+      "source_seed_ids": [
+        "seed-9590"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "1. Owner docs and rewrite-root routing"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05225",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06745 is partial for Missing help-entry template, related-concept linking, and distinction rules for high-risk",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Help-entry template and related-concept clusters"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06745"
+      ],
+      "source_obligation_ids": [
+        "obl-6384"
+      ],
+      "source_seed_ids": [
+        "seed-9746"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Missing help-entry template, related-concept linking, and distinction rules for high-risk term pairs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05363",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06921 is missing for `Plans/Glossary.md:34-67`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06921"
+      ],
+      "source_obligation_ids": [
+        "obl-6521"
+      ],
+      "source_seed_ids": [
+        "seed-9912",
+        "seed-9954"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/Glossary.md:34-67`",
+        "Plans/Glossary.md:34-67"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05364",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06922 is missing for `Plans/Glossary.md:102-126`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06922"
+      ],
+      "source_obligation_ids": [
+        "obl-6522"
+      ],
+      "source_seed_ids": [
+        "seed-9913",
+        "seed-9955"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/Glossary.md:102-126`",
+        "Plans/Glossary.md:102-126"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05422",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06988 is missing for `Plans/Glossary.md:30-127`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06988"
+      ],
+      "source_obligation_ids": [
+        "obl-6584"
+      ],
+      "source_seed_ids": [
+        "seed-10035",
+        "seed-10151"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/Glossary.md:30-127`",
+        "Plans/Glossary.md:30-127"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05493",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07083 is missing for `Plans/Glossary.md:30-67`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07083"
+      ],
+      "source_obligation_ids": [
+        "obl-6663"
+      ],
+      "source_seed_ids": [
+        "seed-10200"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/Glossary.md:30-67`",
+        "Plans/Glossary.md:30-67"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05507",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07098 is missing for `Plans/Glossary.md:30-70`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07098"
+      ],
+      "source_obligation_ids": [
+        "obl-6678"
+      ],
+      "source_seed_ids": [
+        "seed-10245"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Glossary.md:30-70`",
+        "Plans/Glossary.md:30-70"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05523",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07118 is missing for `Plans/Glossary.md:34-85`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07118"
+      ],
+      "source_obligation_ids": [
+        "obl-6693"
+      ],
+      "source_seed_ids": [
+        "seed-10278"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Glossary.md:34-85`",
+        "Plans/Glossary.md:34-85"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05540",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07138 is missing for `Plans/Glossary.md:30-85`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07138"
+      ],
+      "source_obligation_ids": [
+        "obl-6711"
+      ],
+      "source_seed_ids": [
+        "seed-10307"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Glossary.md:30-85`",
+        "Plans/Glossary.md:30-85"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05573",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07175 is missing for `Plans/Glossary.md:30-90`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07175"
+      ],
+      "source_obligation_ids": [
+        "obl-6742"
+      ],
+      "source_seed_ids": [
+        "seed-10376"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Glossary.md:30-90`",
+        "Plans/Glossary.md:30-90"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00464",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-00590 is missing for `stale`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "# Glossary (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00590"
+      ],
+      "source_obligation_ids": [
+        "obl-447"
+      ],
+      "source_seed_ids": [
+        "seed-517",
+        "seed-1519",
+        "seed-1524",
+        "seed-1761"
+      ],
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0024",
+        "shard-0026"
+      ],
+      "exact_missing_items": [
+        "`stale`",
+        "stale"
+      ],
+      "stale_tokens": [
+        "stale"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-04216",
+    "cov-04276",
+    "cov-04381",
+    "cov-04404",
+    "cov-04424",
+    "cov-04472",
+    "cov-04586",
+    "cov-05198",
+    "cov-05276",
+    "cov-05493",
+    "cov-05881",
+    "cov-06241",
+    "cov-06553",
+    "cov-06556",
+    "cov-06687",
+    "cov-06745",
+    "cov-06921",
+    "cov-06922",
+    "cov-06988",
+    "cov-07083",
+    "cov-07098",
+    "cov-07118",
+    "cov-07138",
+    "cov-07175",
+    "cov-00590"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-4056",
+    "obl-4116",
+    "obl-4221",
+    "obl-4244",
+    "obl-4264",
+    "obl-4292",
+    "obl-4364",
+    "obl-447",
+    "obl-4974",
+    "obl-5052",
+    "obl-5265",
+    "obl-5653",
+    "obl-5986",
+    "obl-6194",
+    "obl-6197",
+    "obl-6328",
+    "obl-6384",
+    "obl-6521",
+    "obl-6522",
+    "obl-6584",
+    "obl-6663",
+    "obl-6678",
+    "obl-6693",
+    "obl-6711",
+    "obl-6742"
+  ],
+  "source_seed_ids_represented": [
+    "seed-10035",
+    "seed-10151",
+    "seed-10200",
+    "seed-10245",
+    "seed-10278",
+    "seed-10307",
+    "seed-10376",
+    "seed-1519",
+    "seed-1524",
+    "seed-1761",
+    "seed-517",
+    "seed-5595",
+    "seed-5704",
+    "seed-5864",
+    "seed-5916",
+    "seed-5948",
+    "seed-6001",
+    "seed-6153",
+    "seed-7216",
+    "seed-7378",
+    "seed-7821",
+    "seed-8385",
+    "seed-9006",
+    "seed-9378",
+    "seed-9381",
+    "seed-9590",
+    "seed-9746",
+    "seed-9912",
+    "seed-9913",
+    "seed-9954",
+    "seed-9955"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0013",
+    "shard-0024",
+    "shard-0026",
+    "shard-0056",
+    "shard-0057",
+    "shard-0058",
+    "shard-0059",
+    "shard-0060",
+    "shard-0068",
+    "shard-0070",
+    "shard-0073",
+    "shard-0077",
+    "shard-0082",
+    "shard-0084",
+    "shard-0086",
+    "shard-0087",
+    "shard-0088",
+    "shard-0089",
+    "shard-0090",
+    "shard-0091"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-03285",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04216 is partial for Promote `project_id`, `attempt_id`, generated/runtime identity routing, and artifact/evide",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04216"
+      ],
+      "source_obligation_ids": [
+        "obl-4056"
+      ],
+      "source_seed_ids": [
+        "seed-5595"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "Promote `project_id`, `attempt_id`, generated/runtime identity routing, and artifact/evidence join fields to first-class owners in the artifact/file/storage docs.",
+        "project_id",
+        "attempt_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03337",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04276 is partial for freshness, mutation-risk, or blocked-action preconditions",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Projection freshness and health terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04276"
+      ],
+      "source_obligation_ids": [
+        "obl-4116"
+      ],
+      "source_seed_ids": [
+        "seed-5704"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "freshness, mutation-risk, or blocked-action preconditions"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03419",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04381 is partial for wrapper-command routing to a canonical target",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04381"
+      ],
+      "source_obligation_ids": [
+        "obl-4221"
+      ],
+      "source_seed_ids": [
+        "seed-5864"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "wrapper-command routing to a canonical target"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03440",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04404 is partial for Preserve the current seglog-first / staging-second model from `Project_Output_Artifacts.md",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04404"
+      ],
+      "source_obligation_ids": [
+        "obl-4244"
+      ],
+      "source_seed_ids": [
+        "seed-5916"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "Preserve the current seglog-first / staging-second model from `Project_Output_Artifacts.md`; it aligns well with subject-open routing.",
+        "Project_Output_Artifacts.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03458",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04424 is partial for runtime nouns like `attempt_id`, `safe_point_id`, `scheduler_lane`, `blocked_sequence`, `p",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "# Glossary (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04424"
+      ],
+      "source_obligation_ids": [
+        "obl-4264"
+      ],
+      "source_seed_ids": [
+        "seed-5948"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "runtime nouns like `attempt_id`, `safe_point_id`, `scheduler_lane`, `blocked_sequence`, `provider_attempt_ref`, and handoff/promotion namespaces still lack Glossary ownership.",
+        "attempt_id",
+        "safe_point_id",
+        "scheduler_lane",
+        "blocked_sequence",
+        "provider_attempt_ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03504",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04472 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04472"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03599",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04586 is partial for This is one of the most actionable owner fixes found in this routing tranche.",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04586"
+      ],
+      "source_obligation_ids": [
+        "obl-4364"
+      ],
+      "source_seed_ids": [
+        "seed-6153"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "This is one of the most actionable owner fixes found in this routing tranche."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04040",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05198 is partial for `resume_url` does not define a second routing ontology",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05198"
+      ],
+      "source_obligation_ids": [
+        "obl-4974"
+      ],
+      "source_seed_ids": [
+        "seed-7216"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "exact_missing_items": [
+        "`resume_url` does not define a second routing ontology",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04090",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05276 is partial for If `subject_id` expands carelessly, the whole routing model becomes muddy again.",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05276"
+      ],
+      "source_obligation_ids": [
+        "obl-5052"
+      ],
+      "source_seed_ids": [
+        "seed-7378"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "If `subject_id` expands carelessly, the whole routing model becomes muddy again.",
+        "subject_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04274",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05493 is partial for Owner docs already identified in the routing tranche:",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05493"
+      ],
+      "source_obligation_ids": [
+        "obl-5265"
+      ],
+      "source_seed_ids": [
+        "seed-7821"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "Owner docs already identified in the routing tranche:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04552",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05881 is partial for `Decision_Log.md` and rewrite-root routing gaps",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05881"
+      ],
+      "source_obligation_ids": [
+        "obl-5653"
+      ],
+      "source_seed_ids": [
+        "seed-8385"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "`Decision_Log.md` and rewrite-root routing gaps",
+        "Decision_Log.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04829",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06241 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06241"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05085",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06553 is partial for `rewrite-tie-in-memo.md` first as rewrite-root routing",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06553"
+      ],
+      "source_obligation_ids": [
+        "obl-6194"
+      ],
+      "source_seed_ids": [
+        "seed-9378"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`rewrite-tie-in-memo.md` first as rewrite-root routing",
+        "rewrite-tie-in-memo.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05088",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06556 is partial for `rewrite-tie-in-memo.md` needs explicit rewrite-root routing for:",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06556"
+      ],
+      "source_obligation_ids": [
+        "obl-6197"
+      ],
+      "source_seed_ids": [
+        "seed-9381"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`rewrite-tie-in-memo.md` needs explicit rewrite-root routing for:",
+        "rewrite-tie-in-memo.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05179",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06687 is partial for 1. Owner docs and rewrite-root routing",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06687"
+      ],
+      "source_obligation_ids": [
+        "obl-6328"
+      ],
+      "source_seed_ids": [
+        "seed-9590"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "1. Owner docs and rewrite-root routing"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05225",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06745 is partial for Missing help-entry template, related-concept linking, and distinction rules for high-risk",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Help-entry template and related-concept clusters"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06745"
+      ],
+      "source_obligation_ids": [
+        "obl-6384"
+      ],
+      "source_seed_ids": [
+        "seed-9746"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Missing help-entry template, related-concept linking, and distinction rules for high-risk term pairs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05363",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06921 is missing for `Plans/Glossary.md:34-67`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06921"
+      ],
+      "source_obligation_ids": [
+        "obl-6521"
+      ],
+      "source_seed_ids": [
+        "seed-9912",
+        "seed-9954"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/Glossary.md:34-67`",
+        "Plans/Glossary.md:34-67"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05364",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06922 is missing for `Plans/Glossary.md:102-126`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06922"
+      ],
+      "source_obligation_ids": [
+        "obl-6522"
+      ],
+      "source_seed_ids": [
+        "seed-9913",
+        "seed-9955"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/Glossary.md:102-126`",
+        "Plans/Glossary.md:102-126"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05422",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06988 is missing for `Plans/Glossary.md:30-127`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06988"
+      ],
+      "source_obligation_ids": [
+        "obl-6584"
+      ],
+      "source_seed_ids": [
+        "seed-10035",
+        "seed-10151"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/Glossary.md:30-127`",
+        "Plans/Glossary.md:30-127"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05493",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07083 is missing for `Plans/Glossary.md:30-67`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07083"
+      ],
+      "source_obligation_ids": [
+        "obl-6663"
+      ],
+      "source_seed_ids": [
+        "seed-10200"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/Glossary.md:30-67`",
+        "Plans/Glossary.md:30-67"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05507",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07098 is missing for `Plans/Glossary.md:30-70`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07098"
+      ],
+      "source_obligation_ids": [
+        "obl-6678"
+      ],
+      "source_seed_ids": [
+        "seed-10245"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Glossary.md:30-70`",
+        "Plans/Glossary.md:30-70"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05523",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07118 is missing for `Plans/Glossary.md:34-85`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07118"
+      ],
+      "source_obligation_ids": [
+        "obl-6693"
+      ],
+      "source_seed_ids": [
+        "seed-10278"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Glossary.md:34-85`",
+        "Plans/Glossary.md:34-85"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05540",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07138 is missing for `Plans/Glossary.md:30-85`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07138"
+      ],
+      "source_obligation_ids": [
+        "obl-6711"
+      ],
+      "source_seed_ids": [
+        "seed-10307"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Glossary.md:30-85`",
+        "Plans/Glossary.md:30-85"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05573",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07175 is missing for `Plans/Glossary.md:30-90`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07175"
+      ],
+      "source_obligation_ids": [
+        "obl-6742"
+      ],
+      "source_seed_ids": [
+        "seed-10376"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Glossary.md:30-90`",
+        "Plans/Glossary.md:30-90"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00464",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-00590 is missing for `stale`",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "# Glossary (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00590"
+      ],
+      "source_obligation_ids": [
+        "obl-447"
+      ],
+      "source_seed_ids": [
+        "seed-517",
+        "seed-1519",
+        "seed-1524",
+        "seed-1761"
+      ],
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0024",
+        "shard-0026"
+      ],
+      "exact_missing_items": [
+        "`stale`",
+        "stale"
+      ],
+      "stale_tokens": [
+        "stale"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

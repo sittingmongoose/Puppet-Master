@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-486",
+  "group_ids": [
+    "discgrp-1941",
+    "discgrp-1942",
+    "discgrp-1943",
+    "discgrp-1944"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02202",
+      "source_obligation_ids": [
+        "obl-2057"
+      ],
+      "source_seed_ids": [
+        "seed-2673"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Personas.md",
+      "new_heading_hint": "# Personas (Canonical SSOT)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Personas.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02203",
+      "source_obligation_ids": [
+        "obl-2058"
+      ],
+      "source_seed_ids": [
+        "seed-2674"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "# Multi-Account Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02204",
+      "source_obligation_ids": [
+        "obl-2059"
+      ],
+      "source_seed_ids": [
+        "seed-2675"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "# Multi-Account Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02205",
+      "source_obligation_ids": [
+        "obl-2060"
+      ],
+      "source_seed_ids": [
+        "seed-2676"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

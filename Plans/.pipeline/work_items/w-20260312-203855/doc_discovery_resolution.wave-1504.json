@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1504",
+  "group_ids": [
+    "discgrp-6013",
+    "discgrp-6014",
+    "discgrp-6015",
+    "discgrp-6016"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06640",
+      "source_obligation_ids": [
+        "obl-6281"
+      ],
+      "source_seed_ids": [
+        "seed-9508"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-06641",
+      "source_obligation_ids": [
+        "obl-6282"
+      ],
+      "source_seed_ids": [
+        "seed-9509"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "# Usage Feature -- App/GUI Plan",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06642",
+      "source_obligation_ids": [
+        "obl-6283"
+      ],
+      "source_seed_ids": [
+        "seed-9510"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-06643",
+      "source_obligation_ids": [
+        "obl-6284"
+      ],
+      "source_seed_ids": [
+        "seed-9511"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "# Usage Feature -- App/GUI Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

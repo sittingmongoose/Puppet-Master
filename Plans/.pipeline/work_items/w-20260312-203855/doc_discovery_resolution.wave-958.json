@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-958",
+  "group_ids": [
+    "discgrp-3829",
+    "discgrp-3830",
+    "discgrp-3831",
+    "discgrp-3832"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04134",
+      "source_obligation_ids": [
+        "obl-3974"
+      ],
+      "source_seed_ids": [
+        "seed-5454"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Retry, reroute, replacement, and resume",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1490"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04135",
+      "source_obligation_ids": [
+        "obl-3975"
+      ],
+      "source_seed_ids": [
+        "seed-5455"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "# Assistant & Chat UI -- Design Plan",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04136",
+      "source_obligation_ids": [
+        "obl-3976"
+      ],
+      "source_seed_ids": [
+        "seed-5456"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L774"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04137",
+      "source_obligation_ids": [
+        "obl-3977"
+      ],
+      "source_seed_ids": [
+        "seed-5457"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L774"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

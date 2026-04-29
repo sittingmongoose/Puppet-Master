@@ -1,0 +1,109 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0044",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0044-L008601-L008800.md",
+  "source_line_range": "L008601-L008800",
+  "covered_shard_id": "shard-0044",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "execution_unit_context owner contract",
+      "exact_items": [
+        "Execution identity is split across incompatible keys",
+        "a canonical execution_unit_context is proposed as the owner doc"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "execution_unit_context"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8607-L8610",
+        "working_ledger.md:L8621-L8624",
+        "working_ledger.md:L8681-L8695"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "execution-context downstream consumers",
+      "exact_items": [
+        "Multiple downstream docs are listed as impacted consumers of the execution-context changes."
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L8626-L8636",
+        "working_ledger.md:L8744-L8755"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "TierContext replacement missing",
+      "exact_items": [
+        "No explicit replacement for TierContext exists",
+        "the current object is overloaded and blocks canonical runtime ownership"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "TierContext"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8646-L8653",
+        "working_ledger.md:L8692-L8695",
+        "working_ledger.md:L8758-L8760"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "tier language to execution refs",
+      "exact_items": [
+        "Legacy tier language/keys are described as needing migration or retirement in favor of canonical runtime execution refs."
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "tier language",
+        "tier keys"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8655-L8663",
+        "working_ledger.md:L8764-L8775",
+        "working_ledger.md:L8792-L8800"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": []
+}

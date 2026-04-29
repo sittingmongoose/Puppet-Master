@@ -1,0 +1,118 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-378",
+  "group_ids": [
+    "discgrp-1509",
+    "discgrp-1510",
+    "discgrp-1511",
+    "discgrp-1512"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01761",
+      "source_obligation_ids": [
+        "obl-1618"
+      ],
+      "source_seed_ids": [
+        "seed-2019",
+        "seed-3234"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01762",
+      "source_obligation_ids": [
+        "obl-1619"
+      ],
+      "source_seed_ids": [
+        "seed-2020",
+        "seed-3239",
+        "seed-5436",
+        "seed-5887",
+        "seed-6038",
+        "seed-6176"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0038",
+        "shard-0055",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01763",
+      "source_obligation_ids": [
+        "obl-1620"
+      ],
+      "source_seed_ids": [
+        "seed-2021",
+        "seed-3240",
+        "seed-5437",
+        "seed-5888",
+        "seed-6039",
+        "seed-6177"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0038",
+        "shard-0055",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01764",
+      "source_obligation_ids": [
+        "obl-1621"
+      ],
+      "source_seed_ids": [
+        "seed-2022",
+        "seed-3241"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

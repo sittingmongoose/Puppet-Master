@@ -1,0 +1,1414 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-121",
+  "group_ids": [
+    "gapgrp-0481",
+    "gapgrp-0482",
+    "gapgrp-0483",
+    "gapgrp-0484"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-01973",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02529 is partial for OpenCode still preserves the older model/permission snapshot view of runtime identity, not",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "## OpenCode Runtime Retry / Blocked-State / Packet Reconciliation Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02529"
+      ],
+      "source_obligation_ids": [
+        "obl-2378"
+      ],
+      "source_seed_ids": [
+        "seed-3091"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "OpenCode still preserves the older model/permission snapshot view of runtime identity, not the newer auth/account bundle:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04920",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06342 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06342"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04104",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05296 is partial for `BinaryLocator_Spec.md` sharpens an ownership vacuum around OpenCode `cli_launcher`, has a",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05296"
+      ],
+      "source_obligation_ids": [
+        "obl-5072"
+      ],
+      "source_seed_ids": [
+        "seed-7420"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`BinaryLocator_Spec.md` sharpens an ownership vacuum around OpenCode `cli_launcher`, has a dangling/false ContractRef to a non-existent four-tier naming rule, and still uses ambiguous Session wording.",
+        "BinaryLocator_Spec.md",
+        "cli_launcher"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04875",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06292 is partial for `OpenCode_Deep_Extraction.md`, `OpenCode_Coverage_Matrix.md`, and `Provider_OpenCode` adja",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06292"
+      ],
+      "source_obligation_ids": [
+        "obl-5995"
+      ],
+      "source_seed_ids": [
+        "seed-9038"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "`OpenCode_Deep_Extraction.md`, `OpenCode_Coverage_Matrix.md`, and `Provider_OpenCode` adjacencies still lack a canonical SSE filter discriminator, stable mapping of OpenCode session IDs into provider-native identity fields, and parity for requested/effective account/auth identity.",
+        "OpenCode_Deep_Extraction.md",
+        "OpenCode_Coverage_Matrix.md",
+        "Provider_OpenCode"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00307",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00388 is missing for `Plans/Provider_OpenCode.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00388"
+      ],
+      "source_obligation_ids": [
+        "obl-246"
+      ],
+      "source_seed_ids": [
+        "seed-278",
+        "seed-2663",
+        "seed-3076",
+        "seed-3108",
+        "seed-3315",
+        "seed-3336",
+        "seed-3500",
+        "seed-3521",
+        "seed-8411",
+        "seed-8986",
+        "seed-9077"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0034",
+        "shard-0037",
+        "shard-0039",
+        "shard-0040",
+        "shard-0041",
+        "shard-0077",
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "`Plans/Provider_OpenCode.md`",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01726",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02219 is partial for `Plans/Permissions_System.md` + `Plans/Provider_OpenCode.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02219"
+      ],
+      "source_obligation_ids": [
+        "obl-2073"
+      ],
+      "source_seed_ids": [
+        "seed-2693"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`Plans/Permissions_System.md` + `Plans/Provider_OpenCode.md`",
+        "Plans/Permissions_System.md",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01732",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02230 is partial for Re-scope permission session cache / reject cascade and OpenCode SSE/session isolation rule",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02230"
+      ],
+      "source_obligation_ids": [
+        "obl-2084"
+      ],
+      "source_seed_ids": [
+        "seed-2704"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "Re-scope permission session cache / reject cascade and OpenCode SSE/session isolation rules to actor/lane-aware boundaries."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01976",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02532 is partial for GPT-5.4 sharpened that the OpenCode transport platform vs upstream provider identity split",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02532"
+      ],
+      "source_obligation_ids": [
+        "obl-2381"
+      ],
+      "source_seed_ids": [
+        "seed-3094"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "GPT-5.4 sharpened that the OpenCode transport platform vs upstream provider identity split now needs explicit ownership"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01994",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02552 is partial for OpenCode still exposes transport platform/model without clear ownership of upstream provid",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02552"
+      ],
+      "source_obligation_ids": [
+        "obl-2400"
+      ],
+      "source_seed_ids": [
+        "seed-3117"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "OpenCode still exposes transport platform/model without clear ownership of upstream provider/account identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01999",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02557 is partial for Extend OpenCode and bridged request/runtime bundles with the full auth/account identity bl",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02557"
+      ],
+      "source_obligation_ids": [
+        "obl-2405"
+      ],
+      "source_seed_ids": [
+        "seed-3122"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "Extend OpenCode and bridged request/runtime bundles with the full auth/account identity block plus explicit upstream-provider identity rules."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02003",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02562 is partial for OpenCode must preserve its split between transport realm and upstream provider/account rea",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02562"
+      ],
+      "source_obligation_ids": [
+        "obl-2410"
+      ],
+      "source_seed_ids": [
+        "seed-3127"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "OpenCode must preserve its split between transport realm and upstream provider/account realm."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02221",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02820 is partial for OpenCode session ID is still being treated as if it were that canonical field",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02820"
+      ],
+      "source_obligation_ids": [
+        "obl-2667"
+      ],
+      "source_seed_ids": [
+        "seed-3509"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "OpenCode session ID is still being treated as if it were that canonical field"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02241",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02841 is partial for Move OpenCode session IDs into provider-native correlation fields.",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02841"
+      ],
+      "source_obligation_ids": [
+        "obl-2688"
+      ],
+      "source_seed_ids": [
+        "seed-3535"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Move OpenCode session IDs into provider-native correlation fields."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03520",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04488 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04488"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04773",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06174 is partial for OpenCode limitations are now source-verified enough that they should be treated as hard ar",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06174"
+      ],
+      "source_obligation_ids": [
+        "obl-5946"
+      ],
+      "source_seed_ids": [
+        "seed-8845"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "OpenCode limitations are now source-verified enough that they should be treated as hard architectural constraints unless the bridge changes:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04783",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06186 is partial for There are still unresolved architectural edges around DAE enforcement, OpenCode bridge lim",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "## OpenCode Runtime Retry / Blocked-State / Packet Reconciliation Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06186"
+      ],
+      "source_obligation_ids": [
+        "obl-5958"
+      ],
+      "source_seed_ids": [
+        "seed-8893"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "There are still unresolved architectural edges around DAE enforcement, OpenCode bridge limits, promoted-feature shell ownership, and runtime identity provenance."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04798",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06204 is partial for `BinaryLocator_Spec.md` now has a sharper ownership gap around OpenCode launcher discovery",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06204"
+      ],
+      "source_obligation_ids": [
+        "obl-5973"
+      ],
+      "source_seed_ids": [
+        "seed-8941"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "`BinaryLocator_Spec.md` now has a sharper ownership gap around OpenCode launcher discovery and an explicitly dangling `Spec_Lock` naming-rule claim.",
+        "BinaryLocator_Spec.md",
+        "Spec_Lock"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04845",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06257 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06257"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04874",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06291 is partial for OpenCode limits and provider identity seams are now final-pass concrete:",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06291"
+      ],
+      "source_obligation_ids": [
+        "obl-5994"
+      ],
+      "source_seed_ids": [
+        "seed-9037"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "OpenCode limits and provider identity seams are now final-pass concrete:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04884",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06305 is partial for OpenCode provider-native identity / SSE correlation / requested-effective disclosure clean",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06305"
+      ],
+      "source_obligation_ids": [
+        "obl-6008"
+      ],
+      "source_seed_ids": [
+        "seed-9091"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "OpenCode provider-native identity / SSE correlation / requested-effective disclosure cleanup fourth"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-02529",
+    "cov-06342",
+    "cov-05296",
+    "cov-06292",
+    "cov-00388",
+    "cov-02219",
+    "cov-02230",
+    "cov-02532",
+    "cov-02552",
+    "cov-02557",
+    "cov-02562",
+    "cov-02820",
+    "cov-02841",
+    "cov-04488",
+    "cov-06174",
+    "cov-06186",
+    "cov-06204",
+    "cov-06257",
+    "cov-06291",
+    "cov-06305"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-2073",
+    "obl-2084",
+    "obl-2378",
+    "obl-2381",
+    "obl-2400",
+    "obl-2405",
+    "obl-2410",
+    "obl-246",
+    "obl-2667",
+    "obl-2688",
+    "obl-4292",
+    "obl-5072",
+    "obl-5946",
+    "obl-5958",
+    "obl-5973",
+    "obl-5986",
+    "obl-5994",
+    "obl-5995",
+    "obl-6008",
+    "obl-6009"
+  ],
+  "source_seed_ids_represented": [
+    "seed-2663",
+    "seed-2693",
+    "seed-2704",
+    "seed-278",
+    "seed-3076",
+    "seed-3091",
+    "seed-3094",
+    "seed-3108",
+    "seed-3117",
+    "seed-3122",
+    "seed-3127",
+    "seed-3315",
+    "seed-3336",
+    "seed-3500",
+    "seed-3509",
+    "seed-3521",
+    "seed-3535",
+    "seed-6001",
+    "seed-7420",
+    "seed-8411",
+    "seed-8845",
+    "seed-8893",
+    "seed-8941",
+    "seed-8986",
+    "seed-9006",
+    "seed-9037",
+    "seed-9038",
+    "seed-9077",
+    "seed-9091",
+    "seed-9092"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0011",
+    "shard-0034",
+    "shard-0035",
+    "shard-0037",
+    "shard-0038",
+    "shard-0039",
+    "shard-0040",
+    "shard-0041",
+    "shard-0059",
+    "shard-0070",
+    "shard-0077",
+    "shard-0081",
+    "shard-0082"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-01973",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02529 is partial for OpenCode still preserves the older model/permission snapshot view of runtime identity, not",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "## OpenCode Runtime Retry / Blocked-State / Packet Reconciliation Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02529"
+      ],
+      "source_obligation_ids": [
+        "obl-2378"
+      ],
+      "source_seed_ids": [
+        "seed-3091"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "OpenCode still preserves the older model/permission snapshot view of runtime identity, not the newer auth/account bundle:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04920",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06342 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06342"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04104",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05296 is partial for `BinaryLocator_Spec.md` sharpens an ownership vacuum around OpenCode `cli_launcher`, has a",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05296"
+      ],
+      "source_obligation_ids": [
+        "obl-5072"
+      ],
+      "source_seed_ids": [
+        "seed-7420"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`BinaryLocator_Spec.md` sharpens an ownership vacuum around OpenCode `cli_launcher`, has a dangling/false ContractRef to a non-existent four-tier naming rule, and still uses ambiguous Session wording.",
+        "BinaryLocator_Spec.md",
+        "cli_launcher"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04875",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06292 is partial for `OpenCode_Deep_Extraction.md`, `OpenCode_Coverage_Matrix.md`, and `Provider_OpenCode` adja",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06292"
+      ],
+      "source_obligation_ids": [
+        "obl-5995"
+      ],
+      "source_seed_ids": [
+        "seed-9038"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "`OpenCode_Deep_Extraction.md`, `OpenCode_Coverage_Matrix.md`, and `Provider_OpenCode` adjacencies still lack a canonical SSE filter discriminator, stable mapping of OpenCode session IDs into provider-native identity fields, and parity for requested/effective account/auth identity.",
+        "OpenCode_Deep_Extraction.md",
+        "OpenCode_Coverage_Matrix.md",
+        "Provider_OpenCode"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00307",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00388 is missing for `Plans/Provider_OpenCode.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00388"
+      ],
+      "source_obligation_ids": [
+        "obl-246"
+      ],
+      "source_seed_ids": [
+        "seed-278",
+        "seed-2663",
+        "seed-3076",
+        "seed-3108",
+        "seed-3315",
+        "seed-3336",
+        "seed-3500",
+        "seed-3521",
+        "seed-8411",
+        "seed-8986",
+        "seed-9077"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0034",
+        "shard-0037",
+        "shard-0039",
+        "shard-0040",
+        "shard-0041",
+        "shard-0077",
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "`Plans/Provider_OpenCode.md`",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01726",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02219 is partial for `Plans/Permissions_System.md` + `Plans/Provider_OpenCode.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02219"
+      ],
+      "source_obligation_ids": [
+        "obl-2073"
+      ],
+      "source_seed_ids": [
+        "seed-2693"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`Plans/Permissions_System.md` + `Plans/Provider_OpenCode.md`",
+        "Plans/Permissions_System.md",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01732",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02230 is partial for Re-scope permission session cache / reject cascade and OpenCode SSE/session isolation rule",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02230"
+      ],
+      "source_obligation_ids": [
+        "obl-2084"
+      ],
+      "source_seed_ids": [
+        "seed-2704"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "Re-scope permission session cache / reject cascade and OpenCode SSE/session isolation rules to actor/lane-aware boundaries."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01976",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02532 is partial for GPT-5.4 sharpened that the OpenCode transport platform vs upstream provider identity split",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02532"
+      ],
+      "source_obligation_ids": [
+        "obl-2381"
+      ],
+      "source_seed_ids": [
+        "seed-3094"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "GPT-5.4 sharpened that the OpenCode transport platform vs upstream provider identity split now needs explicit ownership"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01994",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02552 is partial for OpenCode still exposes transport platform/model without clear ownership of upstream provid",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02552"
+      ],
+      "source_obligation_ids": [
+        "obl-2400"
+      ],
+      "source_seed_ids": [
+        "seed-3117"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "OpenCode still exposes transport platform/model without clear ownership of upstream provider/account identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01999",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02557 is partial for Extend OpenCode and bridged request/runtime bundles with the full auth/account identity bl",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02557"
+      ],
+      "source_obligation_ids": [
+        "obl-2405"
+      ],
+      "source_seed_ids": [
+        "seed-3122"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "Extend OpenCode and bridged request/runtime bundles with the full auth/account identity block plus explicit upstream-provider identity rules."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02003",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02562 is partial for OpenCode must preserve its split between transport realm and upstream provider/account rea",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02562"
+      ],
+      "source_obligation_ids": [
+        "obl-2410"
+      ],
+      "source_seed_ids": [
+        "seed-3127"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "OpenCode must preserve its split between transport realm and upstream provider/account realm."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02221",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02820 is partial for OpenCode session ID is still being treated as if it were that canonical field",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02820"
+      ],
+      "source_obligation_ids": [
+        "obl-2667"
+      ],
+      "source_seed_ids": [
+        "seed-3509"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "OpenCode session ID is still being treated as if it were that canonical field"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02241",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02841 is partial for Move OpenCode session IDs into provider-native correlation fields.",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02841"
+      ],
+      "source_obligation_ids": [
+        "obl-2688"
+      ],
+      "source_seed_ids": [
+        "seed-3535"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Move OpenCode session IDs into provider-native correlation fields."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03520",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04488 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04488"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04773",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06174 is partial for OpenCode limitations are now source-verified enough that they should be treated as hard ar",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06174"
+      ],
+      "source_obligation_ids": [
+        "obl-5946"
+      ],
+      "source_seed_ids": [
+        "seed-8845"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "OpenCode limitations are now source-verified enough that they should be treated as hard architectural constraints unless the bridge changes:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04783",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06186 is partial for There are still unresolved architectural edges around DAE enforcement, OpenCode bridge lim",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "## OpenCode Runtime Retry / Blocked-State / Packet Reconciliation Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06186"
+      ],
+      "source_obligation_ids": [
+        "obl-5958"
+      ],
+      "source_seed_ids": [
+        "seed-8893"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "There are still unresolved architectural edges around DAE enforcement, OpenCode bridge limits, promoted-feature shell ownership, and runtime identity provenance."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04798",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06204 is partial for `BinaryLocator_Spec.md` now has a sharper ownership gap around OpenCode launcher discovery",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06204"
+      ],
+      "source_obligation_ids": [
+        "obl-5973"
+      ],
+      "source_seed_ids": [
+        "seed-8941"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "`BinaryLocator_Spec.md` now has a sharper ownership gap around OpenCode launcher discovery and an explicitly dangling `Spec_Lock` naming-rule claim.",
+        "BinaryLocator_Spec.md",
+        "Spec_Lock"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04845",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06257 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06257"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04874",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06291 is partial for OpenCode limits and provider identity seams are now final-pass concrete:",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06291"
+      ],
+      "source_obligation_ids": [
+        "obl-5994"
+      ],
+      "source_seed_ids": [
+        "seed-9037"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "OpenCode limits and provider identity seams are now final-pass concrete:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04884",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06305 is partial for OpenCode provider-native identity / SSE correlation / requested-effective disclosure clean",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "# Provider: OpenCode (Server-Bridged)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06305"
+      ],
+      "source_obligation_ids": [
+        "obl-6008"
+      ],
+      "source_seed_ids": [
+        "seed-9091"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "OpenCode provider-native identity / SSE correlation / requested-effective disclosure cleanup fourth"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

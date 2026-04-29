@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-353",
+  "group_ids": [
+    "discgrp-1409",
+    "discgrp-1410",
+    "discgrp-1411",
+    "discgrp-1412"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01661",
+      "source_obligation_ids": [
+        "obl-1518"
+      ],
+      "source_seed_ids": [
+        "seed-1881"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L35"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01662",
+      "source_obligation_ids": [
+        "obl-1519"
+      ],
+      "source_seed_ids": [
+        "seed-1883"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01663",
+      "source_obligation_ids": [
+        "obl-1520"
+      ],
+      "source_seed_ids": [
+        "seed-1887"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01664",
+      "source_obligation_ids": [
+        "obl-1521"
+      ],
+      "source_seed_ids": [
+        "seed-1888"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Canonical records baseline",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L457"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

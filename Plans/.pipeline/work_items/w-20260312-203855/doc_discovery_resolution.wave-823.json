@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-823",
+  "group_ids": [
+    "discgrp-3289",
+    "discgrp-3290",
+    "discgrp-3291",
+    "discgrp-3292"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03569",
+      "source_obligation_ids": [
+        "obl-3415"
+      ],
+      "source_seed_ids": [
+        "seed-4598"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "### 10.1 WorktreeGitImprovement.md",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L1125"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03570",
+      "source_obligation_ids": [
+        "obl-3416"
+      ],
+      "source_seed_ids": [
+        "seed-4599"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03571",
+      "source_obligation_ids": [
+        "obl-3417"
+      ],
+      "source_seed_ids": [
+        "seed-4600"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03572",
+      "source_obligation_ids": [
+        "obl-3418"
+      ],
+      "source_seed_ids": [
+        "seed-4601"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

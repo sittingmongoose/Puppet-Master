@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-299",
+  "group_ids": [
+    "discgrp-1193",
+    "discgrp-1194",
+    "discgrp-1195",
+    "discgrp-1196"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01443",
+      "source_obligation_ids": [
+        "obl-1300"
+      ],
+      "source_seed_ids": [
+        "seed-1567"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "## Docker project detection and visibility rules",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L130"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01444",
+      "source_obligation_ids": [
+        "obl-1301"
+      ],
+      "source_seed_ids": [
+        "seed-1568"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L43"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01445",
+      "source_obligation_ids": [
+        "obl-1302"
+      ],
+      "source_seed_ids": [
+        "seed-1569"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L35"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01446",
+      "source_obligation_ids": [
+        "obl-1303"
+      ],
+      "source_seed_ids": [
+        "seed-1576"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Canonical records baseline",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L457"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

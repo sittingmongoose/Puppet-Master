@@ -1,0 +1,486 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-150",
+  "group_ids": [
+    "recgrp-0597",
+    "recgrp-0598",
+    "recgrp-0599",
+    "recgrp-0600"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0597",
+      "path": "Plans/chain-wizard.md",
+      "mapped_owner_heading": "## Wizard and launched-run lineage reconciliation",
+      "live_anchor": "## Wizard and launched-run lineage reconciliation (Plans/chain-wizard.md:L3)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-03309",
+        "cov-03326",
+        "cov-03479"
+      ],
+      "source_obligation_ids": [
+        "obl-3155",
+        "obl-3172",
+        "obl-3325"
+      ],
+      "source_seed_ids": [
+        "seed-4197",
+        "seed-4225",
+        "seed-4466"
+      ],
+      "source_shard_ids": [
+        "shard-0046",
+        "shard-0047"
+      ],
+      "gap_ids": [
+        "gap-02590",
+        "gap-02603",
+        "gap-02720"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`project_id` and validation/report lineage are still missing from the wizard\u2019s normalized handoff payload.",
+        "project_id",
+        "`chain-wizard-flexibility.md` still leaves wizard normalized payloads too thin to satisfy adjacent contracts that already require `thread_id`, `project_id`, and validation lineage for reproducible pre-run quality governance.",
+        "chain-wizard-flexibility.md",
+        "thread_id",
+        "The pass reports are canonical enough to gate wizard transitions and downstream artifact promotion, but not canonical enough to explain their own upstream/downstream lineage without consulting multiple other records."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-ef62cf060bda",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0598",
+      "path": "Plans/evidence.schema.json",
+      "mapped_owner_heading": "",
+      "live_anchor": "Plans/evidence.schema.json:L1",
+      "action": "layout_repair_reference",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00263",
+        "cov-04300",
+        "cov-04316",
+        "cov-05676"
+      ],
+      "source_obligation_ids": [
+        "obl-144",
+        "obl-4140",
+        "obl-4156",
+        "obl-5448"
+      ],
+      "source_seed_ids": [
+        "seed-150",
+        "seed-5738",
+        "seed-5751",
+        "seed-5989",
+        "seed-6812",
+        "seed-6834",
+        "seed-8074",
+        "seed-8095",
+        "seed-9172",
+        "seed-5766",
+        "seed-8085"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0057",
+        "shard-0059",
+        "shard-0065",
+        "shard-0075",
+        "shard-0083"
+      ],
+      "gap_ids": [
+        "gap-00232",
+        "gap-03360",
+        "gap-03368",
+        "gap-04421"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `Plans/test_strategy.schema.json`, `Plans/evidence.schema.json`, `Plans/gui_automation_manifest.schema.json`",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/test_strategy.schema.json",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "`Plans/evidence.schema.json`",
+        "Either extend `Plans/evidence.schema.json` with structured gate-specific detail blocks, or add a dedicated wiring-evidence schema for richer machine-readable results.",
+        "`Plans/evidence.schema.json` is also too generic to express route/wrapper verification cleanly:"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-a0b7e4987e3d",
+      "packet_writer_role": "observe_only",
+      "span_ownership_notes": "Non-mutation observe_only target; Packet Builder must preserve lineage metadata and must not emit this target as a mutation doc_intent.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers.",
+        "Target preserved as observe_only because its transfer-coverage path is not a concrete existing Plans markdown document.",
+        "Non-packetizable path reason: target path is not a markdown Plans doc.",
+        "Replanning must resolve this row to a concrete live Plans markdown owner before it can become an active mutation target."
+      ]
+    },
+    {
+      "target_id": "target-0599",
+      "path": "Plans/feature-list.md",
+      "mapped_owner_heading": "# Puppet Master Feature List (Reference)",
+      "live_anchor": "# Puppet Master Feature List (Reference) (Plans/feature-list.md:L1)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00180",
+        "cov-00295",
+        "cov-00364",
+        "cov-00499",
+        "cov-02402",
+        "cov-04506",
+        "cov-05212",
+        "cov-06275",
+        "cov-06360",
+        "cov-06386"
+      ],
+      "source_obligation_ids": [
+        "obl-076",
+        "obl-163",
+        "obl-222",
+        "obl-356",
+        "obl-2252",
+        "obl-4292",
+        "obl-4988",
+        "obl-5986",
+        "obl-6009",
+        "obl-6027"
+      ],
+      "source_seed_ids": [
+        "seed-076",
+        "seed-195",
+        "seed-2917",
+        "seed-2940",
+        "seed-2978",
+        "seed-6085",
+        "seed-6102",
+        "seed-6555",
+        "seed-6573",
+        "seed-6589",
+        "seed-6607",
+        "seed-6686",
+        "seed-6705",
+        "seed-6728",
+        "seed-7398",
+        "seed-7443",
+        "seed-7468",
+        "seed-8401",
+        "seed-8834",
+        "seed-8875",
+        "seed-8903",
+        "seed-8929",
+        "seed-8967",
+        "seed-9001",
+        "seed-9027",
+        "seed-9061",
+        "seed-9525",
+        "seed-9547",
+        "seed-9583",
+        "seed-9615",
+        "seed-9665",
+        "seed-173",
+        "seed-254",
+        "seed-411",
+        "seed-2924",
+        "seed-6001",
+        "seed-7245",
+        "seed-9006",
+        "seed-9092",
+        "seed-9114"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010",
+        "shard-0036",
+        "shard-0037",
+        "shard-0059",
+        "shard-0063",
+        "shard-0064",
+        "shard-0070",
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0085",
+        "shard-0086",
+        "shard-0012",
+        "shard-0069"
+      ],
+      "gap_ids": [
+        "gap-00167",
+        "gap-00250",
+        "gap-00295",
+        "gap-00391",
+        "gap-01870",
+        "gap-03538",
+        "gap-04050",
+        "gap-04861",
+        "gap-04938",
+        "gap-04959"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Plans/feature-list.md`",
+        "Plans/feature-list.md",
+        "`Plans/feature-list.md`, `Plans/newfeatures.md`, `Plans/MiscPlan.md`",
+        "Plans/newfeatures.md",
+        "Plans/MiscPlan.md",
+        "Source Control can still list worktrees directly, but should also expose lane/package ownership and lifecycle state when known.",
+        "Source Control should keep `Worktrees` as the primary subview/object list rather than flipping to a lane-first list.",
+        "Worktrees",
+        "`projects:v1` currently only promises list metadata like path, detected languages, last-opened timestamp, health status, and overrides",
+        "projects:v1",
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md",
+        "The earlier `object_kind` list is directionally correct, but it now needs a firmer canonical refresh against the rewrite-era object set and the newer runtime lineage objects.",
+        "object_kind",
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "22",
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "61",
+        "the primitive list still lacks named ownership for `route_target` and `OpenSubject`",
+        "route_target",
+        "OpenSubject"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-6cc2cb61f183",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0600",
+      "path": "Plans/gui_automation_manifest.schema.json",
+      "mapped_owner_heading": "",
+      "live_anchor": "Plans/gui_automation_manifest.schema.json:L1",
+      "action": "layout_repair_reference",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00264"
+      ],
+      "source_obligation_ids": [
+        "obl-144"
+      ],
+      "source_seed_ids": [
+        "seed-150"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "gap_ids": [
+        "gap-00233"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `Plans/test_strategy.schema.json`, `Plans/evidence.schema.json`, `Plans/gui_automation_manifest.schema.json`",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/test_strategy.schema.json",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-1499915f57cb",
+      "packet_writer_role": "observe_only",
+      "span_ownership_notes": "Non-mutation observe_only target; Packet Builder must preserve lineage metadata and must not emit this target as a mutation doc_intent.",
+      "notes": [
+        "Observe-only layout repair reference: target records packetizable layout backlog without creating an overlapping mutation writer.",
+        "Target preserved as observe_only because its transfer-coverage path is not a concrete existing Plans markdown document.",
+        "Non-packetizable path reason: target path is not a markdown Plans doc.",
+        "Replanning must resolve this row to a concrete live Plans markdown owner before it can become an active mutation target."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-03309",
+    "cov-03326",
+    "cov-03479",
+    "cov-00263",
+    "cov-04300",
+    "cov-04316",
+    "cov-05676",
+    "cov-00180",
+    "cov-00295",
+    "cov-00364",
+    "cov-00499",
+    "cov-02402",
+    "cov-04506",
+    "cov-05212",
+    "cov-06275",
+    "cov-06360",
+    "cov-06386",
+    "cov-00264"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-3155",
+    "obl-3172",
+    "obl-3325",
+    "obl-144",
+    "obl-4140",
+    "obl-4156",
+    "obl-5448",
+    "obl-076",
+    "obl-163",
+    "obl-222",
+    "obl-356",
+    "obl-2252",
+    "obl-4292",
+    "obl-4988",
+    "obl-5986",
+    "obl-6009",
+    "obl-6027"
+  ],
+  "source_seed_ids_represented": [
+    "seed-4197",
+    "seed-4225",
+    "seed-4466",
+    "seed-150",
+    "seed-5738",
+    "seed-5751",
+    "seed-5989",
+    "seed-6812",
+    "seed-6834",
+    "seed-8074",
+    "seed-8095",
+    "seed-9172",
+    "seed-5766",
+    "seed-8085",
+    "seed-076",
+    "seed-195",
+    "seed-2917",
+    "seed-2940",
+    "seed-2978",
+    "seed-6085",
+    "seed-6102",
+    "seed-6555",
+    "seed-6573",
+    "seed-6589",
+    "seed-6607",
+    "seed-6686",
+    "seed-6705",
+    "seed-6728",
+    "seed-7398",
+    "seed-7443",
+    "seed-7468",
+    "seed-8401",
+    "seed-8834",
+    "seed-8875",
+    "seed-8903",
+    "seed-8929",
+    "seed-8967",
+    "seed-9001",
+    "seed-9027",
+    "seed-9061",
+    "seed-9525",
+    "seed-9547",
+    "seed-9583",
+    "seed-9615",
+    "seed-9665",
+    "seed-173",
+    "seed-254",
+    "seed-411",
+    "seed-2924",
+    "seed-6001",
+    "seed-7245",
+    "seed-9006",
+    "seed-9092",
+    "seed-9114"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0046",
+    "shard-0047",
+    "shard-0009",
+    "shard-0057",
+    "shard-0059",
+    "shard-0065",
+    "shard-0075",
+    "shard-0083",
+    "shard-0010",
+    "shard-0036",
+    "shard-0037",
+    "shard-0063",
+    "shard-0064",
+    "shard-0070",
+    "shard-0077",
+    "shard-0081",
+    "shard-0082",
+    "shard-0085",
+    "shard-0086",
+    "shard-0012",
+    "shard-0069"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": [
+    {
+      "target_id": "target-0598",
+      "path": "Plans/evidence.schema.json",
+      "reason": "observe_only non-packetizable source path"
+    },
+    {
+      "target_id": "target-0600",
+      "path": "Plans/gui_automation_manifest.schema.json",
+      "reason": "observe_only non-packetizable source path"
+    }
+  ]
+}

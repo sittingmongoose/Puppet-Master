@@ -1,0 +1,112 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0051",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0051-L010001-L010200.md",
+  "source_line_range": "L010001-L010200",
+  "covered_shard_id": "shard-0051",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "executor-facing execution_unit_context contract",
+      "exact_items": [
+        "Add an explicit execution_unit_context section to Executor_Protocol.md that names required context fields.",
+        "execution_unit_context should be defined as a runtime contract with dispatch/runtime fields."
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [
+        "Concrete executor-facing execution_unit_context field contract",
+        "Placement of execution_role and operational_identity"
+      ],
+      "stale_tokens": [
+        "tier_runtime_record",
+        "tier_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L10045-L10049",
+        "working_ledger.md:L10141-L10153",
+        "working_ledger.md:L10155-L10161"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "tier-shaped surfaces consume canonical execution objects",
+      "exact_items": [
+        "Update surface specs so tier/group views carry pointers to canonical execution objects instead of using tier_id as the primary mutation/audit key.",
+        "Retarget Run Graph and Usage links toward node_id / attempt_id semantics, with tier_id surviving only as a display/grouping label where needed.",
+        "Recast HITL surface state around blocked-episode identity first, with tier labels as explanatory metadata rather than canonical targeting."
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [
+        "Practical routing/correlation rule",
+        "Contradictions / gaps surfaced",
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "tier_id",
+        "request_id + tier_id + tier_type"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L10019-L10023",
+        "working_ledger.md:L10031-L10033",
+        "working_ledger.md:L10134-L10138"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "tier_runtime_record compatibility overlay only",
+      "exact_items": [
+        "Keep tier_runtime_record only as a compatibility/overlay projection and say that explicitly in storage-plan.md.",
+        "storage-plan.md keeps tier_runtime_record alive next to attempt_record, which increases the risk that consumers keep binding to the looser tier-shaped projection instead of the stricter attempt-shaped context."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [
+        "Contradictions / gaps surfaced",
+        "Candidate fixes to carry forward",
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [
+        "tier_runtime_record",
+        "tier_id",
+        "tier-shaped projection"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L10025-L10028",
+        "working_ledger.md:L10143-L10144",
+        "working_ledger.md:L10156-L10161"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "L010001-L010017",
+    "L010030-L010033",
+    "L010035-L010043",
+    "L010062-L010120",
+    "L010122-L010127",
+    "L010129-L010138",
+    "L010140-L010161",
+    "L010163-L010200"
+  ],
+  "uncertain_items": []
+}

@@ -1,0 +1,2425 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-133",
+  "group_ids": [
+    "gapgrp-0529",
+    "gapgrp-0530",
+    "gapgrp-0531",
+    "gapgrp-0532"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-03144",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04046 is partial for `FileManager.md` needs stable identity and open-by-identity semantics, but the artifact do",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "### Fidelity recovery cov-202: Artifact envelope routing preference"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04046"
+      ],
+      "source_obligation_ids": [
+        "obl-3889"
+      ],
+      "source_seed_ids": [
+        "seed-5340"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "exact_missing_items": [
+        "`FileManager.md` needs stable identity and open-by-identity semantics, but the artifact docs still do not define enough envelope routing data to support that cleanly.",
+        "FileManager.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03188",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04104 is present for spot-checks against `Plans/storage-plan.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plan",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04104"
+      ],
+      "source_obligation_ids": [
+        "obl-3946"
+      ],
+      "source_seed_ids": [
+        "seed-5409"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "exact_missing_items": [
+        "spot-checks against `Plans/storage-plan.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/usage-feature.md`",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03470",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04437 is partial for `CustomHeadlessTool` still lacks stable config/identity/permission ownership and still con",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04437"
+      ],
+      "source_obligation_ids": [
+        "obl-4277"
+      ],
+      "source_seed_ids": [
+        "seed-5961"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "`CustomHeadlessTool` still lacks stable config/identity/permission ownership and still conflicts with state/config SSOT.",
+        "CustomHeadlessTool"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03567",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04542 is partial for Require manifests for non-trivial bundle exports, and make those manifests preserve canoni",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 5A. Debug investigation grouping, manifests, and exports"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04542"
+      ],
+      "source_obligation_ids": [
+        "obl-4320"
+      ],
+      "source_seed_ids": [
+        "seed-6076"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "Require manifests for non-trivial bundle exports, and make those manifests preserve canonical IDs/refs rather than export-local surrogate identities."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03571",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04547 is partial for Bundle manifests and route/subject normalization fit together naturally; exports should pr",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 5A. Debug investigation grouping, manifests, and exports"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04547"
+      ],
+      "source_obligation_ids": [
+        "obl-4325"
+      ],
+      "source_seed_ids": [
+        "seed-6081"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "Bundle manifests and route/subject normalization fit together naturally; exports should preserve the same object vocabulary the UI uses."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03733",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04778 is partial for `Document_Packaging_Policy.md` still has no place for glossary artifacts, requirements-sta",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04778"
+      ],
+      "source_obligation_ids": [
+        "obl-4556"
+      ],
+      "source_seed_ids": [
+        "seed-6473"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "`Document_Packaging_Policy.md` still has no place for glossary artifacts, requirements-staging seglog artifacts, or package-generation lineage states.",
+        "Document_Packaging_Policy.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04289",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05509 is present for `cost_usage` artifacts already require `Show in Ledger` and `Show in Usage`",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05509"
+      ],
+      "source_obligation_ids": [
+        "obl-5281"
+      ],
+      "source_seed_ids": [
+        "seed-7852"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "`cost_usage` artifacts already require `Show in Ledger` and `Show in Usage`",
+        "cost_usage",
+        "Show in Ledger",
+        "Show in Usage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04291",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05513 is partial for `UsageRecord` still keeps `tier_id` as a required cross-surface field",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05513"
+      ],
+      "source_obligation_ids": [
+        "obl-5285"
+      ],
+      "source_seed_ids": [
+        "seed-7856"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "`UsageRecord` still keeps `tier_id` as a required cross-surface field",
+        "UsageRecord",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04318",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05542 is partial for `OpenFile` is still overclaimed as a universal open contract even though generated artifac",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05542"
+      ],
+      "source_obligation_ids": [
+        "obl-5314"
+      ],
+      "source_seed_ids": [
+        "seed-7899"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "`OpenFile` is still overclaimed as a universal open contract even though generated artifacts, draft documents, checkpoints, search hits, and runtime artifacts already require identity-native resolution.",
+        "OpenFile"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04346",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05575 is present for `Plans/Runtime_Artifacts_Panel.md` is partly aligned:",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05575"
+      ],
+      "source_obligation_ids": [
+        "obl-5347"
+      ],
+      "source_seed_ids": [
+        "seed-7947"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "`Plans/Runtime_Artifacts_Panel.md` is partly aligned:",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04355",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05585 is partial for Runtime artifacts already require canonical cross-surface routing, but the shared contract",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05585"
+      ],
+      "source_obligation_ids": [
+        "obl-5357"
+      ],
+      "source_seed_ids": [
+        "seed-7961"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "Runtime artifacts already require canonical cross-surface routing, but the shared contract is still missing from the owner docs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04511",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05822 is present for `Plans/Runtime_Artifacts_Panel.md` is already stronger than these docs on the usage side:",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05822"
+      ],
+      "source_obligation_ids": [
+        "obl-5594"
+      ],
+      "source_seed_ids": [
+        "seed-8304"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "`Plans/Runtime_Artifacts_Panel.md` is already stronger than these docs on the usage side:",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04763",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06161 is present for `FinalGUISpec.md` aligns with only one of those outcomes.",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 3. Mechanism: one event type per artifact type"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06161"
+      ],
+      "source_obligation_ids": [
+        "obl-5933"
+      ],
+      "source_seed_ids": [
+        "seed-8808"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` aligns with only one of those outcomes.",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04946",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06369 is partial for `meta.json` remains `status: \"active\"` exactly as required; this pass closes the research",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 7. JSON schemas (all required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06369"
+      ],
+      "source_obligation_ids": [
+        "obl-6010"
+      ],
+      "source_seed_ids": [
+        "seed-9093"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "`meta.json` remains `status: \"active\"` exactly as required; this pass closes the research sweep but does not itself mark the work item ready for reconciliation.",
+        "meta.json",
+        "status: \"active\""
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05341",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06895 is partial for The v2 `canon_inventory.json` keeps only the eight surviving canon clusters needed for the",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 7. JSON schemas (all required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06895"
+      ],
+      "source_obligation_ids": [
+        "obl-6497"
+      ],
+      "source_seed_ids": [
+        "seed-9880"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "The v2 `canon_inventory.json` keeps only the eight surviving canon clusters needed for the remaining blockers.",
+        "canon_inventory.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05342",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06896 is partial for The v2 `open_gaps.json` keeps only unresolved blocker families and their exact missing ite",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "### 4A Artifacts index families and projector checkpoints"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06896"
+      ],
+      "source_obligation_ids": [
+        "obl-6498"
+      ],
+      "source_seed_ids": [
+        "seed-9881"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "The v2 `open_gaps.json` keeps only unresolved blocker families and their exact missing items.",
+        "open_gaps.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05396",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06957 is partial for `open_gaps.json.next_required_stage` is returned to `Audit Mode`; this pass updated the co",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 7. JSON schemas (all required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06957"
+      ],
+      "source_obligation_ids": [
+        "obl-6557"
+      ],
+      "source_seed_ids": [
+        "seed-9967"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`open_gaps.json.next_required_stage` is returned to `Audit Mode`; this pass updated the compact blocker bundle directly rather than handing off to Ready Check.",
+        "open_gaps.json.next_required_stage",
+        "Audit Mode"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05427",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06993 is partial for `open_gaps.json.next_required_stage` returns to `Audit Mode` because the bundle still need",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 7. JSON schemas (all required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06993"
+      ],
+      "source_obligation_ids": [
+        "obl-6589"
+      ],
+      "source_seed_ids": [
+        "seed-10044"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`open_gaps.json.next_required_stage` returns to `Audit Mode` because the bundle still needs targeted owner-anchor and consumer-propagation repair rather than another readiness check.",
+        "open_gaps.json.next_required_stage",
+        "Audit Mode"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05438",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07008 is present for `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interv",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07008"
+      ],
+      "source_obligation_ids": [
+        "obl-6603"
+      ],
+      "source_seed_ids": [
+        "seed-10067"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings.",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "validation artifact lineage",
+        "bridge-field viewer",
+        "validation/report section"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05444",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07014 is missing for `Plans/Runtime_Artifacts_Panel.md:63-93`",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07014"
+      ],
+      "source_obligation_ids": [
+        "obl-6608"
+      ],
+      "source_seed_ids": [
+        "seed-10077",
+        "seed-10160",
+        "seed-10192"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/Runtime_Artifacts_Panel.md:63-93`",
+        "Plans/Runtime_Artifacts_Panel.md:63-93"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05472",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07057 is present for Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-0",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07057"
+      ],
+      "source_obligation_ids": [
+        "obl-6643"
+      ],
+      "source_seed_ids": [
+        "seed-10135"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.",
+        "gap-003",
+        "gap-004",
+        "gap-005",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05498",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07088 is partial for `canon_inventory.json` now lags the refined blocker wording again, so the next useful stag",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 7. JSON schemas (all required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07088"
+      ],
+      "source_obligation_ids": [
+        "obl-6668"
+      ],
+      "source_seed_ids": [
+        "seed-10209"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`canon_inventory.json` now lags the refined blocker wording again, so the next useful stage is `Ledger Condenser`.",
+        "canon_inventory.json",
+        "Ledger Condenser"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05503",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07094 is missing for `Plans/Runtime_Artifacts_Panel.md:61-93`",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07094"
+      ],
+      "source_obligation_ids": [
+        "obl-6674"
+      ],
+      "source_seed_ids": [
+        "seed-10233"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Runtime_Artifacts_Panel.md:61-93`",
+        "Plans/Runtime_Artifacts_Panel.md:61-93"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05551",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07149 is present for `gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missi",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07149"
+      ],
+      "source_obligation_ids": [
+        "obl-6719"
+      ],
+      "source_seed_ids": [
+        "seed-10320"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missing `Plans/storage-plan.md#Cross-surface receipt record` anchor, so the receipt blocker now includes a live broken consumer reference rather than only missing owner/consumer headings.",
+        "gap-004",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md#Cross-surface receipt record"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05557",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07157 is missing for `Plans/Runtime_Artifacts_Panel.md:57-65`",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07157"
+      ],
+      "source_obligation_ids": [
+        "obl-6725"
+      ],
+      "source_seed_ids": [
+        "seed-10334",
+        "seed-10375"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Runtime_Artifacts_Panel.md:57-65`",
+        "Plans/Runtime_Artifacts_Panel.md:57-65"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00737",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00970 is partial for evidence vs artifacts",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00970"
+      ],
+      "source_obligation_ids": [
+        "obl-827"
+      ],
+      "source_seed_ids": [
+        "seed-956"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "exact_missing_items": [
+        "evidence vs artifacts"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00822",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01061 is partial for Evidence and artifact exports should not collapse into one undifferentiated zip of files",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 3. Mechanism: one event type per artifact type"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01061"
+      ],
+      "source_obligation_ids": [
+        "obl-918"
+      ],
+      "source_seed_ids": [
+        "seed-1075"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "Evidence and artifact exports should not collapse into one undifferentiated zip of files"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01045",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01336 is partial for evidence records and artifacts need independent virtualization/paging",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01336"
+      ],
+      "source_obligation_ids": [
+        "obl-1193"
+      ],
+      "source_seed_ids": [
+        "seed-1426"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "exact_missing_items": [
+        "evidence records and artifacts need independent virtualization/paging"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01046",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01337 is partial for heavy artifacts should stay metadata-first until opened",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01337"
+      ],
+      "source_obligation_ids": [
+        "obl-1194"
+      ],
+      "source_seed_ids": [
+        "seed-1427"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "exact_missing_items": [
+        "heavy artifacts should stay metadata-first until opened"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01166",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01479 is partial for Keep artifacts and rendered summaries linked but separate from canonical records.",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01479"
+      ],
+      "source_obligation_ids": [
+        "obl-1336"
+      ],
+      "source_seed_ids": [
+        "seed-1627"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "exact_missing_items": [
+        "Keep artifacts and rendered summaries linked but separate from canonical records."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01296",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01655 is partial for artifacts stay on canonical runtime identity",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01655"
+      ],
+      "source_obligation_ids": [
+        "obl-1512"
+      ],
+      "source_seed_ids": [
+        "seed-1871"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "artifacts stay on canonical runtime identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01318",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01680 is partial for artifacts should preserve canonical run/thread/attempt linkage",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01680"
+      ],
+      "source_obligation_ids": [
+        "obl-1537"
+      ],
+      "source_seed_ids": [
+        "seed-1914"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "artifacts should preserve canonical run/thread/attempt linkage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01320",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01682 is partial for usage-linked artifacts should continue to route through canonical usage identity",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01682"
+      ],
+      "source_obligation_ids": [
+        "obl-1539"
+      ],
+      "source_seed_ids": [
+        "seed-1916"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "usage-linked artifacts should continue to route through canonical usage identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01682",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02160 is partial for runtime recovery already uses `blocked_sequence` and canonical `cmd.runtime.*` actions",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02160"
+      ],
+      "source_obligation_ids": [
+        "obl-2017"
+      ],
+      "source_seed_ids": [
+        "seed-2623"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "runtime recovery already uses `blocked_sequence` and canonical `cmd.runtime.*` actions",
+        "blocked_sequence",
+        "cmd.runtime.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01709",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02194 is partial for Research Progress - 2026-03-16 - Sonnet Expanded Identity / Runtime SSOT Batch",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02194"
+      ],
+      "source_obligation_ids": [
+        "obl-2049"
+      ],
+      "source_seed_ids": [
+        "seed-2658"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - Sonnet Expanded Identity / Runtime SSOT Batch"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-04046",
+    "cov-04104",
+    "cov-04437",
+    "cov-04542",
+    "cov-04547",
+    "cov-04778",
+    "cov-05509",
+    "cov-05513",
+    "cov-05542",
+    "cov-05575",
+    "cov-05585",
+    "cov-05822",
+    "cov-06161",
+    "cov-06369",
+    "cov-06895",
+    "cov-06896",
+    "cov-06957",
+    "cov-06993",
+    "cov-07008",
+    "cov-07014",
+    "cov-07057",
+    "cov-07088",
+    "cov-07094",
+    "cov-07149",
+    "cov-07157",
+    "cov-00970",
+    "cov-01061",
+    "cov-01336",
+    "cov-01337",
+    "cov-01479",
+    "cov-01655",
+    "cov-01680",
+    "cov-01682",
+    "cov-02160",
+    "cov-02194"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1193",
+    "obl-1194",
+    "obl-1336",
+    "obl-1512",
+    "obl-1537",
+    "obl-1539",
+    "obl-2017",
+    "obl-2049",
+    "obl-3889",
+    "obl-3946",
+    "obl-4277",
+    "obl-4320",
+    "obl-4325",
+    "obl-4556",
+    "obl-5281",
+    "obl-5285",
+    "obl-5314",
+    "obl-5347",
+    "obl-5357",
+    "obl-5594",
+    "obl-5933",
+    "obl-6010",
+    "obl-6497",
+    "obl-6498",
+    "obl-6557",
+    "obl-6589",
+    "obl-6603",
+    "obl-6608",
+    "obl-6643",
+    "obl-6668",
+    "obl-6674",
+    "obl-6719",
+    "obl-6725",
+    "obl-827",
+    "obl-918"
+  ],
+  "source_seed_ids_represented": [
+    "seed-10044",
+    "seed-10067",
+    "seed-10077",
+    "seed-10135",
+    "seed-10160",
+    "seed-10192",
+    "seed-10209",
+    "seed-10233",
+    "seed-10320",
+    "seed-10334",
+    "seed-10375",
+    "seed-1075",
+    "seed-1426",
+    "seed-1427",
+    "seed-1627",
+    "seed-1871",
+    "seed-1914",
+    "seed-1916",
+    "seed-2623",
+    "seed-2658",
+    "seed-5340",
+    "seed-5409",
+    "seed-5961",
+    "seed-6076",
+    "seed-6081",
+    "seed-6473",
+    "seed-7852",
+    "seed-7856",
+    "seed-7899",
+    "seed-7947",
+    "seed-7961",
+    "seed-8304",
+    "seed-8808",
+    "seed-9093",
+    "seed-956",
+    "seed-9880",
+    "seed-9881",
+    "seed-9967"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0017",
+    "shard-0019",
+    "shard-0023",
+    "shard-0025",
+    "shard-0027",
+    "shard-0028",
+    "shard-0034",
+    "shard-0054",
+    "shard-0058",
+    "shard-0059",
+    "shard-0062",
+    "shard-0073",
+    "shard-0074",
+    "shard-0076",
+    "shard-0080",
+    "shard-0082",
+    "shard-0088",
+    "shard-0089",
+    "shard-0090",
+    "shard-0091"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-03144",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04046 is partial for `FileManager.md` needs stable identity and open-by-identity semantics, but the artifact do",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "### Fidelity recovery cov-202: Artifact envelope routing preference"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04046"
+      ],
+      "source_obligation_ids": [
+        "obl-3889"
+      ],
+      "source_seed_ids": [
+        "seed-5340"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "exact_missing_items": [
+        "`FileManager.md` needs stable identity and open-by-identity semantics, but the artifact docs still do not define enough envelope routing data to support that cleanly.",
+        "FileManager.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03188",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04104 is present for spot-checks against `Plans/storage-plan.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plan",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04104"
+      ],
+      "source_obligation_ids": [
+        "obl-3946"
+      ],
+      "source_seed_ids": [
+        "seed-5409"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "exact_missing_items": [
+        "spot-checks against `Plans/storage-plan.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/usage-feature.md`",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03470",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04437 is partial for `CustomHeadlessTool` still lacks stable config/identity/permission ownership and still con",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04437"
+      ],
+      "source_obligation_ids": [
+        "obl-4277"
+      ],
+      "source_seed_ids": [
+        "seed-5961"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "`CustomHeadlessTool` still lacks stable config/identity/permission ownership and still conflicts with state/config SSOT.",
+        "CustomHeadlessTool"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03567",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04542 is partial for Require manifests for non-trivial bundle exports, and make those manifests preserve canoni",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 5A. Debug investigation grouping, manifests, and exports"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04542"
+      ],
+      "source_obligation_ids": [
+        "obl-4320"
+      ],
+      "source_seed_ids": [
+        "seed-6076"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "Require manifests for non-trivial bundle exports, and make those manifests preserve canonical IDs/refs rather than export-local surrogate identities."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03571",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04547 is partial for Bundle manifests and route/subject normalization fit together naturally; exports should pr",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 5A. Debug investigation grouping, manifests, and exports"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04547"
+      ],
+      "source_obligation_ids": [
+        "obl-4325"
+      ],
+      "source_seed_ids": [
+        "seed-6081"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "Bundle manifests and route/subject normalization fit together naturally; exports should preserve the same object vocabulary the UI uses."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03733",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04778 is partial for `Document_Packaging_Policy.md` still has no place for glossary artifacts, requirements-sta",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04778"
+      ],
+      "source_obligation_ids": [
+        "obl-4556"
+      ],
+      "source_seed_ids": [
+        "seed-6473"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "`Document_Packaging_Policy.md` still has no place for glossary artifacts, requirements-staging seglog artifacts, or package-generation lineage states.",
+        "Document_Packaging_Policy.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04289",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05509 is present for `cost_usage` artifacts already require `Show in Ledger` and `Show in Usage`",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05509"
+      ],
+      "source_obligation_ids": [
+        "obl-5281"
+      ],
+      "source_seed_ids": [
+        "seed-7852"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "`cost_usage` artifacts already require `Show in Ledger` and `Show in Usage`",
+        "cost_usage",
+        "Show in Ledger",
+        "Show in Usage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04291",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05513 is partial for `UsageRecord` still keeps `tier_id` as a required cross-surface field",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05513"
+      ],
+      "source_obligation_ids": [
+        "obl-5285"
+      ],
+      "source_seed_ids": [
+        "seed-7856"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "`UsageRecord` still keeps `tier_id` as a required cross-surface field",
+        "UsageRecord",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04318",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05542 is partial for `OpenFile` is still overclaimed as a universal open contract even though generated artifac",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05542"
+      ],
+      "source_obligation_ids": [
+        "obl-5314"
+      ],
+      "source_seed_ids": [
+        "seed-7899"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "`OpenFile` is still overclaimed as a universal open contract even though generated artifacts, draft documents, checkpoints, search hits, and runtime artifacts already require identity-native resolution.",
+        "OpenFile"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04346",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05575 is present for `Plans/Runtime_Artifacts_Panel.md` is partly aligned:",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05575"
+      ],
+      "source_obligation_ids": [
+        "obl-5347"
+      ],
+      "source_seed_ids": [
+        "seed-7947"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "`Plans/Runtime_Artifacts_Panel.md` is partly aligned:",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04355",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05585 is partial for Runtime artifacts already require canonical cross-surface routing, but the shared contract",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05585"
+      ],
+      "source_obligation_ids": [
+        "obl-5357"
+      ],
+      "source_seed_ids": [
+        "seed-7961"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "Runtime artifacts already require canonical cross-surface routing, but the shared contract is still missing from the owner docs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04511",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05822 is present for `Plans/Runtime_Artifacts_Panel.md` is already stronger than these docs on the usage side:",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05822"
+      ],
+      "source_obligation_ids": [
+        "obl-5594"
+      ],
+      "source_seed_ids": [
+        "seed-8304"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "`Plans/Runtime_Artifacts_Panel.md` is already stronger than these docs on the usage side:",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04763",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06161 is present for `FinalGUISpec.md` aligns with only one of those outcomes.",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 3. Mechanism: one event type per artifact type"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06161"
+      ],
+      "source_obligation_ids": [
+        "obl-5933"
+      ],
+      "source_seed_ids": [
+        "seed-8808"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` aligns with only one of those outcomes.",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04946",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06369 is partial for `meta.json` remains `status: \"active\"` exactly as required; this pass closes the research",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 7. JSON schemas (all required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06369"
+      ],
+      "source_obligation_ids": [
+        "obl-6010"
+      ],
+      "source_seed_ids": [
+        "seed-9093"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "`meta.json` remains `status: \"active\"` exactly as required; this pass closes the research sweep but does not itself mark the work item ready for reconciliation.",
+        "meta.json",
+        "status: \"active\""
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05341",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06895 is partial for The v2 `canon_inventory.json` keeps only the eight surviving canon clusters needed for the",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 7. JSON schemas (all required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06895"
+      ],
+      "source_obligation_ids": [
+        "obl-6497"
+      ],
+      "source_seed_ids": [
+        "seed-9880"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "The v2 `canon_inventory.json` keeps only the eight surviving canon clusters needed for the remaining blockers.",
+        "canon_inventory.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05342",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06896 is partial for The v2 `open_gaps.json` keeps only unresolved blocker families and their exact missing ite",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "### 4A Artifacts index families and projector checkpoints"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06896"
+      ],
+      "source_obligation_ids": [
+        "obl-6498"
+      ],
+      "source_seed_ids": [
+        "seed-9881"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "The v2 `open_gaps.json` keeps only unresolved blocker families and their exact missing items.",
+        "open_gaps.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05396",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06957 is partial for `open_gaps.json.next_required_stage` is returned to `Audit Mode`; this pass updated the co",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 7. JSON schemas (all required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06957"
+      ],
+      "source_obligation_ids": [
+        "obl-6557"
+      ],
+      "source_seed_ids": [
+        "seed-9967"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`open_gaps.json.next_required_stage` is returned to `Audit Mode`; this pass updated the compact blocker bundle directly rather than handing off to Ready Check.",
+        "open_gaps.json.next_required_stage",
+        "Audit Mode"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05427",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06993 is partial for `open_gaps.json.next_required_stage` returns to `Audit Mode` because the bundle still need",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 7. JSON schemas (all required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06993"
+      ],
+      "source_obligation_ids": [
+        "obl-6589"
+      ],
+      "source_seed_ids": [
+        "seed-10044"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`open_gaps.json.next_required_stage` returns to `Audit Mode` because the bundle still needs targeted owner-anchor and consumer-propagation repair rather than another readiness check.",
+        "open_gaps.json.next_required_stage",
+        "Audit Mode"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05438",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07008 is present for `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interv",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07008"
+      ],
+      "source_obligation_ids": [
+        "obl-6603"
+      ],
+      "source_seed_ids": [
+        "seed-10067"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings.",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "validation artifact lineage",
+        "bridge-field viewer",
+        "validation/report section"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05444",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07014 is missing for `Plans/Runtime_Artifacts_Panel.md:63-93`",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07014"
+      ],
+      "source_obligation_ids": [
+        "obl-6608"
+      ],
+      "source_seed_ids": [
+        "seed-10077",
+        "seed-10160",
+        "seed-10192"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/Runtime_Artifacts_Panel.md:63-93`",
+        "Plans/Runtime_Artifacts_Panel.md:63-93"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05472",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07057 is present for Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-0",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07057"
+      ],
+      "source_obligation_ids": [
+        "obl-6643"
+      ],
+      "source_seed_ids": [
+        "seed-10135"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.",
+        "gap-003",
+        "gap-004",
+        "gap-005",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05498",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07088 is partial for `canon_inventory.json` now lags the refined blocker wording again, so the next useful stag",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 7. JSON schemas (all required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07088"
+      ],
+      "source_obligation_ids": [
+        "obl-6668"
+      ],
+      "source_seed_ids": [
+        "seed-10209"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`canon_inventory.json` now lags the refined blocker wording again, so the next useful stage is `Ledger Condenser`.",
+        "canon_inventory.json",
+        "Ledger Condenser"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05503",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07094 is missing for `Plans/Runtime_Artifacts_Panel.md:61-93`",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07094"
+      ],
+      "source_obligation_ids": [
+        "obl-6674"
+      ],
+      "source_seed_ids": [
+        "seed-10233"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Runtime_Artifacts_Panel.md:61-93`",
+        "Plans/Runtime_Artifacts_Panel.md:61-93"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05551",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07149 is present for `gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missi",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07149"
+      ],
+      "source_obligation_ids": [
+        "obl-6719"
+      ],
+      "source_seed_ids": [
+        "seed-10320"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missing `Plans/storage-plan.md#Cross-surface receipt record` anchor, so the receipt blocker now includes a live broken consumer reference rather than only missing owner/consumer headings.",
+        "gap-004",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md#Cross-surface receipt record"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05557",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07157 is missing for `Plans/Runtime_Artifacts_Panel.md:57-65`",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07157"
+      ],
+      "source_obligation_ids": [
+        "obl-6725"
+      ],
+      "source_seed_ids": [
+        "seed-10334",
+        "seed-10375"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Runtime_Artifacts_Panel.md:57-65`",
+        "Plans/Runtime_Artifacts_Panel.md:57-65"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00737",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00970 is partial for evidence vs artifacts",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00970"
+      ],
+      "source_obligation_ids": [
+        "obl-827"
+      ],
+      "source_seed_ids": [
+        "seed-956"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "exact_missing_items": [
+        "evidence vs artifacts"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00822",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01061 is partial for Evidence and artifact exports should not collapse into one undifferentiated zip of files",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 3. Mechanism: one event type per artifact type"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01061"
+      ],
+      "source_obligation_ids": [
+        "obl-918"
+      ],
+      "source_seed_ids": [
+        "seed-1075"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "Evidence and artifact exports should not collapse into one undifferentiated zip of files"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01045",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01336 is partial for evidence records and artifacts need independent virtualization/paging",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01336"
+      ],
+      "source_obligation_ids": [
+        "obl-1193"
+      ],
+      "source_seed_ids": [
+        "seed-1426"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "exact_missing_items": [
+        "evidence records and artifacts need independent virtualization/paging"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01046",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01337 is partial for heavy artifacts should stay metadata-first until opened",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01337"
+      ],
+      "source_obligation_ids": [
+        "obl-1194"
+      ],
+      "source_seed_ids": [
+        "seed-1427"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "exact_missing_items": [
+        "heavy artifacts should stay metadata-first until opened"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01166",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01479 is partial for Keep artifacts and rendered summaries linked but separate from canonical records.",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01479"
+      ],
+      "source_obligation_ids": [
+        "obl-1336"
+      ],
+      "source_seed_ids": [
+        "seed-1627"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "exact_missing_items": [
+        "Keep artifacts and rendered summaries linked but separate from canonical records."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01296",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01655 is partial for artifacts stay on canonical runtime identity",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01655"
+      ],
+      "source_obligation_ids": [
+        "obl-1512"
+      ],
+      "source_seed_ids": [
+        "seed-1871"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "artifacts stay on canonical runtime identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01318",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01680 is partial for artifacts should preserve canonical run/thread/attempt linkage",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01680"
+      ],
+      "source_obligation_ids": [
+        "obl-1537"
+      ],
+      "source_seed_ids": [
+        "seed-1914"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "artifacts should preserve canonical run/thread/attempt linkage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01320",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01682 is partial for usage-linked artifacts should continue to route through canonical usage identity",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01682"
+      ],
+      "source_obligation_ids": [
+        "obl-1539"
+      ],
+      "source_seed_ids": [
+        "seed-1916"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "usage-linked artifacts should continue to route through canonical usage identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01682",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02160 is partial for runtime recovery already uses `blocked_sequence` and canonical `cmd.runtime.*` actions",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02160"
+      ],
+      "source_obligation_ids": [
+        "obl-2017"
+      ],
+      "source_seed_ids": [
+        "seed-2623"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "runtime recovery already uses `blocked_sequence` and canonical `cmd.runtime.*` actions",
+        "blocked_sequence",
+        "cmd.runtime.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01709",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02194 is partial for Research Progress - 2026-03-16 - Sonnet Expanded Identity / Runtime SSOT Batch",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "# Runtime Artifacts Panel \u2014 SSOT"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02194"
+      ],
+      "source_obligation_ids": [
+        "obl-2049"
+      ],
+      "source_seed_ids": [
+        "seed-2658"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - Sonnet Expanded Identity / Runtime SSOT Batch"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

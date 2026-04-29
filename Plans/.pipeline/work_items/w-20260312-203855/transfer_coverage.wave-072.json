@@ -1,126 +1,118 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-072",
-  "timestamp_utc": "2026-04-28T21:52:34Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-285",
-    "coverage-rowgrp-286",
-    "coverage-rowgrp-287",
-    "coverage-rowgrp-288"
+  "row_group_ids": [
+    "rowgrp-0285",
+    "rowgrp-0286",
+    "rowgrp-0287",
+    "rowgrp-0288"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-285 cov-094,cov-135,cov-180 Plans/plan_graph.schema.json",
-    "rowgrp-286 cov-108 Plans/plan_graph.schema.json",
-    "rowgrp-287 cov-119 Plans/project_plan_graph_index.schema.json",
-    "rowgrp-288 cov-096 Plans/project_plan_graph_index.schema.json"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-285": "completed_reduced_conservatively_with_evidence_stripping",
-    "coverage-rowgrp-286": "completed_reduced_conservatively_with_schema_normalization",
-    "coverage-rowgrp-287": "completed_reduced_conservatively_with_evidence_stripping",
-    "coverage-rowgrp-288": "completed_reduced_conservatively_with_downgrade"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-094",
-    "cov-135",
-    "cov-180",
-    "cov-108",
-    "cov-119",
-    "cov-096"
-  ],
-  "coverage_ids_completed": [
-    "cov-094",
-    "cov-135",
-    "cov-180",
-    "cov-108",
-    "cov-119",
-    "cov-096"
-  ],
-  "path_groups_assigned": [
-    "Plans/plan_graph.schema.json",
-    "Plans/project_plan_graph_index.schema.json"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-094",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Plans/plan_graph.schema.json still contains the stale selection_rule constant and does not add package/seam/lane/worktree/account identity fields or contamination/safe-point linkage.",
+      "coverage_id": "cov-06428",
       "source_obligation_ids": [
-        "obl-034"
+        "obl-6069"
       ],
       "source_seed_ids": [
-        "seed-034"
+        "seed-9175"
       ],
       "source_shard_ids": [
-        "shard-0008"
+        "shard-0083"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-135",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Plans/plan_graph.schema.json remains node-level schema modeling and lacks package/seam/lane/promotion object families, contamination state, resolution thread, or effective account identity.",
-      "source_obligation_ids": [
-        "obl-038"
+      "canon_label": "The duplicated runtime-recovery addendum means the gate doc now has same-file canon duplic",
+      "row_type": "layout_blocker",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "The duplicated runtime-recovery addendum means the gate doc now has same-file canon duplication similar to the problems already logged in `Crosswalk.md`, `human-in-the-loop.md`, and `storage-plan.md`.",
+        "Crosswalk.md",
+        "human-in-the-loop.md",
+        "storage-plan.md"
       ],
-      "source_seed_ids": [
-        "seed-038"
-      ],
-      "source_shard_ids": [
-        "shard-0009"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-180",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Plans/plan_graph.schema.json only preserves lexicographic selection/acceptance structure and does not directly cover allowed_actions versus allowed_action_ids, tier-boundary HITL, or UI-derived recovery conflicts.",
-      "source_obligation_ids": [
-        "obl-047"
-      ],
-      "source_seed_ids": [
-        "seed-047"
-      ],
-      "source_shard_ids": [
-        "shard-0010"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-108",
-      "status": "partial",
+      "stale_tokens": [],
       "evidence": [
-        "Plans/plan_graph.schema.json:38-45 defines ready_rule selection_rule as lexicographic_node_id",
-        "Plans/plan_graph.schema.json:151-160 defines node blockers and unblocks fields"
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29",
+        "Plans/Crosswalk.md:L72"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Lexicographic selection and blockers/unblocks are directly present, but depends_on, reason_code, recovery_options, allowed_actions, blocked_reason, and graph-local Retry/Replan/Reopen/Approve/Deny are absent.",
-      "source_obligation_ids": [
-        "obl-035"
-      ],
-      "source_seed_ids": [
-        "seed-035"
-      ],
-      "source_shard_ids": [
-        "shard-0008"
-      ],
-      "path_field_status": "match"
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-119",
+      "coverage_id": "cov-06824",
+      "source_obligation_ids": [
+        "obl-6442"
+      ],
+      "source_seed_ids": [
+        "seed-9821"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Cr",
+      "row_type": "layout_blocker",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Crosswalk.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md",
+        "Plans/FileManager.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29",
+        "Plans/Crosswalk.md:L31"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07191",
+      "source_obligation_ids": [
+        "obl-6753"
+      ],
+      "source_seed_ids": [
+        "seed-10392"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "`cov-526` / `obl-222` remains unresolved because the ledger requires a concrete worktree a",
+      "row_type": "layout_blocker",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
       "status": "missing",
-      "evidence": [],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Plans/project_plan_graph_index.schema.json only defines index/node source constants and does not directly cover the assigned live-doc consumer set or stale tier/Overseer/worktree/scope tokens.",
+      "exact_items": [
+        "`cov-526` / `obl-222` remains unresolved because the ledger requires a concrete worktree allocation strategy (per node, per package, per seam, or remediation branch) plus contamination/reuse/cleanup rules, but the live docs still stop short of that owner section: `Plans/Crosswalk.md:88-94` assigns lane/worktree ownership boundaries, `Plans/WorktreeGitImprovement.md:62-66` and `Plans/WorktreeGitImprovement.md:78-80` retain the worktree plan without defining allocation strategy, and `Plans/orchestrator-subagent-integration.md:28-41` plus later authority wording require identity alignment without specifying how lanes/worktrees are allocated. Exact ledger evidence remains at `working_ledger.md:L806`, `working_ledger.md:L1036`, `working_ledger.md:L1289`, and `working_ledger.md:L1539`.",
+        "cov-526",
+        "obl-222",
+        "Plans/Crosswalk.md:88-94",
+        "Plans/WorktreeGitImprovement.md:62-66",
+        "Plans/WorktreeGitImprovement.md:78-80",
+        "Plans/orchestrator-subagent-integration.md:28-41",
+        "working_ledger.md:L806",
+        "working_ledger.md:L1036"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00101",
       "source_obligation_ids": [
         "obl-036"
       ],
@@ -128,26 +120,653 @@
         "seed-036"
       ],
       "source_shard_ids": [
-        "shard-0008"
+        "shard-0007"
       ],
-      "path_field_status": "match"
+      "canon_label": "package/seam overseer + lane-aware execution model",
+      "row_type": "layout_blocker",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "missing",
+      "exact_items": [
+        "Replace tier-rooted execution with package/seam/lane model",
+        "Define package overseer + seam overseer roles",
+        "Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage",
+        "Redefine gates to package-complete / seam-complete",
+        "Rename or retire Tiers UI/tab and tier_tree/progress bars"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars",
+        "phase/task/subtask"
+      ],
+      "evidence": [
+        "Plans/Crosswalk.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-096",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Plans/project_plan_graph_index.schema.json still contains selection_rule and node-only index fields, but does not add package/seam/lane/worktree/account identity fields or contamination/safe-point linkage.",
+      "coverage_id": "cov-00178",
       "source_obligation_ids": [
-        "obl-034"
+        "obl-074"
       ],
       "source_seed_ids": [
-        "seed-034"
+        "seed-074",
+        "seed-193",
+        "seed-2150",
+        "seed-4717",
+        "seed-4750",
+        "seed-5063",
+        "seed-5100",
+        "seed-5528",
+        "seed-5570",
+        "seed-5604",
+        "seed-5618",
+        "seed-5664",
+        "seed-5929",
+        "seed-5970",
+        "seed-6119",
+        "seed-6137",
+        "seed-6156",
+        "seed-6194",
+        "seed-6266",
+        "seed-6337",
+        "seed-6425",
+        "seed-6545",
+        "seed-6569",
+        "seed-6601",
+        "seed-6627",
+        "seed-6674",
+        "seed-6720",
+        "seed-6736",
+        "seed-6754",
+        "seed-6776",
+        "seed-6792",
+        "seed-6833",
+        "seed-6882",
+        "seed-6907",
+        "seed-6930",
+        "seed-6977",
+        "seed-7115",
+        "seed-7154",
+        "seed-7280",
+        "seed-7366",
+        "seed-7448",
+        "seed-7673",
+        "seed-7751",
+        "seed-7775",
+        "seed-7823",
+        "seed-7897",
+        "seed-7941",
+        "seed-7954",
+        "seed-7980",
+        "seed-8000",
+        "seed-8021",
+        "seed-8109",
+        "seed-8124",
+        "seed-8359",
+        "seed-8390",
+        "seed-8879",
+        "seed-8971",
+        "seed-9064",
+        "seed-9098",
+        "seed-9121",
+        "seed-9152",
+        "seed-9168",
+        "seed-9204",
+        "seed-9369",
+        "seed-9568",
+        "seed-9596",
+        "seed-9635",
+        "seed-10400"
       ],
       "source_shard_ids": [
-        "shard-0008"
+        "shard-0009",
+        "shard-0010",
+        "shard-0030",
+        "shard-0049",
+        "shard-0050",
+        "shard-0052",
+        "shard-0055",
+        "shard-0056",
+        "shard-0058",
+        "shard-0060",
+        "shard-0061",
+        "shard-0062",
+        "shard-0063",
+        "shard-0064",
+        "shard-0065",
+        "shard-0066",
+        "shard-0067",
+        "shard-0068",
+        "shard-0069",
+        "shard-0070",
+        "shard-0072",
+        "shard-0073",
+        "shard-0074",
+        "shard-0075",
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084",
+        "shard-0086",
+        "shard-0092"
       ],
-      "path_field_status": "match"
+      "canon_label": "`Plans/Crosswalk.md`",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Crosswalk.md`",
+        "Plans/Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00235",
+      "source_obligation_ids": [
+        "obl-125"
+      ],
+      "source_seed_ids": [
+        "seed-130"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "`Plans/00-plans-index.md`, `Plans/Crosswalk.md`, `Plans/Glossary.md`",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/00-plans-index.md`, `Plans/Crosswalk.md`, `Plans/Glossary.md`",
+        "Plans/00-plans-index.md",
+        "Plans/Crosswalk.md",
+        "Plans/Glossary.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29",
+        "Plans/Crosswalk.md:L59"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00338",
+      "source_obligation_ids": [
+        "obl-196"
+      ],
+      "source_seed_ids": [
+        "seed-228"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "Source Control rows expose `owner run/tier when present`",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "status": "partial",
+      "exact_items": [
+        "Source Control rows expose `owner run/tier when present`",
+        "owner run/tier when present"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00497",
+      "source_obligation_ids": [
+        "obl-354"
+      ],
+      "source_seed_ids": [
+        "seed-409"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "glossary/help/labels for lane/worktree terminology",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "status": "partial",
+      "exact_items": [
+        "glossary/help/labels for lane/worktree terminology"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00498",
+      "source_obligation_ids": [
+        "obl-355"
+      ],
+      "source_seed_ids": [
+        "seed-410"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "`Source Control` stays `worktree-first`.",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "status": "present",
+      "exact_items": [
+        "`Source Control` stays `worktree-first`.",
+        "Source Control",
+        "worktree-first"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L102",
+        "Plans/Crosswalk.md:L104",
+        "Plans/Crosswalk.md:L315",
+        "Plans/Crosswalk.md:L322",
+        "Plans/Crosswalk.md:L323"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00514",
+      "source_obligation_ids": [
+        "obl-371"
+      ],
+      "source_seed_ids": [
+        "seed-427"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "enrich row metadata with package/lane/run ownership and lifecycle state",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.11 Remediation lifecycle ownership",
+      "status": "partial",
+      "exact_items": [
+        "enrich row metadata with package/lane/run ownership and lifecycle state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L193"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00517",
+      "source_obligation_ids": [
+        "obl-374"
+      ],
+      "source_seed_ids": [
+        "seed-432"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "preserve Source Control as Git/worktree-first",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "status": "partial",
+      "exact_items": [
+        "preserve Source Control as Git/worktree-first"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00682",
+      "source_obligation_ids": [
+        "obl-539"
+      ],
+      "source_seed_ids": [
+        "seed-620"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "History rows can open Graph/Evidence",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Open subject navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "History rows can open Graph/Evidence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00696",
+      "source_obligation_ids": [
+        "obl-553"
+      ],
+      "source_seed_ids": [
+        "seed-634"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "Each result should carry a canonical route target:",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Route target navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "Each result should carry a canonical route target:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00761",
+      "source_obligation_ids": [
+        "obl-618"
+      ],
+      "source_seed_ids": [
+        "seed-713"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "canon_label": "lane/worktree records",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "status": "partial",
+      "exact_items": [
+        "lane/worktree records"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00775",
+      "source_obligation_ids": [
+        "obl-632"
+      ],
+      "source_seed_ids": [
+        "seed-727"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "canon_label": "lane/worktree objects",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "status": "partial",
+      "exact_items": [
+        "lane/worktree objects"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00901",
+      "source_obligation_ids": [
+        "obl-758"
+      ],
+      "source_seed_ids": [
+        "seed-863"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "Search result should route based on what the user likely needs:",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Route target navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "Search result should route based on what the user likely needs:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00939",
+      "source_obligation_ids": [
+        "obl-796"
+      ],
+      "source_seed_ids": [
+        "seed-917"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "open evidence/history/ledger/source control",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Open subject navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "open evidence/history/ledger/source control"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01375",
+      "source_obligation_ids": [
+        "obl-1232"
+      ],
+      "source_seed_ids": [
+        "seed-1473"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "open selected items in `History`, `Evidence`, or `Ledger`",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Open subject navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "open selected items in `History`, `Evidence`, or `Ledger`",
+        "History",
+        "Evidence",
+        "Ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L293",
+        "Plans/Crosswalk.md:L322"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01380",
+      "source_obligation_ids": [
+        "obl-1237"
+      ],
+      "source_seed_ids": [
+        "seed-1478"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "lane/worktree",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "status": "present",
+      "exact_items": [
+        "lane/worktree"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01505",
+      "source_obligation_ids": [
+        "obl-1362"
+      ],
+      "source_seed_ids": [
+        "seed-1676"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "Source Control still needs a more concrete worktree-first vocabulary.",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "status": "partial",
+      "exact_items": [
+        "Source Control still needs a more concrete worktree-first vocabulary."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01512",
+      "source_obligation_ids": [
+        "obl-1369"
+      ],
+      "source_seed_ids": [
+        "seed-1686"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "This should stay worktree-first in Source Control, with lane/package/run metadata attached",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "status": "partial",
+      "exact_items": [
+        "This should stay worktree-first in Source Control, with lane/package/run metadata attached."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01532",
+      "source_obligation_ids": [
+        "obl-1389"
+      ],
+      "source_seed_ids": [
+        "seed-1706"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "revoked/reopened flow leaves an old lane/worktree no longer needed live",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "status": "partial",
+      "exact_items": [
+        "revoked/reopened flow leaves an old lane/worktree no longer needed live"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01593",
+      "source_obligation_ids": [
+        "obl-1450"
+      ],
+      "source_seed_ids": [
+        "seed-1796"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Source Control / lane/worktree language",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "status": "partial",
+      "exact_items": [
+        "Source Control / lane/worktree language"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02087",
+      "source_obligation_ids": [
+        "obl-1944"
+      ],
+      "source_seed_ids": [
+        "seed-2521"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "Source Control is compact and worktree-first",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "status": "partial",
+      "exact_items": [
+        "Source Control is compact and worktree-first"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "required_action": "owner_create_or_rewrite"
     }
   ]
 }

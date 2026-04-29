@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1468",
+  "group_ids": [
+    "discgrp-5869",
+    "discgrp-5870",
+    "discgrp-5871",
+    "discgrp-5872"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06484",
+      "source_obligation_ids": [
+        "obl-6125"
+      ],
+      "source_seed_ids": [
+        "seed-9256"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileManager.md",
+      "new_heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FileManager.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06485",
+      "source_obligation_ids": [
+        "obl-6126"
+      ],
+      "source_seed_ids": [
+        "seed-9257"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06486",
+      "source_obligation_ids": [
+        "obl-6127"
+      ],
+      "source_seed_ids": [
+        "seed-9258"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06488",
+      "source_obligation_ids": [
+        "obl-6129"
+      ],
+      "source_seed_ids": [
+        "seed-9261"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "### 7.2 `plan_graph/nodes/<node_id>.json` (required; one node per file)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L314"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

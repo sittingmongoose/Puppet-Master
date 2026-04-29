@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1235",
+  "group_ids": [
+    "discgrp-4937",
+    "discgrp-4938",
+    "discgrp-4939",
+    "discgrp-4940"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05341",
+      "source_obligation_ids": [
+        "obl-5113"
+      ],
+      "source_seed_ids": [
+        "seed-7548"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05342",
+      "source_obligation_ids": [
+        "obl-5114"
+      ],
+      "source_seed_ids": [
+        "seed-7549"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05343",
+      "source_obligation_ids": [
+        "obl-5115"
+      ],
+      "source_seed_ids": [
+        "seed-7550",
+        "seed-7557",
+        "seed-7564",
+        "seed-7578"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-093: Account switch and pressure history",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L221"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05344",
+      "source_obligation_ids": [
+        "obl-5116"
+      ],
+      "source_seed_ids": [
+        "seed-7551",
+        "seed-7579"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 4. Remediation lineage events",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1243"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

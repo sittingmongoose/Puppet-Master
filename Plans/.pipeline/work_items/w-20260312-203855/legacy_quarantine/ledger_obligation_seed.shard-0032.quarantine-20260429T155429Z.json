@@ -1,0 +1,150 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0032",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0032-L006201-L006400.md",
+  "source_line_range": "L006201-L006400",
+  "covered_shard_id": "shard-0032",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Decision_Policy / overseer-owned blocked-state and transition policy",
+      "exact_items": [
+        "acknowledge concerns",
+        "revoke promotions",
+        "confirm corroboration outcomes",
+        "own blocked states",
+        "concerns",
+        "corroboration",
+        "promotions",
+        "superseded/revoked/reopened states"
+      ],
+      "affected_doc_hints": [
+        "Plans/Decision_Policy.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Contradictions / gaps surfaced",
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "Puppet Master authority center",
+        "tier context"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6222-L6240"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "HITL / blocked-flow execution anchors",
+      "exact_items": [
+        "HITLRequest",
+        "tier_id",
+        "tier_type",
+        "node_id",
+        "attempt-scoped records",
+        "blocked_reason_code",
+        "attempt_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Architecture_Invariants.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Contradictions / gaps surfaced",
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [
+        "tier_id",
+        "tier_type"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6223-L6245"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Intent-specific worktree/orchestration modes",
+      "exact_items": [
+        "always use isolated worktrees",
+        "single-branch execution",
+        "intent-specific execution modes",
+        "adaptive phase planning",
+        "contract unification"
+      ],
+      "affected_doc_hints": [
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Contradictions / gaps surfaced",
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "always use isolated worktrees",
+        "globally uniform"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6225-L6240"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Monolithic authority / tier-era ownership language",
+      "exact_items": [
+        "stronger single \"Puppet Master\" authority center",
+        "seam/package overseer scopes",
+        "blocked-owner attribution",
+        "runtime/system/user authority",
+        "tier context",
+        "less precise ownership terms"
+      ],
+      "affected_doc_hints": [
+        "Plans/Decision_Policy.md",
+        "Plans/Permissions_System.md",
+        "Plans/Architecture_Invariants.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Authority is still framed too monolithically in several places"
+      ],
+      "stale_tokens": [
+        "Puppet Master",
+        "tier context"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6201-L6210"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    {
+      "line_range": "L006212-L006219",
+      "reason": "impacted-doc list only"
+    },
+    {
+      "line_range": "L006249-L006260",
+      "reason": "targeted docs read only"
+    },
+    {
+      "line_range": "L006281-L006289",
+      "reason": "impacted-doc list only"
+    },
+    {
+      "line_range": "L006325-L006335",
+      "reason": "targeted docs read only"
+    },
+    {
+      "line_range": "L006357-L006365",
+      "reason": "impacted-doc list only"
+    }
+  ],
+  "uncertain_items": []
+}

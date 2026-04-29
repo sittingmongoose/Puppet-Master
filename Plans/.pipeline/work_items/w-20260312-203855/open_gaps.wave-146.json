@@ -1,0 +1,648 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-146",
+  "group_ids": [
+    "gapgrp-0581",
+    "gapgrp-0582",
+    "gapgrp-0583",
+    "gapgrp-0584"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-05109",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06583 is partial for still defines Evidence, History, and Ledger as widget tabs rather than native tabs",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06583"
+      ],
+      "source_obligation_ids": [
+        "obl-6224"
+      ],
+      "source_seed_ids": [
+        "seed-9410"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "still defines Evidence, History, and Ledger as widget tabs rather than native tabs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05136",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06618 is partial for still defines `Dashboard, Usage, Orchestrator widget tabs`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06618"
+      ],
+      "source_obligation_ids": [
+        "obl-6259"
+      ],
+      "source_seed_ids": [
+        "seed-9469"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "still defines `Dashboard, Usage, Orchestrator widget tabs`",
+        "Dashboard, Usage, Orchestrator widget tabs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05145",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06634 is present for `Widget_System.md` and `Orchestrator_Page.md` still reinforce each other through the old \u201c",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06634"
+      ],
+      "source_obligation_ids": [
+        "obl-6275"
+      ],
+      "source_seed_ids": [
+        "seed-9501"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`Widget_System.md` and `Orchestrator_Page.md` still reinforce each other through the old \u201call Orchestrator tabs are widget canvases\u201d model.",
+        "Widget_System.md",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05152",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06650 is partial for non-Progress Orchestrator tabs removed from widget layout persistence",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06650"
+      ],
+      "source_obligation_ids": [
+        "obl-6291"
+      ],
+      "source_seed_ids": [
+        "seed-9518"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "non-Progress Orchestrator tabs removed from widget layout persistence"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03530",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04498 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04498"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04855",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06267 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06267"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04753",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-06145 is missing for Retire `widget.tier_tree` as a first-class Orchestrator widget in favor of native `Seams`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06145"
+      ],
+      "source_obligation_ids": [
+        "obl-5917"
+      ],
+      "source_seed_ids": [
+        "seed-8787"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "Retire `widget.tier_tree` as a first-class Orchestrator widget in favor of native `Seams` and native graph/history/evidence/ledger tabs.",
+        "widget.tier_tree",
+        "Seams"
+      ],
+      "stale_tokens": [
+        "Seams",
+        "widget.tier_tree"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05135",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-06617 is missing for `Plans/Widget_System.md` remains a major stale hostability owner:",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06617"
+      ],
+      "source_obligation_ids": [
+        "obl-6258"
+      ],
+      "source_seed_ids": [
+        "seed-9468"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`Plans/Widget_System.md` remains a major stale hostability owner:",
+        "Plans/Widget_System.md"
+      ],
+      "stale_tokens": [
+        "Plans/Widget_System.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04931",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06353 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06353"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-06583",
+    "cov-06618",
+    "cov-06634",
+    "cov-06650",
+    "cov-04498",
+    "cov-06267",
+    "cov-06145",
+    "cov-06617",
+    "cov-06353"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-4292",
+    "obl-5917",
+    "obl-5986",
+    "obl-6009",
+    "obl-6224",
+    "obl-6258",
+    "obl-6259",
+    "obl-6275",
+    "obl-6291"
+  ],
+  "source_seed_ids_represented": [
+    "seed-6001",
+    "seed-8787",
+    "seed-9006",
+    "seed-9092",
+    "seed-9410",
+    "seed-9468",
+    "seed-9469",
+    "seed-9501",
+    "seed-9518"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0059",
+    "shard-0080",
+    "shard-0082",
+    "shard-0085"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-05109",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06583 is partial for still defines Evidence, History, and Ledger as widget tabs rather than native tabs",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06583"
+      ],
+      "source_obligation_ids": [
+        "obl-6224"
+      ],
+      "source_seed_ids": [
+        "seed-9410"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "still defines Evidence, History, and Ledger as widget tabs rather than native tabs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05136",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06618 is partial for still defines `Dashboard, Usage, Orchestrator widget tabs`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06618"
+      ],
+      "source_obligation_ids": [
+        "obl-6259"
+      ],
+      "source_seed_ids": [
+        "seed-9469"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "still defines `Dashboard, Usage, Orchestrator widget tabs`",
+        "Dashboard, Usage, Orchestrator widget tabs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05145",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06634 is present for `Widget_System.md` and `Orchestrator_Page.md` still reinforce each other through the old \u201c",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06634"
+      ],
+      "source_obligation_ids": [
+        "obl-6275"
+      ],
+      "source_seed_ids": [
+        "seed-9501"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`Widget_System.md` and `Orchestrator_Page.md` still reinforce each other through the old \u201call Orchestrator tabs are widget canvases\u201d model.",
+        "Widget_System.md",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05152",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06650 is partial for non-Progress Orchestrator tabs removed from widget layout persistence",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06650"
+      ],
+      "source_obligation_ids": [
+        "obl-6291"
+      ],
+      "source_seed_ids": [
+        "seed-9518"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "non-Progress Orchestrator tabs removed from widget layout persistence"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03530",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04498 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04498"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04855",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06267 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06267"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04753",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-06145 is missing for Retire `widget.tier_tree` as a first-class Orchestrator widget in favor of native `Seams`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06145"
+      ],
+      "source_obligation_ids": [
+        "obl-5917"
+      ],
+      "source_seed_ids": [
+        "seed-8787"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "Retire `widget.tier_tree` as a first-class Orchestrator widget in favor of native `Seams` and native graph/history/evidence/ledger tabs.",
+        "widget.tier_tree",
+        "Seams"
+      ],
+      "stale_tokens": [
+        "Seams",
+        "widget.tier_tree"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05135",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-06617 is missing for `Plans/Widget_System.md` remains a major stale hostability owner:",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06617"
+      ],
+      "source_obligation_ids": [
+        "obl-6258"
+      ],
+      "source_seed_ids": [
+        "seed-9468"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`Plans/Widget_System.md` remains a major stale hostability owner:",
+        "Plans/Widget_System.md"
+      ],
+      "stale_tokens": [
+        "Plans/Widget_System.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04931",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06353 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06353"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

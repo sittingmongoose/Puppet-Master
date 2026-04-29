@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-239",
+  "group_ids": [
+    "discgrp-0953",
+    "discgrp-0954",
+    "discgrp-0955",
+    "discgrp-0956"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01202",
+      "source_obligation_ids": [
+        "obl-1059"
+      ],
+      "source_seed_ids": [
+        "seed-1243",
+        "seed-1246"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "# Glossary (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01203",
+      "source_obligation_ids": [
+        "obl-1060"
+      ],
+      "source_seed_ids": [
+        "seed-1244",
+        "seed-1247"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Fidelity recovery cov-194: Help entry template and related-concept clusters",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L17"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01204",
+      "source_obligation_ids": [
+        "obl-1061"
+      ],
+      "source_seed_ids": [
+        "seed-1245",
+        "seed-1248"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Fidelity recovery cov-061: Glossary and help governance",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01205",
+      "source_obligation_ids": [
+        "obl-1062"
+      ],
+      "source_seed_ids": [
+        "seed-1249"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Fidelity recovery cov-061: Glossary and help governance",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L7"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

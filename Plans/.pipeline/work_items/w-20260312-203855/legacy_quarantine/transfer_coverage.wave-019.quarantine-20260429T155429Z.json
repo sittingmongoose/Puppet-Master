@@ -1,0 +1,676 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-019",
+  "timestamp_utc": "2026-04-28T20:07:28Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-073",
+    "coverage-rowgrp-074",
+    "coverage-rowgrp-075",
+    "coverage-rowgrp-076"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-073 cov-685,cov-875,cov-993,cov-1046,cov-1049,cov-1051,cov-1149,cov-1156 Plans/FinalGUISpec.md",
+    "rowgrp-074 cov-028,cov-031,cov-269,cov-447,cov-525,cov-825,cov-833,cov-835,cov-892,cov-1009 Plans/FinalGUISpec.md",
+    "rowgrp-075 cov-1023 Plans/FinalGUISpec.md",
+    "rowgrp-076 cov-055,cov-199,cov-210,cov-237,cov-257,cov-293,cov-300,cov-304,cov-305,cov-354 Plans/FinalGUISpec.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-073": "completed_reduced_conservatively",
+    "coverage-rowgrp-074": "completed_reduced_conservatively",
+    "coverage-rowgrp-075": "completed_reduced_conservatively",
+    "coverage-rowgrp-076": "completed_reduced_conservatively"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-685",
+    "cov-875",
+    "cov-993",
+    "cov-1046",
+    "cov-1049",
+    "cov-1051",
+    "cov-1149",
+    "cov-1156",
+    "cov-028",
+    "cov-031",
+    "cov-269",
+    "cov-447",
+    "cov-525",
+    "cov-825",
+    "cov-833",
+    "cov-835",
+    "cov-892",
+    "cov-1009",
+    "cov-1023",
+    "cov-055",
+    "cov-199",
+    "cov-210",
+    "cov-237",
+    "cov-257",
+    "cov-293",
+    "cov-300",
+    "cov-304",
+    "cov-305",
+    "cov-354"
+  ],
+  "coverage_ids_completed": [
+    "cov-685",
+    "cov-875",
+    "cov-993",
+    "cov-1046",
+    "cov-1049",
+    "cov-1051",
+    "cov-1149",
+    "cov-1156",
+    "cov-028",
+    "cov-031",
+    "cov-269",
+    "cov-447",
+    "cov-525",
+    "cov-825",
+    "cov-833",
+    "cov-835",
+    "cov-892",
+    "cov-1009",
+    "cov-1023",
+    "cov-055",
+    "cov-199",
+    "cov-210",
+    "cov-237",
+    "cov-257",
+    "cov-293",
+    "cov-300",
+    "cov-304",
+    "cov-305",
+    "cov-354"
+  ],
+  "path_groups_assigned": [
+    "Plans/FinalGUISpec.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-685",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md:2585-2587 still lists cmd.orchestrator.* action IDs for remediation actions, but no matching UICommand IDs, cmd.orchestrator.switch_tab, cmd.chat.run_user_command, or catalog/page integrity repair is present"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Catalog/page integrity and missing command-family blockers are not resolved in the assigned path.",
+      "source_obligation_ids": [
+        "obl-190"
+      ],
+      "source_seed_ids": [
+        "seed-190"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-875",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:937-938 concern routes preserve focused-run, target-tab, selected concern, and related object context",
+        "Plans/FinalGUISpec.md:941 inspector_target is secondary metadata, not primary identity"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "FinalGUISpec defines inspector_target as secondary metadata, but does not fully define the narrow reusable detail/subsection focus boundary.",
+      "source_obligation_ids": [
+        "obl-246"
+      ],
+      "source_seed_ids": [
+        "seed-246"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-993",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:912-914 Progress catalog includes focused_run_id, node inspector, and lane/worktree drill targets",
+        "Plans/FinalGUISpec.md:937-941 shared route payload includes object_kind/object_id, focused_run_id, target_tab, and inspector_target boundaries"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Route fields are partially represented, but no complete node graph page_tab example with target_kind, tab_id=node_graph, and inspector_target options is present.",
+      "source_obligation_ids": [
+        "obl-278"
+      ],
+      "source_seed_ids": [
+        "seed-278"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1046",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md:935 resume_url is the serialized transport form of the shared route/deep-link payload, not a second routing model"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-295"
+      ],
+      "source_seed_ids": [
+        "seed-295"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1049",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:1749 tiers.rs is renamed to views/nodes.slint to match the node/package/lane/seam model"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Tiers retirement is partially represented by the node/package/lane/seam rename, but stale Tiers page/tab structures are not fully removed or reconciled.",
+      "source_obligation_ids": [
+        "obl-296"
+      ],
+      "source_seed_ids": [
+        "seed-296"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1051",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md:906 Only Progress is widget-composed inside Orchestrator and orchestrator:progress layout persists independently from Dashboard and Usage layout keys"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-297"
+      ],
+      "source_seed_ids": [
+        "seed-297"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1149",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:935 resume_url is serialized transport, not a second routing model",
+        "Plans/FinalGUISpec.md:1749 tiers.rs is renamed to match the node/package/lane/seam model"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Resume URL transport cleanup and partial tier retirement are present, but FinalGUISpec remains a GUI drift amplifier with incomplete Tiers retirement.",
+      "source_obligation_ids": [
+        "obl-334"
+      ],
+      "source_seed_ids": [
+        "seed-334"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1156",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:906 Only Progress is widget-composed inside Orchestrator",
+        "Plans/FinalGUISpec.md:1749 tiers.rs is renamed to match the node/package/lane/seam model"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Tier retirement is partially represented, but native Seams, Evidence, History, Ledger tabs and tier_id replacement are not fully specified here.",
+      "source_obligation_ids": [
+        "obl-336"
+      ],
+      "source_seed_ids": [
+        "seed-336"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-028",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:260 Usage page is listed as a new view",
+        "Plans/FinalGUISpec.md:286-288 redb, seglog, and Tantivy persistence/search assumptions are listed",
+        "Plans/FinalGUISpec.md:1983 Dashboard widgets include Usage widgets"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "FinalGUISpec carries usage/runtime/event/GUI assumptions, but does not state the row-specific usage-feature owner-doc relationship.",
+      "source_obligation_ids": [
+        "obl-021"
+      ],
+      "source_seed_ids": [
+        "seed-021"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-031",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:912-920 Progress catalog uses focused_run_id, node inspector, lane health, and Source Control worktree rows with lane/package/run refs",
+        "Plans/FinalGUISpec.md:1602 project_state stores per-project shell snapshots",
+        "Plans/FinalGUISpec.md:2137 implementation boundaries include Orchestrator node/package/lane/seam mappings"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Feature seam, work package, independent execution settings, persona override, and project-scoped aggregation are only partially represented.",
+      "source_obligation_ids": [
+        "obl-022"
+      ],
+      "source_seed_ids": [
+        "seed-022"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-269",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:268 catalog and sync includes config export/import bundles",
+        "Plans/FinalGUISpec.md:919 Progress includes artifact receipts filtered to receipt-linked runtime artifacts"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Export/import and artifact references exist, but the record export, bundle export, view export, and manifest backbone contract is not fully defined.",
+      "source_obligation_ids": [
+        "obl-077"
+      ],
+      "source_seed_ids": [
+        "seed-077"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-447",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:967 concern actions carry actor authority, confirmation requirements, rationale requirements, reversibility, and audit fields",
+        "Plans/FinalGUISpec.md:981-987 recommended concern shape includes governance authority policy, confirmation policy, rationale policy, and audit refs"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Concern action policy fields exist, but no complete canonical table with default action policies for acknowledge/resolve/dismiss/reopen/merge/split/supersede is present.",
+      "source_obligation_ids": [
+        "obl-131"
+      ],
+      "source_seed_ids": [
+        "seed-131"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-525",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:959 project_summary contains activity_state, attention_state, health_state, owner, and projection-trust disclosure",
+        "Plans/FinalGUISpec.md:961 project_attention_item carries primary route payload, projection-trust disclosure, blocked-owner kind, escalation level, and summary text",
+        "Plans/FinalGUISpec.md:703 layout state is persisted per project in redb"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Project summary and attention row shapes exist, but canonical redb key patterns and archival/resolution behavior for attention records are not fully specified.",
+      "source_obligation_ids": [
+        "obl-151"
+      ],
+      "source_seed_ids": [
+        "seed-151"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-825",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:935 all search results, palette actions, widgets, recovery links, and cross-surface pivots emit one shared route/deep-link payload",
+        "Plans/FinalGUISpec.md:939 route_target stays small as subject_id or object_kind/object_id identity",
+        "Plans/FinalGUISpec.md:961 project_attention_item carries a primary route payload"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Shared route behavior covers many pivots, but search/attention/usage/artifact normalization through one canonical route-target model is not fully enumerated.",
+      "source_obligation_ids": [
+        "obl-232"
+      ],
+      "source_seed_ids": [
+        "seed-232"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-833",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:268 catalog and sync includes config export/import bundles",
+        "Plans/FinalGUISpec.md:919 artifact receipts are filtered to receipt-linked runtime artifacts"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Export/bundle mentions exist, but identity-preserving export manifests for non-trivial bundle exports are not fully specified.",
+      "source_obligation_ids": [
+        "obl-233"
+      ],
+      "source_seed_ids": [
+        "seed-233"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-835",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:961 project_attention_item carries a primary route payload",
+        "Plans/FinalGUISpec.md:969 Orchestrator, Dashboard, thread badges, and notifications share one escalation ladder",
+        "Plans/FinalGUISpec.md:2479-2484 wizard_blocked cards define CTA behavior and priority ordering"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Attention and blocked/action surfaces consume route-like behavior, but they are not explicitly stated as first-class consumers of the canonical route-target model.",
+      "source_obligation_ids": [
+        "obl-234"
+      ],
+      "source_seed_ids": [
+        "seed-234"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-892",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: assigned file reviewed; no panel-local subview/selector route-identity exclusion rule found"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Panel-local subviews/selectors are not explicitly moved out of route identity into destination/view-state handling.",
+      "source_obligation_ids": [
+        "obl-252"
+      ],
+      "source_seed_ids": [
+        "seed-252"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1009",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: assigned file reviewed; no route validation rejection or invalid-payload contract-failure rule found"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Route validation rejection rules are absent from the assigned path.",
+      "source_obligation_ids": [
+        "obl-283"
+      ],
+      "source_seed_ids": [
+        "seed-283"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1023",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:900 canonical concern definitions, approval scope semantics, and route/open ownership are defined in Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md:935 shared route/deep-link payload is the routing model",
+        "Plans/FinalGUISpec.md:468 ContractRefs include UI_Command_Catalog, GitHub_Integration, and FileManager"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "FinalGUISpec references stronger owner docs and canonical routing behavior, but does not directly state that routing conclusions are ahead of Contracts_V0, Crosswalk, UI_Command_Catalog, and FinalGUISpec.",
+      "source_obligation_ids": [
+        "obl-287"
+      ],
+      "source_seed_ids": [
+        "seed-287"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-055",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:950-955 settings resolver separates source, request, and execution axes and emits settings_resolution",
+        "Plans/FinalGUISpec.md:2026-2036 Persona editor shows provider support state for controls",
+        "Plans/FinalGUISpec.md:2089-2096 runtime display shows requested/effective Persona, platform, model, variant/effort, and skipped controls"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Execution-object settings are partly surfaced, but overseer policies, worktree-central behavior, node-worker persona assignment, and default multi-account auto-switch are not fully specified.",
+      "source_obligation_ids": [
+        "obl-028"
+      ],
+      "source_seed_ids": [
+        "seed-028"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-199",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:920 Source Control worktree row includes lane/package/run refs",
+        "Plans/FinalGUISpec.md:2396-2403 thread rows show active worktree bindings with branch/status/path and stale projection disclosure",
+        "Plans/FinalGUISpec.md:1602 project_state stores last-focused Search/Source Control refs"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Worktree context metadata exists, but Source Control rows are not fully specified as filesystem/Git-oriented ownership metadata with lifecycle and blocked/recovery state.",
+      "source_obligation_ids": [
+        "obl-053"
+      ],
+      "source_seed_ids": [
+        "seed-053"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-210",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:904 Orchestrator renders current, refreshing, stale, degraded, and unavailable states with projection_freshness/projection_health ownership",
+        "Plans/FinalGUISpec.md:959 project_summary includes projection-trust disclosure"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Projection trust exists for Orchestrator and project summaries, but there is no full shared trust policy across all projection-backed surfaces with first-class last-updated fields.",
+      "source_obligation_ids": [
+        "obl-058"
+      ],
+      "source_seed_ids": [
+        "seed-058"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-237",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:935 all search results emit one shared route/deep-link payload",
+        "Plans/FinalGUISpec.md:937 concern search results include focused_run_id and target_tab context",
+        "Plans/FinalGUISpec.md:942 destination/context overrides are allowed only when needed to restore the target surface"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Focused-run routing fields are present, but explicit cross-run focus-switch disclosure and search scope behavior are not fully defined.",
+      "source_obligation_ids": [
+        "obl-066"
+      ],
+      "source_seed_ids": [
+        "seed-066"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-257",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:965 concern is a first-class durable record with concern_id, project_id, run refs, scope refs, evidence/source/lineage refs, severity, category, status, and governance metadata",
+        "Plans/FinalGUISpec.md:981-987 recommended concern record shape includes owner_kind, owner_ref, evidence_refs, artifact_refs, lineage_refs, and governance policies"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Concern record shape is strong, but the full canonical concern record family and corresponding projection contract is not completely stated.",
+      "source_obligation_ids": [
+        "obl-072"
+      ],
+      "source_seed_ids": [
+        "seed-072"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-293",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md:950-955 resolver separates source, request, and execution axes and emits settings_resolution with switch_reason and resolution_status",
+        "Plans/FinalGUISpec.md:2080-2130 runtime display and provider-gap disclosure preserve requested/effective naming, provider identity, effective model, skipped controls, and auditable history disclosure"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-084"
+      ],
+      "source_seed_ids": [
+        "seed-084"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-300",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:971 help is layered as inline help, context help, and canonical help-entry pages while keeping canonical term names stable",
+        "Plans/FinalGUISpec.md:975 dedicated help entries use a stable canonical-term template and link to canonical term names rather than local aliases"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Help layers and stable names are present, but the canonical term system, help entry system, and contextual help system are not fully separated as contract layers.",
+      "source_obligation_ids": [
+        "obl-086"
+      ],
+      "source_seed_ids": [
+        "seed-086"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-304",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:971 consumes Glossary coverage for rewrite-critical objects, states, and trust terms",
+        "Plans/FinalGUISpec.md:975 dedicated help entries use canonical term, trigger conditions, operator meaning, related concepts, routes, and recovery guidance"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Glossary coverage is referenced, but Glossary.md is not established as the canonical short-definition inventory backbone.",
+      "source_obligation_ids": [
+        "obl-087"
+      ],
+      "source_seed_ids": [
+        "seed-087"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-305",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md:959 project_summary contains activity_state, attention_state, health_state, owner, and projection-trust disclosure",
+        "Plans/FinalGUISpec.md:977 project-facing help and notifications use project activity_state, project attention_state, blocked-owner taxonomy, escalation ladder, and resurfacing/aging rules"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-088"
+      ],
+      "source_seed_ids": [
+        "seed-088"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-354",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:971 consumes Glossary coverage for rewrite-critical objects, states, and trust terms including Concern, blocked episode, focused run, projection trust, escalation ladder, blocked owner, and resolution_kind",
+        "Plans/FinalGUISpec.md:979 blocked-owner taxonomy includes Runtime, Package Overseer, Seam Overseer, Corroboration, Graph Patch, Recovery, User, and External Resource"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Many rewrite-critical terms are covered, but the full requested glossary ownership list for Feature Seam, Work Package, Lane Pool, stale_historical, and lifecycle terms is incomplete.",
+      "source_obligation_ids": [
+        "obl-105"
+      ],
+      "source_seed_ids": [
+        "seed-105"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-313",
+  "group_ids": [
+    "discgrp-1249",
+    "discgrp-1250",
+    "discgrp-1251",
+    "discgrp-1252"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01499",
+      "source_obligation_ids": [
+        "obl-1356"
+      ],
+      "source_seed_ids": [
+        "seed-1652"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Recommended minimum concern record shape",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L199"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01500",
+      "source_obligation_ids": [
+        "obl-1357"
+      ],
+      "source_seed_ids": [
+        "seed-1653"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01501",
+      "source_obligation_ids": [
+        "obl-1358"
+      ],
+      "source_seed_ids": [
+        "seed-1664"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01502",
+      "source_obligation_ids": [
+        "obl-1359"
+      ],
+      "source_seed_ids": [
+        "seed-1671"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "### Fidelity recovery cov-038: Focused run and historical routing contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L19"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

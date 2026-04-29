@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-023",
+  "group_ids": [
+    "discgrp-0089",
+    "discgrp-0090",
+    "discgrp-0091",
+    "discgrp-0092"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00311",
+      "source_obligation_ids": [
+        "obl-176"
+      ],
+      "source_seed_ids": [
+        "seed-202"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00321",
+      "source_obligation_ids": [
+        "obl-180"
+      ],
+      "source_seed_ids": [
+        "seed-206"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00323",
+      "source_obligation_ids": [
+        "obl-182"
+      ],
+      "source_seed_ids": [
+        "seed-208"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L774"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00326",
+      "source_obligation_ids": [
+        "obl-184"
+      ],
+      "source_seed_ids": [
+        "seed-210"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

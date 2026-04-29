@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-585",
+  "group_ids": [
+    "discgrp-2337",
+    "discgrp-2338",
+    "discgrp-2339",
+    "discgrp-2340"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02612",
+      "source_obligation_ids": [
+        "obl-2460"
+      ],
+      "source_seed_ids": [
+        "seed-3212"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02613",
+      "source_obligation_ids": [
+        "obl-2461"
+      ],
+      "source_seed_ids": [
+        "seed-3213"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "new_heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02614",
+      "source_obligation_ids": [
+        "obl-2462"
+      ],
+      "source_seed_ids": [
+        "seed-3214"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02615",
+      "source_obligation_ids": [
+        "obl-2463"
+      ],
+      "source_seed_ids": [
+        "seed-3215"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 7.3 Shared route and open behavior",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L933"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

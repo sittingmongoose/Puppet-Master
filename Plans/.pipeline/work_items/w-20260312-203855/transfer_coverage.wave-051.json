@@ -1,692 +1,1088 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-051",
-  "timestamp_utc": "2026-04-28T21:19:29Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-201",
-    "coverage-rowgrp-202",
-    "coverage-rowgrp-203",
-    "coverage-rowgrp-204"
+  "row_group_ids": [
+    "rowgrp-0201",
+    "rowgrp-0202",
+    "rowgrp-0203",
+    "rowgrp-0204"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-201 cov-599,cov-785,cov-906,cov-1006,cov-1190 Plans/UI_Command_Catalog.md",
-    "rowgrp-202 cov-326,cov-506,cov-530,cov-658,cov-688,cov-717,cov-912,cov-934,cov-1082,cov-1148 Plans/UI_Command_Catalog.md",
-    "rowgrp-203 cov-821,cov-828,cov-891,cov-1008,cov-1022 Plans/UI_Command_Catalog.md",
-    "rowgrp-204 cov-710,cov-806,cov-859,cov-919,cov-947,cov-956,cov-960,cov-982,cov-1018,cov-1043 Plans/UI_Command_Catalog.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-201": "completed_reduced_conservatively_with_schema_normalization",
-    "coverage-rowgrp-202": "completed_reduced_conservatively_with_schema_normalization",
-    "coverage-rowgrp-203": "completed_reduced_conservatively_with_schema_normalization",
-    "coverage-rowgrp-204": "completed_reduced_conservatively_with_schema_normalization"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-599",
-    "cov-785",
-    "cov-906",
-    "cov-1006",
-    "cov-1190",
-    "cov-326",
-    "cov-506",
-    "cov-530",
-    "cov-658",
-    "cov-688",
-    "cov-717",
-    "cov-912",
-    "cov-934",
-    "cov-1082",
-    "cov-1148",
-    "cov-821",
-    "cov-828",
-    "cov-891",
-    "cov-1008",
-    "cov-1022",
-    "cov-710",
-    "cov-806",
-    "cov-859",
-    "cov-919",
-    "cov-947",
-    "cov-956",
-    "cov-960",
-    "cov-982",
-    "cov-1018",
-    "cov-1043"
-  ],
-  "coverage_ids_completed": [
-    "cov-599",
-    "cov-785",
-    "cov-906",
-    "cov-1006",
-    "cov-1190",
-    "cov-326",
-    "cov-506",
-    "cov-530",
-    "cov-658",
-    "cov-688",
-    "cov-717",
-    "cov-912",
-    "cov-934",
-    "cov-1082",
-    "cov-1148",
-    "cov-821",
-    "cov-828",
-    "cov-891",
-    "cov-1008",
-    "cov-1022",
-    "cov-710",
-    "cov-806",
-    "cov-859",
-    "cov-919",
-    "cov-947",
-    "cov-956",
-    "cov-960",
-    "cov-982",
-    "cov-1018",
-    "cov-1043"
-  ],
-  "path_groups_assigned": [
-    "Plans/UI_Command_Catalog.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-599",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:81-109 scopes UI actions by execution_role, concern state, approval context, DAE jail posture, and preserves route_target/OpenSubject/execution_unit_context/approval_scope_key/operational_identity",
-        "Plans/UI_Command_Catalog.md:113-135 normalizes UI commands to a standard record and preserves route_target/OpenSubject intent"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Route/open identity fields and concern-state policy exist, but runtime-artifact producer identity/role/account/switch lineage is not directly covered.",
+      "coverage_id": "cov-03553",
       "source_obligation_ids": [
-        "obl-168"
+        "obl-3399"
       ],
       "source_seed_ids": [
-        "seed-168"
+        "seed-4577"
       ],
       "source_shard_ids": [
-        "shard-0042"
+        "shard-0048"
       ],
-      "path_field_status": "match"
+      "canon_label": "`baseline_ref?`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`baseline_ref?`",
+        "baseline_ref?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-785",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:64-77 normalizes command families around shared navigation, search routing, runtime recovery ownership, and route_target canonical open/focus identity",
-        "Plans/UI_Command_Catalog.md:186-195 lists project/deferred wizard open commands including cmd.project.open and cmd.project.chain_wizard_open_deferred"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Routed/open commands exist, but no explicit generalized subject-open command family or reusable route payload contract for all new surfaces is defined.",
+      "coverage_id": "cov-03554",
       "source_obligation_ids": [
-        "obl-218"
+        "obl-3400"
       ],
       "source_seed_ids": [
-        "seed-218"
+        "seed-4579"
       ],
       "source_shard_ids": [
-        "shard-0055"
+        "shard-0048"
       ],
-      "path_field_status": "match"
+      "canon_label": "`created_by_run_id?`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`created_by_run_id?`",
+        "created_by_run_id?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-906",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:269-272 treats Orchestrator object opens as route-consuming navigation wrappers and preserves project_id, focused_run_id, object identity, and inspector focus across cross-tab deep links"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Deep-link identity/focus preservation exists, but no explicit shared override rule prevents remembered shell state from hiding the requested target.",
+      "coverage_id": "cov-03555",
       "source_obligation_ids": [
-        "obl-255"
+        "obl-3401"
       ],
       "source_seed_ids": [
-        "seed-255"
+        "seed-4580"
       ],
       "source_shard_ids": [
-        "shard-0064"
+        "shard-0048"
       ],
-      "path_field_status": "match"
+      "canon_label": "`created_by_attempt_id?`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`created_by_attempt_id?`",
+        "created_by_attempt_id?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1006",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:186-195 defines deferred wizard open commands with wizard_id and deferred payload ref",
-        "Plans/UI_Command_Catalog.md:269-272 preserves project_id, focused_run_id, object identity, and inspector focus in cross-tab deep links"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Wizard/deep-link behavior exists, but normalized object routes with serialized step anchors and tab/inspector focus secondary to object route are not explicit.",
+      "coverage_id": "cov-03556",
       "source_obligation_ids": [
-        "obl-282"
+        "obl-3402"
       ],
       "source_seed_ids": [
-        "seed-282"
+        "seed-4582"
       ],
       "source_shard_ids": [
-        "shard-0071"
+        "shard-0048"
       ],
-      "path_field_status": "match"
+      "canon_label": "`historical_lineage_refs[]?`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`historical_lineage_refs[]?`",
+        "historical_lineage_refs[]?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1190",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:679-684 references Contracts_V0, Run_Graph_View, Orchestrator_Page, and Widget_System"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "The file has related references, but not the exact same-file supersession hot list covering every named plan.",
+      "coverage_id": "cov-03559",
       "source_obligation_ids": [
-        "obl-341"
+        "obl-3405"
       ],
       "source_seed_ids": [
-        "seed-341"
+        "seed-4585"
       ],
       "source_shard_ids": [
-        "shard-0086"
+        "shard-0048"
       ],
-      "path_field_status": "match"
+      "canon_label": "`dirty_state`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`dirty_state`",
+        "dirty_state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-326",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:91-109 gates actions by approval_scope_key, blocked_sequence, DAE jail posture, external side-effect confirmation, and FileSafe route/open guards",
-        "Plans/UI_Command_Catalog.md:113-124 normalizes button clicks, keyboard shortcuts, and context menu items to a standard command record",
-        "Plans/UI_Command_Catalog.md:307-311 routes Orchestrator navigation through shared route payloads and retains confirmation/safety class for mutations"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Generic shortcut/context-menu normalization and safety gating exist, but rewrite-specific palette, bulk, and live-runtime batch safety policy is absent.",
+      "coverage_id": "cov-03560",
       "source_obligation_ids": [
-        "obl-097"
+        "obl-3406"
       ],
       "source_seed_ids": [
-        "seed-097"
+        "seed-4586"
       ],
       "source_shard_ids": [
-        "shard-0023"
+        "shard-0048"
       ],
-      "path_field_status": "match"
+      "canon_label": "`conflict_state`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`conflict_state`",
+        "conflict_state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-506",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:141-144 retires TierContext, tier_id, TierType, and Tiers",
-        "Plans/UI_Command_Catalog.md:247-274 normalizes Run Graph runtime recovery commands and defines canonical Orchestrator commands including cmd.orchestrator.open_in_source_control",
-        "Plans/UI_Command_Catalog.md:276-311 lists action-envelope fields and route/safety rules"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Run Graph/orchestrator command normalization and tier retirement exist, but open_in_* envelope/trust-state gating and dashboard_layout:v1 contradiction handling are incomplete.",
+      "coverage_id": "cov-03561",
       "source_obligation_ids": [
-        "obl-146"
+        "obl-3407"
       ],
       "source_seed_ids": [
-        "seed-146"
+        "seed-4587"
       ],
       "source_shard_ids": [
-        "shard-0036"
+        "shard-0048"
       ],
-      "path_field_status": "match"
+      "canon_label": "`owner_run_id?`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`owner_run_id?`",
+        "owner_run_id?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-530",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:28-35 defines canonical route payload treatment and resume_url as serialized transport",
-        "Plans/UI_Command_Catalog.md:113-124 normalizes commands with route_target and open_subject",
-        "Plans/UI_Command_Catalog.md:292-299 defines navigation/mutation canonical terms including route_target"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Route payload terminology exists, but no canonical internal route_payload schema is defined.",
+      "coverage_id": "cov-03562",
       "source_obligation_ids": [
-        "obl-153"
+        "obl-3408"
       ],
       "source_seed_ids": [
-        "seed-153"
+        "seed-4588"
       ],
       "source_shard_ids": [
-        "shard-0038"
+        "shard-0048"
       ],
-      "path_field_status": "match"
+      "canon_label": "`owner_attempt_id?`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`owner_attempt_id?`",
+        "owner_attempt_id?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-658",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:141-143 retires TierContext, tier_id, TierType, and Tiers",
-        "Plans/UI_Command_Catalog.md:231-243 defines widget layout commands required by Widget_System",
-        "Plans/UI_Command_Catalog.md:247-274 defines canonical Orchestrator commands including cmd.orchestrator.open_in_source_control"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Canonical orchestrator/widget command text and tier retirement exist, but the cmd.orchestrator.switch_tab contradiction and standalone Tiers/Evidence/History/Ledger drift are not directly resolved.",
+      "coverage_id": "cov-03563",
       "source_obligation_ids": [
-        "obl-186"
+        "obl-3409"
       ],
       "source_seed_ids": [
-        "seed-186"
+        "seed-4589"
       ],
       "source_shard_ids": [
-        "shard-0046"
+        "shard-0048"
       ],
-      "path_field_status": "match"
+      "canon_label": "latest `blocked_reason_code?`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "latest `blocked_reason_code?`",
+        "blocked_reason_code?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L555"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-688",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:428-439 lists chat/thread context commands and marks superseded IDs non-canonical",
-        "Plans/UI_Command_Catalog.md:231-243 defines widget layout commands required by Widget_System"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "The file has command IDs and chat command cleanup, but not the missing UICommand IDs section, cmd.orchestrator.switch_tab, or cmd.chat.run_user_command coverage.",
+      "coverage_id": "cov-03565",
       "source_obligation_ids": [
-        "obl-190"
+        "obl-3411"
       ],
       "source_seed_ids": [
-        "seed-190"
+        "seed-4594"
       ],
       "source_shard_ids": [
-        "shard-0047"
+        "shard-0048"
       ],
-      "path_field_status": "match"
+      "canon_label": "package/work-package linkage",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-033: Concern linkage to adjacent families",
+      "status": "partial",
+      "exact_items": [
+        "package/work-package linkage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L83",
+        "Plans/Contracts_V0.md:L90"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-717",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:690-716 defines canonical cmd.runtime.* recovery commands and maps blocked-state recovery from allowed_action_ids[]",
-        "Plans/UI_Command_Catalog.md:722-755 defines required command metadata including normalization.kind, normalizes_to_contract, alias_of_command_id, allowed_action_ids[], route_target, open_subject, and ref_family"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Runtime recovery canon and metadata exist, but missing catalog rows, runtime-artifact storage registration, dead glossary/crosswalk refs, and reserved slash criteria remain uncovered.",
+      "coverage_id": "cov-03568",
       "source_obligation_ids": [
-        "obl-197"
+        "obl-3414"
       ],
       "source_seed_ids": [
-        "seed-197"
+        "seed-4597"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "canon_label": "`storage-plan.md` should own:",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`storage-plan.md` should own:",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L340",
+        "Plans/Contracts_V0.md:L341",
+        "Plans/Contracts_V0.md:L362",
+        "Plans/Contracts_V0.md:L364",
+        "Plans/Contracts_V0.md:L496"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03571",
+      "source_obligation_ids": [
+        "obl-3417"
+      ],
+      "source_seed_ids": [
+        "seed-4600"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "canon_label": "schema family references",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "status": "partial",
+      "exact_items": [
+        "schema family references"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L47",
+        "Plans/Contracts_V0.md:L54"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03576",
+      "source_obligation_ids": [
+        "obl-3422"
+      ],
+      "source_seed_ids": [
+        "seed-4609"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "canon_label": "Expand `storage-plan.md` with explicit artifact-index and worktree/lane family registratio",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "status": "present",
+      "exact_items": [
+        "Expand `storage-plan.md` with explicit artifact-index and worktree/lane family registration.",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L340",
+        "Plans/Contracts_V0.md:L341",
+        "Plans/Contracts_V0.md:L362",
+        "Plans/Contracts_V0.md:L364",
+        "Plans/Contracts_V0.md:L496"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03583",
+      "source_obligation_ids": [
+        "obl-3429"
+      ],
+      "source_seed_ids": [
+        "seed-4622"
       ],
       "source_shard_ids": [
         "shard-0049"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-912",
+      "canon_label": "canonical execution-context replacement / `TierContext` successor ownership",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
       "status": "partial",
+      "exact_items": [
+        "canonical execution-context replacement / `TierContext` successor ownership",
+        "TierContext"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/UI_Command_Catalog.md:113-124 normalizes all UI commands with command_type, route_target, and open_subject",
-        "Plans/UI_Command_Catalog.md:292-311 distinguishes navigation and mutation canonical terms and safety rules",
-        "Plans/UI_Command_Catalog.md:722-755 defines required command metadata including route_target/open_subject and recovery identity behavior"
+        "Plans/Contracts_V0.md:L153",
+        "Plans/Contracts_V0.md:L160"
       ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Taxonomy-related fields and route/open ownership exist, but the formal shell/view-state vs route-consuming navigation vs domain mutation/runtime taxonomy is not stated.",
-      "source_obligation_ids": [
-        "obl-256"
-      ],
-      "source_seed_ids": [
-        "seed-256"
-      ],
-      "source_shard_ids": [
-        "shard-0065"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-934",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:113-124 defines normalized command record fields including route_target, open_subject, and approval_scope_key",
-        "Plans/UI_Command_Catalog.md:722-755 defines command metadata including command_kind, normalization.kind, normalizes_to_contract, alias_of_command_id, route_target, and open_subject"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Normalization metadata exists, but an explicit ui_command_id-centered small-contract/gate-logic rule is absent.",
+      "coverage_id": "cov-03596",
       "source_obligation_ids": [
-        "obl-263"
+        "obl-3442"
       ],
       "source_seed_ids": [
-        "seed-263"
-      ],
-      "source_shard_ids": [
-        "shard-0066"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1082",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:251-255 states graph approval/recovery commands target blocked/runtime identity, not request_id, and cmd.graph.approve_hitl/cmd.graph.deny_hitl are not canonical",
-        "Plans/UI_Command_Catalog.md:690-716 defines cmd.runtime.* recovery commands and blocked_sequence targeting when no attempt exists"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Blocked_sequence/runtime recovery canon exists, but HITL request_id/tier_id/tier_type/tier_boundary schema-family coverage remains absent.",
-      "source_obligation_ids": [
-        "obl-310"
-      ],
-      "source_seed_ids": [
-        "seed-310"
-      ],
-      "source_shard_ids": [
-        "shard-0078"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1148",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:28-35 treats resume_url as serialized transport of canonical route payload",
-        "Plans/UI_Command_Catalog.md:141-143 retires TierContext, tier_id, TierType, and Tiers",
-        "Plans/UI_Command_Catalog.md:247-274 defines Run Graph runtime recovery and canonical Orchestrator commands"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "resume_url transport and tier retirement exist, but the stronger FinalGUISpec drift-amplifier and first-class navigation identity reduction are incomplete.",
-      "source_obligation_ids": [
-        "obl-334"
-      ],
-      "source_seed_ids": [
-        "seed-334"
-      ],
-      "source_shard_ids": [
-        "shard-0084"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-821",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:95-109 defines canonical route payload and route/open tail rules for route_target, OpenSubject, execution_unit_context, approval_scope_key, and operational_identity",
-        "Plans/UI_Command_Catalog.md:113-135 normalizes commands to a standard record and preserves route_target/OpenSubject"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Route/open payload coverage exists, but the requested Contracts_V0 route-target/subject-open contract family above surface commands is not implemented in the assigned file.",
-      "source_obligation_ids": [
-        "obl-230"
-      ],
-      "source_seed_ids": [
-        "seed-230"
-      ],
-      "source_shard_ids": [
-        "shard-0058"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-828",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:97-103 requires route/open commands to preserve route_target, OpenSubject, execution_unit_context, approval_scope_key, and operational_identity",
-        "Plans/UI_Command_Catalog.md:252-272 normalizes graph, Source Control, and Usage pivots to canonical route/open contracts"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Route_target normalization exists for several pivots, but one canonical route-target model for search/attention/usage/artifact pivots is incomplete.",
-      "source_obligation_ids": [
-        "obl-232"
-      ],
-      "source_seed_ids": [
-        "seed-232"
-      ],
-      "source_shard_ids": [
-        "shard-0059"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-891",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "No direct statement moves panel-local subviews/selectors out of route identity and into destination/view-state handling.",
-      "source_obligation_ids": [
-        "obl-252"
-      ],
-      "source_seed_ids": [
-        "seed-252"
-      ],
-      "source_shard_ids": [
-        "shard-0064"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1008",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:105-109 sends file mutations through FileSafe and route/open guards and errors without fallback mutation if route_target is unreachable",
-        "Plans/UI_Command_Catalog.md:132-135 normalizes keyboard/menu/context/programmatic commands to one record without rewriting route_target/OpenSubject"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Route guards and no-fallback behavior exist, but explicit route validation failure semantics and normalize-before-route-construction rules are absent.",
-      "source_obligation_ids": [
-        "obl-283"
-      ],
-      "source_seed_ids": [
-        "seed-283"
-      ],
-      "source_shard_ids": [
-        "shard-0072"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1022",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:103 references Primitive:RouteTarget, Primitive:OpenSubject, Primitive:ExecutionContext, Permissions_System, and Contracts_V0",
-        "Plans/UI_Command_Catalog.md:254-274 normalizes graph, Source Control, and Usage pivots to runtime/route/open contracts and references Contracts_V0, Orchestrator_Page, and FinalGUISpec"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Contracts and canonical routing are referenced, but the file does not state that routing conclusions are ahead of high-traffic consumer or owner docs.",
-      "source_obligation_ids": [
-        "obl-287"
-      ],
-      "source_seed_ids": [
-        "seed-287"
-      ],
-      "source_shard_ids": [
-        "shard-0073"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-710",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:81-90 scopes actions by execution_role, run mode, concern state, blocked_sequence, approval_scope_key, approval_id, and DAE jail posture",
-        "Plans/UI_Command_Catalog.md:141-144 retires TierContext, tier_id, TierType, Tiers, and stale blocked/HITL survivors"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Blocked/retirement text exists, but execution-context replacement ownership, approval identity minting/scope, storage families, and durable lineage bridges are incomplete.",
-      "source_obligation_ids": [
-        "obl-195"
-      ],
-      "source_seed_ids": [
-        "seed-195"
+        "seed-4635"
       ],
       "source_shard_ids": [
         "shard-0049"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-806",
+      "canon_label": "execution-unit context owner and minimum field contract",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
       "status": "partial",
+      "exact_items": [
+        "execution-unit context owner and minimum field contract"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/UI_Command_Catalog.md:97-103 requires route/open commands to preserve route_target, OpenSubject, and execution_unit_context",
-        "Plans/UI_Command_Catalog.md:147-156 requires catalog commands to be verifiable through wiring matrix handler registration, event emission, UI binding, and acceptance checks"
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Route/open preservation and wiring verification exist, but correlation_id envelope/passthrough obligations are absent.",
-      "source_obligation_ids": [
-        "obl-224"
-      ],
-      "source_seed_ids": [
-        "seed-224"
-      ],
-      "source_shard_ids": [
-        "shard-0057"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-859",
+      "coverage_id": "cov-03597",
+      "source_obligation_ids": [
+        "obl-3443"
+      ],
+      "source_seed_ids": [
+        "seed-4636"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "blocked approval identity/scope and `blocked_sequence` minting ownership",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "status": "present",
+      "exact_items": [
+        "blocked approval identity/scope and `blocked_sequence` minting ownership",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L328",
+        "Plans/Contracts_V0.md:L332",
+        "Plans/Contracts_V0.md:L805",
+        "Plans/Contracts_V0.md:L822",
+        "Plans/Contracts_V0.md:L831"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03599",
+      "source_obligation_ids": [
+        "obl-3445"
+      ],
+      "source_seed_ids": [
+        "seed-4638"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "Must-fix spec-integrity failures before reconciliation**",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)",
       "status": "partial",
+      "exact_items": [
+        "Must-fix spec-integrity failures before reconciliation**"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/UI_Command_Catalog.md:95-109 requires route/open commands to preserve route_target, OpenSubject, execution_unit_context, approval_scope_key, and operational_identity",
-        "Plans/UI_Command_Catalog.md:278-290 lists target_kind, subject_id, object_kind, object_id, tab_id, and inspector_target fields"
+        "Plans/Contracts_V0.md:L1409"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Related route/target fields exist, but specialized subtarget/detail fields, serialized resume_url handling, and exact normalization guidance are incomplete.",
-      "source_obligation_ids": [
-        "obl-240"
-      ],
-      "source_seed_ids": [
-        "seed-240"
-      ],
-      "source_shard_ids": [
-        "shard-0061"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-919",
+      "coverage_id": "cov-03609",
+      "source_obligation_ids": [
+        "obl-3455"
+      ],
+      "source_seed_ids": [
+        "seed-4648"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "Research Progress - 2026-03-16 - Blocked episode ownership and startup-recovery handshake",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
       "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-16 - Blocked episode ownership and startup-recovery handshake"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/UI_Command_Catalog.md:76-77 states route_target owns canonical open/focus identity and command normalization remains discoverable at doc-level contract",
-        "Plans/UI_Command_Catalog.md:135-137 preserves user intent without rewriting route_target/OpenSubject and references Contracts_V0 route_target/OpenSubject"
+        "Plans/Contracts_V0.md:L327"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Route_target/OpenSubject ownership is referenced, but wrapper-vs-contract-layer ownership split is not explicit.",
-      "source_obligation_ids": [
-        "obl-258"
-      ],
-      "source_seed_ids": [
-        "seed-258"
-      ],
-      "source_shard_ids": [
-        "shard-0065"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-947",
+      "coverage_id": "cov-03610",
+      "source_obligation_ids": [
+        "obl-3456"
+      ],
+      "source_seed_ids": [
+        "seed-4655"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "The canonical field family is already mostly clear:",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
       "status": "partial",
+      "exact_items": [
+        "The canonical field family is already mostly clear:"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/UI_Command_Catalog.md:97-103 requires route/open commands to preserve route_target, OpenSubject, execution_unit_context, approval_scope_key, and operational_identity",
-        "Plans/UI_Command_Catalog.md:278-290 lists target_kind, subject_id, object_kind, object_id, tab_id, and inspector_target fields"
+        "Plans/Contracts_V0.md:L47",
+        "Plans/Contracts_V0.md:L54"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Route fields are present, but the exact canonical minimum route_target field set and project_id requirement are absent.",
-      "source_obligation_ids": [
-        "obl-265"
-      ],
-      "source_seed_ids": [
-        "seed-265"
-      ],
-      "source_shard_ids": [
-        "shard-0067"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-956",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "No direct canonical target_kind vocabulary is defined; target_kind appears only as a generic field.",
+      "coverage_id": "cov-03613",
       "source_obligation_ids": [
-        "obl-268"
+        "obl-3459"
       ],
       "source_seed_ids": [
-        "seed-268"
+        "seed-4661"
       ],
       "source_shard_ids": [
-        "shard-0068"
+        "shard-0049"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-960",
+      "canon_label": "`wake_reason = approval_resolved | clarification_resolved | auth_recovered | startup_recov",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "`wake_reason = approval_resolved | clarification_resolved | auth_recovered | startup_recovered | ...`",
+        "wake_reason = approval_resolved | clarification_resolved | auth_recovered | startup_recovered | ..."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/UI_Command_Catalog.md:278-290 lists target_kind, subject_id, object_kind, object_id, tab_id, and inspector_target fields",
-        "Plans/UI_Command_Catalog.md:307-311 requires Orchestrator commands to route through shared route payloads and retain mutation safety class"
+        "Plans/Contracts_V0.md:L1"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Route selector fields and shared routing exist, but no explicit precedence rule or rejection of multi-selector route payloads is present.",
-      "source_obligation_ids": [
-        "obl-269"
-      ],
-      "source_seed_ids": [
-        "seed-269"
-      ],
-      "source_shard_ids": [
-        "shard-0068"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-982",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:278-308 lists inspector_target as a required field and routes Orchestrator commands through shared route payloads"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "inspector_target appears, but no closed enum or message-step-line-range anchor handling is defined.",
+      "coverage_id": "cov-03615",
       "source_obligation_ids": [
-        "obl-273"
+        "obl-3461"
       ],
       "source_seed_ids": [
-        "seed-273"
+        "seed-4663"
       ],
       "source_shard_ids": [
-        "shard-0069"
+        "shard-0049"
       ],
-      "path_field_status": "match"
+      "canon_label": "no doc clearly says who mints `blocked_sequence`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "no doc clearly says who mints `blocked_sequence`",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L328",
+        "Plans/Contracts_V0.md:L332",
+        "Plans/Contracts_V0.md:L805",
+        "Plans/Contracts_V0.md:L822",
+        "Plans/Contracts_V0.md:L831"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-1018",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:270-274 treats Orchestrator object opens as route-consuming wrappers and normalizes Source Control/Usage pivots to canonical route/open contracts",
-        "Plans/UI_Command_Catalog.md:276 references Orchestrator_Page search/routing policy and Contracts_V0 route_target"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Route-consuming wrapper behavior exists, but explicit owner-doc adoption split and primitive ownership statements are missing.",
+      "coverage_id": "cov-03616",
       "source_obligation_ids": [
-        "obl-286"
+        "obl-3462"
       ],
       "source_seed_ids": [
-        "seed-286"
+        "seed-4664"
       ],
       "source_shard_ids": [
-        "shard-0072"
+        "shard-0049"
       ],
-      "path_field_status": "match"
+      "canon_label": "no doc clearly says when a new blocked episode starts versus an existing one being updated",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "status": "partial",
+      "exact_items": [
+        "no doc clearly says when a new blocked episode starts versus an existing one being updated"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1043",
-      "status": "partial",
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:76-77 states route_target owns canonical open/focus identity",
-        "Plans/UI_Command_Catalog.md:270-274 treats Orchestrator object opens as route-consuming wrappers and normalizes Source Control/Usage pivots to canonical route/open contracts"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Route/open primitive behavior exists, but UICommand boundary rewrite and OrchestratorPage boundary update are absent.",
+      "coverage_id": "cov-03622",
       "source_obligation_ids": [
-        "obl-293"
+        "obl-3468"
       ],
       "source_seed_ids": [
-        "seed-293"
+        "seed-4670"
       ],
       "source_shard_ids": [
-        "shard-0074"
+        "shard-0049"
       ],
-      "path_field_status": "match"
+      "canon_label": "starts at `1`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "starts at `1`",
+        "1"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L7",
+        "Plans/Contracts_V0.md:L8",
+        "Plans/Contracts_V0.md:L9",
+        "Plans/Contracts_V0.md:L14",
+        "Plans/Contracts_V0.md:L15"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03624",
+      "source_obligation_ids": [
+        "obl-3470"
+      ],
+      "source_seed_ids": [
+        "seed-4672"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "A blocked episode is the canonical unit for:",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "status": "partial",
+      "exact_items": [
+        "A blocked episode is the canonical unit for:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03627",
+      "source_obligation_ids": [
+        "obl-3473"
+      ],
+      "source_seed_ids": [
+        "seed-4675"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "A new `blocked_sequence` is minted only when:",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "A new `blocked_sequence` is minted only when:",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L328",
+        "Plans/Contracts_V0.md:L332",
+        "Plans/Contracts_V0.md:L805",
+        "Plans/Contracts_V0.md:L822",
+        "Plans/Contracts_V0.md:L831"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03628",
+      "source_obligation_ids": [
+        "obl-3474"
+      ],
+      "source_seed_ids": [
+        "seed-4676"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "the prior blocked episode was resolved/unblocked and a later distinct blocked condition oc",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "status": "partial",
+      "exact_items": [
+        "the prior blocked episode was resolved/unblocked and a later distinct blocked condition occurs, or"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03630",
+      "source_obligation_ids": [
+        "obl-3476"
+      ],
+      "source_seed_ids": [
+        "seed-4678"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "`blocked_sequence` should be canonical; `request_id` should become a child/compatibility h",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`blocked_sequence` should be canonical; `request_id` should become a child/compatibility handle for approval-specific UX/history.",
+        "blocked_sequence",
+        "request_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L328",
+        "Plans/Contracts_V0.md:L332",
+        "Plans/Contracts_V0.md:L805",
+        "Plans/Contracts_V0.md:L822",
+        "Plans/Contracts_V0.md:L831"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03631",
+      "source_obligation_ids": [
+        "obl-3477"
+      ],
+      "source_seed_ids": [
+        "seed-4679"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "`waiting_approval` blocked episode exists first-class in runtime/state",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "status": "present",
+      "exact_items": [
+        "`waiting_approval` blocked episode exists first-class in runtime/state",
+        "waiting_approval"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L818",
+        "Plans/Contracts_V0.md:L1439"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03635",
+      "source_obligation_ids": [
+        "obl-3481"
+      ],
+      "source_seed_ids": [
+        "seed-4683"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "Approval commands should route by blocked episode identity; any retained `request_id` is l",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "status": "partial",
+      "exact_items": [
+        "Approval commands should route by blocked episode identity; any retained `request_id` is lookup metadata, not the canonical recovery target.",
+        "request_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L839"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03637",
+      "source_obligation_ids": [
+        "obl-3483"
+      ],
+      "source_seed_ids": [
+        "seed-4685"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "The scheduler then emits a scheduler pass with `wake_reason = startup_recovered`.",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "#### `scheduler.pass`",
+      "status": "partial",
+      "exact_items": [
+        "The scheduler then emits a scheduler pass with `wake_reason = startup_recovered`.",
+        "wake_reason = startup_recovered"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1351"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03638",
+      "source_obligation_ids": [
+        "obl-3484"
+      ],
+      "source_seed_ids": [
+        "seed-4686"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "That startup-recovery pass does not mint new blocked episodes by itself; it rehydrates exi",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "status": "partial",
+      "exact_items": [
+        "That startup-recovery pass does not mint new blocked episodes by itself; it rehydrates existing unresolved episodes and reevaluates runnable work."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03645",
+      "source_obligation_ids": [
+        "obl-3491"
+      ],
+      "source_seed_ids": [
+        "seed-4699"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "Make `Executor_Protocol.md` + `Contracts_V0.md` the joint owners of:",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "Make `Executor_Protocol.md` + `Contracts_V0.md` the joint owners of:",
+        "Executor_Protocol.md",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L14",
+        "Plans/Contracts_V0.md:L17",
+        "Plans/Contracts_V0.md:L28",
+        "Plans/Contracts_V0.md:L33",
+        "Plans/Contracts_V0.md:L42"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03649",
+      "source_obligation_ids": [
+        "obl-3495"
+      ],
+      "source_seed_ids": [
+        "seed-4705"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "canonical runtime action routing",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "status": "partial",
+      "exact_items": [
+        "canonical runtime action routing"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L153",
+        "Plans/Contracts_V0.md:L160"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03650",
+      "source_obligation_ids": [
+        "obl-3496"
+      ],
+      "source_seed_ids": [
+        "seed-4706"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "Add a deterministic rule for \u201csame blocked episode vs new blocked episode\u201d to a canonical",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "status": "present",
+      "exact_items": [
+        "Add a deterministic rule for \u201csame blocked episode vs new blocked episode\u201d to a canonical owner doc, likely `Decision_Policy.md` or `Executor_Protocol.md`.",
+        "Decision_Policy.md",
+        "Executor_Protocol.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L225",
+        "Plans/Contracts_V0.md:L358",
+        "Plans/Contracts_V0.md:L702",
+        "Plans/Contracts_V0.md:L814",
+        "Plans/Contracts_V0.md:L836"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03678",
+      "source_obligation_ids": [
+        "obl-3524"
+      ],
+      "source_seed_ids": [
+        "seed-4741"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "now has multiple ghost-ID dependents and remains the weak link for command-family ownershi",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "status": "partial",
+      "exact_items": [
+        "now has multiple ghost-ID dependents and remains the weak link for command-family ownership."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L153",
+        "Plans/Contracts_V0.md:L160"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03680",
+      "source_obligation_ids": [
+        "obl-3526"
+      ],
+      "source_seed_ids": [
+        "seed-4745"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "still too thin for modern event/runtime/account lineage.",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### 4. Remediation lineage events",
+      "status": "partial",
+      "exact_items": [
+        "still too thin for modern event/runtime/account lineage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1243"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03688",
+      "source_obligation_ids": [
+        "obl-3533"
+      ],
+      "source_seed_ids": [
+        "seed-4756"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Several owner docs claim EventRecord/runtime alignment but still omit project/thread/run/a",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### `tool.denied` alignment",
+      "status": "partial",
+      "exact_items": [
+        "Several owner docs claim EventRecord/runtime alignment but still omit project/thread/run/attempt/account identity in their own schemas."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1399"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03690",
+      "source_obligation_ids": [
+        "obl-3535"
+      ],
+      "source_seed_ids": [
+        "seed-4758"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "New supporting docs (`newtools.md`, `assistant-memory-subsystem.md`) are now independently",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-033: Concern linkage to adjacent families",
+      "status": "partial",
+      "exact_items": [
+        "New supporting docs (`newtools.md`, `assistant-memory-subsystem.md`) are now independently inventing command/event families faster than the canonical owners are registering them.",
+        "newtools.md",
+        "assistant-memory-subsystem.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1502"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03702",
+      "source_obligation_ids": [
+        "obl-3547"
+      ],
+      "source_seed_ids": [
+        "seed-4774"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "The owner split is now explicit enough to stop treating this as a vague \u201creplace `TierCont",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-175: Concern source-event vs record vs projection split",
+      "status": "partial",
+      "exact_items": [
+        "The owner split is now explicit enough to stop treating this as a vague \u201creplace `TierContext`\u201d task.",
+        "TierContext"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L143",
+        "Plans/Contracts_V0.md:L149"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03707",
+      "source_obligation_ids": [
+        "obl-3552"
+      ],
+      "source_seed_ids": [
+        "seed-4783"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "workspace heuristics (`workspace`, language/domain/framework detection)",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-193: Concern update heuristics",
+      "status": "partial",
+      "exact_items": [
+        "workspace heuristics (`workspace`, language/domain/framework detection)",
+        "workspace"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1385"
+      ],
+      "required_action": "owner_create_or_rewrite"
     }
   ]
 }

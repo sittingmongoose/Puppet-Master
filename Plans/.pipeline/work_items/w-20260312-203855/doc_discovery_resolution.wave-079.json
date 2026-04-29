@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-079",
+  "group_ids": [
+    "discgrp-0313",
+    "discgrp-0314",
+    "discgrp-0315",
+    "discgrp-0316"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00559",
+      "source_obligation_ids": [
+        "obl-416"
+      ],
+      "source_seed_ids": [
+        "seed-478"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00560",
+      "source_obligation_ids": [
+        "obl-417"
+      ],
+      "source_seed_ids": [
+        "seed-479"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### Progress catalog source and default drills",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L910"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00561",
+      "source_obligation_ids": [
+        "obl-418"
+      ],
+      "source_seed_ids": [
+        "seed-480"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00563",
+      "source_obligation_ids": [
+        "obl-420"
+      ],
+      "source_seed_ids": [
+        "seed-482"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 12.3 Dashboard Grid Responsive",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1391"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

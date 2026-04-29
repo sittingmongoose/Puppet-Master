@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1344",
+  "group_ids": [
+    "discgrp-5373",
+    "discgrp-5374",
+    "discgrp-5375",
+    "discgrp-5376"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05817",
+      "source_obligation_ids": [
+        "obl-5589"
+      ],
+      "source_seed_ids": [
+        "seed-8299"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "# Usage Feature -- App/GUI Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05819",
+      "source_obligation_ids": [
+        "obl-5591"
+      ],
+      "source_seed_ids": [
+        "seed-8301"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "### 5. Active Agent Tracking",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L2952"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05820",
+      "source_obligation_ids": [
+        "obl-5592"
+      ],
+      "source_seed_ids": [
+        "seed-8302"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05821",
+      "source_obligation_ids": [
+        "obl-5593"
+      ],
+      "source_seed_ids": [
+        "seed-8303"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/rewrite-tie-in-memo.md",
+      "new_heading_hint": "# Puppet Master Rewrite Tie-In Contract (Active)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

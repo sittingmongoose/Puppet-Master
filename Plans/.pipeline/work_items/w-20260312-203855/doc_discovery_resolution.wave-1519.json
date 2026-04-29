@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1519",
+  "group_ids": [
+    "discgrp-6073",
+    "discgrp-6074",
+    "discgrp-6075",
+    "discgrp-6076"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06705",
+      "source_obligation_ids": [
+        "obl-6346"
+      ],
+      "source_seed_ids": [
+        "seed-9693"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "### Codex -- Direct provider",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/usage-feature.md:L248"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06706",
+      "source_obligation_ids": [
+        "obl-6347"
+      ],
+      "source_seed_ids": [
+        "seed-9694"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06707",
+      "source_obligation_ids": [
+        "obl-6348"
+      ],
+      "source_seed_ids": [
+        "seed-9695"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06708",
+      "source_obligation_ids": [
+        "obl-6349"
+      ],
+      "source_seed_ids": [
+        "seed-9696"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-696",
+  "group_ids": [
+    "discgrp-2781",
+    "discgrp-2782",
+    "discgrp-2783",
+    "discgrp-2784"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03061",
+      "source_obligation_ids": [
+        "obl-2907"
+      ],
+      "source_seed_ids": [
+        "seed-3839"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-096: Projection freshness vs projection health",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L167"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03062",
+      "source_obligation_ids": [
+        "obl-2908"
+      ],
+      "source_seed_ids": [
+        "seed-3840"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "## 2. Core terms",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Glossary.md:L54"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03063",
+      "source_obligation_ids": [
+        "obl-2909"
+      ],
+      "source_seed_ids": [
+        "seed-3841"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "### 5.3 Human plan may repeat summary, but must point to canonical contracts",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L230"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03064",
+      "source_obligation_ids": [
+        "obl-2910"
+      ],
+      "source_seed_ids": [
+        "seed-3842"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_Integration.md",
+      "new_heading_hint": "# GitHub Integration -- Spec",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

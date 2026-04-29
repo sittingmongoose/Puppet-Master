@@ -1,471 +1,836 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-081",
-  "timestamp_utc": "2026-04-28T22:13:21Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-321",
-    "coverage-rowgrp-322",
-    "coverage-rowgrp-323",
-    "coverage-rowgrp-324"
+  "row_group_ids": [
+    "rowgrp-0321",
+    "rowgrp-0322",
+    "rowgrp-0323",
+    "rowgrp-0324"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-321 cov-996,cov-1138,cov-1179,cov-1227 Plans/usage-feature.md",
-    "rowgrp-322 cov-175,cov-207,cov-492,cov-588,cov-766,cov-1259 Plans/usage-feature.md",
-    "rowgrp-323 cov-002,cov-007,cov-008,cov-011,cov-021,cov-379,cov-1096 __DOC_DISCOVERY_REQUIRED__",
-    "rowgrp-324 cov-001,cov-009,cov-010,cov-022,cov-414 __DOC_DISCOVERY_REQUIRED__"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-321": "completed_reduced_conservatively_with_action_and_path_normalization",
-    "coverage-rowgrp-322": "completed_reduced_conservatively_with_action_and_path_normalization",
-    "coverage-rowgrp-323": "completed_reduced_conservatively_with_action_and_path_normalization",
-    "coverage-rowgrp-324": "completed_reduced_conservatively_with_action_and_path_normalization"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-996",
-    "cov-1138",
-    "cov-1179",
-    "cov-1227",
-    "cov-175",
-    "cov-207",
-    "cov-492",
-    "cov-588",
-    "cov-766",
-    "cov-1259",
-    "cov-002",
-    "cov-007",
-    "cov-008",
-    "cov-011",
-    "cov-021",
-    "cov-379",
-    "cov-1096",
-    "cov-001",
-    "cov-009",
-    "cov-010",
-    "cov-022",
-    "cov-414"
-  ],
-  "coverage_ids_completed": [
-    "cov-996",
-    "cov-1138",
-    "cov-1179",
-    "cov-1227",
-    "cov-175",
-    "cov-207",
-    "cov-492",
-    "cov-588",
-    "cov-766",
-    "cov-1259",
-    "cov-002",
-    "cov-007",
-    "cov-008",
-    "cov-011",
-    "cov-021",
-    "cov-379",
-    "cov-1096",
-    "cov-001",
-    "cov-009",
-    "cov-010",
-    "cov-022",
-    "cov-414"
-  ],
-  "path_groups_assigned": [
-    "Plans/usage-feature.md",
-    "__DOC_DISCOVERY_REQUIRED__"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-996",
+      "coverage_id": "cov-00102",
+      "source_obligation_ids": [
+        "obl-036"
+      ],
+      "source_seed_ids": [
+        "seed-036"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "package/seam overseer + lane-aware execution model",
+      "row_type": "layout_blocker",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "missing",
+      "exact_items": [
+        "Replace tier-rooted execution with package/seam/lane model",
+        "Define package overseer + seam overseer roles",
+        "Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage",
+        "Redefine gates to package-complete / seam-complete",
+        "Rename or retire Tiers UI/tab and tier_tree/progress bars"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars",
+        "phase/task/subtask"
+      ],
+      "evidence": [
+        "Plans/Decision_Policy.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00156",
+      "source_obligation_ids": [
+        "obl-053"
+      ],
+      "source_seed_ids": [
+        "seed-053"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Settings scopes are still too coarse.** Global/project toggles are common, but package/sea",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "Settings scopes are still too coarse.** Global/project toggles are common, but package/seam/lane/run/account-aware settings or policy scopes are mostly absent."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/usage-feature.md:67 states usage_event_ref is the usage bridge for attempt/provider/usage/receipt joins",
-        "Plans/usage-feature.md:89 says usage_event_ref is preferred rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger"
+        "Plans/Decision_Policy.md:L1"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "usage_event_ref bridge/routing preference is covered, but object_kind=usage_event normalization and serialized anchor-detail handling are absent.",
-      "source_obligation_ids": [
-        "obl-279"
-      ],
-      "source_seed_ids": [
-        "seed-279"
-      ],
-      "source_shard_ids": [
-        "shard-0071"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1138",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "No tier_runtime_record, tier-keyed usage_record, or tier-keyed evidence_record demotion/replacement coverage was found in usage-feature.md.",
+      "coverage_id": "cov-00162",
       "source_obligation_ids": [
-        "obl-331"
+        "obl-059"
       ],
       "source_seed_ids": [
-        "seed-331"
+        "seed-059"
       ],
       "source_shard_ids": [
-        "shard-0084"
+        "shard-0009"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1179",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "No MUST CHANGE, MUST RECONCILE, or MUST VERIFY doc-canon guidance was found in usage-feature.md.",
-      "source_obligation_ids": [
-        "obl-339"
+      "canon_label": "Contamination policy is still a vocabulary gap.** Safe-point language exists in newer adde",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Contamination policy is still a vocabulary gap.** Safe-point language exists in newer addenda, but contamination classification, restore-before-reuse, and lane quarantine semantics are mostly absent from the main SCM/worktree contracts."
       ],
-      "source_seed_ids": [
-        "seed-339"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1227",
-      "status": "present",
+      "stale_tokens": [],
       "evidence": [
-        "Plans/usage-feature.md:55-56 transfers execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs and carries usage switch-history/execution-role follow-through",
-        "Plans/usage-feature.md:423-427 repeats the same transfer and usage switch-history/execution-role continuity in the account-history owner section"
+        "Plans/Decision_Policy.md:L1"
       ],
-      "required_action": "none",
-      "unresolved_reason": "The required identity, pressure, blocked_sequence, startup recovery, DAE policy, switch-history, and execution-role transfer is directly represented.",
-      "source_obligation_ids": [
-        "obl-346"
-      ],
-      "source_seed_ids": [
-        "seed-346"
-      ],
-      "source_shard_ids": [
-        "shard-0088"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-175",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "No tier-boundary, single-Overseer, package/seam overseer, automation-first execution, or tier-term deprecation/aliasing coverage was found in usage-feature.md.",
+      "coverage_id": "cov-00221",
       "source_obligation_ids": [
-        "obl-046"
+        "obl-116"
       ],
       "source_seed_ids": [
-        "seed-046"
+        "seed-120"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "what likely new model pressure is: package-based lane pools, contamination quarantine, res",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "what likely new model pressure is: package-based lane pools, contamination quarantine, restore-before-reuse policy, Source Control plus Orchestrator shared visibility."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00329",
+      "source_obligation_ids": [
+        "obl-187"
+      ],
+      "source_seed_ids": [
+        "seed-213"
       ],
       "source_shard_ids": [
         "shard-0010"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-207",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "No widget-catalog tier-centric cleanup, TierChanged/IterationStart/TierTree/Progress migration, or widget contract projection migration coverage was found in usage-feature.md.",
-      "source_obligation_ids": [
-        "obl-056"
-      ],
-      "source_seed_ids": [
-        "seed-056"
-      ],
-      "source_shard_ids": [
-        "shard-0012"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-492",
+      "canon_label": "why it matters: define package-based lane-pool worktree policy end-to-end, including conta",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "why it matters: define package-based lane-pool worktree policy end-to-end, including contamination, safe-point, restore, and visibility rules shared by Orchestrator and Source Control."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/usage-feature.md:431-433 defines attempt_id, provider_attempt_ref, usage_event_ref, and receipt refs as bridge fields that do not replace the primary local key",
-        "Plans/usage-feature.md:586 says aggregation should use usage_event_ref, run_id, node_id, attempt_id, and runtime attribution fields rather than tier_id"
+        "Plans/Decision_Policy.md:L1"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Bridge-field and canonical identity fragments are present, but scheduler/safe-point/remediation payload gaps, provider snapshot envelope, HITL argument mismatch, graph-local recovery, and projection-trust payload remain incomplete.",
-      "source_obligation_ids": [
-        "obl-142"
-      ],
-      "source_seed_ids": [
-        "seed-142"
-      ],
-      "source_shard_ids": [
-        "shard-0035"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-588",
+      "coverage_id": "cov-00742",
+      "source_obligation_ids": [
+        "obl-599"
+      ],
+      "source_seed_ids": [
+        "seed-687"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "canon_label": "These should not collapse into a generic \"old\" state.",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "### 3. No silent runtime identity collapse",
       "status": "partial",
+      "exact_items": [
+        "These should not collapse into a generic \"old\" state."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/usage-feature.md:416-421 adds append-only account_pressure_episode and account_switch_event families for Usage, History, Ledger, and Orchestrator"
+        "Plans/Decision_Policy.md:L242"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "The pressure and switch event families are present, but explicit soft/hard switching and role/account interaction semantics are incomplete.",
-      "source_obligation_ids": [
-        "obl-165"
-      ],
-      "source_seed_ids": [
-        "seed-165"
-      ],
-      "source_shard_ids": [
-        "shard-0041"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-766",
+      "coverage_id": "cov-00764",
+      "source_obligation_ids": [
+        "obl-621"
+      ],
+      "source_seed_ids": [
+        "seed-716"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "canon_label": "archival policy should be separate from semantic validity",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "archival policy should be separate from semantic validity"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/usage-feature.md:431-437 defines provider_attempt_ref and usage_event_ref bridge-field precedence and usage/receipt lineage routing",
-        "Plans/usage-feature.md:586 says aggregation should use canonical usage identity usage_event_ref, run_id, node_id, attempt_id, and runtime attribution fields rather than tier_id"
+        "Plans/Decision_Policy.md:L1"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Bridge-field precedence is covered, but timestamp/run/thread fallback compatibility is not explicitly degraded.",
-      "source_obligation_ids": [
-        "obl-212"
-      ],
-      "source_seed_ids": [
-        "seed-212"
-      ],
-      "source_shard_ids": [
-        "shard-0053"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1259",
+      "coverage_id": "cov-00777",
+      "source_obligation_ids": [
+        "obl-634"
+      ],
+      "source_seed_ids": [
+        "seed-729"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "canon_label": "Keep visibility policy (`archived`, hidden from default lists) separate from semantic stat",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "Keep visibility policy (`archived`, hidden from default lists) separate from semantic state (`historical`, `revoked`, `superseded`).",
+        "archived",
+        "historical",
+        "revoked",
+        "superseded"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/usage-feature.md:466-478 expands blocked_notice beyond blocked_family/allowed_action_ids and carries escalation_level, action_available ownership, and usage observability through blocked surfaces",
-        "Plans/usage-feature.md:785 says blocked counters retain escalation_level and shared blocked-action disclosure action_available"
+        "Plans/Decision_Policy.md:L1"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "blocked_notice, escalation_level, and action_available are covered, but detached_window/result_id survivors and restore-points/stale-verdict cleanup are incomplete.",
-      "source_obligation_ids": [
-        "obl-355"
-      ],
-      "source_seed_ids": [
-        "seed-355"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-002",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "doc discovery required",
+      "coverage_id": "cov-00826",
       "source_obligation_ids": [
-        "obl-002"
+        "obl-683"
       ],
       "source_seed_ids": [
-        "seed-002"
+        "seed-783",
+        "seed-2164",
+        "seed-3179"
       ],
       "source_shard_ids": [
-        "shard-0001"
+        "shard-0016",
+        "shard-0030",
+        "shard-0038"
       ],
-      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+      "canon_label": "`severity`",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "### 6.4 Requirements quality report boundary, severity, and persistence",
+      "status": "present",
+      "exact_items": [
+        "`severity`",
+        "severity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L198",
+        "Plans/Decision_Policy.md:L210",
+        "Plans/Decision_Policy.md:L221"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-007",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "doc discovery required",
+      "coverage_id": "cov-00862",
       "source_obligation_ids": [
-        "obl-007"
+        "obl-719"
       ],
       "source_seed_ids": [
-        "seed-007"
+        "seed-819"
       ],
       "source_shard_ids": [
-        "shard-0002"
+        "shard-0016"
       ],
-      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+      "canon_label": "`quality`",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "### 6.4 Requirements quality report boundary, severity, and persistence",
+      "status": "present",
+      "exact_items": [
+        "`quality`",
+        "quality"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L174",
+        "Plans/Decision_Policy.md:L180",
+        "Plans/Decision_Policy.md:L198",
+        "Plans/Decision_Policy.md:L200",
+        "Plans/Decision_Policy.md:L202"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-008",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "doc discovery required",
+      "coverage_id": "cov-00897",
       "source_obligation_ids": [
-        "obl-008"
+        "obl-754"
       ],
       "source_seed_ids": [
-        "seed-008"
+        "seed-859",
+        "seed-1329",
+        "seed-1955"
       ],
       "source_shard_ids": [
-        "shard-0002"
-      ],
-      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
-    },
-    {
-      "coverage_id": "cov-011",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "doc discovery required",
-      "source_obligation_ids": [
-        "obl-011"
-      ],
-      "source_seed_ids": [
-        "seed-011"
-      ],
-      "source_shard_ids": [
-        "shard-0002"
-      ],
-      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
-    },
-    {
-      "coverage_id": "cov-021",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "doc discovery required",
-      "source_obligation_ids": [
-        "obl-018"
-      ],
-      "source_seed_ids": [
-        "seed-018"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
-    },
-    {
-      "coverage_id": "cov-379",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "doc discovery required",
-      "source_obligation_ids": [
-        "obl-112"
-      ],
-      "source_seed_ids": [
-        "seed-112"
-      ],
-      "source_shard_ids": [
+        "shard-0016",
+        "shard-0022",
         "shard-0028"
       ],
-      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+      "canon_label": "`User`",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "## 6. Ambiguity vs. Missing User Intent",
+      "status": "present",
+      "exact_items": [
+        "`User`",
+        "User"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L76",
+        "Plans/Decision_Policy.md:L80",
+        "Plans/Decision_Policy.md:L153",
+        "Plans/Decision_Policy.md:L157",
+        "Plans/Decision_Policy.md:L159"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-1096",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "doc discovery required",
+      "coverage_id": "cov-00921",
       "source_obligation_ids": [
-        "obl-315"
+        "obl-778"
       ],
       "source_seed_ids": [
-        "seed-315"
+        "seed-891"
       ],
       "source_shard_ids": [
-        "shard-0080"
+        "shard-0017"
       ],
-      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+      "canon_label": "What is missing is a shared policy for Orchestrator/runtime actions specifically.",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "What is missing is a shared policy for Orchestrator/runtime actions specifically."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-001",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "doc discovery required",
+      "coverage_id": "cov-01009",
       "source_obligation_ids": [
-        "obl-001"
+        "obl-866"
       ],
       "source_seed_ids": [
-        "seed-001"
+        "seed-1011"
       ],
       "source_shard_ids": [
-        "shard-0001"
+        "shard-0018"
       ],
-      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+      "canon_label": "This may help avoid every major object family inventing bespoke \"decision summary\" fields.",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "This may help avoid every major object family inventing bespoke \"decision summary\" fields."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-009",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "doc discovery required",
+      "coverage_id": "cov-01084",
       "source_obligation_ids": [
-        "obl-009"
+        "obl-941"
       ],
       "source_seed_ids": [
-        "seed-009"
+        "seed-1108"
       ],
       "source_shard_ids": [
-        "shard-0002"
+        "shard-0019"
       ],
-      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+      "canon_label": "`Inherited from Project policy`",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`Inherited from Project policy`",
+        "Inherited from Project policy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-010",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "doc discovery required",
+      "coverage_id": "cov-01095",
       "source_obligation_ids": [
-        "obl-010"
+        "obl-952"
       ],
       "source_seed_ids": [
-        "seed-010"
+        "seed-1119"
       ],
       "source_shard_ids": [
-        "shard-0002"
+        "shard-0019"
       ],
-      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+      "canon_label": "account policy",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "account policy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-022",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "doc discovery required",
+      "coverage_id": "cov-01096",
       "source_obligation_ids": [
-        "obl-019"
+        "obl-953"
       ],
       "source_seed_ids": [
-        "seed-019"
+        "seed-1120"
       ],
       "source_shard_ids": [
-        "shard-0003"
+        "shard-0019"
       ],
-      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+      "canon_label": "worker policy (`subagent` vs `agent`, fresh vs reused worker)",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "worker policy (`subagent` vs `agent`, fresh vs reused worker)",
+        "subagent",
+        "agent"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L108",
+        "Plans/Decision_Policy.md:L116",
+        "Plans/Decision_Policy.md:L127",
+        "Plans/Decision_Policy.md:L186"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-414",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "doc discovery required",
+      "coverage_id": "cov-01102",
       "source_obligation_ids": [
-        "obl-123"
+        "obl-959"
       ],
       "source_seed_ids": [
-        "seed-123"
+        "seed-1126"
       ],
       "source_shard_ids": [
-        "shard-0031"
+        "shard-0019"
       ],
-      "path_field_status": "__DOC_DISCOVERY_REQUIRED__"
+      "canon_label": "requested platform/model/variant/auth/account policy",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "requested platform/model/variant/auth/account policy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01124",
+      "source_obligation_ids": [
+        "obl-981"
+      ],
+      "source_seed_ids": [
+        "seed-1149"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "canon_label": "Worker policy likely needs the same treatment:",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Worker policy likely needs the same treatment:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01125",
+      "source_obligation_ids": [
+        "obl-982"
+      ],
+      "source_seed_ids": [
+        "seed-1150"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "canon_label": "source: project/package/node override source",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "### Field-level override",
+      "status": "partial",
+      "exact_items": [
+        "source: project/package/node override source"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L286"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01130",
+      "source_obligation_ids": [
+        "obl-987"
+      ],
+      "source_seed_ids": [
+        "seed-1155"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "canon_label": "requested account policy is not the same as effective account",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "requested account policy is not the same as effective account"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01132",
+      "source_obligation_ids": [
+        "obl-989"
+      ],
+      "source_seed_ids": [
+        "seed-1157"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "canon_label": "`Account policy: Auto switch (Project policy)`",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`Account policy: Auto switch (Project policy)`",
+        "Account policy: Auto switch (Project policy)"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01144",
+      "source_obligation_ids": [
+        "obl-1001"
+      ],
+      "source_seed_ids": [
+        "seed-1169"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "canon_label": "Extend the same model to worker policy, not just provider/model/persona/account.",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Extend the same model to worker policy, not just provider/model/persona/account."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01147",
+      "source_obligation_ids": [
+        "obl-1004"
+      ],
+      "source_seed_ids": [
+        "seed-1172"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "canon_label": "provider-gap disclosure (`honored` / `skipped` / `clamped`) is a third concept, not just a",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "### Field-level override",
+      "status": "partial",
+      "exact_items": [
+        "provider-gap disclosure (`honored` / `skipped` / `clamped`) is a third concept, not just another word for override",
+        "honored",
+        "skipped",
+        "clamped"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L286"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01167",
+      "source_obligation_ids": [
+        "obl-1024"
+      ],
+      "source_seed_ids": [
+        "seed-1200"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "canon_label": "The exact persona ids may still evolve, but the mapping policy should be explicit now.",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "The exact persona ids may still evolve, but the mapping policy should be explicit now."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01246",
+      "source_obligation_ids": [
+        "obl-1103"
+      ],
+      "source_seed_ids": [
+        "seed-1304"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "red = missing directory / corrupt repo / critical config errors",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "## 6. Ambiguity vs. Missing User Intent",
+      "status": "partial",
+      "exact_items": [
+        "red = missing directory / corrupt repo / critical config errors"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L153"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01252",
+      "source_obligation_ids": [
+        "obl-1109"
+      ],
+      "source_seed_ids": [
+        "seed-1313"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "whether something actually needs user or operator action",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "## 6. Ambiguity vs. Missing User Intent",
+      "status": "partial",
+      "exact_items": [
+        "whether something actually needs user or operator action"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L153"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01317",
+      "source_obligation_ids": [
+        "obl-1174"
+      ],
+      "source_seed_ids": [
+        "seed-1396"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "concern severity + blocking effect + owner + persistence decide escalation",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "### 6.4 Requirements quality report boundary, severity, and persistence",
+      "status": "partial",
+      "exact_items": [
+        "concern severity + blocking effect + owner + persistence decide escalation"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L198"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01367",
+      "source_obligation_ids": [
+        "obl-1224"
+      ],
+      "source_seed_ids": [
+        "seed-1465"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "What is still missing is a rewrite-specific action policy for:",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "What is still missing is a rewrite-specific action policy for:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01394",
+      "source_obligation_ids": [
+        "obl-1251"
+      ],
+      "source_seed_ids": [
+        "seed-1496"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "The command infrastructure is ahead of the Orchestrator-specific safety policy.",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "The command infrastructure is ahead of the Orchestrator-specific safety policy."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01406",
+      "source_obligation_ids": [
+        "obl-1263"
+      ],
+      "source_seed_ids": [
+        "seed-1514"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "What is still missing is a shared Orchestrator-wide execution policy for:",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "# Decision Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "What is still missing is a shared Orchestrator-wide execution policy for:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01413",
+      "source_obligation_ids": [
+        "obl-1270"
+      ],
+      "source_seed_ids": [
+        "seed-1531"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "usually allowed if the target object identity is still valid",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "### 5.1 When Spec Lock updates are allowed",
+      "status": "partial",
+      "exact_items": [
+        "usually allowed if the target object identity is still valid"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Decision_Policy.md:L111"
+      ],
+      "required_action": "owner_create_or_rewrite"
     }
   ]
 }

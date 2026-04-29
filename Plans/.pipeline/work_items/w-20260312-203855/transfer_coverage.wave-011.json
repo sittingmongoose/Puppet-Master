@@ -1,170 +1,715 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-011",
-  "timestamp_utc": "2026-04-28T19:40:32Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-041",
-    "coverage-rowgrp-042",
-    "coverage-rowgrp-043",
-    "coverage-rowgrp-044"
+  "row_group_ids": [
+    "rowgrp-0041",
+    "rowgrp-0042",
+    "rowgrp-0043",
+    "rowgrp-0044"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-041 cov-1117 Plans/Decision_Log.md",
-    "rowgrp-042 cov-1102,cov-1169 Plans/Decision_Log.md",
-    "rowgrp-043 cov-1125 Plans/Decision_Log.md",
-    "rowgrp-044 cov-433,cov-716 Plans/Decision_Policy.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-041": "completed_reduced_conservatively",
-    "coverage-rowgrp-042": "completed_reduced_conservatively",
-    "coverage-rowgrp-043": "completed_lineage_corrected",
-    "coverage-rowgrp-044": "completed_reduced_conservatively"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-1117",
-    "cov-1102",
-    "cov-1169",
-    "cov-1125",
-    "cov-433",
-    "cov-716"
-  ],
-  "coverage_ids_completed": [
-    "cov-1117",
-    "cov-1102",
-    "cov-1169",
-    "cov-1125",
-    "cov-433",
-    "cov-716"
-  ],
-  "path_groups_assigned": [
-    "Plans/Decision_Log.md",
-    "Plans/Decision_Policy.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-1117",
-      "status": "partial",
-      "evidence": [
-        "Plans/Decision_Log.md:18-26 records orchestration model and governance split decisions",
-        "Plans/Decision_Log.md:53-66 records runtime identity, blocked approval identity, and navigation primitive decisions"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Decision_Log.md now contains several rewrite-era decisions, but the assigned row's broader owner-decision ledger coverage remains incomplete.",
+      "coverage_id": "cov-00129",
       "source_obligation_ids": [
-        "obl-323"
+        "obl-041"
       ],
       "source_seed_ids": [
-        "seed-323"
+        "seed-041"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0008"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1102",
-      "status": "partial",
-      "evidence": [
-        "Plans/Decision_Log.md:18-20 canonical node graph, Feature Seam, Work Package, and Node decisions",
-        "Plans/Decision_Log.md:23-26 Package Overseer and Seam Overseer governance split",
-        "Plans/Decision_Log.md:53-56 requested/effective runtime identity is shared across actors",
-        "Plans/Decision_Log.md:58-61 blocked approval identity is anchored by run_id, node_id, blocked_sequence, and attempt_id?"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Decision_Log.md covers several rewrite decisions, but does not cover all assigned architecture/decision owner gaps such as provider-pool concurrency, projection trust, and safe-point lineage exactness.",
-      "source_obligation_ids": [
-        "obl-319"
-      ],
-      "source_seed_ids": [
-        "seed-319"
-      ],
-      "source_shard_ids": [
-        "shard-0081"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1169",
+      "canon_label": "ownership glossary/crosswalk",
+      "row_type": "owner",
+      "path": "Plans/00-plans-index.md",
+      "heading_hint": "Cleanup Priorities",
       "status": "missing",
+      "exact_items": [
+        "Extend Glossary.md, Crosswalk.md, Decision_Policy.md, and 00-plans-index.md with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.",
+        "Clarify which docs own execution truth vs projections vs UI-only overlays."
+      ],
+      "stale_tokens": [
+        "tier-centric ownership",
+        "projection-only overlay",
+        "execution truth vs projections"
+      ],
       "evidence": [
-        "Plans/Decision_Log.md: assigned file reviewed; no matching MUST CHANGE / MUST RECONCILE / MUST VERIFY packet inclusion category coverage found"
+        "Plans/00-plans-index.md:content_absent_after_scan"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Assigned packet inclusion categories are absent from Plans/Decision_Log.md.",
-      "source_obligation_ids": [
-        "obl-339"
-      ],
-      "source_seed_ids": [
-        "seed-339"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1125",
-      "status": "partial",
-      "evidence": [
-        "Plans/Decision_Log.md:21 ContractRef appears for the orchestrator execution model decision",
-        "Plans/Decision_Log.md:26 ContractRef appears for the governance split decision",
-        "Plans/Decision_Log.md:61 ContractRef appears for blocked approval identity",
-        "Plans/Decision_Log.md:66 ContractRef appears for navigation primitives"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "ContractRef anchors are present, but exact ContractRef/section-anchor/duplicate-number cleanup prioritization is not fully covered in Decision_Log.md.",
-      "source_obligation_ids": [
-        "obl-326"
-      ],
-      "source_seed_ids": [
-        "seed-326"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-433",
-      "status": "missing",
-      "evidence": [
-        "Plans/Decision_Policy.md:247-250 projection-state action policy exists, but no concern/corroboration/promotion object lifecycle, requested/effective identity model, or scheduler lane ordering coverage was found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned governance-layer concern lifecycle / authority rules are not present in Plans/Decision_Policy.md.",
+      "coverage_id": "cov-00237",
       "source_obligation_ids": [
         "obl-126"
       ],
       "source_seed_ids": [
-        "seed-126"
+        "seed-131"
       ],
       "source_shard_ids": [
-        "shard-0031"
+        "shard-0009"
       ],
-      "path_field_status": "match"
+      "canon_label": "why impacted: anti-drift and ownership docs still operationalize the legacy model.",
+      "row_type": "stale_retirement",
+      "path": "Plans/00-plans-index.md",
+      "heading_hint": "## Anti-drift layer (required reading order)",
+      "status": "present",
+      "exact_items": [
+        "why impacted: anti-drift and ownership docs still operationalize the legacy model."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/00-plans-index.md:L1-L256 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-716",
-      "status": "partial",
-      "evidence": [
-        "Plans/Decision_Policy.md:232-239 blocked and approval decisions resolve through runtime blocked episodes; blocked actions target run_id, node_id, blocked_sequence, and attempt_id?; request_id is lineage/compatibility only; allowed_action_ids[] is canonical",
-        "Plans/Decision_Policy.md:291-303 additional blocked defaults are present"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Blocked episode identity is partially covered, but startup_recovered and complete startup-recovery scheduler handshake ownership are not fully covered here.",
+      "coverage_id": "cov-01715",
       "source_obligation_ids": [
-        "obl-196"
+        "obl-1572"
       ],
       "source_seed_ids": [
-        "seed-196"
+        "seed-1962"
       ],
       "source_shard_ids": [
-        "shard-0049"
+        "shard-0028"
       ],
-      "path_field_status": "match"
+      "canon_label": "if a summary surface is `stale`",
+      "row_type": "stale_retirement",
+      "path": "Plans/00-plans-index.md",
+      "heading_hint": "## Change Summary",
+      "status": "missing",
+      "exact_items": [
+        "if a summary surface is `stale`",
+        "stale"
+      ],
+      "stale_tokens": [
+        "stale"
+      ],
+      "evidence": [
+        "Plans/00-plans-index.md:L38",
+        "Plans/00-plans-index.md:L173"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-02385",
+      "source_obligation_ids": [
+        "obl-2235"
+      ],
+      "source_seed_ids": [
+        "seed-2902"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Resolve one authoritative hostability and migration story for terminal widgets and legacy",
+      "row_type": "stale_retirement",
+      "path": "Plans/00-plans-index.md",
+      "heading_hint": "# Plans Index (authoritative map)",
+      "status": "present",
+      "exact_items": [
+        "Resolve one authoritative hostability and migration story for terminal widgets and legacy dashboard layout keys."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/00-plans-index.md:L1-L256 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03020",
+      "source_obligation_ids": [
+        "obl-2866"
+      ],
+      "source_seed_ids": [
+        "seed-3783"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "stale \u201cno change to tier/subtask execution\u201d language still appears in summary tables where",
+      "row_type": "stale_retirement",
+      "path": "Plans/00-plans-index.md",
+      "heading_hint": "## Change Summary",
+      "status": "present",
+      "exact_items": [
+        "stale \u201cno change to tier/subtask execution\u201d language still appears in summary tables where it can mislead implementers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/00-plans-index.md:L1-L256 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03580",
+      "source_obligation_ids": [
+        "obl-3426"
+      ],
+      "source_seed_ids": [
+        "seed-4613"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "canon_label": "artifact index rows should degrade cleanly to seglog-backed inspection if projector state",
+      "row_type": "stale_retirement",
+      "path": "Plans/00-plans-index.md",
+      "heading_hint": "# Plans Index (authoritative map)",
+      "status": "present",
+      "exact_items": [
+        "artifact index rows should degrade cleanly to seglog-backed inspection if projector state is stale or missing"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/00-plans-index.md:L1-L256 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04210",
+      "source_obligation_ids": [
+        "obl-4050"
+      ],
+      "source_seed_ids": [
+        "seed-5589"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "The append-only addendum pattern is itself now a risk signal: several high-value owner doc",
+      "row_type": "stale_retirement",
+      "path": "Plans/00-plans-index.md",
+      "heading_hint": "## 2026-03-07 addendum \u2014 containers, registry, and Unraid",
+      "status": "present",
+      "exact_items": [
+        "The append-only addendum pattern is itself now a risk signal: several high-value owner docs still preserve stale canonical text instead of fully reconciling it."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/00-plans-index.md:L1-L256 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05406",
+      "source_obligation_ids": [
+        "obl-5178"
+      ],
+      "source_seed_ids": [
+        "seed-7670"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "The route layer must normalize legacy/special-case ids before validation rather than accep",
+      "row_type": "stale_retirement",
+      "path": "Plans/00-plans-index.md",
+      "heading_hint": "## Anti-drift layer (required reading order)",
+      "status": "present",
+      "exact_items": [
+        "The route layer must normalize legacy/special-case ids before validation rather than accepting them as ad hoc top-level fields."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/00-plans-index.md:L1-L256 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05521",
+      "source_obligation_ids": [
+        "obl-5293"
+      ],
+      "source_seed_ids": [
+        "seed-7868"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "The duplicated `cost_usage` section raises reconciliation risk because one copy can be upd",
+      "row_type": "stale_retirement",
+      "path": "Plans/00-plans-index.md",
+      "heading_hint": "### Instant Grep canon reconciliation note (2026-03-30)",
+      "status": "missing",
+      "exact_items": [
+        "The duplicated `cost_usage` section raises reconciliation risk because one copy can be updated while the other stays stale.",
+        "cost_usage"
+      ],
+      "stale_tokens": [
+        "cost_usage"
+      ],
+      "evidence": [
+        "Plans/00-plans-index.md:L120",
+        "Plans/00-plans-index.md:L121"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-05708",
+      "source_obligation_ids": [
+        "obl-5480"
+      ],
+      "source_seed_ids": [
+        "seed-8132"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "Remove stale `Tiers` page/tab structures from `FinalGUISpec.md` and `Orchestrator_Page.md`",
+      "row_type": "stale_retirement",
+      "path": "Plans/00-plans-index.md",
+      "heading_hint": "### Instant Grep canon reconciliation note (2026-03-30)",
+      "status": "missing",
+      "exact_items": [
+        "Remove stale `Tiers` page/tab structures from `FinalGUISpec.md` and `Orchestrator_Page.md` in the same reconciliation tranche so they do not keep cross-referencing each other.",
+        "Tiers",
+        "FinalGUISpec.md",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [
+        "FinalGUISpec.md",
+        "Orchestrator_Page.md",
+        "Tiers"
+      ],
+      "evidence": [
+        "Plans/00-plans-index.md:L28",
+        "Plans/00-plans-index.md:L30",
+        "Plans/00-plans-index.md:L52",
+        "Plans/00-plans-index.md:L54",
+        "Plans/00-plans-index.md:L62"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-05951",
+      "source_obligation_ids": [
+        "obl-5723"
+      ],
+      "source_seed_ids": [
+        "seed-8509"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "canon_label": "The event-family layer is still one of the last upstream carriers of stale execution seman",
+      "row_type": "stale_retirement",
+      "path": "Plans/00-plans-index.md",
+      "heading_hint": "## Anti-drift layer (required reading order)",
+      "status": "present",
+      "exact_items": [
+        "The event-family layer is still one of the last upstream carriers of stale execution semantics."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/00-plans-index.md:L1-L256 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06296",
+      "source_obligation_ids": [
+        "obl-5999"
+      ],
+      "source_seed_ids": [
+        "seed-9082"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "The final pass confirms the broader second sweep reached diminishing returns only after th",
+      "row_type": "stale_retirement",
+      "path": "Plans/00-plans-index.md",
+      "heading_hint": "### Instant Grep canon reconciliation note (2026-03-30)",
+      "status": "present",
+      "exact_items": [
+        "The final pass confirms the broader second sweep reached diminishing returns only after the sixth model: the remaining signal is mostly exact structural canon breakage, stale owner-routing, and field/command/schema mismatches rather than broad new conceptual seams."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/00-plans-index.md:L1-L256 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06526",
+      "source_obligation_ids": [
+        "obl-6167"
+      ],
+      "source_seed_ids": [
+        "seed-9329"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "Reconciliation should keep the field names that are already correct and replace the stale",
+      "row_type": "stale_retirement",
+      "path": "Plans/00-plans-index.md",
+      "heading_hint": "### Instant Grep canon reconciliation note (2026-03-30)",
+      "status": "present",
+      "exact_items": [
+        "Reconciliation should keep the field names that are already correct and replace the stale scope model under them:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/00-plans-index.md:L1-L256 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06695",
+      "source_obligation_ids": [
+        "obl-6336"
+      ],
+      "source_seed_ids": [
+        "seed-9674"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "`MUST CHANGE` docs carry either direct stale canon or owner-level gaps. Packetization shou",
+      "row_type": "stale_retirement",
+      "path": "Plans/00-plans-index.md",
+      "heading_hint": "## Change Summary",
+      "status": "present",
+      "exact_items": [
+        "`MUST CHANGE` docs carry either direct stale canon or owner-level gaps. Packetization should assume stale sections must be replaced or retired, not merely annotated.",
+        "MUST CHANGE"
+      ],
+      "stale_tokens": [
+        "MUST CHANGE"
+      ],
+      "evidence": [
+        "Plans/00-plans-index.md:L1-L256 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06898",
+      "source_obligation_ids": [
+        "obl-6500"
+      ],
+      "source_seed_ids": [
+        "seed-9883"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "summary: Re-audited live owner and consumer docs in chunks and confirmed that several bloc",
+      "row_type": "stale_retirement",
+      "path": "Plans/00-plans-index.md",
+      "heading_hint": "## Change Summary",
+      "status": "present",
+      "exact_items": [
+        "summary: Re-audited live owner and consumer docs in chunks and confirmed that several blockers remain real but are overstated as total absence; the live failures are now more precisely partial-transfer, structural-heading, and stale-survivor defects."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/00-plans-index.md:L1-L256 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07164",
+      "source_obligation_ids": [
+        "obl-6732"
+      ],
+      "source_seed_ids": [
+        "seed-10349"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "summary: Audited the repaired `pm.open_gaps.v3` blocker split against live planning docs;",
+      "row_type": "stale_retirement",
+      "path": "Plans/00-plans-index.md",
+      "heading_hint": "## Change Summary",
+      "status": "present",
+      "exact_items": [
+        "summary: Audited the repaired `pm.open_gaps.v3` blocker split against live planning docs; the bounded waves reconfirmed the known missing headings, carry-through gaps, stale survivors, and broken cross-references, but produced zero new exact findings and no evidence that any repaired gap must move back to `blocker_type=planning`.",
+        "pm.open_gaps.v3",
+        "blocker_type=planning"
+      ],
+      "stale_tokens": [
+        "blocker_type=planning",
+        "pm.open_gaps.v3"
+      ],
+      "evidence": [
+        "Plans/00-plans-index.md:L1-L256 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02235",
+      "source_obligation_ids": [
+        "obl-2089"
+      ],
+      "source_seed_ids": [
+        "seed-2717"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "Cross-surface usage/deep-link identity is now clearly under-typed:",
+      "row_type": "consumer",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "### Invariant C -- Cross-surface investigation identity",
+      "status": "partial",
+      "exact_items": [
+        "Cross-surface usage/deep-link identity is now clearly under-typed:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L218"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04577",
+      "source_obligation_ids": [
+        "obl-4355"
+      ],
+      "source_seed_ids": [
+        "seed-6134"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "`storage-plan.md`: owns persisted subject identity and restore/projection joins",
+      "row_type": "consumer",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "status": "present",
+      "exact_items": [
+        "`storage-plan.md`: owns persisted subject identity and restore/projection joins",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L43",
+        "Plans/Architecture_Invariants.md:L73",
+        "Plans/Architecture_Invariants.md:L133",
+        "Plans/Architecture_Invariants.md:L161",
+        "Plans/Architecture_Invariants.md:L170"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04664",
+      "source_obligation_ids": [
+        "obl-4442"
+      ],
+      "source_seed_ids": [
+        "seed-6295"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "Optional later expansion only if a real cross-surface need appears:",
+      "row_type": "consumer",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "### Invariant C -- Cross-surface investigation identity",
+      "status": "partial",
+      "exact_items": [
+        "Optional later expansion only if a real cross-surface need appears:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L218"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04793",
+      "source_obligation_ids": [
+        "obl-4570"
+      ],
+      "source_seed_ids": [
+        "seed-6524"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "canon_label": "A deep-link transport should preserve:",
+      "row_type": "consumer",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
+      "status": "partial",
+      "exact_items": [
+        "A deep-link transport should preserve:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L91"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05621",
+      "source_obligation_ids": [
+        "obl-5393"
+      ],
+      "source_seed_ids": [
+        "seed-8016"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "`storage-plan.md` owns persisted refs like `preview_subject_id` and `resume_url`",
+      "row_type": "consumer",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "status": "present",
+      "exact_items": [
+        "`storage-plan.md` owns persisted refs like `preview_subject_id` and `resume_url`",
+        "storage-plan.md",
+        "preview_subject_id",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L43",
+        "Plans/Architecture_Invariants.md:L73",
+        "Plans/Architecture_Invariants.md:L133",
+        "Plans/Architecture_Invariants.md:L161",
+        "Plans/Architecture_Invariants.md:L170"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05922",
+      "source_obligation_ids": [
+        "obl-5694"
+      ],
+      "source_seed_ids": [
+        "seed-8462"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "canon_label": "Reconcile worker/verifier identity consumers to the canonical requested/effective field se",
+      "row_type": "consumer",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
+      "status": "partial",
+      "exact_items": [
+        "Reconcile worker/verifier identity consumers to the canonical requested/effective field set."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L91"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06171",
+      "source_obligation_ids": [
+        "obl-5943"
+      ],
+      "source_seed_ids": [
+        "seed-8842"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`Architecture_Invariants.md` needs explicit invariants for frozen requested/effective exec",
+      "row_type": "consumer",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "# Architecture Invariants (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`Architecture_Invariants.md` needs explicit invariants for frozen requested/effective execution identity bundles, provider-pool concurrency scope, projection trust vs scheduler authority, and safe-point lineage exactness.",
+        "Architecture_Invariants.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L127"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06200",
+      "source_obligation_ids": [
+        "obl-5969"
+      ],
+      "source_seed_ids": [
+        "seed-8937"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`Architecture_Invariants.md` is now missing invariants that adjacent owner docs already st",
+      "row_type": "consumer",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "# Architecture Invariants (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`Architecture_Invariants.md` is now missing invariants that adjacent owner docs already state normatively: safe-point vs restore-point boundaries, graph-lock non-degradation, classification-before-policy, checkpoint-derived projection freshness, and attempt-boundary identity freeze.",
+        "Architecture_Invariants.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L127"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06307",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06633",
+      "source_obligation_ids": [
+        "obl-6274"
+      ],
+      "source_seed_ids": [
+        "seed-9500"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Run_Graph_View.md` and `usage-feature.md` still reinforce each other through `tier_id`, w",
+      "row_type": "consumer",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "status": "partial",
+      "exact_items": [
+        "`Run_Graph_View.md` and `usage-feature.md` still reinforce each other through `tier_id`, which keeps the old usage/evidence/runtime correlation alive.",
+        "Run_Graph_View.md",
+        "usage-feature.md",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L142",
+        "Plans/Architecture_Invariants.md:L152"
+      ],
+      "required_action": "consumer_propagation"
     }
   ]
 }

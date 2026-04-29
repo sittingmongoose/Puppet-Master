@@ -1,0 +1,542 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-148",
+  "row_group_ids": [
+    "rowgrp-0589",
+    "rowgrp-0590",
+    "rowgrp-0591",
+    "rowgrp-0592"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-04897",
+      "source_obligation_ids": [
+        "obl-4674"
+      ],
+      "source_seed_ids": [
+        "seed-6693"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "`Plugins_System.md` still has a severe hook/schema split, missing `mutation_capable` on pl",
+      "row_type": "layout_blocker",
+      "path": "Plans/Plugins_System.md",
+      "heading_hint": "### 4.1 Tool execution hooks",
+      "status": "present",
+      "exact_items": [
+        "`Plugins_System.md` still has a severe hook/schema split, missing `mutation_capable` on plugin tools, in-process execution ambiguity vs subprocess-sandbox expectations, and prompt/param hooks that can bypass run-mode safety assumptions.",
+        "Plugins_System.md",
+        "mutation_capable"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Plugins_System.md:L7",
+        "Plans/Plugins_System.md:L86",
+        "Plans/Plugins_System.md:L133",
+        "Plans/Plugins_System.md:L285",
+        "Plans/Plugins_System.md:L522"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05305",
+      "source_obligation_ids": [
+        "obl-5078"
+      ],
+      "source_seed_ids": [
+        "seed-7472"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "with `Plans/00-plans-index.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plug",
+      "row_type": "layout_blocker",
+      "path": "Plans/Plugins_System.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "with `Plans/00-plans-index.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/Formatters_System.md` also still clearly above the noise floor.",
+        "Plans/00-plans-index.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Plugins_System.md",
+        "Plans/Skills_System.md",
+        "Plans/Formatters_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Plugins_System.md:L7",
+        "Plans/Plugins_System.md:L21",
+        "Plans/Plugins_System.md:L86",
+        "Plans/Plugins_System.md:L133",
+        "Plans/Plugins_System.md:L285"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06190",
+      "source_obligation_ids": [
+        "obl-5960"
+      ],
+      "source_seed_ids": [
+        "seed-8906"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skil",
+      "row_type": "layout_blocker",
+      "path": "Plans/Plugins_System.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/LSPSupport.md` still clearly active.",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Plugins_System.md",
+        "Plans/Skills_System.md",
+        "Plans/LSPSupport.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Plugins_System.md:L7",
+        "Plans/Plugins_System.md:L86",
+        "Plans/Plugins_System.md:L133",
+        "Plans/Plugins_System.md:L285",
+        "Plans/Plugins_System.md:L406"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04201",
+      "source_obligation_ids": [
+        "obl-4041"
+      ],
+      "source_seed_ids": [
+        "seed-5560"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "`newtools.md` and assistant-memory still add net-new owner failures even after Sonnet:",
+      "row_type": "owner",
+      "path": "Plans/Plugins_System.md",
+      "heading_hint": "#### `tool.execute.after`",
+      "status": "partial",
+      "exact_items": [
+        "`newtools.md` and assistant-memory still add net-new owner failures even after Sonnet:",
+        "newtools.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Plugins_System.md:L70",
+        "Plans/Plugins_System.md:L205"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04484",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/Plugins_System.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Plugins_System.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04889",
+      "source_obligation_ids": [
+        "obl-4666"
+      ],
+      "source_seed_ids": [
+        "seed-6684",
+        "seed-6703",
+        "seed-6726",
+        "seed-7394",
+        "seed-7439",
+        "seed-8830",
+        "seed-8871",
+        "seed-8925",
+        "seed-8963",
+        "seed-9023",
+        "seed-9057"
+      ],
+      "source_shard_ids": [
+        "shard-0064",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "canon_label": "`Plans/Plugins_System.md`",
+      "row_type": "owner",
+      "path": "Plans/Plugins_System.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Plugins_System.md`",
+        "Plans/Plugins_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Plugins_System.md:L7",
+        "Plans/Plugins_System.md:L86",
+        "Plans/Plugins_System.md:L133",
+        "Plans/Plugins_System.md:L285",
+        "Plans/Plugins_System.md:L522"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05293",
+      "source_obligation_ids": [
+        "obl-5069"
+      ],
+      "source_seed_ids": [
+        "seed-7417"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`Plugins_System.md` still has a hook-name schism, missing `mutation_capable` on plugin too",
+      "row_type": "owner",
+      "path": "Plans/Plugins_System.md",
+      "heading_hint": "#### `permission.ask`",
+      "status": "present",
+      "exact_items": [
+        "`Plugins_System.md` still has a hook-name schism, missing `mutation_capable` on plugin tools, a `shell.env` bypass that can mutate PM control env vars, shadow approval paths via `permission.ask`, and Persona-disabled plugins whose tools remain callable.",
+        "Plugins_System.md",
+        "mutation_capable",
+        "shell.env",
+        "permission.ask"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Plugins_System.md:L7",
+        "Plans/Plugins_System.md:L86",
+        "Plans/Plugins_System.md:L133",
+        "Plans/Plugins_System.md:L219",
+        "Plans/Plugins_System.md:L285"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06217",
+      "source_obligation_ids": [
+        "obl-5984"
+      ],
+      "source_seed_ids": [
+        "seed-9004"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "with `Plans/Plugins_System.md`, `Plans/Skills_System.md`, `Plans/LSPSupport.md`, `Plans/Me",
+      "row_type": "owner",
+      "path": "Plans/Plugins_System.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "with `Plans/Plugins_System.md`, `Plans/Skills_System.md`, `Plans/LSPSupport.md`, `Plans/Media_Generation_and_Capabilities.md`, and `Plans/agent-rules-context.md` still clearly active.",
+        "Plans/Plugins_System.md",
+        "Plans/Skills_System.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/agent-rules-context.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Plugins_System.md:L7",
+        "Plans/Plugins_System.md:L86",
+        "Plans/Plugins_System.md:L133",
+        "Plans/Plugins_System.md:L285",
+        "Plans/Plugins_System.md:L406"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06253",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/Plugins_System.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Plugins_System.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00275",
+      "source_obligation_ids": [
+        "obl-150"
+      ],
+      "source_seed_ids": [
+        "seed-156"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "`Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/Run_Graph_View.md`",
+      "row_type": "consumer",
+      "path": "Plans/Progression_Gates.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/Run_Graph_View.md`",
+        "Plans/Executor_Protocol.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Progression_Gates.md:L14",
+        "Plans/Progression_Gates.md:L17",
+        "Plans/Progression_Gates.md:L126",
+        "Plans/Progression_Gates.md:L134",
+        "Plans/Progression_Gates.md:L143"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00313",
+      "source_obligation_ids": [
+        "obl-177"
+      ],
+      "source_seed_ids": [
+        "seed-203"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "docs involved: `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_gra",
+      "row_type": "consumer",
+      "path": "Plans/Progression_Gates.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "docs involved: `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, `Plans/Run_Graph_View.md`",
+        "Plans/Executor_Protocol.md",
+        "Plans/Progression_Gates.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/Run_Graph_View.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Progression_Gates.md:L14",
+        "Plans/Progression_Gates.md:L17",
+        "Plans/Progression_Gates.md:L126",
+        "Plans/Progression_Gates.md:L134",
+        "Plans/Progression_Gates.md:L143"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04102",
+      "source_obligation_ids": [
+        "obl-3944"
+      ],
+      "source_seed_ids": [
+        "seed-5403"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "This seam now looks tightly connected to routing/deep-link normalization, not just FileMan",
+      "row_type": "consumer",
+      "path": "Plans/Progression_Gates.md",
+      "heading_hint": "### Verifier result normalization",
+      "status": "partial",
+      "exact_items": [
+        "This seam now looks tightly connected to routing/deep-link normalization, not just FileManager UX."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Progression_Gates.md:L114"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06339",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/Progression_Gates.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Progression_Gates.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00244",
+      "source_obligation_ids": [
+        "obl-130"
+      ],
+      "source_seed_ids": [
+        "seed-135"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "likely issue: UI still presents `Tiers` as a primary mental model and lacks first-class wo",
+      "row_type": "layout_blocker",
+      "path": "Plans/Progression_Gates.md",
+      "heading_hint": "### Fidelity recovery cov-034: Promotion classes and gate evidence",
+      "status": "partial",
+      "exact_items": [
+        "likely issue: UI still presents `Tiers` as a primary mental model and lacks first-class work package, feature seam, lane, promotion, contamination, and resolution-thread surfaces.",
+        "Tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Progression_Gates.md:L124"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05679",
+      "source_obligation_ids": [
+        "obl-5451"
+      ],
+      "source_seed_ids": [
+        "seed-8088"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "`Plans/Progression_Gates.md` and `UI_Wiring_Rules.md` still assume command verification is",
+      "row_type": "layout_blocker",
+      "path": "Plans/Progression_Gates.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Progression_Gates.md` and `UI_Wiring_Rules.md` still assume command verification is:",
+        "Plans/Progression_Gates.md",
+        "UI_Wiring_Rules.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Progression_Gates.md:L14",
+        "Plans/Progression_Gates.md:L17",
+        "Plans/Progression_Gates.md:L271",
+        "Plans/Progression_Gates.md:L440"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06381",
+      "source_obligation_ids": [
+        "obl-6022"
+      ],
+      "source_seed_ids": [
+        "seed-9109"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "section `7` uses `Plans/Progression_Gates.md#GATE-009` while the references block later li",
+      "row_type": "layout_blocker",
+      "path": "Plans/Progression_Gates.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "section `7` uses `Plans/Progression_Gates.md#GATE-009` while the references block later lists `Plans/Progression_Gates.md#GATE-011`; the doc is mixing path-only and path-plus-anchor styles inside its own canon examples",
+        "7",
+        "Plans/Progression_Gates.md#GATE-009",
+        "Plans/Progression_Gates.md#GATE-011"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Progression_Gates.md:L245",
+        "Plans/Progression_Gates.md:L291",
+        "Plans/Progression_Gates.md:L294"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06826",
+      "source_obligation_ids": [
+        "obl-6442"
+      ],
+      "source_seed_ids": [
+        "seed-9821"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Cr",
+      "row_type": "layout_blocker",
+      "path": "Plans/Progression_Gates.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Crosswalk.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md",
+        "Plans/FileManager.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Progression_Gates.md:L14",
+        "Plans/Progression_Gates.md:L17",
+        "Plans/Progression_Gates.md:L19",
+        "Plans/Progression_Gates.md:L76",
+        "Plans/Progression_Gates.md:L112"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

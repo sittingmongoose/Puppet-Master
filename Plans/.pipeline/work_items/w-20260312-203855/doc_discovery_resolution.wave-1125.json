@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1125",
+  "group_ids": [
+    "discgrp-4497",
+    "discgrp-4498",
+    "discgrp-4499",
+    "discgrp-4500"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04893",
+      "source_obligation_ids": [
+        "obl-4670"
+      ],
+      "source_seed_ids": [
+        "seed-6689"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "# Assistant & Chat UI -- Design Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04894",
+      "source_obligation_ids": [
+        "obl-4671"
+      ],
+      "source_seed_ids": [
+        "seed-6690"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Progression_Gates.md",
+      "new_heading_hint": "## GATE-003 -- Architecture invariants",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Progression_Gates.md:L186"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04895",
+      "source_obligation_ids": [
+        "obl-4672"
+      ],
+      "source_seed_ids": [
+        "seed-6691"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04896",
+      "source_obligation_ids": [
+        "obl-4673"
+      ],
+      "source_seed_ids": [
+        "seed-6692"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/LSPSupport.md",
+      "new_heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/LSPSupport.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

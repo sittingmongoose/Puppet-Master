@@ -1,0 +1,540 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-147",
+  "row_group_ids": [
+    "rowgrp-0585",
+    "rowgrp-0586",
+    "rowgrp-0587",
+    "rowgrp-0588"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-02075",
+      "source_obligation_ids": [
+        "obl-1932"
+      ],
+      "source_seed_ids": [
+        "seed-2496"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "`FinalGUISpec.md`, `Personas.md`, and `Models_System.md` consistently require dual copy va",
+      "row_type": "layout_blocker",
+      "path": "Plans/Personas.md",
+      "heading_hint": "# Personas (Canonical SSOT)",
+      "status": "present",
+      "exact_items": [
+        "`FinalGUISpec.md`, `Personas.md`, and `Models_System.md` consistently require dual copy variants for tooltips/help strings",
+        "FinalGUISpec.md",
+        "Personas.md",
+        "Models_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:L7",
+        "Plans/Personas.md:L23",
+        "Plans/Personas.md:L48",
+        "Plans/Personas.md:L109",
+        "Plans/Personas.md:L155"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06802",
+      "source_obligation_ids": [
+        "obl-6427"
+      ],
+      "source_seed_ids": [
+        "seed-9806"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Mod",
+      "row_type": "layout_blocker",
+      "path": "Plans/Personas.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:L7",
+        "Plans/Personas.md:L23",
+        "Plans/Personas.md:L40",
+        "Plans/Personas.md:L48",
+        "Plans/Personas.md:L109"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00187",
+      "source_obligation_ids": [
+        "obl-083"
+      ],
+      "source_seed_ids": [
+        "seed-083"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Docs involved: `Executor_Protocol.md`, `Orchestrator_Page.md`, `Personas.md`, `Provider_St",
+      "row_type": "owner",
+      "path": "Plans/Personas.md",
+      "heading_hint": "# Personas (Canonical SSOT)",
+      "status": "present",
+      "exact_items": [
+        "Docs involved: `Executor_Protocol.md`, `Orchestrator_Page.md`, `Personas.md`, `Provider_Stream_Mapping_External_Reference_A2A.md`",
+        "Executor_Protocol.md",
+        "Orchestrator_Page.md",
+        "Personas.md",
+        "Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:L7",
+        "Plans/Personas.md:L35",
+        "Plans/Personas.md:L109",
+        "Plans/Personas.md:L211",
+        "Plans/Personas.md:L217"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00224",
+      "source_obligation_ids": [
+        "obl-119"
+      ],
+      "source_seed_ids": [
+        "seed-124"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "`Plans/Prompt_Pipeline.md`, `Plans/Personas.md`, `Plans/Provider_Stream_Mapping_External_R",
+      "row_type": "owner",
+      "path": "Plans/Personas.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md`, `Plans/Personas.md`, `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Personas.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:L7",
+        "Plans/Personas.md:L40",
+        "Plans/Personas.md:L109",
+        "Plans/Personas.md:L211",
+        "Plans/Personas.md:L217"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00280",
+      "source_obligation_ids": [
+        "obl-153"
+      ],
+      "source_seed_ids": [
+        "seed-160"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "`Plans/Models_System.md`, `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`",
+      "row_type": "owner",
+      "path": "Plans/Personas.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Models_System.md`, `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`",
+        "Plans/Models_System.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Personas.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:L7",
+        "Plans/Personas.md:L23",
+        "Plans/Personas.md:L40",
+        "Plans/Personas.md:L48",
+        "Plans/Personas.md:L109"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00385",
+      "source_obligation_ids": [
+        "obl-243"
+      ],
+      "source_seed_ids": [
+        "seed-275",
+        "seed-304",
+        "seed-1080",
+        "seed-1174",
+        "seed-1236",
+        "seed-1729",
+        "seed-1809",
+        "seed-2493",
+        "seed-2665",
+        "seed-2691",
+        "seed-3026",
+        "seed-3264",
+        "seed-3459",
+        "seed-8984",
+        "seed-9080",
+        "seed-9619",
+        "seed-9655"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0019",
+        "shard-0020",
+        "shard-0021",
+        "shard-0026",
+        "shard-0027",
+        "shard-0033",
+        "shard-0034",
+        "shard-0037",
+        "shard-0039",
+        "shard-0040",
+        "shard-0082",
+        "shard-0086"
+      ],
+      "canon_label": "`Plans/Personas.md`",
+      "row_type": "owner",
+      "path": "Plans/Personas.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Personas.md`",
+        "Plans/Personas.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:L7",
+        "Plans/Personas.md:L109",
+        "Plans/Personas.md:L211",
+        "Plans/Personas.md:L217",
+        "Plans/Personas.md:L227"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00393",
+      "source_obligation_ids": [
+        "obl-251"
+      ],
+      "source_seed_ids": [
+        "seed-284"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "`Models_System.md`, `Personas.md`, and bridged-provider docs still behave as if provider/m",
+      "row_type": "owner",
+      "path": "Plans/Personas.md",
+      "heading_hint": "# Personas (Canonical SSOT)",
+      "status": "present",
+      "exact_items": [
+        "`Models_System.md`, `Personas.md`, and bridged-provider docs still behave as if provider/model/persona are the full identity envelope",
+        "Models_System.md",
+        "Personas.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:L7",
+        "Plans/Personas.md:L23",
+        "Plans/Personas.md:L48",
+        "Plans/Personas.md:L109",
+        "Plans/Personas.md:L155"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00403",
+      "source_obligation_ids": [
+        "obl-261"
+      ],
+      "source_seed_ids": [
+        "seed-294"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "`Prompt_Pipeline.md`, `Models_System.md`, and `Personas.md` still embed tier ownership in",
+      "row_type": "owner",
+      "path": "Plans/Personas.md",
+      "heading_hint": "# Personas (Canonical SSOT)",
+      "status": "present",
+      "exact_items": [
+        "`Prompt_Pipeline.md`, `Models_System.md`, and `Personas.md` still embed tier ownership in selection sources, override owners, or execution framing",
+        "Prompt_Pipeline.md",
+        "Models_System.md",
+        "Personas.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:L7",
+        "Plans/Personas.md:L23",
+        "Plans/Personas.md:L40",
+        "Plans/Personas.md:L48",
+        "Plans/Personas.md:L109"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00412",
+      "source_obligation_ids": [
+        "obl-270"
+      ],
+      "source_seed_ids": [
+        "seed-308"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "`Personas.md` still uses `requested_persona_id` / `effective_persona_id` in a runtime-faci",
+      "row_type": "owner",
+      "path": "Plans/Personas.md",
+      "heading_hint": "# Personas (Canonical SSOT)",
+      "status": "present",
+      "exact_items": [
+        "`Personas.md` still uses `requested_persona_id` / `effective_persona_id` in a runtime-facing section even though `Contracts_V0.md` explicitly prohibits those names as canonical fields.",
+        "Personas.md",
+        "requested_persona_id",
+        "effective_persona_id",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:L3",
+        "Plans/Personas.md:L7",
+        "Plans/Personas.md:L13",
+        "Plans/Personas.md:L35",
+        "Plans/Personas.md:L109"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00422",
+      "source_obligation_ids": [
+        "obl-280"
+      ],
+      "source_seed_ids": [
+        "seed-318"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "Replace tier-bound identity/override wording in `Prompt_Pipeline.md`, `Models_System.md`,",
+      "row_type": "owner",
+      "path": "Plans/Personas.md",
+      "heading_hint": "# Personas (Canonical SSOT)",
+      "status": "present",
+      "exact_items": [
+        "Replace tier-bound identity/override wording in `Prompt_Pipeline.md`, `Models_System.md`, and `Personas.md` with node/package/seam/lane-aware ownership.",
+        "Prompt_Pipeline.md",
+        "Models_System.md",
+        "Personas.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:L7",
+        "Plans/Personas.md:L23",
+        "Plans/Personas.md:L40",
+        "Plans/Personas.md:L48",
+        "Plans/Personas.md:L109"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02202",
+      "source_obligation_ids": [
+        "obl-2057"
+      ],
+      "source_seed_ids": [
+        "seed-2673"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "`Personas.md` still references `select_for_tier()` and still violates canonical persona fi",
+      "row_type": "owner",
+      "path": "Plans/Personas.md",
+      "heading_hint": "# Personas (Canonical SSOT)",
+      "status": "present",
+      "exact_items": [
+        "`Personas.md` still references `select_for_tier()` and still violates canonical persona field naming inside its own SSOT section",
+        "Personas.md",
+        "select_for_tier()"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:L7",
+        "Plans/Personas.md:L109",
+        "Plans/Personas.md:L211",
+        "Plans/Personas.md:L217",
+        "Plans/Personas.md:L227"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02222",
+      "source_obligation_ids": [
+        "obl-2076"
+      ],
+      "source_seed_ids": [
+        "seed-2696"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "`Personas.md` still uses `_persona_id` canonical names and `select_for_tier()` references",
+      "row_type": "owner",
+      "path": "Plans/Personas.md",
+      "heading_hint": "# Personas (Canonical SSOT)",
+      "status": "present",
+      "exact_items": [
+        "`Personas.md` still uses `_persona_id` canonical names and `select_for_tier()` references even though `Contracts_V0.md` prohibits the former and the rewrite invalidates the latter.",
+        "Personas.md",
+        "_persona_id",
+        "select_for_tier()",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:L3",
+        "Plans/Personas.md:L7",
+        "Plans/Personas.md:L13",
+        "Plans/Personas.md:L35",
+        "Plans/Personas.md:L80"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02227",
+      "source_obligation_ids": [
+        "obl-2081"
+      ],
+      "source_seed_ids": [
+        "seed-2701"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "Replace tier-era persisted names/values in `Prompt_Pipeline.md` and `Personas.md` before t",
+      "row_type": "owner",
+      "path": "Plans/Personas.md",
+      "heading_hint": "# Personas (Canonical SSOT)",
+      "status": "present",
+      "exact_items": [
+        "Replace tier-era persisted names/values in `Prompt_Pipeline.md` and `Personas.md` before they become entrenched in durable records.",
+        "Prompt_Pipeline.md",
+        "Personas.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:L7",
+        "Plans/Personas.md:L40",
+        "Plans/Personas.md:L109",
+        "Plans/Personas.md:L211",
+        "Plans/Personas.md:L217"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04483",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/Personas.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06252",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/Personas.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06338",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/Plugins_System.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Plugins_System.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    }
+  ]
+}

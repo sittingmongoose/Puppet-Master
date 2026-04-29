@@ -1,0 +1,103 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-728",
+  "group_ids": [
+    "discgrp-2909",
+    "discgrp-2910",
+    "discgrp-2911",
+    "discgrp-2912"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03189",
+      "source_obligation_ids": [
+        "obl-3035"
+      ],
+      "source_seed_ids": [
+        "seed-4007"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03190",
+      "source_obligation_ids": [
+        "obl-3036"
+      ],
+      "source_seed_ids": [
+        "seed-4008",
+        "seed-4833",
+        "seed-4964",
+        "seed-5181",
+        "seed-5249",
+        "seed-5298"
+      ],
+      "source_shard_ids": [
+        "shard-0044",
+        "shard-0050",
+        "shard-0051",
+        "shard-0053",
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03191",
+      "source_obligation_ids": [
+        "obl-3037"
+      ],
+      "source_seed_ids": [
+        "seed-4009"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "## 7. Plan graph requirements (**sharded-only canonical** + optional derived export)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L256"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03192",
+      "source_obligation_ids": [
+        "obl-3038"
+      ],
+      "source_seed_ids": [
+        "seed-4010"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Prompt_Pipeline.md",
+      "new_heading_hint": "## Fidelity recovery addendum",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L3"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

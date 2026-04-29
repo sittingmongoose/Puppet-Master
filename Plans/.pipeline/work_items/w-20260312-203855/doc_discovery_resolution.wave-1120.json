@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1120",
+  "group_ids": [
+    "discgrp-4477",
+    "discgrp-4478",
+    "discgrp-4479",
+    "discgrp-4480"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04865",
+      "source_obligation_ids": [
+        "obl-4642"
+      ],
+      "source_seed_ids": [
+        "seed-6648"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04866",
+      "source_obligation_ids": [
+        "obl-4643"
+      ],
+      "source_seed_ids": [
+        "seed-6649"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "### Field-level override",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L286"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04867",
+      "source_obligation_ids": [
+        "obl-4644"
+      ],
+      "source_seed_ids": [
+        "seed-6650"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Permissions_System.md",
+      "new_heading_hint": "# Granular rules (object syntax)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Permissions_System.md:L593"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04868",
+      "source_obligation_ids": [
+        "obl-4645"
+      ],
+      "source_seed_ids": [
+        "seed-6651"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-086: Requested concrete-account fields",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L145"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

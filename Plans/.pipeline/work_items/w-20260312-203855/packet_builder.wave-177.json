@@ -1,0 +1,85 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-177",
+  "group_ids": [
+    "pktgrp-0705"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0150",
+      "source_reconciliation_target_id": "target-0704",
+      "source_reconciliation_target_ids": [
+        "target-0704"
+      ],
+      "path": "Plans/usage-feature.md",
+      "operation": "observe_only",
+      "live_anchor": "### Problem 4: 5h/7d semantics differ by platform (Plans/usage-feature.md:L515)",
+      "coverage_row_ids": [
+        "cov-01105"
+      ],
+      "source_obligation_ids": [
+        "obl-962"
+      ],
+      "source_seed_ids": [
+        "seed-1129"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-962"
+        ],
+        "source_seed_ids": [
+          "seed-1129"
+        ],
+        "source_shard_ids": [
+          "shard-0019"
+        ]
+      },
+      "gap_ids": [
+        "gap-00857"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "if they differ, the UI must expand/disclose the difference visibly"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-1cb78dfe3f58",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-01105"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-962"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-1129"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0019"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "if they differ, the UI must expand/disclose the difference visibly"
+  ],
+  "blocked_targets": []
+}

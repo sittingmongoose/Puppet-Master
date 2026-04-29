@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1373",
+  "group_ids": [
+    "discgrp-5489",
+    "discgrp-5490",
+    "discgrp-5491",
+    "discgrp-5492"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05944",
+      "source_obligation_ids": [
+        "obl-5716"
+      ],
+      "source_seed_ids": [
+        "seed-8496"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L193"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05945",
+      "source_obligation_ids": [
+        "obl-5717"
+      ],
+      "source_seed_ids": [
+        "seed-8497"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05946",
+      "source_obligation_ids": [
+        "obl-5718"
+      ],
+      "source_seed_ids": [
+        "seed-8498"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## 19. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2020"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05947",
+      "source_obligation_ids": [
+        "obl-5719"
+      ],
+      "source_seed_ids": [
+        "seed-8499"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 19.3 Compatibility panel copy examples",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2069"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

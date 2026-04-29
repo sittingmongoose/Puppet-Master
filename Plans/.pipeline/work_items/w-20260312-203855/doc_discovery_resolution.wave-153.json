@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-153",
+  "group_ids": [
+    "discgrp-0609",
+    "discgrp-0610",
+    "discgrp-0611",
+    "discgrp-0612"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00856",
+      "source_obligation_ids": [
+        "obl-713"
+      ],
+      "source_seed_ids": [
+        "seed-813"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-036: Promotion classes and gate evidence",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L95"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00857",
+      "source_obligation_ids": [
+        "obl-714"
+      ],
+      "source_seed_ids": [
+        "seed-814"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Wiring_Rules.md",
+      "new_heading_hint": "# UI Wiring Rules (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Wiring_Rules.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00858",
+      "source_obligation_ids": [
+        "obl-715"
+      ],
+      "source_seed_ids": [
+        "seed-815"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "### Managed template-repo workflow default",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L573"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00859",
+      "source_obligation_ids": [
+        "obl-716"
+      ],
+      "source_seed_ids": [
+        "seed-816"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

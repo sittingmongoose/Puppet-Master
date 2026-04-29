@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1348",
+  "group_ids": [
+    "discgrp-5389",
+    "discgrp-5390",
+    "discgrp-5391",
+    "discgrp-5392"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05835",
+      "source_obligation_ids": [
+        "obl-5607"
+      ],
+      "source_seed_ids": [
+        "seed-8325"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-090: Execution role and operational identity",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L157"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05837",
+      "source_obligation_ids": [
+        "obl-5609"
+      ],
+      "source_seed_ids": [
+        "seed-8328"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05838",
+      "source_obligation_ids": [
+        "obl-5610"
+      ],
+      "source_seed_ids": [
+        "seed-8329"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05839",
+      "source_obligation_ids": [
+        "obl-5611"
+      ],
+      "source_seed_ids": [
+        "seed-8330"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "### 3. Event ledger (existing concept, under Usage umbrella)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/usage-feature.md:L187"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

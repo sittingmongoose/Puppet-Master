@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-775",
+  "group_ids": [
+    "discgrp-3097",
+    "discgrp-3098",
+    "discgrp-3099",
+    "discgrp-3100"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03377",
+      "source_obligation_ids": [
+        "obl-3223"
+      ],
+      "source_seed_ids": [
+        "seed-4304"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Runtime artifact and projection storage scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03378",
+      "source_obligation_ids": [
+        "obl-3224"
+      ],
+      "source_seed_ids": [
+        "seed-4305"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "## 2. Required artifact set (SSOT) \u2014 Project Plan Package",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L37"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03379",
+      "source_obligation_ids": [
+        "obl-3225"
+      ],
+      "source_seed_ids": [
+        "seed-4306"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "### 3.5A `skill` tool runtime contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Tools.md:L465"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03380",
+      "source_obligation_ids": [
+        "obl-3226"
+      ],
+      "source_seed_ids": [
+        "seed-4307"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Cross-surface receipt record baseline",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L481"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

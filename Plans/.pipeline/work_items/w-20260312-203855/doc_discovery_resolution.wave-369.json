@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-369",
+  "group_ids": [
+    "discgrp-1473",
+    "discgrp-1474",
+    "discgrp-1475",
+    "discgrp-1476"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01725",
+      "source_obligation_ids": [
+        "obl-1582"
+      ],
+      "source_seed_ids": [
+        "seed-1974"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01726",
+      "source_obligation_ids": [
+        "obl-1583"
+      ],
+      "source_seed_ids": [
+        "seed-1975"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "## 6. Ambiguity vs. Missing User Intent",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01727",
+      "source_obligation_ids": [
+        "obl-1584"
+      ],
+      "source_seed_ids": [
+        "seed-1976"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-011 -- UI command dispatch only (Rule 1)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L108"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01728",
+      "source_obligation_ids": [
+        "obl-1585"
+      ],
+      "source_seed_ids": [
+        "seed-1977"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "## Runtime Scheduler / Recovery Ownership and Precedence",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L300"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

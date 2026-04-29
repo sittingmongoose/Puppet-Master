@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1005",
+  "group_ids": [
+    "discgrp-4017",
+    "discgrp-4018",
+    "discgrp-4019",
+    "discgrp-4020"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04328",
+      "source_obligation_ids": [
+        "obl-4168"
+      ],
+      "source_seed_ids": [
+        "seed-5786"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04329",
+      "source_obligation_ids": [
+        "obl-4169"
+      ],
+      "source_seed_ids": [
+        "seed-5787"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "# Assistant & Chat UI -- Design Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04330",
+      "source_obligation_ids": [
+        "obl-4170"
+      ],
+      "source_seed_ids": [
+        "seed-5788"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "### 1.1 User Command (preset)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Commands_System.md:L31"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04331",
+      "source_obligation_ids": [
+        "obl-4171"
+      ],
+      "source_seed_ids": [
+        "seed-5797"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

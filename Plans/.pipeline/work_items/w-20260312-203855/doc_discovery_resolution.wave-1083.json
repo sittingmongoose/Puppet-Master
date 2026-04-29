@@ -1,0 +1,102 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1083",
+  "group_ids": [
+    "discgrp-4329",
+    "discgrp-4330",
+    "discgrp-4331",
+    "discgrp-4332"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04706",
+      "source_obligation_ids": [
+        "obl-4484"
+      ],
+      "source_seed_ids": [
+        "seed-6373"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "# One regex pattern per line. Case-insensitive matching.",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L815"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04707",
+      "source_obligation_ids": [
+        "obl-4485"
+      ],
+      "source_seed_ids": [
+        "seed-6374"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "# === Raw SQL via CLI clients ===",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L862"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04708",
+      "source_obligation_ids": [
+        "obl-4486"
+      ],
+      "source_seed_ids": [
+        "seed-6375",
+        "seed-7358",
+        "seed-7503"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0069",
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### 7.16.1 Thread header and message stream",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1000"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04709",
+      "source_obligation_ids": [
+        "obl-4487"
+      ],
+      "source_seed_ids": [
+        "seed-6376",
+        "seed-7359",
+        "seed-7504"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0069",
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

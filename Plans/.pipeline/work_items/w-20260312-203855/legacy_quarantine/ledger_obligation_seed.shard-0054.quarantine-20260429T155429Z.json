@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0054",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0054-L010601-L010800.md",
+  "source_line_range": "L010601-L010800",
+  "covered_shard_id": "shard-0054",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "runtime-artifact envelope common field contract",
+      "exact_items": [
+        "Promote the runtime-artifact envelope from a named schema file to a clearly stated common field contract in Runtime_Artifacts_Panel.md.",
+        "FileManager.md still states one canonical open contract, but later addenda already require a second category of opens for runtime artifacts by artifact_id."
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/FileManager.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "artifact_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L10648-L10665",
+        "working_ledger.md:L10681-L10689"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "OpenSubject identity-native object opens",
+      "exact_items": [
+        "FileManager\u2019s future OpenArtifact-style flow should resolve by artifact_id for the artifact object, related runtime attempt/evidence lineage, and related Source Control / GitHub / Docker / Kubernetes surface when relevant",
+        "keep OpenFile { path... } for canonical workspace-file opens; add a second canonical open contract for identity-native objects, e.g. OpenSubject { subject_id, target_group?, open_mode?, location? }",
+        "path-based open remains for repo/workspace files; identity-based open is the canonical entrypoint for runtime artifacts, attempt/evidence/safe-point/remediation reports, preview/document hybrids"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "OpenArtifact",
+        "OpenFile",
+        "OpenSubject"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L10640-L10646",
+        "working_ledger.md:L10695-L10699",
+        "working_ledger.md:L10720-L10727"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "OpenArtifact/OpenSubject contract absent",
+      "exact_items": [
+        "Runtime_Artifacts_Panel.md calls artifact_id, run_id, thread_id, task_id, linked_artifact_id, and logical_artifact_id the canonical ID set, but that set is still missing the attempt-native/runtime attribution fields.",
+        "attempt-scoped evidence by attempt_id and runtime artifacts by artifact_id mean the docs have already outgrown a path-only open contract",
+        "there is currently no canonical OpenArtifact/OpenSubject contract even though multiple docs implicitly need it."
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/FileManager.md",
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [],
+      "stale_tokens": [
+        "OpenArtifact",
+        "OpenSubject",
+        "artifact_id",
+        "attempt_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L10656-L10659",
+        "working_ledger.md:L10683-L10689",
+        "working_ledger.md:L10754-L10756"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "field list / metadata / heading sections L010601-L010800"
+  ],
+  "uncertain_items": []
+}

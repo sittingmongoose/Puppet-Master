@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-869",
+  "group_ids": [
+    "discgrp-3473",
+    "discgrp-3474",
+    "discgrp-3475",
+    "discgrp-3476"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03766",
+      "source_obligation_ids": [
+        "obl-3611"
+      ],
+      "source_seed_ids": [
+        "seed-4881"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Media_Generation_and_Capabilities.md",
+      "new_heading_hint": "### 2.2 Request envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Media_Generation_and_Capabilities.md:L165"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03767",
+      "source_obligation_ids": [
+        "obl-3612"
+      ],
+      "source_seed_ids": [
+        "seed-4882"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03768",
+      "source_obligation_ids": [
+        "obl-3613"
+      ],
+      "source_seed_ids": [
+        "seed-4883"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03769",
+      "source_obligation_ids": [
+        "obl-3614"
+      ],
+      "source_seed_ids": [
+        "seed-4884"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Requested/effective account and execution identity",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L270"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

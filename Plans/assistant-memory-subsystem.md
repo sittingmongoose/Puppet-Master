@@ -1,5 +1,63 @@
 # Assistant-Only Memory Subsystem (Canonical SSOT)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+  - Runtime / Storage / Contract Impacts
+
+#### Source target target-0580
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+  - Runtime / Storage / Contract Impacts
+- Exact required items represented:
+  - Add node_id
+  - Add package_id
+  - Add seam_id
+  - Add lane_id
+  - Add attempt_id
+  - Add effective_identity
+  - Normalize requested/effective account identity shapes
+  - Normalize blocked_reason_code/allowed_action_ids and safe-point/restore-point/rollback terminology
+  - Multi-account projection fixes should not create a second provider-local quota subsystem outside the shared Usage pipeline.
+  - Register memory and live-preview/build event families, new doctor checks, and new ToolIDs in the canonical storage/tool/command owners instead of leaving them stranded in supporting docs.
+  - `live.*` and memory auto-trigger/handoff event families still have no canonical contracts/storage registration.
+  - live.*
+  - `handoff` and `promotion` are now visibly polysemous across stream, UI, memory, and evidence docs.
+  - handoff
+  - promotion
+  - assistant-memory still has no clear owner for whether `memory.gist.*` is a [retired-token-7] event family or merely a [retired-token-8]-side mutation signal.
+  - memory.gist.*
+  - `memory.gist.*`, AutoRunBoundary/AutoMilestone, project-switch handoff, and `attention_required` durability still lack a consistent event/persistence/command ownership story.
+  - attention_required
+  - Newtools and memory remain the strongest examples of plan-local obligations not yet absorbed by canonical state/event/command owners.
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 ## Change Summary

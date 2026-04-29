@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-597",
+  "group_ids": [
+    "discgrp-2385",
+    "discgrp-2386",
+    "discgrp-2387",
+    "discgrp-2388"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02660",
+      "source_obligation_ids": [
+        "obl-2508"
+      ],
+      "source_seed_ids": [
+        "seed-3293"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Shared governance and runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L260"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02661",
+      "source_obligation_ids": [
+        "obl-2509"
+      ],
+      "source_seed_ids": [
+        "seed-3295"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02664",
+      "source_obligation_ids": [
+        "obl-2511"
+      ],
+      "source_seed_ids": [
+        "seed-3297"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Canonical records baseline",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L457"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02665",
+      "source_obligation_ids": [
+        "obl-2512"
+      ],
+      "source_seed_ids": [
+        "seed-3299"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "### 6.7 Model aliases (friendly names)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Models_System.md:L447"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-535",
+  "group_ids": [
+    "discgrp-2137",
+    "discgrp-2138",
+    "discgrp-2139",
+    "discgrp-2140"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02408",
+      "source_obligation_ids": [
+        "obl-2258"
+      ],
+      "source_seed_ids": [
+        "seed-2930"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02409",
+      "source_obligation_ids": [
+        "obl-2259"
+      ],
+      "source_seed_ids": [
+        "seed-2931"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "new_heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02410",
+      "source_obligation_ids": [
+        "obl-2260"
+      ],
+      "source_seed_ids": [
+        "seed-2932"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "#### Explicit editability contract for all fields",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L435"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02411",
+      "source_obligation_ids": [
+        "obl-2261"
+      ],
+      "source_seed_ids": [
+        "seed-2933"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

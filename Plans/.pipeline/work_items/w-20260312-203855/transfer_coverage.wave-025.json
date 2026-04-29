@@ -1,128 +1,847 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-025",
-  "timestamp_utc": "2026-04-28T20:21:18Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-097",
-    "coverage-rowgrp-098",
-    "coverage-rowgrp-099",
-    "coverage-rowgrp-100"
+  "row_group_ids": [
+    "rowgrp-0097",
+    "rowgrp-0098",
+    "rowgrp-0099",
+    "rowgrp-0100"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-097 cov-1116 Plans/LSPSupport.md",
-    "rowgrp-098 cov-1109 Plans/Media_Generation_and_Capabilities.md",
-    "rowgrp-099 cov-841 Plans/Media_Generation_and_Capabilities.md",
-    "rowgrp-100 cov-126 Plans/MiscPlan.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-097": "completed_reduced_conservatively",
-    "coverage-rowgrp-098": "completed_reduced_conservatively",
-    "coverage-rowgrp-099": "completed_reduced_conservatively",
-    "coverage-rowgrp-100": "completed_reduced_conservatively"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-1116",
-    "cov-1109",
-    "cov-841",
-    "cov-126"
-  ],
-  "coverage_ids_completed": [
-    "cov-1116",
-    "cov-1109",
-    "cov-841",
-    "cov-126"
-  ],
-  "path_groups_assigned": [
-    "Plans/LSPSupport.md",
-    "Plans/Media_Generation_and_Capabilities.md",
-    "Plans/MiscPlan.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-1116",
-      "status": "partial",
-      "evidence": [
-        "Plans/LSPSupport.md:294 Chat LSP provides read-only intelligence only; no refactoring and no code actions are exposed through this surface",
-        "Plans/LSPSupport.md:305 LSP scope includes diagnostics, hover, navigation, code actions, status UI, chat diagnostics, @ symbol, chat hover/go-to-definition, and Problems link",
-        "Plans/LSPSupport.md:13 implementation summary separates Core LSP, Editor, Chat LSP, and optional tool promotion phases"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "LSPSupport distinguishes read-only chat LSP from editor/mutation capabilities, but the broader shell/runtime/extension policy seam, DAE ownership, and multi-project-tab routing split is not fully resolved.",
+      "coverage_id": "cov-04212",
       "source_obligation_ids": [
-        "obl-322"
+        "obl-4052"
       ],
       "source_seed_ids": [
-        "seed-322"
+        "seed-5591"
       ],
       "source_shard_ids": [
-        "shard-0081"
+        "shard-0056"
       ],
-      "path_field_status": "match"
+      "canon_label": "Reconcile command ownership around one enforceable registry boundary:",
+      "row_type": "owner",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "# Containers, Registry, and Unraid Integration",
+      "status": "partial",
+      "exact_items": [
+        "Reconcile command ownership around one enforceable registry boundary:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1109",
-      "status": "partial",
-      "evidence": [
-        "Plans/Media_Generation_and_Capabilities.md:125 provider_tool covers provider-exposed tools such as OpenCode tools with enabled/disabled_reason/setup_hint shape",
-        "Plans/Media_Generation_and_Capabilities.md:137-143 capabilities.get is computed from the current runtime registry snapshot and recomputed on settings/provider/MCP/preflight changes",
-        "Plans/Media_Generation_and_Capabilities.md:149 capabilities.get uses canonical tool telemetry and does not define a separate persistent capability-state event stream"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Media capabilities define runtime-derived capability state and provider-tool handling, but not direct OpenCode media request/event surfaces, server-global SSE, or caller-scoped identity handling.",
+      "coverage_id": "cov-04223",
       "source_obligation_ids": [
-        "obl-321"
+        "obl-4063"
       ],
       "source_seed_ids": [
-        "seed-321"
+        "seed-5625"
       ],
       "source_shard_ids": [
-        "shard-0081"
+        "shard-0056"
       ],
-      "path_field_status": "match"
+      "canon_label": "Command/event registry drift sharpened further:",
+      "row_type": "owner",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "# Containers, Registry, and Unraid Integration",
+      "status": "partial",
+      "exact_items": [
+        "Command/event registry drift sharpened further:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-841",
-      "status": "missing",
-      "evidence": [
-        "Plans/Media_Generation_and_Capabilities.md:21-27 declares this document the SSOT for capability/media-generation rules and tells other docs to reference anchors",
-        "Plans/Media_Generation_and_Capabilities.md:225-252 defines backend routing and requested/effective runtime snapshot behavior"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Only adjacent SSOT and routing guidance exists; no direct retirement of fragmented owner-doc conventions is present.",
+      "coverage_id": "cov-04303",
       "source_obligation_ids": [
-        "obl-235"
+        "obl-4143"
       ],
       "source_seed_ids": [
-        "seed-235"
+        "seed-5743"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "`GATE-010` has no explicit notion of:",
+      "row_type": "owner",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "#### Explicit editability contract for all fields",
+      "status": "partial",
+      "exact_items": [
+        "`GATE-010` has no explicit notion of:",
+        "GATE-010"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L435"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04335",
+      "source_obligation_ids": [
+        "obl-4175"
+      ],
+      "source_seed_ids": [
+        "seed-5801"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "Add an explicit command-catalog pattern for:",
+      "row_type": "owner",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "#### Explicit editability contract for all fields",
+      "status": "partial",
+      "exact_items": [
+        "Add an explicit command-catalog pattern for:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L435"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04457",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
       ],
       "source_shard_ids": [
         "shard-0059"
       ],
-      "path_field_status": "match"
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-126",
-      "status": "partial",
-      "evidence": [
-        "Plans/MiscPlan.md:22-24 cleanup/evidence events go to seglog and retention metadata/rollups go to redb",
-        "Plans/MiscPlan.md:110-124 assistant-owned worktrees are persistent and cleanup triggers are explicit",
-        "Plans/MiscPlan.md:198-207 runner cleanup contracts pass the actual main workspace or worktree path used by the agent"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "MiscPlan has related worktree/cleanup and storage guidance, but not direct coverage for the full impacted-doc bundle set or stale-token scope list.",
+      "coverage_id": "cov-04529",
       "source_obligation_ids": [
-        "obl-036"
+        "obl-4307"
       ],
       "source_seed_ids": [
-        "seed-036"
+        "seed-6044"
       ],
       "source_shard_ids": [
-        "shard-0008"
+        "shard-0059"
       ],
-      "path_field_status": "match"
+      "canon_label": "Once this is normalized, several existing `open in X` and `show in Y` actions may turn int",
+      "row_type": "owner",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "## Relationship to existing plans",
+      "status": "partial",
+      "exact_items": [
+        "Once this is normalized, several existing `open in X` and `show in Y` actions may turn into thin wrappers instead of independent navigation systems.",
+        "open in X",
+        "show in Y"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L17"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04751",
+      "source_obligation_ids": [
+        "obl-4529"
+      ],
+      "source_seed_ids": [
+        "seed-6444",
+        "seed-6481",
+        "seed-6507",
+        "seed-7382",
+        "seed-7427",
+        "seed-8818",
+        "seed-8859",
+        "seed-8913",
+        "seed-8951",
+        "seed-9011",
+        "seed-9045"
+      ],
+      "source_shard_ids": [
+        "shard-0062",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "canon_label": "`Plans/Containers_Registry_and_Unraid.md`",
+      "row_type": "owner",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Containers_Registry_and_Unraid.md`",
+        "Plans/Containers_Registry_and_Unraid.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04773",
+      "source_obligation_ids": [
+        "obl-4551"
+      ],
+      "source_seed_ids": [
+        "seed-6468"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "Container / Docker / Unraid ownership is still more fragmented than the main owner set sug",
+      "row_type": "owner",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "# Containers, Registry, and Unraid Integration",
+      "status": "partial",
+      "exact_items": [
+        "Container / Docker / Unraid ownership is still more fragmented than the main owner set suggested:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04795",
+      "source_obligation_ids": [
+        "obl-4572"
+      ],
+      "source_seed_ids": [
+        "seed-6526"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "canon_label": "It should generally NOT try to preserve:",
+      "row_type": "owner",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "## Data/state model to preserve in implementation docs",
+      "status": "partial",
+      "exact_items": [
+        "It should generally NOT try to preserve:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L716"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04971",
+      "source_obligation_ids": [
+        "obl-4747"
+      ],
+      "source_seed_ids": [
+        "seed-6840"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "Add an explicit command-normalization model with three layers:",
+      "row_type": "owner",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "#### Explicit editability contract for all fields",
+      "status": "partial",
+      "exact_items": [
+        "Add an explicit command-normalization model with three layers:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L435"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06226",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06432",
+      "source_obligation_ids": [
+        "obl-6073"
+      ],
+      "source_seed_ids": [
+        "seed-9179"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "`GATE-010` needs an explicit relationship to:",
+      "row_type": "owner",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "## Relationship to existing plans",
+      "status": "partial",
+      "exact_items": [
+        "`GATE-010` needs an explicit relationship to:",
+        "GATE-010"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L17"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00601",
+      "source_obligation_ids": [
+        "obl-458"
+      ],
+      "source_seed_ids": [
+        "seed-528"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "`refreshing`: allow normal read actions; mutating actions may continue if backed by runtim",
+      "row_type": "stale_retirement",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "#### Runtime access URL resolution",
+      "status": "present",
+      "exact_items": [
+        "`refreshing`: allow normal read actions; mutating actions may continue if backed by runtime truth rather than stale page cache",
+        "refreshing"
+      ],
+      "stale_tokens": [
+        "refreshing"
+      ],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L1-L797 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00602",
+      "source_obligation_ids": [
+        "obl-459"
+      ],
+      "source_seed_ids": [
+        "seed-529"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "`stale`: allow inspection and historical navigation; require refresh or direct runtime rev",
+      "row_type": "stale_retirement",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "#### Runtime access URL resolution",
+      "status": "present",
+      "exact_items": [
+        "`stale`: allow inspection and historical navigation; require refresh or direct runtime revalidation before sensitive live actions",
+        "stale"
+      ],
+      "stale_tokens": [
+        "stale"
+      ],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L1-L797 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01443",
+      "source_obligation_ids": [
+        "obl-1300"
+      ],
+      "source_seed_ids": [
+        "seed-1567"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "stale visibility is not the same as action authority",
+      "row_type": "stale_retirement",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "## Docker project detection and visibility rules",
+      "status": "present",
+      "exact_items": [
+        "stale visibility is not the same as action authority"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L1-L797 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03044",
+      "source_obligation_ids": [
+        "obl-2890"
+      ],
+      "source_seed_ids": [
+        "seed-3814"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "projector lag and failure are not the same thing as stale-but-usable state",
+      "row_type": "stale_retirement",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "### Auth-expiry failure rule",
+      "status": "present",
+      "exact_items": [
+        "projector lag and failure are not the same thing as stale-but-usable state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L1-L797 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04543",
+      "source_obligation_ids": [
+        "obl-4321"
+      ],
+      "source_seed_ids": [
+        "seed-6077"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "For exports built from stale/degraded projections, carry trust disclosure or re-query cano",
+      "row_type": "stale_retirement",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "#### Known-field registry and XML mapping (first implementation)",
+      "status": "present",
+      "exact_items": [
+        "For exports built from stale/degraded projections, carry trust disclosure or re-query canonical backing first."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L1-L797 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05506",
+      "source_obligation_ids": [
+        "obl-5278"
+      ],
+      "source_seed_ids": [
+        "seed-7848"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "`FinalGUISpec.md` will keep reintroducing stale page assumptions until the owner docs are",
+      "row_type": "stale_retirement",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "#### Known-field registry and XML mapping (first implementation)",
+      "status": "missing",
+      "exact_items": [
+        "`FinalGUISpec.md` will keep reintroducing stale page assumptions until the owner docs are reconciled first.",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [
+        "FinalGUISpec.md"
+      ],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L15",
+        "Plans/Containers_Registry_and_Unraid.md:L19",
+        "Plans/Containers_Registry_and_Unraid.md:L94"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-05654",
+      "source_obligation_ids": [
+        "obl-5426"
+      ],
+      "source_seed_ids": [
+        "seed-8057"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "`FinalGUISpec.md` still preserves `Tiers` as both a page concept and a settings grouping l",
+      "row_type": "stale_retirement",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "### 1. Settings > Advanced > Containers & Registry",
+      "status": "missing",
+      "exact_items": [
+        "`FinalGUISpec.md` still preserves `Tiers` as both a page concept and a settings grouping label, which will keep reintroducing stale vocabulary.",
+        "FinalGUISpec.md",
+        "Tiers"
+      ],
+      "stale_tokens": [
+        "FinalGUISpec.md",
+        "Tiers"
+      ],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L15",
+        "Plans/Containers_Registry_and_Unraid.md:L19",
+        "Plans/Containers_Registry_and_Unraid.md:L94"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-05929",
+      "source_obligation_ids": [
+        "obl-5701"
+      ],
+      "source_seed_ids": [
+        "seed-8473"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "canon_label": "The owner docs now have a split between modern canonical field names and stale canonical s",
+      "row_type": "stale_retirement",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "### Canonical scope split and blocked-outcome state",
+      "status": "present",
+      "exact_items": [
+        "The owner docs now have a split between modern canonical field names and stale canonical scope language."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L1-L797 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06159",
+      "source_obligation_ids": [
+        "obl-5931"
+      ],
+      "source_seed_ids": [
+        "seed-8806"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "preserve legacy backup",
+      "row_type": "stale_retirement",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "## Data/state model to preserve in implementation docs",
+      "status": "present",
+      "exact_items": [
+        "preserve legacy backup"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L1-L797 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00323",
+      "source_obligation_ids": [
+        "obl-182"
+      ],
+      "source_seed_ids": [
+        "seed-208"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "why it matters: `needs_review` and blocked/failure payload semantics disagree inside the s",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "status": "partial",
+      "exact_items": [
+        "why it matters: `needs_review` and blocked/failure payload semantics disagree inside the same doc, which will leak into automation-first operator flows.",
+        "needs_review"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L774"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00443",
+      "source_obligation_ids": [
+        "obl-301"
+      ],
+      "source_seed_ids": [
+        "seed-349"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "now needs explicit requested/effective identity, trust-state, and governance-record drill-",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "now needs explicit requested/effective identity, trust-state, and governance-record drill-in contracts to stay viable as the graph-native surface"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00597",
+      "source_obligation_ids": [
+        "obl-454"
+      ],
+      "source_seed_ids": [
+        "seed-524"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "`unavailable`: projection cannot currently answer the surface contract",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "present",
+      "exact_items": [
+        "`unavailable`: projection cannot currently answer the surface contract",
+        "unavailable"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L529",
+        "Plans/Contracts_V0.md:L532",
+        "Plans/Contracts_V0.md:L540",
+        "Plans/Contracts_V0.md:L697"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00624",
+      "source_obligation_ids": [
+        "obl-481"
+      ],
+      "source_seed_ids": [
+        "seed-551"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Add a shared projection health/trust contract used by:",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "Add a shared projection health/trust contract used by:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00701",
+      "source_obligation_ids": [
+        "obl-558"
+      ],
+      "source_seed_ids": [
+        "seed-639"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "promotion/review/corroboration/graph patch/recovery record -> likely `Ledger` or `History`",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "status": "present",
+      "exact_items": [
+        "promotion/review/corroboration/graph patch/recovery record -> likely `Ledger` or `History` depending on whether exact-record or story context is primary",
+        "Ledger",
+        "History"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L329",
+        "Plans/Contracts_V0.md:L834",
+        "Plans/Contracts_V0.md:L967",
+        "Plans/Contracts_V0.md:L1319",
+        "Plans/Contracts_V0.md:L1492"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00914",
+      "source_obligation_ids": [
+        "obl-771"
+      ],
+      "source_seed_ids": [
+        "seed-878",
+        "seed-2233"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0031"
+      ],
+      "canon_label": "Add a canonical concern record family and corresponding projection contract.",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "status": "partial",
+      "exact_items": [
+        "Add a canonical concern record family and corresponding projection contract."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L47",
+        "Plans/Contracts_V0.md:L54"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00981",
+      "source_obligation_ids": [
+        "obl-838"
+      ],
+      "source_seed_ids": [
+        "seed-983"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "A review record likely needs:",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "status": "partial",
+      "exact_items": [
+        "A review record likely needs:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L35",
+        "Plans/Contracts_V0.md:L42"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00987",
+      "source_obligation_ids": [
+        "obl-844"
+      ],
+      "source_seed_ids": [
+        "seed-989"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "review findings may nominate or update concerns, but the review record itself should remai",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "status": "partial",
+      "exact_items": [
+        "review findings may nominate or update concerns, but the review record itself should remain distinct from concern records"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L47",
+        "Plans/Contracts_V0.md:L54"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01319",
+      "source_obligation_ids": [
+        "obl-1176"
+      ],
+      "source_seed_ids": [
+        "seed-1398"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "There is no one explicit cross-surface escalation contract yet.",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "There is no one explicit cross-surface escalation contract yet."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01341",
+      "source_obligation_ids": [
+        "obl-1198"
+      ],
+      "source_seed_ids": [
+        "seed-1432"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "dense event bursts should be summarized when collapsed, not force every low-level record i",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "status": "partial",
+      "exact_items": [
+        "dense event bursts should be summarized when collapsed, not force every low-level record into the initial viewport"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L35",
+        "Plans/Contracts_V0.md:L42"
+      ],
+      "required_action": "consumer_propagation"
     }
   ]
 }

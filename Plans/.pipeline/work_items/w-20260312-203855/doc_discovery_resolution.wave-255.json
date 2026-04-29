@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-255",
+  "group_ids": [
+    "discgrp-1017",
+    "discgrp-1018",
+    "discgrp-1019",
+    "discgrp-1020"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01267",
+      "source_obligation_ids": [
+        "obl-1124"
+      ],
+      "source_seed_ids": [
+        "seed-1336"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01268",
+      "source_obligation_ids": [
+        "obl-1125"
+      ],
+      "source_seed_ids": [
+        "seed-1337"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## Fidelity recovery addendum",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01269",
+      "source_obligation_ids": [
+        "obl-1126"
+      ],
+      "source_seed_ids": [
+        "seed-1338"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Account pressure, history, and runtime attribution baseline",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L491"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01270",
+      "source_obligation_ids": [
+        "obl-1127"
+      ],
+      "source_seed_ids": [
+        "seed-1339"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L43"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

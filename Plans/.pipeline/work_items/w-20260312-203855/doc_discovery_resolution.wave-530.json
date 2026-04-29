@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-530",
+  "group_ids": [
+    "discgrp-2117",
+    "discgrp-2118",
+    "discgrp-2119",
+    "discgrp-2120"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02388",
+      "source_obligation_ids": [
+        "obl-2238"
+      ],
+      "source_seed_ids": [
+        "seed-2905"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "## 0. Scope",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L46"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02389",
+      "source_obligation_ids": [
+        "obl-2239"
+      ],
+      "source_seed_ids": [
+        "seed-2906"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "new_heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02390",
+      "source_obligation_ids": [
+        "obl-2240"
+      ],
+      "source_seed_ids": [
+        "seed-2907"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "## 4. Orchestrator Progress widget scope and catalog linkage",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Widget_System.md:L57"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02391",
+      "source_obligation_ids": [
+        "obl-2241"
+      ],
+      "source_seed_ids": [
+        "seed-2908"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-079: Project summary projection",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L123"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

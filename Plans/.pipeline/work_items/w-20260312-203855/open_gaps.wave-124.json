@@ -1,0 +1,2716 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-124",
+  "group_ids": [
+    "gapgrp-0493",
+    "gapgrp-0494",
+    "gapgrp-0495",
+    "gapgrp-0496"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-01160",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01473 is partial for review scope, findings counts, unresolved findings, verdict, canonical findings summary re",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## 1. Scope and canonical role"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01473"
+      ],
+      "source_obligation_ids": [
+        "obl-1330"
+      ],
+      "source_seed_ids": [
+        "seed-1615"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "exact_missing_items": [
+        "review scope, findings counts, unresolved findings, verdict, canonical findings summary ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01275",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01629 is partial for an Interview run may have runtime identity and blocked/remediation state",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01629"
+      ],
+      "source_obligation_ids": [
+        "obl-1486"
+      ],
+      "source_seed_ids": [
+        "seed-1838"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "an Interview run may have runtime identity and blocked/remediation state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01277",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01631 is partial for when multiple surfaces present the same active conversational/document-production run, the",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01631"
+      ],
+      "source_obligation_ids": [
+        "obl-1488"
+      ],
+      "source_seed_ids": [
+        "seed-1840"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "when multiple surfaces present the same active conversational/document-production run, they should consume the same underlying runtime state and expose the same requested/effective visibility fields"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01443",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01851 is partial for they should not just be badges, notes, or review leftovers",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01851"
+      ],
+      "source_obligation_ids": [
+        "obl-1708"
+      ],
+      "source_seed_ids": [
+        "seed-2155"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "exact_missing_items": [
+        "they should not just be badges, notes, or review leftovers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01478",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01894 is partial for Keep concern separate from review findings, annotations, blocked episodes, and recovery re",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-032: Concern linkage to adjacent families"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01894"
+      ],
+      "source_obligation_ids": [
+        "obl-1751"
+      ],
+      "source_seed_ids": [
+        "seed-2236"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "Keep concern separate from review findings, annotations, blocked episodes, and recovery records while allowing rich cross-linking."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01507",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01931 is partial for `effective_provider_identity` / display labels are audit/display fields, not routing keys",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01931"
+      ],
+      "source_obligation_ids": [
+        "obl-1788"
+      ],
+      "source_seed_ids": [
+        "seed-2292"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "`effective_provider_identity` / display labels are audit/display fields, not routing keys",
+        "effective_provider_identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01540",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01975 is partial for Opus strongly reinforces the ledger direction that only `Progress` should remain widget-he",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01975"
+      ],
+      "source_obligation_ids": [
+        "obl-1832"
+      ],
+      "source_seed_ids": [
+        "seed-2355"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "Opus strongly reinforces the ledger direction that only `Progress` should remain widget-heavy while Graph / Seams / Evidence / History / Ledger become stronger native surfaces",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01642",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02111 is partial for widgets may add presentation or sub-filter choices, but they must not secretly select a di",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02111"
+      ],
+      "source_obligation_ids": [
+        "obl-1968"
+      ],
+      "source_seed_ids": [
+        "seed-2561"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "widgets may add presentation or sub-filter choices, but they must not secretly select a different run or redefine the operational scope"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01656",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02129 is partial for `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` become native surfaces with the",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02129"
+      ],
+      "source_obligation_ids": [
+        "obl-1986"
+      ],
+      "source_seed_ids": [
+        "seed-2583"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` become native surfaces with their own state contracts",
+        "Seams",
+        "Node Graph",
+        "Evidence",
+        "History",
+        "Ledger"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01661",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02134 is partial for widgets may not invent independent semantic scope such as their own run selection, their o",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02134"
+      ],
+      "source_obligation_ids": [
+        "obl-1991"
+      ],
+      "source_seed_ids": [
+        "seed-2588"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "widgets may not invent independent semantic scope such as their own run selection, their own lane universe, or their own concern-state semantics"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01666",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02143 is partial for historical-run mode will feel broken if some `Progress` widgets silently follow live event",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02143"
+      ],
+      "source_obligation_ids": [
+        "obl-2000"
+      ],
+      "source_seed_ids": [
+        "seed-2597"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "historical-run mode will feel broken if some `Progress` widgets silently follow live events while others honor the focused historical run",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01678",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02156 is partial for `GitHub_Integration.md` still lacks effective-account / switch-reason display and requeste",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02156"
+      ],
+      "source_obligation_ids": [
+        "obl-2013"
+      ],
+      "source_seed_ids": [
+        "seed-2619"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`GitHub_Integration.md` still lacks effective-account / switch-reason display and requested-vs-effective admin-capability UX",
+        "GitHub_Integration.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01703",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02186 is partial for add effective-account / switch-reason display",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02186"
+      ],
+      "source_obligation_ids": [
+        "obl-2041"
+      ],
+      "source_seed_ids": [
+        "seed-2650"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "add effective-account / switch-reason display"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01815",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02339 is partial for Projection trust and node concern posture still lack a compact canonical contract that pag",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02339"
+      ],
+      "source_obligation_ids": [
+        "obl-2190"
+      ],
+      "source_seed_ids": [
+        "seed-2845"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "Projection trust and node concern posture still lack a compact canonical contract that page/widget consumers can reuse."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01822",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02348 is partial for `usage_event_ref` should be a structured locator, not just a display string.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02348"
+      ],
+      "source_obligation_ids": [
+        "obl-2199"
+      ],
+      "source_seed_ids": [
+        "seed-2854"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "`usage_event_ref` should be a structured locator, not just a display string.",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01943",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02485 is partial for GPT-5.4 sharpened that this now blocks truthful requested-vs-effective runtime inspectors",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02485"
+      ],
+      "source_obligation_ids": [
+        "obl-2335"
+      ],
+      "source_seed_ids": [
+        "seed-3036"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "GPT-5.4 sharpened that this now blocks truthful requested-vs-effective runtime inspectors for Orchestrator, Run Graph, and conversational actor surfaces"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01950",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02493 is partial for Orchestrator/Run Graph identity consumers are still materially below the contract the upst",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02493"
+      ],
+      "source_obligation_ids": [
+        "obl-2343"
+      ],
+      "source_seed_ids": [
+        "seed-3044"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "Orchestrator/Run Graph identity consumers are still materially below the contract the upstream docs now imply:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02566",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03278 is partial for account/auth controls, concern actions, and promotion actions still have no canonical comm",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-032: Concern linkage to adjacent families"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03278"
+      ],
+      "source_obligation_ids": [
+        "obl-3124"
+      ],
+      "source_seed_ids": [
+        "seed-4158"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "account/auth controls, concern actions, and promotion actions still have no canonical command-family owner, and command/wiring schemas still cannot encode projection-freshness/health gating for mutating actions."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02661",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03409 is partial for Wizard/interview docs are good on blocked/degraded planning lineage, but still weak on the",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03409"
+      ],
+      "source_obligation_ids": [
+        "obl-3255"
+      ],
+      "source_seed_ids": [
+        "seed-4349"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "Wizard/interview docs are good on blocked/degraded planning lineage, but still weak on the bridge from that lineage into the eventual execution run identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02776",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03548 is partial for current lane lifecycle/status projection",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03548"
+      ],
+      "source_obligation_ids": [
+        "obl-3394"
+      ],
+      "source_seed_ids": [
+        "seed-4570"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "current lane lifecycle/status projection"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02949",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03778 is partial for Tier-shaped surfaces may still display and group by `tier_id`, but they should resolve thr",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03778"
+      ],
+      "source_obligation_ids": [
+        "obl-3623"
+      ],
+      "source_seed_ids": [
+        "seed-4897"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "Tier-shaped surfaces may still display and group by `tier_id`, but they should resolve through pointers to canonical execution objects rather than using `tier_id` as if it were the durable execution key.",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02950",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03779 is partial for `Run_Graph_View.md` calls itself a node graph but still uses `tier_id` for major data-sour",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03779"
+      ],
+      "source_obligation_ids": [
+        "obl-3624"
+      ],
+      "source_seed_ids": [
+        "seed-4903"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "`Run_Graph_View.md` calls itself a node graph but still uses `tier_id` for major data-source joins, including Usage and Output filtering.",
+        "Run_Graph_View.md",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02954",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03785 is partial for Retarget Run Graph and Usage links toward `node_id` / `attempt_id` semantics, with `tier_i",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03785"
+      ],
+      "source_obligation_ids": [
+        "obl-3630"
+      ],
+      "source_seed_ids": [
+        "seed-4909"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "Retarget Run Graph and Usage links toward `node_id` / `attempt_id` semantics, with `tier_id` surviving only as a display/grouping label where needed.",
+        "node_id",
+        "attempt_id",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03020",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03872 is partial for Keep usage attribution schema shared across all run kinds, but permit execution-role displ",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03872"
+      ],
+      "source_obligation_ids": [
+        "obl-3717"
+      ],
+      "source_seed_ids": [
+        "seed-5052"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "Keep usage attribution schema shared across all run kinds, but permit execution-role display/filtering without creating a second usage system."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03136",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04037 is partial for should be attempt-native whenever produced by a node worker/verifier/reviewer flow",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04037"
+      ],
+      "source_obligation_ids": [
+        "obl-3880"
+      ],
+      "source_seed_ids": [
+        "seed-5326"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "exact_missing_items": [
+        "should be attempt-native whenever produced by a node worker/verifier/reviewer flow"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03688",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04723 is partial for This seam is what prevents the new route-target contract from immediately turning back int",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04723"
+      ],
+      "source_obligation_ids": [
+        "obl-4501"
+      ],
+      "source_seed_ids": [
+        "seed-6400"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "This seam is what prevents the new route-target contract from immediately turning back into per-surface deep-link spaghetti."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03791",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04847 is partial for Source Control: `active_subview`, selected repo/worktree, compare target, graph filters",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04847"
+      ],
+      "source_obligation_ids": [
+        "obl-4624"
+      ],
+      "source_seed_ids": [
+        "seed-6616"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "Source Control: `active_subview`, selected repo/worktree, compare target, graph filters",
+        "active_subview"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03966",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05092 is partial for `open_intent` is the caller\u2019s direct purpose for opening the subject. It belongs to the su",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05092"
+      ],
+      "source_obligation_ids": [
+        "obl-4868"
+      ],
+      "source_seed_ids": [
+        "seed-7015"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "exact_missing_items": [
+        "`open_intent` is the caller\u2019s direct purpose for opening the subject. It belongs to the subject-open contract because the same subject can be opened as source, preview, or review entry.",
+        "open_intent"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04490",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05785 is partial for Research Progress - 2026-03-17 - Blocked-family contracts are still uneven across node, wi",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05785"
+      ],
+      "source_obligation_ids": [
+        "obl-5557"
+      ],
+      "source_seed_ids": [
+        "seed-8246"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - Blocked-family contracts are still uneven across node, wizard, and thread surfaces"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04512",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05825 is partial for cross-surface node usage via `tier_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05825"
+      ],
+      "source_obligation_ids": [
+        "obl-5597"
+      ],
+      "source_seed_ids": [
+        "seed-8315"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "cross-surface node usage via `tier_id`",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04606",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05950 is partial for Fixing consumer docs without fixing this owner-language seam will not hold.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05950"
+      ],
+      "source_obligation_ids": [
+        "obl-5722"
+      ],
+      "source_seed_ids": [
+        "seed-8502"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "Fixing consumer docs without fixing this owner-language seam will not hold."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04645",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06002 is partial for Research Progress - 2026-03-17 - Graph and Orchestrator approval consumers still preserve",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06002"
+      ],
+      "source_obligation_ids": [
+        "obl-5774"
+      ],
+      "source_seed_ids": [
+        "seed-8590"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - Graph and Orchestrator approval consumers still preserve HITL-request-era fields"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04646",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06003 is partial for The graph and Orchestrator surfaces now show a direct mixed-era contract in one place.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06003"
+      ],
+      "source_obligation_ids": [
+        "obl-5775"
+      ],
+      "source_seed_ids": [
+        "seed-8595"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "exact_missing_items": [
+        "The graph and Orchestrator surfaces now show a direct mixed-era contract in one place."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04658",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06020 is partial for `hitl_request_id` remains in the graph view-model even though the surrounding blocked/reco",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06020"
+      ],
+      "source_obligation_ids": [
+        "obl-5792"
+      ],
+      "source_seed_ids": [
+        "seed-8617"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "exact_missing_items": [
+        "`hitl_request_id` remains in the graph view-model even though the surrounding blocked/recovery model is already moving toward blocked-episode identity.",
+        "hitl_request_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04922",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06344 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06344"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05028",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06485 is partial for The action-label cleanup depends on this file, because it still legitimizes `Reject` / `Ca",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06485"
+      ],
+      "source_obligation_ids": [
+        "obl-6126"
+      ],
+      "source_seed_ids": [
+        "seed-9257"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "The action-label cleanup depends on this file, because it still legitimizes `Reject` / `Cancel Run` / `Skip` as if they were canonical action names rather than surface labels over runtime action families.",
+        "Reject",
+        "Cancel Run",
+        "Skip"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05040",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06500 is partial for Usage and Evidence remain tied to `tier_id` in the canonical storage owner, which keeps re",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06500"
+      ],
+      "source_obligation_ids": [
+        "obl-6141"
+      ],
+      "source_seed_ids": [
+        "seed-9288"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "Usage and Evidence remain tied to `tier_id` in the canonical storage owner, which keeps recreating the same drift in Usage, Graph, and Orchestrator consumers.",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05196",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06708 is partial for settings / requested-vs-effective / identity display grammar",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06708"
+      ],
+      "source_obligation_ids": [
+        "obl-6349"
+      ],
+      "source_seed_ids": [
+        "seed-9696"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "settings / requested-vs-effective / identity display grammar"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05282",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06809 is partial for named display grammar (`Inherited from`, `Overridden by`, `Requested`, `Effective`, `Reaso",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06809"
+      ],
+      "source_obligation_ids": [
+        "obl-6432"
+      ],
+      "source_seed_ids": [
+        "seed-9811"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "named display grammar (`Inherited from`, `Overridden by`, `Requested`, `Effective`, `Reason`, `Support`)",
+        "Inherited from",
+        "Overridden by",
+        "Requested",
+        "Effective",
+        "Reason",
+        "Support"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05283",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06810 is partial for worker-policy display under the same requested/effective grammar",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06810"
+      ],
+      "source_obligation_ids": [
+        "obl-6433"
+      ],
+      "source_seed_ids": [
+        "seed-9812"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "worker-policy display under the same requested/effective grammar"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-01473",
+    "cov-01629",
+    "cov-01631",
+    "cov-01851",
+    "cov-01894",
+    "cov-01931",
+    "cov-01975",
+    "cov-02111",
+    "cov-02129",
+    "cov-02134",
+    "cov-02143",
+    "cov-02156",
+    "cov-02186",
+    "cov-02339",
+    "cov-02348",
+    "cov-02485",
+    "cov-02493",
+    "cov-03278",
+    "cov-03409",
+    "cov-03548",
+    "cov-03778",
+    "cov-03779",
+    "cov-03785",
+    "cov-03872",
+    "cov-04037",
+    "cov-04723",
+    "cov-04847",
+    "cov-05092",
+    "cov-05785",
+    "cov-05825",
+    "cov-05950",
+    "cov-06002",
+    "cov-06003",
+    "cov-06020",
+    "cov-06344",
+    "cov-06485",
+    "cov-06500",
+    "cov-06708",
+    "cov-06809",
+    "cov-06810"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1330",
+    "obl-1486",
+    "obl-1488",
+    "obl-1708",
+    "obl-1751",
+    "obl-1788",
+    "obl-1832",
+    "obl-1968",
+    "obl-1986",
+    "obl-1991",
+    "obl-2000",
+    "obl-2013",
+    "obl-2041",
+    "obl-2190",
+    "obl-2199",
+    "obl-2335",
+    "obl-2343",
+    "obl-3124",
+    "obl-3255",
+    "obl-3394",
+    "obl-3623",
+    "obl-3624",
+    "obl-3630",
+    "obl-3717",
+    "obl-3880",
+    "obl-4501",
+    "obl-4624",
+    "obl-4868",
+    "obl-5557",
+    "obl-5597",
+    "obl-5722",
+    "obl-5774",
+    "obl-5775",
+    "obl-5792",
+    "obl-6009",
+    "obl-6126",
+    "obl-6141",
+    "obl-6349",
+    "obl-6432",
+    "obl-6433"
+  ],
+  "source_seed_ids_represented": [
+    "seed-1615",
+    "seed-1838",
+    "seed-1840",
+    "seed-2155",
+    "seed-2236",
+    "seed-2292",
+    "seed-2355",
+    "seed-2561",
+    "seed-2583",
+    "seed-2588",
+    "seed-2597",
+    "seed-2619",
+    "seed-2650",
+    "seed-2845",
+    "seed-2854",
+    "seed-3036",
+    "seed-3044",
+    "seed-4158",
+    "seed-4349",
+    "seed-4570",
+    "seed-4897",
+    "seed-4903",
+    "seed-4909",
+    "seed-5052",
+    "seed-5326",
+    "seed-6400",
+    "seed-6616",
+    "seed-7015",
+    "seed-8246",
+    "seed-8315",
+    "seed-8502",
+    "seed-8590",
+    "seed-8595",
+    "seed-8617",
+    "seed-9092",
+    "seed-9257",
+    "seed-9288",
+    "seed-9696",
+    "seed-9811",
+    "seed-9812"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0025",
+    "shard-0027",
+    "shard-0030",
+    "shard-0031",
+    "shard-0032",
+    "shard-0034",
+    "shard-0035",
+    "shard-0036",
+    "shard-0037",
+    "shard-0045",
+    "shard-0047",
+    "shard-0048",
+    "shard-0051",
+    "shard-0052",
+    "shard-0054",
+    "shard-0062",
+    "shard-0064",
+    "shard-0067",
+    "shard-0076",
+    "shard-0077",
+    "shard-0078",
+    "shard-0079",
+    "shard-0082",
+    "shard-0083",
+    "shard-0084",
+    "shard-0087",
+    "shard-0088"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-01160",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01473 is partial for review scope, findings counts, unresolved findings, verdict, canonical findings summary re",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## 1. Scope and canonical role"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01473"
+      ],
+      "source_obligation_ids": [
+        "obl-1330"
+      ],
+      "source_seed_ids": [
+        "seed-1615"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "exact_missing_items": [
+        "review scope, findings counts, unresolved findings, verdict, canonical findings summary ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01275",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01629 is partial for an Interview run may have runtime identity and blocked/remediation state",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01629"
+      ],
+      "source_obligation_ids": [
+        "obl-1486"
+      ],
+      "source_seed_ids": [
+        "seed-1838"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "an Interview run may have runtime identity and blocked/remediation state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01277",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01631 is partial for when multiple surfaces present the same active conversational/document-production run, the",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01631"
+      ],
+      "source_obligation_ids": [
+        "obl-1488"
+      ],
+      "source_seed_ids": [
+        "seed-1840"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "when multiple surfaces present the same active conversational/document-production run, they should consume the same underlying runtime state and expose the same requested/effective visibility fields"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01443",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01851 is partial for they should not just be badges, notes, or review leftovers",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01851"
+      ],
+      "source_obligation_ids": [
+        "obl-1708"
+      ],
+      "source_seed_ids": [
+        "seed-2155"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "exact_missing_items": [
+        "they should not just be badges, notes, or review leftovers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01478",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01894 is partial for Keep concern separate from review findings, annotations, blocked episodes, and recovery re",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-032: Concern linkage to adjacent families"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01894"
+      ],
+      "source_obligation_ids": [
+        "obl-1751"
+      ],
+      "source_seed_ids": [
+        "seed-2236"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "Keep concern separate from review findings, annotations, blocked episodes, and recovery records while allowing rich cross-linking."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01507",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01931 is partial for `effective_provider_identity` / display labels are audit/display fields, not routing keys",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01931"
+      ],
+      "source_obligation_ids": [
+        "obl-1788"
+      ],
+      "source_seed_ids": [
+        "seed-2292"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "`effective_provider_identity` / display labels are audit/display fields, not routing keys",
+        "effective_provider_identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01540",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01975 is partial for Opus strongly reinforces the ledger direction that only `Progress` should remain widget-he",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01975"
+      ],
+      "source_obligation_ids": [
+        "obl-1832"
+      ],
+      "source_seed_ids": [
+        "seed-2355"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "Opus strongly reinforces the ledger direction that only `Progress` should remain widget-heavy while Graph / Seams / Evidence / History / Ledger become stronger native surfaces",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01642",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02111 is partial for widgets may add presentation or sub-filter choices, but they must not secretly select a di",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02111"
+      ],
+      "source_obligation_ids": [
+        "obl-1968"
+      ],
+      "source_seed_ids": [
+        "seed-2561"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "widgets may add presentation or sub-filter choices, but they must not secretly select a different run or redefine the operational scope"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01656",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02129 is partial for `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` become native surfaces with the",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02129"
+      ],
+      "source_obligation_ids": [
+        "obl-1986"
+      ],
+      "source_seed_ids": [
+        "seed-2583"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` become native surfaces with their own state contracts",
+        "Seams",
+        "Node Graph",
+        "Evidence",
+        "History",
+        "Ledger"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01661",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02134 is partial for widgets may not invent independent semantic scope such as their own run selection, their o",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02134"
+      ],
+      "source_obligation_ids": [
+        "obl-1991"
+      ],
+      "source_seed_ids": [
+        "seed-2588"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "widgets may not invent independent semantic scope such as their own run selection, their own lane universe, or their own concern-state semantics"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01666",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02143 is partial for historical-run mode will feel broken if some `Progress` widgets silently follow live event",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02143"
+      ],
+      "source_obligation_ids": [
+        "obl-2000"
+      ],
+      "source_seed_ids": [
+        "seed-2597"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "historical-run mode will feel broken if some `Progress` widgets silently follow live events while others honor the focused historical run",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01678",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02156 is partial for `GitHub_Integration.md` still lacks effective-account / switch-reason display and requeste",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02156"
+      ],
+      "source_obligation_ids": [
+        "obl-2013"
+      ],
+      "source_seed_ids": [
+        "seed-2619"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`GitHub_Integration.md` still lacks effective-account / switch-reason display and requested-vs-effective admin-capability UX",
+        "GitHub_Integration.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01703",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02186 is partial for add effective-account / switch-reason display",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02186"
+      ],
+      "source_obligation_ids": [
+        "obl-2041"
+      ],
+      "source_seed_ids": [
+        "seed-2650"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "add effective-account / switch-reason display"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01815",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02339 is partial for Projection trust and node concern posture still lack a compact canonical contract that pag",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02339"
+      ],
+      "source_obligation_ids": [
+        "obl-2190"
+      ],
+      "source_seed_ids": [
+        "seed-2845"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "Projection trust and node concern posture still lack a compact canonical contract that page/widget consumers can reuse."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01822",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02348 is partial for `usage_event_ref` should be a structured locator, not just a display string.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02348"
+      ],
+      "source_obligation_ids": [
+        "obl-2199"
+      ],
+      "source_seed_ids": [
+        "seed-2854"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "`usage_event_ref` should be a structured locator, not just a display string.",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01943",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02485 is partial for GPT-5.4 sharpened that this now blocks truthful requested-vs-effective runtime inspectors",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02485"
+      ],
+      "source_obligation_ids": [
+        "obl-2335"
+      ],
+      "source_seed_ids": [
+        "seed-3036"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "GPT-5.4 sharpened that this now blocks truthful requested-vs-effective runtime inspectors for Orchestrator, Run Graph, and conversational actor surfaces"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01950",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02493 is partial for Orchestrator/Run Graph identity consumers are still materially below the contract the upst",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02493"
+      ],
+      "source_obligation_ids": [
+        "obl-2343"
+      ],
+      "source_seed_ids": [
+        "seed-3044"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "Orchestrator/Run Graph identity consumers are still materially below the contract the upstream docs now imply:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02566",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03278 is partial for account/auth controls, concern actions, and promotion actions still have no canonical comm",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-032: Concern linkage to adjacent families"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03278"
+      ],
+      "source_obligation_ids": [
+        "obl-3124"
+      ],
+      "source_seed_ids": [
+        "seed-4158"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "account/auth controls, concern actions, and promotion actions still have no canonical command-family owner, and command/wiring schemas still cannot encode projection-freshness/health gating for mutating actions."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02661",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03409 is partial for Wizard/interview docs are good on blocked/degraded planning lineage, but still weak on the",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03409"
+      ],
+      "source_obligation_ids": [
+        "obl-3255"
+      ],
+      "source_seed_ids": [
+        "seed-4349"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "Wizard/interview docs are good on blocked/degraded planning lineage, but still weak on the bridge from that lineage into the eventual execution run identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02776",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03548 is partial for current lane lifecycle/status projection",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03548"
+      ],
+      "source_obligation_ids": [
+        "obl-3394"
+      ],
+      "source_seed_ids": [
+        "seed-4570"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "current lane lifecycle/status projection"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02949",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03778 is partial for Tier-shaped surfaces may still display and group by `tier_id`, but they should resolve thr",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03778"
+      ],
+      "source_obligation_ids": [
+        "obl-3623"
+      ],
+      "source_seed_ids": [
+        "seed-4897"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "Tier-shaped surfaces may still display and group by `tier_id`, but they should resolve through pointers to canonical execution objects rather than using `tier_id` as if it were the durable execution key.",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02950",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03779 is partial for `Run_Graph_View.md` calls itself a node graph but still uses `tier_id` for major data-sour",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03779"
+      ],
+      "source_obligation_ids": [
+        "obl-3624"
+      ],
+      "source_seed_ids": [
+        "seed-4903"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "`Run_Graph_View.md` calls itself a node graph but still uses `tier_id` for major data-source joins, including Usage and Output filtering.",
+        "Run_Graph_View.md",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02954",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03785 is partial for Retarget Run Graph and Usage links toward `node_id` / `attempt_id` semantics, with `tier_i",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03785"
+      ],
+      "source_obligation_ids": [
+        "obl-3630"
+      ],
+      "source_seed_ids": [
+        "seed-4909"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "Retarget Run Graph and Usage links toward `node_id` / `attempt_id` semantics, with `tier_id` surviving only as a display/grouping label where needed.",
+        "node_id",
+        "attempt_id",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03020",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03872 is partial for Keep usage attribution schema shared across all run kinds, but permit execution-role displ",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03872"
+      ],
+      "source_obligation_ids": [
+        "obl-3717"
+      ],
+      "source_seed_ids": [
+        "seed-5052"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "Keep usage attribution schema shared across all run kinds, but permit execution-role display/filtering without creating a second usage system."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03136",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04037 is partial for should be attempt-native whenever produced by a node worker/verifier/reviewer flow",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04037"
+      ],
+      "source_obligation_ids": [
+        "obl-3880"
+      ],
+      "source_seed_ids": [
+        "seed-5326"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "exact_missing_items": [
+        "should be attempt-native whenever produced by a node worker/verifier/reviewer flow"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03688",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04723 is partial for This seam is what prevents the new route-target contract from immediately turning back int",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04723"
+      ],
+      "source_obligation_ids": [
+        "obl-4501"
+      ],
+      "source_seed_ids": [
+        "seed-6400"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "This seam is what prevents the new route-target contract from immediately turning back into per-surface deep-link spaghetti."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03791",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04847 is partial for Source Control: `active_subview`, selected repo/worktree, compare target, graph filters",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04847"
+      ],
+      "source_obligation_ids": [
+        "obl-4624"
+      ],
+      "source_seed_ids": [
+        "seed-6616"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "Source Control: `active_subview`, selected repo/worktree, compare target, graph filters",
+        "active_subview"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03966",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05092 is partial for `open_intent` is the caller\u2019s direct purpose for opening the subject. It belongs to the su",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05092"
+      ],
+      "source_obligation_ids": [
+        "obl-4868"
+      ],
+      "source_seed_ids": [
+        "seed-7015"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "exact_missing_items": [
+        "`open_intent` is the caller\u2019s direct purpose for opening the subject. It belongs to the subject-open contract because the same subject can be opened as source, preview, or review entry.",
+        "open_intent"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04490",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05785 is partial for Research Progress - 2026-03-17 - Blocked-family contracts are still uneven across node, wi",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05785"
+      ],
+      "source_obligation_ids": [
+        "obl-5557"
+      ],
+      "source_seed_ids": [
+        "seed-8246"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - Blocked-family contracts are still uneven across node, wizard, and thread surfaces"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04512",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05825 is partial for cross-surface node usage via `tier_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05825"
+      ],
+      "source_obligation_ids": [
+        "obl-5597"
+      ],
+      "source_seed_ids": [
+        "seed-8315"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "cross-surface node usage via `tier_id`",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04606",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05950 is partial for Fixing consumer docs without fixing this owner-language seam will not hold.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05950"
+      ],
+      "source_obligation_ids": [
+        "obl-5722"
+      ],
+      "source_seed_ids": [
+        "seed-8502"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "Fixing consumer docs without fixing this owner-language seam will not hold."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04645",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06002 is partial for Research Progress - 2026-03-17 - Graph and Orchestrator approval consumers still preserve",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06002"
+      ],
+      "source_obligation_ids": [
+        "obl-5774"
+      ],
+      "source_seed_ids": [
+        "seed-8590"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - Graph and Orchestrator approval consumers still preserve HITL-request-era fields"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04646",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06003 is partial for The graph and Orchestrator surfaces now show a direct mixed-era contract in one place.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06003"
+      ],
+      "source_obligation_ids": [
+        "obl-5775"
+      ],
+      "source_seed_ids": [
+        "seed-8595"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "exact_missing_items": [
+        "The graph and Orchestrator surfaces now show a direct mixed-era contract in one place."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04658",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06020 is partial for `hitl_request_id` remains in the graph view-model even though the surrounding blocked/reco",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06020"
+      ],
+      "source_obligation_ids": [
+        "obl-5792"
+      ],
+      "source_seed_ids": [
+        "seed-8617"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "exact_missing_items": [
+        "`hitl_request_id` remains in the graph view-model even though the surrounding blocked/recovery model is already moving toward blocked-episode identity.",
+        "hitl_request_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04922",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06344 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06344"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05028",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06485 is partial for The action-label cleanup depends on this file, because it still legitimizes `Reject` / `Ca",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06485"
+      ],
+      "source_obligation_ids": [
+        "obl-6126"
+      ],
+      "source_seed_ids": [
+        "seed-9257"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "The action-label cleanup depends on this file, because it still legitimizes `Reject` / `Cancel Run` / `Skip` as if they were canonical action names rather than surface labels over runtime action families.",
+        "Reject",
+        "Cancel Run",
+        "Skip"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05040",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06500 is partial for Usage and Evidence remain tied to `tier_id` in the canonical storage owner, which keeps re",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06500"
+      ],
+      "source_obligation_ids": [
+        "obl-6141"
+      ],
+      "source_seed_ids": [
+        "seed-9288"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "Usage and Evidence remain tied to `tier_id` in the canonical storage owner, which keeps recreating the same drift in Usage, Graph, and Orchestrator consumers.",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05196",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06708 is partial for settings / requested-vs-effective / identity display grammar",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06708"
+      ],
+      "source_obligation_ids": [
+        "obl-6349"
+      ],
+      "source_seed_ids": [
+        "seed-9696"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "settings / requested-vs-effective / identity display grammar"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05282",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06809 is partial for named display grammar (`Inherited from`, `Overridden by`, `Requested`, `Effective`, `Reaso",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06809"
+      ],
+      "source_obligation_ids": [
+        "obl-6432"
+      ],
+      "source_seed_ids": [
+        "seed-9811"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "named display grammar (`Inherited from`, `Overridden by`, `Requested`, `Effective`, `Reason`, `Support`)",
+        "Inherited from",
+        "Overridden by",
+        "Requested",
+        "Effective",
+        "Reason",
+        "Support"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05283",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06810 is partial for worker-policy display under the same requested/effective grammar",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06810"
+      ],
+      "source_obligation_ids": [
+        "obl-6433"
+      ],
+      "source_seed_ids": [
+        "seed-9812"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "worker-policy display under the same requested/effective grammar"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

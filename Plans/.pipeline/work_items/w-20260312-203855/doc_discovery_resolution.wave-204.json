@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-204",
+  "group_ids": [
+    "discgrp-0813",
+    "discgrp-0814",
+    "discgrp-0815",
+    "discgrp-0816"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01060",
+      "source_obligation_ids": [
+        "obl-917"
+      ],
+      "source_seed_ids": [
+        "seed-1074"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01061",
+      "source_obligation_ids": [
+        "obl-918"
+      ],
+      "source_seed_ids": [
+        "seed-1075"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "## 3. Mechanism: one event type per artifact type",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L83"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01062",
+      "source_obligation_ids": [
+        "obl-919"
+      ],
+      "source_seed_ids": [
+        "seed-1076"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01063",
+      "source_obligation_ids": [
+        "obl-920"
+      ],
+      "source_seed_ids": [
+        "seed-1084"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "## 4. Data model and identity",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L60"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

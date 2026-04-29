@@ -1,215 +1,713 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-023",
-  "timestamp_utc": "2026-04-28T20:16:46Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-089",
-    "coverage-rowgrp-090",
-    "coverage-rowgrp-091",
-    "coverage-rowgrp-092"
+  "row_group_ids": [
+    "rowgrp-0089",
+    "rowgrp-0090",
+    "rowgrp-0091",
+    "rowgrp-0092"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-089 cov-160,cov-198,cov-419,cov-430 Plans/GitHub_Integration.md",
-    "rowgrp-090 cov-348 Plans/GitHub_Integration.md",
-    "rowgrp-091 cov-451 Plans/Glossary.md",
-    "rowgrp-092 cov-130,cov-358 Plans/Glossary.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-089": "completed_reduced_conservatively",
-    "coverage-rowgrp-090": "completed_reduced_conservatively",
-    "coverage-rowgrp-091": "completed_reduced_conservatively",
-    "coverage-rowgrp-092": "completed_reduced_conservatively"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-160",
-    "cov-198",
-    "cov-419",
-    "cov-430",
-    "cov-348",
-    "cov-451",
-    "cov-130",
-    "cov-358"
-  ],
-  "coverage_ids_completed": [
-    "cov-160",
-    "cov-198",
-    "cov-419",
-    "cov-430",
-    "cov-348",
-    "cov-451",
-    "cov-130",
-    "cov-358"
-  ],
-  "path_groups_assigned": [
-    "Plans/GitHub_Integration.md",
-    "Plans/Glossary.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-160",
-      "status": "partial",
-      "evidence": [
-        "Plans/GitHub_Integration.md:111 consumes runtime identity GitHub_AuthContext",
-        "Plans/GitHub_Integration.md:112 all GitHub API calls include effective_account_id for audit",
-        "Plans/GitHub_Integration.md:113 cross-org account changes use runtime identity resolution rather than silent re-auth"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Effective account identity and account-context handling are present, but requested/effective pairing, fallback reason, and account-switching disclosure are not fully stated.",
+      "coverage_id": "cov-06183",
       "source_obligation_ids": [
-        "obl-043"
+        "obl-5955"
       ],
       "source_seed_ids": [
-        "seed-043"
+        "seed-8854"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`Skills_System.md` still has unresolved bundling-off semantics, compaction behavior for bu",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "### 2.4 Name collision rules",
+      "status": "partial",
+      "exact_items": [
+        "`Skills_System.md` still has unresolved bundling-off semantics, compaction behavior for bundled skill text, and HTE/DAE reachability rules.",
+        "Skills_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L93"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06225",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06288",
+      "source_obligation_ids": [
+        "obl-5991"
+      ],
+      "source_seed_ids": [
+        "seed-9034"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "`BinaryLocator_Spec.md`, `Document_Packaging_Policy.md`, and `Containers_Registry_and_Unra",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "### 1.1 User Command (preset)",
+      "status": "partial",
+      "exact_items": [
+        "`BinaryLocator_Spec.md`, `Document_Packaging_Policy.md`, and `Containers_Registry_and_Unraid.md` still show split ownership between behavior SSOTs and adjacent command/storage/runtime owners, now with exact command ID, artifact-type, and launcher-ownership mismatches.",
+        "BinaryLocator_Spec.md",
+        "Document_Packaging_Policy.md",
+        "Containers_Registry_and_Unraid.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L31"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06294",
+      "source_obligation_ids": [
+        "obl-5997"
+      ],
+      "source_seed_ids": [
+        "seed-9040"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "`Formatters_System.md`, `LSPSupport.md`, `Plugins_System.md`, and `Skills_System.md` still",
+      "row_type": "owner",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "## 4. Execution semantics",
+      "status": "partial",
+      "exact_items": [
+        "`Formatters_System.md`, `LSPSupport.md`, `Plugins_System.md`, and `Skills_System.md` still lack clean ownership boundaries for mutation-capable semantics, hosted-vs-DAE execution reachability, tool/event identity, and plugin/skill introspection or isolation guarantees.",
+        "Formatters_System.md",
+        "LSPSupport.md",
+        "Plugins_System.md",
+        "Skills_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L190"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00778",
+      "source_obligation_ids": [
+        "obl-635"
+      ],
+      "source_seed_ids": [
+        "seed-730"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "canon_label": "`stale_historical` is specifically stronger than plain `historical`; it carries non-resuma",
+      "row_type": "stale_retirement",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "## 4. Execution semantics",
+      "status": "present",
+      "exact_items": [
+        "`stale_historical` is specifically stronger than plain `historical`; it carries non-resumable/non-live semantics.",
+        "stale_historical",
+        "historical"
+      ],
+      "stale_tokens": [
+        "historical",
+        "stale_historical"
+      ],
+      "evidence": [
+        "Plans/Commands_System.md:L1-L523 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02118",
+      "source_obligation_ids": [
+        "obl-1975"
+      ],
+      "source_seed_ids": [
+        "seed-2568"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "then immediately defines SSOT precedence saying legacy keys are converted and the legacy k",
+      "row_type": "stale_retirement",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "present",
+      "exact_items": [
+        "then immediately defines SSOT precedence saying legacy keys are converted and the legacy key is deleted"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1-L523 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02362",
+      "source_obligation_ids": [
+        "obl-2213"
+      ],
+      "source_seed_ids": [
+        "seed-2876"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "`Widget_System.md` still persists layouts for them and still has an explicit internal cont",
+      "row_type": "stale_retirement",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "### 1.2 UICommand (internal dispatch) \u2014 distinction",
+      "status": "present",
+      "exact_items": [
+        "`Widget_System.md` still persists layouts for them and still has an explicit internal contradiction over whether legacy `dashboard_layout:v1` is retained or deleted",
+        "Widget_System.md",
+        "dashboard_layout:v1"
+      ],
+      "stale_tokens": [
+        "Widget_System.md",
+        "dashboard_layout:v1"
+      ],
+      "evidence": [
+        "Plans/Commands_System.md:L1-L523 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02976",
+      "source_obligation_ids": [
+        "obl-2822"
+      ],
+      "source_seed_ids": [
+        "seed-3720"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "Commands that change execution truth still lack a shared stale/degraded-projection gate.",
+      "row_type": "stale_retirement",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "present",
+      "exact_items": [
+        "Commands that change execution truth still lack a shared stale/degraded-projection gate."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1-L523 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06062",
+      "source_obligation_ids": [
+        "obl-5834"
+      ],
+      "source_seed_ids": [
+        "seed-8667"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "It is one of the clearest examples where the stale approval model is now breaking exact co",
+      "row_type": "stale_retirement",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "### 1.1 User Command (preset)",
+      "status": "present",
+      "exact_items": [
+        "It is one of the clearest examples where the stale approval model is now breaking exact command contracts."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1-L523 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06160",
+      "source_obligation_ids": [
+        "obl-5932"
+      ],
+      "source_seed_ids": [
+        "seed-8807"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "delete legacy key",
+      "row_type": "stale_retirement",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "#### 6.1.5 Delete",
+      "status": "present",
+      "exact_items": [
+        "delete legacy key"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1-L523 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06287",
+      "source_obligation_ids": [
+        "obl-5990"
+      ],
+      "source_seed_ids": [
+        "seed-9033"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "`GUI_Rebuild_Requirements_Checklist.md`, `Section15_MVP_Promoted_Features_Spec.md`, `featu",
+      "row_type": "stale_retirement",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "### 1.1 User Command (preset)",
+      "status": "present",
+      "exact_items": [
+        "`GUI_Rebuild_Requirements_Checklist.md`, `Section15_MVP_Promoted_Features_Spec.md`, `feature-list.md`, and `newfeatures.md` still expose phantom or missing command rows, stale panel/tab/title-bar assumptions, and workspace-tab persistence identity contradictions against promoted-shell canon.",
+        "GUI_Rebuild_Requirements_Checklist.md",
+        "Section15_MVP_Promoted_Features_Spec.md",
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "stale_tokens": [
+        "GUI_Rebuild_Requirements_Checklist.md",
+        "Section15_MVP_Promoted_Features_Spec.md",
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "evidence": [
+        "Plans/Commands_System.md:L1-L523 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06681",
+      "source_obligation_ids": [
+        "obl-6322"
+      ],
+      "source_seed_ids": [
+        "seed-9564"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "`GUI_Rebuild_Requirements_Checklist.md` can create false confidence if stale upstream PASS",
+      "row_type": "stale_retirement",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "#### 6.1.3 Create",
+      "status": "present",
+      "exact_items": [
+        "`GUI_Rebuild_Requirements_Checklist.md` can create false confidence if stale upstream PASS conditions remain unchallenged.",
+        "GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "stale_tokens": [
+        "GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "evidence": [
+        "Plans/Commands_System.md:L1-L523 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00604",
+      "source_obligation_ids": [
+        "obl-461"
+      ],
+      "source_seed_ids": [
+        "seed-531"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "`unavailable`: route to record-backed fallback views or explicit recovery/refresh actions",
+      "row_type": "consumer",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "#### Explicit editability contract for all fields",
+      "status": "partial",
+      "exact_items": [
+        "`unavailable`: route to record-backed fallback views or explicit recovery/refresh actions",
+        "unavailable"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L435"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02830",
+      "source_obligation_ids": [
+        "obl-2677"
+      ],
+      "source_seed_ids": [
+        "seed-3519"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "but snapshots still omit requested values, downgrade reasons, effective account/operationa",
+      "row_type": "consumer",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "### Requested vs effective auth state",
+      "status": "partial",
+      "exact_items": [
+        "but snapshots still omit requested values, downgrade reasons, effective account/operational identity, and actor/surface scope"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L122",
+        "Plans/Containers_Registry_and_Unraid.md:L187"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03592",
+      "source_obligation_ids": [
+        "obl-3438"
+      ],
+      "source_seed_ids": [
+        "seed-4631"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "moving surfaces to canonical route payloads and runtime actions",
+      "row_type": "consumer",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "## User-visible surfaces",
+      "status": "partial",
+      "exact_items": [
+        "moving surfaces to canonical route payloads and runtime actions"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L33"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06311",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00330",
+      "source_obligation_ids": [
+        "obl-188"
+      ],
+      "source_seed_ids": [
+        "seed-214"
       ],
       "source_shard_ids": [
         "shard-0010"
       ],
-      "path_field_status": "match"
+      "canon_label": "why it matters: unify blocked/recovery action families so UI, runtime, and chat-thread res",
+      "row_type": "layout_blocker",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "#### Runtime access URL resolution",
+      "status": "partial",
+      "exact_items": [
+        "why it matters: unify blocked/recovery action families so UI, runtime, and chat-thread resolution all point to the same canonical actions."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L295"
+      ],
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-198",
-      "status": "present",
-      "evidence": [
-        "Plans/GitHub_Integration.md:11 keeps Orchestrator as lane-pool operational truth and Source Control as concrete repo/worktree operator",
-        "Plans/GitHub_Integration.md:12 worktree rows show owning package/lane/run refs plus lifecycle and blocked/recovery state"
-      ],
-      "required_action": "none",
-      "unresolved_reason": "",
+      "coverage_id": "cov-00572",
       "source_obligation_ids": [
-        "obl-053"
+        "obl-429"
       ],
       "source_seed_ids": [
-        "seed-053"
+        "seed-494"
       ],
       "source_shard_ids": [
         "shard-0012"
       ],
-      "path_field_status": "match"
+      "canon_label": "likely still needs explicit cross-reference that only certain pages/tabs are widget-compos",
+      "row_type": "layout_blocker",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "#### Explicit editability contract for all fields",
+      "status": "partial",
+      "exact_items": [
+        "likely still needs explicit cross-reference that only certain pages/tabs are widget-composed."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L435"
+      ],
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-419",
-      "status": "partial",
-      "evidence": [
-        "Plans/GitHub_Integration.md:111 consumes runtime identity GitHub_AuthContext",
-        "Plans/GitHub_Integration.md:112 effective_account_id is included so audit shows which account performed the operation",
-        "Plans/GitHub_Integration.md:113 account-context changes use runtime identity resolution flow"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "GitHub identity disclosure exists, but a shared requested/effective identity disclosure contract across graph detail, artifacts, GitHub/auth, and usage/account-pressure is not fully present.",
+      "coverage_id": "cov-00934",
       "source_obligation_ids": [
-        "obl-124"
+        "obl-791"
       ],
       "source_seed_ids": [
-        "seed-124"
+        "seed-908"
       ],
       "source_shard_ids": [
-        "shard-0031"
+        "shard-0017"
       ],
-      "path_field_status": "match"
+      "canon_label": "actions that must go through a canonical approval/blocked flow and cannot be bypassed by g",
+      "row_type": "layout_blocker",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "#### Repository creation confirmation flow",
+      "status": "partial",
+      "exact_items": [
+        "actions that must go through a canonical approval/blocked flow and cannot be bypassed by generic UI confirmation"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L260"
+      ],
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-430",
-      "status": "missing",
-      "evidence": [
-        "Plans/GitHub_Integration.md: assigned file reviewed; no seam_id/package_id/lane_id/attempt_id first-class attribution or tier-era event/widget deprecation found"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Storage/usage attribution pivot away from tier-era routing is absent from the assigned path.",
+      "coverage_id": "cov-00960",
       "source_obligation_ids": [
-        "obl-125"
+        "obl-817"
       ],
       "source_seed_ids": [
-        "seed-125"
+        "seed-941"
       ],
       "source_shard_ids": [
-        "shard-0031"
+        "shard-0017"
       ],
-      "path_field_status": "match"
+      "canon_label": "narrow Source Control panel means destructive actions there should likely route through co",
+      "row_type": "layout_blocker",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "#### Repository creation confirmation flow",
+      "status": "partial",
+      "exact_items": [
+        "narrow Source Control panel means destructive actions there should likely route through compact but clear confirmation patterns, not giant forms"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L260"
+      ],
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-348",
-      "status": "partial",
-      "evidence": [
-        "Plans/GitHub_Integration.md:11 Orchestrator is lane-pool operational truth and Source Control is concrete repo/worktree operator",
-        "Plans/GitHub_Integration.md:12 worktree rows show owning package/lane/run refs plus lifecycle and blocked/recovery state"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Lane/worktree ownership relation is present, but lane lifecycle vs worktree lifecycle states and recover/archive/prune/remove split are not fully represented.",
+      "coverage_id": "cov-01365",
       "source_obligation_ids": [
-        "obl-103"
+        "obl-1222"
       ],
       "source_seed_ids": [
-        "seed-103"
+        "seed-1463"
       ],
       "source_shard_ids": [
-        "shard-0025"
+        "shard-0023"
       ],
-      "path_field_status": "match"
+      "canon_label": "`UI_Command_Catalog.md` already requires blocked-state actions to map from `allowed_action",
+      "row_type": "layout_blocker",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "#### Runtime access URL resolution",
+      "status": "present",
+      "exact_items": [
+        "`UI_Command_Catalog.md` already requires blocked-state actions to map from `allowed_action_ids[]` to canonical runtime commands rather than surface-local variants.",
+        "UI_Command_Catalog.md",
+        "allowed_action_ids[]"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L94",
+        "Plans/Containers_Registry_and_Unraid.md:L788",
+        "Plans/Containers_Registry_and_Unraid.md:L793"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-451",
-      "status": "partial",
-      "evidence": [
-        "Plans/Glossary.md:62-64 defines Inline Help, Context Help, and Canonical Help Entry with stable canonical term names",
-        "Plans/Glossary.md:66 requires canonical names verbatim across rewrite docs",
-        "Plans/Glossary.md:120 related-concept clusters allow inline help, context help, and full help views to pivot without inventing new terminology"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Three help depths and anti-drift naming are covered, but click/hover term/badge/state behavior is not fully specified.",
+      "coverage_id": "cov-02045",
       "source_obligation_ids": [
-        "obl-132"
+        "obl-1902"
       ],
       "source_seed_ids": [
-        "seed-132"
+        "seed-2460"
       ],
       "source_shard_ids": [
         "shard-0033"
       ],
-      "path_field_status": "match"
+      "canon_label": "Existing UI docs have many local confirmation examples, but nothing yet defines how durabl",
+      "row_type": "layout_blocker",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "## Relationship to existing plans",
+      "status": "partial",
+      "exact_items": [
+        "Existing UI docs have many local confirmation examples, but nothing yet defines how durable concern actions should differ from:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L17"
+      ],
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-130",
-      "status": "partial",
-      "evidence": [
-        "Plans/Glossary.md:56-68 defines Orchestrator rewrite terms and links Contracts, Orchestrator_Page, and FinalGUISpec",
-        "Plans/Glossary.md:146-154 PatchPipeline and SessionStore reference WorktreeGitImprovement, GitHub auth, and storage-plan ownership"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Glossary has related consumer terms and cross-doc ownership links, but not the full impacted-doc bundle set or stale-token pressure list.",
+      "coverage_id": "cov-02120",
       "source_obligation_ids": [
-        "obl-036"
+        "obl-1977"
       ],
       "source_seed_ids": [
-        "seed-036"
+        "seed-2570"
       ],
       "source_shard_ids": [
-        "shard-0008"
+        "shard-0034"
       ],
-      "path_field_status": "match"
+      "canon_label": "but `FinalGUISpec.md` already has project-scoped state containers like `project_state:v1:{",
+      "row_type": "layout_blocker",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "# Containers, Registry, and Unraid Integration",
+      "status": "present",
+      "exact_items": [
+        "but `FinalGUISpec.md` already has project-scoped state containers like `project_state:v1:{project_id}`",
+        "FinalGUISpec.md",
+        "project_state:v1:{project_id}"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L15",
+        "Plans/Containers_Registry_and_Unraid.md:L19",
+        "Plans/Containers_Registry_and_Unraid.md:L94"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-358",
-      "status": "partial",
-      "evidence": [
-        "Plans/Glossary.md:62-64 defines inline help, context help, and canonical help entry",
-        "Plans/Glossary.md:94-103 defines help-entry architecture, project status terms, escalation ladder, and resurfacing/aging rules",
-        "Plans/Glossary.md:105-120 defines a help-entry template and related-concept clusters"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Help-system architecture is present, but not all distinction-heavy concepts in the row are represented.",
+      "coverage_id": "cov-02244",
       "source_obligation_ids": [
-        "obl-106"
+        "obl-2098"
       ],
       "source_seed_ids": [
-        "seed-106"
+        "seed-2726"
       ],
       "source_shard_ids": [
-        "shard-0026"
+        "shard-0035"
       ],
-      "path_field_status": "match"
+      "canon_label": "`Orchestrator_Page.md` TOC sections 13\u201317 are genuinely missing, not relocated",
+      "row_type": "layout_blocker",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "### Missing repository behavior",
+      "status": "present",
+      "exact_items": [
+        "`Orchestrator_Page.md` TOC sections 13\u201317 are genuinely missing, not relocated",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L15",
+        "Plans/Containers_Registry_and_Unraid.md:L20",
+        "Plans/Containers_Registry_and_Unraid.md:L106"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02523",
+      "source_obligation_ids": [
+        "obl-2372"
+      ],
+      "source_seed_ids": [
+        "seed-3085"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "bridged-provider sections still do not expose equivalent capability blocks",
+      "row_type": "layout_blocker",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "#### Canonical DockerHub effective capability enum",
+      "status": "partial",
+      "exact_items": [
+        "bridged-provider sections still do not expose equivalent capability blocks"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L188"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02641",
+      "source_obligation_ids": [
+        "obl-2489"
+      ],
+      "source_seed_ids": [
+        "seed-3272"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "`Multi-Account.md` already distinguishes identities like `github_api`, registry identity,",
+      "row_type": "layout_blocker",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "heading_hint": "# Containers, Registry, and Unraid Integration",
+      "status": "partial",
+      "exact_items": [
+        "`Multi-Account.md` already distinguishes identities like `github_api`, registry identity, and Kubernetes context",
+        "Multi-Account.md",
+        "github_api"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
     }
   ]
 }

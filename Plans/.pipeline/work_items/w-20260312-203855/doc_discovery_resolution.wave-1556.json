@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1556",
+  "group_ids": [
+    "discgrp-6221",
+    "discgrp-6222",
+    "discgrp-6223",
+    "discgrp-6224"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-07003",
+      "source_obligation_ids": [
+        "obl-6599"
+      ],
+      "source_seed_ids": [
+        "seed-10063"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "### Problem 3: Two usage tracker types and ad-hoc Ledger parsing",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/usage-feature.md:L504"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-07015",
+      "source_obligation_ids": [
+        "obl-6609"
+      ],
+      "source_seed_ids": [
+        "seed-10078"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 14.3 Virtualized Lists",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1581"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-07016",
+      "source_obligation_ids": [
+        "obl-6610"
+      ],
+      "source_seed_ids": [
+        "seed-10079"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "## 6. Ambiguity vs. Missing User Intent",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-07017",
+      "source_obligation_ids": [
+        "obl-6611"
+      ],
+      "source_seed_ids": [
+        "seed-10081"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-079: Project summary projection",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L123"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

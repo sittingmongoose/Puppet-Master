@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1445",
+  "group_ids": [
+    "discgrp-5777",
+    "discgrp-5778",
+    "discgrp-5779",
+    "discgrp-5780"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06387",
+      "source_obligation_ids": [
+        "obl-6028"
+      ],
+      "source_seed_ids": [
+        "seed-9115"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-06388",
+      "source_obligation_ids": [
+        "obl-6029"
+      ],
+      "source_seed_ids": [
+        "seed-9116"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-06389",
+      "source_obligation_ids": [
+        "obl-6030"
+      ],
+      "source_seed_ids": [
+        "seed-9117"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-06390",
+      "source_obligation_ids": [
+        "obl-6031"
+      ],
+      "source_seed_ids": [
+        "seed-9118"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Document_Packaging_Policy.md",
+      "new_heading_hint": "# Document Packaging Policy (Canonical)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

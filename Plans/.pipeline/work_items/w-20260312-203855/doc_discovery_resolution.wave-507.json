@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-507",
+  "group_ids": [
+    "discgrp-2025",
+    "discgrp-2026",
+    "discgrp-2027",
+    "discgrp-2028"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02290",
+      "source_obligation_ids": [
+        "obl-2143"
+      ],
+      "source_seed_ids": [
+        "seed-2783"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 10.11 Loading-to-live transitions",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1317"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02291",
+      "source_obligation_ids": [
+        "obl-2144"
+      ],
+      "source_seed_ids": [
+        "seed-2785"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02292",
+      "source_obligation_ids": [
+        "obl-2145"
+      ],
+      "source_seed_ids": [
+        "seed-2787"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Canonical Runtime Event, Outcome, and Action Contract Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1473"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02293",
+      "source_obligation_ids": [
+        "obl-2146"
+      ],
+      "source_seed_ids": [
+        "seed-2789"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "new_heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

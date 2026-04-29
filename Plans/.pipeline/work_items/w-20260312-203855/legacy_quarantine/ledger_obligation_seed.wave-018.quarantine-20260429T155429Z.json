@@ -1,0 +1,38 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-018",
+  "timestamp_utc": "2026-04-28T18:07:21Z",
+  "subagent_tasks": [
+    "seed-shard-0069",
+    "seed-shard-0070",
+    "seed-shard-0071",
+    "seed-shard-0072"
+  ],
+  "assigned_input_boundaries": [
+    "shard-0069 L013601-L013800",
+    "shard-0070 L013801-L014000",
+    "shard-0071 L014001-L014200",
+    "shard-0072 L014201-L014400"
+  ],
+  "subagent_result_status": {
+    "seed-shard-0069": "completed",
+    "seed-shard-0070": "completed",
+    "seed-shard-0071": "completed_after_clarification",
+    "seed-shard-0072": "completed"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "shard_ids_assigned": [
+    "shard-0069",
+    "shard-0070",
+    "shard-0071",
+    "shard-0072"
+  ],
+  "shard_ids_completed": [
+    "shard-0069",
+    "shard-0070",
+    "shard-0071",
+    "shard-0072"
+  ]
+}

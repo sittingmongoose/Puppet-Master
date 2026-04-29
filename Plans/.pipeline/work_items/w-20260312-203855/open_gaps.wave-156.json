@@ -1,0 +1,2096 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-156",
+  "group_ids": [
+    "gapgrp-0621",
+    "gapgrp-0622",
+    "gapgrp-0623",
+    "gapgrp-0624"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-01911",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02448 is partial for multiple surfaces already emit attention-like objects: wizard cards, thread badges, dashbo",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 3. Dashboard / thread / resume behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02448"
+      ],
+      "source_obligation_ids": [
+        "obl-2298"
+      ],
+      "source_seed_ids": [
+        "seed-2980"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "multiple surfaces already emit attention-like objects: wizard cards, thread badges, dashboard CtAs, blocked-node lists, auth badges, and resume URLs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02601",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03324 is partial for Wizard / interview / worktree lineage gaps continue to sharpen at the seams:",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03324"
+      ],
+      "source_obligation_ids": [
+        "obl-3170"
+      ],
+      "source_seed_ids": [
+        "seed-4223"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "Wizard / interview / worktree lineage gaps continue to sharpen at the seams:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02669",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03418 is partial for `thread_id: None` in interview examples is now a concrete drift signal, not just omitted d",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03418"
+      ],
+      "source_obligation_ids": [
+        "obl-3264"
+      ],
+      "source_seed_ids": [
+        "seed-4367"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`thread_id: None` in interview examples is now a concrete drift signal, not just omitted detail",
+        "thread_id: None"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02681",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03432 is partial for Wizard / interview / worktree seams still expose the remaining high-risk lineage holes:",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03432"
+      ],
+      "source_obligation_ids": [
+        "obl-3278"
+      ],
+      "source_seed_ids": [
+        "seed-4392"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "Wizard / interview / worktree seams still expose the remaining high-risk lineage holes:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03751",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04806 is partial for The current wizard URL shape is useful, but it should stop standing alone as the only prec",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 2.1 Wizard State Shape"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04806"
+      ],
+      "source_obligation_ids": [
+        "obl-4583"
+      ],
+      "source_seed_ids": [
+        "seed-6547"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "The current wizard URL shape is useful, but it should stop standing alone as the only precise deep-link contract in the app."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03753",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04809 is partial for The existing wizard deep-link is a good precedent, but it should become one member of a no",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 13.2 Add Existing Project (no wizard)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04809"
+      ],
+      "source_obligation_ids": [
+        "obl-4586"
+      ],
+      "source_seed_ids": [
+        "seed-6550"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "The existing wizard deep-link is a good precedent, but it should become one member of a normalized transport family."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03818",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04877 is partial for must override to the wizard surface and the correct wizard/step context",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04877"
+      ],
+      "source_obligation_ids": [
+        "obl-4654"
+      ],
+      "source_seed_ids": [
+        "seed-6663"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "must override to the wizard surface and the correct wizard/step context"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04045",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05203 is partial for The concrete wizard deep-link format is defined, but there is still no owner doc that stat",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05203"
+      ],
+      "source_obligation_ids": [
+        "obl-4979"
+      ],
+      "source_seed_ids": [
+        "seed-7229"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "The concrete wizard deep-link format is defined, but there is still no owner doc that states what class of route data is allowed into serialized transport."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04936",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06358 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06358"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00220",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00247 is present for `Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00247"
+      ],
+      "source_obligation_ids": [
+        "obl-131"
+      ],
+      "source_seed_ids": [
+        "seed-136"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "`Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md`",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00998",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01281 is present for with `attention_required`",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 2. attention_required vs blocked"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01281"
+      ],
+      "source_obligation_ids": [
+        "obl-1138"
+      ],
+      "source_seed_ids": [
+        "seed-1350"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "exact_missing_items": [
+        "with `attention_required`",
+        "attention_required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01010",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01296 is present for `attention_required`",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 2. attention_required vs blocked"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01296"
+      ],
+      "source_obligation_ids": [
+        "obl-1153"
+      ],
+      "source_seed_ids": [
+        "seed-1369",
+        "seed-1374",
+        "seed-1842",
+        "seed-1939"
+      ],
+      "source_shard_ids": [
+        "shard-0022",
+        "shard-0027",
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "`attention_required`",
+        "attention_required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01904",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02440 is present for `attention_required` outranks advisory pressure/noise",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 2. attention_required vs blocked"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02440"
+      ],
+      "source_obligation_ids": [
+        "obl-2290"
+      ],
+      "source_seed_ids": [
+        "seed-2967"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "`attention_required` outranks advisory pressure/noise",
+        "attention_required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02057",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02621 is present for `resume_url` is carried in storage/events for wizard and thread blocked flows, but there i",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### Blocked clear rule"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02621"
+      ],
+      "source_obligation_ids": [
+        "obl-2469"
+      ],
+      "source_seed_ids": [
+        "seed-3227"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "`resume_url` is carried in storage/events for wizard and thread blocked flows, but there is no normalized rule for how equivalent non-wizard object routes are represented.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03041",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03900 is present for `Progression_Gates.md` contains duplicate addenda, unnumbered runtime/governance gate fami",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "## 15. Requirements Quality Escalation Semantics"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03900"
+      ],
+      "source_obligation_ids": [
+        "obl-3745"
+      ],
+      "source_seed_ids": [
+        "seed-5092"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "`Progression_Gates.md` contains duplicate addenda, unnumbered runtime/governance gate families, missing GATE-007 / GATE-008 placeholders, and a material collision where GATE-012 BLOCKED semantics collapse wizard `attention_required` and true wizard `blocked` escalation into the same gate state.",
+        "Progression_Gates.md",
+        "attention_required",
+        "blocked"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03259",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04185 is present for `validation_pass_report` contradictions are broader than one enum row because pass-level s",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 3.6 Plan/Deep Plan/TODO integration with wizard flow"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04185"
+      ],
+      "source_obligation_ids": [
+        "obl-4025"
+      ],
+      "source_seed_ids": [
+        "seed-5544"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "`validation_pass_report` contradictions are broader than one enum row because pass-level sweep sections still assume pass/fail-only semantics while downstream wizard flow requires `skipped`.",
+        "validation_pass_report",
+        "skipped"
+      ],
+      "stale_tokens": [
+        "skipped",
+        "validation_pass_report"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03272",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04199 is present for GATE-012 still collapses `attention_required` and true wizard `blocked` escalation into on",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "## 17. Assistant / Deep Plan Escalation into Chain Wizard (2026-03-08)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04199"
+      ],
+      "source_obligation_ids": [
+        "obl-4039"
+      ],
+      "source_seed_ids": [
+        "seed-5558"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "GATE-012 still collapses `attention_required` and true wizard `blocked` escalation into one evidence path.",
+        "attention_required",
+        "blocked"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03576",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04552 is present for `FinalGUISpec.md` wizard attention and blocked CtA cards are especially explicit: they alr",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 3. Dashboard / thread / resume behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04552"
+      ],
+      "source_obligation_ids": [
+        "obl-4330"
+      ],
+      "source_seed_ids": [
+        "seed-6093"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` wizard attention and blocked CtA cards are especially explicit: they already define concrete actions like `Resume Wizard` and `View in Thread`, but those actions still resolve through special-case fields rather than a shared navigation object.",
+        "FinalGUISpec.md",
+        "Resume Wizard",
+        "View in Thread"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04449",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05713 is present for the `wizard.blocked` minimum payload earlier in the file requires `resume_url`",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "## Canonical Wizard Blocked Lifecycle"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05713"
+      ],
+      "source_obligation_ids": [
+        "obl-5485"
+      ],
+      "source_seed_ids": [
+        "seed-8142"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "the `wizard.blocked` minimum payload earlier in the file requires `resume_url`",
+        "wizard.blocked",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05220",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06740 is present for `Plans/chain-wizard-flexibility.md`, `Plans/FinalGUISpec.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06740"
+      ],
+      "source_obligation_ids": [
+        "obl-6379"
+      ],
+      "source_seed_ids": [
+        "seed-9739"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "`Plans/chain-wizard-flexibility.md`, `Plans/FinalGUISpec.md`",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00190",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00208 is partial for what likely new model pressure is: package/seam overseers, package/seam/lane visibility, p",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### Requested vs effective visibility"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00208"
+      ],
+      "source_obligation_ids": [
+        "obl-104"
+      ],
+      "source_seed_ids": [
+        "seed-105"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "what likely new model pressure is: package/seam overseers, package/seam/lane visibility, promotion-class state, requested vs effective execution/account identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01401",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01794 is partial for `Resume Wizard`",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01794"
+      ],
+      "source_obligation_ids": [
+        "obl-1651"
+      ],
+      "source_seed_ids": [
+        "seed-2058",
+        "seed-6644",
+        "seed-6662"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "`Resume Wizard`",
+        "Resume Wizard"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01419",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01814 is partial for wizard blocked state",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "## Canonical Wizard Blocked Lifecycle"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01814"
+      ],
+      "source_obligation_ids": [
+        "obl-1671"
+      ],
+      "source_seed_ids": [
+        "seed-2086"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "wizard blocked state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03055",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03920 is partial for give startup recovery, backoff, counter ceilings, DAE/jail lifecycle, account-switch strat",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### Builder stages requiring explicit Persona strategy"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03920"
+      ],
+      "source_obligation_ids": [
+        "obl-3765"
+      ],
+      "source_seed_ids": [
+        "seed-5132"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "give startup recovery, backoff, counter ceilings, DAE/jail lifecycle, account-switch strategy invalidation, and wizard blocked-escalation semantics explicit homes in the policy/run-mode/gate docs rather than leaving them implied across addenda."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03205",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04124 is partial for wizard resume via `wizard_id + step`",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04124"
+      ],
+      "source_obligation_ids": [
+        "obl-3964"
+      ],
+      "source_seed_ids": [
+        "seed-5428"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "wizard resume via `wizard_id + step`",
+        "wizard_id + step"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03536",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04504 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04504"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03638",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04644 is partial for `object_kind = wizard`",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04644"
+      ],
+      "source_obligation_ids": [
+        "obl-4422"
+      ],
+      "source_seed_ids": [
+        "seed-6258",
+        "seed-6378",
+        "seed-7360",
+        "seed-7496"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0069",
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`object_kind = wizard`",
+        "object_kind = wizard"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03742",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04790 is partial for `puppet-master://wizard/<wizard_id>/step/<wizard_step_id>/clarify`",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04790"
+      ],
+      "source_obligation_ids": [
+        "obl-4567"
+      ],
+      "source_seed_ids": [
+        "seed-6521"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "`puppet-master://wizard/<wizard_id>/step/<wizard_step_id>/clarify`",
+        "puppet-master://wizard/<wizard_id>/step/<wizard_step_id>/clarify"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04261",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05474 is partial for The routing model now has a clear owner chain.",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05474"
+      ],
+      "source_obligation_ids": [
+        "obl-5246"
+      ],
+      "source_seed_ids": [
+        "seed-7794"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "The routing model now has a clear owner chain."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04262",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05475 is partial for Reconciliation should follow that owner chain or it will fragment again.",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05475"
+      ],
+      "source_obligation_ids": [
+        "obl-5247"
+      ],
+      "source_seed_ids": [
+        "seed-7795"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "Reconciliation should follow that owner chain or it will fragment again."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-02448",
+    "cov-03324",
+    "cov-03418",
+    "cov-03432",
+    "cov-04806",
+    "cov-04809",
+    "cov-04877",
+    "cov-05203",
+    "cov-06358",
+    "cov-00247",
+    "cov-01281",
+    "cov-01296",
+    "cov-02440",
+    "cov-02621",
+    "cov-03900",
+    "cov-04185",
+    "cov-04199",
+    "cov-04552",
+    "cov-05713",
+    "cov-06740",
+    "cov-00208",
+    "cov-01794",
+    "cov-01814",
+    "cov-03920",
+    "cov-04124",
+    "cov-04504",
+    "cov-04644",
+    "cov-04790",
+    "cov-05474",
+    "cov-05475"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-104",
+    "obl-1138",
+    "obl-1153",
+    "obl-131",
+    "obl-1651",
+    "obl-1671",
+    "obl-2290",
+    "obl-2298",
+    "obl-2469",
+    "obl-3170",
+    "obl-3264",
+    "obl-3278",
+    "obl-3745",
+    "obl-3765",
+    "obl-3964",
+    "obl-4025",
+    "obl-4039",
+    "obl-4292",
+    "obl-4330",
+    "obl-4422",
+    "obl-4567",
+    "obl-4583",
+    "obl-4586",
+    "obl-4654",
+    "obl-4979",
+    "obl-5246",
+    "obl-5247",
+    "obl-5485",
+    "obl-6009",
+    "obl-6379"
+  ],
+  "source_seed_ids_represented": [
+    "seed-105",
+    "seed-1350",
+    "seed-136",
+    "seed-1369",
+    "seed-1374",
+    "seed-1842",
+    "seed-1939",
+    "seed-2058",
+    "seed-2086",
+    "seed-2967",
+    "seed-2980",
+    "seed-3227",
+    "seed-4223",
+    "seed-4367",
+    "seed-4392",
+    "seed-5092",
+    "seed-5132",
+    "seed-5428",
+    "seed-5544",
+    "seed-5558",
+    "seed-6001",
+    "seed-6093",
+    "seed-6258",
+    "seed-6378",
+    "seed-6521",
+    "seed-6547",
+    "seed-6550",
+    "seed-6644",
+    "seed-6662",
+    "seed-6663",
+    "seed-7229",
+    "seed-7360",
+    "seed-7496",
+    "seed-7794",
+    "seed-7795",
+    "seed-8142",
+    "seed-9092",
+    "seed-9739"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0009",
+    "shard-0022",
+    "shard-0027",
+    "shard-0028",
+    "shard-0029",
+    "shard-0036",
+    "shard-0037",
+    "shard-0038",
+    "shard-0046",
+    "shard-0047",
+    "shard-0052",
+    "shard-0055",
+    "shard-0056",
+    "shard-0059",
+    "shard-0061",
+    "shard-0063",
+    "shard-0064",
+    "shard-0069",
+    "shard-0070",
+    "shard-0073",
+    "shard-0075",
+    "shard-0082",
+    "shard-0087"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-01911",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02448 is partial for multiple surfaces already emit attention-like objects: wizard cards, thread badges, dashbo",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 3. Dashboard / thread / resume behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02448"
+      ],
+      "source_obligation_ids": [
+        "obl-2298"
+      ],
+      "source_seed_ids": [
+        "seed-2980"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "multiple surfaces already emit attention-like objects: wizard cards, thread badges, dashboard CtAs, blocked-node lists, auth badges, and resume URLs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02601",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03324 is partial for Wizard / interview / worktree lineage gaps continue to sharpen at the seams:",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03324"
+      ],
+      "source_obligation_ids": [
+        "obl-3170"
+      ],
+      "source_seed_ids": [
+        "seed-4223"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "Wizard / interview / worktree lineage gaps continue to sharpen at the seams:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02669",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03418 is partial for `thread_id: None` in interview examples is now a concrete drift signal, not just omitted d",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03418"
+      ],
+      "source_obligation_ids": [
+        "obl-3264"
+      ],
+      "source_seed_ids": [
+        "seed-4367"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`thread_id: None` in interview examples is now a concrete drift signal, not just omitted detail",
+        "thread_id: None"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02681",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03432 is partial for Wizard / interview / worktree seams still expose the remaining high-risk lineage holes:",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03432"
+      ],
+      "source_obligation_ids": [
+        "obl-3278"
+      ],
+      "source_seed_ids": [
+        "seed-4392"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "Wizard / interview / worktree seams still expose the remaining high-risk lineage holes:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03751",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04806 is partial for The current wizard URL shape is useful, but it should stop standing alone as the only prec",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 2.1 Wizard State Shape"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04806"
+      ],
+      "source_obligation_ids": [
+        "obl-4583"
+      ],
+      "source_seed_ids": [
+        "seed-6547"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "The current wizard URL shape is useful, but it should stop standing alone as the only precise deep-link contract in the app."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03753",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04809 is partial for The existing wizard deep-link is a good precedent, but it should become one member of a no",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 13.2 Add Existing Project (no wizard)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04809"
+      ],
+      "source_obligation_ids": [
+        "obl-4586"
+      ],
+      "source_seed_ids": [
+        "seed-6550"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "The existing wizard deep-link is a good precedent, but it should become one member of a normalized transport family."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03818",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04877 is partial for must override to the wizard surface and the correct wizard/step context",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04877"
+      ],
+      "source_obligation_ids": [
+        "obl-4654"
+      ],
+      "source_seed_ids": [
+        "seed-6663"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "must override to the wizard surface and the correct wizard/step context"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04045",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05203 is partial for The concrete wizard deep-link format is defined, but there is still no owner doc that stat",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05203"
+      ],
+      "source_obligation_ids": [
+        "obl-4979"
+      ],
+      "source_seed_ids": [
+        "seed-7229"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "The concrete wizard deep-link format is defined, but there is still no owner doc that states what class of route data is allowed into serialized transport."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04936",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06358 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06358"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00220",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00247 is present for `Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00247"
+      ],
+      "source_obligation_ids": [
+        "obl-131"
+      ],
+      "source_seed_ids": [
+        "seed-136"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "`Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md`",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00998",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01281 is present for with `attention_required`",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 2. attention_required vs blocked"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01281"
+      ],
+      "source_obligation_ids": [
+        "obl-1138"
+      ],
+      "source_seed_ids": [
+        "seed-1350"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "exact_missing_items": [
+        "with `attention_required`",
+        "attention_required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01010",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01296 is present for `attention_required`",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 2. attention_required vs blocked"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01296"
+      ],
+      "source_obligation_ids": [
+        "obl-1153"
+      ],
+      "source_seed_ids": [
+        "seed-1369",
+        "seed-1374",
+        "seed-1842",
+        "seed-1939"
+      ],
+      "source_shard_ids": [
+        "shard-0022",
+        "shard-0027",
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "`attention_required`",
+        "attention_required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01904",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02440 is present for `attention_required` outranks advisory pressure/noise",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 2. attention_required vs blocked"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02440"
+      ],
+      "source_obligation_ids": [
+        "obl-2290"
+      ],
+      "source_seed_ids": [
+        "seed-2967"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "`attention_required` outranks advisory pressure/noise",
+        "attention_required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02057",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02621 is present for `resume_url` is carried in storage/events for wizard and thread blocked flows, but there i",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### Blocked clear rule"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02621"
+      ],
+      "source_obligation_ids": [
+        "obl-2469"
+      ],
+      "source_seed_ids": [
+        "seed-3227"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "`resume_url` is carried in storage/events for wizard and thread blocked flows, but there is no normalized rule for how equivalent non-wizard object routes are represented.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03041",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03900 is present for `Progression_Gates.md` contains duplicate addenda, unnumbered runtime/governance gate fami",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "## 15. Requirements Quality Escalation Semantics"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03900"
+      ],
+      "source_obligation_ids": [
+        "obl-3745"
+      ],
+      "source_seed_ids": [
+        "seed-5092"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "`Progression_Gates.md` contains duplicate addenda, unnumbered runtime/governance gate families, missing GATE-007 / GATE-008 placeholders, and a material collision where GATE-012 BLOCKED semantics collapse wizard `attention_required` and true wizard `blocked` escalation into the same gate state.",
+        "Progression_Gates.md",
+        "attention_required",
+        "blocked"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03259",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04185 is present for `validation_pass_report` contradictions are broader than one enum row because pass-level s",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 3.6 Plan/Deep Plan/TODO integration with wizard flow"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04185"
+      ],
+      "source_obligation_ids": [
+        "obl-4025"
+      ],
+      "source_seed_ids": [
+        "seed-5544"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "`validation_pass_report` contradictions are broader than one enum row because pass-level sweep sections still assume pass/fail-only semantics while downstream wizard flow requires `skipped`.",
+        "validation_pass_report",
+        "skipped"
+      ],
+      "stale_tokens": [
+        "skipped",
+        "validation_pass_report"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03272",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04199 is present for GATE-012 still collapses `attention_required` and true wizard `blocked` escalation into on",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "## 17. Assistant / Deep Plan Escalation into Chain Wizard (2026-03-08)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04199"
+      ],
+      "source_obligation_ids": [
+        "obl-4039"
+      ],
+      "source_seed_ids": [
+        "seed-5558"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "GATE-012 still collapses `attention_required` and true wizard `blocked` escalation into one evidence path.",
+        "attention_required",
+        "blocked"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03576",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04552 is present for `FinalGUISpec.md` wizard attention and blocked CtA cards are especially explicit: they alr",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 3. Dashboard / thread / resume behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04552"
+      ],
+      "source_obligation_ids": [
+        "obl-4330"
+      ],
+      "source_seed_ids": [
+        "seed-6093"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` wizard attention and blocked CtA cards are especially explicit: they already define concrete actions like `Resume Wizard` and `View in Thread`, but those actions still resolve through special-case fields rather than a shared navigation object.",
+        "FinalGUISpec.md",
+        "Resume Wizard",
+        "View in Thread"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04449",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05713 is present for the `wizard.blocked` minimum payload earlier in the file requires `resume_url`",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "## Canonical Wizard Blocked Lifecycle"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05713"
+      ],
+      "source_obligation_ids": [
+        "obl-5485"
+      ],
+      "source_seed_ids": [
+        "seed-8142"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "the `wizard.blocked` minimum payload earlier in the file requires `resume_url`",
+        "wizard.blocked",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05220",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06740 is present for `Plans/chain-wizard-flexibility.md`, `Plans/FinalGUISpec.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06740"
+      ],
+      "source_obligation_ids": [
+        "obl-6379"
+      ],
+      "source_seed_ids": [
+        "seed-9739"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "`Plans/chain-wizard-flexibility.md`, `Plans/FinalGUISpec.md`",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00190",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00208 is partial for what likely new model pressure is: package/seam overseers, package/seam/lane visibility, p",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### Requested vs effective visibility"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00208"
+      ],
+      "source_obligation_ids": [
+        "obl-104"
+      ],
+      "source_seed_ids": [
+        "seed-105"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "what likely new model pressure is: package/seam overseers, package/seam/lane visibility, promotion-class state, requested vs effective execution/account identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01401",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01794 is partial for `Resume Wizard`",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01794"
+      ],
+      "source_obligation_ids": [
+        "obl-1651"
+      ],
+      "source_seed_ids": [
+        "seed-2058",
+        "seed-6644",
+        "seed-6662"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "`Resume Wizard`",
+        "Resume Wizard"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01419",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01814 is partial for wizard blocked state",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "## Canonical Wizard Blocked Lifecycle"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01814"
+      ],
+      "source_obligation_ids": [
+        "obl-1671"
+      ],
+      "source_seed_ids": [
+        "seed-2086"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "wizard blocked state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03055",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03920 is partial for give startup recovery, backoff, counter ceilings, DAE/jail lifecycle, account-switch strat",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### Builder stages requiring explicit Persona strategy"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03920"
+      ],
+      "source_obligation_ids": [
+        "obl-3765"
+      ],
+      "source_seed_ids": [
+        "seed-5132"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "give startup recovery, backoff, counter ceilings, DAE/jail lifecycle, account-switch strategy invalidation, and wizard blocked-escalation semantics explicit homes in the policy/run-mode/gate docs rather than leaving them implied across addenda."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03205",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04124 is partial for wizard resume via `wizard_id + step`",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04124"
+      ],
+      "source_obligation_ids": [
+        "obl-3964"
+      ],
+      "source_seed_ids": [
+        "seed-5428"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "wizard resume via `wizard_id + step`",
+        "wizard_id + step"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03536",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04504 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04504"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03638",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04644 is partial for `object_kind = wizard`",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04644"
+      ],
+      "source_obligation_ids": [
+        "obl-4422"
+      ],
+      "source_seed_ids": [
+        "seed-6258",
+        "seed-6378",
+        "seed-7360",
+        "seed-7496"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0069",
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`object_kind = wizard`",
+        "object_kind = wizard"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03742",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04790 is partial for `puppet-master://wizard/<wizard_id>/step/<wizard_step_id>/clarify`",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04790"
+      ],
+      "source_obligation_ids": [
+        "obl-4567"
+      ],
+      "source_seed_ids": [
+        "seed-6521"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "`puppet-master://wizard/<wizard_id>/step/<wizard_step_id>/clarify`",
+        "puppet-master://wizard/<wizard_id>/step/<wizard_step_id>/clarify"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04261",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05474 is partial for The routing model now has a clear owner chain.",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05474"
+      ],
+      "source_obligation_ids": [
+        "obl-5246"
+      ],
+      "source_seed_ids": [
+        "seed-7794"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "The routing model now has a clear owner chain."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04262",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05475 is partial for Reconciliation should follow that owner chain or it will fragment again.",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05475"
+      ],
+      "source_obligation_ids": [
+        "obl-5247"
+      ],
+      "source_seed_ids": [
+        "seed-7795"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "Reconciliation should follow that owner chain or it will fragment again."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

@@ -1,10 +1,225 @@
 # Worktree & Git Improvement -- Implementation Plan
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+  - worktree behavior
+  - Worktree / SCM / Parallelism Impacts
+  - Cleanup Priorities
+  - Suggested Research Follow-Ups
+
+#### Source target target-0540
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+  - worktree behavior
+  - Worktree / SCM / Parallelism Impacts
+  - Cleanup Priorities
+  - Suggested Research Follow-Ups
+- Exact required items represented:
+  - how are worktrees assigned for parallel nodes within the same package or seam
+  - what happens to worktree ownership during remediation, corroboration, or graph-patch-triggered work
+  - for package-based worktree pools, whether downstream dependent nodes reuse the same worktree lane or start a fresh lane from the promoted upstream result
+  - preserve same-lane continuation by default; promote-then-fork only when it materially improves safe parallelism
+  - Define lane↔worktree mapping
+  - Specify [retired-token-14] detection and cross-lane reuse rules
+  - Define [retired-token-11] restore for lane/package context
+  - Resolve [retired-token-4] vs [retired-token-3] contradiction
+  - Register PM-managed worktrees in source control visibility
+  - Remove legacy `[retired-token-9]` / `[retired-token-10]` drift and [retired-token-15].
+  - Normalize [retired-token-11] / [retired-token-12] / [retired-token-13] / [retired-token-14] terminology into one authoritative mapping and event taxonomy.
+  - Decide which objects are persisted canonically (`package`, `seam`, `lane`, `promotion`, `review`, `resolution_thread`) and which are projections only.
+  - Unify requested vs effective execution identity to include account, lane/worktree, and overseer class.
+  - Specify package-based worktree lane pools, including lane ownership, pool sizing, [retired-token-14] detection, [retired-token-11] restore behavior, and Source Control visibility.
+  - Worktree / SCM / Parallelism Impacts
+  - why it matters: current SCM ownership is tier- and branch-based, which collides with package-lane worktree pools.
+  - ownership is still described as run/tier/subtask worktree ownership
+  - Worktree plan cleanup = removing worktree directories after merge/completion
+  - `removed` means the live worktree directory is gone
+  - removed
+  - open worktree
+  - prune/remove worktree
+  - historical run/package/node/lane references MUST survive after live worktree cleanup
+  - still references `Tiers` and per-tier worktree ownership.
+  - Tiers
+  - has `worktree_id` and historical receipt linkage, but likely needs lane/package/seam linkage added so worktree records do not remain stranded as flat Git objects.
+  - worktree_id
+  - `worktree filesystem state`
+  - worktree filesystem state
+  - cleanup of files inside a worktree is not the same thing as removing the worktree itself.
+  - worktree health/state badges
+  - keep worktree references contextual, actionable, and deep-linkable
+  - backing worktree may be removed
+  - `Worktree Removed`
+  - Worktree Removed
+  - removing a worktree directory
+  - remove/prune/archive worktree
+  - whether the backing worktree will be removed
+  - Bulk worktree cleanup/archive/remove should remain preview-heavy and explicit.
+  - live worktree existence
+  - worktree = concrete Git/filesystem backing object
+  - Recommended worktree row posture:
+  - explicit destructive removal of live worktree backing after confirmation and eligibility checks
+  - remove on a worktree with blocked/recovery lineage may approach `hard_gate`
+  - hard_gate
+  - worktree archived vs removed are distinct
+  - `GitHub_Integration.md` still frames worktree ownership around `run/tier`
+  - GitHub_Integration.md
+  - run/tier
+  - Workflow entry and worktree rules are no longer globally uniform:
+  - Source Control emphasizes worktree as concrete Git object
+  - still missing core persistence/acceptance sections and still under-specifies historical mode, worktree partitioning, and precise usage/deep-link behavior
+  - Lane-aware scheduling still does not flow into worktree and active-agent tracking.
+  - Worktree blocked reasons and historical lineage preservation still lack a single clear owner/emitter model.
+  - `WorktreeGitImprovement.md` now has a sharper ownership split: `worktree_id` is first-class in `storage-plan.md` and `GitHub_Integration.md`, while the worktree plan still centers `tier_id`/filesystem path; it also still splits `base_branch` ownership across run config vs Git panel state and still returns raw git-hook errors instead of canonical blocked episodes.
+  - WorktreeGitImprovement.md
+  - storage-plan.md
+  - tier_id
+  - base_branch
+  - durable worktree lineage, base-branch authority, and canonical blocked emitters remain unresolved.
+  - durable worktree identity / filesystem / git backing
+  - current lifecycle/status projection for the worktree
+  - active worktree refs
+  - historical worktree refs
+  - `selected_worktree_id?` in project UI state is not a substitute for a durable worktree record family.
+  - selected_worktree_id?
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - worktree detail:
+  - `object_kind = worktree`
+  - object_kind = worktree
+  - consume worktree object routing rather than inventing a separate SCM-local navigation identity
+  - Reclassify worktree selection and open-in-SCM flows as object navigation, not pure layout state.
+  - Research Progress - 2026-03-17 - Worktree and SCM routing consumers
+  - historical runs must preserve historical worktree references after prune/remove
+  - Replace tier-bound worktree identity in SCM/runtime flows with the newer lane/worktree plus execution-context model.
+  - reclassify worktree selection and thread Usage focus/open as navigation wrappers
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - still mirrors worktree ownership through `tier_id`
+  - Git/worktree sections still use `tier_id` as worktree ownership glue
+  - summary: Re-audited the already-condensed blocker bundle in smaller target passes and found one more precision improvement: assistant-chat blocked-state headings are real, so that blocker is now more clearly a skeletal consumer-payload problem rather than a missing-section problem.
+  - `[retired-token-24]` sharpened: the broken `[retired-token-21]` reference survives not only in `[retired-token-20]` but also in `[retired-token-23]` and `[retired-token-22]`, while `[retired-token-19]` still preserves the `[retired-token-25]` contradiction.
+  - [retired-token-24]
+  - [retired-token-21]
+  - [retired-token-20]
+  - [retired-token-23]
+  - [retired-token-22]
+  - [retired-token-19]
+  - [retired-token-25]
+  - `[retired-token-22]:704-708`
+  - [retired-token-22]:704-708
+  - This invocation kept the blocker-family count at eight, raised the affected-doc count to twenty by pulling `[retired-token-22]` into the unresolved blocker set, and raised the underlying evidence count to fifty-four.
+  - `[retired-token-31]` sharpened: `[retired-token-27]` still points at the missing `[retired-token-23]#[retired-token-26]` anchor, and both `[retired-token-28]` and `[retired-token-22]` still point at the missing `[retired-token-23]#Restart and stale history` anchor in addition to the already-carried missing `[retired-token-26]` heading.
+  - [retired-token-31]
+  - [retired-token-27]
+  - [retired-token-23]#[retired-token-26]
+  - [retired-token-28]
+  - [retired-token-23]#Restart and stale history
+  - [retired-token-26]
+  - `[retired-token-22]:134-150`
+  - [retired-token-22]:134-150
+  - `[retired-token-22]:142-144`
+  - [retired-token-22]:142-144
+  - `cov-526` / `obl-222` remains unresolved because the ledger requires a concrete worktree allocation strategy (per node, per package, per seam, or remediation branch) plus [retired-token-14]/reuse/cleanup rules, but the live docs still stop short of that owner section: `Plans/Crosswalk.md:88-94` assigns lane/worktree ownership boundaries, `[retired-token-22]:62-66` and `[retired-token-22]:78-80` retain the worktree plan without defining allocation strategy, and `Plans/orchestrator-subagent-integration.md:28-41` plus later authority wording require identity alignment without specifying how lanes/worktrees are allocated. Exact ledger evidence remains at `working_ledger.md:L806`, `working_ledger.md:L1036`, `working_ledger.md:L1289`, and `working_ledger.md:L1539`.
+  - cov-526
+  - obl-222
+  - Plans/Crosswalk.md:88-94
+  - [retired-token-22]:62-66
+  - [retired-token-22]:78-80
+  - Plans/orchestrator-subagent-integration.md:28-41
+  - working_ledger.md:L806
+  - working_ledger.md:L1036
+  - `[retired-token-22]:62-66`
+  - `[retired-token-22]:78-80`
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #14 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #15 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #16 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #17 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #18 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #19 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #20 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #21 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #22 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #23 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #24 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #25 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #26 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #27 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #28 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #29 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #30 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #31 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 ## Fidelity recovery addendum
 
 This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
 
 ### Fidelity recovery cov-041: Source Control and worktree handshake
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0548
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Worktree visibility is only partially wired between Source Control and Orchestrator.** Several docs acknowledge shared visibility, yet status models still stop at repo/worktree/branch/tier rather than package/lane ownership, contamination, restore eligibility, or promotion posture.
+  - Research Progress - 2026-03-16 - Source Control / Worktree Handshake
+  - Reword Source Control worktree rows from `owner run/tier` to something like:
+  - owner run/tier
+  - Source Control worktree rows remain concrete and filesystem/Git oriented, but must show enough orchestration metadata to prevent isolation drift:
+  - Source Control / worktree implication
+  - no unresolved blocked recovery requiring that exact worktree
+  - Because Source Control is narrow, it should default to compact current/live worktree rows with filters/toggles for:
+  - safe-point and blocked recovery lineage can keep an old worktree relevant even after supersession
+  - Orchestrator-owned worktree partitioning still exists only as row metadata (`owner run/tier`) in Source Control docs, not as a canonical grouping/partition contract
+  - Move worktree docs onto node/lane-aware vocabulary and define projection authority between Source Control and Orchestrator receipt lineage.
+  - Move worktree ownership to lane/worktree plus canonical run/node/attempt references, with Source Control remaining worktree-first at the UI level and Orchestrator remaining lane/package/seam/node-first operationally.
+  - Source Control / worktree docs still describe boundary ownership in prose only; they still do not anchor one shared projection object or route payload that other surfaces can rely on.
+  - Source Control and worktree docs still lack one durable object family for worktree ownership, restart authority, and historical lineage preservation.
+  - Normalize Source Control worktree selection through `object_kind = worktree`.
+  - object_kind = worktree
+  - Source Control worktree selection is still described as UI state only even though worktree identity is now a first-class routed object in the broader model.
+  - Keep Source Control worktree-first, but route by canonical worktree object identity rather than treating worktree selection as shell state or tier metadata.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-041
 - Fidelity gap refs: cov-041
 - Required fidelity items:
@@ -17,6 +232,39 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-041` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
 
 ### Fidelity recovery cov-059: Lane vs worktree lifecycle split
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0549
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Why it matters: worktree lifecycle, visibility, and conflict recovery cannot be coherent if both models remain canonical.
+  - 5. **Specify package-based worktree lane pools end-to-end.**
+  - what likely new model pressure is: scored ready-set scheduling, lane pools, package/seam governance split, contamination and safe-point-aware recovery.
+  - likely issue: worktree ownership is still tier/subtask-native and does not support package-based lane pools or contamination quarantine.
+  - a lane may preserve historical identity after the live worktree has been cleaned up, archived, or removed.
+  - archive lane worktree
+  - lane / worktree
+  - recreate a pruned worktree lane only via new runtime action, not true undo
+  - Research Progress - 2026-03-16 - Lane / Worktree Cleanup Lifecycle
+  - a lane may remain historically important after its live worktree is archived or removed
+  - a live worktree may be operationally suspect even while the lane remains active in orchestration terms
+  - Orchestrator should continue to present the lane state and show worktree status in context.
+  - Define distinct lane and worktree lifecycle states, with explicit mapping but no forced identity collapse.
+  - Worktree lane binding and historical lineage preservation are now correctness requirements, not nice-to-have source-control polish.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-059
 - Fidelity gap refs: cov-059
 - Required fidelity items:
@@ -27,6 +275,26 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-059` repair is in the owner section for `Plans/WorktreeGitImprovement.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-076: Historical semantic consistency
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0550
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - restore attempts and recovery episodes need current vs historical semantics
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-076
 - Fidelity gap refs: cov-076
 - Required fidelity items:
@@ -145,6 +413,26 @@ The orchestrator reads **PuppetMasterConfig** from `ConfigManager::discover()` (
 
 ### GUI updates needed
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0551
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - This should stay short and deep-link into Usage/Authentication/Orchestrator as needed.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 **Yes.** All Git/worktree-relevant settings must be visible and wired. Required: Branching tab (Enable Git, Auto PR, Branch strategy, optional Use worktrees/Parallel note); optional worktree list and "Recover orphaned worktrees" (placement: **Health** tab per FinalGUISpec); Git info for **active project**; tooltip cleanup. See [Section 4](#4-gui-for-git--worktrees) and Phase 4 checklist. Align with FinalGUISpec §7.4 (Branching and Health) and MiscPlan §7.5 (project path, Option B, cleanup ownership).
 
 ### Readiness for implementation
@@ -160,6 +448,31 @@ The plan is **ready to implement** with the following in mind:
 ## 2. Worktree Improvements
 
 ### 2.0 Symlink resolution in worktree paths
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0543
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Align worktree docs around `worktree_id` as durable identity and `lane_id` as operational lineage, rather than continuing to let tier IDs or raw paths carry canonical meaning.
+  - worktree_id
+  - lane_id
+  - open-by-identity routing now clearly needs richer envelopes (safe point/worktree/baseline/artifact refs), not scalar IDs or plain paths.
+  - worktree paths and branches keyed by `tier_id`
+  - tier_id
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Worktree path resolution MUST apply the fail-closed symlink policy from `Plans/Permissions_System.md` §1.1 and `Plans/Architecture_Invariants.md` INV-017.
 
@@ -190,6 +503,32 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 
 ### 2.3 Merge conflicts: worktree kept but re-run can destroy it
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0544
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - what old assumption is present: `tier_id` / subtask worktree ownership, branch-per-tier flow, merge fallback posture, parallel subtasks as primary parallelism model.
+  - tier_id
+  - Evidence items can be exported
+  - These can be linked, but should not be collapsed into one object model.
+  - `cmd.source_control.select_worktree` still claims `layout/UI state only`, which conflicts with object-first routing and worktree identity
+  - cmd.source_control.select_worktree
+  - layout/UI state only
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 - **Gap:** On merge conflict, `cleanup_subtask_worktree` returns without removing the worktree but removes the node from `active_worktrees`. Re-running the same subtask calls `create_subtask_worktree` → `create_worktree` → "if path exists remove_worktree", so the conflicting worktree is removed and the conflict state is lost.
 - **Fix:**
   - On conflict, either: (1) surface the worktree path to the user (e.g. toast or status) and avoid reusing that node_id for a new worktree until the user resolves or discards, or (2) document clearly that re-running will replace the worktree and lose unmerged state.
@@ -204,6 +543,48 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 
 ### 2.5 Branch already exists when recreating worktree
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0545
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `source_control.project_state.{project_id}` already has `selected_worktree_id?`
+  - source_control.project_state.{project_id}
+  - selected_worktree_id?
+  - `requested_account_policy` exists
+  - requested_account_policy
+  - `effective_account_id` exists
+  - effective_account_id
+  - canonical docs already model `requested_account_policy`
+  - canonical docs already model `effective_account_id`
+  - `trust_tier` already exists in preview/browser state
+  - trust_tier
+  - `usage_record` already carries `attempt_id?`
+  - usage_record
+  - attempt_id?
+  - `attempt_record` already has `provider_attempt_ref?`
+  - attempt_record
+  - provider_attempt_ref?
+  - This is now mostly an owner-doc problem, not a conceptual one; the identity vocabulary already exists in scattered places.
+  - `object_id` should use the canonical domain identity already present in the docs:
+  - object_id
+  - Owner docs already implicated:
+  - owner docs already contain stronger rewrite-era addenda
+  - The doc is already ahead on identity in some places:
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 - **Gap:** If the branch (e.g. `subtask/ST-001-001-001`) already exists (e.g. after incomplete cleanup), `git worktree add -b <branch> <path>` fails with "fatal: A branch named '...' already exists."
 - **Fix:**
   - Before `worktree add -b`, check if the branch exists (e.g. `git rev-parse --verify refs/heads/<branch>`). If it exists, use `git worktree add <path> <branch>` (no `-b`) to create the worktree from the existing branch, or explicitly delete the branch if it is safe (e.g. no other worktree uses it).
@@ -214,6 +595,28 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 - **Fix:** When parsing porcelain output, treat missing branch as "detached". In `merge_worktree`, if source_branch is empty, skip merge or merge by commit hash and document behavior.
 
 ### 2.8 Lane/worktree lifecycle, storage families, and historical vocabulary
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0546
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Recommended lane/worktree lifecycle vocabulary:
+  - Some families clearly need local lifecycle terms, and the docs do not yet sharply separate “cross-family historical overlays” from “family-local workflow states.”
+  - still cannot support durable historical worktree lineage or multi-identity SCM audit without new record families.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 #### Lane and worktree lifecycle
 - Lanes own worktrees through explicit allocation and handshake.
@@ -705,6 +1108,33 @@ Worktree/branch status surfaces should be able to explain whether a pending retr
 - Worktree-oriented status surfaces can explain retry posture.
 ## Safe Point / Worktree Recovery Alignment Addendum (2026-03-09)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0542
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Retry from Safe Point`
+  - Retry from Safe Point
+  - attempt to restore or reconcile a suspect/orphaned/conflicted worktree into a safe known state
+  - `retry from safe point` vs `start fresh attempt`
+  - retry from safe point
+  - start fresh attempt
+  - `safe point vs restore point`
+  - safe point vs restore point
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 Worktree-native isolation remains canonical, but runtime recovery must integrate with it.
 
 ### Required rules
@@ -713,6 +1143,30 @@ Worktree-native isolation remains canonical, but runtime recovery must integrate
 - merge/conflict or dirty-state detection may block resume and must surface an explicit reason rather than silently reusing a changed worktree
 - worktree isolation does not replace runtime blocked classification; it complements it
 ## Runtime Worktree Conflict Reconciliation Addendum (2026-03-09)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0541
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - newer model: scored ready set, `scheduler_lane`, `replan_generation`, runnable-unit fields like `attempt_id`, blocked reason codes, worktree conflict classification
+  - scheduler_lane
+  - replan_generation
+  - attempt_id
+  - worktree conflict / dirty-worktree block
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 This addendum is retained as historical context only.
 

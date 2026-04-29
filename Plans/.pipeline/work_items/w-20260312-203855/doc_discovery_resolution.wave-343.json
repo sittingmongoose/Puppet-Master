@@ -1,0 +1,110 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-343",
+  "group_ids": [
+    "discgrp-1369",
+    "discgrp-1370",
+    "discgrp-1371",
+    "discgrp-1372"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01620",
+      "source_obligation_ids": [
+        "obl-1477"
+      ],
+      "source_seed_ids": [
+        "seed-1829"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-033: Concern linkage to adjacent families",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L83"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01621",
+      "source_obligation_ids": [
+        "obl-1478"
+      ],
+      "source_seed_ids": [
+        "seed-1830"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "### 4.6 Call sites: Orchestrator, Interview, Start chain, and Conversation",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L226"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01622",
+      "source_obligation_ids": [
+        "obl-1479"
+      ],
+      "source_seed_ids": [
+        "seed-1831",
+        "seed-4352",
+        "seed-5160",
+        "seed-6089",
+        "seed-6324",
+        "seed-7018",
+        "seed-7071",
+        "seed-7078",
+        "seed-7267",
+        "seed-8169"
+      ],
+      "source_shard_ids": [
+        "shard-0027",
+        "shard-0047",
+        "shard-0052",
+        "shard-0059",
+        "shard-0061",
+        "shard-0067",
+        "shard-0069",
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01623",
+      "source_obligation_ids": [
+        "obl-1480"
+      ],
+      "source_seed_ids": [
+        "seed-1832"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-356",
+  "group_ids": [
+    "discgrp-1421",
+    "discgrp-1422",
+    "discgrp-1423",
+    "discgrp-1424"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01673",
+      "source_obligation_ids": [
+        "obl-1530"
+      ],
+      "source_seed_ids": [
+        "seed-1907"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-011 -- UI command dispatch only (Rule 1)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L108"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01674",
+      "source_obligation_ids": [
+        "obl-1531"
+      ],
+      "source_seed_ids": [
+        "seed-1908"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Progression_Gates.md",
+      "new_heading_hint": "### Gate rule clarification: canonical blocked-payload field name",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Progression_Gates.md:L538"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01675",
+      "source_obligation_ids": [
+        "obl-1532"
+      ],
+      "source_seed_ids": [
+        "seed-1909"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-018: Export taxonomy and manifest contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L31"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01676",
+      "source_obligation_ids": [
+        "obl-1533"
+      ],
+      "source_seed_ids": [
+        "seed-1910"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-093: Account switch and pressure history",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L221"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

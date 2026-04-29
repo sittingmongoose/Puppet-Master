@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-923",
+  "group_ids": [
+    "discgrp-3689",
+    "discgrp-3690",
+    "discgrp-3691",
+    "discgrp-3692"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03987",
+      "source_obligation_ids": [
+        "obl-3831"
+      ],
+      "source_seed_ids": [
+        "seed-5247"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "# Runtime Artifacts Panel \u2014 SSOT",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03988",
+      "source_obligation_ids": [
+        "obl-3832"
+      ],
+      "source_seed_ids": [
+        "seed-5251"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "# Runtime Artifacts Panel \u2014 SSOT",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03989",
+      "source_obligation_ids": [
+        "obl-3833"
+      ],
+      "source_seed_ids": [
+        "seed-5252"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "# Adding Tool Support -- Research & Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Tools.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03990",
+      "source_obligation_ids": [
+        "obl-3834"
+      ],
+      "source_seed_ids": [
+        "seed-5257"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1409"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

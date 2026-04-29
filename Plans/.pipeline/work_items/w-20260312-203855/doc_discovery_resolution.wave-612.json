@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-612",
+  "group_ids": [
+    "discgrp-2445",
+    "discgrp-2446",
+    "discgrp-2447",
+    "discgrp-2448"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02723",
+      "source_obligation_ids": [
+        "obl-2570"
+      ],
+      "source_seed_ids": [
+        "seed-3372"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1409"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02724",
+      "source_obligation_ids": [
+        "obl-2571"
+      ],
+      "source_seed_ids": [
+        "seed-3373"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "#### `remediation.resolved`",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1262"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02725",
+      "source_obligation_ids": [
+        "obl-2572"
+      ],
+      "source_seed_ids": [
+        "seed-3374"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-086: Requested concrete-account fields",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L145"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02726",
+      "source_obligation_ids": [
+        "obl-2573"
+      ],
+      "source_seed_ids": [
+        "seed-3375"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "## 6. Ambiguity vs. Missing User Intent",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L153"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

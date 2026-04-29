@@ -1,736 +1,708 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-075",
-  "timestamp_utc": "2026-04-28T21:57:34Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-297",
-    "coverage-rowgrp-298",
-    "coverage-rowgrp-299",
-    "coverage-rowgrp-300"
+  "row_group_ids": [
+    "rowgrp-0297",
+    "rowgrp-0298",
+    "rowgrp-0299",
+    "rowgrp-0300"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-297 cov-127,cov-235,cov-248,cov-281,cov-409,cov-476,cov-498,cov-514,cov-593,cov-644 Plans/storage-plan.md",
-    "rowgrp-298 cov-711,cov-775,cov-983,cov-1038,cov-1159,cov-1211,cov-1254 Plans/storage-plan.md",
-    "rowgrp-299 cov-013,cov-266,cov-523,cov-581,cov-908,cov-1186 Plans/storage-plan.md",
-    "rowgrp-300 cov-046,cov-062,cov-104,cov-220,cov-321,cov-325,cov-340,cov-344,cov-479,cov-556 Plans/storage-plan.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-297": "completed_reduced_conservatively_with_action_and_evidence_normalization",
-    "coverage-rowgrp-298": "completed_reduced_conservatively_with_action_and_path_normalization",
-    "coverage-rowgrp-299": "completed_reduced_conservatively_with_action_and_path_normalization",
-    "coverage-rowgrp-300": "completed_reduced_conservatively_with_action_and_path_normalization"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-127",
-    "cov-235",
-    "cov-248",
-    "cov-281",
-    "cov-409",
-    "cov-476",
-    "cov-498",
-    "cov-514",
-    "cov-593",
-    "cov-644",
-    "cov-711",
-    "cov-775",
-    "cov-983",
-    "cov-1038",
-    "cov-1159",
-    "cov-1211",
-    "cov-1254",
-    "cov-013",
-    "cov-266",
-    "cov-523",
-    "cov-581",
-    "cov-908",
-    "cov-1186",
-    "cov-046",
-    "cov-062",
-    "cov-104",
-    "cov-220",
-    "cov-321",
-    "cov-325",
-    "cov-340",
-    "cov-344",
-    "cov-479",
-    "cov-556"
-  ],
-  "coverage_ids_completed": [
-    "cov-127",
-    "cov-235",
-    "cov-248",
-    "cov-281",
-    "cov-409",
-    "cov-476",
-    "cov-498",
-    "cov-514",
-    "cov-593",
-    "cov-644",
-    "cov-711",
-    "cov-775",
-    "cov-983",
-    "cov-1038",
-    "cov-1159",
-    "cov-1211",
-    "cov-1254",
-    "cov-013",
-    "cov-266",
-    "cov-523",
-    "cov-581",
-    "cov-908",
-    "cov-1186",
-    "cov-046",
-    "cov-062",
-    "cov-104",
-    "cov-220",
-    "cov-321",
-    "cov-325",
-    "cov-340",
-    "cov-344",
-    "cov-479",
-    "cov-556"
-  ],
-  "path_groups_assigned": [
-    "Plans/storage-plan.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-127",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:221-226 cross-references assistant-chat-design.md, FinalGUISpec.md, and Contracts_V0.md",
-        "Plans/storage-plan.md:287-299 defines storage path layout and project-root artifact paths"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Related cross-references and storage path layout exist, but exact consumer doc-set and stale scope-token coverage is incomplete.",
+      "coverage_id": "cov-05588",
       "source_obligation_ids": [
-        "obl-036"
+        "obl-5360"
       ],
       "source_seed_ids": [
-        "seed-036"
-      ],
-      "source_shard_ids": [
-        "shard-0008"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-235",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Plans/storage-plan.md does not directly define unified object-first Orchestrator search, global object search versus tab-local filtering, or run-aware cross-tab routing.",
-      "source_obligation_ids": [
-        "obl-065"
-      ],
-      "source_seed_ids": [
-        "seed-065"
-      ],
-      "source_shard_ids": [
-        "shard-0014"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-248",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:1638-1642 keeps historical, archived, and removed distinct and historically inspectable"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Historical vocabulary is present, but attempts/stale_historical/superseded remediation-generation coverage is incomplete.",
-      "source_obligation_ids": [
-        "obl-069"
-      ],
-      "source_seed_ids": [
-        "seed-069"
-      ],
-      "source_shard_ids": [
-        "shard-0015"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-281",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:594-597 stores active_run_id, focused_run_id, and focus_mode live/historical so live dashboards, historical inspectors, and restart rehydration resolve the same focused run"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Historical inspector/focused-run state exists, but frozen requested/effective state plus reason/source snapshot refs are incomplete.",
-      "source_obligation_ids": [
-        "obl-081"
-      ],
-      "source_seed_ids": [
-        "seed-081"
-      ],
-      "source_shard_ids": [
-        "shard-0019"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-409",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:1638-1642 keeps historical, archived, and removed distinct and historically inspectable"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Historical/archive/remove distinction exists, but current vs historical, superseded vs revoked, and ledger-inspector/search-filter semantics are incomplete.",
-      "source_obligation_ids": [
-        "obl-121"
-      ],
-      "source_seed_ids": [
-        "seed-121"
-      ],
-      "source_shard_ids": [
-        "shard-0030"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-476",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:181-185 defines attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge",
-        "Plans/storage-plan.md:1248-1250 says activity transparency payloads carry canonical runtime bridge fields and receipt refs across audit, artifacts, and usage surfaces"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Runtime bridge fields exist, but shared-runtime snapshots, account declarations, switch history, session cache, and reject cascade semantics are incomplete.",
-      "source_obligation_ids": [
-        "obl-139"
-      ],
-      "source_seed_ids": [
-        "seed-139"
-      ],
-      "source_shard_ids": [
-        "shard-0035"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-498",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:181-185 defines usage_event_ref as the usage bridge",
-        "Plans/storage-plan.md:1248-1250 says activity transparency payloads carry canonical runtime bridge fields and receipt refs across audit, artifacts, and usage surfaces"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "usage_event_ref exists, but cross-surface receipt schema requirements and structured locator semantics are incomplete.",
-      "source_obligation_ids": [
-        "obl-144"
-      ],
-      "source_seed_ids": [
-        "seed-144"
-      ],
-      "source_shard_ids": [
-        "shard-0036"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-514",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:1178-1186 says permission snapshots and usage surfaces preserve effective_account_id and execution_role",
-        "Plans/storage-plan.md:1260-1263 defines execution_role, effective_account_id, and operational_identity in activity payloads"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "execution_role and identity fields exist, but actor_kind and actor-scoped refs are incomplete.",
-      "source_obligation_ids": [
-        "obl-148"
-      ],
-      "source_seed_ids": [
-        "seed-148"
-      ],
-      "source_shard_ids": [
-        "shard-0037"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-593",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:1178-1186 preserves effective_account_id and execution_role in permission snapshots and usage surfaces"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Account identity is preserved, but account_switch_reason history-family model is not directly covered.",
-      "source_obligation_ids": [
-        "obl-167"
-      ],
-      "source_seed_ids": [
-        "seed-167"
-      ],
-      "source_shard_ids": [
-        "shard-0042"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-644",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:732-733 defines blocked_projection with blocked_reason_code, blocked_at, blocked_family, approval_scope_key, and allowed_action_ids",
-        "Plans/storage-plan.md:611 says TierContext/tier_id decomposition is compatibility-only metadata and must not own runtime canon/storage keys/join identity"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Blocked projection and tier_id deprecation exist, but HITL event payload and checkpoint safety details are incomplete.",
-      "source_obligation_ids": [
-        "obl-181"
-      ],
-      "source_seed_ids": [
-        "seed-181"
-      ],
-      "source_shard_ids": [
-        "shard-0045"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-711",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:1517 references extended event types including HITL and run tier/iteration/verification",
-        "Plans/storage-plan.md:732 defines blocked_projection with blocked_reason_code, blocked_family, approval_scope_key, and allowed_action_ids",
-        "Plans/storage-plan.md:1553-1554 says blocked_projection.{run_id}.{node_id}.{blocked_sequence} is superseded by canonical blocked_projection.v1:{project_id}:{node_id}"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "HITL and blocked projection coverage exists, but allowed_actions/request_id/startup_recovered contract recast is incomplete.",
-      "source_obligation_ids": [
-        "obl-196"
-      ],
-      "source_seed_ids": [
-        "seed-196"
-      ],
-      "source_shard_ids": [
-        "shard-0049"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-775",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:619-620 lets Contracts_V0 own canonical route_target and OpenSubject contracts"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "OpenSubject ownership is referenced, but OpenArtifact/artifact_id runtime/evidence lineage and OpenFile split are incomplete.",
-      "source_obligation_ids": [
-        "obl-214"
-      ],
-      "source_seed_ids": [
-        "seed-214"
-      ],
-      "source_shard_ids": [
-        "shard-0054"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-983",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:619 lets Contracts_V0 own canonical route_target and OpenSubject contracts",
-        "Plans/storage-plan.md:714-717 defines mcp_runtime_availability key with runtime_subject_id"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Subject/open contract references exist, but subject_id family and object_kind/object_id mapping are incomplete.",
-      "source_obligation_ids": [
-        "obl-274"
-      ],
-      "source_seed_ids": [
-        "seed-274"
-      ],
-      "source_shard_ids": [
-        "shard-0069"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1038",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:619-620 lets Contracts_V0 own canonical route_target and OpenSubject contracts"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Route/open owner split is referenced, but preview_subject_id, resume_url, and FileManager OpenFile ownership are incomplete.",
-      "source_obligation_ids": [
-        "obl-291"
-      ],
-      "source_seed_ids": [
-        "seed-291"
+        "seed-7964"
       ],
       "source_shard_ids": [
         "shard-0074"
       ],
-      "path_field_status": "match"
+      "canon_label": "Put the primitive boundary declaration for route-target and subject-open navigation in `Pl",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Put the primitive boundary declaration for route-target and subject-open navigation in `Plans/Crosswalk.md`.",
+        "Plans/Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-1159",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:611 says TierContext/tier_id decomposition is compatibility-only and not runtime/storage/join identity",
-        "Plans/storage-plan.md:560-573 defines provider_attempt_ref, usage_event_ref, and receipt refs as bridge fields"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "tier_id deprecation and usage_event_ref exist, but run/node/attempt usage correlation contract is incomplete.",
+      "coverage_id": "cov-05593",
       "source_obligation_ids": [
-        "obl-337"
+        "obl-5365"
       ],
       "source_seed_ids": [
-        "seed-337"
+        "seed-7969"
       ],
       "source_shard_ids": [
-        "shard-0085"
+        "shard-0074"
       ],
-      "path_field_status": "match"
+      "canon_label": "`storage-plan.md` is ahead of `Contracts_V0.md` and `Crosswalk.md` on this seam.",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`storage-plan.md` is ahead of `Contracts_V0.md` and `Crosswalk.md` on this seam.",
+        "storage-plan.md",
+        "Contracts_V0.md",
+        "Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29",
+        "Plans/Crosswalk.md:L31"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-1211",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:181-185 defines attempt_id, provider_attempt_ref, usage_event_ref, and receipt refs as bridge anchors",
-        "Plans/storage-plan.md:911-936 includes blocked_sequence and usage_event_ref in required identity/attribution fields"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Bridge anchors exist, but precedence, fallback compatibility, and route/open primitive fields are incomplete.",
+      "coverage_id": "cov-05599",
       "source_obligation_ids": [
-        "obl-345"
+        "obl-5371"
       ],
       "source_seed_ids": [
-        "seed-345"
+        "seed-7977"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "`Plans/Crosswalk.md` still lacks the matching primitive-boundary declaration for route-tar",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Crosswalk.md` still lacks the matching primitive-boundary declaration for route-target and subject-open navigation.",
+        "Plans/Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05618",
+      "source_obligation_ids": [
+        "obl-5390"
+      ],
+      "source_seed_ids": [
+        "seed-8010"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "`Plans/Crosswalk.md` already has the adjacent primitive owners that expose the gap:",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Crosswalk.md` already has the adjacent primitive owners that expose the gap:",
+        "Plans/Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05634",
+      "source_obligation_ids": [
+        "obl-5406"
+      ],
+      "source_seed_ids": [
+        "seed-8031"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "In `Plans/Crosswalk.md`:",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "In `Plans/Crosswalk.md`:",
+        "Plans/Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05696",
+      "source_obligation_ids": [
+        "obl-5468"
+      ],
+      "source_seed_ids": [
+        "seed-8116"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "`3.14` is used for both `OrchestratorPage` and `TargetedRevisionPass`",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.15 TargetedRevisionPass",
+      "status": "present",
+      "exact_items": [
+        "`3.14` is used for both `OrchestratorPage` and `TargetedRevisionPass`",
+        "3.14",
+        "OrchestratorPage",
+        "TargetedRevisionPass"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L237",
+        "Plans/Crosswalk.md:L258",
+        "Plans/Crosswalk.md:L267",
+        "Plans/Crosswalk.md:L287"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05706",
+      "source_obligation_ids": [
+        "obl-5478"
+      ],
+      "source_seed_ids": [
+        "seed-8130"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "Repair `Crosswalk.md` numbering before using it as the owner boundary doc for route/open p",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "Repair `Crosswalk.md` numbering before using it as the owner boundary doc for route/open primitives.",
+        "Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05745",
+      "source_obligation_ids": [
+        "obl-5517"
+      ],
+      "source_seed_ids": [
+        "seed-8195"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "`resume_url` is currently the only ref field trying to carry actual navigation, which is w",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Route target navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "`resume_url` is currently the only ref field trying to carry actual navigation, which is why it keeps colliding with the route/open-by-identity work.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05830",
+      "source_obligation_ids": [
+        "obl-5602"
+      ],
+      "source_seed_ids": [
+        "seed-8320"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Keep canonical usage-event identity primary for Usage/Ledger navigation.",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Route target navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "Keep canonical usage-event identity primary for Usage/Ledger navigation."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05879",
+      "source_obligation_ids": [
+        "obl-5651"
+      ],
+      "source_seed_ids": [
+        "seed-8383"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "`Crosswalk.md` and `Contracts_V0.md` owner-routing integrity",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`Crosswalk.md` and `Contracts_V0.md` owner-routing integrity",
+        "Crosswalk.md",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29",
+        "Plans/Crosswalk.md:L31"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06126",
+      "source_obligation_ids": [
+        "obl-5898"
+      ],
+      "source_seed_ids": [
+        "seed-8758"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "lane/worktree state",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "status": "partial",
+      "exact_items": [
+        "lane/worktree state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06228",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06297",
+      "source_obligation_ids": [
+        "obl-6000"
+      ],
+      "source_seed_ids": [
+        "seed-9083"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "traceability / owner-routing integrity (`Crosswalk`, `DRY_Rules`, `Decision_Log`, `Progres",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "traceability / owner-routing integrity (`Crosswalk`, `DRY_Rules`, `Decision_Log`, `Progression_Gates`)",
+        "Crosswalk",
+        "DRY_Rules",
+        "Decision_Log",
+        "Progression_Gates"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1",
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06375",
+      "source_obligation_ids": [
+        "obl-6016"
+      ],
+      "source_seed_ids": [
+        "seed-9102"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "`worktree-first` Source Control with lane/worktree split",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "status": "partial",
+      "exact_items": [
+        "`worktree-first` Source Control with lane/worktree split",
+        "worktree-first"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06379",
+      "source_obligation_ids": [
+        "obl-6020"
+      ],
+      "source_seed_ids": [
+        "seed-9107"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "section `2` references `ContractName:Contracts_V0.md` instead of the file-path form used e",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## References",
+      "status": "present",
+      "exact_items": [
+        "section `2` references `ContractName:Contracts_V0.md` instead of the file-path form used elsewhere",
+        "2",
+        "ContractName:Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L19",
+        "Plans/Crosswalk.md:L20",
+        "Plans/Crosswalk.md:L21",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L27"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06396",
+      "source_obligation_ids": [
+        "obl-6037"
+      ],
+      "source_seed_ids": [
+        "seed-9132"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "`Decision_Log.md` and `Crosswalk.md` are now both missing the same high-impact rewrite dec",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`Decision_Log.md` and `Crosswalk.md` are now both missing the same high-impact rewrite decisions, which means reconciliation has no single owner-traceability path for them.",
+        "Decision_Log.md",
+        "Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06399",
+      "source_obligation_ids": [
+        "obl-6040"
+      ],
+      "source_seed_ids": [
+        "seed-9135"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "`Crosswalk.md` first",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`Crosswalk.md` first",
+        "Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06402",
+      "source_obligation_ids": [
+        "obl-6043"
+      ],
+      "source_seed_ids": [
+        "seed-9138"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "`Crosswalk.md` needs:",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`Crosswalk.md` needs:",
+        "Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06730",
+      "source_obligation_ids": [
+        "obl-6371"
+      ],
+      "source_seed_ids": [
+        "seed-9728"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Cluster D - Route / open-subject / bridge-field refinement misses",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Route target navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "Cluster D - Route / open-subject / bridge-field refinement misses"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06751",
+      "source_obligation_ids": [
+        "obl-6387"
+      ],
+      "source_seed_ids": [
+        "seed-9751"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "owner-doc primitive boundaries that remain prose-only rather than formalized (for example",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.3 Navigation and source-open ownership",
+      "status": "partial",
+      "exact_items": [
+        "owner-doc primitive boundaries that remain prose-only rather than formalized (for example navigation identity / route-target ownership)"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L101"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06833",
+      "source_obligation_ids": [
+        "obl-6445"
+      ],
+      "source_seed_ids": [
+        "seed-9824"
       ],
       "source_shard_ids": [
         "shard-0088"
       ],
-      "path_field_status": "match"
+      "canon_label": "`Crosswalk.md` still lacks `Primitive:RouteTarget` / `Primitive:OpenSubject` in the primit",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## 2. Primitive index (definitions are DRY)",
+      "status": "present",
+      "exact_items": [
+        "`Crosswalk.md` still lacks `Primitive:RouteTarget` / `Primitive:OpenSubject` in the primitive index",
+        "Crosswalk.md",
+        "Primitive:RouteTarget",
+        "Primitive:OpenSubject"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29",
+        "Plans/Crosswalk.md:L83"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-1254",
+      "coverage_id": "cov-07211",
+      "source_obligation_ids": [
+        "obl-6771"
+      ],
+      "source_seed_ids": [
+        "seed-10421"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "`Plans/Crosswalk.md:88-94`",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
       "status": "missing",
-      "evidence": [],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Plans/storage-plan.md does not directly cover UI_Command_Catalog search/routing/action policy, result_id, cmd.search.open_result, or cmd.search.replace_selected.",
-      "source_obligation_ids": [
-        "obl-354"
+      "exact_items": [
+        "`Plans/Crosswalk.md:88-94`",
+        "Plans/Crosswalk.md:88-94"
       ],
-      "source_seed_ids": [
-        "seed-354"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-013",
-      "status": "partial",
+      "stale_tokens": [],
       "evidence": [
-        "Plans/storage-plan.md:613-614 says storage-plan owns persistence and projection of attempt/usage/receipt/artifact joins for history, audit, and inspector consumers",
-        "Plans/storage-plan.md:520-528 lists attempt_record, blocked_projection, concern_record, worktree/lane records/projections, project_summary, and project_attention_item keys"
+        "Plans/Crosswalk.md:content_absent_after_scan"
       ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Runtime storage families are broad, but node retry memory, handoff artifacts, reusable learning records, and worker packets are not mapped concretely.",
-      "source_obligation_ids": [
-        "obl-013"
-      ],
-      "source_seed_ids": [
-        "seed-013"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-266",
-      "status": "partial",
+      "coverage_id": "cov-07216",
+      "source_obligation_ids": [
+        "obl-6775"
+      ],
+      "source_seed_ids": [
+        "seed-10425"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Crosswalk.md`, and `Plans/Orchestrator_Page.md`.",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Models_System.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Crosswalk.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/storage-plan.md:532-535 defines Concern as first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request"
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29",
+        "Plans/Crosswalk.md:L31"
       ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Concern/review/graph-patch separation exists, but review record, corroboration request/result, and graph patch request/result schemas are incomplete.",
-      "source_obligation_ids": [
-        "obl-076"
-      ],
-      "source_seed_ids": [
-        "seed-076"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "path_field_status": "match"
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-523",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:137-140 requires attention rows consumable across Orchestrator, Dashboard, and notifications",
-        "Plans/storage-plan.md:527-528 lists project_attention_item.v1:{project_id}:{attention_item_id}"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Attention item key/consumer coverage exists, but concrete payload schema and badge precedence are incomplete.",
+      "coverage_id": "cov-00127",
       "source_obligation_ids": [
-        "obl-150"
+        "obl-041"
       ],
       "source_seed_ids": [
-        "seed-150"
-      ],
-      "source_shard_ids": [
-        "shard-0037"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-581",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:1178-1186 requires requested/effective identity to survive in storage snapshots and preserve effective_account_id/execution_role",
-        "Plans/storage-plan.md:1260-1263 defines execution_role, effective_account_id, and operational_identity in activity payloads"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Identity fields exist, but stable owner/projection-freshness/project-card attention-center owner model is incomplete.",
-      "source_obligation_ids": [
-        "obl-162"
-      ],
-      "source_seed_ids": [
-        "seed-162"
-      ],
-      "source_shard_ids": [
-        "shard-0040"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-908",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:616-621 says runtime artifact open flows resolve by artifact_id, Contracts_V0 owns route_target/OpenSubject, and export manifests/artifact indices carry route/open linkage by reference"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Route/open linkage exists, but the shared override rule preserving shell state and exposing target is not direct.",
-      "source_obligation_ids": [
-        "obl-255"
-      ],
-      "source_seed_ids": [
-        "seed-255"
-      ],
-      "source_shard_ids": [
-        "shard-0064"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1186",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Plans/storage-plan.md does not directly include the same-file supersession hot list.",
-      "source_obligation_ids": [
-        "obl-341"
-      ],
-      "source_seed_ids": [
-        "seed-341"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-046",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:623-625 keeps Orchestrator as lane-pool operational truth and Source Control as concrete repo/worktree operator, with package/lane/run refs and lifecycle/blocked/recovery state on worktree rows"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Worktree/lane ownership exists, but node/package/seam/remediation-branch governing model is incomplete.",
-      "source_obligation_ids": [
-        "obl-026"
-      ],
-      "source_seed_ids": [
-        "seed-026"
-      ],
-      "source_shard_ids": [
-        "shard-0005"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-062",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:949-951 defines projection_freshness current/refreshing/stale and projection_health healthy/degraded/unavailable"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Projection state terms exist, but same-file supersession hotspot and GUI/UX impact doc coverage is absent.",
-      "source_obligation_ids": [
-        "obl-029"
-      ],
-      "source_seed_ids": [
-        "seed-029"
-      ],
-      "source_shard_ids": [
-        "shard-0006"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-104",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:906-936 requires identity/attribution fields including project_id, run_id, node_id, attempt_id, blocked_sequence, feature_seam_id, work_package_id, lane_id, worktree_id, and execution_role"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Identity fields exist, but graph-constant replacement and explicit contamination/safe-point linkage remain incomplete.",
-      "source_obligation_ids": [
-        "obl-034"
-      ],
-      "source_seed_ids": [
-        "seed-034"
+        "seed-041"
       ],
       "source_shard_ids": [
         "shard-0008"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-220",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:1640-1642 keeps historical, archived, and removed distinct and historically inspectable with projection trust explicit"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Historical inspection exists, but History/Ledger/direct evidence inspector coverage is incomplete.",
-      "source_obligation_ids": [
-        "obl-060"
-      ],
-      "source_seed_ids": [
-        "seed-060"
-      ],
-      "source_shard_ids": [
-        "shard-0013"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-321",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:594-597 defines focused_run_id/focus_mode and cross-tab deep links/search pivots against focused run context with projection freshness/health rules"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Focused-run and projection rules exist, but scale contract, paging/search interplay, and lazy expansion guidance are incomplete.",
-      "source_obligation_ids": [
-        "obl-095"
-      ],
-      "source_seed_ids": [
-        "seed-095"
-      ],
-      "source_shard_ids": [
-        "shard-0023"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-325",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:595-597 ties cross-tab links/search pivots to focused run and uses freshness/health for action gating"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Cross-tab/focused-run behavior exists, but progressive disclosure, virtualization, and windowed History are incomplete.",
-      "source_obligation_ids": [
-        "obl-096"
-      ],
-      "source_seed_ids": [
-        "seed-096"
-      ],
-      "source_shard_ids": [
-        "shard-0023"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-340",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:949-951 defines projection_freshness current/refreshing/stale and projection_health healthy/degraded/unavailable",
-        "Plans/storage-plan.md:597 says stale-but-healthy projections can require refresh, degraded projections can fall back to canonical record reads, and unavailable projections block projection-dependent actions"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Projection vocabulary and action gating are strong, but explicit allowed_action_ids and write-action refusal wording are incomplete.",
-      "source_obligation_ids": [
-        "obl-101"
-      ],
-      "source_seed_ids": [
-        "seed-101"
-      ],
-      "source_shard_ids": [
-        "shard-0024"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-344",
+      "canon_label": "ownership glossary/crosswalk",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Cleanup Priorities",
       "status": "missing",
-      "evidence": [],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Plans/storage-plan.md does not directly define a shared governance/runtime record-envelope pattern or common envelope fields.",
-      "source_obligation_ids": [
-        "obl-102"
+      "exact_items": [
+        "Extend Glossary.md, Crosswalk.md, Decision_Policy.md, and 00-plans-index.md with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.",
+        "Clarify which docs own execution truth vs projections vs UI-only overlays."
       ],
-      "source_seed_ids": [
-        "seed-102"
+      "stale_tokens": [
+        "tier-centric ownership",
+        "projection-only overlay",
+        "execution truth vs projections"
       ],
-      "source_shard_ids": [
-        "shard-0025"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-479",
-      "status": "partial",
       "evidence": [
-        "Plans/storage-plan.md:935-936 includes provider_attempt_ref and usage_event_ref in identity/attribution fields",
-        "Plans/storage-plan.md:1264 defines usage_event_ref as usage-side reference for accounting and evidence joins"
+        "Plans/Crosswalk.md:content_absent_after_scan"
       ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "usage_event_ref exists, but format/stability and route-by-usage-identity schema are incomplete.",
-      "source_obligation_ids": [
-        "obl-140"
-      ],
-      "source_seed_ids": [
-        "seed-140"
-      ],
-      "source_shard_ids": [
-        "shard-0035"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-556",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:621 says export manifests and artifact indices carry route/open linkage by reference rather than redefining route payload shapes locally",
-        "Plans/storage-plan.md:1658 says storage-plan must reference owner-doc schema instead of embedding a competing schema copy"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Route/open ownership language exists, but shared route-payload schema and actor/role dimension gaps remain incomplete.",
-      "source_obligation_ids": [
-        "obl-158"
-      ],
-      "source_seed_ids": [
-        "seed-158"
-      ],
-      "source_shard_ids": [
-        "shard-0039"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     }
   ]
 }

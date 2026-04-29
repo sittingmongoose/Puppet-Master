@@ -1,0 +1,262 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-067",
+  "timestamp_utc": "2026-04-28T21:44:40Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-265",
+    "coverage-rowgrp-266",
+    "coverage-rowgrp-267",
+    "coverage-rowgrp-268"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-265 cov-606,cov-682 Plans/interview-subagent-integration.md",
+    "rowgrp-266 cov-296,cov-373,cov-651 Plans/interview-subagent-integration.md",
+    "rowgrp-267 cov-364,cov-386,cov-1243 Plans/interview-subagent-integration.md",
+    "rowgrp-268 cov-290,cov-368,cov-660 Plans/interview-subagent-integration.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-265": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-266": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-267": "completed_reduced_conservatively_with_evidence_stripping",
+    "coverage-rowgrp-268": "completed_reduced_conservatively_with_evidence_stripping"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-606",
+    "cov-682",
+    "cov-296",
+    "cov-373",
+    "cov-651",
+    "cov-364",
+    "cov-386",
+    "cov-1243",
+    "cov-290",
+    "cov-368",
+    "cov-660"
+  ],
+  "coverage_ids_completed": [
+    "cov-606",
+    "cov-682",
+    "cov-296",
+    "cov-373",
+    "cov-651",
+    "cov-364",
+    "cov-386",
+    "cov-1243",
+    "cov-290",
+    "cov-368",
+    "cov-660"
+  ],
+  "path_groups_assigned": [
+    "Plans/interview-subagent-integration.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-606",
+      "status": "partial",
+      "evidence": [
+        "Plans/interview-subagent-integration.md:32-42 says interview launches share the runtime identity packet with Orchestrator while preserving interview actor identity and lineage, and handoff carries project_id, thread_id, wizard_id, interview_session_id, requested/effective runtime identity, requested/effective account identity, execution_role, and launched_run_id/ref"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Shared runtime identity coverage exists, but HITL request/resolution actor/lane/account identity and tool-event node/attempt/actor/account context are not directly covered.",
+      "source_obligation_ids": [
+        "obl-169"
+      ],
+      "source_seed_ids": [
+        "seed-169"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-682",
+      "status": "partial",
+      "evidence": [
+        "Plans/interview-subagent-integration.md:49 references Plans/Prompt_Pipeline.md, Plans/Contracts_V0.md, and Plans/Orchestrator_Page.md"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Only part of the downstream/highest-risk impacted document set is directly referenced.",
+      "source_obligation_ids": [
+        "obl-189"
+      ],
+      "source_seed_ids": [
+        "seed-189"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-296",
+      "status": "partial",
+      "evidence": [
+        "Plans/interview-subagent-integration.md:34-37 says assistant/chat/interview/builder actors share provider/runtime identity semantics while preserving distinct actor/run kinds and requested/effective runtime/account identity"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Shared runtime identity exists, but global precedence chain, deterministic ranked resolver candidates, and actor/operation precedence over stack hints are not directly covered.",
+      "source_obligation_ids": [
+        "obl-085"
+      ],
+      "source_seed_ids": [
+        "seed-085"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-373",
+      "status": "partial",
+      "evidence": [
+        "Plans/interview-subagent-integration.md:44-47 extends validation_pass_report with planning/governance lineage and reuses a bridge instead of reconstructing joins from filenames, timestamps, or provider-native traces"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Bridge reuse exists, but same active run state for interview chat/activity panes and shared agent activity pane reuse are not directly stated.",
+      "source_obligation_ids": [
+        "obl-110"
+      ],
+      "source_seed_ids": [
+        "seed-110"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-651",
+      "status": "partial",
+      "evidence": [
+        "Plans/interview-subagent-integration.md:37-42 preserves requested/effective runtime identity, requested/effective account identity, execution_role, operational_identity, project_id, and thread_id in shared runtime packets and handoff"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "The concrete handoff now carries several fields, but chain-wizard payload thinness, validation lineage governance, and separate interview contract gaps are not fully covered.",
+      "source_obligation_ids": [
+        "obl-184"
+      ],
+      "source_seed_ids": [
+        "seed-184"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-364",
+      "status": "partial",
+      "evidence": [
+        "Plans/interview-subagent-integration.md:34-37 says Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator, remain distinct actor/run kinds rather than package/seam/node execution objects, and preserve requested/effective runtime/account identity"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Shared runtime/account boundary is directly related, but upstream conversational/document-production actor wording is incomplete.",
+      "source_obligation_ids": [
+        "obl-108"
+      ],
+      "source_seed_ids": [
+        "seed-108"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-386",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/interview-subagent-integration.md does not directly define notification routing by severity, execution impact, blocked owner, persistence, projection trust, stale/degraded projection handling, concern acknowledgement, or quiet windows.",
+      "source_obligation_ids": [
+        "obl-115"
+      ],
+      "source_seed_ids": [
+        "seed-115"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1243",
+      "status": "partial",
+      "evidence": [
+        "Plans/interview-subagent-integration.md:44-47 adds a validation_pass_report bridge with planning/governance lineage, workflow_run_id, pass_verdict, wizard_snapshot_ref, launched_run_id/ref, and shared preview/validation/review/resume bridge reuse"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Validation bridge coverage exists, but exact validation artifact lineage, bridge-field viewer, and validation/report section headings remain incomplete.",
+      "source_obligation_ids": [
+        "obl-350"
+      ],
+      "source_seed_ids": [
+        "seed-350"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-290",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/interview-subagent-integration.md does not directly cover settings UI override-display grammar, source/requested/effective UI separation, origin badges, or precedence disclosure.",
+      "source_obligation_ids": [
+        "obl-084"
+      ],
+      "source_seed_ids": [
+        "seed-084"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-368",
+      "status": "partial",
+      "evidence": [
+        "Plans/interview-subagent-integration.md:32-37 preserves interview-specific actor identity and launched-run lineage while sharing provider/runtime identity semantics, and keeps assistant/chat/interview/builder actors as distinct actor/run kinds rather than package/seam/node execution objects"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Distinct actor/run kinds are covered, but shared disclosure grammar, blocked/remediation taxonomy, and actor-specific state machines/object identities are incomplete.",
+      "source_obligation_ids": [
+        "obl-109"
+      ],
+      "source_seed_ids": [
+        "seed-109"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-660",
+      "status": "partial",
+      "evidence": [
+        "Plans/interview-subagent-integration.md:39-42 extends wizard/interview handoff with project/thread/wizard/runtime identity and execution_role, and carries project_id, thread_id, wizard_id, interview_session_id, requested/effective runtime identity, requested/effective account identity, execution_role, and launched_run_id/ref"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Wizard/interview handoff identity is covered, but builder inclusion, persona/platform/model fields, operational_identity, and permission/runtime snapshot refs are incomplete.",
+      "source_obligation_ids": [
+        "obl-187"
+      ],
+      "source_seed_ids": [
+        "seed-187"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

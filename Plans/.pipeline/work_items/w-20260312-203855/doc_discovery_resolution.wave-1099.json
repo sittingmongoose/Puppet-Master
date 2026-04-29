@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1099",
+  "group_ids": [
+    "discgrp-4393",
+    "discgrp-4394",
+    "discgrp-4395",
+    "discgrp-4396"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04779",
+      "source_obligation_ids": [
+        "obl-4557"
+      ],
+      "source_seed_ids": [
+        "seed-6474"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Document_Packaging_Policy.md",
+      "new_heading_hint": "# Document Packaging Policy (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04780",
+      "source_obligation_ids": [
+        "obl-4558"
+      ],
+      "source_seed_ids": [
+        "seed-6475"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "### `tool.denied` requirements",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Tools.md:L1231"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04781",
+      "source_obligation_ids": [
+        "obl-4559"
+      ],
+      "source_seed_ids": [
+        "seed-6476"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04782",
+      "source_obligation_ids": [
+        "obl-4560"
+      ],
+      "source_seed_ids": [
+        "seed-6477"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,319 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-167",
+  "group_ids": [
+    "pktgrp-0665",
+    "pktgrp-0666",
+    "pktgrp-0667",
+    "pktgrp-0668"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0110",
+      "source_reconciliation_target_id": "target-0539",
+      "source_reconciliation_target_ids": [
+        "target-0539"
+      ],
+      "path": "Plans/Wiring_Matrix.schema.json",
+      "operation": "observe_only",
+      "live_anchor": "Plans/Wiring_Matrix.schema.json:L1",
+      "coverage_row_ids": [
+        "cov-04269",
+        "cov-05675"
+      ],
+      "source_obligation_ids": [
+        "obl-4109",
+        "obl-5447"
+      ],
+      "source_seed_ids": [
+        "seed-5696",
+        "seed-5711",
+        "seed-5755",
+        "seed-6852",
+        "seed-6879",
+        "seed-8072",
+        "seed-8094",
+        "seed-9171",
+        "seed-8084"
+      ],
+      "source_shard_ids": [
+        "shard-0056",
+        "shard-0057",
+        "shard-0066",
+        "shard-0075",
+        "shard-0083"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4109",
+          "obl-5447"
+        ],
+        "source_seed_ids": [
+          "seed-5696",
+          "seed-5711",
+          "seed-5755",
+          "seed-6852",
+          "seed-6879",
+          "seed-8072",
+          "seed-8094",
+          "seed-9171",
+          "seed-8084"
+        ],
+        "source_shard_ids": [
+          "shard-0056",
+          "shard-0057",
+          "shard-0066",
+          "shard-0075",
+          "shard-0083"
+        ]
+      },
+      "gap_ids": [
+        "gap-03330",
+        "gap-04420"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Plans/Wiring_Matrix.schema.json`",
+        "Plans/Wiring_Matrix.schema.json",
+        "`Plans/Wiring_Matrix.schema.json` currently has no fields for command-kind or normalization metadata."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-3fa8da6f556d",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0111",
+      "source_reconciliation_target_id": "target-0547",
+      "source_reconciliation_target_ids": [
+        "target-0547"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "operation": "observe_only",
+      "live_anchor": "### Dependency order (implement in this order within phases) (Plans/WorktreeGitImprovement.md:L431)",
+      "coverage_row_ids": [
+        "cov-06027"
+      ],
+      "source_obligation_ids": [
+        "obl-5799"
+      ],
+      "source_seed_ids": [
+        "seed-8624"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-5799"
+        ],
+        "source_seed_ids": [
+          "seed-8624"
+        ],
+        "source_shard_ids": [
+          "shard-0079"
+        ]
+      },
+      "gap_ids": [
+        "gap-04665"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`UI_Command_Catalog.md` currently contradicts itself within the same approval/recovery area.",
+        "UI_Command_Catalog.md"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "UI_Command_Catalog.md"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "UI_Command_Catalog.md"
+      ],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-de1b2ecd2f7f",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0112",
+      "source_reconciliation_target_id": "target-0554",
+      "source_reconciliation_target_ids": [
+        "target-0554"
+      ],
+      "path": "Plans/agent-rules-context.md",
+      "operation": "observe_only",
+      "live_anchor": "### Order and precedence (Plans/agent-rules-context.md:L63)",
+      "coverage_row_ids": [
+        "cov-06836"
+      ],
+      "source_obligation_ids": [
+        "obl-6448"
+      ],
+      "source_seed_ids": [
+        "seed-9827"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-6448"
+        ],
+        "source_seed_ids": [
+          "seed-9827"
+        ],
+        "source_shard_ids": [
+          "shard-0088"
+        ]
+      },
+      "gap_ids": [
+        "gap-05307"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Contracts_V0.md` still lacks the late refinement layer: selector precedence order, reject rules, closed `tab_id` vocabulary, scoped resolver rules, route examples, ref-family split",
+        "Contracts_V0.md",
+        "tab_id"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-f13f40800ec8",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0113",
+      "source_reconciliation_target_id": "target-0555",
+      "source_reconciliation_target_ids": [
+        "target-0555"
+      ],
+      "path": "Plans/agent-rules-context.md",
+      "operation": "observe_only",
+      "live_anchor": "#### B) Attempt Journal (Ephemeral, per node attempt) (Plans/agent-rules-context.md:L167)",
+      "coverage_row_ids": [
+        "cov-04796"
+      ],
+      "source_obligation_ids": [
+        "obl-4573"
+      ],
+      "source_seed_ids": [
+        "seed-6527"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4573"
+        ],
+        "source_seed_ids": [
+          "seed-6527"
+        ],
+        "source_shard_ids": [
+          "shard-0063"
+        ]
+      },
+      "gap_ids": [
+        "gap-03747"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "ephemeral UI layout state"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-2f4f67ef79d9",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-04269",
+    "cov-05675",
+    "cov-06027",
+    "cov-06836",
+    "cov-04796"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-4109",
+    "obl-5447",
+    "obl-5799",
+    "obl-6448",
+    "obl-4573"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-5696",
+    "seed-5711",
+    "seed-5755",
+    "seed-6852",
+    "seed-6879",
+    "seed-8072",
+    "seed-8094",
+    "seed-9171",
+    "seed-8084",
+    "seed-8624",
+    "seed-9827",
+    "seed-6527"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0056",
+    "shard-0057",
+    "shard-0066",
+    "shard-0075",
+    "shard-0083",
+    "shard-0079",
+    "shard-0088",
+    "shard-0063"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "preserved_exact_required_items": [
+    "`Plans/Wiring_Matrix.schema.json`",
+    "Plans/Wiring_Matrix.schema.json",
+    "`Plans/Wiring_Matrix.schema.json` currently has no fields for command-kind or normalization metadata.",
+    "`UI_Command_Catalog.md` currently contradicts itself within the same approval/recovery area.",
+    "UI_Command_Catalog.md",
+    "`Contracts_V0.md` still lacks the late refinement layer: selector precedence order, reject rules, closed `tab_id` vocabulary, scoped resolver rules, route examples, ref-family split",
+    "Contracts_V0.md",
+    "tab_id",
+    "ephemeral UI layout state"
+  ],
+  "blocked_targets": []
+}

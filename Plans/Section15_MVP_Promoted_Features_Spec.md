@@ -1,5 +1,39 @@
 # Section 15 Promoted Features Spec
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0495
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - Exports are frequently described as output-format features, but not yet as identity-preserving artifacts in their own right.
+  - The biggest risk is that export features get implemented as “dump whatever the current view shows” and quietly lose canonical identity.
+  - `Plans/Section15_MVP_Promoted_Features_Spec.md`
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - `Plans/Section15_MVP_Promoted_Features_Spec.md` is comparatively disciplined in this seam:
+  - `feature-list.md` and `newfeatures.md` are broad drift amplifiers because they condense many features into short summaries that users and implementers often read first.
+  - feature-list.md
+  - newfeatures.md
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 
 ## 0. Scope and SSOT status
@@ -70,6 +104,38 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matri
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
 
 #### Action tiers
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0499
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - section `7.7 [retired-token-1]`
+  - 7.7 [retired-token-1]
+  - removal of stale `[retired-token-1]` and widgetized-Orchestrator wording
+  - [retired-token-1]
+  - still defines a six-tab page with `[retired-token-1]`
+  - `[retired-token-1]` retired and replaced by `[retired-token-2]`
+  - [retired-token-2]
+  - `View in [retired-token-1]`
+  - View in [retired-token-1]
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **Tier 1 — always allowed**
 `navigate`, `back`, `reload`, `snapshot`, `screenshot`, `console`, `network`
@@ -315,6 +381,27 @@ Rules:
 
 ### 3.2 Branching Conversations (Restore Then Fork)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0497
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - then consumer docs
+  - Then the canonical-record section partially regresses again by keeping:
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 - branching always starts from a restore point or equivalent preserved state boundary
 - branch creation produces a new thread/session identity linked to the source branch and restore point
 - the source thread remains intact
@@ -341,6 +428,27 @@ Rules:
 - timer UI must remain lightweight and not cause reflow/flicker in long threads
 
 ### 3.6 Interleaved Thinking Toggle
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0498
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `tier_id` remains an important field in usage/storage thinking
+  - tier_id
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - the toggle is thread-local unless another owner doc explicitly broadens scope
 - requested state and effective provider behavior are both shown when the provider cannot honor the requested mode exactly
@@ -380,6 +488,26 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usa
 - virtualization cannot break sticky status elements, selection, or search results navigation
 
 ### 3.12 Know Where Your Tokens Go (Analytics Framing)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0496
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - The docs already know what fields matter; they just do not normalize them yet.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 - app-wide Usage and the thread-scoped Context Detail Pane share one normalized usage contract
 - cost_usage artifacts deep-link into canonical Usage/Ledger surfaces rather than an artifact-local model

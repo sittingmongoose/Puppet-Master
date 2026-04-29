@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1118",
+  "group_ids": [
+    "discgrp-4469",
+    "discgrp-4470",
+    "discgrp-4471",
+    "discgrp-4472"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04857",
+      "source_obligation_ids": [
+        "obl-4634"
+      ],
+      "source_seed_ids": [
+        "seed-6633"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "#### Route target navigation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04858",
+      "source_obligation_ids": [
+        "obl-4635"
+      ],
+      "source_seed_ids": [
+        "seed-6634"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-016 -- Token fields are never aggregated at storage layer",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L148"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04859",
+      "source_obligation_ids": [
+        "obl-4636"
+      ],
+      "source_seed_ids": [
+        "seed-6635"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### Progress catalog source and default drills",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L910"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04860",
+      "source_obligation_ids": [
+        "obl-4637"
+      ],
+      "source_seed_ids": [
+        "seed-6641"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "new_heading_hint": "## Change Summary",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L40"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

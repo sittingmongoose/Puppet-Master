@@ -1,0 +1,273 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-169",
+  "group_ids": [
+    "pktgrp-0673",
+    "pktgrp-0674",
+    "pktgrp-0675",
+    "pktgrp-0676"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0118",
+      "source_reconciliation_target_id": "target-0571",
+      "source_reconciliation_target_ids": [
+        "target-0571"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "operation": "observe_only",
+      "live_anchor": "### 17.6 Context Lens (Mute / Focus / Subcompact) \u2014 user-directed context shaping (thread-local) (Plans/assistant-chat-design.md:L1582)",
+      "coverage_row_ids": [
+        "cov-04689"
+      ],
+      "source_obligation_ids": [
+        "obl-4467"
+      ],
+      "source_seed_ids": [
+        "seed-6351"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4467"
+        ],
+        "source_seed_ids": [
+          "seed-6351"
+        ],
+        "source_shard_ids": [
+          "shard-0061"
+        ]
+      },
+      "gap_ids": [
+        "gap-03663"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Keep UI container state (`tab_id`, panel focus, inspector section) as view context around the target, not as the target taxonomy itself.",
+        "tab_id"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-0c5fce5edebb",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0119",
+      "source_reconciliation_target_id": "target-0573",
+      "source_reconciliation_target_ids": [
+        "target-0573"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "operation": "observe_only",
+      "live_anchor": "### 27.7 Provider compatibility disclosure in chat (Plans/assistant-chat-design.md:L2066)",
+      "coverage_row_ids": [
+        "cov-06530"
+      ],
+      "source_obligation_ids": [
+        "obl-6171"
+      ],
+      "source_seed_ids": [
+        "seed-9333"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-6171"
+        ],
+        "source_seed_ids": [
+          "seed-9333"
+        ],
+        "source_shard_ids": [
+          "shard-0084"
+        ]
+      },
+      "gap_ids": [
+        "gap-05063"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Prompt_Pipeline.md` is upstream of requested/effective identity disclosure across chat, builders, Orchestrator, and storage. Scope drift here will keep leaking everywhere else.",
+        "Prompt_Pipeline.md"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-410c36753607",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0120",
+      "source_reconciliation_target_id": "target-0574",
+      "source_reconciliation_target_ids": [
+        "target-0574"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "operation": "observe_only",
+      "live_anchor": "### 8.8 Approval, queue, and execution handoff (Plans/assistant-chat-design.md:L687)",
+      "coverage_row_ids": [
+        "cov-03144"
+      ],
+      "source_obligation_ids": [
+        "obl-2990"
+      ],
+      "source_seed_ids": [
+        "seed-3947"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-2990"
+        ],
+        "source_seed_ids": [
+          "seed-3947"
+        ],
+        "source_shard_ids": [
+          "shard-0044"
+        ]
+      },
+      "gap_ids": [
+        "gap-02471"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Consolidate execution-core docs around a single node-native execution context object that replaces or wraps `TierContext` and is the canonical handoff between scheduler, worker spawn, verification, remediation, recovery, and UI projections.",
+        "TierContext"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-4b207741aaf0",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0121",
+      "source_reconciliation_target_id": "target-0578",
+      "source_reconciliation_target_ids": [
+        "target-0578"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "operation": "observe_only",
+      "live_anchor": "### W.11 Command catalog (Plans/assistant-chat-design.md:L2649)",
+      "coverage_row_ids": [
+        "cov-03665"
+      ],
+      "source_obligation_ids": [
+        "obl-3511"
+      ],
+      "source_seed_ids": [
+        "seed-4727"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3511"
+        ],
+        "source_seed_ids": [
+          "seed-4727"
+        ],
+        "source_shard_ids": [
+          "shard-0049"
+        ]
+      },
+      "gap_ids": [
+        "gap-02864"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Commands_System.md` defines `cmd.chat.run_user_command`, but the canonical catalog does not register it; the Wiring Matrix also references ghost chat/orchestrator command IDs (`cmd.chat.branch_from_restore`, `cmd.orchestrator.switch_tab`) that do not exist in the catalog.",
+        "Commands_System.md",
+        "cmd.chat.run_user_command",
+        "cmd.chat.branch_from_restore",
+        "cmd.orchestrator.switch_tab"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-75e3ba148d5f",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-04689",
+    "cov-06530",
+    "cov-03144",
+    "cov-03665"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-4467",
+    "obl-6171",
+    "obl-2990",
+    "obl-3511"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-6351",
+    "seed-9333",
+    "seed-3947",
+    "seed-4727"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0061",
+    "shard-0084",
+    "shard-0044",
+    "shard-0049"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "Keep UI container state (`tab_id`, panel focus, inspector section) as view context around the target, not as the target taxonomy itself.",
+    "tab_id",
+    "`Prompt_Pipeline.md` is upstream of requested/effective identity disclosure across chat, builders, Orchestrator, and storage. Scope drift here will keep leaking everywhere else.",
+    "Prompt_Pipeline.md",
+    "Consolidate execution-core docs around a single node-native execution context object that replaces or wraps `TierContext` and is the canonical handoff between scheduler, worker spawn, verification, remediation, recovery, and UI projections.",
+    "TierContext",
+    "`Commands_System.md` defines `cmd.chat.run_user_command`, but the canonical catalog does not register it; the Wiring Matrix also references ghost chat/orchestrator command IDs (`cmd.chat.branch_from_restore`, `cmd.orchestrator.switch_tab`) that do not exist in the catalog.",
+    "Commands_System.md",
+    "cmd.chat.run_user_command",
+    "cmd.chat.branch_from_restore",
+    "cmd.orchestrator.switch_tab"
+  ],
+  "blocked_targets": []
+}

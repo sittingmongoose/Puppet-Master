@@ -1,0 +1,2825 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-125",
+  "group_ids": [
+    "gapgrp-0497",
+    "gapgrp-0498",
+    "gapgrp-0499",
+    "gapgrp-0500"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-00086",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00089 is missing for projection ownership and source-control partitioning",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "projection ownership by surface"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00089"
+      ],
+      "source_obligation_ids": [
+        "obl-034"
+      ],
+      "source_seed_ids": [
+        "seed-034"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "exact_missing_items": [
+        "which Orchestrator seam should lead the discussion: runtime ownership boundary, page/tab IA, blocked/remediation UX, lineage across graph/evidence/history/usage",
+        "Source Control worktree area likely needs top-level partitioning into Orchestrator Owned and Other",
+        "Orchestrator Owned section likely needs further subdivision by feature seam",
+        "Orchestrator page is a high-density information surface with very large detail volume"
+      ],
+      "stale_tokens": [
+        "Tiers tab",
+        "page layer",
+        "Orchestrator Owned"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00108",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00111 is missing for orchestrator attention routing and lane-aware widgets",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "GUI / UX Impacts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00111"
+      ],
+      "source_obligation_ids": [
+        "obl-038"
+      ],
+      "source_seed_ids": [
+        "seed-038"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Replace Tiers-first navigation",
+        "Define Dashboard\u2192Orchestrator\u2192thread routing contract",
+        "Add package/seam/lane visualization widgets",
+        "Define which overseer's thread opens on click",
+        "Make worktree/lane state visible and navigable"
+      ],
+      "stale_tokens": [
+        "Tiers tab",
+        "widget.tier_tree",
+        "3-bar layout",
+        "grouped-by-phase",
+        "single-threaded",
+        "current_task"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00127",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00130 is missing for graph-native attention routing",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "Cleanup Priorities"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00130"
+      ],
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "source_seed_ids": [
+        "seed-042"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "exact_missing_items": [
+        "Replace or demote tiers-first widgets and layouts.",
+        "Add package/seam/lane-aware identity, worktree, and attention surfaces.",
+        "Define Dashboard \u2192 Orchestrator \u2192 chat-thread routing using canonical runtime objects rather than prose-only references."
+      ],
+      "stale_tokens": [
+        "tiers-first",
+        "phase-grouped layouts",
+        "single current task",
+        "single worktree",
+        "prose-only references"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00215",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00242 is present for `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00242"
+      ],
+      "source_obligation_ids": [
+        "obl-129"
+      ],
+      "source_seed_ids": [
+        "seed-134"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00350",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00447 is partial for `Contracts_V0.md` forbids `_persona_id` canonical names while downstream UI/runtime docs s",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00447"
+      ],
+      "source_obligation_ids": [
+        "obl-304"
+      ],
+      "source_seed_ids": [
+        "seed-353"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`Contracts_V0.md` forbids `_persona_id` canonical names while downstream UI/runtime docs still consume or display them.",
+        "Contracts_V0.md",
+        "_persona_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00418",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00530 is partial for `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` are fixed-purpose tabs with str",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00530"
+      ],
+      "source_obligation_ids": [
+        "obl-387"
+      ],
+      "source_seed_ids": [
+        "seed-449"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "`Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` are fixed-purpose tabs with stronger native layouts and interaction contracts",
+        "Seams",
+        "Node Graph",
+        "Evidence",
+        "History",
+        "Ledger"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00492",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00638 is partial for distinguish `active run truth` from `focused run context`",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00638"
+      ],
+      "source_obligation_ids": [
+        "obl-495"
+      ],
+      "source_seed_ids": [
+        "seed-570"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "distinguish `active run truth` from `focused run context`",
+        "active run truth",
+        "focused run context"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00524",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00674 is partial for Add a first-class `Historical Run Mode` UI contract for Orchestrator.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00674"
+      ],
+      "source_obligation_ids": [
+        "obl-531"
+      ],
+      "source_seed_ids": [
+        "seed-607"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "Add a first-class `Historical Run Mode` UI contract for Orchestrator.",
+        "Historical Run Mode"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00529",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00679 is present for Cross-tab deep links must preserve focused `run_id` so History -> Graph -> Evidence -> Led",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00679"
+      ],
+      "source_obligation_ids": [
+        "obl-536"
+      ],
+      "source_seed_ids": [
+        "seed-612"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "Cross-tab deep links must preserve focused `run_id` so History -> Graph -> Evidence -> Ledger stays coherent.",
+        "run_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00550",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00702 is present for run -> switch `focused_run_id` and open the relevant tab/context",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00702"
+      ],
+      "source_obligation_ids": [
+        "obl-559"
+      ],
+      "source_seed_ids": [
+        "seed-640"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "run -> switch `focused_run_id` and open the relevant tab/context",
+        "focused_run_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00553",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00705 is partial for the UI should disclose that the focused run changed because of the search result",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00705"
+      ],
+      "source_obligation_ids": [
+        "obl-562"
+      ],
+      "source_seed_ids": [
+        "seed-643"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "the UI should disclose that the focused run changed because of the search result"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00630",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00803 is partial for Avoid UI copy like `superseded by newer run` unless there is an explicit relationship prov",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00803"
+      ],
+      "source_obligation_ids": [
+        "obl-660"
+      ],
+      "source_seed_ids": [
+        "seed-755"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "exact_missing_items": [
+        "Avoid UI copy like `superseded by newer run` unless there is an explicit relationship proving that.",
+        "superseded by newer run"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00771",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01008 is partial for prerequisite evidence / review / corroboration refs",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01008"
+      ],
+      "source_obligation_ids": [
+        "obl-865"
+      ],
+      "source_seed_ids": [
+        "seed-1010"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "exact_missing_items": [
+        "prerequisite evidence / review / corroboration refs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00984",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01267 is partial for `Graph patch required`",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01267"
+      ],
+      "source_obligation_ids": [
+        "obl-1124"
+      ],
+      "source_seed_ids": [
+        "seed-1336"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "exact_missing_items": [
+        "`Graph patch required`",
+        "Graph patch required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01035",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01324 is partial for The graph tab already has the strongest explicit scale contract in the current docs.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01324"
+      ],
+      "source_obligation_ids": [
+        "obl-1181"
+      ],
+      "source_seed_ids": [
+        "seed-1407"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "exact_missing_items": [
+        "The graph tab already has the strongest explicit scale contract in the current docs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01301",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01662 is partial for portable package containing multiple records/artifacts plus manifest",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01662"
+      ],
+      "source_obligation_ids": [
+        "obl-1519"
+      ],
+      "source_seed_ids": [
+        "seed-1883"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "portable package containing multiple records/artifacts plus manifest"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01431",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01830 is partial for `superseded` and `replan_required` matter for graph patch and generation lineage",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01830"
+      ],
+      "source_obligation_ids": [
+        "obl-1687"
+      ],
+      "source_seed_ids": [
+        "seed-2118"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "exact_missing_items": [
+        "`superseded` and `replan_required` matter for graph patch and generation lineage",
+        "superseded",
+        "replan_required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01548",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01985 is partial for prompt/runtime resolution records, usage records, auth events, graph detail panels, and ar",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01985"
+      ],
+      "source_obligation_ids": [
+        "obl-1842"
+      ],
+      "source_seed_ids": [
+        "seed-2373"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "prompt/runtime resolution records, usage records, auth events, graph detail panels, and artifact views still do not share one obvious identity disclosure contract"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01556",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01995 is partial for graph patch lineage and concern/promotion visibility are now contract-level omissions, not",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01995"
+      ],
+      "source_obligation_ids": [
+        "obl-1852"
+      ],
+      "source_seed_ids": [
+        "seed-2383"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "graph patch lineage and concern/promotion visibility are now contract-level omissions, not just UI polish gaps"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01563",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02005 is partial for `run.started` / `usage.event` / `hitl.*` / config-validation rows in `storage-plan.md` sti",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02005"
+      ],
+      "source_obligation_ids": [
+        "obl-1862"
+      ],
+      "source_seed_ids": [
+        "seed-2401"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "`run.started` / `usage.event` / `hitl.*` / config-validation rows in `storage-plan.md` still under-specify or mis-key the runtime identity and execution anchors they are supposed to carry",
+        "run.started",
+        "usage.event",
+        "hitl.*",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01567",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02010 is partial for the gap is not just \"missing multi-account support\" but \"mutable display identity used as",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02010"
+      ],
+      "source_obligation_ids": [
+        "obl-1867"
+      ],
+      "source_seed_ids": [
+        "seed-2406"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "the gap is not just \"missing multi-account support\" but \"mutable display identity used as storage/routing anchor\""
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01607",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02068 is partial for concern operations should likely be available from multiple surfaces (`Progress`, `Seams`,",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02068"
+      ],
+      "source_obligation_ids": [
+        "obl-1925"
+      ],
+      "source_seed_ids": [
+        "seed-2483"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "concern operations should likely be available from multiple surfaces (`Progress`, `Seams`, `Evidence`, `History`, `Ledger`, graph inspector), so the same action policy must survive different UI densities",
+        "Progress",
+        "Seams",
+        "Evidence",
+        "History",
+        "Ledger"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01693",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02175 is partial for `storage-plan.md` says `run.started` MUST include the full persona/runtime snapshot, but t",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02175"
+      ],
+      "source_obligation_ids": [
+        "obl-2030"
+      ],
+      "source_seed_ids": [
+        "seed-2639"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`storage-plan.md` says `run.started` MUST include the full persona/runtime snapshot, but the event table row still enumerates a much thinner field set.",
+        "storage-plan.md",
+        "run.started"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01705",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02188 is partial for Make Run Graph and Orchestrator consume attempt/receipt-based canonical projections and co",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02188"
+      ],
+      "source_obligation_ids": [
+        "obl-2043"
+      ],
+      "source_seed_ids": [
+        "seed-2652"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "Make Run Graph and Orchestrator consume attempt/receipt-based canonical projections and command args already present in `UI_Command_Catalog.md`, instead of re-describing tier-era or node-only action contracts",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01753",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02258 is partial for `Plans/Run_Graph_View.md` + `Plans/Runtime_Artifacts_Panel.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02258"
+      ],
+      "source_obligation_ids": [
+        "obl-2112"
+      ],
+      "source_seed_ids": [
+        "seed-2744"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`Plans/Run_Graph_View.md` + `Plans/Runtime_Artifacts_Panel.md`",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01771",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02279 is partial for no minority-advisory outcome for the now-required 2-of-3 corroboration pattern",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02279"
+      ],
+      "source_obligation_ids": [
+        "obl-2132"
+      ],
+      "source_seed_ids": [
+        "seed-2772"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "no minority-advisory outcome for the now-required 2-of-3 corroboration pattern"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01776",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02286 is partial for `input_required` / `input_provided` cannot distinguish node HITL, corroboration pause, or",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02286"
+      ],
+      "source_obligation_ids": [
+        "obl-2139"
+      ],
+      "source_seed_ids": [
+        "seed-2779"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`input_required` / `input_provided` cannot distinguish node HITL, corroboration pause, or conversational user-input pause",
+        "input_required",
+        "input_provided"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01803",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02322 is partial for `cmd.graph.approve_hitl` / `deny_hitl` arguments do not match `UI_Command_Catalog.md` (`re",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02322"
+      ],
+      "source_obligation_ids": [
+        "obl-2174"
+      ],
+      "source_seed_ids": [
+        "seed-2825"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`cmd.graph.approve_hitl` / `deny_hitl` arguments do not match `UI_Command_Catalog.md` (`request_id` mismatch)",
+        "cmd.graph.approve_hitl",
+        "deny_hitl",
+        "UI_Command_Catalog.md",
+        "request_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01805",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02324 is partial for cross-surface open commands are required in prose but not bound in the Run Graph command s",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02324"
+      ],
+      "source_obligation_ids": [
+        "obl-2176"
+      ],
+      "source_seed_ids": [
+        "seed-2827"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "cross-surface open commands are required in prose but not bound in the Run Graph command section"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01864",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02395 is partial for historical/current run switching must not change layout identity; layout scope is project-",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02395"
+      ],
+      "source_obligation_ids": [
+        "obl-2245"
+      ],
+      "source_seed_ids": [
+        "seed-2912"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "historical/current run switching must not change layout identity; layout scope is project-level, not run-level"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02191",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02784 is partial for but the requested-side fields should remain queryable/auditable where the run snapshot is",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02784"
+      ],
+      "source_obligation_ids": [
+        "obl-2631"
+      ],
+      "source_seed_ids": [
+        "seed-3451"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "but the requested-side fields should remain queryable/auditable where the run snapshot is shown"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02449",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03118 is partial for `Executor_Protocol.md` presents execution as a canonical `Builder` / `Verifier` / `Oversee",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03118"
+      ],
+      "source_obligation_ids": [
+        "obl-2964"
+      ],
+      "source_seed_ids": [
+        "seed-3912"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "`Executor_Protocol.md` presents execution as a canonical `Builder` / `Verifier` / `Overseer` loop over graph nodes.",
+        "Executor_Protocol.md",
+        "Builder",
+        "Verifier",
+        "Overseer"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02516",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03211 is partial for approval resolution emits `node.prerequisite_resolved`",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03211"
+      ],
+      "source_obligation_ids": [
+        "obl-3057"
+      ],
+      "source_seed_ids": [
+        "seed-4050"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "approval resolution emits `node.prerequisite_resolved`",
+        "node.prerequisite_resolved"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02523",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03223 is partial for `UI_Command_Catalog.md` still has graph-local `cmd.graph.approve_hitl` / `cmd.graph.deny_h",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03223"
+      ],
+      "source_obligation_ids": [
+        "obl-3069"
+      ],
+      "source_seed_ids": [
+        "seed-4069"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "`UI_Command_Catalog.md` still has graph-local `cmd.graph.approve_hitl` / `cmd.graph.deny_hitl` entries even though the same file later establishes `cmd.runtime.*` as the canonical recovery namespace.",
+        "UI_Command_Catalog.md",
+        "cmd.graph.approve_hitl",
+        "cmd.graph.deny_hitl",
+        "cmd.runtime.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02537",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03241 is partial for `UI_Command_Catalog.md` still leaves the runtime command layer under-owned: deprecated gra",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-032: Concern linkage to adjacent families"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03241"
+      ],
+      "source_obligation_ids": [
+        "obl-3087"
+      ],
+      "source_seed_ids": [
+        "seed-4102"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "`UI_Command_Catalog.md` still leaves the runtime command layer under-owned: deprecated graph recovery commands are still presented as live canon, HITL `approve_continue` still has no canonical `cmd.*` mapping, cross-surface pivot payloads still lack rewrite-era structural keys, and there are still no stable `cmd.account.*`, `cmd.concern.*`, or `cmd.promotion.*` families.",
+        "UI_Command_Catalog.md",
+        "approve_continue",
+        "cmd.*",
+        "cmd.account.*",
+        "cmd.concern.*",
+        "cmd.promotion.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02554",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03265 is partial for Define canonical command families for account operations, concern operations, and promotio",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-032: Concern linkage to adjacent families"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03265"
+      ],
+      "source_obligation_ids": [
+        "obl-3111"
+      ],
+      "source_seed_ids": [
+        "seed-4134"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Define canonical command families for account operations, concern operations, and promotion operations, and explicitly map HITL `allowed_action_ids` into stable `cmd.*` handlers.",
+        "allowed_action_ids",
+        "cmd.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02589",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03308 is partial for `execution_role` is now an audit/routing requirement, not a nice-to-have display field.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03308"
+      ],
+      "source_obligation_ids": [
+        "obl-3154"
+      ],
+      "source_seed_ids": [
+        "seed-4196"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "`execution_role` is now an audit/routing requirement, not a nice-to-have display field.",
+        "execution_role"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02721",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03480 is partial for `workflow_run_id` links the three passes together, but it is not enough by itself to relat",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03480"
+      ],
+      "source_obligation_ids": [
+        "obl-3326"
+      ],
+      "source_seed_ids": [
+        "seed-4467"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`workflow_run_id` links the three passes together, but it is not enough by itself to relate the sweep to `wizard_id`, staged requirements state, or the later launched run.",
+        "workflow_run_id",
+        "wizard_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02828",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03612 is partial for `node.prerequisite_resolved`",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03612"
+      ],
+      "source_obligation_ids": [
+        "obl-3458"
+      ],
+      "source_seed_ids": [
+        "seed-4660"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "`node.prerequisite_resolved`",
+        "node.prerequisite_resolved"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02996",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03842 is partial for The docs are already consistent on one important point: provider/account identity is share",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03842"
+      ],
+      "source_obligation_ids": [
+        "obl-3687"
+      ],
+      "source_seed_ids": [
+        "seed-5009"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "The docs are already consistent on one important point: provider/account identity is shared across assistant, interviewer, builders, overseers, and node workers, but that does not by itself explain what the actor was doing."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00089",
+    "cov-00111",
+    "cov-00130",
+    "cov-00242",
+    "cov-00447",
+    "cov-00530",
+    "cov-00638",
+    "cov-00674",
+    "cov-00679",
+    "cov-00702",
+    "cov-00705",
+    "cov-00803",
+    "cov-01008",
+    "cov-01267",
+    "cov-01324",
+    "cov-01662",
+    "cov-01830",
+    "cov-01985",
+    "cov-01995",
+    "cov-02005",
+    "cov-02010",
+    "cov-02068",
+    "cov-02175",
+    "cov-02188",
+    "cov-02258",
+    "cov-02279",
+    "cov-02286",
+    "cov-02322",
+    "cov-02324",
+    "cov-02395",
+    "cov-02784",
+    "cov-03118",
+    "cov-03211",
+    "cov-03223",
+    "cov-03241",
+    "cov-03265",
+    "cov-03308",
+    "cov-03480",
+    "cov-03612",
+    "cov-03842"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-034",
+    "obl-038",
+    "obl-042",
+    "obl-1124",
+    "obl-1181",
+    "obl-129",
+    "obl-1519",
+    "obl-1687",
+    "obl-1842",
+    "obl-1852",
+    "obl-1862",
+    "obl-1867",
+    "obl-1925",
+    "obl-2030",
+    "obl-2043",
+    "obl-2112",
+    "obl-2132",
+    "obl-2139",
+    "obl-2174",
+    "obl-2176",
+    "obl-2245",
+    "obl-2631",
+    "obl-2964",
+    "obl-304",
+    "obl-3057",
+    "obl-3069",
+    "obl-3087",
+    "obl-3111",
+    "obl-3154",
+    "obl-3326",
+    "obl-3458",
+    "obl-3687",
+    "obl-387",
+    "obl-495",
+    "obl-531",
+    "obl-536",
+    "obl-559",
+    "obl-562",
+    "obl-660",
+    "obl-865"
+  ],
+  "source_seed_ids_represented": [
+    "seed-034",
+    "seed-038",
+    "seed-042",
+    "seed-1010",
+    "seed-1336",
+    "seed-134",
+    "seed-1407",
+    "seed-1883",
+    "seed-2118",
+    "seed-2373",
+    "seed-2383",
+    "seed-2401",
+    "seed-2406",
+    "seed-2483",
+    "seed-2639",
+    "seed-2652",
+    "seed-2744",
+    "seed-2772",
+    "seed-2779",
+    "seed-2825",
+    "seed-2827",
+    "seed-2912",
+    "seed-3451",
+    "seed-353",
+    "seed-3912",
+    "seed-4050",
+    "seed-4069",
+    "seed-4102",
+    "seed-4134",
+    "seed-4196",
+    "seed-4467",
+    "seed-449",
+    "seed-4660",
+    "seed-5009",
+    "seed-570",
+    "seed-607",
+    "seed-612",
+    "seed-640",
+    "seed-643",
+    "seed-755"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0006",
+    "shard-0007",
+    "shard-0008",
+    "shard-0009",
+    "shard-0011",
+    "shard-0012",
+    "shard-0013",
+    "shard-0014",
+    "shard-0015",
+    "shard-0018",
+    "shard-0022",
+    "shard-0023",
+    "shard-0027",
+    "shard-0030",
+    "shard-0032",
+    "shard-0033",
+    "shard-0034",
+    "shard-0035",
+    "shard-0036",
+    "shard-0040",
+    "shard-0044",
+    "shard-0045",
+    "shard-0046",
+    "shard-0047",
+    "shard-0049",
+    "shard-0051"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-00086",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00089 is missing for projection ownership and source-control partitioning",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "projection ownership by surface"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00089"
+      ],
+      "source_obligation_ids": [
+        "obl-034"
+      ],
+      "source_seed_ids": [
+        "seed-034"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "exact_missing_items": [
+        "which Orchestrator seam should lead the discussion: runtime ownership boundary, page/tab IA, blocked/remediation UX, lineage across graph/evidence/history/usage",
+        "Source Control worktree area likely needs top-level partitioning into Orchestrator Owned and Other",
+        "Orchestrator Owned section likely needs further subdivision by feature seam",
+        "Orchestrator page is a high-density information surface with very large detail volume"
+      ],
+      "stale_tokens": [
+        "Tiers tab",
+        "page layer",
+        "Orchestrator Owned"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00108",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00111 is missing for orchestrator attention routing and lane-aware widgets",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "GUI / UX Impacts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00111"
+      ],
+      "source_obligation_ids": [
+        "obl-038"
+      ],
+      "source_seed_ids": [
+        "seed-038"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Replace Tiers-first navigation",
+        "Define Dashboard\u2192Orchestrator\u2192thread routing contract",
+        "Add package/seam/lane visualization widgets",
+        "Define which overseer's thread opens on click",
+        "Make worktree/lane state visible and navigable"
+      ],
+      "stale_tokens": [
+        "Tiers tab",
+        "widget.tier_tree",
+        "3-bar layout",
+        "grouped-by-phase",
+        "single-threaded",
+        "current_task"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00127",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00130 is missing for graph-native attention routing",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "Cleanup Priorities"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00130"
+      ],
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "source_seed_ids": [
+        "seed-042"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "exact_missing_items": [
+        "Replace or demote tiers-first widgets and layouts.",
+        "Add package/seam/lane-aware identity, worktree, and attention surfaces.",
+        "Define Dashboard \u2192 Orchestrator \u2192 chat-thread routing using canonical runtime objects rather than prose-only references."
+      ],
+      "stale_tokens": [
+        "tiers-first",
+        "phase-grouped layouts",
+        "single current task",
+        "single worktree",
+        "prose-only references"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00215",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00242 is present for `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00242"
+      ],
+      "source_obligation_ids": [
+        "obl-129"
+      ],
+      "source_seed_ids": [
+        "seed-134"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00350",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00447 is partial for `Contracts_V0.md` forbids `_persona_id` canonical names while downstream UI/runtime docs s",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00447"
+      ],
+      "source_obligation_ids": [
+        "obl-304"
+      ],
+      "source_seed_ids": [
+        "seed-353"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`Contracts_V0.md` forbids `_persona_id` canonical names while downstream UI/runtime docs still consume or display them.",
+        "Contracts_V0.md",
+        "_persona_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00418",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00530 is partial for `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` are fixed-purpose tabs with str",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00530"
+      ],
+      "source_obligation_ids": [
+        "obl-387"
+      ],
+      "source_seed_ids": [
+        "seed-449"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "`Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` are fixed-purpose tabs with stronger native layouts and interaction contracts",
+        "Seams",
+        "Node Graph",
+        "Evidence",
+        "History",
+        "Ledger"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00492",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00638 is partial for distinguish `active run truth` from `focused run context`",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00638"
+      ],
+      "source_obligation_ids": [
+        "obl-495"
+      ],
+      "source_seed_ids": [
+        "seed-570"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "distinguish `active run truth` from `focused run context`",
+        "active run truth",
+        "focused run context"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00524",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00674 is partial for Add a first-class `Historical Run Mode` UI contract for Orchestrator.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00674"
+      ],
+      "source_obligation_ids": [
+        "obl-531"
+      ],
+      "source_seed_ids": [
+        "seed-607"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "Add a first-class `Historical Run Mode` UI contract for Orchestrator.",
+        "Historical Run Mode"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00529",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00679 is present for Cross-tab deep links must preserve focused `run_id` so History -> Graph -> Evidence -> Led",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00679"
+      ],
+      "source_obligation_ids": [
+        "obl-536"
+      ],
+      "source_seed_ids": [
+        "seed-612"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "Cross-tab deep links must preserve focused `run_id` so History -> Graph -> Evidence -> Ledger stays coherent.",
+        "run_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00550",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00702 is present for run -> switch `focused_run_id` and open the relevant tab/context",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00702"
+      ],
+      "source_obligation_ids": [
+        "obl-559"
+      ],
+      "source_seed_ids": [
+        "seed-640"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "run -> switch `focused_run_id` and open the relevant tab/context",
+        "focused_run_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00553",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00705 is partial for the UI should disclose that the focused run changed because of the search result",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00705"
+      ],
+      "source_obligation_ids": [
+        "obl-562"
+      ],
+      "source_seed_ids": [
+        "seed-643"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "the UI should disclose that the focused run changed because of the search result"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00630",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00803 is partial for Avoid UI copy like `superseded by newer run` unless there is an explicit relationship prov",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00803"
+      ],
+      "source_obligation_ids": [
+        "obl-660"
+      ],
+      "source_seed_ids": [
+        "seed-755"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "exact_missing_items": [
+        "Avoid UI copy like `superseded by newer run` unless there is an explicit relationship proving that.",
+        "superseded by newer run"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00771",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01008 is partial for prerequisite evidence / review / corroboration refs",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01008"
+      ],
+      "source_obligation_ids": [
+        "obl-865"
+      ],
+      "source_seed_ids": [
+        "seed-1010"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "exact_missing_items": [
+        "prerequisite evidence / review / corroboration refs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00984",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01267 is partial for `Graph patch required`",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01267"
+      ],
+      "source_obligation_ids": [
+        "obl-1124"
+      ],
+      "source_seed_ids": [
+        "seed-1336"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "exact_missing_items": [
+        "`Graph patch required`",
+        "Graph patch required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01035",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01324 is partial for The graph tab already has the strongest explicit scale contract in the current docs.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01324"
+      ],
+      "source_obligation_ids": [
+        "obl-1181"
+      ],
+      "source_seed_ids": [
+        "seed-1407"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "exact_missing_items": [
+        "The graph tab already has the strongest explicit scale contract in the current docs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01301",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01662 is partial for portable package containing multiple records/artifacts plus manifest",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01662"
+      ],
+      "source_obligation_ids": [
+        "obl-1519"
+      ],
+      "source_seed_ids": [
+        "seed-1883"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "portable package containing multiple records/artifacts plus manifest"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01431",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01830 is partial for `superseded` and `replan_required` matter for graph patch and generation lineage",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01830"
+      ],
+      "source_obligation_ids": [
+        "obl-1687"
+      ],
+      "source_seed_ids": [
+        "seed-2118"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "exact_missing_items": [
+        "`superseded` and `replan_required` matter for graph patch and generation lineage",
+        "superseded",
+        "replan_required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01548",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01985 is partial for prompt/runtime resolution records, usage records, auth events, graph detail panels, and ar",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01985"
+      ],
+      "source_obligation_ids": [
+        "obl-1842"
+      ],
+      "source_seed_ids": [
+        "seed-2373"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "prompt/runtime resolution records, usage records, auth events, graph detail panels, and artifact views still do not share one obvious identity disclosure contract"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01556",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01995 is partial for graph patch lineage and concern/promotion visibility are now contract-level omissions, not",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01995"
+      ],
+      "source_obligation_ids": [
+        "obl-1852"
+      ],
+      "source_seed_ids": [
+        "seed-2383"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "graph patch lineage and concern/promotion visibility are now contract-level omissions, not just UI polish gaps"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01563",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02005 is partial for `run.started` / `usage.event` / `hitl.*` / config-validation rows in `storage-plan.md` sti",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02005"
+      ],
+      "source_obligation_ids": [
+        "obl-1862"
+      ],
+      "source_seed_ids": [
+        "seed-2401"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "`run.started` / `usage.event` / `hitl.*` / config-validation rows in `storage-plan.md` still under-specify or mis-key the runtime identity and execution anchors they are supposed to carry",
+        "run.started",
+        "usage.event",
+        "hitl.*",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01567",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02010 is partial for the gap is not just \"missing multi-account support\" but \"mutable display identity used as",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02010"
+      ],
+      "source_obligation_ids": [
+        "obl-1867"
+      ],
+      "source_seed_ids": [
+        "seed-2406"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "the gap is not just \"missing multi-account support\" but \"mutable display identity used as storage/routing anchor\""
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01607",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02068 is partial for concern operations should likely be available from multiple surfaces (`Progress`, `Seams`,",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02068"
+      ],
+      "source_obligation_ids": [
+        "obl-1925"
+      ],
+      "source_seed_ids": [
+        "seed-2483"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "concern operations should likely be available from multiple surfaces (`Progress`, `Seams`, `Evidence`, `History`, `Ledger`, graph inspector), so the same action policy must survive different UI densities",
+        "Progress",
+        "Seams",
+        "Evidence",
+        "History",
+        "Ledger"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01693",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02175 is partial for `storage-plan.md` says `run.started` MUST include the full persona/runtime snapshot, but t",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02175"
+      ],
+      "source_obligation_ids": [
+        "obl-2030"
+      ],
+      "source_seed_ids": [
+        "seed-2639"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`storage-plan.md` says `run.started` MUST include the full persona/runtime snapshot, but the event table row still enumerates a much thinner field set.",
+        "storage-plan.md",
+        "run.started"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01705",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02188 is partial for Make Run Graph and Orchestrator consume attempt/receipt-based canonical projections and co",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02188"
+      ],
+      "source_obligation_ids": [
+        "obl-2043"
+      ],
+      "source_seed_ids": [
+        "seed-2652"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "Make Run Graph and Orchestrator consume attempt/receipt-based canonical projections and command args already present in `UI_Command_Catalog.md`, instead of re-describing tier-era or node-only action contracts",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01753",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02258 is partial for `Plans/Run_Graph_View.md` + `Plans/Runtime_Artifacts_Panel.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02258"
+      ],
+      "source_obligation_ids": [
+        "obl-2112"
+      ],
+      "source_seed_ids": [
+        "seed-2744"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`Plans/Run_Graph_View.md` + `Plans/Runtime_Artifacts_Panel.md`",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01771",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02279 is partial for no minority-advisory outcome for the now-required 2-of-3 corroboration pattern",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02279"
+      ],
+      "source_obligation_ids": [
+        "obl-2132"
+      ],
+      "source_seed_ids": [
+        "seed-2772"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "no minority-advisory outcome for the now-required 2-of-3 corroboration pattern"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01776",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02286 is partial for `input_required` / `input_provided` cannot distinguish node HITL, corroboration pause, or",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02286"
+      ],
+      "source_obligation_ids": [
+        "obl-2139"
+      ],
+      "source_seed_ids": [
+        "seed-2779"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`input_required` / `input_provided` cannot distinguish node HITL, corroboration pause, or conversational user-input pause",
+        "input_required",
+        "input_provided"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01803",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02322 is partial for `cmd.graph.approve_hitl` / `deny_hitl` arguments do not match `UI_Command_Catalog.md` (`re",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02322"
+      ],
+      "source_obligation_ids": [
+        "obl-2174"
+      ],
+      "source_seed_ids": [
+        "seed-2825"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`cmd.graph.approve_hitl` / `deny_hitl` arguments do not match `UI_Command_Catalog.md` (`request_id` mismatch)",
+        "cmd.graph.approve_hitl",
+        "deny_hitl",
+        "UI_Command_Catalog.md",
+        "request_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01805",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02324 is partial for cross-surface open commands are required in prose but not bound in the Run Graph command s",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02324"
+      ],
+      "source_obligation_ids": [
+        "obl-2176"
+      ],
+      "source_seed_ids": [
+        "seed-2827"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "cross-surface open commands are required in prose but not bound in the Run Graph command section"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01864",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02395 is partial for historical/current run switching must not change layout identity; layout scope is project-",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02395"
+      ],
+      "source_obligation_ids": [
+        "obl-2245"
+      ],
+      "source_seed_ids": [
+        "seed-2912"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "historical/current run switching must not change layout identity; layout scope is project-level, not run-level"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02191",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02784 is partial for but the requested-side fields should remain queryable/auditable where the run snapshot is",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02784"
+      ],
+      "source_obligation_ids": [
+        "obl-2631"
+      ],
+      "source_seed_ids": [
+        "seed-3451"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "but the requested-side fields should remain queryable/auditable where the run snapshot is shown"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02449",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03118 is partial for `Executor_Protocol.md` presents execution as a canonical `Builder` / `Verifier` / `Oversee",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03118"
+      ],
+      "source_obligation_ids": [
+        "obl-2964"
+      ],
+      "source_seed_ids": [
+        "seed-3912"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "`Executor_Protocol.md` presents execution as a canonical `Builder` / `Verifier` / `Overseer` loop over graph nodes.",
+        "Executor_Protocol.md",
+        "Builder",
+        "Verifier",
+        "Overseer"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02516",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03211 is partial for approval resolution emits `node.prerequisite_resolved`",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03211"
+      ],
+      "source_obligation_ids": [
+        "obl-3057"
+      ],
+      "source_seed_ids": [
+        "seed-4050"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "approval resolution emits `node.prerequisite_resolved`",
+        "node.prerequisite_resolved"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02523",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03223 is partial for `UI_Command_Catalog.md` still has graph-local `cmd.graph.approve_hitl` / `cmd.graph.deny_h",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03223"
+      ],
+      "source_obligation_ids": [
+        "obl-3069"
+      ],
+      "source_seed_ids": [
+        "seed-4069"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "`UI_Command_Catalog.md` still has graph-local `cmd.graph.approve_hitl` / `cmd.graph.deny_hitl` entries even though the same file later establishes `cmd.runtime.*` as the canonical recovery namespace.",
+        "UI_Command_Catalog.md",
+        "cmd.graph.approve_hitl",
+        "cmd.graph.deny_hitl",
+        "cmd.runtime.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02537",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03241 is partial for `UI_Command_Catalog.md` still leaves the runtime command layer under-owned: deprecated gra",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-032: Concern linkage to adjacent families"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03241"
+      ],
+      "source_obligation_ids": [
+        "obl-3087"
+      ],
+      "source_seed_ids": [
+        "seed-4102"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "`UI_Command_Catalog.md` still leaves the runtime command layer under-owned: deprecated graph recovery commands are still presented as live canon, HITL `approve_continue` still has no canonical `cmd.*` mapping, cross-surface pivot payloads still lack rewrite-era structural keys, and there are still no stable `cmd.account.*`, `cmd.concern.*`, or `cmd.promotion.*` families.",
+        "UI_Command_Catalog.md",
+        "approve_continue",
+        "cmd.*",
+        "cmd.account.*",
+        "cmd.concern.*",
+        "cmd.promotion.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02554",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03265 is partial for Define canonical command families for account operations, concern operations, and promotio",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-032: Concern linkage to adjacent families"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03265"
+      ],
+      "source_obligation_ids": [
+        "obl-3111"
+      ],
+      "source_seed_ids": [
+        "seed-4134"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Define canonical command families for account operations, concern operations, and promotion operations, and explicitly map HITL `allowed_action_ids` into stable `cmd.*` handlers.",
+        "allowed_action_ids",
+        "cmd.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02589",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03308 is partial for `execution_role` is now an audit/routing requirement, not a nice-to-have display field.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03308"
+      ],
+      "source_obligation_ids": [
+        "obl-3154"
+      ],
+      "source_seed_ids": [
+        "seed-4196"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "`execution_role` is now an audit/routing requirement, not a nice-to-have display field.",
+        "execution_role"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02721",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03480 is partial for `workflow_run_id` links the three passes together, but it is not enough by itself to relat",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03480"
+      ],
+      "source_obligation_ids": [
+        "obl-3326"
+      ],
+      "source_seed_ids": [
+        "seed-4467"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`workflow_run_id` links the three passes together, but it is not enough by itself to relate the sweep to `wizard_id`, staged requirements state, or the later launched run.",
+        "workflow_run_id",
+        "wizard_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02828",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03612 is partial for `node.prerequisite_resolved`",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03612"
+      ],
+      "source_obligation_ids": [
+        "obl-3458"
+      ],
+      "source_seed_ids": [
+        "seed-4660"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "`node.prerequisite_resolved`",
+        "node.prerequisite_resolved"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02996",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03842 is partial for The docs are already consistent on one important point: provider/account identity is share",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03842"
+      ],
+      "source_obligation_ids": [
+        "obl-3687"
+      ],
+      "source_seed_ids": [
+        "seed-5009"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "The docs are already consistent on one important point: provider/account identity is shared across assistant, interviewer, builders, overseers, and node workers, but that does not by itself explain what the actor was doing."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "uncertain_items": []
+}

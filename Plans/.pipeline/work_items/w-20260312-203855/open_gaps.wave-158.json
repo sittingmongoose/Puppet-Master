@@ -1,0 +1,1143 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-158",
+  "group_ids": [
+    "gapgrp-0629",
+    "gapgrp-0630",
+    "gapgrp-0631",
+    "gapgrp-0632"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-00232",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00263 is missing for `Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `Plans/test_strateg",
+      "affected_targets": [
+        {
+          "path": "Plans/evidence.schema.json",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00263"
+      ],
+      "source_obligation_ids": [
+        "obl-144"
+      ],
+      "source_seed_ids": [
+        "seed-150"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "`Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `Plans/test_strategy.schema.json`, `Plans/evidence.schema.json`, `Plans/gui_automation_manifest.schema.json`",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/test_strategy.schema.json",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03360",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04300 is missing for `Plans/evidence.schema.json`",
+      "affected_targets": [
+        {
+          "path": "Plans/evidence.schema.json",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04300"
+      ],
+      "source_obligation_ids": [
+        "obl-4140"
+      ],
+      "source_seed_ids": [
+        "seed-5738",
+        "seed-5751",
+        "seed-5989",
+        "seed-6812",
+        "seed-6834",
+        "seed-8074",
+        "seed-8095",
+        "seed-9172"
+      ],
+      "source_shard_ids": [
+        "shard-0057",
+        "shard-0059",
+        "shard-0065",
+        "shard-0075",
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "`Plans/evidence.schema.json`",
+        "Plans/evidence.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03368",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04316 is missing for Either extend `Plans/evidence.schema.json` with structured gate-specific detail blocks, or",
+      "affected_targets": [
+        {
+          "path": "Plans/evidence.schema.json",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04316"
+      ],
+      "source_obligation_ids": [
+        "obl-4156"
+      ],
+      "source_seed_ids": [
+        "seed-5766"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "Either extend `Plans/evidence.schema.json` with structured gate-specific detail blocks, or add a dedicated wiring-evidence schema for richer machine-readable results.",
+        "Plans/evidence.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04421",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05676 is missing for `Plans/evidence.schema.json` is also too generic to express route/wrapper verification cle",
+      "affected_targets": [
+        {
+          "path": "Plans/evidence.schema.json",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05676"
+      ],
+      "source_obligation_ids": [
+        "obl-5448"
+      ],
+      "source_seed_ids": [
+        "seed-8085"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "`Plans/evidence.schema.json` is also too generic to express route/wrapper verification cleanly:",
+        "Plans/evidence.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00391",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00499 is partial for Source Control should keep `Worktrees` as the primary subview/object list rather than flip",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": "# Puppet Master Feature List (Reference)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00499"
+      ],
+      "source_obligation_ids": [
+        "obl-356"
+      ],
+      "source_seed_ids": [
+        "seed-411"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "Source Control should keep `Worktrees` as the primary subview/object list rather than flipping to a lane-first list.",
+        "Worktrees"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04938",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06360 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06360"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00167",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00180 is missing for `Plans/feature-list.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00180"
+      ],
+      "source_obligation_ids": [
+        "obl-076"
+      ],
+      "source_seed_ids": [
+        "seed-076",
+        "seed-195",
+        "seed-2917",
+        "seed-2940",
+        "seed-2978",
+        "seed-6085",
+        "seed-6102",
+        "seed-6555",
+        "seed-6573",
+        "seed-6589",
+        "seed-6607",
+        "seed-6686",
+        "seed-6705",
+        "seed-6728",
+        "seed-7398",
+        "seed-7443",
+        "seed-7468",
+        "seed-8401",
+        "seed-8834",
+        "seed-8875",
+        "seed-8903",
+        "seed-8929",
+        "seed-8967",
+        "seed-9001",
+        "seed-9027",
+        "seed-9061",
+        "seed-9525",
+        "seed-9547",
+        "seed-9583",
+        "seed-9615",
+        "seed-9665"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010",
+        "shard-0036",
+        "shard-0037",
+        "shard-0059",
+        "shard-0063",
+        "shard-0064",
+        "shard-0070",
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0085",
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "`Plans/feature-list.md`",
+        "Plans/feature-list.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00250",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00295 is missing for `Plans/feature-list.md`, `Plans/newfeatures.md`, `Plans/MiscPlan.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00295"
+      ],
+      "source_obligation_ids": [
+        "obl-163"
+      ],
+      "source_seed_ids": [
+        "seed-173"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "`Plans/feature-list.md`, `Plans/newfeatures.md`, `Plans/MiscPlan.md`",
+        "Plans/feature-list.md",
+        "Plans/newfeatures.md",
+        "Plans/MiscPlan.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00295",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00364 is partial for Source Control can still list worktrees directly, but should also expose lane/package owne",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": "# Puppet Master Feature List (Reference)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00364"
+      ],
+      "source_obligation_ids": [
+        "obl-222"
+      ],
+      "source_seed_ids": [
+        "seed-254"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "Source Control can still list worktrees directly, but should also expose lane/package ownership and lifecycle state when known."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01870",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02402 is partial for `projects:v1` currently only promises list metadata like path, detected languages, last-op",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": "# Puppet Master Feature List (Reference)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02402"
+      ],
+      "source_obligation_ids": [
+        "obl-2252"
+      ],
+      "source_seed_ids": [
+        "seed-2924"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "`projects:v1` currently only promises list metadata like path, detected languages, last-opened timestamp, health status, and overrides",
+        "projects:v1"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03538",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04506 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04506"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04050",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05212 is partial for The earlier `object_kind` list is directionally correct, but it now needs a firmer canonic",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": "# Puppet Master Feature List (Reference)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05212"
+      ],
+      "source_obligation_ids": [
+        "obl-4988"
+      ],
+      "source_seed_ids": [
+        "seed-7245"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "The earlier `object_kind` list is directionally correct, but it now needs a firmer canonical refresh against the rewrite-era object set and the newer runtime lineage objects.",
+        "object_kind"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04861",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06275 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06275"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04959",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06386 is partial for the primitive list still lacks named ownership for `route_target` and `OpenSubject`",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": "# Puppet Master Feature List (Reference)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06386"
+      ],
+      "source_obligation_ids": [
+        "obl-6027"
+      ],
+      "source_seed_ids": [
+        "seed-9114"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "the primitive list still lacks named ownership for `route_target` and `OpenSubject`",
+        "route_target",
+        "OpenSubject"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00263",
+    "cov-04300",
+    "cov-04316",
+    "cov-05676",
+    "cov-00499",
+    "cov-06360",
+    "cov-00180",
+    "cov-00295",
+    "cov-00364",
+    "cov-02402",
+    "cov-04506",
+    "cov-05212",
+    "cov-06275",
+    "cov-06386"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-076",
+    "obl-144",
+    "obl-163",
+    "obl-222",
+    "obl-2252",
+    "obl-356",
+    "obl-4140",
+    "obl-4156",
+    "obl-4292",
+    "obl-4988",
+    "obl-5448",
+    "obl-5986",
+    "obl-6009",
+    "obl-6027"
+  ],
+  "source_seed_ids_represented": [
+    "seed-076",
+    "seed-150",
+    "seed-173",
+    "seed-195",
+    "seed-254",
+    "seed-2917",
+    "seed-2924",
+    "seed-2940",
+    "seed-2978",
+    "seed-411",
+    "seed-5738",
+    "seed-5751",
+    "seed-5766",
+    "seed-5989",
+    "seed-6001",
+    "seed-6085",
+    "seed-6102",
+    "seed-6555",
+    "seed-6573",
+    "seed-6589",
+    "seed-6607",
+    "seed-6686",
+    "seed-6705",
+    "seed-6728",
+    "seed-6812",
+    "seed-6834",
+    "seed-7245",
+    "seed-7398",
+    "seed-7443",
+    "seed-7468",
+    "seed-8074",
+    "seed-8085",
+    "seed-8095",
+    "seed-8401",
+    "seed-8834",
+    "seed-8875",
+    "seed-8903",
+    "seed-8929",
+    "seed-8967",
+    "seed-9001",
+    "seed-9006",
+    "seed-9027",
+    "seed-9061",
+    "seed-9092",
+    "seed-9114",
+    "seed-9172",
+    "seed-9525",
+    "seed-9547",
+    "seed-9583",
+    "seed-9615",
+    "seed-9665"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0009",
+    "shard-0010",
+    "shard-0012",
+    "shard-0036",
+    "shard-0037",
+    "shard-0057",
+    "shard-0059",
+    "shard-0063",
+    "shard-0064",
+    "shard-0065",
+    "shard-0069",
+    "shard-0070",
+    "shard-0075",
+    "shard-0077",
+    "shard-0081",
+    "shard-0082",
+    "shard-0083",
+    "shard-0085",
+    "shard-0086"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-00232",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00263 is missing for `Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `Plans/test_strateg",
+      "affected_targets": [
+        {
+          "path": "Plans/evidence.schema.json",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00263"
+      ],
+      "source_obligation_ids": [
+        "obl-144"
+      ],
+      "source_seed_ids": [
+        "seed-150"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "`Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `Plans/test_strategy.schema.json`, `Plans/evidence.schema.json`, `Plans/gui_automation_manifest.schema.json`",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/test_strategy.schema.json",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03360",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04300 is missing for `Plans/evidence.schema.json`",
+      "affected_targets": [
+        {
+          "path": "Plans/evidence.schema.json",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04300"
+      ],
+      "source_obligation_ids": [
+        "obl-4140"
+      ],
+      "source_seed_ids": [
+        "seed-5738",
+        "seed-5751",
+        "seed-5989",
+        "seed-6812",
+        "seed-6834",
+        "seed-8074",
+        "seed-8095",
+        "seed-9172"
+      ],
+      "source_shard_ids": [
+        "shard-0057",
+        "shard-0059",
+        "shard-0065",
+        "shard-0075",
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "`Plans/evidence.schema.json`",
+        "Plans/evidence.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03368",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04316 is missing for Either extend `Plans/evidence.schema.json` with structured gate-specific detail blocks, or",
+      "affected_targets": [
+        {
+          "path": "Plans/evidence.schema.json",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04316"
+      ],
+      "source_obligation_ids": [
+        "obl-4156"
+      ],
+      "source_seed_ids": [
+        "seed-5766"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "Either extend `Plans/evidence.schema.json` with structured gate-specific detail blocks, or add a dedicated wiring-evidence schema for richer machine-readable results.",
+        "Plans/evidence.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04421",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05676 is missing for `Plans/evidence.schema.json` is also too generic to express route/wrapper verification cle",
+      "affected_targets": [
+        {
+          "path": "Plans/evidence.schema.json",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05676"
+      ],
+      "source_obligation_ids": [
+        "obl-5448"
+      ],
+      "source_seed_ids": [
+        "seed-8085"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "`Plans/evidence.schema.json` is also too generic to express route/wrapper verification cleanly:",
+        "Plans/evidence.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00391",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00499 is partial for Source Control should keep `Worktrees` as the primary subview/object list rather than flip",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": "# Puppet Master Feature List (Reference)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00499"
+      ],
+      "source_obligation_ids": [
+        "obl-356"
+      ],
+      "source_seed_ids": [
+        "seed-411"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "Source Control should keep `Worktrees` as the primary subview/object list rather than flipping to a lane-first list.",
+        "Worktrees"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04938",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06360 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06360"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00167",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00180 is missing for `Plans/feature-list.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00180"
+      ],
+      "source_obligation_ids": [
+        "obl-076"
+      ],
+      "source_seed_ids": [
+        "seed-076",
+        "seed-195",
+        "seed-2917",
+        "seed-2940",
+        "seed-2978",
+        "seed-6085",
+        "seed-6102",
+        "seed-6555",
+        "seed-6573",
+        "seed-6589",
+        "seed-6607",
+        "seed-6686",
+        "seed-6705",
+        "seed-6728",
+        "seed-7398",
+        "seed-7443",
+        "seed-7468",
+        "seed-8401",
+        "seed-8834",
+        "seed-8875",
+        "seed-8903",
+        "seed-8929",
+        "seed-8967",
+        "seed-9001",
+        "seed-9027",
+        "seed-9061",
+        "seed-9525",
+        "seed-9547",
+        "seed-9583",
+        "seed-9615",
+        "seed-9665"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010",
+        "shard-0036",
+        "shard-0037",
+        "shard-0059",
+        "shard-0063",
+        "shard-0064",
+        "shard-0070",
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0085",
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "`Plans/feature-list.md`",
+        "Plans/feature-list.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00250",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00295 is missing for `Plans/feature-list.md`, `Plans/newfeatures.md`, `Plans/MiscPlan.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00295"
+      ],
+      "source_obligation_ids": [
+        "obl-163"
+      ],
+      "source_seed_ids": [
+        "seed-173"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "`Plans/feature-list.md`, `Plans/newfeatures.md`, `Plans/MiscPlan.md`",
+        "Plans/feature-list.md",
+        "Plans/newfeatures.md",
+        "Plans/MiscPlan.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00295",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00364 is partial for Source Control can still list worktrees directly, but should also expose lane/package owne",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": "# Puppet Master Feature List (Reference)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00364"
+      ],
+      "source_obligation_ids": [
+        "obl-222"
+      ],
+      "source_seed_ids": [
+        "seed-254"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "Source Control can still list worktrees directly, but should also expose lane/package ownership and lifecycle state when known."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01870",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02402 is partial for `projects:v1` currently only promises list metadata like path, detected languages, last-op",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": "# Puppet Master Feature List (Reference)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02402"
+      ],
+      "source_obligation_ids": [
+        "obl-2252"
+      ],
+      "source_seed_ids": [
+        "seed-2924"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "`projects:v1` currently only promises list metadata like path, detected languages, last-opened timestamp, health status, and overrides",
+        "projects:v1"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03538",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04506 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04506"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04050",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05212 is partial for The earlier `object_kind` list is directionally correct, but it now needs a firmer canonic",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": "# Puppet Master Feature List (Reference)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05212"
+      ],
+      "source_obligation_ids": [
+        "obl-4988"
+      ],
+      "source_seed_ids": [
+        "seed-7245"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "The earlier `object_kind` list is directionally correct, but it now needs a firmer canonical refresh against the rewrite-era object set and the newer runtime lineage objects.",
+        "object_kind"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04861",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06275 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06275"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04959",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06386 is partial for the primitive list still lacks named ownership for `route_target` and `OpenSubject`",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": "# Puppet Master Feature List (Reference)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06386"
+      ],
+      "source_obligation_ids": [
+        "obl-6027"
+      ],
+      "source_seed_ids": [
+        "seed-9114"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "the primitive list still lacks named ownership for `route_target` and `OpenSubject`",
+        "route_target",
+        "OpenSubject"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

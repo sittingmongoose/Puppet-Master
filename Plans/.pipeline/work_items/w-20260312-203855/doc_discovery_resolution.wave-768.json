@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-768",
+  "group_ids": [
+    "discgrp-3069",
+    "discgrp-3070",
+    "discgrp-3071",
+    "discgrp-3072"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03349",
+      "source_obligation_ids": [
+        "obl-3195"
+      ],
+      "source_seed_ids": [
+        "seed-4260"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "# Adding Tool Support -- Research & Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Tools.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03350",
+      "source_obligation_ids": [
+        "obl-3196"
+      ],
+      "source_seed_ids": [
+        "seed-4261"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "### `tool.denied` requirements",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Tools.md:L1231"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03351",
+      "source_obligation_ids": [
+        "obl-3197"
+      ],
+      "source_seed_ids": [
+        "seed-4262"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "#### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Tools.md:L218"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03352",
+      "source_obligation_ids": [
+        "obl-3198"
+      ],
+      "source_seed_ids": [
+        "seed-4263"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "# Adding Tool Support -- Research & Plan",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Tools.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

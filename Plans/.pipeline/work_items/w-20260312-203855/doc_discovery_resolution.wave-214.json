@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-214",
+  "group_ids": [
+    "discgrp-0853",
+    "discgrp-0854",
+    "discgrp-0855",
+    "discgrp-0856"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01100",
+      "source_obligation_ids": [
+        "obl-957"
+      ],
+      "source_seed_ids": [
+        "seed-1124",
+        "seed-1203"
+      ],
+      "source_shard_ids": [
+        "shard-0019",
+        "shard-0020"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Models_System.md:L586"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01101",
+      "source_obligation_ids": [
+        "obl-958"
+      ],
+      "source_seed_ids": [
+        "seed-1125",
+        "seed-1204"
+      ],
+      "source_shard_ids": [
+        "shard-0019",
+        "shard-0020"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Models_System.md:L586"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01102",
+      "source_obligation_ids": [
+        "obl-959"
+      ],
+      "source_seed_ids": [
+        "seed-1126"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01103",
+      "source_obligation_ids": [
+        "obl-960"
+      ],
+      "source_seed_ids": [
+        "seed-1127"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1310"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

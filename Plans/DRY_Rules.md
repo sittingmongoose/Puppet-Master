@@ -1,5 +1,108 @@
 # DRY Rules (Canonical)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0170
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - likely issue: tier-boundary and single-Overseer audit rules are too rigid for package/seam overseers and automation-first execution.
+  - `Widget_System.md` still catalogs tier widgets and weak hostability rules
+  - Widget_System.md
+  - provider-gap disclosure rules (`honored`, `skipped`, `clamped`)
+  - honored
+  - skipped
+  - clamped
+  - Manual override lifecycle exists for Persona, but similar presentation rules are less explicit for provider/model/account/worker-policy overrides.
+  - Research Progress - 2026-03-16 - Auto Persona Resolution Rules
+  - Terms that need explicit distinction rules
+  - `FinalGUISpec.md` already contains many local disclosure rules, but they are distributed.
+  - FinalGUISpec.md
+  - concerns need exact identity, lineage, source linking, status, and interaction rules
+  - Concern lineage now needs more exact rules.
+  - still needs explicit account-switch history semantics and tighter binding between canonical snapshot rules and downstream event/record families
+  - Align `storage-plan.md` event-table rows with the stronger normative rules:
+  - storage-plan.md
+  - still needs project-scoped layout rules, terminal-widget normalization, projection-trust chrome, and attempt/lane-aware live data contracts
+  - `usage_event_ref?` is treated as the canonical bridge name in storage/receipt rules, but no doc actually defines what it is.
+  - usage_event_ref?
+  - title-bar project badges, Projects page cards, command-palette summaries, and attention-center rows should all reuse the same status vocabulary and precedence rules
+  - session-scoped `always` approvals and reject-cascade rules have no actor/lane/run/account scope key
+  - always
+  - needs immediate correction of canonical `thread_id` semantics and explicit upstream-account opacity rules
+  - thread_id
+  - now clearly needs its operational-identity rules bound into the shared runtime grammar
+  - Worktree/source-control contracts still need rewrite-native authority rules:
+  - still needs node/lane-aware vocabulary and projection authority rules
+  - `Executor_Protocol.md` still lacks `blocked_sequence` minting rules even though storage/contracts/UI all depend on it.
+  - Executor_Protocol.md
+  - blocked_sequence
+  - Execution-core seams are now pinned to specific missing mint/ownership rules:
+  - `Executor_Protocol.md` still has duplicated scheduler sections, still leaves `blocked_sequence` minting rules unowned, and still leaves the startup-recovery -> first scheduler-pass handshake implicit even though the vocabulary (`startup_recovered`) now exists.
+  - startup_recovered
+  - still lacks the mint/ownership rules that blocked/runtime recovery now depend on.
+  - duplicate canonical sections plus unowned mint/handshake rules remain an execution-core risk multiplier.
+  - If route-aware navigation becomes canonical, keeping `GATE-010` unchanged will make the strongest navigation rules effectively unenforced.
+  - GATE-010
+  - Make `Runtime_Artifacts_Panel.md` and other artifact-bearing surfaces consume the same subject-open resolver rather than bespoke artifact-opening rules.
+  - Runtime_Artifacts_Panel.md
+  - reserved-name ownership remains split across three docs, with `/compact` still showing why copied lists and copied rules are unsafe.
+  - /compact
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - resolves through canonical subject/open rules
+  - `OpenSubject` owns `subject_id` and subject realization rules
+  - OpenSubject
+  - subject_id
+  - Deprecated aliases and stable wrappers need different lifecycle rules.
+  - Treat `resume_url` as a derived serialization of `route_target`, with decoding rules anchored back to `Contracts_V0.md`.
+  - resume_url
+  - route_target
+  - Contracts_V0.md
+  - Research Progress - 2026-03-17 - Canonical route validation and rejection rules
+  - The route layer now needs explicit invalid-combination rules.
+  - Canonical route validation rules are:
+  - A bounded contract needs rejection rules.
+  - Scoped identity rules:
+  - Resolver logic must be responsible for applying the correct scoped lookup rules.
+  - Reconcile owner docs first, then update these four consumer docs to consume the canonical route/object model rather than invent page-local identity rules.
+  - Reconcile worker output and evidence update rules so they align with attempt/node/runtime lineage rather than `TierChanged`-driven active-tier state.
+  - TierChanged
+  - queue-analysis and blocked-state rendering rules keyed to canonical runtime records
+  - `[retired-token-2]` cross-checks surfaced duplicated canonical sections, malformed/uncategorized `[retired-token-1]`s, lowercase normative text that evades traceability gates, and alias-canonicalization rules that now contradict owner docs.
+  - [retired-token-2]
+  - [retired-token-1]
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - Research Progress - 2026-03-17 - owner-traceability seam: Decision Log, DRY Rules, Crosswalk
+  - project-summary, escalation, blocked-owner, and resurfacing rules
+  - route/open-subject/bridge-field refinement and verification rules
+  - Example pattern: `route_target` / `OpenSubject` exist, but precedence, reject rules, examples, and scoped-resolution rules are still missing.
+  - Bridge fields exist, but precedence/join semantics and compatibility fallback rules remain under-specified.
+  - Envelope fields landed, but per-family behavior rules and stronger bridge-governance semantics were not fully transferred.
+  - Missing blocked-owner / escalation / resurfacing rules will produce inconsistent UX and inconsistent persistence semantics.
+  - Missing cleanup/lifecycle rules will produce destructive ambiguity between archive/remove/prune/recover behaviors.
+  - detailed rules, examples, field schemas, or operational policies often did not
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
@@ -98,6 +201,27 @@ ContractRef: Primitive:DRYRules, PolicyRule:Decision_Policy.md§2
 ---
 
 ## 6. ContractRef taxonomy (allowed categories)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0171
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `inspector_target` remains allowed because it is a reusable detail-focus field rather than per-surface noise.
+  - inspector_target
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 ContractRef entries are comma-separated.
 
 Allowed categories (minimum):
@@ -162,6 +286,26 @@ ContractRef: Primitive:DRYRules
 
 <a id="9"></a>
 ## 9. No unreferenced operational text
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0173
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Later canonical correction text says:
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Operational requirements without `ContractRef:` are non-canonical and MUST fail the plan-quality gate.
 
 ContractRef: Gate:GATE-009

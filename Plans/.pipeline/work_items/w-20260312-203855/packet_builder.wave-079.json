@@ -1,0 +1,331 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-079",
+  "group_ids": [
+    "pktgrp-0313",
+    "pktgrp-0314",
+    "pktgrp-0315",
+    "pktgrp-0316"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "packet-target-0313",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## 10. Phase 2 (native auth) -- when available (Plans/Multi-Account.md:L537)",
+      "path": "Plans/Multi-Account.md",
+      "coverage_row_ids": [
+        "cov-03389",
+        "cov-04032"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-03389",
+          "cov-04032"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-3235",
+        "obl-3875"
+      ],
+      "source_seed_ids": [
+        "seed-4321",
+        "seed-5321"
+      ],
+      "source_shard_ids": [
+        "shard-0046",
+        "shard-0054"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3235",
+          "obl-3875"
+        ],
+        "source_seed_ids": [
+          "seed-4321",
+          "seed-5321"
+        ],
+        "source_shard_ids": [
+          "shard-0046",
+          "shard-0054"
+        ]
+      },
+      "gap_ids": [
+        "gap-02646",
+        "gap-03134"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`project_id` / `project_path` when available",
+        "project_id",
+        "project_path",
+        "must carry `usage_event_ref` whenever available",
+        "usage_event_ref"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-12db3f5bf66b",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0392",
+      "source_reconciliation_target_ids": [
+        "target-0392"
+      ],
+      "source_target_ids": [
+        "target-0392"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0392\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `project_id` / `project_path` when available\n  - project_id\n  - project_path\n  - must carry `usage_event_ref` whenever available\n  - usage_event_ref\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0314",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## 3. Assessment: what we have and gaps (filled) (Plans/Multi-Account.md:L104)",
+      "path": "Plans/Multi-Account.md",
+      "coverage_row_ids": [
+        "cov-06097"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-06097"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-5869"
+      ],
+      "source_seed_ids": [
+        "seed-8713"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-5869"
+        ],
+        "source_seed_ids": [
+          "seed-8713"
+        ],
+        "source_shard_ids": [
+          "shard-0080"
+        ]
+      },
+      "gap_ids": [
+        "gap-04714"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "The owner docs already have the stronger source model."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-8e070eb55148",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0393",
+      "source_reconciliation_target_ids": [
+        "target-0393"
+      ],
+      "source_target_ids": [
+        "target-0393"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0393\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - The owner docs already have the stronger source model.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0315",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## Operational Identity Addendum for GitHub Actions and Docker Manager (2026-03-12) (Plans/Multi-Account.md:L553)",
+      "path": "Plans/Multi-Account.md",
+      "coverage_row_ids": [
+        "cov-03393"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-03393"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-3239"
+      ],
+      "source_seed_ids": [
+        "seed-4325"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3239"
+        ],
+        "source_seed_ids": [
+          "seed-4325"
+        ],
+        "source_shard_ids": [
+          "shard-0046"
+        ]
+      },
+      "gap_ids": [
+        "gap-02649"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "no operational identity or permission posture"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-534f4a6e971c",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0394",
+      "source_reconciliation_target_ids": [
+        "target-0394"
+      ],
+      "source_target_ids": [
+        "target-0394"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0394\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - no operational identity or permission posture\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0316",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### 4.2 Account record (canonical) (Plans/Multi-Account.md:L176)",
+      "path": "Plans/Multi-Account.md",
+      "coverage_row_ids": [
+        "cov-02150"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-02150"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-2007"
+      ],
+      "source_seed_ids": [
+        "seed-2613"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-2007"
+        ],
+        "source_seed_ids": [
+          "seed-2613"
+        ],
+        "source_shard_ids": [
+          "shard-0034"
+        ]
+      },
+      "gap_ids": [
+        "gap-01672"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Account switching is still modeled as fields and latest-state hints rather than as a first-class historical record family:"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-aa2edb4600fe",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0395",
+      "source_reconciliation_target_ids": [
+        "target-0395"
+      ],
+      "source_target_ids": [
+        "target-0395"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0395\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Account switching is still modeled as fields and latest-state hints rather than as a first-class historical record family:\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-03389",
+    "cov-04032",
+    "cov-06097",
+    "cov-03393",
+    "cov-02150"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-3235",
+    "obl-3875",
+    "obl-5869",
+    "obl-3239",
+    "obl-2007"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-4321",
+    "seed-5321",
+    "seed-8713",
+    "seed-4325",
+    "seed-2613"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0046",
+    "shard-0054",
+    "shard-0080",
+    "shard-0034"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "`project_id` / `project_path` when available",
+    "project_id",
+    "project_path",
+    "must carry `usage_event_ref` whenever available",
+    "usage_event_ref",
+    "The owner docs already have the stronger source model.",
+    "no operational identity or permission posture",
+    "Account switching is still modeled as fields and latest-state hints rather than as a first-class historical record family:"
+  ],
+  "blocked_targets": []
+}

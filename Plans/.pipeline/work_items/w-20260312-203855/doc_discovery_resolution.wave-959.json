@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-959",
+  "group_ids": [
+    "discgrp-3833",
+    "discgrp-3834",
+    "discgrp-3835",
+    "discgrp-3836"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04138",
+      "source_obligation_ids": [
+        "obl-3978"
+      ],
+      "source_seed_ids": [
+        "seed-5458"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04139",
+      "source_obligation_ids": [
+        "obl-3979"
+      ],
+      "source_seed_ids": [
+        "seed-5459"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04140",
+      "source_obligation_ids": [
+        "obl-3980"
+      ],
+      "source_seed_ids": [
+        "seed-5460"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "## 2. Canonical command IDs",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L64"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04141",
+      "source_obligation_ids": [
+        "obl-3981"
+      ],
+      "source_seed_ids": [
+        "seed-5461"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "#### Route target navigation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

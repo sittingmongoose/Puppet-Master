@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1527",
+  "group_ids": [
+    "discgrp-6105",
+    "discgrp-6106",
+    "discgrp-6107",
+    "discgrp-6108"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06741",
+      "source_obligation_ids": [
+        "obl-6380"
+      ],
+      "source_seed_ids": [
+        "seed-9740"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L91"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06742",
+      "source_obligation_ids": [
+        "obl-6381"
+      ],
+      "source_seed_ids": [
+        "seed-9742"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "## 10.6 Lifecycle and Quality Enhancements for Cleanup Operations",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L1192"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06743",
+      "source_obligation_ids": [
+        "obl-6382"
+      ],
+      "source_seed_ids": [
+        "seed-9744"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06745",
+      "source_obligation_ids": [
+        "obl-6384"
+      ],
+      "source_seed_ids": [
+        "seed-9746"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Help-entry template and related-concept clusters",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L105"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

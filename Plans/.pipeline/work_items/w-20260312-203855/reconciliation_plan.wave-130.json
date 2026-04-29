@@ -1,0 +1,510 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-130",
+  "group_ids": [
+    "recgrp-0517",
+    "recgrp-0518",
+    "recgrp-0519",
+    "recgrp-0520"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0517",
+      "path": "Plans/UI_Command_Catalog.md",
+      "mapped_owner_heading": "## 2. Canonical command IDs",
+      "live_anchor": "## 2. Canonical command IDs (Plans/UI_Command_Catalog.md:L64)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [
+        "UI_Command_Catalog.md",
+        "FinalGUISpec.md",
+        "GUI_Rebuild_Requirements_Checklist.md",
+        "Section15_MVP_Promoted_Features_Spec.md",
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "coverage_row_ids": [
+        "cov-01397",
+        "cov-02382",
+        "cov-03074",
+        "cov-03102",
+        "cov-03586",
+        "cov-03679",
+        "cov-03888",
+        "cov-04107",
+        "cov-04140",
+        "cov-04275",
+        "cov-04277",
+        "cov-04932",
+        "cov-04985",
+        "cov-05011",
+        "cov-05297",
+        "cov-05636",
+        "cov-05888",
+        "cov-06198"
+      ],
+      "source_obligation_ids": [
+        "obl-1254",
+        "obl-2232",
+        "obl-2920",
+        "obl-2948",
+        "obl-3432",
+        "obl-3525",
+        "obl-3733",
+        "obl-3947",
+        "obl-3980",
+        "obl-4115",
+        "obl-4117",
+        "obl-4708",
+        "obl-4761",
+        "obl-4787",
+        "obl-5073",
+        "obl-5408",
+        "obl-5660",
+        "obl-5967"
+      ],
+      "source_seed_ids": [
+        "seed-1499",
+        "seed-2899",
+        "seed-3861",
+        "seed-3892",
+        "seed-4625",
+        "seed-4743",
+        "seed-5080",
+        "seed-5411",
+        "seed-5460",
+        "seed-5703",
+        "seed-5705",
+        "seed-6780",
+        "seed-6858",
+        "seed-6894",
+        "seed-7421",
+        "seed-8033",
+        "seed-8416",
+        "seed-8935"
+      ],
+      "source_shard_ids": [
+        "shard-0024",
+        "shard-0036",
+        "shard-0043",
+        "shard-0049",
+        "shard-0052",
+        "shard-0054",
+        "shard-0055",
+        "shard-0056",
+        "shard-0057",
+        "shard-0065",
+        "shard-0066",
+        "shard-0070",
+        "shard-0074",
+        "shard-0077",
+        "shard-0081"
+      ],
+      "gap_ids": [
+        "gap-01101",
+        "gap-01853",
+        "gap-02419",
+        "gap-02439",
+        "gap-02808",
+        "gap-02875",
+        "gap-03032",
+        "gap-03191",
+        "gap-03217",
+        "gap-03336",
+        "gap-03338",
+        "gap-03858",
+        "gap-03904",
+        "gap-03924",
+        "gap-04105",
+        "gap-04387",
+        "gap-04558",
+        "gap-04794"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Keep canonical runtime command ids authoritative for blocked/recovery actions on every surface.",
+        "Publish a GitHub command migration map from legacy IDs to canonical `UI_Command_Catalog.md` IDs and payloads.",
+        "UI_Command_Catalog.md",
+        "`UI_Command_Catalog.md` should own stable command IDs and command argument families, but not the deeper route ontology by itself",
+        "keep stable command IDs",
+        "ghost command IDs",
+        "internal AC contradiction and uncataloged command IDs now directly threaten wiring verification.",
+        "`newtools.md` introduces uncataloged preview/build command IDs, unregistered `live.*` and doctor/custom-headless event families, and a conditional `CustomHeadlessTool` lifecycle with no canonical Tools/permissions owner.",
+        "newtools.md",
+        "live.*",
+        "CustomHeadlessTool",
+        "command IDs plus ad hoc args",
+        "The system now wants a routing contract, not just more command IDs.",
+        "canonical command IDs versus deprecated aliases/wrappers",
+        "`UI_Wiring_Rules.md` already treats `correlation_id` as part of the command envelope, but the matrix/schema pair has no way to declare or verify passthrough obligations for route payloads, subject IDs, or correlation continuity into downstream events.",
+        "UI_Wiring_Rules.md",
+        "correlation_id",
+        "The command/wiring system is biased toward stable user-facing command IDs with explicit surface meaning.",
+        "wiring rows should reference command IDs and handlers, not restate the normalization model in full",
+        "deprecated aliases resolve to real canonical command IDs",
+        "`Containers_Registry_and_Unraid.md` still has uncataloged command IDs, unresolved publish-authority split, broken blocked-payload consistency, and unanchored publish-result lineage.",
+        "Containers_Registry_and_Unraid.md",
+        "update `UICommand` boundary text so command IDs stay stable while route/open semantics live in Contracts",
+        "UICommand",
+        "unresolved command IDs and promoted-shell persistence contradictions",
+        "`GUI_Rebuild_Requirements_Checklist.md`, `Section15_MVP_Promoted_Features_Spec.md`, `feature-list.md`, and `newfeatures.md` still contain exact phantom/superseded/missing command IDs, stale shell-surface assumptions, and persistence-identity contradictions against `UI_Command_Catalog.md`, `FinalGUISpec.md`, and promoted-shell canon.",
+        "GUI_Rebuild_Requirements_Checklist.md",
+        "Section15_MVP_Promoted_Features_Spec.md",
+        "feature-list.md",
+        "newfeatures.md",
+        "FinalGUISpec.md"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "UI_Command_Catalog.md",
+        "FinalGUISpec.md",
+        "GUI_Rebuild_Requirements_Checklist.md",
+        "Section15_MVP_Promoted_Features_Spec.md",
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "packet_span_group_id": "span-50fb20a291f8",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0518",
+      "path": "Plans/UI_Command_Catalog.md",
+      "mapped_owner_heading": "### 2.0 Command entry contract (doc-level)",
+      "live_anchor": "### 2.0 Command entry contract (doc-level) (Plans/UI_Command_Catalog.md:L68)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00193",
+        "cov-04302",
+        "cov-04372",
+        "cov-04378",
+        "cov-05030",
+        "cov-06059"
+      ],
+      "source_obligation_ids": [
+        "obl-089",
+        "obl-4142",
+        "obl-4212",
+        "obl-4218",
+        "obl-4806",
+        "obl-5831"
+      ],
+      "source_seed_ids": [
+        "seed-089",
+        "seed-5742",
+        "seed-5855",
+        "seed-5861",
+        "seed-6920",
+        "seed-8664"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0057",
+        "shard-0058",
+        "shard-0066",
+        "shard-0079"
+      ],
+      "gap_ids": [
+        "gap-00176",
+        "gap-03361",
+        "gap-03413",
+        "gap-03416",
+        "gap-03936",
+        "gap-04688"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Why it matters: the user can otherwise see one command family while runtime/event contracts expect another.",
+        "That is enough for a flat `element -> command -> handler` contract, but not for the route-aware/navigation-aware model the rewrite is moving toward.",
+        "element -> command -> handler",
+        "`Contracts_V0.md` currently gives the app only a very thin canonical UI command contract:",
+        "Contracts_V0.md",
+        "That is enough to standardize command dispatch mechanically, but not enough to standardize navigation semantics. There is still no canonical contract for:",
+        "keeps `OpenFile` as the path-based file-open contract reference point for UI command work",
+        "OpenFile",
+        "Remove the graph-specific approval command contract as a primary action model."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-71b38ed5fc65",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0519",
+      "path": "Plans/UI_Command_Catalog.md",
+      "mapped_owner_heading": "### 2.0.1 Acceptance hooks contract (wiring verification)",
+      "live_anchor": "### 2.0.1 Acceptance hooks contract (wiring verification) (Plans/UI_Command_Catalog.md:L146)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-03877",
+        "cov-05644"
+      ],
+      "source_obligation_ids": [
+        "obl-3722",
+        "obl-5416"
+      ],
+      "source_seed_ids": [
+        "seed-5069",
+        "seed-8045"
+      ],
+      "source_shard_ids": [
+        "shard-0052",
+        "shard-0074"
+      ],
+      "gap_ids": [
+        "gap-03024",
+        "gap-04394"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "The owner-doc tranche deepened from generic drift into hard SSOT-integrity failures across command registration, wiring verification, and dispatcher/runtime gating.",
+        "The catalog already has a stable command-entry contract and wiring hooks, so the missing piece is command classification and normalization metadata, not a new catalog structure."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-1045e208ce4c",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0520",
+      "path": "Plans/UI_Command_Catalog.md",
+      "mapped_owner_heading": "### 2.0A Promoted Section 15 command families",
+      "live_anchor": "### 2.0A Promoted Section 15 command families (Plans/UI_Command_Catalog.md:L65)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [
+        "UI_Command_Catalog.md"
+      ],
+      "coverage_row_ids": [
+        "cov-03293",
+        "cov-03907",
+        "cov-04726",
+        "cov-06673"
+      ],
+      "source_obligation_ids": [
+        "obl-3139",
+        "obl-3752",
+        "obl-4504",
+        "obl-6314"
+      ],
+      "source_seed_ids": [
+        "seed-4176",
+        "seed-5119",
+        "seed-6407",
+        "seed-9545"
+      ],
+      "source_shard_ids": [
+        "shard-0045",
+        "shard-0052",
+        "shard-0062",
+        "shard-0086"
+      ],
+      "gap_ids": [
+        "gap-02576",
+        "gap-03045",
+        "gap-03691",
+        "gap-05169"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "still internally split on blocked/HITL mutator ownership and still missing command families for account/concern/promotion flows.",
+        "Register/fix the missing command families and remove false catalog/wiring claims:",
+        "canonical runtime recovery command consolidation in `UI_Command_Catalog.md`, where legacy command families become deprecated aliases but consumers map to one shared namespace",
+        "UI_Command_Catalog.md",
+        "it also lists command families that now need revalidation against the newer runtime recovery and route/open model"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "UI_Command_Catalog.md"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "packet_span_group_id": "span-7461667c941a",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-01397",
+    "cov-02382",
+    "cov-03074",
+    "cov-03102",
+    "cov-03586",
+    "cov-03679",
+    "cov-03888",
+    "cov-04107",
+    "cov-04140",
+    "cov-04275",
+    "cov-04277",
+    "cov-04932",
+    "cov-04985",
+    "cov-05011",
+    "cov-05297",
+    "cov-05636",
+    "cov-05888",
+    "cov-06198",
+    "cov-00193",
+    "cov-04302",
+    "cov-04372",
+    "cov-04378",
+    "cov-05030",
+    "cov-06059",
+    "cov-03877",
+    "cov-05644",
+    "cov-03293",
+    "cov-03907",
+    "cov-04726",
+    "cov-06673"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1254",
+    "obl-2232",
+    "obl-2920",
+    "obl-2948",
+    "obl-3432",
+    "obl-3525",
+    "obl-3733",
+    "obl-3947",
+    "obl-3980",
+    "obl-4115",
+    "obl-4117",
+    "obl-4708",
+    "obl-4761",
+    "obl-4787",
+    "obl-5073",
+    "obl-5408",
+    "obl-5660",
+    "obl-5967",
+    "obl-089",
+    "obl-4142",
+    "obl-4212",
+    "obl-4218",
+    "obl-4806",
+    "obl-5831",
+    "obl-3722",
+    "obl-5416",
+    "obl-3139",
+    "obl-3752",
+    "obl-4504",
+    "obl-6314"
+  ],
+  "source_seed_ids_represented": [
+    "seed-1499",
+    "seed-2899",
+    "seed-3861",
+    "seed-3892",
+    "seed-4625",
+    "seed-4743",
+    "seed-5080",
+    "seed-5411",
+    "seed-5460",
+    "seed-5703",
+    "seed-5705",
+    "seed-6780",
+    "seed-6858",
+    "seed-6894",
+    "seed-7421",
+    "seed-8033",
+    "seed-8416",
+    "seed-8935",
+    "seed-089",
+    "seed-5742",
+    "seed-5855",
+    "seed-5861",
+    "seed-6920",
+    "seed-8664",
+    "seed-5069",
+    "seed-8045",
+    "seed-4176",
+    "seed-5119",
+    "seed-6407",
+    "seed-9545"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0024",
+    "shard-0036",
+    "shard-0043",
+    "shard-0049",
+    "shard-0052",
+    "shard-0054",
+    "shard-0055",
+    "shard-0056",
+    "shard-0057",
+    "shard-0065",
+    "shard-0066",
+    "shard-0070",
+    "shard-0074",
+    "shard-0077",
+    "shard-0081",
+    "shard-0009",
+    "shard-0058",
+    "shard-0079",
+    "shard-0045",
+    "shard-0062",
+    "shard-0086"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": []
+}

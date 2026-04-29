@@ -1,0 +1,1204 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-135",
+  "group_ids": [
+    "gapgrp-0537",
+    "gapgrp-0538",
+    "gapgrp-0539",
+    "gapgrp-0540"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-03570",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04546 is partial for The biggest risk is that export features get implemented as \u201cdump whatever the current vie",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "# Section 15 Promoted Features Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04546"
+      ],
+      "source_obligation_ids": [
+        "obl-4324"
+      ],
+      "source_seed_ids": [
+        "seed-6080"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The biggest risk is that export features get implemented as \u201cdump whatever the current view shows\u201d and quietly lose canonical identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04776",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06179 is partial for `feature-list.md` / `newfeatures.md` still mix promoted shell/runtime language with pre-pr",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "#### Persistence and recovery guarantees"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06179"
+      ],
+      "source_obligation_ids": [
+        "obl-5951"
+      ],
+      "source_seed_ids": [
+        "seed-8850"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "`feature-list.md` / `newfeatures.md` still mix promoted shell/runtime language with pre-promotion page/title-bar/recovery models, and now also show internal contradictions around persistence identity and recovery anchors.",
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "stale_tokens": [
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05106",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06580 is present for still defines a six-tab page with `Tiers`",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "#### Action tiers"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06580"
+      ],
+      "source_obligation_ids": [
+        "obl-6221"
+      ],
+      "source_seed_ids": [
+        "seed-9407"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "still defines a six-tab page with `Tiers`",
+        "Tiers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01495",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01916 is partial for `tier_id` remains an important field in usage/storage thinking",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "### 3.6 Interleaved Thinking Toggle"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01916"
+      ],
+      "source_obligation_ids": [
+        "obl-1773"
+      ],
+      "source_seed_ids": [
+        "seed-2277"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "`tier_id` remains an important field in usage/storage thinking",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03525",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04493 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04493"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03565",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04539 is partial for Exports are frequently described as output-format features, but not yet as identity-preser",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "# Section 15 Promoted Features Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04539"
+      ],
+      "source_obligation_ids": [
+        "obl-4317"
+      ],
+      "source_seed_ids": [
+        "seed-6070"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "Exports are frequently described as output-format features, but not yet as identity-preserving artifacts in their own right."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03585",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04564 is partial for The docs already know what fields matter; they just do not normalize them yet.",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "### 3.12 Know Where Your Tokens Go (Analytics Framing)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04564"
+      ],
+      "source_obligation_ids": [
+        "obl-4342"
+      ],
+      "source_seed_ids": [
+        "seed-6117"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "The docs already know what fields matter; they just do not normalize them yet."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03716",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "owner coverage row cov-04756 is missing for `Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04756"
+      ],
+      "source_obligation_ids": [
+        "obl-4534"
+      ],
+      "source_seed_ids": [
+        "seed-6451",
+        "seed-6488",
+        "seed-6512",
+        "seed-6716",
+        "seed-7395",
+        "seed-7440",
+        "seed-7467",
+        "seed-8400",
+        "seed-8831",
+        "seed-8872",
+        "seed-8900",
+        "seed-8926",
+        "seed-8964",
+        "seed-8999",
+        "seed-9024",
+        "seed-9058",
+        "seed-9524",
+        "seed-9546",
+        "seed-9586",
+        "seed-9618",
+        "seed-9669"
+      ],
+      "source_shard_ids": [
+        "shard-0062",
+        "shard-0064",
+        "shard-0070",
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0085",
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04440",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "owner coverage row cov-05699 is partial for section `7.7 Tiers`",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "#### Action tiers"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05699"
+      ],
+      "source_obligation_ids": [
+        "obl-5471"
+      ],
+      "source_seed_ids": [
+        "seed-8119"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "section `7.7 Tiers`",
+        "7.7 Tiers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04530",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05846 is partial for Then the canonical-record section partially regresses again by keeping:",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "### 3.2 Branching Conversations (Restore Then Fork)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05846"
+      ],
+      "source_obligation_ids": [
+        "obl-5618"
+      ],
+      "source_seed_ids": [
+        "seed-8337"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "Then the canonical-record section partially regresses again by keeping:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04850",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06262 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06262"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05156",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "owner coverage row cov-06656 is missing for `Plans/Section15_MVP_Promoted_Features_Spec.md` is comparatively disciplined in this seam:",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06656"
+      ],
+      "source_obligation_ids": [
+        "obl-6297"
+      ],
+      "source_seed_ids": [
+        "seed-9528"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md` is comparatively disciplined in this seam:",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05175",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06682 is partial for `feature-list.md` and `newfeatures.md` are broad drift amplifiers because they condense ma",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "# Section 15 Promoted Features Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06682"
+      ],
+      "source_obligation_ids": [
+        "obl-6323"
+      ],
+      "source_seed_ids": [
+        "seed-9565"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "`feature-list.md` and `newfeatures.md` are broad drift amplifiers because they condense many features into short summaries that users and implementers often read first.",
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04972",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-06403 is missing for removal of stale `Tiers` and widgetized-Orchestrator wording",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "#### Action tiers"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06403"
+      ],
+      "source_obligation_ids": [
+        "obl-6044"
+      ],
+      "source_seed_ids": [
+        "seed-9139"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "removal of stale `Tiers` and widgetized-Orchestrator wording",
+        "Tiers"
+      ],
+      "stale_tokens": [
+        "Tiers"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05123",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-06602 is missing for `Tiers` retired and replaced by `Seams`",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "#### Action tiers"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06602"
+      ],
+      "source_obligation_ids": [
+        "obl-6243"
+      ],
+      "source_seed_ids": [
+        "seed-9441"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`Tiers` retired and replaced by `Seams`",
+        "Tiers",
+        "Seams"
+      ],
+      "stale_tokens": [
+        "Seams",
+        "Tiers"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04926",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06348 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/Skills_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06348"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-04546",
+    "cov-06179",
+    "cov-06580",
+    "cov-01916",
+    "cov-04493",
+    "cov-04539",
+    "cov-04564",
+    "cov-04756",
+    "cov-05699",
+    "cov-05846",
+    "cov-06262",
+    "cov-06656",
+    "cov-06682",
+    "cov-06403",
+    "cov-06602",
+    "cov-06348"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1773",
+    "obl-4292",
+    "obl-4317",
+    "obl-4324",
+    "obl-4342",
+    "obl-4534",
+    "obl-5471",
+    "obl-5618",
+    "obl-5951",
+    "obl-5986",
+    "obl-6009",
+    "obl-6044",
+    "obl-6221",
+    "obl-6243",
+    "obl-6297",
+    "obl-6323"
+  ],
+  "source_seed_ids_represented": [
+    "seed-2277",
+    "seed-6001",
+    "seed-6070",
+    "seed-6080",
+    "seed-6117",
+    "seed-6451",
+    "seed-6488",
+    "seed-6512",
+    "seed-6716",
+    "seed-7395",
+    "seed-7440",
+    "seed-7467",
+    "seed-8119",
+    "seed-8337",
+    "seed-8400",
+    "seed-8831",
+    "seed-8850",
+    "seed-8872",
+    "seed-8900",
+    "seed-8926",
+    "seed-8964",
+    "seed-8999",
+    "seed-9006",
+    "seed-9024",
+    "seed-9058",
+    "seed-9092",
+    "seed-9139",
+    "seed-9407",
+    "seed-9441",
+    "seed-9524",
+    "seed-9528",
+    "seed-9546",
+    "seed-9565",
+    "seed-9586",
+    "seed-9618",
+    "seed-9669"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0031",
+    "shard-0059",
+    "shard-0060",
+    "shard-0062",
+    "shard-0064",
+    "shard-0070",
+    "shard-0075",
+    "shard-0077",
+    "shard-0081",
+    "shard-0082",
+    "shard-0083",
+    "shard-0085",
+    "shard-0086"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-03570",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04546 is partial for The biggest risk is that export features get implemented as \u201cdump whatever the current vie",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "# Section 15 Promoted Features Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04546"
+      ],
+      "source_obligation_ids": [
+        "obl-4324"
+      ],
+      "source_seed_ids": [
+        "seed-6080"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The biggest risk is that export features get implemented as \u201cdump whatever the current view shows\u201d and quietly lose canonical identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04776",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06179 is partial for `feature-list.md` / `newfeatures.md` still mix promoted shell/runtime language with pre-pr",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "#### Persistence and recovery guarantees"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06179"
+      ],
+      "source_obligation_ids": [
+        "obl-5951"
+      ],
+      "source_seed_ids": [
+        "seed-8850"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "`feature-list.md` / `newfeatures.md` still mix promoted shell/runtime language with pre-promotion page/title-bar/recovery models, and now also show internal contradictions around persistence identity and recovery anchors.",
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "stale_tokens": [
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05106",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06580 is present for still defines a six-tab page with `Tiers`",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "#### Action tiers"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06580"
+      ],
+      "source_obligation_ids": [
+        "obl-6221"
+      ],
+      "source_seed_ids": [
+        "seed-9407"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "still defines a six-tab page with `Tiers`",
+        "Tiers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01495",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01916 is partial for `tier_id` remains an important field in usage/storage thinking",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "### 3.6 Interleaved Thinking Toggle"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01916"
+      ],
+      "source_obligation_ids": [
+        "obl-1773"
+      ],
+      "source_seed_ids": [
+        "seed-2277"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "`tier_id` remains an important field in usage/storage thinking",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03525",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04493 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04493"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03565",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04539 is partial for Exports are frequently described as output-format features, but not yet as identity-preser",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "# Section 15 Promoted Features Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04539"
+      ],
+      "source_obligation_ids": [
+        "obl-4317"
+      ],
+      "source_seed_ids": [
+        "seed-6070"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "Exports are frequently described as output-format features, but not yet as identity-preserving artifacts in their own right."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03585",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04564 is partial for The docs already know what fields matter; they just do not normalize them yet.",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "### 3.12 Know Where Your Tokens Go (Analytics Framing)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04564"
+      ],
+      "source_obligation_ids": [
+        "obl-4342"
+      ],
+      "source_seed_ids": [
+        "seed-6117"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "The docs already know what fields matter; they just do not normalize them yet."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03716",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "owner coverage row cov-04756 is missing for `Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04756"
+      ],
+      "source_obligation_ids": [
+        "obl-4534"
+      ],
+      "source_seed_ids": [
+        "seed-6451",
+        "seed-6488",
+        "seed-6512",
+        "seed-6716",
+        "seed-7395",
+        "seed-7440",
+        "seed-7467",
+        "seed-8400",
+        "seed-8831",
+        "seed-8872",
+        "seed-8900",
+        "seed-8926",
+        "seed-8964",
+        "seed-8999",
+        "seed-9024",
+        "seed-9058",
+        "seed-9524",
+        "seed-9546",
+        "seed-9586",
+        "seed-9618",
+        "seed-9669"
+      ],
+      "source_shard_ids": [
+        "shard-0062",
+        "shard-0064",
+        "shard-0070",
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0085",
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04440",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "owner coverage row cov-05699 is partial for section `7.7 Tiers`",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "#### Action tiers"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05699"
+      ],
+      "source_obligation_ids": [
+        "obl-5471"
+      ],
+      "source_seed_ids": [
+        "seed-8119"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "section `7.7 Tiers`",
+        "7.7 Tiers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04530",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05846 is partial for Then the canonical-record section partially regresses again by keeping:",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "### 3.2 Branching Conversations (Restore Then Fork)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05846"
+      ],
+      "source_obligation_ids": [
+        "obl-5618"
+      ],
+      "source_seed_ids": [
+        "seed-8337"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "Then the canonical-record section partially regresses again by keeping:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04850",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06262 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06262"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05156",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "owner coverage row cov-06656 is missing for `Plans/Section15_MVP_Promoted_Features_Spec.md` is comparatively disciplined in this seam:",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06656"
+      ],
+      "source_obligation_ids": [
+        "obl-6297"
+      ],
+      "source_seed_ids": [
+        "seed-9528"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md` is comparatively disciplined in this seam:",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05175",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06682 is partial for `feature-list.md` and `newfeatures.md` are broad drift amplifiers because they condense ma",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "# Section 15 Promoted Features Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06682"
+      ],
+      "source_obligation_ids": [
+        "obl-6323"
+      ],
+      "source_seed_ids": [
+        "seed-9565"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "`feature-list.md` and `newfeatures.md` are broad drift amplifiers because they condense many features into short summaries that users and implementers often read first.",
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04972",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-06403 is missing for removal of stale `Tiers` and widgetized-Orchestrator wording",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "#### Action tiers"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06403"
+      ],
+      "source_obligation_ids": [
+        "obl-6044"
+      ],
+      "source_seed_ids": [
+        "seed-9139"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "removal of stale `Tiers` and widgetized-Orchestrator wording",
+        "Tiers"
+      ],
+      "stale_tokens": [
+        "Tiers"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05123",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-06602 is missing for `Tiers` retired and replaced by `Seams`",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "#### Action tiers"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06602"
+      ],
+      "source_obligation_ids": [
+        "obl-6243"
+      ],
+      "source_seed_ids": [
+        "seed-9441"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`Tiers` retired and replaced by `Seams`",
+        "Tiers",
+        "Seams"
+      ],
+      "stale_tokens": [
+        "Seams",
+        "Tiers"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04926",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06348 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/Skills_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06348"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

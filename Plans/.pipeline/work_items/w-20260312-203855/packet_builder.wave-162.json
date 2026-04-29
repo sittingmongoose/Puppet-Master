@@ -1,0 +1,266 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-162",
+  "group_ids": [
+    "pktgrp-0645",
+    "pktgrp-0646",
+    "pktgrp-0647",
+    "pktgrp-0648"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0090",
+      "source_reconciliation_target_id": "target-0447",
+      "source_reconciliation_target_ids": [
+        "target-0447"
+      ],
+      "path": "Plans/Project_Output_Artifacts.md",
+      "operation": "observe_only",
+      "live_anchor": "## 12. Optional derived `quickstart.md` contract (human convenience only) (Plans/Project_Output_Artifacts.md:L672)",
+      "coverage_row_ids": [
+        "cov-02571"
+      ],
+      "source_obligation_ids": [
+        "obl-2419"
+      ],
+      "source_seed_ids": [
+        "seed-3140"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-2419"
+        ],
+        "source_seed_ids": [
+          "seed-3140"
+        ],
+        "source_shard_ids": [
+          "shard-0038"
+        ]
+      },
+      "gap_ids": [
+        "gap-02012"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`project_state:v1:{project_id}` as UI-only convenience flags",
+        "project_state:v1:{project_id}"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-28e583d258b5",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0091",
+      "source_reconciliation_target_id": "target-0456",
+      "source_reconciliation_target_ids": [
+        "target-0456"
+      ],
+      "path": "Plans/Project_Output_Artifacts.md",
+      "operation": "observe_only",
+      "live_anchor": "### validation artifact lineage (Plans/Project_Output_Artifacts.md:L723)",
+      "coverage_row_ids": [
+        "cov-03905"
+      ],
+      "source_obligation_ids": [
+        "obl-3750"
+      ],
+      "source_seed_ids": [
+        "seed-5117"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3750"
+        ],
+        "source_seed_ids": [
+          "seed-5117"
+        ],
+        "source_shard_ids": [
+          "shard-0052"
+        ]
+      },
+      "gap_ids": [
+        "gap-03044"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Artifact lineage now clearly requires project/run/thread/wizard/attempt/account anchors, but the project-artifact and memory/handoff surfaces still underspecify those joins."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-ac068ba3e493",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0092",
+      "source_reconciliation_target_id": "target-0458",
+      "source_reconciliation_target_ids": [
+        "target-0458"
+      ],
+      "path": "Plans/Promotion*",
+      "operation": "observe_only",
+      "live_anchor": "Plans/Promotion*:L1",
+      "coverage_row_ids": [
+        "cov-00055"
+      ],
+      "source_obligation_ids": [
+        "obl-022"
+      ],
+      "source_seed_ids": [
+        "seed-022"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-022"
+        ],
+        "source_seed_ids": [
+          "seed-022"
+        ],
+        "source_shard_ids": [
+          "shard-0004"
+        ]
+      },
+      "gap_ids": [
+        "gap-00055"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`promotion` should persist promotion class, source/target linkage, eligibility/blocking/HITL state, decision/result, and evidence/review/corroboration linkage"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "Child-record field-shape direction now discussed"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-9f2acaa5d540",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0093",
+      "source_reconciliation_target_id": "target-0462",
+      "source_reconciliation_target_ids": [
+        "target-0462"
+      ],
+      "path": "Plans/Prompt_Pipeline.md",
+      "operation": "observe_only",
+      "live_anchor": "## Fidelity recovery addendum (Plans/Prompt_Pipeline.md:L3)",
+      "coverage_row_ids": [
+        "cov-03192"
+      ],
+      "source_obligation_ids": [
+        "obl-3038"
+      ],
+      "source_seed_ids": [
+        "seed-4010"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3038"
+        ],
+        "source_seed_ids": [
+          "seed-4010"
+        ],
+        "source_shard_ids": [
+          "shard-0044"
+        ]
+      },
+      "gap_ids": [
+        "gap-02504"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Recommended rule: worker spawn, verification, remediation, recovery, coordination state, history, ledger, receipts, and graph/detail inspectors should all anchor to `execution_unit_context`, not to decomposition context.",
+        "execution_unit_context"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-9345925bdb48",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-02571",
+    "cov-03905",
+    "cov-00055",
+    "cov-03192"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-2419",
+    "obl-3750",
+    "obl-022",
+    "obl-3038"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-3140",
+    "seed-5117",
+    "seed-022",
+    "seed-4010"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0038",
+    "shard-0052",
+    "shard-0004",
+    "shard-0044"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "`project_state:v1:{project_id}` as UI-only convenience flags",
+    "project_state:v1:{project_id}",
+    "Artifact lineage now clearly requires project/run/thread/wizard/attempt/account anchors, but the project-artifact and memory/handoff surfaces still underspecify those joins.",
+    "`promotion` should persist promotion class, source/target linkage, eligibility/blocking/HITL state, decision/result, and evidence/review/corroboration linkage",
+    "Recommended rule: worker spawn, verification, remediation, recovery, coordination state, history, ledger, receipts, and graph/detail inspectors should all anchor to `execution_unit_context`, not to decomposition context.",
+    "execution_unit_context"
+  ],
+  "blocked_targets": []
+}

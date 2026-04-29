@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1196",
+  "group_ids": [
+    "discgrp-4781",
+    "discgrp-4782",
+    "discgrp-4783",
+    "discgrp-4784"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05180",
+      "source_obligation_ids": [
+        "obl-4956"
+      ],
+      "source_seed_ids": [
+        "seed-7187"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05181",
+      "source_obligation_ids": [
+        "obl-4957"
+      ],
+      "source_seed_ids": [
+        "seed-7188"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "#### 6.1.1 Scope selector",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Commands_System.md:L311"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05182",
+      "source_obligation_ids": [
+        "obl-4958"
+      ],
+      "source_seed_ids": [
+        "seed-7189"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "#### 6.1.1 Scope selector",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Commands_System.md:L311"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05183",
+      "source_obligation_ids": [
+        "obl-4959"
+      ],
+      "source_seed_ids": [
+        "seed-7195"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "new_heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

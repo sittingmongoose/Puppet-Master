@@ -1,0 +1,136 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-035",
+  "group_ids": [
+    "discgrp-0137",
+    "discgrp-0138",
+    "discgrp-0139",
+    "discgrp-0140"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00372",
+      "source_obligation_ids": [
+        "obl-230"
+      ],
+      "source_seed_ids": [
+        "seed-262",
+        "seed-1659",
+        "seed-1669"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0025"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00373",
+      "source_obligation_ids": [
+        "obl-231"
+      ],
+      "source_seed_ids": [
+        "seed-263",
+        "seed-685",
+        "seed-695",
+        "seed-1622",
+        "seed-1660",
+        "seed-1670",
+        "seed-1684",
+        "seed-2094",
+        "seed-2102",
+        "seed-2125",
+        "seed-2141"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0015",
+        "shard-0025",
+        "shard-0029",
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00374",
+      "source_obligation_ids": [
+        "obl-232"
+      ],
+      "source_seed_ids": [
+        "seed-264",
+        "seed-696",
+        "seed-1623",
+        "seed-1661",
+        "seed-1672",
+        "seed-1685",
+        "seed-2095",
+        "seed-2103",
+        "seed-2126",
+        "seed-2142"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0015",
+        "shard-0025",
+        "shard-0029",
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "### 3.1 What Must Never Be Removed",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L91"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00375",
+      "source_obligation_ids": [
+        "obl-233"
+      ],
+      "source_seed_ids": [
+        "seed-265",
+        "seed-680",
+        "seed-689",
+        "seed-1618",
+        "seed-1662",
+        "seed-1674",
+        "seed-2089",
+        "seed-2096",
+        "seed-2136"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0015",
+        "shard-0025",
+        "shard-0029",
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-075: Historical semantic consistency",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L107"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

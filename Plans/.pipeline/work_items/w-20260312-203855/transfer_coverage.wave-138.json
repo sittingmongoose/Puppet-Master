@@ -1,0 +1,852 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-138",
+  "row_group_ids": [
+    "rowgrp-0549",
+    "rowgrp-0550",
+    "rowgrp-0551",
+    "rowgrp-0552"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-06021",
+      "source_obligation_ids": [
+        "obl-5793"
+      ],
+      "source_seed_ids": [
+        "seed-8618"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Orchestrator live-status documentation still uses `TierChanged` / `request_id` language be",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator live-status documentation still uses `TierChanged` / `request_id` language beside newer blocked-projection contracts.",
+        "TierChanged",
+        "request_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06025",
+      "source_obligation_ids": [
+        "obl-5797"
+      ],
+      "source_seed_ids": [
+        "seed-8622"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Reconcile Orchestrator live-status dependencies so request-centric HITL bindings stop comp",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Reconcile Orchestrator live-status dependencies so request-centric HITL bindings stop competing with blocked-projection bindings."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06335",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06408",
+      "source_obligation_ids": [
+        "obl-6049"
+      ],
+      "source_seed_ids": [
+        "seed-9144"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "at minimum the owner-boundary decisions that now affect routing, Orchestrator ontology, bl",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "at minimum the owner-boundary decisions that now affect routing, Orchestrator ontology, blocked identity, runtime identity, and projection-trust vocabulary"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06507",
+      "source_obligation_ids": [
+        "obl-6148"
+      ],
+      "source_seed_ids": [
+        "seed-9296"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "The doc already proves that subject-first identity is viable through `preview_subject_id`;",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Concern ownership / authority direction",
+      "status": "partial",
+      "exact_items": [
+        "The doc already proves that subject-first identity is viable through `preview_subject_id`; route/open ownership should align to that instead of inventing a second identity model.",
+        "preview_subject_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L333",
+        "Plans/Orchestrator_Page.md:L341",
+        "Plans/Orchestrator_Page.md:L500"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06568",
+      "source_obligation_ids": [
+        "obl-6209"
+      ],
+      "source_seed_ids": [
+        "seed-9393"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - execution-core and main surface seam: Executor Protocol,",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - execution-core and main surface seam: Executor Protocol, Orchestrator Page"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06621",
+      "source_obligation_ids": [
+        "obl-6262"
+      ],
+      "source_seed_ids": [
+        "seed-9477"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "data sources still rely on `PuppetMasterEvent::TierChanged`, `tier_id`, and phase/task/sub",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "data sources still rely on `PuppetMasterEvent::TierChanged`, `tier_id`, and phase/task/subtask framing for multiple Orchestrator widgets",
+        "PuppetMasterEvent::TierChanged",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06776",
+      "source_obligation_ids": [
+        "obl-6412"
+      ],
+      "source_seed_ids": [
+        "seed-9791"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md` / `Plans/Widget_System.md`",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` / `Plans/Widget_System.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00042",
+      "source_obligation_ids": [
+        "obl-014"
+      ],
+      "source_seed_ids": [
+        "seed-014"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Orchestrator canonical runtime consumer",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "Current docs do say Orchestrator consumes the plan/node graph for execution",
+      "status": "missing",
+      "exact_items": [
+        "Orchestrator must consume canonical runtime fields and event names from shared contracts",
+        "use plan-graph index and node shard files as required execution inputs",
+        "treat runnable graph nodes, DAG readiness, and dispatch from a global ready set as the scheduling model"
+      ],
+      "stale_tokens": [
+        "tier system",
+        "single agent"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02318",
+      "source_obligation_ids": [
+        "obl-2170"
+      ],
+      "source_seed_ids": [
+        "seed-2821"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "`storage-plan.md` internally contradicts itself because the early `orchestrator.receipt.{r",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Recommended minimum concern record shape",
+      "status": "present",
+      "exact_items": [
+        "`storage-plan.md` internally contradicts itself because the early `orchestrator.receipt.{run_id}.{attempt_id}` value shape omits `project_id` and `created_at_utc`, while the later cross-surface receipt record makes them mandatory",
+        "storage-plan.md",
+        "orchestrator.receipt.{run_id}.{attempt_id}",
+        "project_id",
+        "created_at_utc"
+      ],
+      "stale_tokens": [
+        "created_at_utc",
+        "orchestrator.receipt.{run_id}.{attempt_id}",
+        "project_id",
+        "storage-plan.md"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L36",
+        "Plans/Orchestrator_Page.md:L40",
+        "Plans/Orchestrator_Page.md:L477",
+        "Plans/Orchestrator_Page.md:L497"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00241",
+      "source_obligation_ids": [
+        "obl-129"
+      ],
+      "source_seed_ids": [
+        "seed-134"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00454",
+      "source_obligation_ids": [
+        "obl-311"
+      ],
+      "source_seed_ids": [
+        "seed-360"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "`Progress` as the widget-hosting operational tab",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "present",
+      "exact_items": [
+        "`Progress` as the widget-hosting operational tab",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L139",
+        "Plans/Orchestrator_Page.md:L143",
+        "Plans/Orchestrator_Page.md:L144",
+        "Plans/Orchestrator_Page.md:L146",
+        "Plans/Orchestrator_Page.md:L147"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00507",
+      "source_obligation_ids": [
+        "obl-364"
+      ],
+      "source_seed_ids": [
+        "seed-419"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "Orchestrator should not mirror a raw worktree inventory table.",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator should not mirror a raw worktree inventory table."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00520",
+      "source_obligation_ids": [
+        "obl-377"
+      ],
+      "source_seed_ids": [
+        "seed-435"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "Source Control rows and tabs must stay information-dense but selective.",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-042: Source Control and worktree handshake",
+      "status": "partial",
+      "exact_items": [
+        "Source Control rows and tabs must stay information-dense but selective."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L115",
+        "Plans/Orchestrator_Page.md:L122"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00529",
+      "source_obligation_ids": [
+        "obl-386"
+      ],
+      "source_seed_ids": [
+        "seed-448"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "`Progress` is the widget-hosting tab",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "present",
+      "exact_items": [
+        "`Progress` is the widget-hosting tab",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L139",
+        "Plans/Orchestrator_Page.md:L143",
+        "Plans/Orchestrator_Page.md:L144",
+        "Plans/Orchestrator_Page.md:L146",
+        "Plans/Orchestrator_Page.md:L147"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00544",
+      "source_obligation_ids": [
+        "obl-401"
+      ],
+      "source_seed_ids": [
+        "seed-463"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "Stable data-contract direction",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Concern ownership / authority direction",
+      "status": "partial",
+      "exact_items": [
+        "Stable data-contract direction"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L333",
+        "Plans/Orchestrator_Page.md:L341",
+        "Plans/Orchestrator_Page.md:L500"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00545",
+      "source_obligation_ids": [
+        "obl-402"
+      ],
+      "source_seed_ids": [
+        "seed-464"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "widgets must consume stable orchestrator projections and canonical record/query contracts",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "widgets must consume stable orchestrator projections and canonical record/query contracts"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00555",
+      "source_obligation_ids": [
+        "obl-412"
+      ],
+      "source_seed_ids": [
+        "seed-474"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "widget config must not invent alternate scoping semantics that diverge from the tab's cano",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "widget config must not invent alternate scoping semantics that diverge from the tab's canonical projection rules"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00558",
+      "source_obligation_ids": [
+        "obl-415"
+      ],
+      "source_seed_ids": [
+        "seed-477"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "non-Orchestrator widgets should not be hostable on the Orchestrator page",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "non-Orchestrator widgets should not be hostable on the Orchestrator page"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00559",
+      "source_obligation_ids": [
+        "obl-416"
+      ],
+      "source_seed_ids": [
+        "seed-478"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "not every Orchestrator tab surface should become a portable widget",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "not every Orchestrator tab surface should become a portable widget"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00565",
+      "source_obligation_ids": [
+        "obl-422"
+      ],
+      "source_seed_ids": [
+        "seed-484"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "`widget_layout:v1:orchestrator:progress`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`widget_layout:v1:orchestrator:progress`",
+        "widget_layout:v1:orchestrator:progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00566",
+      "source_obligation_ids": [
+        "obl-423"
+      ],
+      "source_seed_ids": [
+        "seed-485",
+        "seed-8770",
+        "seed-9471"
+      ],
+      "source_shard_ids": [
+        "shard-0012",
+        "shard-0080",
+        "shard-0085"
+      ],
+      "canon_label": "`widget_layout:v1:orchestrator:tiers`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`widget_layout:v1:orchestrator:tiers`",
+        "widget_layout:v1:orchestrator:tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00567",
+      "source_obligation_ids": [
+        "obl-424"
+      ],
+      "source_seed_ids": [
+        "seed-486",
+        "seed-8771",
+        "seed-9472"
+      ],
+      "source_shard_ids": [
+        "shard-0012",
+        "shard-0080",
+        "shard-0085"
+      ],
+      "canon_label": "`widget_layout:v1:orchestrator:evidence`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`widget_layout:v1:orchestrator:evidence`",
+        "widget_layout:v1:orchestrator:evidence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00568",
+      "source_obligation_ids": [
+        "obl-425"
+      ],
+      "source_seed_ids": [
+        "seed-487",
+        "seed-8772",
+        "seed-9473"
+      ],
+      "source_shard_ids": [
+        "shard-0012",
+        "shard-0080",
+        "shard-0085"
+      ],
+      "canon_label": "`widget_layout:v1:orchestrator:history`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`widget_layout:v1:orchestrator:history`",
+        "widget_layout:v1:orchestrator:history"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00569",
+      "source_obligation_ids": [
+        "obl-426"
+      ],
+      "source_seed_ids": [
+        "seed-488",
+        "seed-8773",
+        "seed-9474"
+      ],
+      "source_shard_ids": [
+        "shard-0012",
+        "shard-0080",
+        "shard-0085"
+      ],
+      "canon_label": "`widget_layout:v1:orchestrator:ledger`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`widget_layout:v1:orchestrator:ledger`",
+        "widget_layout:v1:orchestrator:ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00571",
+      "source_obligation_ids": [
+        "obl-428"
+      ],
+      "source_seed_ids": [
+        "seed-492"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "still describes `Tiers` as a widget-based tab and carries old default layouts.",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "still describes `Tiers` as a widget-based tab and carries old default layouts.",
+        "Tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00574",
+      "source_obligation_ids": [
+        "obl-431"
+      ],
+      "source_seed_ids": [
+        "seed-496"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "Make `Progress` the only widget-composed Orchestrator tab.",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "present",
+      "exact_items": [
+        "Make `Progress` the only widget-composed Orchestrator tab.",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L139",
+        "Plans/Orchestrator_Page.md:L143",
+        "Plans/Orchestrator_Page.md:L144",
+        "Plans/Orchestrator_Page.md:L146",
+        "Plans/Orchestrator_Page.md:L147"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00637",
+      "source_obligation_ids": [
+        "obl-494"
+      ],
+      "source_seed_ids": [
+        "seed-569"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "there is no obvious equivalent `orchestrator.project_state.{project_id}` with focused/sele",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "there is no obvious equivalent `orchestrator.project_state.{project_id}` with focused/selected run state",
+        "orchestrator.project_state.{project_id}"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00644",
+      "source_obligation_ids": [
+        "obl-501"
+      ],
+      "source_seed_ids": [
+        "seed-576"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "`focused_run_id` = the run whose data the Orchestrator tabs are currently showing",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "present",
+      "exact_items": [
+        "`focused_run_id` = the run whose data the Orchestrator tabs are currently showing",
+        "focused_run_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L107",
+        "Plans/Orchestrator_Page.md:L111",
+        "Plans/Orchestrator_Page.md:L375",
+        "Plans/Orchestrator_Page.md:L397"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00649",
+      "source_obligation_ids": [
+        "obl-506"
+      ],
+      "source_seed_ids": [
+        "seed-581"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "all tabs clearly show the focused historical `run_id`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-037: Focused run and historical routing contract",
+      "status": "present",
+      "exact_items": [
+        "all tabs clearly show the focused historical `run_id`",
+        "run_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L107",
+        "Plans/Orchestrator_Page.md:L111",
+        "Plans/Orchestrator_Page.md:L375",
+        "Plans/Orchestrator_Page.md:L397"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

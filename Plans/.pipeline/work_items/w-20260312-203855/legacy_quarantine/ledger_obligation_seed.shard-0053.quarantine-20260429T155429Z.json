@@ -1,0 +1,110 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0053",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0053-L010401-L010600.md",
+  "source_line_range": "L010401-L010600",
+  "covered_shard_id": "shard-0053",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "cross-family attribution packet owner split",
+      "exact_items": [
+        "Contracts_V0.md owns the shared cross-family attribution packet shape for runtime events",
+        "storage-plan.md owns persistence/projection of that packet across attempt_record, usage_record, receipt records, artifact index records"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L10441-L10448"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "tool/artifact/usage consumers of shared attribution",
+      "exact_items": [
+        "Tools.md should stop at tool-specific semantics and reference the shared runtime attribution packet instead of keeping tool events analytics-only",
+        "Runtime_Artifacts_Panel.md should keep artifact-family distinctions, but consume the shared attribution packet instead of relying on artifact-local identity alone",
+        "usage-feature.md should keep canonical Usage routing on shared usage identity, not feature-local cost or receipt notions"
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/usage-feature.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L10449-L10454"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "runtime attribution fields missing from artifacts/tools",
+      "exact_items": [
+        "tool.invoked remains under-attributed compared with tool.denied; it is still documented mainly as analytics exhaust rather than as a first-class runtime trace record.",
+        "runtime artifacts still have no normalized place for attempt_id, node_id, execution_role, provider_attempt_ref, or operational_identity, even though cross-surface receipt linkage already depends on that level of identity.",
+        "usage_record is closer to canonical runtime identity than several artifact and tool docs are, but it still keeps old tier_id joins alive."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/usage-feature.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "tool.invoked",
+        "tool.denied",
+        "attempt_id",
+        "node_id",
+        "execution_role",
+        "provider_attempt_ref",
+        "operational_identity",
+        "tier_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L10467-L10470"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "bridge-field fallback compatibility only",
+      "exact_items": [
+        "usage-feature.md correctly treats usage_event_ref as canonical when present, but still allows timestamp/run/thread fallback behavior that should probably be treated as degraded compatibility, not the preferred routing path.",
+        "storage-plan.md puts provider_attempt_ref on the attempt record and usage_event_ref on the receipt record, but does not yet explain how downstream surfaces should join them coherently.",
+        "Add a bridge-field precedence note to the canonical runtime/storage owner docs.",
+        "Treat timestamp/run/thread fallback routing as compatibility behavior only when canonical bridge refs are absent."
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "usage_event_ref",
+        "provider_attempt_ref"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L10543-L10554"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "headings and process sections L010401-L010590"
+  ],
+  "uncertain_items": []
+}

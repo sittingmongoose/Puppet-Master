@@ -1,0 +1,106 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0064",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0064-L012601-L012800.md",
+  "source_line_range": "L012601-L012800",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "panel-local state outside route identity",
+      "exact_items": [
+        "Move panel-local subviews/selectors out of route identity and into destination/view-state handling."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L12617-L12627",
+        "working_ledger.md:L12645-L12647"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "route activation override boundaries",
+      "exact_items": [
+        "Route activation consumers must override only what is necessary to satisfy requested destination/object/context, and may reuse persisted state only when it does not obscure the target."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Crosswalk.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L12671-L12687",
+        "working_ledger.md:L12718-L12721"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "destination selection versus panel-local state drift",
+      "exact_items": [
+        "Retire docs that still package destination selection and panel-local state as one concept, since they currently risk absorbing filter/subview noise into route payloads."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L12640-L12647",
+        "working_ledger.md:L12715-L12716"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "shared override rule for routing landing state",
+      "exact_items": [
+        "Define a shared override rule so routing can land users on the correct surface without trashing unrelated remembered shell state or hiding the requested target behind the wrong tab/subview."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Crosswalk.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L12672-L12687",
+        "working_ledger.md:L12723-L12726"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "working_ledger.md:L12611-L12614 status-only",
+    "working_ledger.md:L12656-L12661 status-only",
+    "working_ledger.md:L12730-L12740 status-only"
+  ],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0064"
+}

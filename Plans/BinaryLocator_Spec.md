@@ -1,5 +1,35 @@
 # BinaryLocator Spec (Canonical)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0057
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Routing/action contracts are now stronger in `UI_Command_Catalog.md` than in the page specs that consume them:
+  - UI_Command_Catalog.md
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - That makes `Orchestrator_Page.md` another same-file supersession case, not just an outdated page spec.
+  - Orchestrator_Page.md
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
@@ -16,11 +46,73 @@ Provide a **deterministic, testable** mechanism for Puppet Master to locate and 
 ## Canonical references and constraints (SSOT; DRY)
 
 ### Locked decisions (no drift)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0065
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - DAE runs still need a clear post-hoc tool-event story or their analytics/blocked truth will drift immediately.
+  - still contains both field-name drift and pseudo-tier execution-key bugs.
+  - `[retired-token-1]`, `UI_Command_Catalog.md`, `Widget_System.md`, and promoted-shell docs as drift amplifiers
+  - [retired-token-1]
+  - UI_Command_Catalog.md
+  - Widget_System.md
+  - field-name drift
+  - `[retired-token-1]` is one of the most dangerous drift multipliers because it turns stale ontology into user-visible structure.
+  - `Executor_Protocol.md` is no longer the main source of tier-era drift. `Orchestrator_Page.md` is now the much larger multiplier.
+  - Executor_Protocol.md
+  - Orchestrator_Page.md
+  - `assistant-chat-design.md` should not be over-corrected. It is mostly aligned and is no longer one of the main drift multipliers.
+  - assistant-chat-design.md
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Platform name is **Puppet Master** only. (ContractRef: Invariant:INV-010)
 - UI toolkit is **Slint 1.15.1**; Iced is legacy. (ContractRef: SchemaID:spec_lock)
 - Storage is **seglog + redb + Tantivy**; SQLite is forbidden. (ContractRef: SchemaID:spec_lock)
 
 ### Canonical sources (reference, don't duplicate)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0061
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Concerns should not duplicate endlessly when the same underlying issue reappears.
+  - `[retired-token-1]` cross-checking surfaced exact duplicate and mislabeled sections in owner docs, showing that stale/additive layering has become a mechanical doc-integrity issue rather than just a conceptual one.
+  - [retired-token-1]
+  - duplicate numbering and `ContractRef` failures in owner docs
+  - ContractRef
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Primitive ownership boundaries: `Plans/Crosswalk.md` (ContractRef: Primitive:Provider)
 - DRY / ContractRef rule: `Plans/DRY_Rules.md` §7 (ContractRef: SchemaID:spec_lock)
 - Autonomy / deterministic defaults: `Plans/Decision_Policy.md` (ContractRef: SchemaID:spec_lock)
@@ -46,6 +138,25 @@ This spec may cite `puppet-master-rs/src/...` paths as **legacy-code behavior an
 BinaryLocator is a **Provider-owned** discovery + validation + trace service. (ContractRef: Primitive:Provider)
 
 ### Contract shape
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+#### Source target target-0063
+- Reconciliation action: stale_retirement
+- Replace scope: exact_section
+- Exact required items represented:
+  - `[retired-token-1]` is not just a stale consumer. It is still publishing canonical key shapes. Any unresolved tier-era key there will keep propagating into other docs.
+  - [retired-token-1]
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 #### Input (conceptual)
 `BinaryLocateRequest` is a conceptual contract; concrete types belong in the Provider domain. (ContractRef: Primitive:Provider)
@@ -84,6 +195,28 @@ AutoDecision: Until callers have a persisted event writer available, return `tra
 ## Deterministic discovery algorithm
 
 ### Probe-layer order (hard requirement)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0066
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - hard `exactly 2 reviewer subagents`
+  - exactly 2 reviewer subagents
+  - This is a hard persistence-contract contradiction.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 BinaryLocator MUST attempt probe layers in this exact order and MUST return the **first Valid hit**. (ContractRef: Primitive:Provider)
 1) `Override`
 2) `PATH`
@@ -170,6 +303,28 @@ Selection rule (deterministic):
 Legacy anchor: `puppet-master-rs/src/install/script_installer.rs` (Cursor shim notes).
 
 #### Windows launcher wrappers (required)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0067
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - wrappers normalize their args into canonical target/subject forms internally
+  - `normalizes_to_contract` for wrappers
+  - normalizes_to_contract
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 If a candidate ends with `.cmd` or `.bat`, treat it as a launcher and validate via the standard validation contract. (ContractRef: Primitive:Provider)
 
 If no launcher rule yields a valid hit, return `NotFound`. (ContractRef: Primitive:Provider)
@@ -203,6 +358,28 @@ ContractRef: Invariant:INV-002, ContractName:Plans/Architecture_Invariants.md, C
 ## Validation contract (commands, version parsing, permission checks)
 
 ### Command selection (SSOT)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0062
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - step selection should ride in a specialized subtarget/detail field or in serialized `resume_url`, not as a universal base field
+  - resume_url
+  - repo/worktree selection
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 BinaryLocator MUST use a Provider-owned SSOT version command for each `provider_cli`. (ContractRef: Invariant:INV-005)
 - Legacy anchor: `puppet-master-rs/src/platforms/platform_specs.rs` `PlatformSpec.version_command`.
 
@@ -248,6 +425,26 @@ BinaryLocator MUST maintain: (ContractRef: Primitive:Provider)
 - A per-workspace ephemeral cache keyed by `(provider_cli, workspace_fingerprint)` during the current Session. (ContractRef: Primitive:Provider)
 
 ### Cache read policy
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0060
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - consumer docs mirror whichever era they happened to read first
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - If `force_rescan == true`, do not read caches. (ContractRef: Primitive:Provider)
 - Otherwise, cached entries MUST be fast-validated before being returned. (ContractRef: Primitive:Provider)
 

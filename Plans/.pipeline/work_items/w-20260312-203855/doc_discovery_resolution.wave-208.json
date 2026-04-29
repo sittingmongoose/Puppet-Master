@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-208",
+  "group_ids": [
+    "discgrp-0829",
+    "discgrp-0830",
+    "discgrp-0831",
+    "discgrp-0832"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01076",
+      "source_obligation_ids": [
+        "obl-933"
+      ],
+      "source_seed_ids": [
+        "seed-1100"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### 7.19.2 Bundle controls and review gate",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1105"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01077",
+      "source_obligation_ids": [
+        "obl-934"
+      ],
+      "source_seed_ids": [
+        "seed-1101"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01078",
+      "source_obligation_ids": [
+        "obl-935"
+      ],
+      "source_seed_ids": [
+        "seed-1102"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01079",
+      "source_obligation_ids": [
+        "obl-936"
+      ],
+      "source_seed_ids": [
+        "seed-1103"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

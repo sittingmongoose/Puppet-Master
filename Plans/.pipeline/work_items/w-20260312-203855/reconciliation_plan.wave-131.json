@@ -1,0 +1,283 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-131",
+  "group_ids": [
+    "recgrp-0521",
+    "recgrp-0522",
+    "recgrp-0523",
+    "recgrp-0524"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0521",
+      "path": "Plans/UI_Command_Catalog.md",
+      "mapped_owner_heading": "### 2.6 Chat context usage commands",
+      "live_anchor": "### 2.6 Chat context usage commands (Plans/UI_Command_Catalog.md:L388)",
+      "action": "layout_repair_reference",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-05290"
+      ],
+      "source_obligation_ids": [
+        "obl-5066"
+      ],
+      "source_seed_ids": [
+        "seed-7414"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "gap_ids": [
+        "gap-04099"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`GUI_Rebuild_Requirements_Checklist.md` still claims phantom command IDs, keeps superseded chat usage commands, omits the `cmd.runtime.*` family entirely, and does not track degraded/projection-trust runtime surfaces.",
+        "GUI_Rebuild_Requirements_Checklist.md",
+        "cmd.runtime.*"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-612f093ac0d4",
+      "packet_writer_role": "observe_only",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Observe-only layout repair reference: target records packetizable layout backlog without creating an overlapping mutation writer."
+      ]
+    },
+    {
+      "target_id": "target-0522",
+      "path": "Plans/UI_Command_Catalog.md",
+      "mapped_owner_heading": "### 2.8A Side-panel and artifacts navigation commands",
+      "live_anchor": "### 2.8A Side-panel and artifacts navigation commands (Plans/UI_Command_Catalog.md:L664)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-04907"
+      ],
+      "source_obligation_ids": [
+        "obl-4683"
+      ],
+      "source_seed_ids": [
+        "seed-6733"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "gap_ids": [
+        "gap-03835"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Research Progress - 2026-03-16 - Command boundary: pure view commands vs route-consuming navigation"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-6f05094320ac",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0523",
+      "path": "Plans/UI_Command_Catalog.md",
+      "mapped_owner_heading": "### Canonical route payload and route/open tail rules",
+      "live_anchor": "### Canonical route payload and route/open tail rules (Plans/UI_Command_Catalog.md:L95)",
+      "action": "layout_repair_reference",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-04998"
+      ],
+      "source_obligation_ids": [
+        "obl-4774"
+      ],
+      "source_seed_ids": [
+        "seed-6874"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "gap_ids": [
+        "gap-03913"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "It should NOT inline route payload shape, object kinds, or argument mapping rules into the command metadata. That would duplicate the route contract and turn the catalog into a second routing schema."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-3d8dd03244e0",
+      "packet_writer_role": "observe_only",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Observe-only layout repair reference: target records packetizable layout backlog without creating an overlapping mutation writer."
+      ]
+    },
+    {
+      "target_id": "target-0524",
+      "path": "Plans/UI_Command_Catalog.md",
+      "mapped_owner_heading": "### Command normalization model",
+      "live_anchor": "### Command normalization model (Plans/UI_Command_Catalog.md:L111)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-02370",
+        "cov-02739",
+        "cov-04969",
+        "cov-05012",
+        "cov-05689",
+        "cov-06418"
+      ],
+      "source_obligation_ids": [
+        "obl-2221",
+        "obl-2586",
+        "obl-4745",
+        "obl-4788",
+        "obl-5461",
+        "obl-6059"
+      ],
+      "source_seed_ids": [
+        "seed-2886",
+        "seed-3388",
+        "seed-6838",
+        "seed-6895",
+        "seed-8105",
+        "seed-9157"
+      ],
+      "source_shard_ids": [
+        "shard-0036",
+        "shard-0040",
+        "shard-0065",
+        "shard-0066",
+        "shard-0075",
+        "shard-0083"
+      ],
+      "gap_ids": [
+        "gap-01842",
+        "gap-02154",
+        "gap-03889",
+        "gap-03925",
+        "gap-04433",
+        "gap-04983"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "still needs command normalization, trust-state gating, and stronger project/account binding for resumed flows",
+        "UI command / route normalization across existing commands",
+        "`GATE-010` can verify command coverage, but it cannot yet verify wrapper normalization consistency.",
+        "GATE-010",
+        "normalization metadata is internally consistent with the command kind",
+        "Keep the matrix row itself relatively small; let it reference a command that already carries normalization meaning.",
+        "command wrapper normalization"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-7ec564b15eb3",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-05290",
+    "cov-04907",
+    "cov-04998",
+    "cov-02370",
+    "cov-02739",
+    "cov-04969",
+    "cov-05012",
+    "cov-05689",
+    "cov-06418"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-5066",
+    "obl-4683",
+    "obl-4774",
+    "obl-2221",
+    "obl-2586",
+    "obl-4745",
+    "obl-4788",
+    "obl-5461",
+    "obl-6059"
+  ],
+  "source_seed_ids_represented": [
+    "seed-7414",
+    "seed-6733",
+    "seed-6874",
+    "seed-2886",
+    "seed-3388",
+    "seed-6838",
+    "seed-6895",
+    "seed-8105",
+    "seed-9157"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0070",
+    "shard-0065",
+    "shard-0066",
+    "shard-0036",
+    "shard-0040",
+    "shard-0075",
+    "shard-0083"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": [
+    {
+      "target_id": "target-0521",
+      "path": "Plans/UI_Command_Catalog.md",
+      "reason": "observe_only non-packetizable source path"
+    },
+    {
+      "target_id": "target-0523",
+      "path": "Plans/UI_Command_Catalog.md",
+      "reason": "observe_only non-packetizable source path"
+    }
+  ]
+}

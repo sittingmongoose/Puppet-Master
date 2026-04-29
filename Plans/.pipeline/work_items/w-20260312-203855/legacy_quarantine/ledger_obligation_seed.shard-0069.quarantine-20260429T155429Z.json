@@ -1,0 +1,128 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0069",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0069-L013601-L013800.md",
+  "source_line_range": "L013601-L013800",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "resume_url serialized route_target transport",
+      "exact_items": [
+        "Define resume_url as serialized route_target transport in Contracts_V0.md.",
+        "State the allowed serialized data classes directly.",
+        "Keep wizard-step detail as a narrow serialized anchor, not a new top-level base route field."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "resume_url",
+        "route_target"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L13611-L13613"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "object_kind vocabulary and blocked_episode identity",
+      "exact_items": [
+        "Define the canonical object_kind enum in Contracts_V0.md.",
+        "Add the vocabulary to Glossary.md so downstream copy and help stop drifting.",
+        "State blocked-episode identity directly: object_kind = blocked_episode, project_id, focused_run_id = run_id, object_id = blocked_sequence, object scope = node_id within run."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Glossary.md",
+        "Plans/storage-plan.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "object_kind",
+        "blocked_episode",
+        "project_id",
+        "focused_run_id",
+        "object_id",
+        "blocked_sequence",
+        "node_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L13691-L13699"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "inspector_target closed enum",
+      "exact_items": [
+        "Define the closed inspector_target enum in Contracts_V0.md.",
+        "Keep all message-step-line-range style anchors out of inspector_target.",
+        "Use domain-local serialized anchor detail only when the target cannot be expressed through the closed inspector vocabulary."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "inspector_target"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L13751-L13753"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "subject_id versus object_kind object_id split",
+      "exact_items": [
+        "Use subject_id only when the target is canonical renderable/openable content.",
+        "Use object_kind + object_id for all runtime, governance, conversational, and workflow objects.",
+        "The canonical subject_id families remain: doc:<document_id> and artifact:<artifact_id>."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "subject_id",
+        "object_kind",
+        "object_id",
+        "doc:<document_id>",
+        "artifact:<artifact_id>"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L13771-L13776"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "working_ledger.md:L13601-L13603 process/status",
+    "working_ledger.md:L13623-L13630 docs/read list",
+    "working_ledger.md:L13673-L13683 docs/read list",
+    "working_ledger.md:L13737-L13744 docs/read list",
+    "working_ledger.md:L13762-L13767 docs/read list"
+  ],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0069"
+}

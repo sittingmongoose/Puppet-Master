@@ -1,0 +1,2111 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-016",
+  "group_ids": [
+    "gapgrp-0061",
+    "gapgrp-0062",
+    "gapgrp-0063",
+    "gapgrp-0064"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-00312",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00395 is partial for `effective_account_id` is the stable internal identity",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00395"
+      ],
+      "source_obligation_ids": [
+        "obl-253"
+      ],
+      "source_seed_ids": [
+        "seed-286"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`effective_account_id` is the stable internal identity",
+        "effective_account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00329",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00420 is partial for or explicitly define it as provider-native metadata subordinate to stable internal `effect",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00420"
+      ],
+      "source_obligation_ids": [
+        "obl-278"
+      ],
+      "source_seed_ids": [
+        "seed-316"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "or explicitly define it as provider-native metadata subordinate to stable internal `effective_account_id`",
+        "effective_account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00669",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00882 is partial for Concerns should not duplicate endlessly when the same underlying issue reappears.",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Canonical sources (reference, don't duplicate)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00882"
+      ],
+      "source_obligation_ids": [
+        "obl-739"
+      ],
+      "source_seed_ids": [
+        "seed-844"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "exact_missing_items": [
+        "Concerns should not duplicate endlessly when the same underlying issue reappears."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00941",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01206 is partial for keep canonical names stable",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01206"
+      ],
+      "source_obligation_ids": [
+        "obl-1063"
+      ],
+      "source_seed_ids": [
+        "seed-1250"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "exact_missing_items": [
+        "keep canonical names stable"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01037",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01327 is partial for per-generation layout caching",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Caching and invalidation"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01327"
+      ],
+      "source_obligation_ids": [
+        "obl-1184"
+      ],
+      "source_seed_ids": [
+        "seed-1410"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "exact_missing_items": [
+        "per-generation layout caching"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01052",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01343 is partial for filtered query + paging + stable sort are required",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01343"
+      ],
+      "source_obligation_ids": [
+        "obl-1200"
+      ],
+      "source_seed_ids": [
+        "seed-1435"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "exact_missing_items": [
+        "filtered query + paging + stable sort are required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01680",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02158 is partial for Routing/action contracts are now stronger in `UI_Command_Catalog.md` than in the page spec",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "# BinaryLocator Spec (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02158"
+      ],
+      "source_obligation_ids": [
+        "obl-2015"
+      ],
+      "source_seed_ids": [
+        "seed-2621"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "Routing/action contracts are now stronger in `UI_Command_Catalog.md` than in the page specs that consume them:",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01702",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02185 is partial for replace login-keyed durable identity with stable internal `account_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02185"
+      ],
+      "source_obligation_ids": [
+        "obl-2040"
+      ],
+      "source_seed_ids": [
+        "seed-2649"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "replace login-keyed durable identity with stable internal `account_id`",
+        "account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02632",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03368 is partial for `usage_event_ref?` is useful but not sufficient as the only drill-through anchor",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Legacy-code anchor note (read-only)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03368"
+      ],
+      "source_obligation_ids": [
+        "obl-3214"
+      ],
+      "source_seed_ids": [
+        "seed-4287"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "`usage_event_ref?` is useful but not sufficient as the only drill-through anchor",
+        "usage_event_ref?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03064",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03933 is present for `storage-plan.md` is the strongest current anchor:",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Legacy-code anchor note (read-only)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03933"
+      ],
+      "source_obligation_ids": [
+        "obl-3777"
+      ],
+      "source_seed_ids": [
+        "seed-5164"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "`storage-plan.md` is the strongest current anchor:",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03671",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04700 is partial for object-family-specific anchor fields only when the anchor is truly domain-local and not re",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Legacy-code anchor note (read-only)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04700"
+      ],
+      "source_obligation_ids": [
+        "obl-4478"
+      ],
+      "source_seed_ids": [
+        "seed-6367"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "object-family-specific anchor fields only when the anchor is truly domain-local and not reusable"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03745",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04794 is partial for stable sharable identity",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04794"
+      ],
+      "source_obligation_ids": [
+        "obl-4571"
+      ],
+      "source_seed_ids": [
+        "seed-6525"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "stable sharable identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03960",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05080 is partial for Keep `subject_id` canonical and stable:",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05080"
+      ],
+      "source_obligation_ids": [
+        "obl-4856"
+      ],
+      "source_seed_ids": [
+        "seed-6993"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "exact_missing_items": [
+        "Keep `subject_id` canonical and stable:",
+        "subject_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03999",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05140 is partial for `usage_event_ref` should normalize into a stable `usage_event` object identity rather than",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05140"
+      ],
+      "source_obligation_ids": [
+        "obl-4916"
+      ],
+      "source_seed_ids": [
+        "seed-7110"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "exact_missing_items": [
+        "`usage_event_ref` should normalize into a stable `usage_event` object identity rather than remain a top-level special-case field.",
+        "usage_event_ref",
+        "usage_event"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04467",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05741 is partial for `message_id` and `thread_id` are stable conversational object identity",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05741"
+      ],
+      "source_obligation_ids": [
+        "obl-5513"
+      ],
+      "source_seed_ids": [
+        "seed-8185"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "`message_id` and `thread_id` are stable conversational object identity",
+        "message_id",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04496",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05799 is partial for stable blocked-episode identity or family-local equivalent",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05799"
+      ],
+      "source_obligation_ids": [
+        "obl-5571"
+      ],
+      "source_seed_ids": [
+        "seed-8276"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "stable blocked-episode identity or family-local equivalent"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04553",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05882 is present for `FinalGUISpec.md`, `UI_Command_Catalog.md`, `Widget_System.md`, and promoted-shell docs as",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Locked decisions (no drift)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05882"
+      ],
+      "source_obligation_ids": [
+        "obl-5654"
+      ],
+      "source_seed_ids": [
+        "seed-8386"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md`, `UI_Command_Catalog.md`, `Widget_System.md`, and promoted-shell docs as drift amplifiers",
+        "FinalGUISpec.md",
+        "UI_Command_Catalog.md",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04557",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05887 is present for duplicate numbering and `ContractRef` failures in owner docs",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Canonical sources (reference, don't duplicate)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05887"
+      ],
+      "source_obligation_ids": [
+        "obl-5659"
+      ],
+      "source_seed_ids": [
+        "seed-8415"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "duplicate numbering and `ContractRef` failures in owner docs",
+        "ContractRef"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02376",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03009 is partial for DAE runs still need a clear post-hoc tool-event story or their analytics/blocked truth wil",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Locked decisions (no drift)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03009"
+      ],
+      "source_obligation_ids": [
+        "obl-2855"
+      ],
+      "source_seed_ids": [
+        "seed-3765"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "DAE runs still need a clear post-hoc tool-event story or their analytics/blocked truth will drift immediately."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02609",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03332 is partial for still contains both field-name drift and pseudo-tier execution-key bugs.",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Locked decisions (no drift)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03332"
+      ],
+      "source_obligation_ids": [
+        "obl-3178"
+      ],
+      "source_seed_ids": [
+        "seed-4236"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "still contains both field-name drift and pseudo-tier execution-key bugs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03486",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04454 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04454"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03640",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04646 is partial for step selection should ride in a specialized subtarget/detail field or in serialized `resum",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Command selection (SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04646"
+      ],
+      "source_obligation_ids": [
+        "obl-4424"
+      ],
+      "source_seed_ids": [
+        "seed-6260"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "step selection should ride in a specialized subtarget/detail field or in serialized `resume_url`, not as a universal base field",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03698",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04736 is partial for wrappers normalize their args into canonical target/subject forms internally",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "#### Windows launcher wrappers (required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04736"
+      ],
+      "source_obligation_ids": [
+        "obl-4514"
+      ],
+      "source_seed_ids": [
+        "seed-6419"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "wrappers normalize their args into canonical target/subject forms internally"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03909",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04994 is partial for `normalizes_to_contract` for wrappers",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "#### Windows launcher wrappers (required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04994"
+      ],
+      "source_obligation_ids": [
+        "obl-4770"
+      ],
+      "source_seed_ids": [
+        "seed-6868"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "exact_missing_items": [
+        "`normalizes_to_contract` for wrappers",
+        "normalizes_to_contract"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04013",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05160 is partial for repo/worktree selection",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Command selection (SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05160"
+      ],
+      "source_obligation_ids": [
+        "obl-4936"
+      ],
+      "source_seed_ids": [
+        "seed-7152"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "exact_missing_items": [
+        "repo/worktree selection"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04582",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05918 is partial for field-name drift",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Locked decisions (no drift)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05918"
+      ],
+      "source_obligation_ids": [
+        "obl-5690"
+      ],
+      "source_seed_ids": [
+        "seed-8458"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "field-name drift"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04766",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06164 is partial for This is a hard persistence-contract contradiction.",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Probe-layer order (hard requirement)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06164"
+      ],
+      "source_obligation_ids": [
+        "obl-5936"
+      ],
+      "source_seed_ids": [
+        "seed-8813"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "This is a hard persistence-contract contradiction."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04812",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06223 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06223"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05118",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06594 is partial for That makes `Orchestrator_Page.md` another same-file supersession case, not just an outdate",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "# BinaryLocator Spec (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06594"
+      ],
+      "source_obligation_ids": [
+        "obl-6235"
+      ],
+      "source_seed_ids": [
+        "seed-9425"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "That makes `Orchestrator_Page.md` another same-file supersession case, not just an outdated page spec.",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05127",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06607 is partial for `Executor_Protocol.md` is no longer the main source of tier-era drift. `Orchestrator_Page.",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Locked decisions (no drift)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06607"
+      ],
+      "source_obligation_ids": [
+        "obl-6248"
+      ],
+      "source_seed_ids": [
+        "seed-9446"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`Executor_Protocol.md` is no longer the main source of tier-era drift. `Orchestrator_Page.md` is now the much larger multiplier.",
+        "Executor_Protocol.md",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05155",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06654 is partial for `assistant-chat-design.md` should not be over-corrected. It is mostly aligned and is no lo",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Locked decisions (no drift)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06654"
+      ],
+      "source_obligation_ids": [
+        "obl-6295"
+      ],
+      "source_seed_ids": [
+        "seed-9522"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`assistant-chat-design.md` should not be over-corrected. It is mostly aligned and is no longer one of the main drift multipliers.",
+        "assistant-chat-design.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00395",
+    "cov-00420",
+    "cov-00882",
+    "cov-01206",
+    "cov-01327",
+    "cov-01343",
+    "cov-02158",
+    "cov-02185",
+    "cov-03368",
+    "cov-03933",
+    "cov-04700",
+    "cov-04794",
+    "cov-05080",
+    "cov-05140",
+    "cov-05741",
+    "cov-05799",
+    "cov-05882",
+    "cov-05887",
+    "cov-03009",
+    "cov-03332",
+    "cov-04454",
+    "cov-04646",
+    "cov-04736",
+    "cov-04994",
+    "cov-05160",
+    "cov-05918",
+    "cov-06164",
+    "cov-06223",
+    "cov-06594",
+    "cov-06607",
+    "cov-06654"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1063",
+    "obl-1184",
+    "obl-1200",
+    "obl-2015",
+    "obl-2040",
+    "obl-253",
+    "obl-278",
+    "obl-2855",
+    "obl-3178",
+    "obl-3214",
+    "obl-3777",
+    "obl-4292",
+    "obl-4424",
+    "obl-4478",
+    "obl-4514",
+    "obl-4571",
+    "obl-4770",
+    "obl-4856",
+    "obl-4916",
+    "obl-4936",
+    "obl-5513",
+    "obl-5571",
+    "obl-5654",
+    "obl-5659",
+    "obl-5690",
+    "obl-5936",
+    "obl-5986",
+    "obl-6235",
+    "obl-6248",
+    "obl-6295",
+    "obl-739"
+  ],
+  "source_seed_ids_represented": [
+    "seed-1250",
+    "seed-1410",
+    "seed-1435",
+    "seed-2621",
+    "seed-2649",
+    "seed-286",
+    "seed-316",
+    "seed-3765",
+    "seed-4236",
+    "seed-4287",
+    "seed-5164",
+    "seed-6001",
+    "seed-6260",
+    "seed-6367",
+    "seed-6419",
+    "seed-6525",
+    "seed-6868",
+    "seed-6993",
+    "seed-7110",
+    "seed-7152",
+    "seed-8185",
+    "seed-8276",
+    "seed-8386",
+    "seed-8415",
+    "seed-844",
+    "seed-8458",
+    "seed-8813",
+    "seed-9006",
+    "seed-9425",
+    "seed-9446",
+    "seed-9522"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0011",
+    "shard-0016",
+    "shard-0021",
+    "shard-0023",
+    "shard-0034",
+    "shard-0042",
+    "shard-0046",
+    "shard-0052",
+    "shard-0059",
+    "shard-0061",
+    "shard-0062",
+    "shard-0063",
+    "shard-0066",
+    "shard-0067",
+    "shard-0068",
+    "shard-0076",
+    "shard-0077",
+    "shard-0078",
+    "shard-0081",
+    "shard-0082",
+    "shard-0085"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-00312",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00395 is partial for `effective_account_id` is the stable internal identity",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00395"
+      ],
+      "source_obligation_ids": [
+        "obl-253"
+      ],
+      "source_seed_ids": [
+        "seed-286"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`effective_account_id` is the stable internal identity",
+        "effective_account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00329",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00420 is partial for or explicitly define it as provider-native metadata subordinate to stable internal `effect",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00420"
+      ],
+      "source_obligation_ids": [
+        "obl-278"
+      ],
+      "source_seed_ids": [
+        "seed-316"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "or explicitly define it as provider-native metadata subordinate to stable internal `effective_account_id`",
+        "effective_account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00669",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00882 is partial for Concerns should not duplicate endlessly when the same underlying issue reappears.",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Canonical sources (reference, don't duplicate)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00882"
+      ],
+      "source_obligation_ids": [
+        "obl-739"
+      ],
+      "source_seed_ids": [
+        "seed-844"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "exact_missing_items": [
+        "Concerns should not duplicate endlessly when the same underlying issue reappears."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00941",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01206 is partial for keep canonical names stable",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01206"
+      ],
+      "source_obligation_ids": [
+        "obl-1063"
+      ],
+      "source_seed_ids": [
+        "seed-1250"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "exact_missing_items": [
+        "keep canonical names stable"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01037",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01327 is partial for per-generation layout caching",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Caching and invalidation"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01327"
+      ],
+      "source_obligation_ids": [
+        "obl-1184"
+      ],
+      "source_seed_ids": [
+        "seed-1410"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "exact_missing_items": [
+        "per-generation layout caching"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01052",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01343 is partial for filtered query + paging + stable sort are required",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01343"
+      ],
+      "source_obligation_ids": [
+        "obl-1200"
+      ],
+      "source_seed_ids": [
+        "seed-1435"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "exact_missing_items": [
+        "filtered query + paging + stable sort are required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01680",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02158 is partial for Routing/action contracts are now stronger in `UI_Command_Catalog.md` than in the page spec",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "# BinaryLocator Spec (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02158"
+      ],
+      "source_obligation_ids": [
+        "obl-2015"
+      ],
+      "source_seed_ids": [
+        "seed-2621"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "Routing/action contracts are now stronger in `UI_Command_Catalog.md` than in the page specs that consume them:",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01702",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02185 is partial for replace login-keyed durable identity with stable internal `account_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02185"
+      ],
+      "source_obligation_ids": [
+        "obl-2040"
+      ],
+      "source_seed_ids": [
+        "seed-2649"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "replace login-keyed durable identity with stable internal `account_id`",
+        "account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02632",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03368 is partial for `usage_event_ref?` is useful but not sufficient as the only drill-through anchor",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Legacy-code anchor note (read-only)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03368"
+      ],
+      "source_obligation_ids": [
+        "obl-3214"
+      ],
+      "source_seed_ids": [
+        "seed-4287"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "`usage_event_ref?` is useful but not sufficient as the only drill-through anchor",
+        "usage_event_ref?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03064",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03933 is present for `storage-plan.md` is the strongest current anchor:",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Legacy-code anchor note (read-only)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03933"
+      ],
+      "source_obligation_ids": [
+        "obl-3777"
+      ],
+      "source_seed_ids": [
+        "seed-5164"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "`storage-plan.md` is the strongest current anchor:",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03671",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04700 is partial for object-family-specific anchor fields only when the anchor is truly domain-local and not re",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Legacy-code anchor note (read-only)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04700"
+      ],
+      "source_obligation_ids": [
+        "obl-4478"
+      ],
+      "source_seed_ids": [
+        "seed-6367"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "object-family-specific anchor fields only when the anchor is truly domain-local and not reusable"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03745",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04794 is partial for stable sharable identity",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04794"
+      ],
+      "source_obligation_ids": [
+        "obl-4571"
+      ],
+      "source_seed_ids": [
+        "seed-6525"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "stable sharable identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03960",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05080 is partial for Keep `subject_id` canonical and stable:",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05080"
+      ],
+      "source_obligation_ids": [
+        "obl-4856"
+      ],
+      "source_seed_ids": [
+        "seed-6993"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "exact_missing_items": [
+        "Keep `subject_id` canonical and stable:",
+        "subject_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03999",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05140 is partial for `usage_event_ref` should normalize into a stable `usage_event` object identity rather than",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05140"
+      ],
+      "source_obligation_ids": [
+        "obl-4916"
+      ],
+      "source_seed_ids": [
+        "seed-7110"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "exact_missing_items": [
+        "`usage_event_ref` should normalize into a stable `usage_event` object identity rather than remain a top-level special-case field.",
+        "usage_event_ref",
+        "usage_event"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04467",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05741 is partial for `message_id` and `thread_id` are stable conversational object identity",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05741"
+      ],
+      "source_obligation_ids": [
+        "obl-5513"
+      ],
+      "source_seed_ids": [
+        "seed-8185"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "`message_id` and `thread_id` are stable conversational object identity",
+        "message_id",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04496",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05799 is partial for stable blocked-episode identity or family-local equivalent",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "## Error taxonomy (stable codes)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05799"
+      ],
+      "source_obligation_ids": [
+        "obl-5571"
+      ],
+      "source_seed_ids": [
+        "seed-8276"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "stable blocked-episode identity or family-local equivalent"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04553",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05882 is present for `FinalGUISpec.md`, `UI_Command_Catalog.md`, `Widget_System.md`, and promoted-shell docs as",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Locked decisions (no drift)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05882"
+      ],
+      "source_obligation_ids": [
+        "obl-5654"
+      ],
+      "source_seed_ids": [
+        "seed-8386"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md`, `UI_Command_Catalog.md`, `Widget_System.md`, and promoted-shell docs as drift amplifiers",
+        "FinalGUISpec.md",
+        "UI_Command_Catalog.md",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04557",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05887 is present for duplicate numbering and `ContractRef` failures in owner docs",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Canonical sources (reference, don't duplicate)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05887"
+      ],
+      "source_obligation_ids": [
+        "obl-5659"
+      ],
+      "source_seed_ids": [
+        "seed-8415"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "duplicate numbering and `ContractRef` failures in owner docs",
+        "ContractRef"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02376",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03009 is partial for DAE runs still need a clear post-hoc tool-event story or their analytics/blocked truth wil",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Locked decisions (no drift)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03009"
+      ],
+      "source_obligation_ids": [
+        "obl-2855"
+      ],
+      "source_seed_ids": [
+        "seed-3765"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "DAE runs still need a clear post-hoc tool-event story or their analytics/blocked truth will drift immediately."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02609",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03332 is partial for still contains both field-name drift and pseudo-tier execution-key bugs.",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Locked decisions (no drift)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03332"
+      ],
+      "source_obligation_ids": [
+        "obl-3178"
+      ],
+      "source_seed_ids": [
+        "seed-4236"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "still contains both field-name drift and pseudo-tier execution-key bugs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03486",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04454 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04454"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03640",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04646 is partial for step selection should ride in a specialized subtarget/detail field or in serialized `resum",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Command selection (SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04646"
+      ],
+      "source_obligation_ids": [
+        "obl-4424"
+      ],
+      "source_seed_ids": [
+        "seed-6260"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "step selection should ride in a specialized subtarget/detail field or in serialized `resume_url`, not as a universal base field",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03698",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04736 is partial for wrappers normalize their args into canonical target/subject forms internally",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "#### Windows launcher wrappers (required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04736"
+      ],
+      "source_obligation_ids": [
+        "obl-4514"
+      ],
+      "source_seed_ids": [
+        "seed-6419"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "wrappers normalize their args into canonical target/subject forms internally"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03909",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04994 is partial for `normalizes_to_contract` for wrappers",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "#### Windows launcher wrappers (required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04994"
+      ],
+      "source_obligation_ids": [
+        "obl-4770"
+      ],
+      "source_seed_ids": [
+        "seed-6868"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "exact_missing_items": [
+        "`normalizes_to_contract` for wrappers",
+        "normalizes_to_contract"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04013",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05160 is partial for repo/worktree selection",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Command selection (SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05160"
+      ],
+      "source_obligation_ids": [
+        "obl-4936"
+      ],
+      "source_seed_ids": [
+        "seed-7152"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "exact_missing_items": [
+        "repo/worktree selection"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04582",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05918 is partial for field-name drift",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Locked decisions (no drift)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05918"
+      ],
+      "source_obligation_ids": [
+        "obl-5690"
+      ],
+      "source_seed_ids": [
+        "seed-8458"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "field-name drift"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04766",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06164 is partial for This is a hard persistence-contract contradiction.",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Probe-layer order (hard requirement)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06164"
+      ],
+      "source_obligation_ids": [
+        "obl-5936"
+      ],
+      "source_seed_ids": [
+        "seed-8813"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "This is a hard persistence-contract contradiction."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04812",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06223 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06223"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05118",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06594 is partial for That makes `Orchestrator_Page.md` another same-file supersession case, not just an outdate",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "# BinaryLocator Spec (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06594"
+      ],
+      "source_obligation_ids": [
+        "obl-6235"
+      ],
+      "source_seed_ids": [
+        "seed-9425"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "That makes `Orchestrator_Page.md` another same-file supersession case, not just an outdated page spec.",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05127",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06607 is partial for `Executor_Protocol.md` is no longer the main source of tier-era drift. `Orchestrator_Page.",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Locked decisions (no drift)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06607"
+      ],
+      "source_obligation_ids": [
+        "obl-6248"
+      ],
+      "source_seed_ids": [
+        "seed-9446"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`Executor_Protocol.md` is no longer the main source of tier-era drift. `Orchestrator_Page.md` is now the much larger multiplier.",
+        "Executor_Protocol.md",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05155",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06654 is partial for `assistant-chat-design.md` should not be over-corrected. It is mostly aligned and is no lo",
+      "affected_targets": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "heading": "### Locked decisions (no drift)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06654"
+      ],
+      "source_obligation_ids": [
+        "obl-6295"
+      ],
+      "source_seed_ids": [
+        "seed-9522"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`assistant-chat-design.md` should not be over-corrected. It is mostly aligned and is no longer one of the main drift multipliers.",
+        "assistant-chat-design.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

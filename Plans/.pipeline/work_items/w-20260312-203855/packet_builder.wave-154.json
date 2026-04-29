@@ -1,0 +1,390 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-154",
+  "group_ids": [
+    "pktgrp-0613",
+    "pktgrp-0614",
+    "pktgrp-0615",
+    "pktgrp-0616"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0058",
+      "source_reconciliation_target_id": "target-0260",
+      "source_reconciliation_target_ids": [
+        "target-0260"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "operation": "observe_only",
+      "live_anchor": "## Table of Contents (Plans/FinalGUISpec.md:L224)",
+      "coverage_row_ids": [
+        "cov-04965"
+      ],
+      "source_obligation_ids": [
+        "obl-4741"
+      ],
+      "source_seed_ids": [
+        "seed-6827"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4741"
+        ],
+        "source_seed_ids": [
+          "seed-6827"
+        ],
+        "source_shard_ids": [
+          "shard-0065"
+        ]
+      },
+      "gap_ids": [
+        "gap-03885"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "this is close to the right thinking for navigation, but navigation still needs a wrapper layer rather than just a winner/loser alias table"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-e5a7d51faeef",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0059",
+      "source_reconciliation_target_id": "target-0263",
+      "source_reconciliation_target_ids": [
+        "target-0263"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "operation": "observe_only",
+      "live_anchor": "### 10.7 Event-driven refresh rule (Plans/FinalGUISpec.md:L1251)",
+      "coverage_row_ids": [
+        "cov-02127",
+        "cov-03664",
+        "cov-06380",
+        "cov-07169"
+      ],
+      "source_obligation_ids": [
+        "obl-1984",
+        "obl-3510",
+        "obl-6021",
+        "obl-6736"
+      ],
+      "source_seed_ids": [
+        "seed-2581",
+        "seed-4726",
+        "seed-9108",
+        "seed-10353"
+      ],
+      "source_shard_ids": [
+        "shard-0034",
+        "shard-0049",
+        "shard-0082",
+        "shard-0091"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1984",
+          "obl-3510",
+          "obl-6021",
+          "obl-6736"
+        ],
+        "source_seed_ids": [
+          "seed-2581",
+          "seed-4726",
+          "seed-9108",
+          "seed-10353"
+        ],
+        "source_shard_ids": [
+          "shard-0034",
+          "shard-0049",
+          "shard-0082",
+          "shard-0091"
+        ]
+      },
+      "gap_ids": [
+        "gap-01654",
+        "gap-02863",
+        "gap-04953",
+        "gap-05568"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`dashboard_layout:v1` backup retention vs deletion rule conflicts inside the same section",
+        "dashboard_layout:v1",
+        "`Commands_System.md` contains an internal acceptance-criteria contradiction on reserved slash-command overrides, while `assistant-chat-design.md` and `UI_Command_Catalog.md` still state the opposite rule and do not even mention `override_builtin`.",
+        "Commands_System.md",
+        "assistant-chat-design.md",
+        "UI_Command_Catalog.md",
+        "override_builtin",
+        "section `6` allows `ContractName:<path>#<anchor>` but section `2` does not follow that same rule",
+        "6",
+        "ContractName:<path>#<anchor>",
+        "2",
+        "A delegated storage/receipt pass suggested reclassifying some missing-heading and broken-anchor items back to planning blockers, but the repair rule rejects that interpretation here because the owner sections, consumer targets, and exact mutations are already known; no new canon ambiguity surfaced."
+      ],
+      "exact_stale_tokens_to_retire": [
+        "Commands_System.md",
+        "UI_Command_Catalog.md",
+        "assistant-chat-design.md",
+        "override_builtin"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "Commands_System.md",
+        "UI_Command_Catalog.md",
+        "assistant-chat-design.md",
+        "override_builtin"
+      ],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-c117f676394a",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0060",
+      "source_reconciliation_target_id": "target-0265",
+      "source_reconciliation_target_ids": [
+        "target-0265"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "operation": "observe_only",
+      "live_anchor": "### 12.3 Dashboard Grid Responsive (Plans/FinalGUISpec.md:L1391)",
+      "coverage_row_ids": [
+        "cov-00563",
+        "cov-01291",
+        "cov-02137",
+        "cov-06152",
+        "cov-06156"
+      ],
+      "source_obligation_ids": [
+        "obl-420",
+        "obl-1148",
+        "obl-1994",
+        "obl-5924",
+        "obl-5928"
+      ],
+      "source_seed_ids": [
+        "seed-482",
+        "seed-1364",
+        "seed-2591",
+        "seed-8796",
+        "seed-8801"
+      ],
+      "source_shard_ids": [
+        "shard-0012",
+        "shard-0022",
+        "shard-0034",
+        "shard-0080"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-420",
+          "obl-1148",
+          "obl-1994",
+          "obl-5924",
+          "obl-5928"
+        ],
+        "source_seed_ids": [
+          "seed-482",
+          "seed-1364",
+          "seed-2591",
+          "seed-8796",
+          "seed-8801"
+        ],
+        "source_shard_ids": [
+          "shard-0012",
+          "shard-0022",
+          "shard-0034",
+          "shard-0080"
+        ]
+      },
+      "gap_ids": [
+        "gap-00444",
+        "gap-01007",
+        "gap-01662",
+        "gap-04758",
+        "gap-04761"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`widget_layout:v1:dashboard`",
+        "widget_layout:v1:dashboard",
+        "Dashboard `Action Required` section",
+        "Action Required",
+        "`dashboard` layout can stay app-global",
+        "dashboard",
+        "convert `dashboard_layout:v1` to `widget_layout:v1:dashboard`",
+        "dashboard_layout:v1",
+        "future reads use `widget_layout:v1:dashboard`"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-d5d8020099dc",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0061",
+      "source_reconciliation_target_id": "target-0267",
+      "source_reconciliation_target_ids": [
+        "target-0267"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "operation": "observe_only",
+      "live_anchor": "### 13.5 Minimum Touch/Click Targets (Plans/FinalGUISpec.md:L1439)",
+      "coverage_row_ids": [
+        "cov-00582"
+      ],
+      "source_obligation_ids": [
+        "obl-439"
+      ],
+      "source_seed_ids": [
+        "seed-509"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-439"
+        ],
+        "source_seed_ids": [
+          "seed-509"
+        ],
+        "source_shard_ids": [
+          "shard-0013"
+        ]
+      },
+      "gap_ids": [
+        "gap-00459"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "replay/rebuild targets a deterministic `target_seq`",
+        "target_seq"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-ac6cda06d3f6",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-04965",
+    "cov-02127",
+    "cov-03664",
+    "cov-06380",
+    "cov-07169",
+    "cov-00563",
+    "cov-01291",
+    "cov-02137",
+    "cov-06152",
+    "cov-06156",
+    "cov-00582"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-4741",
+    "obl-1984",
+    "obl-3510",
+    "obl-6021",
+    "obl-6736",
+    "obl-420",
+    "obl-1148",
+    "obl-1994",
+    "obl-5924",
+    "obl-5928",
+    "obl-439"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-6827",
+    "seed-2581",
+    "seed-4726",
+    "seed-9108",
+    "seed-10353",
+    "seed-482",
+    "seed-1364",
+    "seed-2591",
+    "seed-8796",
+    "seed-8801",
+    "seed-509"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0065",
+    "shard-0034",
+    "shard-0049",
+    "shard-0082",
+    "shard-0091",
+    "shard-0012",
+    "shard-0022",
+    "shard-0080",
+    "shard-0013"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "preserved_exact_required_items": [
+    "this is close to the right thinking for navigation, but navigation still needs a wrapper layer rather than just a winner/loser alias table",
+    "`dashboard_layout:v1` backup retention vs deletion rule conflicts inside the same section",
+    "dashboard_layout:v1",
+    "`Commands_System.md` contains an internal acceptance-criteria contradiction on reserved slash-command overrides, while `assistant-chat-design.md` and `UI_Command_Catalog.md` still state the opposite rule and do not even mention `override_builtin`.",
+    "Commands_System.md",
+    "assistant-chat-design.md",
+    "UI_Command_Catalog.md",
+    "override_builtin",
+    "section `6` allows `ContractName:<path>#<anchor>` but section `2` does not follow that same rule",
+    "6",
+    "ContractName:<path>#<anchor>",
+    "2",
+    "A delegated storage/receipt pass suggested reclassifying some missing-heading and broken-anchor items back to planning blockers, but the repair rule rejects that interpretation here because the owner sections, consumer targets, and exact mutations are already known; no new canon ambiguity surfaced.",
+    "`widget_layout:v1:dashboard`",
+    "widget_layout:v1:dashboard",
+    "Dashboard `Action Required` section",
+    "Action Required",
+    "`dashboard` layout can stay app-global",
+    "dashboard",
+    "convert `dashboard_layout:v1` to `widget_layout:v1:dashboard`",
+    "future reads use `widget_layout:v1:dashboard`",
+    "replay/rebuild targets a deterministic `target_seq`",
+    "target_seq"
+  ],
+  "blocked_targets": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-339",
+  "group_ids": [
+    "discgrp-1353",
+    "discgrp-1354",
+    "discgrp-1355",
+    "discgrp-1356"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01604",
+      "source_obligation_ids": [
+        "obl-1461"
+      ],
+      "source_seed_ids": [
+        "seed-1813"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Shared governance and runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L260"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01605",
+      "source_obligation_ids": [
+        "obl-1462"
+      ],
+      "source_seed_ids": [
+        "seed-1814"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L193"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01606",
+      "source_obligation_ids": [
+        "obl-1463"
+      ],
+      "source_seed_ids": [
+        "seed-1815"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "## 16. Interview Phase UX (Chat Surface)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L1463"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01607",
+      "source_obligation_ids": [
+        "obl-1464"
+      ],
+      "source_seed_ids": [
+        "seed-1816"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "new_heading_hint": "# GUI Rebuild Requirements Checklist (2026-02-23)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

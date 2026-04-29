@@ -1,0 +1,1091 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-166",
+  "row_group_ids": [
+    "rowgrp-0661",
+    "rowgrp-0662",
+    "rowgrp-0663",
+    "rowgrp-0664"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-02148",
+      "source_obligation_ids": [
+        "obl-2005"
+      ],
+      "source_seed_ids": [
+        "seed-2611"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "`storage-plan.md` event rows for `run.started` and `usage.event` still omit those fields b",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`storage-plan.md` event rows for `run.started` and `usage.event` still omit those fields by enumeration",
+        "storage-plan.md",
+        "run.started",
+        "usage.event"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L39"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02157",
+      "source_obligation_ids": [
+        "obl-2014"
+      ],
+      "source_seed_ids": [
+        "seed-2620"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "remote-mode docs still leave GitHub REST side effects local while remote agents run elsewh",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "### Fidelity recovery cov-038: Focused run and historical routing contract",
+      "status": "partial",
+      "exact_items": [
+        "remote-mode docs still leave GitHub REST side effects local while remote agents run elsewhere, without a clear orchestration boundary contract"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L19",
+        "Plans/Run_Graph_View.md:L26"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02321",
+      "source_obligation_ids": [
+        "obl-2173"
+      ],
+      "source_seed_ids": [
+        "seed-2824"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "Run Graph still has concrete command/routing contract drift:",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Run Graph still has concrete command/routing contract drift:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02326",
+      "source_obligation_ids": [
+        "obl-2178"
+      ],
+      "source_seed_ids": [
+        "seed-2829"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "remediation-linked `finding_refs[]` can carry some node concern rendering immediately",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "remediation-linked `finding_refs[]` can carry some node concern rendering immediately",
+        "finding_refs[]"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02344",
+      "source_obligation_ids": [
+        "obl-2195"
+      ],
+      "source_seed_ids": [
+        "seed-2850"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Normalize Run Graph onto canonical `cmd.runtime.*` / `cmd.orchestrator.open_in_*` command",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Normalize Run Graph onto canonical `cmd.runtime.*` / `cmd.orchestrator.open_in_*` command bindings, add the missing action envelope, and add trust-state gating rules.",
+        "cmd.runtime.*",
+        "cmd.orchestrator.open_in_*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02421",
+      "source_obligation_ids": [
+        "obl-2271"
+      ],
+      "source_seed_ids": [
+        "seed-2947"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "active run owner",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "active run owner"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02424",
+      "source_obligation_ids": [
+        "obl-2274"
+      ],
+      "source_seed_ids": [
+        "seed-2950"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "one blocked run should not necessarily flatten the whole project into a generic \u201cred proje",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "one blocked run should not necessarily flatten the whole project into a generic \u201cred project\u201d without context"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02480",
+      "source_obligation_ids": [
+        "obl-2330"
+      ],
+      "source_seed_ids": [
+        "seed-3022"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "a single project can legitimately have mixed attention sources at once: blocked run, auth",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "a single project can legitimately have mixed attention sources at once: blocked run, auth trouble, and background advisory pressure"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02486",
+      "source_obligation_ids": [
+        "obl-2336"
+      ],
+      "source_seed_ids": [
+        "seed-3037"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "The rewrite now needs a first-class actor envelope, not just a richer run record:",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "The rewrite now needs a first-class actor envelope, not just a richer run record:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02511",
+      "source_obligation_ids": [
+        "obl-2360"
+      ],
+      "source_seed_ids": [
+        "seed-3065"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "History is still closer to a run index than to the runtime/account-switch/recovery story t",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "History is still closer to a run index than to the runtime/account-switch/recovery story the rewrite now needs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02666",
+      "source_obligation_ids": [
+        "obl-2513"
+      ],
+      "source_seed_ids": [
+        "seed-3300"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "Operational identities are declared in Multi-Account, but not carried in the canonical run",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Operational identities are declared in Multi-Account, but not carried in the canonical runtime identity bundle."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03015",
+      "source_obligation_ids": [
+        "obl-2861"
+      ],
+      "source_seed_ids": [
+        "seed-3778"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "`Executor_Protocol.md` has no concern model, no corroboration lifecycle, no wake reasons f",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "### Fidelity recovery cov-032: Concern linkage to adjacent families",
+      "status": "partial",
+      "exact_items": [
+        "`Executor_Protocol.md` has no concern model, no corroboration lifecycle, no wake reasons for concern/promotion/governance boundaries, and no dual-overseer actor model",
+        "Executor_Protocol.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L39"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03129",
+      "source_obligation_ids": [
+        "obl-2975"
+      ],
+      "source_seed_ids": [
+        "seed-3923"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "Orchestrator consumption still says `Progress, Tiers, History, and Node Graph`",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator consumption still says `Progress, Tiers, History, and Node Graph`",
+        "Progress, Tiers, History, and Node Graph"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03136",
+      "source_obligation_ids": [
+        "obl-2982"
+      ],
+      "source_seed_ids": [
+        "seed-3939"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "node execution worker identity",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "node execution worker identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03307",
+      "source_obligation_ids": [
+        "obl-3153"
+      ],
+      "source_seed_ids": [
+        "seed-4195"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`checkpoints.hitl.{run_id}` is too coarse once more than one approval can exist in the sam",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`checkpoints.hitl.{run_id}` is too coarse once more than one approval can exist in the same run.",
+        "checkpoints.hitl.{run_id}"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03354",
+      "source_obligation_ids": [
+        "obl-3200"
+      ],
+      "source_seed_ids": [
+        "seed-4265"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "why a run used or failed to use a tool under a specific account/runtime context",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "why a run used or failed to use a tool under a specific account/runtime context"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03611",
+      "source_obligation_ids": [
+        "obl-3457"
+      ],
+      "source_seed_ids": [
+        "seed-4656"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "`node.blocked` / `node.unblocked`",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`node.blocked` / `node.unblocked`",
+        "node.blocked",
+        "node.unblocked"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03623",
+      "source_obligation_ids": [
+        "obl-3469"
+      ],
+      "source_seed_ids": [
+        "seed-4671"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "increments only when the node transitions from non-blocked to a new blocked episode",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "increments only when the node transitions from non-blocked to a new blocked episode"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03762",
+      "source_obligation_ids": [
+        "obl-3607"
+      ],
+      "source_seed_ids": [
+        "seed-4876"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "`Orchestrator_Page.md` still describes the page as `Progress / Tiers / Node Graph / Eviden",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`Orchestrator_Page.md` still describes the page as `Progress / Tiers / Node Graph / Evidence / History / Ledger`, and many data-source rows still bind live state to:",
+        "Orchestrator_Page.md",
+        "Progress / Tiers / Node Graph / Evidence / History / Ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L39"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03782",
+      "source_obligation_ids": [
+        "obl-3627"
+      ],
+      "source_seed_ids": [
+        "seed-4906"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "Evidence and terminal routing are still described as tier-keyed, which will be increasingl",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Evidence and terminal routing are still described as tier-keyed, which will be increasingly wrong once multiple attempts, blocked episodes, and graph generations are first-class."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04281",
+      "source_obligation_ids": [
+        "obl-4121"
+      ],
+      "source_seed_ids": [
+        "seed-5713",
+        "seed-5754",
+        "seed-5791",
+        "seed-5831",
+        "seed-5870",
+        "seed-5908",
+        "seed-6024",
+        "seed-6066",
+        "seed-6099",
+        "seed-6141",
+        "seed-6196",
+        "seed-6267",
+        "seed-6338",
+        "seed-6389",
+        "seed-6426",
+        "seed-6541",
+        "seed-6571",
+        "seed-6603",
+        "seed-6626",
+        "seed-6670"
+      ],
+      "source_shard_ids": [
+        "shard-0057",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060",
+        "shard-0061",
+        "shard-0062",
+        "shard-0063",
+        "shard-0064"
+      ],
+      "canon_label": "Cross-owner docs implicated by this seam:",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Cross-owner docs implicated by this seam:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04490",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04691",
+      "source_obligation_ids": [
+        "obl-4469"
+      ],
+      "source_seed_ids": [
+        "seed-6353"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "Rewrite-era objects like `Feature Seam`, `Work Package`, `Concern`, and `Graph Patch` now",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "present",
+      "exact_items": [
+        "Rewrite-era objects like `Feature Seam`, `Work Package`, `Concern`, and `Graph Patch` now deserve first-class target kinds, not just ad hoc filters.",
+        "Feature Seam",
+        "Work Package",
+        "Concern",
+        "Graph Patch"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L7",
+        "Plans/Run_Graph_View.md:L11",
+        "Plans/Run_Graph_View.md:L12",
+        "Plans/Run_Graph_View.md:L14",
+        "Plans/Run_Graph_View.md:L15"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04712",
+      "source_obligation_ids": [
+        "obl-4490"
+      ],
+      "source_seed_ids": [
+        "seed-6381"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "`object_kind = node` or `attempt`",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`object_kind = node` or `attempt`",
+        "object_kind = node",
+        "attempt"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04770",
+      "source_obligation_ids": [
+        "obl-4548"
+      ],
+      "source_seed_ids": [
+        "seed-6465"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "`Media_Generation_and_Capabilities.md` vs `orchestrator-subagent-integration.md` still dis",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`Media_Generation_and_Capabilities.md` vs `orchestrator-subagent-integration.md` still disagree on live capability re-checks vs frozen run snapshots, and `platform.capability_evaluated` remains outside Contracts_V0 event registration.",
+        "Media_Generation_and_Capabilities.md",
+        "orchestrator-subagent-integration.md",
+        "platform.capability_evaluated"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04828",
+      "source_obligation_ids": [
+        "obl-4605"
+      ],
+      "source_seed_ids": [
+        "seed-6582"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "canon_label": "This seam prevents the route model from swallowing the whole shell.",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "This seam prevents the route model from swallowing the whole shell."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05217",
+      "source_obligation_ids": [
+        "obl-4993"
+      ],
+      "source_seed_ids": [
+        "seed-7287"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "Older docs still pivot by `tier_id` in places where `node`, `attempt`, `scheduler_pass`, `",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "present",
+      "exact_items": [
+        "Older docs still pivot by `tier_id` in places where `node`, `attempt`, `scheduler_pass`, `blocked_episode`, or rewrite-era objects should now be first-class navigation targets.",
+        "tier_id",
+        "node",
+        "attempt",
+        "scheduler_pass",
+        "blocked_episode"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1",
+        "Plans/Run_Graph_View.md:L11",
+        "Plans/Run_Graph_View.md:L12",
+        "Plans/Run_Graph_View.md:L15",
+        "Plans/Run_Graph_View.md:L16"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05227",
+      "source_obligation_ids": [
+        "obl-5003"
+      ],
+      "source_seed_ids": [
+        "seed-7298"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "`object scope = node_id within run`",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`object scope = node_id within run`",
+        "object scope = node_id within run"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05266",
+      "source_obligation_ids": [
+        "obl-5042"
+      ],
+      "source_seed_ids": [
+        "seed-7355"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "seam / package / lane / worktree / concern / promotion / graph objects",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "seam / package / lane / worktree / concern / promotion / graph objects"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05324",
+      "source_obligation_ids": [
+        "obl-5096"
+      ],
+      "source_seed_ids": [
+        "seed-7508"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`object_kind = node`",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`object_kind = node`",
+        "object_kind = node"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05340",
+      "source_obligation_ids": [
+        "obl-5112"
+      ],
+      "source_seed_ids": [
+        "seed-7544"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`node_id` remains object scope within the run and must not be dropped by the resolver",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`node_id` remains object scope within the run and must not be dropped by the resolver",
+        "node_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05363",
+      "source_obligation_ids": [
+        "obl-5135"
+      ],
+      "source_seed_ids": [
+        "seed-7593"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "That change is necessary for blocked episodes, scheduler passes, and graph generations to",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "That change is necessary for blocked episodes, scheduler passes, and graph generations to remain intelligible."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05368",
+      "source_obligation_ids": [
+        "obl-5140"
+      ],
+      "source_seed_ids": [
+        "seed-7605"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "lane detail:",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "## 3. Node detail inspector",
+      "status": "partial",
+      "exact_items": [
+        "lane detail:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L54"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05369",
+      "source_obligation_ids": [
+        "obl-5141"
+      ],
+      "source_seed_ids": [
+        "seed-7609"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_kind = lane`",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`object_kind = lane`",
+        "object_kind = lane"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05444",
+      "source_obligation_ids": [
+        "obl-5216"
+      ],
+      "source_seed_ids": [
+        "seed-7739"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Do not add family-specific top-level route fields just because some ids are only unique wi",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Do not add family-specific top-level route fields just because some ids are only unique within run scope."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05490",
+      "source_obligation_ids": [
+        "obl-5262"
+      ],
+      "source_seed_ids": [
+        "seed-7814"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "older graph HITL commands still use `request_id`",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "older graph HITL commands still use `request_id`",
+        "request_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05514",
+      "source_obligation_ids": [
+        "obl-5286"
+      ],
+      "source_seed_ids": [
+        "seed-7857"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "Run Graph and Orchestrator consumption still says aggregate by `tier_id` and `attempt_id?`",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Run Graph and Orchestrator consumption still says aggregate by `tier_id` and `attempt_id?`",
+        "tier_id",
+        "attempt_id?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05526",
+      "source_obligation_ids": [
+        "obl-5298"
+      ],
+      "source_seed_ids": [
+        "seed-7874"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "`usage-feature.md` is closer to the rewrite than the tier-era graph docs, but it still car",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`usage-feature.md` is closer to the rewrite than the tier-era graph docs, but it still carries enough `tier_id` language to reintroduce drift if left untouched.",
+        "usage-feature.md",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05656",
+      "source_obligation_ids": [
+        "obl-5428"
+      ],
+      "source_seed_ids": [
+        "seed-8059"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "`Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` native",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` native",
+        "Seams",
+        "Node Graph",
+        "Evidence",
+        "History",
+        "Ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05787",
+      "source_obligation_ids": [
+        "obl-5559"
+      ],
+      "source_seed_ids": [
+        "seed-8251"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "`node.blocked` is the strongest contract:",
+      "row_type": "owner",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`node.blocked` is the strongest contract:",
+        "node.blocked"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

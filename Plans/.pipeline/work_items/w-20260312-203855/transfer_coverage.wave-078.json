@@ -1,553 +1,980 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-078",
-  "timestamp_utc": "2026-04-28T22:05:28Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-309",
-    "coverage-rowgrp-310",
-    "coverage-rowgrp-311",
-    "coverage-rowgrp-312"
+  "row_group_ids": [
+    "rowgrp-0309",
+    "rowgrp-0310",
+    "rowgrp-0311",
+    "rowgrp-0312"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-309 cov-1228,cov-1265 Plans/storage-plan.md",
-    "rowgrp-310 cov-843,cov-901 Plans/storage-plan.md",
-    "rowgrp-311 cov-019,cov-113,cov-134,cov-238,cov-243,cov-275,cov-286,cov-349,cov-397,cov-406 Plans/storage-plan.md",
-    "rowgrp-312 cov-472,cov-491,cov-587,cov-612,cov-622,cov-640,cov-656,cov-742,cov-768,cov-867 Plans/storage-plan.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-309": "completed_reduced_conservatively_with_action_and_path_normalization",
-    "coverage-rowgrp-310": "completed_reduced_conservatively_with_action_and_path_normalization",
-    "coverage-rowgrp-311": "completed_reduced_conservatively_with_action_and_path_normalization",
-    "coverage-rowgrp-312": "completed_reduced_conservatively_with_action_and_path_normalization"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-1228",
-    "cov-1265",
-    "cov-843",
-    "cov-901",
-    "cov-019",
-    "cov-113",
-    "cov-134",
-    "cov-238",
-    "cov-243",
-    "cov-275",
-    "cov-286",
-    "cov-349",
-    "cov-397",
-    "cov-406",
-    "cov-472",
-    "cov-491",
-    "cov-587",
-    "cov-612",
-    "cov-622",
-    "cov-640",
-    "cov-656",
-    "cov-742",
-    "cov-768",
-    "cov-867"
-  ],
-  "coverage_ids_completed": [
-    "cov-1228",
-    "cov-1265",
-    "cov-843",
-    "cov-901",
-    "cov-019",
-    "cov-113",
-    "cov-134",
-    "cov-238",
-    "cov-243",
-    "cov-275",
-    "cov-286",
-    "cov-349",
-    "cov-397",
-    "cov-406",
-    "cov-472",
-    "cov-491",
-    "cov-587",
-    "cov-612",
-    "cov-622",
-    "cov-640",
-    "cov-656",
-    "cov-742",
-    "cov-768",
-    "cov-867"
-  ],
-  "path_groups_assigned": [
-    "Plans/storage-plan.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-1228",
+      "coverage_id": "cov-02445",
+      "source_obligation_ids": [
+        "obl-2295"
+      ],
+      "source_seed_ids": [
+        "seed-2972"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "title-bar project badges, Projects page cards, command-palette summaries, and attention-ce",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "title-bar project badges, Projects page cards, command-palette summaries, and attention-center rows should all reuse the same status vocabulary and precedence rules"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/storage-plan.md:643-651 defines required redb keys under owner reconciliation, including orchestrator.project_state.{project_id}",
-        "Plans/storage-plan.md:1625-1642 defines Restart and stale history fields including historical lineage, worktree/lane refs, and owner run/attempt IDs"
+        "Plans/DRY_Rules.md:L1"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Storage-plan now has the required redb-key and restart/stale-history anchors, but the first heading is a variant and the paired UI_Command_Catalog command-entry anchors are outside this row path.",
-      "source_obligation_ids": [
-        "obl-347"
-      ],
-      "source_seed_ids": [
-        "seed-347"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1265",
+      "coverage_id": "cov-02690",
+      "source_obligation_ids": [
+        "obl-2537"
+      ],
+      "source_seed_ids": [
+        "seed-3330"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "session-scoped `always` approvals and reject-cascade rules have no actor/lane/run/account",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "session-scoped `always` approvals and reject-cascade rules have no actor/lane/run/account scope key",
+        "always"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/storage-plan.md:532-535 defines concern as a durable record with active, acknowledged, resolved, and dismissed lifecycle states plus resolution_kind including accepted_risk"
+        "Plans/DRY_Rules.md:L1"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Concern lifecycle states and accepted_risk are covered, but a concrete concern-action confirmation matrix is still not present.",
-      "source_obligation_ids": [
-        "obl-357"
-      ],
-      "source_seed_ids": [
-        "seed-357"
-      ],
-      "source_shard_ids": [
-        "shard-0092"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-843",
+      "coverage_id": "cov-02696",
+      "source_obligation_ids": [
+        "obl-2543"
+      ],
+      "source_seed_ids": [
+        "seed-3337"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "needs immediate correction of canonical `thread_id` semantics and explicit upstream-accoun",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "needs immediate correction of canonical `thread_id` semantics and explicit upstream-account opacity rules",
+        "thread_id"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/storage-plan.md:512 says owner-doc corrections must be applied before consumer and mirror cleanup",
-        "Plans/storage-plan.md:1658 says storage-plan must reference the owner-doc schema instead of embedding a competing schema copy"
+        "Plans/DRY_Rules.md:L72"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Owner-doc correction/schema-reference coverage exists, but fragmented owner-doc convention retirement and canonical routing/governance ownership are not fully specified.",
-      "source_obligation_ids": [
-        "obl-235"
-      ],
-      "source_seed_ids": [
-        "seed-235"
-      ],
-      "source_shard_ids": [
-        "shard-0059"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-901",
+      "coverage_id": "cov-02804",
+      "source_obligation_ids": [
+        "obl-2651"
+      ],
+      "source_seed_ids": [
+        "seed-3484"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "now clearly needs its operational-identity rules bound into the shared runtime grammar",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "now clearly needs its operational-identity rules bound into the shared runtime grammar"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/storage-plan.md:621 says export manifests and artifact indices carry route/open linkage by reference rather than redefining route payload shapes locally",
-        "Plans/storage-plan.md:1336 stores search projection query, results, filter state, and scope separately"
+        "Plans/DRY_Rules.md:L1"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Route linkage and filter state are separated, but the exact retirement of packaging destination selection with panel-local state is incomplete.",
-      "source_obligation_ids": [
-        "obl-254"
-      ],
-      "source_seed_ids": [
-        "seed-254"
-      ],
-      "source_shard_ids": [
-        "shard-0064"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-019",
-      "status": "present",
-      "evidence": [
-        "Plans/storage-plan.md:399 says canonical payload codec is MessagePack and JSON mirrors/diagnostics are not the on-disk authority",
-        "Plans/storage-plan.md:448 says JSONL mirror files are rebuildable from seglog plus checkpoints and do not outrank seglog authority"
-      ],
-      "required_action": "none",
-      "unresolved_reason": "JSON is directly framed as mirror/diagnostic/export material rather than canonical storage truth.",
+      "coverage_id": "cov-03021",
       "source_obligation_ids": [
-        "obl-017"
+        "obl-2867"
       ],
       "source_seed_ids": [
-        "seed-017"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-113",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:732-733 defines blocked_projection with blocked_reason_code and allowed_action_ids[] and supersedes older run-scoped variants as migration-read aliases"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Canonical blocked-state fields are covered, but lexicographic/scored scheduling, depends_on versus blockers/unblocks, and graph-local recovery action retirement are incomplete.",
-      "source_obligation_ids": [
-        "obl-035"
-      ],
-      "source_seed_ids": [
-        "seed-035"
-      ],
-      "source_shard_ids": [
-        "shard-0008"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-134",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:448-451 says redb projections, JSONL mirrors, and Tantivy indices are rebuildable from seglog plus checkpoints and do not outrank seglog authority",
-        "Plans/storage-plan.md:985 says projection state and projector checkpoints must be first-class rather than panel-owned leftovers"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Runtime storage authority is covered, but mutable plan shards and JSON sidecars are not explicitly retired as runtime truth.",
-      "source_obligation_ids": [
-        "obl-037"
-      ],
-      "source_seed_ids": [
-        "seed-037"
-      ],
-      "source_shard_ids": [
-        "shard-0009"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-238",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:904-906 says blocked projections remain historical after resolution and attempts from older generations remain queryable but stale/non-resumable",
-        "Plans/storage-plan.md:733 keeps older key variants as migration-read aliases only"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Historical blocked projections and stale older attempts are covered, but lineage visibility after live targets disappear is incomplete.",
-      "source_obligation_ids": [
-        "obl-067"
-      ],
-      "source_seed_ids": [
-        "seed-067"
-      ],
-      "source_shard_ids": [
-        "shard-0014"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-243",
-      "status": "present",
-      "evidence": [
-        "Plans/storage-plan.md:477-479 defines shared historical vocabulary including historical, stale_historical, superseded, revoked, reopened, archived, and removed",
-        "Plans/storage-plan.md:538 keeps those terms explicit as shared storage terms while preserving family-local workflow states"
-      ],
-      "required_action": "none",
-      "unresolved_reason": "Shared historical vocabulary is directly represented.",
-      "source_obligation_ids": [
-        "obl-068"
-      ],
-      "source_seed_ids": [
-        "seed-068"
-      ],
-      "source_shard_ids": [
-        "shard-0015"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-275",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:538 defines historical, stale_historical, superseded, revoked, reopened, archived, and removed as shared storage terms",
-        "Plans/storage-plan.md:733 says older variants are superseded and retained as migration-read aliases only"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Historical/superseded/removed vocabulary exists, but backing-object handling is not explicit.",
-      "source_obligation_ids": [
-        "obl-079"
-      ],
-      "source_seed_ids": [
-        "seed-079"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-286",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:912-925 lists requested/effective runtime, model, auth, account, and billing identity fields",
-        "Plans/storage-plan.md:1178-1186 persists requested/effective identity and permission snapshots for attempts"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Requested/effective identity persistence exists, but historical frozen policy snapshot versus live runtime decision is incomplete.",
-      "source_obligation_ids": [
-        "obl-083"
-      ],
-      "source_seed_ids": [
-        "seed-083"
-      ],
-      "source_shard_ids": [
-        "shard-0019"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-349",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:501-504 says worktree lifecycle records track allocation, usage, reclamation, handshake, and cleanup lineage",
-        "Plans/storage-plan.md:623-629 splits lane-pool operational truth from source-control worktree operation and registers worktree/lane record and projection families"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Lane/worktree lifecycle ownership is covered, but the required state/posture lists are incomplete.",
-      "source_obligation_ids": [
-        "obl-103"
-      ],
-      "source_seed_ids": [
-        "seed-103"
-      ],
-      "source_shard_ids": [
-        "shard-0025"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-397",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:904-906 says blocked projections remain historical after resolution and older attempts are stale/non-resumable",
-        "Plans/storage-plan.md:477-479 defines shared historical vocabulary including stale_historical, superseded, revoked, archived, and removed"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Blocked projection and stale attempt history are covered, but worktree references surviving live prune/retire are incomplete.",
-      "source_obligation_ids": [
-        "obl-118"
-      ],
-      "source_seed_ids": [
-        "seed-118"
-      ],
-      "source_shard_ids": [
-        "shard-0029"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-406",
-      "status": "present",
-      "evidence": [
-        "Plans/storage-plan.md:477-479 defines shared historical vocabulary including historical, stale_historical, superseded, revoked, reopened, archived, and removed",
-        "Plans/storage-plan.md:538 keeps those terms explicit as shared storage terms while preserving family-local workflow states"
-      ],
-      "required_action": "none",
-      "unresolved_reason": "Shared historical/storage vocabulary is directly represented.",
-      "source_obligation_ids": [
-        "obl-119"
-      ],
-      "source_seed_ids": [
-        "seed-119"
-      ],
-      "source_shard_ids": [
-        "shard-0030"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-472",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "No dashboard_layout:v1 backup/delete legacy-key contradiction coverage was found in storage-plan; terminal_layout evidence is unrelated.",
-      "source_obligation_ids": [
-        "obl-138"
-      ],
-      "source_seed_ids": [
-        "seed-138"
-      ],
-      "source_shard_ids": [
-        "shard-0034"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-491",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:1526-1541 lists canonical scheduler, safe-point, and remediation event families",
-        "Plans/storage-plan.md:573 defines provider_attempt_ref, usage_event_ref, and receipt refs as bridge fields that do not replace the local key"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Scheduler/safe-point/remediation events and bridge refs are covered, but the full canonical payload block gaps remain incomplete.",
-      "source_obligation_ids": [
-        "obl-142"
-      ],
-      "source_seed_ids": [
-        "seed-142"
-      ],
-      "source_shard_ids": [
-        "shard-0035"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-587",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:1 defines seglog as the canonical append-only event stream",
-        "Plans/storage-plan.md:610 persists execution_unit_context with account pressure episodes, switch history, runtime artifacts, receipts, and usage joins"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Append-only storage and pressure/switch history are present, but explicit switch/pressure episode families are incomplete.",
-      "source_obligation_ids": [
-        "obl-165"
-      ],
-      "source_seed_ids": [
-        "seed-165"
-      ],
-      "source_shard_ids": [
-        "shard-0041"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-612",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:603-612 introduces execution_unit_context, demotes TierContext, and bars TierContext/tier_id from owning runtime canon, storage keys, or join identity"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Runtime/tier execution split is covered, but node-native versus tier-native language and concern/corroboration/wake gaps are incomplete.",
-      "source_obligation_ids": [
-        "obl-170"
-      ],
-      "source_seed_ids": [
-        "seed-170"
+        "seed-3784"
       ],
       "source_shard_ids": [
         "shard-0042"
       ],
-      "path_field_status": "match"
+      "canon_label": "Worktree/source-control contracts still need rewrite-native authority rules:",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Worktree/source-control contracts still need rewrite-native authority rules:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-622",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:623-629 defines worktree/lane lifecycle ownership, lane_record/lane_projection families, durable worktree_id/lane_id identities, and cleanup/archive lineage",
-        "Plans/storage-plan.md:591-598 reserves trust_tier for preview/browser semantics and retires it as canonical projection vocabulary"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Worktree/lane lineage and trust_tier retirement are covered, but scheduler_lane structural ownership is incomplete.",
+      "coverage_id": "cov-03321",
       "source_obligation_ids": [
-        "obl-174"
+        "obl-3167"
       ],
       "source_seed_ids": [
-        "seed-174"
-      ],
-      "source_shard_ids": [
-        "shard-0043"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-640",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:591-598 reserves trust_tier for preview/browser semantics and retires it as canonical projection vocabulary",
-        "Plans/storage-plan.md:604-611 demotes TierContext/tier_id to compatibility-only derived metadata that must not own runtime canon, storage keys, or join identity"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Legacy tier compatibility/retirement is covered, but full migration/retirement of tier language and keys is incomplete.",
-      "source_obligation_ids": [
-        "obl-178"
-      ],
-      "source_seed_ids": [
-        "seed-178"
-      ],
-      "source_shard_ids": [
-        "shard-0044"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-656",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:732-733 defines allowed_action_ids[] on blocked_projection and supersedes older run-scoped variants as migration-read aliases only"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "allowed_action_ids[] is canonical in storage-plan, but allowed_actions[] deprecation is not explicit.",
-      "source_obligation_ids": [
-        "obl-185"
-      ],
-      "source_seed_ids": [
-        "seed-185"
+        "seed-4220"
       ],
       "source_shard_ids": [
         "shard-0046"
       ],
-      "path_field_status": "match"
+      "canon_label": "Execution-core seams are now pinned to specific missing mint/ownership rules:",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Execution-core seams are now pinned to specific missing mint/ownership rules:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-742",
+      "coverage_id": "cov-03331",
+      "source_obligation_ids": [
+        "obl-3177"
+      ],
+      "source_seed_ids": [
+        "seed-4234"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "still lacks the mint/ownership rules that blocked/runtime recovery now depend on.",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "still lacks the mint/ownership rules that blocked/runtime recovery now depend on."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04320",
+      "source_obligation_ids": [
+        "obl-4160"
+      ],
+      "source_seed_ids": [
+        "seed-5770"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "If route-aware navigation becomes canonical, keeping `GATE-010` unchanged will make the st",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "If route-aware navigation becomes canonical, keeping `GATE-010` unchanged will make the strongest navigation rules effectively unenforced.",
+        "GATE-010"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04415",
+      "source_obligation_ids": [
+        "obl-4255"
+      ],
+      "source_seed_ids": [
+        "seed-5939"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "reserved-name ownership remains split across three docs, with `/compact` still showing why",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "reserved-name ownership remains split across three docs, with `/compact` still showing why copied lists and copied rules are unsafe.",
+        "/compact"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04460",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "",
       "status": "missing",
-      "evidence": [],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "No tier_runtime_record compatibility/overlay projection-only coverage was found; generic storage-mode evidence was stripped.",
-      "source_obligation_ids": [
-        "obl-205"
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
       ],
-      "source_seed_ids": [
-        "seed-205"
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:content_absent_after_scan"
       ],
-      "source_shard_ids": [
-        "shard-0051"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-768",
-      "status": "present",
-      "evidence": [
-        "Plans/storage-plan.md:177-186 adds bridge-field precedence for attempt/provider/usage/receipt joins and says bridge fields do not replace the primary local key",
-        "Plans/storage-plan.md:1263-1264 defines provider_attempt_ref as subordinate to attempt_id and usage_event_ref as the usage-side accounting/evidence join reference"
-      ],
-      "required_action": "none",
-      "unresolved_reason": "Bridge-field precedence and coherent join ownership are directly represented.",
+      "coverage_id": "cov-04604",
       "source_obligation_ids": [
-        "obl-212"
+        "obl-4382"
       ],
       "source_seed_ids": [
-        "seed-212"
+        "seed-6186"
       ],
       "source_shard_ids": [
-        "shard-0053"
+        "shard-0060"
       ],
-      "path_field_status": "match"
+      "canon_label": "resolves through canonical subject/open rules",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "resolves through canonical subject/open rules"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-867",
-      "status": "present",
-      "evidence": [
-        "Plans/storage-plan.md:619-621 says Contracts_V0 owns canonical route_target/OpenSubject contracts and route/open linkage is carried by reference rather than redefining route payload shapes locally",
-        "Plans/storage-plan.md:728-733 reconciles canonical local keys for attempt and blocked projections instead of route-local surrogate key shapes"
-      ],
-      "required_action": "none",
-      "unresolved_reason": "Route target ownership and avoidance of route-local surrogate shapes are directly represented.",
+      "coverage_id": "cov-04654",
       "source_obligation_ids": [
-        "obl-243"
+        "obl-4432"
       ],
       "source_seed_ids": [
-        "seed-243"
+        "seed-6277"
       ],
       "source_shard_ids": [
         "shard-0061"
       ],
-      "path_field_status": "match"
+      "canon_label": "`OpenSubject` owns `subject_id` and subject realization rules",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`OpenSubject` owns `subject_id` and subject realization rules",
+        "OpenSubject",
+        "subject_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L51"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04886",
+      "source_obligation_ids": [
+        "obl-4663"
+      ],
+      "source_seed_ids": [
+        "seed-6680",
+        "seed-6699",
+        "seed-7383",
+        "seed-7428",
+        "seed-8395",
+        "seed-8819",
+        "seed-8860",
+        "seed-8901",
+        "seed-8914",
+        "seed-8952",
+        "seed-8995",
+        "seed-9012",
+        "seed-9046",
+        "seed-9097",
+        "seed-9120",
+        "seed-9151",
+        "seed-9166",
+        "seed-9574",
+        "seed-9602",
+        "seed-9641"
+      ],
+      "source_shard_ids": [
+        "shard-0064",
+        "shard-0070",
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0086"
+      ],
+      "canon_label": "`Plans/DRY_Rules.md`",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/DRY_Rules.md`",
+        "Plans/DRY_Rules.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L3",
+        "Plans/DRY_Rules.md:L185",
+        "Plans/DRY_Rules.md:L188",
+        "Plans/DRY_Rules.md:L191"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04905",
+      "source_obligation_ids": [
+        "obl-4681"
+      ],
+      "source_seed_ids": [
+        "seed-6731"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "with `Plans/DRY_Rules.md` important as a mechanical-integrity forcing function and `Plans/",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "with `Plans/DRY_Rules.md` important as a mechanical-integrity forcing function and `Plans/BinaryLocator_Spec.md` lower-risk but still non-zero.",
+        "Plans/DRY_Rules.md",
+        "Plans/BinaryLocator_Spec.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L3",
+        "Plans/DRY_Rules.md:L185",
+        "Plans/DRY_Rules.md:L188",
+        "Plans/DRY_Rules.md:L191"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05393",
+      "source_obligation_ids": [
+        "obl-5165"
+      ],
+      "source_seed_ids": [
+        "seed-7653"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - Canonical route validation and rejection rules",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - Canonical route validation and rejection rules"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05394",
+      "source_obligation_ids": [
+        "obl-5166"
+      ],
+      "source_seed_ids": [
+        "seed-7658"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "The route layer now needs explicit invalid-combination rules.",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "The route layer now needs explicit invalid-combination rules."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05395",
+      "source_obligation_ids": [
+        "obl-5167"
+      ],
+      "source_seed_ids": [
+        "seed-7659"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Canonical route validation rules are:",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Canonical route validation rules are:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05408",
+      "source_obligation_ids": [
+        "obl-5180"
+      ],
+      "source_seed_ids": [
+        "seed-7676"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Add explicit route validation rules to `Contracts_V0.md`.",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "Add explicit route validation rules to `Contracts_V0.md`.",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L3",
+        "Plans/DRY_Rules.md:L56",
+        "Plans/DRY_Rules.md:L65",
+        "Plans/DRY_Rules.md:L66",
+        "Plans/DRY_Rules.md:L67"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05410",
+      "source_obligation_ids": [
+        "obl-5182"
+      ],
+      "source_seed_ids": [
+        "seed-7678"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "A bounded contract needs rejection rules.",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "A bounded contract needs rejection rules."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05433",
+      "source_obligation_ids": [
+        "obl-5205"
+      ],
+      "source_seed_ids": [
+        "seed-7714"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Scoped identity rules:",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Scoped identity rules:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05440",
+      "source_obligation_ids": [
+        "obl-5212"
+      ],
+      "source_seed_ids": [
+        "seed-7731"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Resolver logic must be responsible for applying the correct scoped lookup rules.",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Resolver logic must be responsible for applying the correct scoped lookup rules."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05443",
+      "source_obligation_ids": [
+        "obl-5215"
+      ],
+      "source_seed_ids": [
+        "seed-7738"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Add scoped-identity resolver rules to `Contracts_V0.md`.",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "Add scoped-identity resolver rules to `Contracts_V0.md`.",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L3",
+        "Plans/DRY_Rules.md:L56",
+        "Plans/DRY_Rules.md:L65",
+        "Plans/DRY_Rules.md:L66",
+        "Plans/DRY_Rules.md:L67"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06033",
+      "source_obligation_ids": [
+        "obl-5805"
+      ],
+      "source_seed_ids": [
+        "seed-8631"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Later canonical correction text says:",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "## 9. No unreferenced operational text",
+      "status": "partial",
+      "exact_items": [
+        "Later canonical correction text says:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L164"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06095",
+      "source_obligation_ids": [
+        "obl-5867"
+      ],
+      "source_seed_ids": [
+        "seed-8711"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Reconcile worker output and evidence update rules so they align with attempt/node/runtime",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Reconcile worker output and evidence update rules so they align with attempt/node/runtime lineage rather than `TierChanged`-driven active-tier state.",
+        "TierChanged"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06105",
+      "source_obligation_ids": [
+        "obl-5877"
+      ],
+      "source_seed_ids": [
+        "seed-8732"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "queue-analysis and blocked-state rendering rules keyed to canonical runtime records",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "queue-analysis and blocked-state rendering rules keyed to canonical runtime records"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06229",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06371",
+      "source_obligation_ids": [
+        "obl-6012"
+      ],
+      "source_seed_ids": [
+        "seed-9095"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - owner-traceability seam: Decision Log, DRY Rules, Crosswa",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - owner-traceability seam: Decision Log, DRY Rules, Crosswalk"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06378",
+      "source_obligation_ids": [
+        "obl-6019"
+      ],
+      "source_seed_ids": [
+        "seed-9106"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "`Plans/DRY_Rules.md` still has exact traceability-format weaknesses even though it is the",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/DRY_Rules.md` still has exact traceability-format weaknesses even though it is the canonical anti-drift doc:",
+        "Plans/DRY_Rules.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L3",
+        "Plans/DRY_Rules.md:L185",
+        "Plans/DRY_Rules.md:L188",
+        "Plans/DRY_Rules.md:L191"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06416",
+      "source_obligation_ids": [
+        "obl-6057"
+      ],
+      "source_seed_ids": [
+        "seed-9155"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "This bypasses the `ContractName:` taxonomy that `Plans/DRY_Rules.md` says is canonical.",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "This bypasses the `ContractName:` taxonomy that `Plans/DRY_Rules.md` says is canonical.",
+        "ContractName:",
+        "Plans/DRY_Rules.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L3",
+        "Plans/DRY_Rules.md:L45",
+        "Plans/DRY_Rules.md:L56",
+        "Plans/DRY_Rules.md:L76",
+        "Plans/DRY_Rules.md:L105"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06709",
+      "source_obligation_ids": [
+        "obl-6350"
+      ],
+      "source_seed_ids": [
+        "seed-9697"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "project-summary, escalation, blocked-owner, and resurfacing rules",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "project-summary, escalation, blocked-owner, and resurfacing rules"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06711",
+      "source_obligation_ids": [
+        "obl-6352"
+      ],
+      "source_seed_ids": [
+        "seed-9699"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "route/open-subject/bridge-field refinement and verification rules",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "route/open-subject/bridge-field refinement and verification rules"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06712",
+      "source_obligation_ids": [
+        "obl-6353"
+      ],
+      "source_seed_ids": [
+        "seed-9700"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Example pattern: `route_target` / `OpenSubject` exist, but precedence, reject rules, examp",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Example pattern: `route_target` / `OpenSubject` exist, but precedence, reject rules, examples, and scoped-resolution rules are still missing.",
+        "route_target",
+        "OpenSubject"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L51"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06722",
+      "source_obligation_ids": [
+        "obl-6363"
+      ],
+      "source_seed_ids": [
+        "seed-9714"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Bridge fields exist, but precedence/join semantics and compatibility fallback rules remain",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Bridge fields exist, but precedence/join semantics and compatibility fallback rules remain under-specified."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06723",
+      "source_obligation_ids": [
+        "obl-6364"
+      ],
+      "source_seed_ids": [
+        "seed-9716"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Envelope fields landed, but per-family behavior rules and stronger bridge-governance seman",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Envelope fields landed, but per-family behavior rules and stronger bridge-governance semantics were not fully transferred."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06770",
+      "source_obligation_ids": [
+        "obl-6406"
+      ],
+      "source_seed_ids": [
+        "seed-9785"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Missing blocked-owner / escalation / resurfacing rules will produce inconsistent UX and in",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Missing blocked-owner / escalation / resurfacing rules will produce inconsistent UX and inconsistent persistence semantics."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06775",
+      "source_obligation_ids": [
+        "obl-6411"
+      ],
+      "source_seed_ids": [
+        "seed-9790"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "detailed rules, examples, field schemas, or operational policies often did not",
+      "row_type": "owner",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "detailed rules, examples, field schemas, or operational policies often did not"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     }
   ]
 }

@@ -1,0 +1,2226 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-179",
+  "group_ids": [
+    "gapgrp-0713",
+    "gapgrp-0714",
+    "gapgrp-0715",
+    "gapgrp-0716"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-05436",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07006 is present for `Plans/usage-feature.md` still does not contain an exact `artifact drill-through section`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07006"
+      ],
+      "source_obligation_ids": [
+        "obl-6602"
+      ],
+      "source_seed_ids": [
+        "seed-10066"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/usage-feature.md` still does not contain an exact `artifact drill-through section` heading.",
+        "Plans/usage-feature.md",
+        "artifact drill-through section"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05477",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07062 is present for Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-0",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07062"
+      ],
+      "source_obligation_ids": [
+        "obl-6643"
+      ],
+      "source_seed_ids": [
+        "seed-10135"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.",
+        "gap-003",
+        "gap-004",
+        "gap-005",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00067",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "owner coverage row cov-00070 is missing for Orchestrator ownership boundaries / projection-vs-canonical split",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "Orchestrator ownership boundaries"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00070"
+      ],
+      "source_obligation_ids": [
+        "obl-028"
+      ],
+      "source_seed_ids": [
+        "seed-028"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "exact_missing_items": [
+        "Define what Orchestrator is allowed to own: page layout and controls, view-model/projections, run control intents; exclude canonical runtime enums, event semantics, scheduler truth.",
+        "Pin the primary discussion seam first: UI surface/IA vs runtime state model vs cross-surface lineage/receipts vs blocked/recovery/remediation UX.",
+        "Record explicit boundary between canonical runtime facts, orchestrator projections, and widget/page presentation.",
+        "Carry forward requested-vs-effective state wherever persona/provider/model fallback can occur."
+      ],
+      "stale_tokens": [
+        "tier model",
+        "super-agent",
+        "owner of execution truth"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00291",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00357 is partial for `Feature Seam`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00357"
+      ],
+      "source_obligation_ids": [
+        "obl-215"
+      ],
+      "source_seed_ids": [
+        "seed-247",
+        "seed-1254",
+        "seed-1740",
+        "seed-2503",
+        "seed-2529"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0021",
+        "shard-0026",
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "`Feature Seam`",
+        "Feature Seam"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00316",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00401 is partial for `Provider_Stream_Mapping_External_Reference_A2A.md` maps usage and diagnostics without eff",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00401"
+      ],
+      "source_obligation_ids": [
+        "obl-259"
+      ],
+      "source_seed_ids": [
+        "seed-292"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`Provider_Stream_Mapping_External_Reference_A2A.md` maps usage and diagnostics without effective-account attribution",
+        "Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00625",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00797 is partial for `shares feature seam with run ...`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00797"
+      ],
+      "source_obligation_ids": [
+        "obl-654"
+      ],
+      "source_seed_ids": [
+        "seed-749"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "exact_missing_items": [
+        "`shares feature seam with run ...`",
+        "shares feature seam with run ..."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00719",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00947 is partial for `hard_gate` should show:",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00947"
+      ],
+      "source_obligation_ids": [
+        "obl-804"
+      ],
+      "source_seed_ids": [
+        "seed-928"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "exact_missing_items": [
+        "`hard_gate` should show:",
+        "hard_gate"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00942",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01207 is partial for keep `Feature Seam`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01207"
+      ],
+      "source_obligation_ids": [
+        "obl-1064"
+      ],
+      "source_seed_ids": [
+        "seed-1251"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "exact_missing_items": [
+        "keep `Feature Seam`",
+        "Feature Seam"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00943",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01208 is partial for ELI5/help can say \u201cA feature seam is where related packages have to work together cleanly\u201d",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01208"
+      ],
+      "source_obligation_ids": [
+        "obl-1065"
+      ],
+      "source_seed_ids": [
+        "seed-1252"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "exact_missing_items": [
+        "ELI5/help can say \u201cA feature seam is where related packages have to work together cleanly\u201d"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00988",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01271 is partial for Project cards likely need compact pressure signals, not full usage details.",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### Enhancement 5: Usage in header (compact)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01271"
+      ],
+      "source_obligation_ids": [
+        "obl-1128"
+      ],
+      "source_seed_ids": [
+        "seed-1340"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "exact_missing_items": [
+        "Project cards likely need compact pressure signals, not full usage details."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01263",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01614 is partial for `Feature Seams`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01614"
+      ],
+      "source_obligation_ids": [
+        "obl-1471"
+      ],
+      "source_seed_ids": [
+        "seed-1823"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "`Feature Seams`",
+        "Feature Seams"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01402",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01795 is partial for preserve canonical usage identity",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01795"
+      ],
+      "source_obligation_ids": [
+        "obl-1652"
+      ],
+      "source_seed_ids": [
+        "seed-2059"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "preserve canonical usage identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01429",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01826 is partial for `success`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "## Success Criteria"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01826"
+      ],
+      "source_obligation_ids": [
+        "obl-1683"
+      ],
+      "source_seed_ids": [
+        "seed-2114"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "exact_missing_items": [
+        "`success`",
+        "success"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01620",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02086 is partial for for example, `Feature Seam` should remain the term in both modes even if the ELI5 explanat",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02086"
+      ],
+      "source_obligation_ids": [
+        "obl-1943"
+      ],
+      "source_seed_ids": [
+        "seed-2520"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "for example, `Feature Seam` should remain the term in both modes even if the ELI5 explanation is plainer",
+        "Feature Seam"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01821",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02347 is partial for Thread Usage stays canonical in-shell, but app Usage pivots still need the same shared sco",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "## Scope of the Usage Feature"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02347"
+      ],
+      "source_obligation_ids": [
+        "obl-2198"
+      ],
+      "source_seed_ids": [
+        "seed-2853"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Thread Usage stays canonical in-shell, but app Usage pivots still need the same shared scope envelope."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02097",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02668 is partial for Role-scoped routing exists in policy/storage but not in effective-resolution or usage sche",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "##### Usage and receipt lineage routing"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02668"
+      ],
+      "source_obligation_ids": [
+        "obl-2515"
+      ],
+      "source_seed_ids": [
+        "seed-3302"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Role-scoped routing exists in policy/storage but not in effective-resolution or usage schemas."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02190",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02783 is partial for usage is still attributed to `effective_account_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02783"
+      ],
+      "source_obligation_ids": [
+        "obl-2630"
+      ],
+      "source_seed_ids": [
+        "seed-3450"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "usage is still attributed to `effective_account_id`",
+        "effective_account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02202",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02797 is partial for but canonical usage records still omit `account_switch_reason` and any durable switch/sign",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02797"
+      ],
+      "source_obligation_ids": [
+        "obl-2644"
+      ],
+      "source_seed_ids": [
+        "seed-3473"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "but canonical usage records still omit `account_switch_reason` and any durable switch/signal pointer",
+        "account_switch_reason"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02212",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02807 is partial for Usage still wants switch explanations without carrying switch lineage in its canonical rec",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "##### Usage and receipt lineage routing"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02807"
+      ],
+      "source_obligation_ids": [
+        "obl-2654"
+      ],
+      "source_seed_ids": [
+        "seed-3488"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Usage still wants switch explanations without carrying switch lineage in its canonical records."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02255",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02857 is partial for but the shared effective-resolution/runtime records and usage records still do not identif",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02857"
+      ],
+      "source_obligation_ids": [
+        "obl-2704"
+      ],
+      "source_seed_ids": [
+        "seed-3557"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "but the shared effective-resolution/runtime records and usage records still do not identify which role actually executed the attempt/message"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03083",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03960 is partial for keep canonical Usage routing on shared usage identity, not feature-local cost or receipt n",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "##### Usage and receipt lineage routing"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03960"
+      ],
+      "source_obligation_ids": [
+        "obl-3804"
+      ],
+      "source_seed_ids": [
+        "seed-5208"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "keep canonical Usage routing on shared usage identity, not feature-local cost or receipt notions"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03085",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03964 is partial for `Orchestrator_Page.md` still describes worker identity and per-node usage in terms that la",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03964"
+      ],
+      "source_obligation_ids": [
+        "obl-3808"
+      ],
+      "source_seed_ids": [
+        "seed-5220"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator_Page.md` still describes worker identity and per-node usage in terms that lag the stronger runtime/account/attempt model.",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03546",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04514 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04514"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03814",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04873 is partial for must open/focus Usage in the correct project/thread/run scope",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "## Scope of the Usage Feature"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04873"
+      ],
+      "source_obligation_ids": [
+        "obl-4650"
+      ],
+      "source_seed_ids": [
+        "seed-6657"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "must open/focus Usage in the correct project/thread/run scope"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04073",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "owner coverage row cov-05247 is partial for Use `inspector_target = usage` for graph/node/attempt pivots that keep the same object but",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05247"
+      ],
+      "source_obligation_ids": [
+        "obl-5023"
+      ],
+      "source_seed_ids": [
+        "seed-7324"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "Use `inspector_target = usage` for graph/node/attempt pivots that keep the same object but focus the usage section.",
+        "inspector_target = usage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04085",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05268 is partial for `object_id = <canonical usage event id>`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### 3. Event ledger (existing concept, under Usage umbrella)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05268"
+      ],
+      "source_obligation_ids": [
+        "obl-5044"
+      ],
+      "source_seed_ids": [
+        "seed-7357",
+        "seed-7485",
+        "seed-7491"
+      ],
+      "source_shard_ids": [
+        "shard-0069",
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`object_id = <canonical usage event id>`",
+        "object_id = <canonical usage event id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04094",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05285 is partial for Provider/runtime/account seams got materially sharper under Sonnet:",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### 3. Event ledger (existing concept, under Usage umbrella)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05285"
+      ],
+      "source_obligation_ids": [
+        "obl-5061"
+      ],
+      "source_seed_ids": [
+        "seed-7409"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "Provider/runtime/account seams got materially sharper under Sonnet:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04121",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05315 is partial for `inspector_target = usage`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05315"
+      ],
+      "source_obligation_ids": [
+        "obl-5087"
+      ],
+      "source_seed_ids": [
+        "seed-7487"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`inspector_target = usage`",
+        "inspector_target = usage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04133",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05327 is partial for `inspector_target = details | evidence | usage | history`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05327"
+      ],
+      "source_obligation_ids": [
+        "obl-5099"
+      ],
+      "source_seed_ids": [
+        "seed-7511"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`inspector_target = details | evidence | usage | history`",
+        "inspector_target = details | evidence | usage | history"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04136",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05330 is partial for `inspector_target = details | evidence | usage | lineage`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "##### Usage and receipt lineage routing"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05330"
+      ],
+      "source_obligation_ids": [
+        "obl-5102"
+      ],
+      "source_seed_ids": [
+        "seed-7518"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`inspector_target = details | evidence | usage | lineage`",
+        "inspector_target = details | evidence | usage | lineage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04176",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05373 is partial for feature seam:",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05373"
+      ],
+      "source_obligation_ids": [
+        "obl-5145"
+      ],
+      "source_seed_ids": [
+        "seed-7613"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "feature seam:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04299",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05522 is partial for `object_id = canonical usage event id`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### 3. Event ledger (existing concept, under Usage umbrella)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05522"
+      ],
+      "source_obligation_ids": [
+        "obl-5294"
+      ],
+      "source_seed_ids": [
+        "seed-7870"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "`object_id = canonical usage event id`",
+        "object_id = canonical usage event id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-07006",
+    "cov-07062",
+    "cov-00070",
+    "cov-00357",
+    "cov-00401",
+    "cov-00797",
+    "cov-00947",
+    "cov-01207",
+    "cov-01208",
+    "cov-01271",
+    "cov-01614",
+    "cov-01795",
+    "cov-01826",
+    "cov-02086",
+    "cov-02347",
+    "cov-02668",
+    "cov-02783",
+    "cov-02797",
+    "cov-02807",
+    "cov-02857",
+    "cov-03960",
+    "cov-03964",
+    "cov-04514",
+    "cov-04873",
+    "cov-05247",
+    "cov-05268",
+    "cov-05285",
+    "cov-05315",
+    "cov-05327",
+    "cov-05330",
+    "cov-05373",
+    "cov-05522"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-028",
+    "obl-1064",
+    "obl-1065",
+    "obl-1128",
+    "obl-1471",
+    "obl-1652",
+    "obl-1683",
+    "obl-1943",
+    "obl-215",
+    "obl-2198",
+    "obl-2515",
+    "obl-259",
+    "obl-2630",
+    "obl-2644",
+    "obl-2654",
+    "obl-2704",
+    "obl-3804",
+    "obl-3808",
+    "obl-4292",
+    "obl-4650",
+    "obl-5023",
+    "obl-5044",
+    "obl-5061",
+    "obl-5087",
+    "obl-5099",
+    "obl-5102",
+    "obl-5145",
+    "obl-5294",
+    "obl-654",
+    "obl-6602",
+    "obl-6643",
+    "obl-804"
+  ],
+  "source_seed_ids_represented": [
+    "seed-028",
+    "seed-10066",
+    "seed-10135",
+    "seed-1251",
+    "seed-1252",
+    "seed-1254",
+    "seed-1340",
+    "seed-1740",
+    "seed-1823",
+    "seed-2059",
+    "seed-2114",
+    "seed-247",
+    "seed-2503",
+    "seed-2520",
+    "seed-2529",
+    "seed-2853",
+    "seed-292",
+    "seed-3302",
+    "seed-3450",
+    "seed-3473",
+    "seed-3488",
+    "seed-3557",
+    "seed-5208",
+    "seed-5220",
+    "seed-6001",
+    "seed-6657",
+    "seed-7324",
+    "seed-7357",
+    "seed-7409",
+    "seed-7485",
+    "seed-7487",
+    "seed-749",
+    "seed-7491",
+    "seed-7511",
+    "seed-7518",
+    "seed-7613",
+    "seed-7870",
+    "seed-928"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0005",
+    "shard-0010",
+    "shard-0011",
+    "shard-0015",
+    "shard-0017",
+    "shard-0021",
+    "shard-0022",
+    "shard-0026",
+    "shard-0027",
+    "shard-0029",
+    "shard-0030",
+    "shard-0033",
+    "shard-0036",
+    "shard-0039",
+    "shard-0040",
+    "shard-0041",
+    "shard-0053",
+    "shard-0059",
+    "shard-0064",
+    "shard-0069",
+    "shard-0070",
+    "shard-0071",
+    "shard-0073",
+    "shard-0089",
+    "shard-0090"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-05436",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07006 is present for `Plans/usage-feature.md` still does not contain an exact `artifact drill-through section`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07006"
+      ],
+      "source_obligation_ids": [
+        "obl-6602"
+      ],
+      "source_seed_ids": [
+        "seed-10066"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/usage-feature.md` still does not contain an exact `artifact drill-through section` heading.",
+        "Plans/usage-feature.md",
+        "artifact drill-through section"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05477",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07062 is present for Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-0",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07062"
+      ],
+      "source_obligation_ids": [
+        "obl-6643"
+      ],
+      "source_seed_ids": [
+        "seed-10135"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.",
+        "gap-003",
+        "gap-004",
+        "gap-005",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00067",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "owner coverage row cov-00070 is missing for Orchestrator ownership boundaries / projection-vs-canonical split",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "Orchestrator ownership boundaries"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00070"
+      ],
+      "source_obligation_ids": [
+        "obl-028"
+      ],
+      "source_seed_ids": [
+        "seed-028"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "exact_missing_items": [
+        "Define what Orchestrator is allowed to own: page layout and controls, view-model/projections, run control intents; exclude canonical runtime enums, event semantics, scheduler truth.",
+        "Pin the primary discussion seam first: UI surface/IA vs runtime state model vs cross-surface lineage/receipts vs blocked/recovery/remediation UX.",
+        "Record explicit boundary between canonical runtime facts, orchestrator projections, and widget/page presentation.",
+        "Carry forward requested-vs-effective state wherever persona/provider/model fallback can occur."
+      ],
+      "stale_tokens": [
+        "tier model",
+        "super-agent",
+        "owner of execution truth"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00291",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00357 is partial for `Feature Seam`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00357"
+      ],
+      "source_obligation_ids": [
+        "obl-215"
+      ],
+      "source_seed_ids": [
+        "seed-247",
+        "seed-1254",
+        "seed-1740",
+        "seed-2503",
+        "seed-2529"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0021",
+        "shard-0026",
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "`Feature Seam`",
+        "Feature Seam"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00316",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00401 is partial for `Provider_Stream_Mapping_External_Reference_A2A.md` maps usage and diagnostics without eff",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00401"
+      ],
+      "source_obligation_ids": [
+        "obl-259"
+      ],
+      "source_seed_ids": [
+        "seed-292"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`Provider_Stream_Mapping_External_Reference_A2A.md` maps usage and diagnostics without effective-account attribution",
+        "Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00625",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00797 is partial for `shares feature seam with run ...`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00797"
+      ],
+      "source_obligation_ids": [
+        "obl-654"
+      ],
+      "source_seed_ids": [
+        "seed-749"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "exact_missing_items": [
+        "`shares feature seam with run ...`",
+        "shares feature seam with run ..."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00719",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00947 is partial for `hard_gate` should show:",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00947"
+      ],
+      "source_obligation_ids": [
+        "obl-804"
+      ],
+      "source_seed_ids": [
+        "seed-928"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "exact_missing_items": [
+        "`hard_gate` should show:",
+        "hard_gate"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00942",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01207 is partial for keep `Feature Seam`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01207"
+      ],
+      "source_obligation_ids": [
+        "obl-1064"
+      ],
+      "source_seed_ids": [
+        "seed-1251"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "exact_missing_items": [
+        "keep `Feature Seam`",
+        "Feature Seam"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00943",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01208 is partial for ELI5/help can say \u201cA feature seam is where related packages have to work together cleanly\u201d",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01208"
+      ],
+      "source_obligation_ids": [
+        "obl-1065"
+      ],
+      "source_seed_ids": [
+        "seed-1252"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "exact_missing_items": [
+        "ELI5/help can say \u201cA feature seam is where related packages have to work together cleanly\u201d"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00988",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01271 is partial for Project cards likely need compact pressure signals, not full usage details.",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### Enhancement 5: Usage in header (compact)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01271"
+      ],
+      "source_obligation_ids": [
+        "obl-1128"
+      ],
+      "source_seed_ids": [
+        "seed-1340"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "exact_missing_items": [
+        "Project cards likely need compact pressure signals, not full usage details."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01263",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01614 is partial for `Feature Seams`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01614"
+      ],
+      "source_obligation_ids": [
+        "obl-1471"
+      ],
+      "source_seed_ids": [
+        "seed-1823"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "`Feature Seams`",
+        "Feature Seams"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01402",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01795 is partial for preserve canonical usage identity",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01795"
+      ],
+      "source_obligation_ids": [
+        "obl-1652"
+      ],
+      "source_seed_ids": [
+        "seed-2059"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "preserve canonical usage identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01429",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01826 is partial for `success`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "## Success Criteria"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01826"
+      ],
+      "source_obligation_ids": [
+        "obl-1683"
+      ],
+      "source_seed_ids": [
+        "seed-2114"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "exact_missing_items": [
+        "`success`",
+        "success"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01620",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02086 is partial for for example, `Feature Seam` should remain the term in both modes even if the ELI5 explanat",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02086"
+      ],
+      "source_obligation_ids": [
+        "obl-1943"
+      ],
+      "source_seed_ids": [
+        "seed-2520"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "for example, `Feature Seam` should remain the term in both modes even if the ELI5 explanation is plainer",
+        "Feature Seam"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01821",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02347 is partial for Thread Usage stays canonical in-shell, but app Usage pivots still need the same shared sco",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "## Scope of the Usage Feature"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02347"
+      ],
+      "source_obligation_ids": [
+        "obl-2198"
+      ],
+      "source_seed_ids": [
+        "seed-2853"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Thread Usage stays canonical in-shell, but app Usage pivots still need the same shared scope envelope."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02097",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02668 is partial for Role-scoped routing exists in policy/storage but not in effective-resolution or usage sche",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "##### Usage and receipt lineage routing"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02668"
+      ],
+      "source_obligation_ids": [
+        "obl-2515"
+      ],
+      "source_seed_ids": [
+        "seed-3302"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Role-scoped routing exists in policy/storage but not in effective-resolution or usage schemas."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02190",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02783 is partial for usage is still attributed to `effective_account_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02783"
+      ],
+      "source_obligation_ids": [
+        "obl-2630"
+      ],
+      "source_seed_ids": [
+        "seed-3450"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "usage is still attributed to `effective_account_id`",
+        "effective_account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02202",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02797 is partial for but canonical usage records still omit `account_switch_reason` and any durable switch/sign",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02797"
+      ],
+      "source_obligation_ids": [
+        "obl-2644"
+      ],
+      "source_seed_ids": [
+        "seed-3473"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "but canonical usage records still omit `account_switch_reason` and any durable switch/signal pointer",
+        "account_switch_reason"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02212",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02807 is partial for Usage still wants switch explanations without carrying switch lineage in its canonical rec",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "##### Usage and receipt lineage routing"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02807"
+      ],
+      "source_obligation_ids": [
+        "obl-2654"
+      ],
+      "source_seed_ids": [
+        "seed-3488"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Usage still wants switch explanations without carrying switch lineage in its canonical records."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02255",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02857 is partial for but the shared effective-resolution/runtime records and usage records still do not identif",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02857"
+      ],
+      "source_obligation_ids": [
+        "obl-2704"
+      ],
+      "source_seed_ids": [
+        "seed-3557"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "but the shared effective-resolution/runtime records and usage records still do not identify which role actually executed the attempt/message"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03083",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03960 is partial for keep canonical Usage routing on shared usage identity, not feature-local cost or receipt n",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "##### Usage and receipt lineage routing"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03960"
+      ],
+      "source_obligation_ids": [
+        "obl-3804"
+      ],
+      "source_seed_ids": [
+        "seed-5208"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "keep canonical Usage routing on shared usage identity, not feature-local cost or receipt notions"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03085",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03964 is partial for `Orchestrator_Page.md` still describes worker identity and per-node usage in terms that la",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03964"
+      ],
+      "source_obligation_ids": [
+        "obl-3808"
+      ],
+      "source_seed_ids": [
+        "seed-5220"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator_Page.md` still describes worker identity and per-node usage in terms that lag the stronger runtime/account/attempt model.",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03546",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04514 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04514"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03814",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04873 is partial for must open/focus Usage in the correct project/thread/run scope",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "## Scope of the Usage Feature"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04873"
+      ],
+      "source_obligation_ids": [
+        "obl-4650"
+      ],
+      "source_seed_ids": [
+        "seed-6657"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "must open/focus Usage in the correct project/thread/run scope"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04073",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "owner coverage row cov-05247 is partial for Use `inspector_target = usage` for graph/node/attempt pivots that keep the same object but",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05247"
+      ],
+      "source_obligation_ids": [
+        "obl-5023"
+      ],
+      "source_seed_ids": [
+        "seed-7324"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "Use `inspector_target = usage` for graph/node/attempt pivots that keep the same object but focus the usage section.",
+        "inspector_target = usage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04085",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05268 is partial for `object_id = <canonical usage event id>`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### 3. Event ledger (existing concept, under Usage umbrella)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05268"
+      ],
+      "source_obligation_ids": [
+        "obl-5044"
+      ],
+      "source_seed_ids": [
+        "seed-7357",
+        "seed-7485",
+        "seed-7491"
+      ],
+      "source_shard_ids": [
+        "shard-0069",
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`object_id = <canonical usage event id>`",
+        "object_id = <canonical usage event id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04094",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05285 is partial for Provider/runtime/account seams got materially sharper under Sonnet:",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### 3. Event ledger (existing concept, under Usage umbrella)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05285"
+      ],
+      "source_obligation_ids": [
+        "obl-5061"
+      ],
+      "source_seed_ids": [
+        "seed-7409"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "Provider/runtime/account seams got materially sharper under Sonnet:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04121",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05315 is partial for `inspector_target = usage`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05315"
+      ],
+      "source_obligation_ids": [
+        "obl-5087"
+      ],
+      "source_seed_ids": [
+        "seed-7487"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`inspector_target = usage`",
+        "inspector_target = usage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04133",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05327 is partial for `inspector_target = details | evidence | usage | history`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05327"
+      ],
+      "source_obligation_ids": [
+        "obl-5099"
+      ],
+      "source_seed_ids": [
+        "seed-7511"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`inspector_target = details | evidence | usage | history`",
+        "inspector_target = details | evidence | usage | history"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04136",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05330 is partial for `inspector_target = details | evidence | usage | lineage`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "##### Usage and receipt lineage routing"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05330"
+      ],
+      "source_obligation_ids": [
+        "obl-5102"
+      ],
+      "source_seed_ids": [
+        "seed-7518"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`inspector_target = details | evidence | usage | lineage`",
+        "inspector_target = details | evidence | usage | lineage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04176",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05373 is partial for feature seam:",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "# Usage Feature -- App/GUI Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05373"
+      ],
+      "source_obligation_ids": [
+        "obl-5145"
+      ],
+      "source_seed_ids": [
+        "seed-7613"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "feature seam:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04299",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05522 is partial for `object_id = canonical usage event id`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### 3. Event ledger (existing concept, under Usage umbrella)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05522"
+      ],
+      "source_obligation_ids": [
+        "obl-5294"
+      ],
+      "source_seed_ids": [
+        "seed-7870"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "`object_id = canonical usage event id`",
+        "object_id = canonical usage event id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

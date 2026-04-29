@@ -1,0 +1,307 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-141",
+  "group_ids": [
+    "pktgrp-0561",
+    "pktgrp-0562",
+    "pktgrp-0563",
+    "pktgrp-0564"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0006",
+      "source_reconciliation_target_id": "target-0006",
+      "source_reconciliation_target_ids": [
+        "target-0006"
+      ],
+      "path": "Plans/.../blocked-state schema docs",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../blocked-state schema docs:L1",
+      "coverage_row_ids": [
+        "cov-00004"
+      ],
+      "source_obligation_ids": [
+        "obl-002"
+      ],
+      "source_seed_ids": [
+        "seed-002"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-002"
+        ],
+        "source_seed_ids": [
+          "seed-002"
+        ],
+        "source_shard_ids": [
+          "shard-0001"
+        ]
+      },
+      "gap_ids": [
+        "gap-00004"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "blocked reason",
+        "blocked owner",
+        "time blocked",
+        "next step",
+        "blocked ownership should be normalized with stable labels: `Runtime`; `Package Overseer`; `Seam Overseer`"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "Key Facts and Findings"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-c2b61f6aee06",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0007",
+      "source_reconciliation_target_id": "target-0007",
+      "source_reconciliation_target_ids": [
+        "target-0007"
+      ],
+      "path": "Plans/.../concern*",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../concern*:L1",
+      "coverage_row_ids": [
+        "cov-00028"
+      ],
+      "source_obligation_ids": [
+        "obl-010"
+      ],
+      "source_seed_ids": [
+        "seed-010"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-010"
+        ],
+        "source_seed_ids": [
+          "seed-010"
+        ],
+        "source_shard_ids": [
+          "shard-0002"
+        ]
+      },
+      "gap_ids": [
+        "gap-00028"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`concern` should be a first-class record, not just a field buried in review/alert logic",
+        "Concern records should carry identity, scope, severity, category, owner, lifecycle state, meaning/summary, linkage to evidence/artifacts/history/source records, visibility/attention flags",
+        "Canonical concerns should be created by runtime, package overseer, seam overseer, corroboration outcome, graph patch/state-transition logic"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "review/alert logic"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "review/alert logic"
+      ],
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "Concern-model direction now clarified"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-c8696ac2004c",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0008",
+      "source_reconciliation_target_id": "target-0008",
+      "source_reconciliation_target_ids": [
+        "target-0008"
+      ],
+      "path": "Plans/.../cross-tab navigation contract docs",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../cross-tab navigation contract docs:L1",
+      "coverage_row_ids": [
+        "cov-00006"
+      ],
+      "source_obligation_ids": [
+        "obl-003"
+      ],
+      "source_seed_ids": [
+        "seed-003"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-003"
+        ],
+        "source_seed_ids": [
+          "seed-003"
+        ],
+        "source_shard_ids": [
+          "shard-0001"
+        ]
+      },
+      "gap_ids": [
+        "gap-00006"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "object/event focus should deep-link across Progress / Seams / Node Graph / Evidence / History / Ledger",
+        "deep links should carry selection/filter/focus context, not merely switch tabs",
+        "`Seams` and `Node Graph` should share focus context without hyperactive live-sync",
+        "clicking evidence/artifact links in graph detail should deep-link into the Evidence tab with target selection/filter applied",
+        "evidence and artifacts should remain linked bidirectionally"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "Key Facts and Findings"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-6e568adc0142",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0009",
+      "source_reconciliation_target_id": "target-0009",
+      "source_reconciliation_target_ids": [
+        "target-0009"
+      ],
+      "path": "Plans/.../current_state.md",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../current_state.md:L1",
+      "coverage_row_ids": [
+        "cov-00012"
+      ],
+      "source_obligation_ids": [
+        "obl-005"
+      ],
+      "source_seed_ids": [
+        "seed-005"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-005"
+        ],
+        "source_seed_ids": [
+          "seed-005"
+        ],
+        "source_shard_ids": [
+          "shard-0002"
+        ]
+      },
+      "gap_ids": [
+        "gap-00012"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Retire/replace legacy locality tokens with explicit scope labels: `Inherited`, `Explicit`, `Computed`",
+        "Treat `Runtime only` as computed truth, not user configuration"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "Runtime only",
+        "Inherited",
+        "Explicit",
+        "Computed"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "Runtime only",
+        "Inherited",
+        "Explicit",
+        "Computed"
+      ],
+      "required_structural_headings": [
+        "Override-display direction now clarified"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-a2283584be43",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-00004",
+    "cov-00028",
+    "cov-00006",
+    "cov-00012"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-002",
+    "obl-010",
+    "obl-003",
+    "obl-005"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-002",
+    "seed-010",
+    "seed-003",
+    "seed-005"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0001",
+    "shard-0002"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "preserved_exact_required_items": [
+    "blocked reason",
+    "blocked owner",
+    "time blocked",
+    "next step",
+    "blocked ownership should be normalized with stable labels: `Runtime`; `Package Overseer`; `Seam Overseer`",
+    "`concern` should be a first-class record, not just a field buried in review/alert logic",
+    "Concern records should carry identity, scope, severity, category, owner, lifecycle state, meaning/summary, linkage to evidence/artifacts/history/source records, visibility/attention flags",
+    "Canonical concerns should be created by runtime, package overseer, seam overseer, corroboration outcome, graph patch/state-transition logic",
+    "object/event focus should deep-link across Progress / Seams / Node Graph / Evidence / History / Ledger",
+    "deep links should carry selection/filter/focus context, not merely switch tabs",
+    "`Seams` and `Node Graph` should share focus context without hyperactive live-sync",
+    "clicking evidence/artifact links in graph detail should deep-link into the Evidence tab with target selection/filter applied",
+    "evidence and artifacts should remain linked bidirectionally",
+    "Retire/replace legacy locality tokens with explicit scope labels: `Inherited`, `Explicit`, `Computed`",
+    "Treat `Runtime only` as computed truth, not user configuration"
+  ],
+  "blocked_targets": []
+}

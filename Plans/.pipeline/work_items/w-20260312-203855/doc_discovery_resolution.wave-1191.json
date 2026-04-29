@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1191",
+  "group_ids": [
+    "discgrp-4761",
+    "discgrp-4762",
+    "discgrp-4763",
+    "discgrp-4764"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05160",
+      "source_obligation_ids": [
+        "obl-4936"
+      ],
+      "source_seed_ids": [
+        "seed-7152"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/BinaryLocator_Spec.md",
+      "new_heading_hint": "### Command selection (SSOT)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L205"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05161",
+      "source_obligation_ids": [
+        "obl-4937"
+      ],
+      "source_seed_ids": [
+        "seed-7158"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05162",
+      "source_obligation_ids": [
+        "obl-4938"
+      ],
+      "source_seed_ids": [
+        "seed-7159"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05163",
+      "source_obligation_ids": [
+        "obl-4939"
+      ],
+      "source_seed_ids": [
+        "seed-7160"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

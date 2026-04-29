@@ -1,0 +1,1078 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-162",
+  "row_group_ids": [
+    "rowgrp-0645",
+    "rowgrp-0646",
+    "rowgrp-0647",
+    "rowgrp-0648"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-02188",
+      "source_obligation_ids": [
+        "obl-2043"
+      ],
+      "source_seed_ids": [
+        "seed-2652"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "Make Run Graph and Orchestrator consume attempt/receipt-based canonical projections and co",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Make Run Graph and Orchestrator consume attempt/receipt-based canonical projections and command args already present in `UI_Command_Catalog.md`, instead of re-describing tier-era or node-only action contracts",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02258",
+      "source_obligation_ids": [
+        "obl-2112"
+      ],
+      "source_seed_ids": [
+        "seed-2744"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "`Plans/Run_Graph_View.md` + `Plans/Runtime_Artifacts_Panel.md`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md` + `Plans/Runtime_Artifacts_Panel.md`",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L14",
+        "Plans/Run_Graph_View.md:L26"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02279",
+      "source_obligation_ids": [
+        "obl-2132"
+      ],
+      "source_seed_ids": [
+        "seed-2772"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "no minority-advisory outcome for the now-required 2-of-3 corroboration pattern",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "no minority-advisory outcome for the now-required 2-of-3 corroboration pattern"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02286",
+      "source_obligation_ids": [
+        "obl-2139"
+      ],
+      "source_seed_ids": [
+        "seed-2779"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "`input_required` / `input_provided` cannot distinguish node HITL, corroboration pause, or",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`input_required` / `input_provided` cannot distinguish node HITL, corroboration pause, or conversational user-input pause",
+        "input_required",
+        "input_provided"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02322",
+      "source_obligation_ids": [
+        "obl-2174"
+      ],
+      "source_seed_ids": [
+        "seed-2825"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "`cmd.graph.approve_hitl` / `deny_hitl` arguments do not match `UI_Command_Catalog.md` (`re",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`cmd.graph.approve_hitl` / `deny_hitl` arguments do not match `UI_Command_Catalog.md` (`request_id` mismatch)",
+        "cmd.graph.approve_hitl",
+        "deny_hitl",
+        "UI_Command_Catalog.md",
+        "request_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02324",
+      "source_obligation_ids": [
+        "obl-2176"
+      ],
+      "source_seed_ids": [
+        "seed-2827"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "cross-surface open commands are required in prose but not bound in the Run Graph command s",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "cross-surface open commands are required in prose but not bound in the Run Graph command section"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02395",
+      "source_obligation_ids": [
+        "obl-2245"
+      ],
+      "source_seed_ids": [
+        "seed-2912"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "historical/current run switching must not change layout identity; layout scope is project-",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "historical/current run switching must not change layout identity; layout scope is project-level, not run-level"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02784",
+      "source_obligation_ids": [
+        "obl-2631"
+      ],
+      "source_seed_ids": [
+        "seed-3451"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "but the requested-side fields should remain queryable/auditable where the run snapshot is",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "but the requested-side fields should remain queryable/auditable where the run snapshot is shown"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03118",
+      "source_obligation_ids": [
+        "obl-2964"
+      ],
+      "source_seed_ids": [
+        "seed-3912"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "`Executor_Protocol.md` presents execution as a canonical `Builder` / `Verifier` / `Oversee",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`Executor_Protocol.md` presents execution as a canonical `Builder` / `Verifier` / `Overseer` loop over graph nodes.",
+        "Executor_Protocol.md",
+        "Builder",
+        "Verifier",
+        "Overseer"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L39"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03211",
+      "source_obligation_ids": [
+        "obl-3057"
+      ],
+      "source_seed_ids": [
+        "seed-4050"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "approval resolution emits `node.prerequisite_resolved`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "approval resolution emits `node.prerequisite_resolved`",
+        "node.prerequisite_resolved"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03223",
+      "source_obligation_ids": [
+        "obl-3069"
+      ],
+      "source_seed_ids": [
+        "seed-4069"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "`UI_Command_Catalog.md` still has graph-local `cmd.graph.approve_hitl` / `cmd.graph.deny_h",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`UI_Command_Catalog.md` still has graph-local `cmd.graph.approve_hitl` / `cmd.graph.deny_hitl` entries even though the same file later establishes `cmd.runtime.*` as the canonical recovery namespace.",
+        "UI_Command_Catalog.md",
+        "cmd.graph.approve_hitl",
+        "cmd.graph.deny_hitl",
+        "cmd.runtime.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03241",
+      "source_obligation_ids": [
+        "obl-3087"
+      ],
+      "source_seed_ids": [
+        "seed-4102"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "`UI_Command_Catalog.md` still leaves the runtime command layer under-owned: deprecated gra",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "### Fidelity recovery cov-032: Concern linkage to adjacent families",
+      "status": "partial",
+      "exact_items": [
+        "`UI_Command_Catalog.md` still leaves the runtime command layer under-owned: deprecated graph recovery commands are still presented as live canon, HITL `approve_continue` still has no canonical `cmd.*` mapping, cross-surface pivot payloads still lack rewrite-era structural keys, and there are still no stable `cmd.account.*`, `cmd.concern.*`, or `cmd.promotion.*` families.",
+        "UI_Command_Catalog.md",
+        "approve_continue",
+        "cmd.*",
+        "cmd.account.*",
+        "cmd.concern.*",
+        "cmd.promotion.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L7",
+        "Plans/Run_Graph_View.md:L14"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03265",
+      "source_obligation_ids": [
+        "obl-3111"
+      ],
+      "source_seed_ids": [
+        "seed-4134"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "Define canonical command families for account operations, concern operations, and promotio",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "### Fidelity recovery cov-032: Concern linkage to adjacent families",
+      "status": "partial",
+      "exact_items": [
+        "Define canonical command families for account operations, concern operations, and promotion operations, and explicitly map HITL `allowed_action_ids` into stable `cmd.*` handlers.",
+        "allowed_action_ids",
+        "cmd.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L7",
+        "Plans/Run_Graph_View.md:L14"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03308",
+      "source_obligation_ids": [
+        "obl-3154"
+      ],
+      "source_seed_ids": [
+        "seed-4196"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`execution_role` is now an audit/routing requirement, not a nice-to-have display field.",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`execution_role` is now an audit/routing requirement, not a nice-to-have display field.",
+        "execution_role"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03480",
+      "source_obligation_ids": [
+        "obl-3326"
+      ],
+      "source_seed_ids": [
+        "seed-4467"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "`workflow_run_id` links the three passes together, but it is not enough by itself to relat",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`workflow_run_id` links the three passes together, but it is not enough by itself to relate the sweep to `wizard_id`, staged requirements state, or the later launched run.",
+        "workflow_run_id",
+        "wizard_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03612",
+      "source_obligation_ids": [
+        "obl-3458"
+      ],
+      "source_seed_ids": [
+        "seed-4660"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "`node.prerequisite_resolved`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`node.prerequisite_resolved`",
+        "node.prerequisite_resolved"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03842",
+      "source_obligation_ids": [
+        "obl-3687"
+      ],
+      "source_seed_ids": [
+        "seed-5009"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "The docs are already consistent on one important point: provider/account identity is share",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "The docs are already consistent on one important point: provider/account identity is shared across assistant, interviewer, builders, overseers, and node workers, but that does not by itself explain what the actor was doing."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03853",
+      "source_obligation_ids": [
+        "obl-3698"
+      ],
+      "source_seed_ids": [
+        "seed-5021"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "assistant / interviewer / builder / package overseer / seam overseer / node worker / verif",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "assistant / interviewer / builder / package overseer / seam overseer / node worker / verifier / corroborator / recovery actor"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04195",
+      "source_obligation_ids": [
+        "obl-4035"
+      ],
+      "source_seed_ids": [
+        "seed-5554"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "recovery actions still leak unstable UI labels (`deny`, `manual fix`, `abort node`) even t",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "recovery actions still leak unstable UI labels (`deny`, `manual fix`, `abort node`) even though HITL/runtime docs are closer to a canonical `allowed_action_ids[]` family.",
+        "deny",
+        "manual fix",
+        "abort node",
+        "allowed_action_ids[]"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04808",
+      "source_obligation_ids": [
+        "obl-4585"
+      ],
+      "source_seed_ids": [
+        "seed-6549"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "canon_label": "Serialization should preserve stable work intent, not every UI detail.",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "## 3. Node detail inspector",
+      "status": "partial",
+      "exact_items": [
+        "Serialization should preserve stable work intent, not every UI detail."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L54"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04839",
+      "source_obligation_ids": [
+        "obl-4616"
+      ],
+      "source_seed_ids": [
+        "seed-6597"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "canon_label": "examples: Orchestrator tabs like Progress, Seams/Tiers, Node Graph, Evidence, History, Led",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "examples: Orchestrator tabs like Progress, Seams/Tiers, Node Graph, Evidence, History, Ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04883",
+      "source_obligation_ids": [
+        "obl-4660"
+      ],
+      "source_seed_ids": [
+        "seed-6677"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "This seam is about predictability.",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "This seam is about predictability."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05201",
+      "source_obligation_ids": [
+        "obl-4977"
+      ],
+      "source_seed_ids": [
+        "seed-7222"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "`focused_run_id` when run scope is required",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "present",
+      "exact_items": [
+        "`focused_run_id` when run scope is required",
+        "focused_run_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L23",
+        "Plans/Run_Graph_View.md:L27",
+        "Plans/Run_Graph_View.md:L63"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05239",
+      "source_obligation_ids": [
+        "obl-5015"
+      ],
+      "source_seed_ids": [
+        "seed-7316"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "These values cover the reusable detail-pane and drill-in patterns already present across O",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "These values cover the reusable detail-pane and drill-in patterns already present across Orchestrator, graph detail, history/ledger pivots, and evidence/artifact surfaces."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05319",
+      "source_obligation_ids": [
+        "obl-5091"
+      ],
+      "source_seed_ids": [
+        "seed-7499"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "serialized `resume_url` carries narrow step anchor detail",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "## 3. Node detail inspector",
+      "status": "partial",
+      "exact_items": [
+        "serialized `resume_url` carries narrow step anchor detail",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L54"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05361",
+      "source_obligation_ids": [
+        "obl-5133"
+      ],
+      "source_seed_ids": [
+        "seed-7591"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "run and node scope remain required resolver context",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "run and node scope remain required resolver context"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05389",
+      "source_obligation_ids": [
+        "obl-5161"
+      ],
+      "source_seed_ids": [
+        "seed-7649"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "Lane, seam, package, concern, and promotion routes are still mostly implied by UI prose in",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "### Fidelity recovery cov-032: Concern linkage to adjacent families",
+      "status": "partial",
+      "exact_items": [
+        "Lane, seam, package, concern, and promotion routes are still mostly implied by UI prose instead of declared as canonical navigation identities."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L7",
+        "Plans/Run_Graph_View.md:L14"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05480",
+      "source_obligation_ids": [
+        "obl-5252"
+      ],
+      "source_seed_ids": [
+        "seed-7804"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "the page still describes a six-tab shell with `Progress`, `Tiers`, `Node Graph`, `Evidence",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "the page still describes a six-tab shell with `Progress`, `Tiers`, `Node Graph`, `Evidence`, `History`, and `Ledger`",
+        "Progress",
+        "Tiers",
+        "Node Graph",
+        "Evidence",
+        "History",
+        "Ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1",
+        "Plans/Run_Graph_View.md:L35"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05495",
+      "source_obligation_ids": [
+        "obl-5267"
+      ],
+      "source_seed_ids": [
+        "seed-7825"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "`request_id` still appears as the HITL approval key in graph commands even though the runt",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`request_id` still appears as the HITL approval key in graph commands even though the runtime direction is `blocked_sequence` anchored to the blocked episode.",
+        "request_id",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05502",
+      "source_obligation_ids": [
+        "obl-5274"
+      ],
+      "source_seed_ids": [
+        "seed-7844"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "Replace graph HITL command payload identity from `request_id` to blocked-episode anchored",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Replace graph HITL command payload identity from `request_id` to blocked-episode anchored identity.",
+        "request_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05834",
+      "source_obligation_ids": [
+        "obl-5606"
+      ],
+      "source_seed_ids": [
+        "seed-8324"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "`Runtime_Artifacts_Panel.md` is now ahead of the main Usage and graph docs on identity rig",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`Runtime_Artifacts_Panel.md` is now ahead of the main Usage and graph docs on identity rigor.",
+        "Runtime_Artifacts_Panel.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05988",
+      "source_obligation_ids": [
+        "obl-5760"
+      ],
+      "source_seed_ids": [
+        "seed-8570"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "canon_label": "`UI_Command_Catalog.md` still gives `cmd.graph.approve_hitl` and `cmd.graph.deny_hitl` arg",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`UI_Command_Catalog.md` still gives `cmd.graph.approve_hitl` and `cmd.graph.deny_hitl` args with `request_id`",
+        "UI_Command_Catalog.md",
+        "cmd.graph.approve_hitl",
+        "cmd.graph.deny_hitl",
+        "request_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05994",
+      "source_obligation_ids": [
+        "obl-5766"
+      ],
+      "source_seed_ids": [
+        "seed-8582"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "That ambiguity is no longer harmless because command payloads, restart restore, graph acti",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "That ambiguity is no longer harmless because command payloads, restart restore, graph actions, and blocked projections are now split across the two identities."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06005",
+      "source_obligation_ids": [
+        "obl-5777"
+      ],
+      "source_seed_ids": [
+        "seed-8597"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "blocked-state buttons across GUI, chat, graph, and orchestrator MUST map from `allowed_act",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "blocked-state buttons across GUI, chat, graph, and orchestrator MUST map from `allowed_action_ids[]` to canonical `cmd.runtime.*` commands",
+        "allowed_action_ids[]",
+        "cmd.runtime.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06010",
+      "source_obligation_ids": [
+        "obl-5782"
+      ],
+      "source_seed_ids": [
+        "seed-8602"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "command table uses `cmd.graph.approve_hitl` / `cmd.graph.deny_hitl`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "command table uses `cmd.graph.approve_hitl` / `cmd.graph.deny_hitl`",
+        "cmd.graph.approve_hitl",
+        "cmd.graph.deny_hitl"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06024",
+      "source_obligation_ids": [
+        "obl-5796"
+      ],
+      "source_seed_ids": [
+        "seed-8621"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Replace `hitl_request_id` in graph data requirements with blocked/runtime approval identit",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Replace `hitl_request_id` in graph data requirements with blocked/runtime approval identity or explicit compatibility lineage-only fields.",
+        "hitl_request_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06056",
+      "source_obligation_ids": [
+        "obl-5828"
+      ],
+      "source_seed_ids": [
+        "seed-8661"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "The graph approval commands do not currently have one stable args contract even before con",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "The graph approval commands do not currently have one stable args contract even before considering the broader runtime-model rewrite."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06072",
+      "source_obligation_ids": [
+        "obl-5844"
+      ],
+      "source_seed_ids": [
+        "seed-8681"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "`Plans/Run_Graph_View.md` does the same in its event-update table:",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md` does the same in its event-update table:",
+        "Plans/Run_Graph_View.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L14",
+        "Plans/Run_Graph_View.md:L26"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06093",
+      "source_obligation_ids": [
+        "obl-5865"
+      ],
+      "source_seed_ids": [
+        "seed-8709"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Reconcile the live-status source tables in graph and Orchestrator docs so they consume can",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "Reconcile the live-status source tables in graph and Orchestrator docs so they consume canonical runtime records/projections first."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06109",
+      "source_obligation_ids": [
+        "obl-5881"
+      ],
+      "source_seed_ids": [
+        "seed-8738"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "`tier_type` still appears as a core node UI field even though the broader rewrite directio",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "status": "partial",
+      "exact_items": [
+        "`tier_type` still appears as a core node UI field even though the broader rewrite direction is to demote tier/phase labels to derived or compatibility-only view context.",
+        "tier_type"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    }
+  ]
+}

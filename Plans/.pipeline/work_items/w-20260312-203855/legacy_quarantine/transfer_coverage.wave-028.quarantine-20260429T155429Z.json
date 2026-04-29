@@ -1,0 +1,300 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-028",
+  "timestamp_utc": "2026-04-28T20:29:02Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-109",
+    "coverage-rowgrp-110",
+    "coverage-rowgrp-111",
+    "coverage-rowgrp-112"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-109 cov-362 Plans/Multi-Account.md",
+    "rowgrp-110 cov-282 Plans/Multi-Account.md",
+    "rowgrp-111 cov-158,cov-309,cov-357,cov-487,cov-539,cov-562,cov-568,cov-1142 Plans/Multi-Account.md",
+    "rowgrp-112 cov-553,cov-586 Plans/Multi-Account.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-109": "completed_reduced_conservatively",
+    "coverage-rowgrp-110": "completed_reduced_conservatively",
+    "coverage-rowgrp-111": "completed_reduced_conservatively",
+    "coverage-rowgrp-112": "completed_reduced_conservatively"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-362",
+    "cov-282",
+    "cov-158",
+    "cov-309",
+    "cov-357",
+    "cov-487",
+    "cov-539",
+    "cov-562",
+    "cov-568",
+    "cov-1142",
+    "cov-553",
+    "cov-586"
+  ],
+  "coverage_ids_completed": [
+    "cov-362",
+    "cov-282",
+    "cov-158",
+    "cov-309",
+    "cov-357",
+    "cov-487",
+    "cov-539",
+    "cov-562",
+    "cov-568",
+    "cov-1142",
+    "cov-553",
+    "cov-586"
+  ],
+  "path_groups_assigned": [
+    "Plans/Multi-Account.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-362",
+      "status": "present",
+      "evidence": [
+        "Plans/Multi-Account.md:27-28 states assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator and remain distinct actor/run kinds",
+        "Plans/Multi-Account.md:97-100 repeats the shared actor/runtime boundary and requires preserving actor kind and execution context"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-108"
+      ],
+      "source_seed_ids": [
+        "seed-108"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-282",
+      "status": "partial",
+      "evidence": [
+        "Plans/Multi-Account.md:51-53 defines default behavior, project-owned policy, run snapshots, and visible requested/effective identity",
+        "Plans/Multi-Account.md:268-275 defines requested state recovery and binding-based fallback behavior",
+        "Plans/Multi-Account.md:317-320 manual controls record requested vs effective account identity and switch reason",
+        "Plans/Multi-Account.md:382-386 labels authoritative vs estimated Gemini usage sources"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Default, policy, manual override, and source-confidence labels exist, but the exact app default/project override/surface default/role policy/seam-package-node/turn-session-run-task-subagent source-layer list and winning-source UI rule are not fully direct.",
+      "source_obligation_ids": [
+        "obl-082"
+      ],
+      "source_seed_ids": [
+        "seed-082"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-158",
+      "status": "present",
+      "evidence": [
+        "Plans/Multi-Account.md:77 owns the canonical requested/effective account identity contract",
+        "Plans/Multi-Account.md:81-88 requires requested_account_id, requested_account_policy, requested_account_binding, effective_account_id, effective_provider_identity, execution_role, and operational_identity",
+        "Plans/Multi-Account.md:91-95 adds requested account fields and binding-governed fallback behavior",
+        "Plans/Multi-Account.md:270-275 keeps requested/effective account state explicit and makes fallback depend on binding",
+        "Plans/Multi-Account.md:320 records requested vs effective account identity and switch reason for manual controls"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-043"
+      ],
+      "source_seed_ids": [
+        "seed-043"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-309",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Multi-Account.md does not directly define the project health, project activity, and project attention split.",
+      "source_obligation_ids": [
+        "obl-088"
+      ],
+      "source_seed_ids": [
+        "seed-088"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-357",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Multi-Account.md does not own the requested rewrite-critical Orchestrator glossary term set.",
+      "source_obligation_ids": [
+        "obl-105"
+      ],
+      "source_seed_ids": [
+        "seed-105"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-487",
+      "status": "partial",
+      "evidence": [
+        "Plans/Multi-Account.md:81-88 preserves account identity fields in runtime and permission-facing envelopes",
+        "Plans/Multi-Account.md:97-100 preserves actor kind and execution context across shared requested/effective identity envelopes",
+        "Plans/Multi-Account.md:277-278 keeps effective account identity available to permission and approval consumers"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Actor-envelope preservation is present, but stream-schema items such as tier_boundary, audit_kind, attempt_id category schemas, input_required/input_provided distinctions, handoff context, and SelectSpeakerEvent treatment are not directly owned here.",
+      "source_obligation_ids": [
+        "obl-141"
+      ],
+      "source_seed_ids": [
+        "seed-141"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-539",
+      "status": "present",
+      "evidence": [
+        "Plans/Multi-Account.md:77 owns the canonical requested/effective account identity contract",
+        "Plans/Multi-Account.md:81-88 requires requested account fields, execution_role, and operational_identity in account-carrying envelopes",
+        "Plans/Multi-Account.md:91-95 adds requested_account_id and requested_account_binding and governs provider_account_id as subordinate metadata",
+        "Plans/Multi-Account.md:259-262 lists requested/effective execution identity, effective_provider_identity, execution_role, and operational_identity as canonical terms"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-155"
+      ],
+      "source_seed_ids": [
+        "seed-155"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-562",
+      "status": "partial",
+      "evidence": [
+        "Plans/Multi-Account.md:81-88 requires requested_account_id, requested_account_binding, execution_role, and operational_identity",
+        "Plans/Multi-Account.md:238-247 lists requested account fields, execution_role, and operational_identity",
+        "Plans/Multi-Account.md:356-362 required account-binding/runtime fields include requested_account_id, requested_account_binding, effective_account_id, account_switch_reason, and execution_role"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Requested concrete-account and execution-role fields are present, but projection-freshness owner, route-payload schema owner, and project-summary/project-attention owner criteria are not directly stated.",
+      "source_obligation_ids": [
+        "obl-159"
+      ],
+      "source_seed_ids": [
+        "seed-159"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-568",
+      "status": "partial",
+      "evidence": [
+        "Plans/Multi-Account.md:81-88 requires execution_role and operational_identity in runtime, bridged-provider, and permission-facing envelopes",
+        "Plans/Multi-Account.md:97-100 requires preserving actor kind and execution context for shared identity envelopes",
+        "Plans/Multi-Account.md:356-372 defines account_switch_reason, execution_role, and durable account_switch_event/account_pressure_episode history"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Actor kind, execution_role, operational_identity, switch reason, and durable switch/pressure history are related coverage, but durable projection schema, usage records, surface payloads, and durable switch pointer are not fully direct.",
+      "source_obligation_ids": [
+        "obl-160"
+      ],
+      "source_seed_ids": [
+        "seed-160"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1142",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Multi-Account.md does not contain Prompt_Pipeline persona_override_owner_id or tier_id scope-vocabulary cleanup.",
+      "source_obligation_ids": [
+        "obl-332"
+      ],
+      "source_seed_ids": [
+        "seed-332"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-553",
+      "status": "partial",
+      "evidence": [
+        "Plans/Multi-Account.md:53 keeps requested/effective persona/auth/account identity visible and queryable",
+        "Plans/Multi-Account.md:81-95 defines the requested/effective account identity fields without requested_persona_id or effective_persona_id tokens"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Requested/effective identity is present and stale persona field tokens are not used in this section, but there is no direct row-specific retirement statement for requested_persona_id/effective_persona_id.",
+      "source_obligation_ids": [
+        "obl-157"
+      ],
+      "source_seed_ids": [
+        "seed-157"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-586",
+      "status": "partial",
+      "evidence": [
+        "Plans/Multi-Account.md:286-290 allows auto-switching for hard exhaustion, projected quota pressure, rate-limit pressure, and unavailable/capacity-constrained accounts",
+        "Plans/Multi-Account.md:356-372 defines account_switch_reason and persists durable switch and pressure history through account_switch_event and account_pressure_episode"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Switch and pressure history exists, but the exact append-only family split, soft vs hard switching, and role/account interaction coverage are incomplete.",
+      "source_obligation_ids": [
+        "obl-165"
+      ],
+      "source_seed_ids": [
+        "seed-165"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

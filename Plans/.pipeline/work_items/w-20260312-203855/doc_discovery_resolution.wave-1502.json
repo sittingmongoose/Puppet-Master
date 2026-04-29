@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1502",
+  "group_ids": [
+    "discgrp-6005",
+    "discgrp-6006",
+    "discgrp-6007",
+    "discgrp-6008"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06632",
+      "source_obligation_ids": [
+        "obl-6273"
+      ],
+      "source_seed_ids": [
+        "seed-9489"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 6.2 Scope and persistence rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L829"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06633",
+      "source_obligation_ids": [
+        "obl-6274"
+      ],
+      "source_seed_ids": [
+        "seed-9500"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06634",
+      "source_obligation_ids": [
+        "obl-6275"
+      ],
+      "source_seed_ids": [
+        "seed-9501"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "## 4. Orchestrator Progress widget scope and catalog linkage",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Widget_System.md:L57"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06635",
+      "source_obligation_ids": [
+        "obl-6276"
+      ],
+      "source_seed_ids": [
+        "seed-9502"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/BinaryLocator_Spec.md",
+      "new_heading_hint": "### Locked decisions (no drift)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L18"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

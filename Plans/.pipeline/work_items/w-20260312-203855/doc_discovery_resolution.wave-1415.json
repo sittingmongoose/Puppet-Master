@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1415",
+  "group_ids": [
+    "discgrp-5657",
+    "discgrp-5658",
+    "discgrp-5659",
+    "discgrp-5660"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06125",
+      "source_obligation_ids": [
+        "obl-5897"
+      ],
+      "source_seed_ids": [
+        "seed-8757"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "## 4. Orchestrator Progress widget scope and catalog linkage",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Widget_System.md:L57"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06126",
+      "source_obligation_ids": [
+        "obl-5898"
+      ],
+      "source_seed_ids": [
+        "seed-8758"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06127",
+      "source_obligation_ids": [
+        "obl-5899"
+      ],
+      "source_seed_ids": [
+        "seed-8759"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Terminal section presentation rules",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L597"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06128",
+      "source_obligation_ids": [
+        "obl-5900"
+      ],
+      "source_seed_ids": [
+        "seed-8760"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-090: Execution role and operational identity",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L157"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

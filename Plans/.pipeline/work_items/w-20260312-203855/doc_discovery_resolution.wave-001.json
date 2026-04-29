@@ -1,403 +1,95 @@
 {
-  "schema_id": "pm.doc_discovery_resolution_wave.v3",
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-001",
-  "timestamp_utc": "2026-04-29T00:35:45Z",
-  "subagent_tasks": [
-    "docdisc-001-layout",
-    "docdisc-002-consumer",
-    "docdisc-003-owner",
-    "docdisc-004-stale"
-  ],
-  "assigned_input_boundaries": [
-    "discgrp-001 cov-001,cov-009,cov-010,cov-022,cov-414",
-    "discgrp-002 cov-002,cov-007,cov-008,cov-011,cov-021",
-    "discgrp-003 cov-003,cov-006",
-    "discgrp-004 cov-004,cov-005,cov-012,cov-018"
-  ],
-  "subagent_result_status": {
-    "docdisc-001-layout": "completed_reduced",
-    "docdisc-002-consumer": "completed_reduced",
-    "docdisc-003-owner": "completed_reduced",
-    "docdisc-004-stale": "completed_reduced"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_row_ids_assigned": [
-    "cov-001",
-    "cov-002",
-    "cov-003",
-    "cov-004",
-    "cov-005",
-    "cov-006",
-    "cov-007",
-    "cov-008",
-    "cov-009",
-    "cov-010",
-    "cov-011",
-    "cov-012",
-    "cov-018",
-    "cov-021",
-    "cov-022",
-    "cov-414"
-  ],
-  "coverage_row_ids_completed": [
-    "cov-001",
-    "cov-002",
-    "cov-003",
-    "cov-004",
-    "cov-005",
-    "cov-006",
-    "cov-007",
-    "cov-008",
-    "cov-009",
-    "cov-010",
-    "cov-011",
-    "cov-012",
-    "cov-018",
-    "cov-021",
-    "cov-022",
-    "cov-414"
+  "group_ids": [
+    "discgrp-0001",
+    "discgrp-0002",
+    "discgrp-0003",
+    "discgrp-0004"
   ],
   "resolutions": [
     {
-      "coverage_id": "cov-001",
+      "coverage_id": "cov-00148",
       "source_obligation_ids": [
-        "obl-001"
+        "obl-045"
       ],
       "source_seed_ids": [
-        "seed-001"
+        "seed-045"
       ],
       "source_shard_ids": [
-        "shard-0001"
-      ],
-      "old_path": "__DOC_DISCOVERY_REQUIRED__",
-      "new_path": "Plans/rewrite-tie-in-memo.md",
-      "new_heading_hint": "tab-first Orchestrator / node graph canonical execution model",
-      "resolution_basis": "layout surface",
-      "evidence": [
-        "Plans/rewrite-tie-in-memo.md:20-29"
-      ],
-      "confidence": "high"
-    },
-    {
-      "coverage_id": "cov-009",
-      "source_obligation_ids": [
-        "obl-009"
-      ],
-      "source_seed_ids": [
-        "seed-009"
-      ],
-      "source_shard_ids": [
-        "shard-0002"
-      ],
-      "old_path": "__DOC_DISCOVERY_REQUIRED__",
-      "new_path": "Plans/usage-feature.md",
-      "new_heading_hint": "Projection freshness and health states",
-      "resolution_basis": "layout surface",
-      "evidence": [
-        "Plans/usage-feature.md:451-458",
-        "Plans/FinalGUISpec.md:944-957"
-      ],
-      "confidence": "high"
-    },
-    {
-      "coverage_id": "cov-010",
-      "source_obligation_ids": [
-        "obl-010"
-      ],
-      "source_seed_ids": [
-        "seed-010"
-      ],
-      "source_shard_ids": [
-        "shard-0002"
-      ],
-      "old_path": "__DOC_DISCOVERY_REQUIRED__",
-      "new_path": "Plans/usage-feature.md",
-      "new_heading_hint": "Projection freshness and health states",
-      "resolution_basis": "layout surface",
-      "evidence": [
-        "Plans/usage-feature.md:451-458",
-        "Plans/FinalGUISpec.md:944-957"
-      ],
-      "confidence": "high"
-    },
-    {
-      "coverage_id": "cov-022",
-      "source_obligation_ids": [
-        "obl-019"
-      ],
-      "source_seed_ids": [
-        "seed-019"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "old_path": "__DOC_DISCOVERY_REQUIRED__",
-      "new_path": "Plans/orchestrator-subagent-integration.md",
-      "new_heading_hint": "Runtime Scheduler Consumer / Subagent Reconciliation Addendum",
-      "resolution_basis": "layout surface",
-      "evidence": [
-        "Plans/orchestrator-subagent-integration.md:6247-6257",
-        "Plans/orchestrator-subagent-integration.md:516-518",
-        "Plans/Personas.md:31-61"
-      ],
-      "confidence": "medium"
-    },
-    {
-      "coverage_id": "cov-414",
-      "source_obligation_ids": [
-        "obl-123"
-      ],
-      "source_seed_ids": [
-        "seed-123"
-      ],
-      "source_shard_ids": [
-        "shard-0031"
-      ],
-      "old_path": "__DOC_DISCOVERY_REQUIRED__",
-      "new_path": "Plans/Contracts_V0.md",
-      "new_heading_hint": "Concern record family / resolution_kind / lineage split",
-      "resolution_basis": "layout surface",
-      "evidence": [
-        "Plans/Contracts_V0.md:47-69",
-        "Plans/FinalGUISpec.md:944-955",
-        "Plans/FinalGUISpec.md:965-967"
-      ],
-      "confidence": "high"
-    },
-    {
-      "coverage_id": "cov-002",
-      "source_obligation_ids": [
-        "obl-002"
-      ],
-      "source_seed_ids": [
-        "seed-002"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
+        "shard-0009"
       ],
       "old_path": "__DOC_DISCOVERY_REQUIRED__",
       "new_path": "Plans/FinalGUISpec.md",
-      "new_heading_hint": "Orchestrator / Progress catalog source and default drills",
-      "resolution_basis": "consumer surface",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
       "evidence": [
-        "Plans/FinalGUISpec.md:910-924",
-        "Plans/Widget_System.md:69-84"
+        "Plans/FinalGUISpec.md:L1"
       ],
       "confidence": "high"
     },
     {
-      "coverage_id": "cov-007",
+      "coverage_id": "cov-00149",
       "source_obligation_ids": [
-        "obl-007"
+        "obl-046"
       ],
       "source_seed_ids": [
-        "seed-007"
+        "seed-046"
       ],
       "source_shard_ids": [
-        "shard-0002"
+        "shard-0009"
       ],
       "old_path": "__DOC_DISCOVERY_REQUIRED__",
-      "new_path": "Plans/Widget_System.md",
-      "new_heading_hint": "Scope and non-scope / Orchestrator Progress widget catalog linkage",
-      "resolution_basis": "consumer surface",
-      "evidence": [
-        "Plans/Widget_System.md:37-43",
-        "Plans/Widget_System.md:57-84"
-      ],
-      "confidence": "high"
-    },
-    {
-      "coverage_id": "cov-008",
-      "source_obligation_ids": [
-        "obl-008"
-      ],
-      "source_seed_ids": [
-        "seed-008"
-      ],
-      "source_shard_ids": [
-        "shard-0002"
-      ],
-      "old_path": "__DOC_DISCOVERY_REQUIRED__",
-      "new_path": "Plans/FinalGUISpec.md",
-      "new_heading_hint": "Orchestrator / Progress catalog source and default drills",
-      "resolution_basis": "consumer surface",
-      "evidence": [
-        "Plans/FinalGUISpec.md:904-924",
-        "Plans/FinalGUISpec.md:957-961"
-      ],
-      "confidence": "high"
-    },
-    {
-      "coverage_id": "cov-011",
-      "source_obligation_ids": [
-        "obl-011"
-      ],
-      "source_seed_ids": [
-        "seed-011"
-      ],
-      "source_shard_ids": [
-        "shard-0002"
-      ],
-      "old_path": "__DOC_DISCOVERY_REQUIRED__",
-      "new_path": "Plans/FinalGUISpec.md",
-      "new_heading_hint": "Settings and inspectors / identity resolver",
-      "resolution_basis": "consumer surface",
-      "evidence": [
-        "Plans/FinalGUISpec.md:944-955",
-        "Plans/Permissions_System.md:47-60",
-        "Plans/Multi-Account.md:75-95"
-      ],
-      "confidence": "medium"
-    },
-    {
-      "coverage_id": "cov-021",
-      "source_obligation_ids": [
-        "obl-018"
-      ],
-      "source_seed_ids": [
-        "seed-018"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "old_path": "__DOC_DISCOVERY_REQUIRED__",
-      "new_path": "Plans/Contracts_V0.md",
-      "new_heading_hint": "Requested/effective account and execution identity",
-      "resolution_basis": "consumer surface",
-      "evidence": [
-        "Plans/Contracts_V0.md:270-290",
-        "Plans/FinalGUISpec.md:944-955",
-        "Plans/Multi-Account.md:268-278"
-      ],
-      "confidence": "high"
-    },
-    {
-      "coverage_id": "cov-003",
-      "source_obligation_ids": [
-        "obl-003"
-      ],
-      "source_seed_ids": [
-        "seed-003"
-      ],
-      "source_shard_ids": [
-        "shard-0001"
-      ],
-      "old_path": "__DOC_DISCOVERY_REQUIRED__",
-      "new_path": "Plans/FinalGUISpec.md",
-      "new_heading_hint": "Concurrent blocked episodes / blocked-owner taxonomy and escalation ladder",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
       "resolution_basis": "owner surface",
       "evidence": [
-        "Plans/FinalGUISpec.md:2570-2574",
-        "Plans/FinalGUISpec.md:971-979",
-        "Plans/Decision_Policy.md:275-279"
+        "Plans/Multi-Account.md:L7"
       ],
-      "confidence": "medium"
+      "confidence": "high"
     },
     {
-      "coverage_id": "cov-006",
+      "coverage_id": "cov-00150",
       "source_obligation_ids": [
-        "obl-006"
+        "obl-047"
       ],
       "source_seed_ids": [
-        "seed-006"
+        "seed-047",
+        "seed-159"
       ],
       "source_shard_ids": [
-        "shard-0002"
+        "shard-0009",
+        "shard-0010"
       ],
       "old_path": "__DOC_DISCOVERY_REQUIRED__",
-      "new_path": "Plans/Contracts_V0.md",
-      "new_heading_hint": "Concern record family, lifecycle, and deferred visibility",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
       "resolution_basis": "owner surface",
       "evidence": [
-        "Plans/Contracts_V0.md:294-312",
-        "Plans/Contracts_V0.md:51-52",
-        "Plans/Orchestrator_Page.md:35-36"
+        "Plans/Multi-Account.md:L7"
       ],
       "confidence": "high"
     },
     {
-      "coverage_id": "cov-004",
+      "coverage_id": "cov-00151",
       "source_obligation_ids": [
-        "obl-004"
+        "obl-048"
       ],
       "source_seed_ids": [
-        "seed-004"
+        "seed-048"
       ],
       "source_shard_ids": [
-        "shard-0001"
+        "shard-0009"
       ],
       "old_path": "__DOC_DISCOVERY_REQUIRED__",
-      "new_path": "Plans/newfeatures.md",
-      "new_heading_hint": "Orchestration and governance / Feature Seam and Work Package labels",
-      "resolution_basis": "stale-retirement surface",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "layout surface",
       "evidence": [
-        "Plans/newfeatures.md:7-13",
-        "Plans/feature-list.md:39-45"
+        "Plans/Multi-Account.md:L7"
       ],
       "confidence": "high"
-    },
-    {
-      "coverage_id": "cov-005",
-      "source_obligation_ids": [
-        "obl-005"
-      ],
-      "source_seed_ids": [
-        "seed-005"
-      ],
-      "source_shard_ids": [
-        "shard-0002"
-      ],
-      "old_path": "__DOC_DISCOVERY_REQUIRED__",
-      "new_path": "Plans/FinalGUISpec.md",
-      "new_heading_hint": "Blocked-owner taxonomy and rewrite-critical labels",
-      "resolution_basis": "stale-retirement surface",
-      "evidence": [
-        "Plans/FinalGUISpec.md:971-979",
-        "Plans/feature-list.md:60-66"
-      ],
-      "confidence": "high"
-    },
-    {
-      "coverage_id": "cov-012",
-      "source_obligation_ids": [
-        "obl-012"
-      ],
-      "source_seed_ids": [
-        "seed-012"
-      ],
-      "source_shard_ids": [
-        "shard-0002"
-      ],
-      "old_path": "__DOC_DISCOVERY_REQUIRED__",
-      "new_path": "Plans/usage-feature.md",
-      "new_heading_hint": "Out of Scope for This Plan",
-      "resolution_basis": "stale-retirement surface",
-      "evidence": [
-        "Plans/usage-feature.md:640-648"
-      ],
-      "confidence": "high"
-    },
-    {
-      "coverage_id": "cov-018",
-      "source_obligation_ids": [
-        "obl-016"
-      ],
-      "source_seed_ids": [
-        "seed-016"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "old_path": "__DOC_DISCOVERY_REQUIRED__",
-      "new_path": "Plans/Executor_Protocol.md",
-      "new_heading_hint": "Seam Overseer / node-worker execution boundary",
-      "resolution_basis": "stale-retirement surface",
-      "evidence": [
-        "Plans/Executor_Protocol.md:82-100"
-      ],
-      "confidence": "medium"
     }
   ],
   "unresolved": []

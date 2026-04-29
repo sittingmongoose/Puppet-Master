@@ -1,0 +1,116 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-099",
+  "group_ids": [
+    "discgrp-0393",
+    "discgrp-0394",
+    "discgrp-0395",
+    "discgrp-0396"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00640",
+      "source_obligation_ids": [
+        "obl-497"
+      ],
+      "source_seed_ids": [
+        "seed-572"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00641",
+      "source_obligation_ids": [
+        "obl-498"
+      ],
+      "source_seed_ids": [
+        "seed-573",
+        "seed-589",
+        "seed-1046",
+        "seed-1897",
+        "seed-2015",
+        "seed-3235",
+        "seed-5432",
+        "seed-5499",
+        "seed-5884",
+        "seed-6034",
+        "seed-6112",
+        "seed-6173",
+        "seed-6228",
+        "seed-6536"
+      ],
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0018",
+        "shard-0027",
+        "shard-0029",
+        "shard-0038",
+        "shard-0055",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060",
+        "shard-0063"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00642",
+      "source_obligation_ids": [
+        "obl-499"
+      ],
+      "source_seed_ids": [
+        "seed-574"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-075: Historical semantic consistency",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L107"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00643",
+      "source_obligation_ids": [
+        "obl-500"
+      ],
+      "source_seed_ids": [
+        "seed-575"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

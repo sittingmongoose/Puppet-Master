@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-061",
+  "group_ids": [
+    "discgrp-0241",
+    "discgrp-0242",
+    "discgrp-0243",
+    "discgrp-0244"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00486",
+      "source_obligation_ids": [
+        "obl-343"
+      ],
+      "source_seed_ids": [
+        "seed-398"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00487",
+      "source_obligation_ids": [
+        "obl-344"
+      ],
+      "source_seed_ids": [
+        "seed-399"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### Fidelity recovery cov-041: Source Control and worktree handshake",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00488",
+      "source_obligation_ids": [
+        "obl-345"
+      ],
+      "source_seed_ids": [
+        "seed-400"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00489",
+      "source_obligation_ids": [
+        "obl-346"
+      ],
+      "source_seed_ids": [
+        "seed-401"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}
