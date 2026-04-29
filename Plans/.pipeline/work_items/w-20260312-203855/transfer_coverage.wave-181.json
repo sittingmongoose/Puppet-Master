@@ -1,0 +1,1039 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-181",
+  "row_group_ids": [
+    "rowgrp-0721",
+    "rowgrp-0722",
+    "rowgrp-0723",
+    "rowgrp-0724"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-04169",
+      "source_obligation_ids": [
+        "obl-4009"
+      ],
+      "source_seed_ids": [
+        "seed-5516"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "add a canonical navigation/open command family to the command catalog",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "add a canonical navigation/open command family to the command catalog"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04172",
+      "source_obligation_ids": [
+        "obl-4012"
+      ],
+      "source_seed_ids": [
+        "seed-5519"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "The catalog gap is now structural, not just a few missing IDs.",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "The catalog gap is now structural, not just a few missing IDs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04227",
+      "source_obligation_ids": [
+        "obl-4067"
+      ],
+      "source_seed_ids": [
+        "seed-5629"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "superseded command IDs still remain visible as plain `cmd.*` tokens inside the catalog, wh",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "superseded command IDs still remain visible as plain `cmd.*` tokens inside the catalog, which can poison regex-style coverage extraction.",
+        "cmd.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L58",
+        "Plans/UI_Command_Catalog.md:L160",
+        "Plans/UI_Command_Catalog.md:L169",
+        "Plans/UI_Command_Catalog.md:L171",
+        "Plans/UI_Command_Catalog.md:L180"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04262",
+      "source_obligation_ids": [
+        "obl-4102"
+      ],
+      "source_seed_ids": [
+        "seed-5687"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "Reconcile event naming and command extraction rules across catalog/storage/wiring before t",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "## 1. Naming rules",
+      "status": "partial",
+      "exact_items": [
+        "Reconcile event naming and command extraction rules across catalog/storage/wiring before trusting any automated gate based on doc parsing."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L56"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04275",
+      "source_obligation_ids": [
+        "obl-4115"
+      ],
+      "source_seed_ids": [
+        "seed-5703"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "canonical command IDs versus deprecated aliases/wrappers",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "## 2. Canonical command IDs",
+      "status": "partial",
+      "exact_items": [
+        "canonical command IDs versus deprecated aliases/wrappers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L64"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04302",
+      "source_obligation_ids": [
+        "obl-4142"
+      ],
+      "source_seed_ids": [
+        "seed-5742"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "That is enough for a flat `element -> command -> handler` contract, but not for the route-",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "### 2.0 Command entry contract (doc-level)",
+      "status": "partial",
+      "exact_items": [
+        "That is enough for a flat `element -> command -> handler` contract, but not for the route-aware/navigation-aware model the rewrite is moving toward.",
+        "element -> command -> handler"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L68"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04322",
+      "source_obligation_ids": [
+        "obl-4162"
+      ],
+      "source_seed_ids": [
+        "seed-5772"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "Research Progress - 2026-03-16 - Command catalog wrapper/alias gap for navigation",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-16 - Command catalog wrapper/alias gap for navigation"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04332",
+      "source_obligation_ids": [
+        "obl-4172"
+      ],
+      "source_seed_ids": [
+        "seed-5798"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "The catalog can list payload keys, but it cannot currently say whether two commands are di",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "### Fidelity recovery cov-072: Canonical route payload",
+      "status": "partial",
+      "exact_items": [
+        "The catalog can list payload keys, but it cannot currently say whether two commands are different user-facing wrappers over one canonical route target."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L28",
+        "Plans/UI_Command_Catalog.md:L34"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04336",
+      "source_obligation_ids": [
+        "obl-4176"
+      ],
+      "source_seed_ids": [
+        "seed-5802"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "canonical command",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "canonical command"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L64",
+        "Plans/UI_Command_Catalog.md:L253",
+        "Plans/UI_Command_Catalog.md:L692"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04337",
+      "source_obligation_ids": [
+        "obl-4177"
+      ],
+      "source_seed_ids": [
+        "seed-5803"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "wrapper command",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "wrapper command"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L254",
+        "Plans/UI_Command_Catalog.md:L272"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04339",
+      "source_obligation_ids": [
+        "obl-4179"
+      ],
+      "source_seed_ids": [
+        "seed-5805"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "Reuse the event-side alias discipline from `Contracts_V0.md` as the template for command d",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "Reuse the event-side alias discipline from `Contracts_V0.md` as the template for command deprecation/migration rules rather than inventing a weaker prose-only pattern.",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L38",
+        "Plans/UI_Command_Catalog.md:L52",
+        "Plans/UI_Command_Catalog.md:L60",
+        "Plans/UI_Command_Catalog.md:L93",
+        "Plans/UI_Command_Catalog.md:L103"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04340",
+      "source_obligation_ids": [
+        "obl-4180"
+      ],
+      "source_seed_ids": [
+        "seed-5806"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "Make shared navigation context fields explicit at the catalog level instead of burying the",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Make shared navigation context fields explicit at the catalog level instead of burying them in per-command notes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04341",
+      "source_obligation_ids": [
+        "obl-4181"
+      ],
+      "source_seed_ids": [
+        "seed-5807"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "The command catalog is not hostile to the new navigation model, but it is still too flat t",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "The command catalog is not hostile to the new navigation model, but it is still too flat to describe it cleanly."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04378",
+      "source_obligation_ids": [
+        "obl-4218"
+      ],
+      "source_seed_ids": [
+        "seed-5861"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "That is enough to standardize command dispatch mechanically, but not enough to standardize",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "### 2.0 Command entry contract (doc-level)",
+      "status": "partial",
+      "exact_items": [
+        "That is enough to standardize command dispatch mechanically, but not enough to standardize navigation semantics. There is still no canonical contract for:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L68"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04496",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04746",
+      "source_obligation_ids": [
+        "obl-4524"
+      ],
+      "source_seed_ids": [
+        "seed-6437"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "Teach the wiring/gate docs to understand canonical command vs wrapper vs deprecated alias,",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Teach the wiring/gate docs to understand canonical command vs wrapper vs deprecated alias, not just \u201ccommand id exists.\u201d"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04774",
+      "source_obligation_ids": [
+        "obl-4552"
+      ],
+      "source_seed_ids": [
+        "seed-6469"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "`Containers_Registry_and_Unraid.md` is itself a second source of ghost command IDs and sti",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`Containers_Registry_and_Unraid.md` is itself a second source of ghost command IDs and still defines auth/publish/repo-management command families absent from the catalog.",
+        "Containers_Registry_and_Unraid.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04908",
+      "source_obligation_ids": [
+        "obl-4684"
+      ],
+      "source_seed_ids": [
+        "seed-6742"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "The command layer wants a three-way split, not a binary split:",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "The command layer wants a three-way split, not a binary split:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04923",
+      "source_obligation_ids": [
+        "obl-4699"
+      ],
+      "source_seed_ids": [
+        "seed-6765"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "Formalize the three-way command taxonomy:",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Formalize the three-way command taxonomy:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04930",
+      "source_obligation_ids": [
+        "obl-4706"
+      ],
+      "source_seed_ids": [
+        "seed-6772"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "The catalog can keep UX-facing wrapper names; the important change is the canonical contra",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "The catalog can keep UX-facing wrapper names; the important change is the canonical contract beneath them."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04943",
+      "source_obligation_ids": [
+        "obl-4719"
+      ],
+      "source_seed_ids": [
+        "seed-6799"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "too many public `cmd.nav.*` commands added to the catalog",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "#### Catalog lifecycle commands",
+      "status": "partial",
+      "exact_items": [
+        "too many public `cmd.nav.*` commands added to the catalog",
+        "cmd.nav.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L526"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04953",
+      "source_obligation_ids": [
+        "obl-4729"
+      ],
+      "source_seed_ids": [
+        "seed-6815"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "The command layer now needs two distinct patterns, not one:",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "The command layer now needs two distinct patterns, not one:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04954",
+      "source_obligation_ids": [
+        "obl-4730"
+      ],
+      "source_seed_ids": [
+        "seed-6816"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "deprecated command aliases during migration",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "deprecated command aliases during migration"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04956",
+      "source_obligation_ids": [
+        "obl-4732"
+      ],
+      "source_seed_ids": [
+        "seed-6818"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "a wrapper command may remain permanently because it is useful UX-facing vocabulary",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "a wrapper command may remain permanently because it is useful UX-facing vocabulary"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04959",
+      "source_obligation_ids": [
+        "obl-4735"
+      ],
+      "source_seed_ids": [
+        "seed-6821"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "dead command detection",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "dead command detection"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04966",
+      "source_obligation_ids": [
+        "obl-4742"
+      ],
+      "source_seed_ids": [
+        "seed-6835"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "deprecated command alias",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "deprecated command alias"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04969",
+      "source_obligation_ids": [
+        "obl-4745"
+      ],
+      "source_seed_ids": [
+        "seed-6838"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "`GATE-010` can verify command coverage, but it cannot yet verify wrapper normalization con",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "### Command normalization model",
+      "status": "partial",
+      "exact_items": [
+        "`GATE-010` can verify command coverage, but it cannot yet verify wrapper normalization consistency.",
+        "GATE-010"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L156"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04972",
+      "source_obligation_ids": [
+        "obl-4748"
+      ],
+      "source_seed_ids": [
+        "seed-6841"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "public command ID",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "public command ID"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04977",
+      "source_obligation_ids": [
+        "obl-4753"
+      ],
+      "source_seed_ids": [
+        "seed-6846"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "Keep the command catalog readable for UX and command-palette use; do not force users to th",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Keep the command catalog readable for UX and command-palette use; do not force users to think in canonical primitive names."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04983",
+      "source_obligation_ids": [
+        "obl-4759"
+      ],
+      "source_seed_ids": [
+        "seed-6856"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "command-definition metadata belongs in the command catalog / command contract layer",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "command-definition metadata belongs in the command catalog / command contract layer"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04985",
+      "source_obligation_ids": [
+        "obl-4761"
+      ],
+      "source_seed_ids": [
+        "seed-6858"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "wiring rows should reference command IDs and handlers, not restate the normalization model",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "## 2. Canonical command IDs",
+      "status": "partial",
+      "exact_items": [
+        "wiring rows should reference command IDs and handlers, not restate the normalization model in full"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L64"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05011",
+      "source_obligation_ids": [
+        "obl-4787"
+      ],
+      "source_seed_ids": [
+        "seed-6894"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "deprecated aliases resolve to real canonical command IDs",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "## 2. Canonical command IDs",
+      "status": "partial",
+      "exact_items": [
+        "deprecated aliases resolve to real canonical command IDs"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L64"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05012",
+      "source_obligation_ids": [
+        "obl-4788"
+      ],
+      "source_seed_ids": [
+        "seed-6895"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "normalization metadata is internally consistent with the command kind",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "### Command normalization model",
+      "status": "partial",
+      "exact_items": [
+        "normalization metadata is internally consistent with the command kind"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L111"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05014",
+      "source_obligation_ids": [
+        "obl-4790"
+      ],
+      "source_seed_ids": [
+        "seed-6897"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "command catalog / command contract owns normalization metadata",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "command catalog / command contract owns normalization metadata"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05017",
+      "source_obligation_ids": [
+        "obl-4793"
+      ],
+      "source_seed_ids": [
+        "seed-6900"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "The catalog should describe what class of command this is, not become the full route schem",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "The catalog should describe what class of command this is, not become the full route schema."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05161",
+      "source_obligation_ids": [
+        "obl-4937"
+      ],
+      "source_seed_ids": [
+        "seed-7158"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "Several command payloads and shell docs still mix destination class with lower-level shell",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Several command payloads and shell docs still mix destination class with lower-level shell realization details."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05388",
+      "source_obligation_ids": [
+        "obl-5160"
+      ],
+      "source_seed_ids": [
+        "seed-7648"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`cmd.source_control.select_worktree` is still described like a local selection command eve",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`cmd.source_control.select_worktree` is still described like a local selection command even though it is now clearly an object-targeting route action.",
+        "cmd.source_control.select_worktree"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05457",
+      "source_obligation_ids": [
+        "obl-5229"
+      ],
+      "source_seed_ids": [
+        "seed-7755"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "normalize command payloads toward `route_target` and `OpenSubject`",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "normalize command payloads toward `route_target` and `OpenSubject`",
+        "route_target",
+        "OpenSubject"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L76",
+        "Plans/UI_Command_Catalog.md:L98",
+        "Plans/UI_Command_Catalog.md:L99",
+        "Plans/UI_Command_Catalog.md:L103",
+        "Plans/UI_Command_Catalog.md:L109"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05601",
+      "source_obligation_ids": [
+        "obl-5373"
+      ],
+      "source_seed_ids": [
+        "seed-7981"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "Stratum 2: command and shell adoption",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Stratum 2: command and shell adoption"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05606",
+      "source_obligation_ids": [
+        "obl-5378"
+      ],
+      "source_seed_ids": [
+        "seed-7996"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "Keep the command layer wrapper-based and domain-facing while normalizing through the share",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Keep the command layer wrapper-based and domain-facing while normalizing through the shared contracts underneath."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

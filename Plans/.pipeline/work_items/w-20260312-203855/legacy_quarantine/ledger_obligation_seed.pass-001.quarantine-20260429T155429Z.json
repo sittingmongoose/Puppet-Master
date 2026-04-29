@@ -1,0 +1,99 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_verification_pass.v1",
+  "work_id": "w-20260312-203855",
+  "pass_id": "pass-001",
+  "timestamp_utc": "2026-04-28T18:17:17Z",
+  "subagent_tasks": [
+    "verify-shard-0077",
+    "verify-shard-0080",
+    "verify-shard-0091",
+    "verify-shard-0092"
+  ],
+  "assigned_input_boundaries": [
+    "shard-0077 L015201-L015400",
+    "shard-0080 L015801-L016000",
+    "shard-0091 L018001-L018200",
+    "shard-0092 L018201-L018244"
+  ],
+  "subagent_result_status": {
+    "verify-shard-0077": "completed",
+    "verify-shard-0080": "completed",
+    "verify-shard-0091": "completed",
+    "verify-shard-0092": "completed"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "shard_ids_assigned": [
+    "shard-0077",
+    "shard-0080",
+    "shard-0091",
+    "shard-0092"
+  ],
+  "shard_ids_completed": [
+    "shard-0077",
+    "shard-0080",
+    "shard-0091",
+    "shard-0092"
+  ],
+  "material_findings": [],
+  "noise_findings": [
+    {
+      "type": "leading_zero_line_format_noise",
+      "item": "Verifier reported source_evidence outside range for L15803-L15958 versus L015801-L016000; interpreted as no material correction because these are the same ledger line numbers without leading zero padding and the verifier result was NOISE."
+    },
+    "Process/count/status-only closure notes remained in noise_items, not seed_candidates.",
+    "Prior evidence references outside L018201-L018244 were corrected in persisted seed candidates; remaining outside-line references are retained only as noise text."
+  ],
+  "results": [
+    {
+      "schema_id": "pm.ledger_obligation_seed_verification_result.v1",
+      "work_id": "w-20260312-203855",
+      "pass_id": "pass-001",
+      "shard_id": "shard-0077",
+      "result": "NOISE",
+      "material_findings": [],
+      "noise_findings": [],
+      "notes": "No missing exact item detected; shard content aligns with the persisted seed. Evidence stays within L015201-L015400, and the listed doc hints/status items are supported by the shard."
+    },
+    {
+      "schema_id": "pm.ledger_obligation_seed_verification_result.v1",
+      "work_id": "w-20260312-203855",
+      "pass_id": "pass-001",
+      "shard_id": "shard-0080",
+      "result": "NOISE",
+      "material_findings": [],
+      "noise_findings": [
+        {
+          "type": "leading_zero_line_format_noise",
+          "item": "Verifier reported source_evidence outside range for L15803-L15958 versus L015801-L016000; interpreted as no material correction because these are the same ledger line numbers without leading zero padding and the verifier result was NOISE."
+        }
+      ],
+      "notes": "No missing material exact item detected from the shard text; the persisted result is internally consistent with the provided lines."
+    },
+    {
+      "schema_id": "pm.ledger_obligation_seed_verification_result.v1",
+      "work_id": "w-20260312-203855",
+      "pass_id": "pass-001",
+      "shard_id": "shard-0091",
+      "result": "NOISE",
+      "material_findings": [],
+      "noise_findings": [],
+      "notes": "Persisted seed aligns with shard evidence; no new exact obligation-grade item needed, and no invalid hints/out-of-range citations detected within L018001-L018200."
+    },
+    {
+      "schema_id": "pm.ledger_obligation_seed_verification_result.v1",
+      "work_id": "w-20260312-203855",
+      "pass_id": "pass-001",
+      "shard_id": "shard-0092",
+      "result": "NOISE",
+      "material_findings": [],
+      "noise_findings": [
+        "Process/count/status-only closure notes remained in noise_items, not seed_candidates.",
+        "Prior evidence references outside L018201-L018244 were corrected in persisted seed candidates; remaining outside-line references are retained only as noise text."
+      ],
+      "notes": "All three exact obligation items are captured; no new exact item missing from the seed."
+    }
+  ],
+  "stop_rule_satisfied": true,
+  "next_required_stage": "Ledger Obligation Seed Finalizer"
+}

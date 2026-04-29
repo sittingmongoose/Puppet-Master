@@ -1,0 +1,2718 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-100",
+  "group_ids": [
+    "gapgrp-0397",
+    "gapgrp-0398",
+    "gapgrp-0399",
+    "gapgrp-0400"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-00346",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00442 is partial for `GitHub_Integration.md` still lacks a strong requested/effective GitHub account display/ro",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00442"
+      ],
+      "source_obligation_ids": [
+        "obl-300"
+      ],
+      "source_seed_ids": [
+        "seed-345"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`GitHub_Integration.md` still lacks a strong requested/effective GitHub account display/routing contract across project/workspace surfaces",
+        "GitHub_Integration.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01724",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02216 is partial for still the biggest dispatch-boundary gap for account identity, execution-role scoping, lane",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02216"
+      ],
+      "source_obligation_ids": [
+        "obl-2071"
+      ],
+      "source_seed_ids": [
+        "seed-2690"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "still the biggest dispatch-boundary gap for account identity, execution-role scoping, lane/worktree attribution, and projection-ready usage signals"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01791",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02304 is partial for Extend the stream/event contract with account attribution, actor kind, blocked-owner conte",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02304"
+      ],
+      "source_obligation_ids": [
+        "obl-2156"
+      ],
+      "source_seed_ids": [
+        "seed-2800"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "Extend the stream/event contract with account attribution, actor kind, blocked-owner context, and package/seam/lane identity where downstream projections depend on them."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01799",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02316 is partial for but requested/effective account resolution already spans thread/chat/interview/wizard/non-",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02316"
+      ],
+      "source_obligation_ids": [
+        "obl-2168"
+      ],
+      "source_seed_ids": [
+        "seed-2819"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "but requested/effective account resolution already spans thread/chat/interview/wizard/non-run actors"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02110",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02688 is partial for but Multi-Account needs configuration/availability/pressure/cooldown state, and Usage/Orch",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "# Multi-Account Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02688"
+      ],
+      "source_obligation_ids": [
+        "obl-2535"
+      ],
+      "source_seed_ids": [
+        "seed-3328"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "but Multi-Account needs configuration/availability/pressure/cooldown state, and Usage/Orchestrator need confidence-aware account-health projections"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02116",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02694 is partial for but the schema only records resolved/effective values and still omits requested state, dow",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02694"
+      ],
+      "source_obligation_ids": [
+        "obl-2541"
+      ],
+      "source_seed_ids": [
+        "seed-3334"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "but the schema only records resolved/effective values and still omits requested state, downgrade reason, effective account, and actor/surface context"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02197",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02790 is partial for Codex confirmed the final missing connective tissue between account routing and truthful p",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02790"
+      ],
+      "source_obligation_ids": [
+        "obl-2637"
+      ],
+      "source_seed_ids": [
+        "seed-3466"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Codex confirmed the final missing connective tissue between account routing and truthful projections is now **durable actor/role projection**:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02203",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02798 is partial for this means Usage can display current account context but still cannot natively explain swi",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02798"
+      ],
+      "source_obligation_ids": [
+        "obl-2645"
+      ],
+      "source_seed_ids": [
+        "seed-3474"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "this means Usage can display current account context but still cannot natively explain switch lineage or join it safely to History/Ledger"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02346",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02968 is partial for account fields, requested concrete-account truth, role/actor identity, operational identit",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02968"
+      ],
+      "source_obligation_ids": [
+        "obl-2815"
+      ],
+      "source_seed_ids": [
+        "seed-3710"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "account fields, requested concrete-account truth, role/actor identity, operational identity, switch-history, and trust-state are still missing from many user-facing surfaces that claim to show runtime truth"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04910",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06332 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06332"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00148",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00151 is partial for Multi-account is surfaced in UX before it is modeled canonically in runtime records.** GPT",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00151"
+      ],
+      "source_obligation_ids": [
+        "obl-048"
+      ],
+      "source_seed_ids": [
+        "seed-048"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "Multi-account is surfaced in UX before it is modeled canonically in runtime records.** GPT-5.4 found account widgets and auth panels, but almost no equivalent requested/effective account fields in runtime/storage/schema contracts."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00229",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00258 is present for likely issue: `requested_persona` / `effective_persona` are canonical in contracts, but UI",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00258"
+      ],
+      "source_obligation_ids": [
+        "obl-140"
+      ],
+      "source_seed_ids": [
+        "seed-146"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "likely issue: `requested_persona` / `effective_persona` are canonical in contracts, but UI still uses `_id` variants; account fallback fields are missing entirely.",
+        "requested_persona",
+        "effective_persona",
+        "_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00310",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00392 is partial for no canonical requested concrete-account anchor exists when a user pins a specific account",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00392"
+      ],
+      "source_obligation_ids": [
+        "obl-250"
+      ],
+      "source_seed_ids": [
+        "seed-283"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "no canonical requested concrete-account anchor exists when a user pins a specific account"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00331",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00424 is partial for The missing requested-side account anchor is not just a UX gap; it blocks durable historic",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00424"
+      ],
+      "source_obligation_ids": [
+        "obl-282"
+      ],
+      "source_seed_ids": [
+        "seed-320"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "The missing requested-side account anchor is not just a UX gap; it blocks durable historical requested-vs-effective analysis."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01534",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01966 is present for supporting references from `Prompt_Pipeline.md`, `Multi-Account.md`, `FinalGUISpec.md`, `E",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "# Multi-Account Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01966"
+      ],
+      "source_obligation_ids": [
+        "obl-1823"
+      ],
+      "source_seed_ids": [
+        "seed-2346"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "supporting references from `Prompt_Pipeline.md`, `Multi-Account.md`, `FinalGUISpec.md`, `Executor_Protocol.md`, and current ledger findings",
+        "Prompt_Pipeline.md",
+        "Multi-Account.md",
+        "FinalGUISpec.md",
+        "Executor_Protocol.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01573",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02017 is present for canonical contracts have `requested_account_policy` but no robust requested-side concrete",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02017"
+      ],
+      "source_obligation_ids": [
+        "obl-1874"
+      ],
+      "source_seed_ids": [
+        "seed-2421"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "canonical contracts have `requested_account_policy` but no robust requested-side concrete account anchor",
+        "requested_account_policy"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01579",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02024 is partial for Add a canonical requested-side concrete account field or explicit equivalent rule wherever",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02024"
+      ],
+      "source_obligation_ids": [
+        "obl-1881"
+      ],
+      "source_seed_ids": [
+        "seed-2428"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "Add a canonical requested-side concrete account field or explicit equivalent rule wherever user-selected account pinning must be represented."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01689",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02168 is partial for still mis-handle stable account identity and do not yet expose effective GitHub account /",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02168"
+      ],
+      "source_obligation_ids": [
+        "obl-2025"
+      ],
+      "source_seed_ids": [
+        "seed-2634"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "still mis-handle stable account identity and do not yet expose effective GitHub account / degraded capability clearly enough for runtime/UI parity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01707",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02191 is present for `provider_account_id` remains a shadow-key risk unless it is explicitly subordinated to st",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02191"
+      ],
+      "source_obligation_ids": [
+        "obl-2046"
+      ],
+      "source_seed_ids": [
+        "seed-2655"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`provider_account_id` remains a shadow-key risk unless it is explicitly subordinated to stable internal account identity.",
+        "provider_account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01729",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02224 is present for `Multi-Account.md` requires switch notifications/history semantics that `storage-plan.md`,",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "# Multi-Account Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02224"
+      ],
+      "source_obligation_ids": [
+        "obl-2078"
+      ],
+      "source_seed_ids": [
+        "seed-2698"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`Multi-Account.md` requires switch notifications/history semantics that `storage-plan.md`, `Prompt_Pipeline.md`, and bridged-provider stream contracts still cannot represent durably.",
+        "Multi-Account.md",
+        "storage-plan.md",
+        "Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01733",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02232 is present for `provider_account_id` remains dangerous unless it is explicitly treated as audit/display-o",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02232"
+      ],
+      "source_obligation_ids": [
+        "obl-2086"
+      ],
+      "source_seed_ids": [
+        "seed-2706"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`provider_account_id` remains dangerous unless it is explicitly treated as audit/display-only metadata subordinate to stable internal account identity.",
+        "provider_account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01740",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02243 is partial for cache scoping still needs `{project_id, selected_repo_id, effective github_api account}` t",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02243"
+      ],
+      "source_obligation_ids": [
+        "obl-2097"
+      ],
+      "source_seed_ids": [
+        "seed-2725"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "cache scoping still needs `{project_id, selected_repo_id, effective github_api account}` to avoid cross-root or cross-account ambiguity",
+        "{project_id, selected_repo_id, effective github_api account}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01784",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02294 is partial for requires per-interaction account attribution and switch/failover reasoning that the stream",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02294"
+      ],
+      "source_obligation_ids": [
+        "obl-2147"
+      ],
+      "source_seed_ids": [
+        "seed-2791"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "requires per-interaction account attribution and switch/failover reasoning that the stream cannot currently express"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01832",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02359 is partial for requested/effective provider/model visibility exists, but account policy/account selection",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02359"
+      ],
+      "source_obligation_ids": [
+        "obl-2210"
+      ],
+      "source_seed_ids": [
+        "seed-2873"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "requested/effective provider/model visibility exists, but account policy/account selection/switch fields are still missing from the required identity set"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01838",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02366 is partial for widget view models still lack requested/effective account, switch-history, and projection-",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02366"
+      ],
+      "source_obligation_ids": [
+        "obl-2217"
+      ],
+      "source_seed_ids": [
+        "seed-2880"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "widget view models still lack requested/effective account, switch-history, and projection-trust envelope requirements"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01841",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02369 is partial for now the sharpest auth-boundary conflict for stable account identity, reconnect correlation",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02369"
+      ],
+      "source_obligation_ids": [
+        "obl-2220"
+      ],
+      "source_seed_ids": [
+        "seed-2884"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "now the sharpest auth-boundary conflict for stable account identity, reconnect correlation, and requested/effective disclosure"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01854",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02383 is partial for Normalize Orchestrator/Interview/UI docs to canonical persona field names and extend their",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02383"
+      ],
+      "source_obligation_ids": [
+        "obl-2233"
+      ],
+      "source_seed_ids": [
+        "seed-2900"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Normalize Orchestrator/Interview/UI docs to canonical persona field names and extend their required identity sets with requested/effective account fields."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01856",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02386 is present for Preserve the hard realm split between `github_api` and `copilot_github` even while normali",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02386"
+      ],
+      "source_obligation_ids": [
+        "obl-2236"
+      ],
+      "source_seed_ids": [
+        "seed-2903"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Preserve the hard realm split between `github_api` and `copilot_github` even while normalizing stable account identity.",
+        "github_api",
+        "copilot_github"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02082",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02648 is partial for The missing role dimension is now clearly the link between account routing and auditabilit",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02648"
+      ],
+      "source_obligation_ids": [
+        "obl-2496"
+      ],
+      "source_seed_ids": [
+        "seed-3279"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "The missing role dimension is now clearly the link between account routing and auditability:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02168",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02754 is partial for is the requested account a soft preference or a hard requirement?",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02754"
+      ],
+      "source_obligation_ids": [
+        "obl-2601"
+      ],
+      "source_seed_ids": [
+        "seed-3409"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "is the requested account a soft preference or a hard requirement?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02177",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02768 is present for `required`: a concrete account was explicitly pinned; fallback is not silent and must surf",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02768"
+      ],
+      "source_obligation_ids": [
+        "obl-2615"
+      ],
+      "source_seed_ids": [
+        "seed-3425"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "`required`: a concrete account was explicitly pinned; fallback is not silent and must surface as blocked or explicit override failure if unmet",
+        "required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02195",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02788 is present for `requested_account_id` must use the stable internal account id, not provider-native displa",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02788"
+      ],
+      "source_obligation_ids": [
+        "obl-2635"
+      ],
+      "source_seed_ids": [
+        "seed-3455"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "`requested_account_id` must use the stable internal account id, not provider-native display identity",
+        "requested_account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02198",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02792 is partial for without it, requested/effective account decisions remain only partially auditable even aft",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02792"
+      ],
+      "source_obligation_ids": [
+        "obl-2639"
+      ],
+      "source_seed_ids": [
+        "seed-3468"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "without it, requested/effective account decisions remain only partially auditable even after adding account fields"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02548",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03259 is partial for missing `attempt_id`, `blocked_sequence`, account identity, or execution-role fields mean",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03259"
+      ],
+      "source_obligation_ids": [
+        "obl-3105"
+      ],
+      "source_seed_ids": [
+        "seed-4128"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "missing `attempt_id`, `blocked_sequence`, account identity, or execution-role fields mean later UI/runtime promises cannot be implemented faithfully from the current contracts.",
+        "attempt_id",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02553",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03264 is present for Extend artifact/tool/HITL/blocked/handoff envelopes with the missing identity anchors: `at",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03264"
+      ],
+      "source_obligation_ids": [
+        "obl-3110"
+      ],
+      "source_seed_ids": [
+        "seed-4133"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Extend artifact/tool/HITL/blocked/handoff envelopes with the missing identity anchors: `attempt_id`, `node_id`, `lane_id`, `package_id`, `execution_role`, actor identity, account identity, and `blocked_sequence` where appropriate.",
+        "attempt_id",
+        "node_id",
+        "lane_id",
+        "package_id",
+        "execution_role",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02617",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03340 is partial for Promote `thread_id`, `project_id`, validation/report lineage, and requested/effective acco",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03340"
+      ],
+      "source_obligation_ids": [
+        "obl-3186"
+      ],
+      "source_seed_ids": [
+        "seed-4246"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "Promote `thread_id`, `project_id`, validation/report lineage, and requested/effective account identity into wizard/interview pre-run governance payloads where adjacent canonical docs already require them.",
+        "thread_id",
+        "project_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02651",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03395 is partial for requested/effective account fields are not carried through the concrete handoff/provenance",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03395"
+      ],
+      "source_obligation_ids": [
+        "obl-3241"
+      ],
+      "source_seed_ids": [
+        "seed-4327"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "requested/effective account fields are not carried through the concrete handoff/provenance requirements"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02676",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03425 is partial for catalog/promoted-family gaps remain explicit: account, concern, promotion, and several pro",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03425"
+      ],
+      "source_obligation_ids": [
+        "obl-3271"
+      ],
+      "source_seed_ids": [
+        "seed-4385"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "catalog/promoted-family gaps remain explicit: account, concern, promotion, and several promised tab/window/catalog/dev command families still do not exist as concrete catalog entries."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04095",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05286 is partial for `OpenCode_Deep_Extraction.md` source-verifies hard architecture limits: server-global SSE",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05286"
+      ],
+      "source_obligation_ids": [
+        "obl-5062"
+      ],
+      "source_seed_ids": [
+        "seed-7410"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`OpenCode_Deep_Extraction.md` source-verifies hard architecture limits: server-global SSE with concurrent-client pollution, fixed server working directory requiring separate instances per worktree, session-scoped approvals and compaction state that are destroyed on session deletion, no observable upstream account identity, and no real reconnect/observe path for mid-run SSE loss.",
+        "OpenCode_Deep_Extraction.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05275",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06800 is present for `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Mod",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06800"
+      ],
+      "source_obligation_ids": [
+        "obl-6427"
+      ],
+      "source_seed_ids": [
+        "seed-9806"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00442",
+    "cov-02216",
+    "cov-02304",
+    "cov-02316",
+    "cov-02688",
+    "cov-02694",
+    "cov-02790",
+    "cov-02798",
+    "cov-02968",
+    "cov-06332",
+    "cov-00151",
+    "cov-00258",
+    "cov-00392",
+    "cov-00424",
+    "cov-01966",
+    "cov-02017",
+    "cov-02024",
+    "cov-02168",
+    "cov-02191",
+    "cov-02224",
+    "cov-02232",
+    "cov-02243",
+    "cov-02294",
+    "cov-02359",
+    "cov-02366",
+    "cov-02369",
+    "cov-02383",
+    "cov-02386",
+    "cov-02648",
+    "cov-02754",
+    "cov-02768",
+    "cov-02788",
+    "cov-02792",
+    "cov-03259",
+    "cov-03264",
+    "cov-03340",
+    "cov-03395",
+    "cov-03425",
+    "cov-05286",
+    "cov-06800"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-048",
+    "obl-140",
+    "obl-1823",
+    "obl-1874",
+    "obl-1881",
+    "obl-2025",
+    "obl-2046",
+    "obl-2071",
+    "obl-2078",
+    "obl-2086",
+    "obl-2097",
+    "obl-2147",
+    "obl-2156",
+    "obl-2168",
+    "obl-2210",
+    "obl-2217",
+    "obl-2220",
+    "obl-2233",
+    "obl-2236",
+    "obl-2496",
+    "obl-250",
+    "obl-2535",
+    "obl-2541",
+    "obl-2601",
+    "obl-2615",
+    "obl-2635",
+    "obl-2637",
+    "obl-2639",
+    "obl-2645",
+    "obl-2815",
+    "obl-282",
+    "obl-300",
+    "obl-3105",
+    "obl-3110",
+    "obl-3186",
+    "obl-3241",
+    "obl-3271",
+    "obl-5062",
+    "obl-6009",
+    "obl-6427"
+  ],
+  "source_seed_ids_represented": [
+    "seed-048",
+    "seed-146",
+    "seed-2346",
+    "seed-2421",
+    "seed-2428",
+    "seed-2634",
+    "seed-2655",
+    "seed-2690",
+    "seed-2698",
+    "seed-2706",
+    "seed-2725",
+    "seed-2791",
+    "seed-2800",
+    "seed-2819",
+    "seed-283",
+    "seed-2873",
+    "seed-2880",
+    "seed-2884",
+    "seed-2900",
+    "seed-2903",
+    "seed-320",
+    "seed-3279",
+    "seed-3328",
+    "seed-3334",
+    "seed-3409",
+    "seed-3425",
+    "seed-345",
+    "seed-3455",
+    "seed-3466",
+    "seed-3468",
+    "seed-3474",
+    "seed-3710",
+    "seed-4128",
+    "seed-4133",
+    "seed-4246",
+    "seed-4327",
+    "seed-4385",
+    "seed-7410",
+    "seed-9092",
+    "seed-9806"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0009",
+    "shard-0011",
+    "shard-0032",
+    "shard-0034",
+    "shard-0035",
+    "shard-0036",
+    "shard-0039",
+    "shard-0040",
+    "shard-0042",
+    "shard-0045",
+    "shard-0046",
+    "shard-0047",
+    "shard-0070",
+    "shard-0082",
+    "shard-0088"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-00346",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00442 is partial for `GitHub_Integration.md` still lacks a strong requested/effective GitHub account display/ro",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00442"
+      ],
+      "source_obligation_ids": [
+        "obl-300"
+      ],
+      "source_seed_ids": [
+        "seed-345"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`GitHub_Integration.md` still lacks a strong requested/effective GitHub account display/routing contract across project/workspace surfaces",
+        "GitHub_Integration.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01724",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02216 is partial for still the biggest dispatch-boundary gap for account identity, execution-role scoping, lane",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02216"
+      ],
+      "source_obligation_ids": [
+        "obl-2071"
+      ],
+      "source_seed_ids": [
+        "seed-2690"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "still the biggest dispatch-boundary gap for account identity, execution-role scoping, lane/worktree attribution, and projection-ready usage signals"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01791",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02304 is partial for Extend the stream/event contract with account attribution, actor kind, blocked-owner conte",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02304"
+      ],
+      "source_obligation_ids": [
+        "obl-2156"
+      ],
+      "source_seed_ids": [
+        "seed-2800"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "Extend the stream/event contract with account attribution, actor kind, blocked-owner context, and package/seam/lane identity where downstream projections depend on them."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01799",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02316 is partial for but requested/effective account resolution already spans thread/chat/interview/wizard/non-",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02316"
+      ],
+      "source_obligation_ids": [
+        "obl-2168"
+      ],
+      "source_seed_ids": [
+        "seed-2819"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "but requested/effective account resolution already spans thread/chat/interview/wizard/non-run actors"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02110",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02688 is partial for but Multi-Account needs configuration/availability/pressure/cooldown state, and Usage/Orch",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "# Multi-Account Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02688"
+      ],
+      "source_obligation_ids": [
+        "obl-2535"
+      ],
+      "source_seed_ids": [
+        "seed-3328"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "but Multi-Account needs configuration/availability/pressure/cooldown state, and Usage/Orchestrator need confidence-aware account-health projections"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02116",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02694 is partial for but the schema only records resolved/effective values and still omits requested state, dow",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02694"
+      ],
+      "source_obligation_ids": [
+        "obl-2541"
+      ],
+      "source_seed_ids": [
+        "seed-3334"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "but the schema only records resolved/effective values and still omits requested state, downgrade reason, effective account, and actor/surface context"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02197",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02790 is partial for Codex confirmed the final missing connective tissue between account routing and truthful p",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02790"
+      ],
+      "source_obligation_ids": [
+        "obl-2637"
+      ],
+      "source_seed_ids": [
+        "seed-3466"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Codex confirmed the final missing connective tissue between account routing and truthful projections is now **durable actor/role projection**:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02203",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02798 is partial for this means Usage can display current account context but still cannot natively explain swi",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02798"
+      ],
+      "source_obligation_ids": [
+        "obl-2645"
+      ],
+      "source_seed_ids": [
+        "seed-3474"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "this means Usage can display current account context but still cannot natively explain switch lineage or join it safely to History/Ledger"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02346",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02968 is partial for account fields, requested concrete-account truth, role/actor identity, operational identit",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02968"
+      ],
+      "source_obligation_ids": [
+        "obl-2815"
+      ],
+      "source_seed_ids": [
+        "seed-3710"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "account fields, requested concrete-account truth, role/actor identity, operational identity, switch-history, and trust-state are still missing from many user-facing surfaces that claim to show runtime truth"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04910",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06332 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06332"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00148",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00151 is partial for Multi-account is surfaced in UX before it is modeled canonically in runtime records.** GPT",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00151"
+      ],
+      "source_obligation_ids": [
+        "obl-048"
+      ],
+      "source_seed_ids": [
+        "seed-048"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "Multi-account is surfaced in UX before it is modeled canonically in runtime records.** GPT-5.4 found account widgets and auth panels, but almost no equivalent requested/effective account fields in runtime/storage/schema contracts."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00229",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00258 is present for likely issue: `requested_persona` / `effective_persona` are canonical in contracts, but UI",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00258"
+      ],
+      "source_obligation_ids": [
+        "obl-140"
+      ],
+      "source_seed_ids": [
+        "seed-146"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "likely issue: `requested_persona` / `effective_persona` are canonical in contracts, but UI still uses `_id` variants; account fallback fields are missing entirely.",
+        "requested_persona",
+        "effective_persona",
+        "_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00310",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00392 is partial for no canonical requested concrete-account anchor exists when a user pins a specific account",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00392"
+      ],
+      "source_obligation_ids": [
+        "obl-250"
+      ],
+      "source_seed_ids": [
+        "seed-283"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "no canonical requested concrete-account anchor exists when a user pins a specific account"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00331",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00424 is partial for The missing requested-side account anchor is not just a UX gap; it blocks durable historic",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00424"
+      ],
+      "source_obligation_ids": [
+        "obl-282"
+      ],
+      "source_seed_ids": [
+        "seed-320"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "The missing requested-side account anchor is not just a UX gap; it blocks durable historical requested-vs-effective analysis."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01534",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01966 is present for supporting references from `Prompt_Pipeline.md`, `Multi-Account.md`, `FinalGUISpec.md`, `E",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "# Multi-Account Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01966"
+      ],
+      "source_obligation_ids": [
+        "obl-1823"
+      ],
+      "source_seed_ids": [
+        "seed-2346"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "supporting references from `Prompt_Pipeline.md`, `Multi-Account.md`, `FinalGUISpec.md`, `Executor_Protocol.md`, and current ledger findings",
+        "Prompt_Pipeline.md",
+        "Multi-Account.md",
+        "FinalGUISpec.md",
+        "Executor_Protocol.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01573",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02017 is present for canonical contracts have `requested_account_policy` but no robust requested-side concrete",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02017"
+      ],
+      "source_obligation_ids": [
+        "obl-1874"
+      ],
+      "source_seed_ids": [
+        "seed-2421"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "canonical contracts have `requested_account_policy` but no robust requested-side concrete account anchor",
+        "requested_account_policy"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01579",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02024 is partial for Add a canonical requested-side concrete account field or explicit equivalent rule wherever",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02024"
+      ],
+      "source_obligation_ids": [
+        "obl-1881"
+      ],
+      "source_seed_ids": [
+        "seed-2428"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "Add a canonical requested-side concrete account field or explicit equivalent rule wherever user-selected account pinning must be represented."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01689",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02168 is partial for still mis-handle stable account identity and do not yet expose effective GitHub account /",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02168"
+      ],
+      "source_obligation_ids": [
+        "obl-2025"
+      ],
+      "source_seed_ids": [
+        "seed-2634"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "still mis-handle stable account identity and do not yet expose effective GitHub account / degraded capability clearly enough for runtime/UI parity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01707",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02191 is present for `provider_account_id` remains a shadow-key risk unless it is explicitly subordinated to st",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02191"
+      ],
+      "source_obligation_ids": [
+        "obl-2046"
+      ],
+      "source_seed_ids": [
+        "seed-2655"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`provider_account_id` remains a shadow-key risk unless it is explicitly subordinated to stable internal account identity.",
+        "provider_account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01729",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02224 is present for `Multi-Account.md` requires switch notifications/history semantics that `storage-plan.md`,",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "# Multi-Account Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02224"
+      ],
+      "source_obligation_ids": [
+        "obl-2078"
+      ],
+      "source_seed_ids": [
+        "seed-2698"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`Multi-Account.md` requires switch notifications/history semantics that `storage-plan.md`, `Prompt_Pipeline.md`, and bridged-provider stream contracts still cannot represent durably.",
+        "Multi-Account.md",
+        "storage-plan.md",
+        "Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01733",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02232 is present for `provider_account_id` remains dangerous unless it is explicitly treated as audit/display-o",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02232"
+      ],
+      "source_obligation_ids": [
+        "obl-2086"
+      ],
+      "source_seed_ids": [
+        "seed-2706"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`provider_account_id` remains dangerous unless it is explicitly treated as audit/display-only metadata subordinate to stable internal account identity.",
+        "provider_account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01740",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02243 is partial for cache scoping still needs `{project_id, selected_repo_id, effective github_api account}` t",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02243"
+      ],
+      "source_obligation_ids": [
+        "obl-2097"
+      ],
+      "source_seed_ids": [
+        "seed-2725"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "cache scoping still needs `{project_id, selected_repo_id, effective github_api account}` to avoid cross-root or cross-account ambiguity",
+        "{project_id, selected_repo_id, effective github_api account}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01784",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02294 is partial for requires per-interaction account attribution and switch/failover reasoning that the stream",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02294"
+      ],
+      "source_obligation_ids": [
+        "obl-2147"
+      ],
+      "source_seed_ids": [
+        "seed-2791"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "requires per-interaction account attribution and switch/failover reasoning that the stream cannot currently express"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01832",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02359 is partial for requested/effective provider/model visibility exists, but account policy/account selection",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02359"
+      ],
+      "source_obligation_ids": [
+        "obl-2210"
+      ],
+      "source_seed_ids": [
+        "seed-2873"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "requested/effective provider/model visibility exists, but account policy/account selection/switch fields are still missing from the required identity set"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01838",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02366 is partial for widget view models still lack requested/effective account, switch-history, and projection-",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02366"
+      ],
+      "source_obligation_ids": [
+        "obl-2217"
+      ],
+      "source_seed_ids": [
+        "seed-2880"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "widget view models still lack requested/effective account, switch-history, and projection-trust envelope requirements"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01841",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02369 is partial for now the sharpest auth-boundary conflict for stable account identity, reconnect correlation",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02369"
+      ],
+      "source_obligation_ids": [
+        "obl-2220"
+      ],
+      "source_seed_ids": [
+        "seed-2884"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "now the sharpest auth-boundary conflict for stable account identity, reconnect correlation, and requested/effective disclosure"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01854",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02383 is partial for Normalize Orchestrator/Interview/UI docs to canonical persona field names and extend their",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02383"
+      ],
+      "source_obligation_ids": [
+        "obl-2233"
+      ],
+      "source_seed_ids": [
+        "seed-2900"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Normalize Orchestrator/Interview/UI docs to canonical persona field names and extend their required identity sets with requested/effective account fields."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01856",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02386 is present for Preserve the hard realm split between `github_api` and `copilot_github` even while normali",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02386"
+      ],
+      "source_obligation_ids": [
+        "obl-2236"
+      ],
+      "source_seed_ids": [
+        "seed-2903"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Preserve the hard realm split between `github_api` and `copilot_github` even while normalizing stable account identity.",
+        "github_api",
+        "copilot_github"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02082",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02648 is partial for The missing role dimension is now clearly the link between account routing and auditabilit",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02648"
+      ],
+      "source_obligation_ids": [
+        "obl-2496"
+      ],
+      "source_seed_ids": [
+        "seed-3279"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "The missing role dimension is now clearly the link between account routing and auditability:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02168",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02754 is partial for is the requested account a soft preference or a hard requirement?",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02754"
+      ],
+      "source_obligation_ids": [
+        "obl-2601"
+      ],
+      "source_seed_ids": [
+        "seed-3409"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "is the requested account a soft preference or a hard requirement?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02177",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02768 is present for `required`: a concrete account was explicitly pinned; fallback is not silent and must surf",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02768"
+      ],
+      "source_obligation_ids": [
+        "obl-2615"
+      ],
+      "source_seed_ids": [
+        "seed-3425"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "`required`: a concrete account was explicitly pinned; fallback is not silent and must surface as blocked or explicit override failure if unmet",
+        "required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02195",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02788 is present for `requested_account_id` must use the stable internal account id, not provider-native displa",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02788"
+      ],
+      "source_obligation_ids": [
+        "obl-2635"
+      ],
+      "source_seed_ids": [
+        "seed-3455"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "`requested_account_id` must use the stable internal account id, not provider-native display identity",
+        "requested_account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02198",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02792 is partial for without it, requested/effective account decisions remain only partially auditable even aft",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02792"
+      ],
+      "source_obligation_ids": [
+        "obl-2639"
+      ],
+      "source_seed_ids": [
+        "seed-3468"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "without it, requested/effective account decisions remain only partially auditable even after adding account fields"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02548",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03259 is partial for missing `attempt_id`, `blocked_sequence`, account identity, or execution-role fields mean",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03259"
+      ],
+      "source_obligation_ids": [
+        "obl-3105"
+      ],
+      "source_seed_ids": [
+        "seed-4128"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "missing `attempt_id`, `blocked_sequence`, account identity, or execution-role fields mean later UI/runtime promises cannot be implemented faithfully from the current contracts.",
+        "attempt_id",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02553",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03264 is present for Extend artifact/tool/HITL/blocked/handoff envelopes with the missing identity anchors: `at",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03264"
+      ],
+      "source_obligation_ids": [
+        "obl-3110"
+      ],
+      "source_seed_ids": [
+        "seed-4133"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Extend artifact/tool/HITL/blocked/handoff envelopes with the missing identity anchors: `attempt_id`, `node_id`, `lane_id`, `package_id`, `execution_role`, actor identity, account identity, and `blocked_sequence` where appropriate.",
+        "attempt_id",
+        "node_id",
+        "lane_id",
+        "package_id",
+        "execution_role",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02617",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03340 is partial for Promote `thread_id`, `project_id`, validation/report lineage, and requested/effective acco",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03340"
+      ],
+      "source_obligation_ids": [
+        "obl-3186"
+      ],
+      "source_seed_ids": [
+        "seed-4246"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "Promote `thread_id`, `project_id`, validation/report lineage, and requested/effective account identity into wizard/interview pre-run governance payloads where adjacent canonical docs already require them.",
+        "thread_id",
+        "project_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02651",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03395 is partial for requested/effective account fields are not carried through the concrete handoff/provenance",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03395"
+      ],
+      "source_obligation_ids": [
+        "obl-3241"
+      ],
+      "source_seed_ids": [
+        "seed-4327"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "requested/effective account fields are not carried through the concrete handoff/provenance requirements"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02676",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03425 is partial for catalog/promoted-family gaps remain explicit: account, concern, promotion, and several pro",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03425"
+      ],
+      "source_obligation_ids": [
+        "obl-3271"
+      ],
+      "source_seed_ids": [
+        "seed-4385"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "catalog/promoted-family gaps remain explicit: account, concern, promotion, and several promised tab/window/catalog/dev command families still do not exist as concrete catalog entries."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04095",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05286 is partial for `OpenCode_Deep_Extraction.md` source-verifies hard architecture limits: server-global SSE",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### Fidelity recovery cov-008: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05286"
+      ],
+      "source_obligation_ids": [
+        "obl-5062"
+      ],
+      "source_seed_ids": [
+        "seed-7410"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`OpenCode_Deep_Extraction.md` source-verifies hard architecture limits: server-global SSE with concurrent-client pollution, fixed server working directory requiring separate instances per worktree, session-scoped approvals and compaction state that are destroyed on session deletion, no observable upstream account identity, and no real reconnect/observe path for mid-run SSE loss.",
+        "OpenCode_Deep_Extraction.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05275",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06800 is present for `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Mod",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06800"
+      ],
+      "source_obligation_ids": [
+        "obl-6427"
+      ],
+      "source_seed_ids": [
+        "seed-9806"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "uncertain_items": []
+}

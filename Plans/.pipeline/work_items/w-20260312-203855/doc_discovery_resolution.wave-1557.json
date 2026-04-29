@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1557",
+  "group_ids": [
+    "discgrp-6225",
+    "discgrp-6226",
+    "discgrp-6227",
+    "discgrp-6228"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-07025",
+      "source_obligation_ids": [
+        "obl-6616"
+      ],
+      "source_seed_ids": [
+        "seed-10086"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/00-plans-index.md",
+      "new_heading_hint": "# Plans Index (authoritative map)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/00-plans-index.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-07030",
+      "source_obligation_ids": [
+        "obl-6621"
+      ],
+      "source_seed_ids": [
+        "seed-10100"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "#### `scheduler.pass`",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1116"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-07031",
+      "source_obligation_ids": [
+        "obl-6622"
+      ],
+      "source_seed_ids": [
+        "seed-10101"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-165: Coverage blocker concern lifecycle owner section",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L233"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-07032",
+      "source_obligation_ids": [
+        "obl-6623"
+      ],
+      "source_seed_ids": [
+        "seed-10103"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

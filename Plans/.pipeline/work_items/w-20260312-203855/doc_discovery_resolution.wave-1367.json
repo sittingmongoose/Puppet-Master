@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1367",
+  "group_ids": [
+    "discgrp-5465",
+    "discgrp-5466",
+    "discgrp-5467",
+    "discgrp-5468"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05916",
+      "source_obligation_ids": [
+        "obl-5688"
+      ],
+      "source_seed_ids": [
+        "seed-8455"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05917",
+      "source_obligation_ids": [
+        "obl-5689"
+      ],
+      "source_seed_ids": [
+        "seed-8457"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "### 4.4 Two Gemini providers",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Models_System.md:L274"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05918",
+      "source_obligation_ids": [
+        "obl-5690"
+      ],
+      "source_seed_ids": [
+        "seed-8458"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/BinaryLocator_Spec.md",
+      "new_heading_hint": "### Locked decisions (no drift)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L18"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05919",
+      "source_obligation_ids": [
+        "obl-5691"
+      ],
+      "source_seed_ids": [
+        "seed-8459"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

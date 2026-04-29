@@ -1,747 +1,200 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-007",
-  "timestamp_utc": "2026-04-28T19:29:52Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-025",
-    "coverage-rowgrp-026",
-    "coverage-rowgrp-027",
-    "coverage-rowgrp-028"
+  "row_group_ids": [
+    "rowgrp-0025",
+    "rowgrp-0026",
+    "rowgrp-0027",
+    "rowgrp-0028"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-025 cov-1137,cov-1141,cov-1153,cov-1163,cov-1219,cov-1230,cov-1244,cov-1250,cov-1267 Plans/Contracts_V0.md",
-    "rowgrp-026 cov-842,cov-871,cov-904,cov-921 Plans/Contracts_V0.md",
-    "rowgrp-027 cov-112,cov-133,cov-239,cov-242,cov-398,cov-404,cov-490,cov-501,cov-538,cov-552 Plans/Contracts_V0.md",
-    "rowgrp-028 cov-655,cov-790,cov-817,cov-854,cov-865,cov-878,cov-931,cov-1034,cov-1077,cov-1095 Plans/Contracts_V0.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-025": "completed",
-    "coverage-rowgrp-026": "completed",
-    "coverage-rowgrp-027": "completed",
-    "coverage-rowgrp-028": "completed"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-1137",
-    "cov-1141",
-    "cov-1153",
-    "cov-1163",
-    "cov-1219",
-    "cov-1230",
-    "cov-1244",
-    "cov-1250",
-    "cov-1267",
-    "cov-842",
-    "cov-871",
-    "cov-904",
-    "cov-921",
-    "cov-112",
-    "cov-133",
-    "cov-239",
-    "cov-242",
-    "cov-398",
-    "cov-404",
-    "cov-490",
-    "cov-501",
-    "cov-538",
-    "cov-552",
-    "cov-655",
-    "cov-790",
-    "cov-817",
-    "cov-854",
-    "cov-865",
-    "cov-878",
-    "cov-931",
-    "cov-1034",
-    "cov-1077",
-    "cov-1095"
-  ],
-  "coverage_ids_completed": [
-    "cov-1137",
-    "cov-1141",
-    "cov-1153",
-    "cov-1163",
-    "cov-1219",
-    "cov-1230",
-    "cov-1244",
-    "cov-1250",
-    "cov-1267",
-    "cov-842",
-    "cov-871",
-    "cov-904",
-    "cov-921",
-    "cov-112",
-    "cov-133",
-    "cov-239",
-    "cov-242",
-    "cov-398",
-    "cov-404",
-    "cov-490",
-    "cov-501",
-    "cov-538",
-    "cov-552",
-    "cov-655",
-    "cov-790",
-    "cov-817",
-    "cov-854",
-    "cov-865",
-    "cov-878",
-    "cov-931",
-    "cov-1034",
-    "cov-1077",
-    "cov-1095"
-  ],
-  "path_groups_assigned": [
-    "Plans/Contracts_V0.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-1137",
+      "coverage_id": "cov-00032",
+      "source_obligation_ids": [
+        "obl-011"
+      ],
+      "source_seed_ids": [
+        "seed-011"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "shared concern projection across surfaces",
+      "row_type": "consumer",
+      "path": "Plans/.../seams*",
+      "heading_hint": "Shared concern projection rule now clarified",
       "status": "missing",
+      "exact_items": [
+        "All major surfaces should project the same concern model rather than inventing local versions",
+        "`Progress` = operational attention projection",
+        "`Seams` = integration/governance projection",
+        "`Evidence` = proof-backed concern projection",
+        "`History` = concern lifecycle timeline projection",
+        "`Ledger` = exact structured concern-record projection"
+      ],
+      "stale_tokens": [
+        "local versions"
+      ],
       "evidence": [
-        "Plans/Contracts_V0.md:24-26 retired-token-safe wording / retired-token handling",
-        "Plans/Contracts_V0.md:111-115 historical vocabulary includes stale_historical"
+        "Plans/.../seams*:target_doc_not_found"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "No direct cov-1137 coverage text found in Plans/Contracts_V0.md; only generic stale-token language appears.",
-      "source_obligation_ids": [
-        "obl-331"
-      ],
-      "source_seed_ids": [
-        "seed-331"
-      ],
-      "source_shard_ids": [
-        "shard-0084"
-      ],
-      "path_field_status": "match"
+      "required_action": "consumer_propagation"
     },
     {
-      "coverage_id": "cov-1141",
+      "coverage_id": "cov-00015",
+      "source_obligation_ids": [
+        "obl-006"
+      ],
+      "source_seed_ids": [
+        "seed-006"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "project/seam/package/node override ownership",
+      "row_type": "owner",
+      "path": "Plans/.../settings*",
+      "heading_hint": "Settings scope hierarchy direction now clarified",
       "status": "missing",
+      "exact_items": [
+        "`App / Global` = broad product defaults/catalogs/capabilities",
+        "`Project` = main execution policy owner",
+        "`Seam` = meaningful feature-level overrides only",
+        "`Package` = useful local execution/recovery overrides",
+        "`Node` = rare targeted override only",
+        "`Actor / Role` = cross-cutting provider/account/persona/worker policy"
+      ],
+      "stale_tokens": [
+        "isolated orchestrator-only settings area"
+      ],
       "evidence": [
-        "Plans/Contracts_V0.md:24-26 retired-token-safe wording / retired-token handling",
-        "Plans/Contracts_V0.md:111-115 historical vocabulary includes stale_historical"
+        "Plans/.../settings*:target_doc_not_found"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "No direct cov-1141 coverage text found in Plans/Contracts_V0.md; only generic stale-token language appears.",
-      "source_obligation_ids": [
-        "obl-332"
-      ],
-      "source_seed_ids": [
-        "seed-332"
-      ],
-      "source_shard_ids": [
-        "shard-0084"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1153",
+      "coverage_id": "cov-00018",
+      "source_obligation_ids": [
+        "obl-007"
+      ],
+      "source_seed_ids": [
+        "seed-007"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "projection consumers and widget shell contract",
+      "row_type": "consumer",
+      "path": "Plans/.../widget*",
+      "heading_hint": "Widget-system data-contract direction now clarified",
       "status": "missing",
+      "exact_items": [
+        "Orchestrator widgets should consume stable shared projections rather than raw event streams or bespoke queries",
+        "widget shell needs widget identity/type, scope, filter/sort/display config, projection ref",
+        "Run Summary, Seam Summary, Concern Summary, Account / Usage Pressure, Recent Major Events should be broadly reusable across Orchestrator / Dashboard / Projects"
+      ],
+      "stale_tokens": [
+        "raw event streams",
+        "bespoke queries"
+      ],
       "evidence": [
-        "Plans/Contracts_V0.md:24-26 retired-token-safe wording / retired-token handling",
-        "Plans/Contracts_V0.md:111-115 historical vocabulary includes stale_historical"
+        "Plans/.../widget*:target_doc_not_found"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "No direct cov-1153 coverage text found in Plans/Contracts_V0.md; only generic stale-token language appears.",
-      "source_obligation_ids": [
-        "obl-335"
-      ],
-      "source_seed_ids": [
-        "seed-335"
-      ],
-      "source_shard_ids": [
-        "shard-0085"
-      ],
-      "path_field_status": "match"
+      "required_action": "consumer_propagation"
     },
     {
-      "coverage_id": "cov-1163",
+      "coverage_id": "cov-00017",
+      "source_obligation_ids": [
+        "obl-007"
+      ],
+      "source_seed_ids": [
+        "seed-007"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "projection consumers and widget shell contract",
+      "row_type": "consumer",
+      "path": "Plans/.../working_ledger.md",
+      "heading_hint": "Widget-system data-contract direction now clarified",
       "status": "missing",
+      "exact_items": [
+        "Orchestrator widgets should consume stable shared projections rather than raw event streams or bespoke queries",
+        "widget shell needs widget identity/type, scope, filter/sort/display config, projection ref",
+        "Run Summary, Seam Summary, Concern Summary, Account / Usage Pressure, Recent Major Events should be broadly reusable across Orchestrator / Dashboard / Projects"
+      ],
+      "stale_tokens": [
+        "raw event streams",
+        "bespoke queries"
+      ],
       "evidence": [
-        "Plans/Contracts_V0.md:24-26 retired-token-safe wording / retired-token handling",
-        "Plans/Contracts_V0.md:111-115 historical vocabulary includes stale_historical"
+        "Plans/.../working_ledger.md:target_doc_not_found"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "No direct cov-1163 coverage text found in Plans/Contracts_V0.md; only generic stale-token language appears.",
-      "source_obligation_ids": [
-        "obl-339"
-      ],
-      "source_seed_ids": [
-        "seed-339"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "path_field_status": "match"
+      "required_action": "consumer_propagation"
     },
     {
-      "coverage_id": "cov-1219",
+      "coverage_id": "cov-00021",
+      "source_obligation_ids": [
+        "obl-008"
+      ],
+      "source_seed_ids": [
+        "seed-008"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "record-backed trust anchor under stale projections",
+      "row_type": "consumer",
+      "path": "Plans/.../working_ledger.md",
+      "heading_hint": "Fallback path under stale projections is now clearer",
       "status": "missing",
+      "exact_items": [
+        "Degrade from summary/projection surfaces to direct record-backed inspection",
+        "Ledger and direct record views become the trust anchor under degraded projection health",
+        "Only certain current/generation-matched direct records should support action",
+        "Direct record views that allow action should explicitly show currentness, generation match, superseded yes/no, actionable yes/no"
+      ],
+      "stale_tokens": [
+        "summary/projection surfaces",
+        "direct record views"
+      ],
       "evidence": [
-        "Plans/Contracts_V0.md:24-26 retired-token-safe wording / retired-token handling",
-        "Plans/Contracts_V0.md:111-115 historical vocabulary includes stale_historical"
+        "Plans/.../working_ledger.md:target_doc_not_found"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "No direct cov-1219 coverage text found in Plans/Contracts_V0.md; only generic stale-token language appears.",
-      "source_obligation_ids": [
-        "obl-346"
-      ],
-      "source_seed_ids": [
-        "seed-346"
-      ],
-      "source_shard_ids": [
-        "shard-0088"
-      ],
-      "path_field_status": "match"
+      "required_action": "consumer_propagation"
     },
     {
-      "coverage_id": "cov-1230",
+      "coverage_id": "cov-00030",
+      "source_obligation_ids": [
+        "obl-011"
+      ],
+      "source_seed_ids": [
+        "seed-011"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "shared concern projection across surfaces",
+      "row_type": "consumer",
+      "path": "Plans/.../working_ledger.md",
+      "heading_hint": "Shared concern projection rule now clarified",
       "status": "missing",
+      "exact_items": [
+        "All major surfaces should project the same concern model rather than inventing local versions",
+        "`Progress` = operational attention projection",
+        "`Seams` = integration/governance projection",
+        "`Evidence` = proof-backed concern projection",
+        "`History` = concern lifecycle timeline projection",
+        "`Ledger` = exact structured concern-record projection"
+      ],
+      "stale_tokens": [
+        "local versions"
+      ],
       "evidence": [
-        "Plans/Contracts_V0.md:24-26 retired-token-safe wording / retired-token handling",
-        "Plans/Contracts_V0.md:111-115 historical vocabulary includes stale_historical"
+        "Plans/.../working_ledger.md:target_doc_not_found"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "No direct cov-1230 coverage text found in Plans/Contracts_V0.md; only generic stale-token language appears.",
-      "source_obligation_ids": [
-        "obl-347"
-      ],
-      "source_seed_ids": [
-        "seed-347"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1244",
-      "status": "missing",
-      "evidence": [
-        "Plans/Contracts_V0.md:24-26 retired-token-safe wording / retired-token handling",
-        "Plans/Contracts_V0.md:111-115 historical vocabulary includes stale_historical"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "No direct cov-1244 coverage text found in Plans/Contracts_V0.md; only generic stale-token language appears.",
-      "source_obligation_ids": [
-        "obl-351"
-      ],
-      "source_seed_ids": [
-        "seed-351"
-      ],
-      "source_shard_ids": [
-        "shard-0090"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1250",
-      "status": "missing",
-      "evidence": [
-        "Plans/Contracts_V0.md:24-26 retired-token-safe wording / retired-token handling",
-        "Plans/Contracts_V0.md:111-115 historical vocabulary includes stale_historical"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "No direct cov-1250 coverage text found in Plans/Contracts_V0.md; only generic stale-token language appears.",
-      "source_obligation_ids": [
-        "obl-353"
-      ],
-      "source_seed_ids": [
-        "seed-353"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1267",
-      "status": "missing",
-      "evidence": [
-        "Plans/Contracts_V0.md:24-26 retired-token-safe wording / retired-token handling",
-        "Plans/Contracts_V0.md:111-115 historical vocabulary includes stale_historical"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "No direct cov-1267 coverage text found in Plans/Contracts_V0.md; only generic stale-token language appears.",
-      "source_obligation_ids": [
-        "obl-357"
-      ],
-      "source_seed_ids": [
-        "seed-357"
-      ],
-      "source_shard_ids": [
-        "shard-0092"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-842",
-      "status": "missing",
-      "evidence": [
-        "Plans/Contracts_V0.md: assigned file reviewed; no matching text found for the row label or canon label"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Assigned contract path does not contain evidence for fragmented owner-doc conventions.",
-      "source_obligation_ids": [
-        "obl-235"
-      ],
-      "source_seed_ids": [
-        "seed-235"
-      ],
-      "source_shard_ids": [
-        "shard-0059"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-871",
-      "status": "missing",
-      "evidence": [
-        "Plans/Contracts_V0.md: assigned file reviewed; no matching text found for the row label or canon label"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Assigned contract path does not contain evidence for route target migration aliases not permanent canon.",
-      "source_obligation_ids": [
-        "obl-245"
-      ],
-      "source_seed_ids": [
-        "seed-245"
-      ],
-      "source_shard_ids": [
-        "shard-0062"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-904",
-      "status": "missing",
-      "evidence": [
-        "Plans/Contracts_V0.md: assigned file reviewed; no matching text found for the row label or canon label"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Assigned contract path does not contain evidence for destination selection versus panel-local state drift.",
-      "source_obligation_ids": [
-        "obl-254"
-      ],
-      "source_seed_ids": [
-        "seed-254"
-      ],
-      "source_shard_ids": [
-        "shard-0064"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-921",
-      "status": "missing",
-      "evidence": [
-        "Plans/Contracts_V0.md: assigned file reviewed; no matching text found for the row label or canon label"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Assigned contract path does not contain evidence for command normalization alias lifecycle.",
-      "source_obligation_ids": [
-        "obl-259"
-      ],
-      "source_seed_ids": [
-        "seed-259"
-      ],
-      "source_shard_ids": [
-        "shard-0065"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-112",
-      "status": "partial",
-      "evidence": [
-        "Plans/Contracts_V0.md:433 usage_event_ref live occurrence",
-        "Plans/Contracts_V0.md:457 usage_event_ref live occurrence",
-        "Plans/Contracts_V0.md:505 usage_event_ref live occurrence"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Only one stale-token occurrence is present in the assigned path; the rest are absent from Plans/Contracts_V0.md.",
-      "source_obligation_ids": [
-        "obl-035"
-      ],
-      "source_seed_ids": [
-        "seed-035"
-      ],
-      "source_shard_ids": [
-        "shard-0008"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-133",
-      "status": "missing",
-      "evidence": [
-        "Plans/Contracts_V0.md: assigned file reviewed; no matching live stale-token occurrence found for plan shards, JSON sidecars, or event/projection docs"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Assigned stale tokens are not present in the assigned path.",
-      "source_obligation_ids": [
-        "obl-037"
-      ],
-      "source_seed_ids": [
-        "seed-037"
-      ],
-      "source_shard_ids": [
-        "shard-0009"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-239",
-      "status": "partial",
-      "evidence": [
-        "Plans/Contracts_V0.md:263 historical, stale_historical, superseded, revoked, reopened, archived, removed"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Only the historical-token subset is present; the other assigned stale tokens are absent.",
-      "source_obligation_ids": [
-        "obl-067"
-      ],
-      "source_seed_ids": [
-        "seed-067"
-      ],
-      "source_shard_ids": [
-        "shard-0014"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-242",
-      "status": "present",
-      "evidence": [
-        "Plans/Contracts_V0.md:263 historical, stale_historical, superseded, revoked, reopened, archived, removed"
-      ],
-      "required_action": "none",
-      "unresolved_reason": "",
-      "source_obligation_ids": [
-        "obl-068"
-      ],
-      "source_seed_ids": [
-        "seed-068"
-      ],
-      "source_shard_ids": [
-        "shard-0015"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-398",
-      "status": "present",
-      "evidence": [
-        "Plans/Contracts_V0.md:263 historical, stale_historical, superseded, revoked, reopened, archived, removed"
-      ],
-      "required_action": "none",
-      "unresolved_reason": "",
-      "source_obligation_ids": [
-        "obl-118"
-      ],
-      "source_seed_ids": [
-        "seed-118"
-      ],
-      "source_shard_ids": [
-        "shard-0029"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-404",
-      "status": "present",
-      "evidence": [
-        "Plans/Contracts_V0.md:263 historical, stale_historical, superseded, revoked, reopened, archived, removed"
-      ],
-      "required_action": "none",
-      "unresolved_reason": "",
-      "source_obligation_ids": [
-        "obl-119"
-      ],
-      "source_seed_ids": [
-        "seed-119"
-      ],
-      "source_shard_ids": [
-        "shard-0030"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-490",
-      "status": "partial",
-      "evidence": [
-        "Plans/Contracts_V0.md:433 usage_event_ref live occurrence",
-        "Plans/Contracts_V0.md:457 usage_event_ref live occurrence",
-        "Plans/Contracts_V0.md:505 usage_event_ref live occurrence"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Only usage_event_ref is present in the assigned path; the rest are absent.",
-      "source_obligation_ids": [
-        "obl-142"
-      ],
-      "source_seed_ids": [
-        "seed-142"
-      ],
-      "source_shard_ids": [
-        "shard-0035"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-501",
-      "status": "missing",
-      "evidence": [
-        "Plans/Contracts_V0.md: assigned file reviewed; no matching live stale-token occurrence found for login or legacy dashboard layout keys"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Assigned stale tokens are not present in the assigned path.",
-      "source_obligation_ids": [
-        "obl-145"
-      ],
-      "source_seed_ids": [
-        "seed-145"
-      ],
-      "source_shard_ids": [
-        "shard-0036"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-538",
-      "status": "missing",
-      "evidence": [
-        "Plans/Contracts_V0.md: assigned file reviewed; no matching live stale-token occurrence found for cmd.widget.* or page: string"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Assigned stale tokens are not present in the assigned path.",
-      "source_obligation_ids": [
-        "obl-154"
-      ],
-      "source_seed_ids": [
-        "seed-154"
-      ],
-      "source_shard_ids": [
-        "shard-0038"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-552",
-      "status": "missing",
-      "evidence": [
-        "Plans/Contracts_V0.md: assigned file reviewed; no matching live stale-token occurrence found for requested_persona_id or effective_persona_id"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Assigned stale tokens are not present in the assigned path.",
-      "source_obligation_ids": [
-        "obl-157"
-      ],
-      "source_seed_ids": [
-        "seed-157"
-      ],
-      "source_shard_ids": [
-        "shard-0039"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-655",
-      "status": "partial",
-      "evidence": [
-        "Plans/Contracts_V0.md:808-828 allowed_action_ids[] is defined and used for approval UI",
-        "Plans/Contracts_V0.md:500-520 resume_url remains transport-only"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Assigned stale-token family is still live in the contract; retirement not complete.",
-      "source_obligation_ids": [
-        "obl-185"
-      ],
-      "source_seed_ids": [
-        "seed-185"
-      ],
-      "source_shard_ids": [
-        "shard-0046"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-790",
-      "status": "partial",
-      "evidence": [
-        "Plans/Contracts_V0.md:319-323 resume_url is explicitly treated as serialized transport",
-        "Plans/Contracts_V0.md:514-519 resume_url remains transport-only"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "resume_url still appears in live contract text; retirement/demotion is not fully removed.",
-      "source_obligation_ids": [
-        "obl-219"
-      ],
-      "source_seed_ids": [
-        "seed-219"
-      ],
-      "source_shard_ids": [
-        "shard-0055"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-817",
-      "status": "missing",
-      "evidence": [
-        "Plans/Contracts_V0.md: assigned file reviewed; no live cmd.nav.* occurrence found"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "No matching stale-token occurrence in the assigned file.",
-      "source_obligation_ids": [
-        "obl-227"
-      ],
-      "source_seed_ids": [
-        "seed-227"
-      ],
-      "source_shard_ids": [
-        "shard-0057"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-854",
-      "status": "partial",
-      "evidence": [
-        "Plans/Contracts_V0.md:321 FileManager OpenFile is still referenced as narrow/path-based",
-        "Plans/Contracts_V0.md:1009 OpenSubject may resolve to OpenFile or generated://<artifact_id>"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "OpenFile remains a live contract term in the assigned file.",
-      "source_obligation_ids": [
-        "obl-238"
-      ],
-      "source_seed_ids": [
-        "seed-238"
-      ],
-      "source_shard_ids": [
-        "shard-0060"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-865",
-      "status": "partial",
-      "evidence": [
-        "Plans/Contracts_V0.md:315-323 route_target/OpenSubject normalization is defined",
-        "Plans/Contracts_V0.md:1008-1011 OpenSubject routing semantics are live"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Route-normalization terms are live, but the stale-token retirement is not fully closed out.",
-      "source_obligation_ids": [
-        "obl-243"
-      ],
-      "source_seed_ids": [
-        "seed-243"
-      ],
-      "source_shard_ids": [
-        "shard-0061"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-878",
-      "status": "partial",
-      "evidence": [
-        "Plans/Contracts_V0.md:922-1026 subject_id, object_kind, and object_id are live contract terms"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Assigned stale-token family is still present in the contract.",
-      "source_obligation_ids": [
-        "obl-247"
-      ],
-      "source_seed_ids": [
-        "seed-247"
-      ],
-      "source_shard_ids": [
-        "shard-0062"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-931",
-      "status": "missing",
-      "evidence": [
-        "Plans/Contracts_V0.md: assigned file reviewed; no live GATE-010 occurrence found"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "No matching stale-token occurrence in the assigned file.",
-      "source_obligation_ids": [
-        "obl-262"
-      ],
-      "source_seed_ids": [
-        "seed-262"
-      ],
-      "source_shard_ids": [
-        "shard-0066"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1034",
-      "status": "partial",
-      "evidence": [
-        "Plans/Contracts_V0.md:321 OpenFile is referenced",
-        "Plans/Contracts_V0.md:995-1011 OpenSubject / generated://<artifact_id> are live"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "OpenFile and related routing terms still appear in the assigned file.",
-      "source_obligation_ids": [
-        "obl-290"
-      ],
-      "source_seed_ids": [
-        "seed-290"
-      ],
-      "source_shard_ids": [
-        "shard-0073"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1077",
-      "status": "missing",
-      "evidence": [
-        "Plans/Contracts_V0.md: assigned file reviewed; no live tier_id, run.tier_started, run.tier_completed, run.persona_stage_changed, or tier_runtime_record occurrence found"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "No matching stale-token occurrence in the assigned file.",
-      "source_obligation_ids": [
-        "obl-309"
-      ],
-      "source_seed_ids": [
-        "seed-309"
-      ],
-      "source_shard_ids": [
-        "shard-0078"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1095",
-      "status": "partial",
-      "evidence": [
-        "Plans/Contracts_V0.md:332 run_id, node_id, and blocked_sequence are explicitly canonical",
-        "Plans/Contracts_V0.md:831 approval binding uses run_id, node_id, blocked_sequence"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Blocked-episode identity tokens remain live in the contract.",
-      "source_obligation_ids": [
-        "obl-314"
-      ],
-      "source_seed_ids": [
-        "seed-314"
-      ],
-      "source_shard_ids": [
-        "shard-0079"
-      ],
-      "path_field_status": "match"
+      "required_action": "consumer_propagation"
     }
   ]
 }

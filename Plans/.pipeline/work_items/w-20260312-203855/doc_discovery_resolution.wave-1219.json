@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1219",
+  "group_ids": [
+    "discgrp-4873",
+    "discgrp-4874",
+    "discgrp-4875",
+    "discgrp-4876"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05272",
+      "source_obligation_ids": [
+        "obl-5048"
+      ],
+      "source_seed_ids": [
+        "seed-7374"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-011 -- UI command dispatch only (Rule 1)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L108"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05273",
+      "source_obligation_ids": [
+        "obl-5049"
+      ],
+      "source_seed_ids": [
+        "seed-7375"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 6.1 Three Theme Families (Three User-Facing Choices)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L720"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05274",
+      "source_obligation_ids": [
+        "obl-5050"
+      ],
+      "source_seed_ids": [
+        "seed-7376"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "## 10. Relationship to Other Plans",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L1168"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05275",
+      "source_obligation_ids": [
+        "obl-5051"
+      ],
+      "source_seed_ids": [
+        "seed-7377"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 2.1 Provider transport taxonomy",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L382"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

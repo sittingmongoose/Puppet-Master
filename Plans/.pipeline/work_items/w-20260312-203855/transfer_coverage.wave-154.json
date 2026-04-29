@@ -1,0 +1,1008 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-154",
+  "row_group_ids": [
+    "rowgrp-0613",
+    "rowgrp-0614",
+    "rowgrp-0615",
+    "rowgrp-0616"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-04536",
+      "source_obligation_ids": [
+        "obl-4314"
+      ],
+      "source_seed_ids": [
+        "seed-6058"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "`usage-feature.md` and `FinalGUISpec.md` describe export surfaces such as Ledger/Usage CSV",
+      "row_type": "layout_blocker",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "#### Three-axis settings model and resolver emit shape",
+      "status": "present",
+      "exact_items": [
+        "`usage-feature.md` and `FinalGUISpec.md` describe export surfaces such as Ledger/Usage CSV/JSON and thread export, but they do not yet require one stable manifest shape for non-trivial bundles.",
+        "usage-feature.md",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L51",
+        "Plans/Prompt_Pipeline.md:L200",
+        "Plans/Prompt_Pipeline.md:L211",
+        "Plans/Prompt_Pipeline.md:L281",
+        "Plans/Prompt_Pipeline.md:L387"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05200",
+      "source_obligation_ids": [
+        "obl-4976"
+      ],
+      "source_seed_ids": [
+        "seed-7221"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "`thread_id` when thread scope is required",
+      "row_type": "layout_blocker",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "## 0. Scope and SSOT status",
+      "status": "present",
+      "exact_items": [
+        "`thread_id` when thread scope is required",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L74",
+        "Plans/Prompt_Pipeline.md:L371",
+        "Plans/Prompt_Pipeline.md:L556"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06295",
+      "source_obligation_ids": [
+        "obl-5998"
+      ],
+      "source_seed_ids": [
+        "seed-9041"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "`agent-rules-context.md` still under-scopes actor coverage and execution-role inputs relat",
+      "row_type": "layout_blocker",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "# Prompt Pipeline (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "`agent-rules-context.md` still under-scopes actor coverage and execution-role inputs relative to Prompt Pipeline, Multi-Account, and Assistant chat identity disclosure requirements.",
+        "agent-rules-context.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L64"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06803",
+      "source_obligation_ids": [
+        "obl-6427"
+      ],
+      "source_seed_ids": [
+        "seed-9806"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Mod",
+      "row_type": "layout_blocker",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L16",
+        "Plans/Prompt_Pipeline.md:L21",
+        "Plans/Prompt_Pipeline.md:L48",
+        "Plans/Prompt_Pipeline.md:L51",
+        "Plans/Prompt_Pipeline.md:L65"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00152",
+      "source_obligation_ids": [
+        "obl-049"
+      ],
+      "source_seed_ids": [
+        "seed-049"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Provider/persona docs still encode old orchestration ownership.** Prompt, persona, model,",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "## 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)",
+      "status": "partial",
+      "exact_items": [
+        "Provider/persona docs still encode old orchestration ownership.** Prompt, persona, model, and provider docs still talk in phase/task/subtask/iteration terms and singular Overseer assumptions, even where runtime records already include `node_id` and `attempt_id`.",
+        "node_id",
+        "attempt_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L76",
+        "Plans/Prompt_Pipeline.md:L201"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00225",
+      "source_obligation_ids": [
+        "obl-119"
+      ],
+      "source_seed_ids": [
+        "seed-124"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "`Plans/Prompt_Pipeline.md`, `Plans/Personas.md`, `Plans/Provider_Stream_Mapping_External_R",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md`, `Plans/Personas.md`, `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Personas.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L16",
+        "Plans/Prompt_Pipeline.md:L21",
+        "Plans/Prompt_Pipeline.md:L48",
+        "Plans/Prompt_Pipeline.md:L65",
+        "Plans/Prompt_Pipeline.md:L398"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00281",
+      "source_obligation_ids": [
+        "obl-153"
+      ],
+      "source_seed_ids": [
+        "seed-160"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "`Plans/Models_System.md`, `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Models_System.md`, `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`",
+        "Plans/Models_System.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Personas.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L16",
+        "Plans/Prompt_Pipeline.md:L21",
+        "Plans/Prompt_Pipeline.md:L48",
+        "Plans/Prompt_Pipeline.md:L65",
+        "Plans/Prompt_Pipeline.md:L238"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00299",
+      "source_obligation_ids": [
+        "obl-166"
+      ],
+      "source_seed_ids": [
+        "seed-176"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "likely issue: execution ordering is thread FIFO with small queues, which misfits package-l",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### 1.2 Stage ordering (canonical)",
+      "status": "partial",
+      "exact_items": [
+        "likely issue: execution ordering is thread FIFO with small queues, which misfits package-lane parallelism and multi-project concurrent orchestration."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L88"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00386",
+      "source_obligation_ids": [
+        "obl-244"
+      ],
+      "source_seed_ids": [
+        "seed-276",
+        "seed-300",
+        "seed-1079",
+        "seed-1175",
+        "seed-2660",
+        "seed-2685",
+        "seed-3027",
+        "seed-3051",
+        "seed-3265",
+        "seed-3290",
+        "seed-3394",
+        "seed-3428",
+        "seed-3460",
+        "seed-3477",
+        "seed-3504",
+        "seed-3547",
+        "seed-3594",
+        "seed-3621",
+        "seed-3676",
+        "seed-3736",
+        "seed-3772",
+        "seed-3850",
+        "seed-3958",
+        "seed-4014",
+        "seed-4311",
+        "seed-4339",
+        "seed-4770",
+        "seed-4850",
+        "seed-4915",
+        "seed-4982",
+        "seed-5039",
+        "seed-7451",
+        "seed-8362",
+        "seed-8393",
+        "seed-8424",
+        "seed-8454",
+        "seed-8469",
+        "seed-8489",
+        "seed-8883",
+        "seed-8975",
+        "seed-9069",
+        "seed-9298",
+        "seed-9319",
+        "seed-9571",
+        "seed-9599",
+        "seed-9638",
+        "seed-9718",
+        "seed-9765"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0019",
+        "shard-0020",
+        "shard-0034",
+        "shard-0037",
+        "shard-0039",
+        "shard-0040",
+        "shard-0041",
+        "shard-0042",
+        "shard-0043",
+        "shard-0044",
+        "shard-0046",
+        "shard-0047",
+        "shard-0050",
+        "shard-0051",
+        "shard-0052",
+        "shard-0070",
+        "shard-0077",
+        "shard-0078",
+        "shard-0081",
+        "shard-0082",
+        "shard-0084",
+        "shard-0086",
+        "shard-0087"
+      ],
+      "canon_label": "`Plans/Prompt_Pipeline.md`",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md`",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L16",
+        "Plans/Prompt_Pipeline.md:L21",
+        "Plans/Prompt_Pipeline.md:L398",
+        "Plans/Prompt_Pipeline.md:L403"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00509",
+      "source_obligation_ids": [
+        "obl-366"
+      ],
+      "source_seed_ids": [
+        "seed-421"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "lane/worktree summary in package context",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "status": "partial",
+      "exact_items": [
+        "lane/worktree summary in package context"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01118",
+      "source_obligation_ids": [
+        "obl-975"
+      ],
+      "source_seed_ids": [
+        "seed-1143"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "canon_label": "compact requested/effective summary for live context",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### Fidelity recovery cov-009: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "compact requested/effective summary for live context"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L7",
+        "Plans/Prompt_Pipeline.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01371",
+      "source_obligation_ids": [
+        "obl-1228"
+      ],
+      "source_seed_ids": [
+        "seed-1469"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "open inspector/detail/history/ledger/evidence context",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "status": "partial",
+      "exact_items": [
+        "open inspector/detail/history/ledger/evidence context"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01391",
+      "source_obligation_ids": [
+        "obl-1248"
+      ],
+      "source_seed_ids": [
+        "seed-1493"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "Because Source Control is worktree-first and physically narrow, it should lean more on con",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "status": "partial",
+      "exact_items": [
+        "Because Source Control is worktree-first and physically narrow, it should lean more on context menus and focused commands than on dense inline action bars."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01790",
+      "source_obligation_ids": [
+        "obl-1647"
+      ],
+      "source_seed_ids": [
+        "seed-2054"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "Search results should not merely open a page; they should reconstruct context.",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "status": "partial",
+      "exact_items": [
+        "Search results should not merely open a page; they should reconstruct context."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02110",
+      "source_obligation_ids": [
+        "obl-1967"
+      ],
+      "source_seed_ids": [
+        "seed-2560"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "page/run context such as `project_id`, `focused_run_id`, historical-run mode, and object f",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### 1.2C Investigation Context normalization for Debug Mode",
+      "status": "partial",
+      "exact_items": [
+        "page/run context such as `project_id`, `focused_run_id`, historical-run mode, and object focus belong to the page/router state",
+        "project_id",
+        "focused_run_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L556"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02514",
+      "source_obligation_ids": [
+        "obl-2363"
+      ],
+      "source_seed_ids": [
+        "seed-3068"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "Consolidate Prompt Pipeline onto one canonical handoff/runtime object that preserves threa",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "# Prompt Pipeline (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "Consolidate Prompt Pipeline onto one canonical handoff/runtime object that preserves thread/auth/account/switch data across dispatch boundaries."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02652",
+      "source_obligation_ids": [
+        "obl-2500"
+      ],
+      "source_seed_ids": [
+        "seed-3283"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "Prompt Pipeline still has the sharpest canonical gap for requested-vs-effective truth:",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "# Prompt Pipeline (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "Prompt Pipeline still has the sharpest canonical gap for requested-vs-effective truth:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02859",
+      "source_obligation_ids": [
+        "obl-2706"
+      ],
+      "source_seed_ids": [
+        "seed-3559"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "`operational_identity` explains which side-effect identity or target context the action us",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "status": "present",
+      "exact_items": [
+        "`operational_identity` explains which side-effect identity or target context the action used",
+        "operational_identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L476",
+        "Plans/Prompt_Pipeline.md:L503",
+        "Plans/Prompt_Pipeline.md:L505",
+        "Plans/Prompt_Pipeline.md:L508",
+        "Plans/Prompt_Pipeline.md:L556"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02906",
+      "source_obligation_ids": [
+        "obl-2753"
+      ],
+      "source_seed_ids": [
+        "seed-3614"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "`effective_project_id` remains useful correlation context, but it is not a substitute for",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "status": "partial",
+      "exact_items": [
+        "`effective_project_id` remains useful correlation context, but it is not a substitute for operational identity",
+        "effective_project_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02951",
+      "source_obligation_ids": [
+        "obl-2798"
+      ],
+      "source_seed_ids": [
+        "seed-3686"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "this history must not become a second quota system; it should plug into the shared Usage/r",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "# Prompt Pipeline (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "this history must not become a second quota system; it should plug into the shared Usage/runtime pipeline"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03110",
+      "source_obligation_ids": [
+        "obl-2956"
+      ],
+      "source_seed_ids": [
+        "seed-3900"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "lane/worktree-aware scheduling context",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "status": "partial",
+      "exact_items": [
+        "lane/worktree-aware scheduling context"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03157",
+      "source_obligation_ids": [
+        "obl-3003"
+      ],
+      "source_seed_ids": [
+        "seed-3965"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "That mixture is the core reason it cannot become the rewrite-era canonical execution conte",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "status": "partial",
+      "exact_items": [
+        "That mixture is the core reason it cannot become the rewrite-era canonical execution context. It is trying to be both a planner/decomposition helper and a runtime/audit object."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03199",
+      "source_obligation_ids": [
+        "obl-3045"
+      ],
+      "source_seed_ids": [
+        "seed-4027"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "plus canonical `execution_unit_context`",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "#### execution_unit_context canonical record",
+      "status": "present",
+      "exact_items": [
+        "plus canonical `execution_unit_context`",
+        "execution_unit_context"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L510",
+        "Plans/Prompt_Pipeline.md:L511",
+        "Plans/Prompt_Pipeline.md:L513",
+        "Plans/Prompt_Pipeline.md:L514",
+        "Plans/Prompt_Pipeline.md:L517"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03201",
+      "source_obligation_ids": [
+        "obl-3047"
+      ],
+      "source_seed_ids": [
+        "seed-4035"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "Treat worktree/lane binding and requested/effective account/runtime identity as mandatory",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### Fidelity recovery cov-009: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "Treat worktree/lane binding and requested/effective account/runtime identity as mandatory parts of the canonical execution context, not optional downstream embellishments."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L7",
+        "Plans/Prompt_Pipeline.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03712",
+      "source_obligation_ids": [
+        "obl-3557"
+      ],
+      "source_seed_ids": [
+        "seed-4788"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "`Plans/Prompt_Pipeline.md` should remain the owner of the effective-resolution field famil",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md` should remain the owner of the effective-resolution field family.",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L16",
+        "Plans/Prompt_Pipeline.md:L21",
+        "Plans/Prompt_Pipeline.md:L398",
+        "Plans/Prompt_Pipeline.md:L403"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03721",
+      "source_obligation_ids": [
+        "obl-3566"
+      ],
+      "source_seed_ids": [
+        "seed-4797"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "`execution_unit_context`",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "#### execution_unit_context canonical record",
+      "status": "present",
+      "exact_items": [
+        "`execution_unit_context`",
+        "execution_unit_context"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L510",
+        "Plans/Prompt_Pipeline.md:L511",
+        "Plans/Prompt_Pipeline.md:L513",
+        "Plans/Prompt_Pipeline.md:L514",
+        "Plans/Prompt_Pipeline.md:L517"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03748",
+      "source_obligation_ids": [
+        "obl-3593"
+      ],
+      "source_seed_ids": [
+        "seed-4859"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Introduce `execution_unit_context` as the canonical runtime-facing context object and make",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "status": "present",
+      "exact_items": [
+        "Introduce `execution_unit_context` as the canonical runtime-facing context object and make `TierContext` explicitly derived or compatibility-only.",
+        "execution_unit_context",
+        "TierContext"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L510",
+        "Plans/Prompt_Pipeline.md:L511",
+        "Plans/Prompt_Pipeline.md:L512",
+        "Plans/Prompt_Pipeline.md:L513",
+        "Plans/Prompt_Pipeline.md:L514"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03800",
+      "source_obligation_ids": [
+        "obl-3645"
+      ],
+      "source_seed_ids": [
+        "seed-4928"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "That context should be strict enough to support:",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "status": "partial",
+      "exact_items": [
+        "That context should be strict enough to support:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03851",
+      "source_obligation_ids": [
+        "obl-3696"
+      ],
+      "source_seed_ids": [
+        "seed-5019"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "`attempt_record` when side-effect context exists",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "status": "partial",
+      "exact_items": [
+        "`attempt_record` when side-effect context exists",
+        "attempt_record"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04487",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04527",
+      "source_obligation_ids": [
+        "obl-4305"
+      ],
+      "source_seed_ids": [
+        "seed-6042"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The issue here is less missing identity than missing normalization; the local docs already",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "status": "partial",
+      "exact_items": [
+        "The issue here is less missing identity than missing normalization; the local docs already know what context they need."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04650",
+      "source_obligation_ids": [
+        "obl-4428"
+      ],
+      "source_seed_ids": [
+        "seed-6273"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "Some existing payloads probably carry both context and target in a way that should be spli",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "status": "partial",
+      "exact_items": [
+        "Some existing payloads probably carry both context and target in a way that should be split once `route_target` exists.",
+        "route_target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04817",
+      "source_obligation_ids": [
+        "obl-4594"
+      ],
+      "source_seed_ids": [
+        "seed-6562"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "canon_label": "which project/workspace context should be activated",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "status": "partial",
+      "exact_items": [
+        "which project/workspace context should be activated"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04875",
+      "source_obligation_ids": [
+        "obl-4652"
+      ],
+      "source_seed_ids": [
+        "seed-6660"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "must land in Source Control with the relevant run/worktree/repo context available",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "status": "partial",
+      "exact_items": [
+        "must land in Source Control with the relevant run/worktree/repo context available"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

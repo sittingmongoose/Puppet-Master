@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-545",
+  "group_ids": [
+    "discgrp-2177",
+    "discgrp-2178",
+    "discgrp-2179",
+    "discgrp-2180"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02448",
+      "source_obligation_ids": [
+        "obl-2298"
+      ],
+      "source_seed_ids": [
+        "seed-2980"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "### 3. Dashboard / thread / resume behavior",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L2065"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02449",
+      "source_obligation_ids": [
+        "obl-2299"
+      ],
+      "source_seed_ids": [
+        "seed-2981"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02450",
+      "source_obligation_ids": [
+        "obl-2300"
+      ],
+      "source_seed_ids": [
+        "seed-2982"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Log.md",
+      "new_heading_hint": "## Entries",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Log.md:L10"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02451",
+      "source_obligation_ids": [
+        "obl-2301"
+      ],
+      "source_seed_ids": [
+        "seed-2983"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "## Relationship to existing plans",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L17"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

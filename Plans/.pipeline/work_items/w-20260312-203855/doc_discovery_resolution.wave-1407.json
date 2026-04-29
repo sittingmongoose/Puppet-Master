@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1407",
+  "group_ids": [
+    "discgrp-5625",
+    "discgrp-5626",
+    "discgrp-5627",
+    "discgrp-5628"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06092",
+      "source_obligation_ids": [
+        "obl-5864"
+      ],
+      "source_seed_ids": [
+        "seed-8708"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06093",
+      "source_obligation_ids": [
+        "obl-5865"
+      ],
+      "source_seed_ids": [
+        "seed-8709"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06094",
+      "source_obligation_ids": [
+        "obl-5866"
+      ],
+      "source_seed_ids": [
+        "seed-8710"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L91"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06095",
+      "source_obligation_ids": [
+        "obl-5867"
+      ],
+      "source_seed_ids": [
+        "seed-8711"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/DRY_Rules.md",
+      "new_heading_hint": "# DRY Rules (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

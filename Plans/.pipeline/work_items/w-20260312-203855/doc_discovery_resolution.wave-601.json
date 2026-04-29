@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-601",
+  "group_ids": [
+    "discgrp-2401",
+    "discgrp-2402",
+    "discgrp-2403",
+    "discgrp-2404"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02678",
+      "source_obligation_ids": [
+        "obl-2525"
+      ],
+      "source_seed_ids": [
+        "seed-3312"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-052: Shared escalation ladder",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L67"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02679",
+      "source_obligation_ids": [
+        "obl-2526"
+      ],
+      "source_seed_ids": [
+        "seed-3313"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "# Usage Feature -- App/GUI Plan",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02681",
+      "source_obligation_ids": [
+        "obl-2528"
+      ],
+      "source_seed_ids": [
+        "seed-3321"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02682",
+      "source_obligation_ids": [
+        "obl-2529"
+      ],
+      "source_seed_ids": [
+        "seed-3322"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_OpenCode.md",
+      "new_heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

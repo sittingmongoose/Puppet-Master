@@ -53,6 +53,28 @@ Context menus are the canonical discoverability surface for copy, paste, Add Not
 
 #### 10.9.1 Copy path and copy value
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0314
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - replacing old worktree/tier copy with lane/worktree/package/seam-aware wording
+  - `Copy tier_id`
+  - Copy tier_id
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 Non-text path/value copy actions must copy the exact underlying value via the shared clipboard helper and must not depend on text rendering quirks.
 
 #### 10.9.2 Text selection and read-only copy
@@ -97,6 +119,30 @@ Rules:
 - `rename` requires `path` + `position` + `newName`.
 - `rename` is approval-gated because it applies edits.
 ### 10.11 Loading-to-live transitions
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0262
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Good candidate transitions into `cleanup_eligible`:
+  - cleanup_eligible
+  - `SelectSpeakerEvent` is demoted to `raw_observation`, which hides governance-relevant speaker/overseer transitions from downstream projections
+  - SelectSpeakerEvent
+  - raw_observation
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 When moving from placeholder to real data, preserve layout footprint and focus so the interface does not jump unexpectedly.
 

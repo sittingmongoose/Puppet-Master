@@ -1,0 +1,102 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1044",
+  "group_ids": [
+    "discgrp-4173",
+    "discgrp-4174",
+    "discgrp-4175",
+    "discgrp-4176"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04550",
+      "source_obligation_ids": [
+        "obl-4328"
+      ],
+      "source_seed_ids": [
+        "seed-6091",
+        "seed-6241",
+        "seed-6325",
+        "seed-7096",
+        "seed-7268"
+      ],
+      "source_shard_ids": [
+        "shard-0059",
+        "shard-0060",
+        "shard-0061",
+        "shard-0067",
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-04551",
+      "source_obligation_ids": [
+        "obl-4329"
+      ],
+      "source_seed_ids": [
+        "seed-6092"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Prompt_Pipeline.md",
+      "new_heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04552",
+      "source_obligation_ids": [
+        "obl-4330"
+      ],
+      "source_seed_ids": [
+        "seed-6093"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "### 3. Dashboard / thread / resume behavior",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L2065"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04553",
+      "source_obligation_ids": [
+        "obl-4331"
+      ],
+      "source_seed_ids": [
+        "seed-6094"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-080: Project attention projection",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L133"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

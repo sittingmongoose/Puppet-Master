@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-765",
+  "group_ids": [
+    "discgrp-3057",
+    "discgrp-3058",
+    "discgrp-3059",
+    "discgrp-3060"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03337",
+      "source_obligation_ids": [
+        "obl-3183"
+      ],
+      "source_seed_ids": [
+        "seed-4243"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-186: Approval scope key and approver identity",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L165"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03338",
+      "source_obligation_ids": [
+        "obl-3184"
+      ],
+      "source_seed_ids": [
+        "seed-4244"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03339",
+      "source_obligation_ids": [
+        "obl-3185"
+      ],
+      "source_seed_ids": [
+        "seed-4245"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "new_heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03340",
+      "source_obligation_ids": [
+        "obl-3186"
+      ],
+      "source_seed_ids": [
+        "seed-4246"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

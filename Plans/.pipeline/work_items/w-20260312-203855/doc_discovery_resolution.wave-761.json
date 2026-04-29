@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-761",
+  "group_ids": [
+    "discgrp-3041",
+    "discgrp-3042",
+    "discgrp-3043",
+    "discgrp-3044"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03321",
+      "source_obligation_ids": [
+        "obl-3167"
+      ],
+      "source_seed_ids": [
+        "seed-4220"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/DRY_Rules.md",
+      "new_heading_hint": "# DRY Rules (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03322",
+      "source_obligation_ids": [
+        "obl-3168"
+      ],
+      "source_seed_ids": [
+        "seed-4221"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/DRY_Rules.md",
+      "new_heading_hint": "# DRY Rules (Canonical)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03323",
+      "source_obligation_ids": [
+        "obl-3169"
+      ],
+      "source_seed_ids": [
+        "seed-4222"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03324",
+      "source_obligation_ids": [
+        "obl-3170"
+      ],
+      "source_seed_ids": [
+        "seed-4223"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

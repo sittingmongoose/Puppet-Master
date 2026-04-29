@@ -1,2 +1,131 @@
 # Orchestrator Subagent Integration -- Implementation Plan
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+  - Current docs do say Orchestrator consumes the plan/node graph for execution
+  - Design discussion now has a concrete recommendation direction
+  - Emerging execution-settings direction
+  - Worktree gap is now explicit
+  - seam review loop
+  - runtime/model precedence
+  - worktree behavior
+  - Highest-Impact Docs
+
+#### Source target target-0616
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+  - Current docs do say Orchestrator consumes the plan/node graph for execution
+  - Design discussion now has a concrete recommendation direction
+  - Emerging execution-settings direction
+  - Worktree gap is now explicit
+  - seam review loop
+  - runtime/model precedence
+  - worktree behavior
+  - Highest-Impact Docs
+- Exact required items represented:
+  - Orchestrator must consume canonical runtime fields and event names from shared contracts
+  - use plan-graph index and node shard files as required execution inputs
+  - treat runnable graph nodes, DAG readiness, and dispatch from a global ready set as the scheduling model
+  - define the governing intelligence/control loop in a graph-canonical system
+  - resolve whether tiers remain only a derived human-facing lens or retain execution authority
+  - Define distinct defaults/overrides for provider/model at run/global, feature seam, work package, node, work [retired-token-11], feature seam overseer, and overseer-delegated node worker levels.
+  - Make requested vs effective provider/model visible at all levels where [retired-token-6] can occur.
+  - Specify node [retired-token-14] selection as dynamic-by-default from node scope/type; node-worker [retired-token-14] override is policy-owned, not per-node [retired-token-4].
+  - Specify whether overseers may use subagents for node work and what provider/model policy applies to delegated node workers.
+  - Decide whether worktrees are allocated/owned per node, per package, per seam, or per remediation branch.
+  - Resolve package-based worktree preference vs [retired-token-7] for scale/manageability.
+  - Record worktree ownership/isolation rules after Orchestrator ownership boundaries are pinned.
+  - Expose source-control/worktree handshake as a remaining blind spot.
+  - define concrete seam review loop behavior
+  - include trigger points, checks performed, corroboration thresholds, and emitted artifacts
+  - candidate outputs: seam review verdict, failure classes with severity, evidence bundle/rationale, remediation-node recommendation or [retired-token-12] recommendation, corroboration requirement and outcome when invoked
+  - provider/model precedence order across run, seam, package, node, overseer, and delegated-subagent levels
+  - whether seam/package/node provider-model settings are hard constraints, defaults, or hints
+  - whether an overseer can do direct node work or only delegate/review
+  - if direct node work is allowed, whether it uses overseer-[retired-token-15] or node-[retired-token-15]
+  - how dynamic node [retired-token-14]s interact with explicit node overrides and overseer-controlled delegation
+  - how are worktrees assigned for parallel nodes within the same package or seam
+  - what happens to worktree ownership during remediation, corroboration, or [retired-token-12]-triggered work
+  - for package-based worktree pools, whether downstream dependent nodes reuse the same worktree lane or start a fresh lane from the promoted upstream result
+  - preserve same-lane continuation by default; promote-then-fork only when it materially improves safe parallelism
+  - Replace tier-rooted execution with package/seam/lane model
+  - Define [retired-token-11] + seam overseer roles
+  - Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage
+  - Redefine gates to package-complete / seam-complete
+  - Rename or retire Tiers UI/tab and tier_tree/progress bars
+  - a seam overseer should not collapse into a narrow implementation [retired-token-14] just because a framework is detected
+  - `Seam integration default`
+  - Seam integration default
+  - `Seam integration blocked`
+  - Seam integration blocked
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - `[retired-token-26]` already carries an `[retired-token-27]` field block, but stale `[retired-token-18]` / `[retired-token-21]` residue still survives nearby.
+  - [retired-token-26]
+  - [retired-token-27]
+  - [retired-token-18]
+  - [retired-token-21]
+  - `[retired-token-26]:209-235`
+  - [retired-token-26]:209-235
+  - `[retired-token-26]:380-402`
+  - [retired-token-26]:380-402
+  - `[retired-token-26]:379-391`
+  - [retired-token-26]:379-391
+  - `[retired-token-26]:374-391`
+  - [retired-token-26]:374-391
+  - `cov-526` / `obl-222` remains unresolved because the ledger requires a concrete worktree allocation strategy (per node, per package, per seam, or remediation branch) plus contamination/reuse/cleanup rules, but the live docs still stop short of that owner section: `Plans/Crosswalk.md:88-94` assigns lane/worktree ownership boundaries, `Plans/WorktreeGitImprovement.md:62-66` and `Plans/WorktreeGitImprovement.md:78-80` retain the worktree plan without defining allocation strategy, and `[retired-token-26]:28-41` plus later authority wording require identity alignment without specifying how lanes/worktrees are allocated. Exact ledger evidence remains at `working_ledger.md:L806`, `working_ledger.md:L1036`, `working_ledger.md:L1289`, and `working_ledger.md:L1539`.
+  - cov-526
+  - obl-222
+  - Plans/Crosswalk.md:88-94
+  - Plans/WorktreeGitImprovement.md:62-66
+  - Plans/WorktreeGitImprovement.md:78-80
+  - [retired-token-26]:28-41
+  - working_ledger.md:L806
+  - working_ledger.md:L1036
+  - `[retired-token-26]:28-41`
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #14 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #15 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #16 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #17 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #18 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #19 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #20 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #21 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #22 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #23 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #24 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #25 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #26 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #27 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+

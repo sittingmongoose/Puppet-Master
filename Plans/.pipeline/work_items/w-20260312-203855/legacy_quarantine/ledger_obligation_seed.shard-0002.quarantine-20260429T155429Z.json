@@ -1,0 +1,227 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0002",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0002-L000201-L000400.md",
+  "source_line_range": "L000201-L000400",
+  "covered_shard_id": "shard-0002",
+  "seed_candidates": [
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "UI/backbone label normalization",
+      "exact_items": [
+        "Seam Overseer",
+        "Corroboration",
+        "Graph Patch",
+        "Recovery",
+        "User",
+        "External Resource"
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "stale_tokens": [
+        "Seam Overseer",
+        "Corroboration",
+        "Graph Patch",
+        "Recovery",
+        "User",
+        "External Resource"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L201-L206"
+      ],
+      "notes": [
+        "Returned uncertain whether labels are stale or canonical; retained as uncertain-adjacent candidate."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "concern record carry-through",
+      "exact_items": [
+        "identity",
+        "scope",
+        "severity",
+        "category",
+        "owner",
+        "lifecycle state",
+        "meaning/summary",
+        "linkage to evidence/artifacts/history/source records",
+        "visibility/attention flags"
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L260-L268"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "orchestrator widget projection fields",
+      "exact_items": [
+        "widget identity/type",
+        "scope",
+        "filter/sort/display config",
+        "projection ref"
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L308-L315"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "orchestrator projection families",
+      "exact_items": [
+        "Run Summary",
+        "Seam Summary",
+        "Package Summary",
+        "Node Summary",
+        "Promotion Summary",
+        "Lane / Worktree Summary",
+        "Concern Summary",
+        "Account / Usage Pressure",
+        "Recent Major Events",
+        "Corroboration Summary",
+        "Recovery Summary",
+        "Overseer Activity"
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L315-L327"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "degraded projection trust/action gates",
+      "exact_items": [
+        "fresh-enough projection state gate",
+        "Ledger and direct record views as trust anchor",
+        "direct record action support only for current/generation-matched records"
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L342-L352"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "direct-record actionability disclosure",
+      "exact_items": [
+        "currentness",
+        "generation match",
+        "superseded yes/no",
+        "actionable yes/no"
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L359-L363"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "settings categorization hierarchy",
+      "exact_items": [
+        "Providers & Models",
+        "Execution Identity",
+        "Governance",
+        "Workers",
+        "Recovery",
+        "HITL",
+        "App / Global",
+        "Project",
+        "Seam",
+        "Package",
+        "Node",
+        "Actor / Role",
+        "Runtime only"
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L381-L397"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "usage redesign out-of-scope marker",
+      "exact_items": [
+        "full Usage-page redesign is intentionally out of scope for this thread"
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L376-L380"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    {
+      "source_evidence": "working_ledger.md:L207-L215",
+      "item": "alert level / dashboard / orchestrator / chat-thread direction bullets"
+    },
+    {
+      "source_evidence": "working_ledger.md:L217-L240",
+      "item": "event family / visibility / badge sparse-count direction bullets"
+    },
+    {
+      "source_evidence": "working_ledger.md:L241-L257",
+      "item": "condition-aging / resolved / dismissed / acknowledged semantics"
+    },
+    {
+      "source_evidence": "working_ledger.md:L275-L304",
+      "item": "concern creation / projection / action-model direction bullets"
+    },
+    {
+      "source_evidence": "working_ledger.md:L328-L341",
+      "item": "projection freshness / degradation policy bullets"
+    },
+    {
+      "source_evidence": "working_ledger.md:L364-L370",
+      "item": "sorting/grouping defaults bullets"
+    },
+    {
+      "source_evidence": "working_ledger.md:L371-L400",
+      "item": "dashboard/projects/orchestrator split and override-display direction bullets"
+    }
+  ],
+  "uncertain_items": [
+    {
+      "source_evidence": "working_ledger.md:L201-L206",
+      "item": "whether the listed labels are stale tokens to retire or canonical headings to preserve"
+    },
+    {
+      "source_evidence": "working_ledger.md:L308-L327",
+      "item": "whether projection family names map to existing Plans/** doc sections or only future surfaces"
+    },
+    {
+      "source_evidence": "working_ledger.md:L381-L397",
+      "item": "whether settings hierarchy names are canonical headings or draft groupings"
+    }
+  ]
+}

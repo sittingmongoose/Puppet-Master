@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-260",
+  "group_ids": [
+    "discgrp-1037",
+    "discgrp-1038",
+    "discgrp-1039",
+    "discgrp-1040"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01287",
+      "source_obligation_ids": [
+        "obl-1144"
+      ],
+      "source_seed_ids": [
+        "seed-1356"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-081: Project attention projection",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L209"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01288",
+      "source_obligation_ids": [
+        "obl-1145"
+      ],
+      "source_seed_ids": [
+        "seed-1357"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Document_Packaging_Policy.md",
+      "new_heading_hint": "### 2.1 Primary split rule",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01289",
+      "source_obligation_ids": [
+        "obl-1146"
+      ],
+      "source_seed_ids": [
+        "seed-1358"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "# Puppet Master \u2014 User-Project Project Plan Package Outputs (SSOT)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01290",
+      "source_obligation_ids": [
+        "obl-1147"
+      ],
+      "source_seed_ids": [
+        "seed-1359"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-075: Historical semantic consistency",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L107"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

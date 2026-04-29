@@ -1,0 +1,653 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-121",
+  "row_group_ids": [
+    "rowgrp-0481",
+    "rowgrp-0482",
+    "rowgrp-0483",
+    "rowgrp-0484"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-06868",
+      "source_obligation_ids": [
+        "obl-6471"
+      ],
+      "source_seed_ids": [
+        "seed-9850"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "7. `Plans/Glossary.md`",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "7. `Plans/Glossary.md`",
+        "Plans/Glossary.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L13",
+        "Plans/Glossary.md:L23"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06921",
+      "source_obligation_ids": [
+        "obl-6521"
+      ],
+      "source_seed_ids": [
+        "seed-9912",
+        "seed-9954"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/Glossary.md:34-67`",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Glossary.md:34-67`",
+        "Plans/Glossary.md:34-67"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06922",
+      "source_obligation_ids": [
+        "obl-6522"
+      ],
+      "source_seed_ids": [
+        "seed-9913",
+        "seed-9955"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/Glossary.md:102-126`",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Glossary.md:102-126`",
+        "Plans/Glossary.md:102-126"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06988",
+      "source_obligation_ids": [
+        "obl-6584"
+      ],
+      "source_seed_ids": [
+        "seed-10035",
+        "seed-10151"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090"
+      ],
+      "canon_label": "`Plans/Glossary.md:30-127`",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Glossary.md:30-127`",
+        "Plans/Glossary.md:30-127"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07083",
+      "source_obligation_ids": [
+        "obl-6663"
+      ],
+      "source_seed_ids": [
+        "seed-10200"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "`Plans/Glossary.md:30-67`",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Glossary.md:30-67`",
+        "Plans/Glossary.md:30-67"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07098",
+      "source_obligation_ids": [
+        "obl-6678"
+      ],
+      "source_seed_ids": [
+        "seed-10245"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/Glossary.md:30-70`",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Glossary.md:30-70`",
+        "Plans/Glossary.md:30-70"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07118",
+      "source_obligation_ids": [
+        "obl-6693"
+      ],
+      "source_seed_ids": [
+        "seed-10278"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/Glossary.md:34-85`",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Glossary.md:34-85`",
+        "Plans/Glossary.md:34-85"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07138",
+      "source_obligation_ids": [
+        "obl-6711"
+      ],
+      "source_seed_ids": [
+        "seed-10307"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/Glossary.md:30-85`",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Glossary.md:30-85`",
+        "Plans/Glossary.md:30-85"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-07175",
+      "source_obligation_ids": [
+        "obl-6742"
+      ],
+      "source_seed_ids": [
+        "seed-10376"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/Glossary.md:30-90`",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Glossary.md:30-90`",
+        "Plans/Glossary.md:30-90"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00126",
+      "source_obligation_ids": [
+        "obl-041"
+      ],
+      "source_seed_ids": [
+        "seed-041"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "ownership glossary/crosswalk",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Cleanup Priorities",
+      "status": "missing",
+      "exact_items": [
+        "Extend Glossary.md, Crosswalk.md, Decision_Policy.md, and 00-plans-index.md with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.",
+        "Clarify which docs own execution truth vs projections vs UI-only overlays."
+      ],
+      "stale_tokens": [
+        "tier-centric ownership",
+        "projection-only overlay",
+        "execution truth vs projections"
+      ],
+      "evidence": [
+        "Plans/Glossary.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00590",
+      "source_obligation_ids": [
+        "obl-447"
+      ],
+      "source_seed_ids": [
+        "seed-517",
+        "seed-1519",
+        "seed-1524",
+        "seed-1761"
+      ],
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0024",
+        "shard-0026"
+      ],
+      "canon_label": "`stale`",
+      "row_type": "stale_retirement",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "missing",
+      "exact_items": [
+        "`stale`",
+        "stale"
+      ],
+      "stale_tokens": [
+        "stale"
+      ],
+      "evidence": [
+        "Plans/Glossary.md:L84",
+        "Plans/Glossary.md:L86"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-00737",
+      "source_obligation_ids": [
+        "obl-594"
+      ],
+      "source_seed_ids": [
+        "seed-681",
+        "seed-690",
+        "seed-1758",
+        "seed-2090",
+        "seed-2097",
+        "seed-2137"
+      ],
+      "source_shard_ids": [
+        "shard-0015",
+        "shard-0026",
+        "shard-0029",
+        "shard-0030"
+      ],
+      "canon_label": "`stale_historical`",
+      "row_type": "stale_retirement",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`stale_historical`",
+        "stale_historical"
+      ],
+      "stale_tokens": [
+        "stale_historical"
+      ],
+      "evidence": [
+        "Plans/Glossary.md:L1-L179 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01416",
+      "source_obligation_ids": [
+        "obl-1273"
+      ],
+      "source_seed_ids": [
+        "seed-1535"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "most vulnerable to stale/degraded projection confusion because it is summary-heavy",
+      "row_type": "stale_retirement",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Projection freshness and health terms",
+      "status": "present",
+      "exact_items": [
+        "most vulnerable to stale/degraded projection confusion because it is summary-heavy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L1-L179 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03041",
+      "source_obligation_ids": [
+        "obl-2887"
+      ],
+      "source_seed_ids": [
+        "seed-3811"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "freshness axis: `current | refreshing | stale`",
+      "row_type": "stale_retirement",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Projection freshness and health terms",
+      "status": "present",
+      "exact_items": [
+        "freshness axis: `current | refreshing | stale`",
+        "current | refreshing | stale"
+      ],
+      "stale_tokens": [
+        "current | refreshing | stale"
+      ],
+      "evidence": [
+        "Plans/Glossary.md:L1-L179 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03062",
+      "source_obligation_ids": [
+        "obl-2908"
+      ],
+      "source_seed_ids": [
+        "seed-3840"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "Let surface docs consume those terms instead of inventing local stale/degraded wording.",
+      "row_type": "stale_retirement",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "## 2. Core terms",
+      "status": "present",
+      "exact_items": [
+        "Let surface docs consume those terms instead of inventing local stale/degraded wording."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L1-L179 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03198",
+      "source_obligation_ids": [
+        "obl-3044"
+      ],
+      "source_seed_ids": [
+        "seed-4026"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "`legacy_decomposition_context`",
+      "row_type": "stale_retirement",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`legacy_decomposition_context`",
+        "legacy_decomposition_context"
+      ],
+      "stale_tokens": [
+        "legacy_decomposition_context"
+      ],
+      "evidence": [
+        "Plans/Glossary.md:L1-L179 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05872",
+      "source_obligation_ids": [
+        "obl-5644"
+      ],
+      "source_seed_ids": [
+        "seed-8376"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "legacy `PuppetMasterEvent::*` source tables",
+      "row_type": "stale_retirement",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "legacy `PuppetMasterEvent::*` source tables",
+        "PuppetMasterEvent::*"
+      ],
+      "stale_tokens": [
+        "PuppetMasterEvent::*"
+      ],
+      "evidence": [
+        "Plans/Glossary.md:L1-L179 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05991",
+      "source_obligation_ids": [
+        "obl-5763"
+      ],
+      "source_seed_ids": [
+        "seed-8577"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Strong stale consumer:",
+      "row_type": "stale_retirement",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "# Glossary (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "Strong stale consumer:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L1-L179 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06100",
+      "source_obligation_ids": [
+        "obl-5872"
+      ],
+      "source_seed_ids": [
+        "seed-8717"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "The base `GraphNode` struct still preserves stale fields as if they were core model state:",
+      "row_type": "stale_retirement",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "## 2. Core terms",
+      "status": "present",
+      "exact_items": [
+        "The base `GraphNode` struct still preserves stale fields as if they were core model state:",
+        "GraphNode"
+      ],
+      "stale_tokens": [
+        "GraphNode"
+      ],
+      "evidence": [
+        "Plans/Glossary.md:L1-L179 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02950",
+      "source_obligation_ids": [
+        "obl-2797"
+      ],
+      "source_seed_ids": [
+        "seed-3685"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "pressure episodes and switch events should support both provider-wide and account-specific",
+      "row_type": "consumer",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "pressure episodes and switch events should support both provider-wide and account-specific views"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03399",
+      "source_obligation_ids": [
+        "obl-3245"
+      ],
+      "source_seed_ids": [
+        "seed-4331"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`to_tier_id: Some(format!(\\\"interview-phase-...\\\"))`",
+      "row_type": "consumer",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "#### File format and location",
+      "status": "partial",
+      "exact_items": [
+        "`to_tier_id: Some(format!(\\\"interview-phase-...\\\"))`",
+        "to_tier_id: Some(format!(\\\"interview-phase-...\\\"))"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L911"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04763",
+      "source_obligation_ids": [
+        "obl-4541"
+      ],
+      "source_seed_ids": [
+        "seed-6458"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "`00-plans-index.md` still misroutes or under-describes several rewrite-critical owners (`O",
+      "row_type": "consumer",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "## 3. How OpenCode Does It (Reference for Rewrite)",
+      "status": "present",
+      "exact_items": [
+        "`00-plans-index.md` still misroutes or under-describes several rewrite-critical owners (`Orchestrator_Page`, `Widget_System`, `storage-plan`, `Executor_Protocol`) and does not surface Multi-Account/Crosswalk strongly enough.",
+        "00-plans-index.md",
+        "Orchestrator_Page",
+        "Widget_System",
+        "storage-plan",
+        "Executor_Protocol"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L8",
+        "Plans/LSPSupport.md:L151",
+        "Plans/LSPSupport.md:L192",
+        "Plans/LSPSupport.md:L273",
+        "Plans/LSPSupport.md:L317"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06327",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    }
+  ]
+}

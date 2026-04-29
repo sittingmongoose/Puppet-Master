@@ -1,2 +1,461 @@
 # Puppet Master GUI Specification -- Slint Rewrite
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+  - Storage/delivery clarification pressure from user
+  - New execution-policy settings requirement
+  - Parent-object field-shape direction now discussed
+  - Child-record field-shape direction now discussed
+  - GUI gap is now explicit
+  - Current docs are not fully simplified to "graph only"
+  - Orchestrator ownership boundaries
+  - seam review loop
+  - runtime/model precedence
+  - projection ownership by surface
+  - [retired-token-21] settings
+  - Highest-Impact Docs
+  - GUI / UX Impacts
+  - Cleanup Priorities
+
+#### Source target target-0247
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+  - Storage/delivery clarification pressure from user
+  - New execution-policy settings requirement
+  - Parent-object field-shape direction now discussed
+  - Child-record field-shape direction now discussed
+  - GUI gap is now explicit
+  - Current docs are not fully simplified to "graph only"
+  - Orchestrator ownership boundaries
+  - seam review loop
+  - runtime/model precedence
+  - projection ownership by surface
+  - [retired-token-21] settings
+  - Highest-Impact Docs
+  - GUI / UX Impacts
+  - Cleanup Priorities
+- Exact required items represented:
+  - pin down whether handoff/retry artifacts are literally JSON/JSONL/redb-backed records/projections
+  - specify the concrete project-scoped paths or storage domains that own them
+  - specify how a worker receives the handoff packet: inline prompt block, referenced artifact, fetched context, or mixed model
+  - cover agent vs subagent
+  - cover fresh vs reused retry worker
+  - cover overseer delegation on/off
+  - cover delegated-worker provider/model/effort policy
+  - ensure consistent requested-vs-effective identity display across chat actors and orchestration actors
+  - `feature_seam` should own membership, lifecycle, requested settings, overseer/governance state, seam-promotion state, and seam evidence linkage
+  - `project` should primarily own identity, repo/project settings/theme/account-policy linkage, active-run pointers, and coarse project status
+  - `promotion` should persist promotion class, source/target linkage, eligibility/blocking/[retired-token-13] state, decision/result, and evidence/review/corroboration linkage
+  - `review` should persist scope, review type, actor linkage, verdict/severity/blocking, findings, evidence, and timestamps
+  - `resolution_thread` should persist trigger linkage, resolution kind, issue summary, allowed actions, status, and UI/chat linkage
+  - no documented GUI surface yet for `work package`
+  - no documented GUI surface yet for `feature seam`
+  - no documented seam-level acceptance / weak-integration / corroboration review affordance yet
+  - execution is documented against graph nodes
+  - orchestration identity, UI labels, and [retired-token-16] defaults still retain a tier hierarchy as a first-class overlay
+  - Define what Orchestrator is allowed to own: page layout and controls, view-model/projections, run control intents; exclude canonical runtime enums, event semantics, scheduler truth.
+  - Pin the primary discussion seam first: UI surface/IA vs runtime state model vs cross-surface lineage/receipts vs blocked/recovery/remediation UX.
+  - Record explicit boundary between canonical runtime facts, orchestrator projections, and widget/page presentation.
+  - Carry forward requested-vs-effective state wherever [retired-token-16]/provider/model fallback can occur.
+  - define concrete seam review loop behavior
+  - include trigger points, checks performed, corroboration thresholds, and emitted artifacts
+  - candidate outputs: seam review verdict, failure classes with severity, evidence bundle/rationale, remediation-node recommendation or [retired-token-15] recommendation, corroboration requirement and outcome when invoked
+  - provider/model precedence order across run, seam, package, node, overseer, and delegated-subagent levels
+  - whether seam/package/node provider-model settings are hard constraints, defaults, or hints
+  - whether an overseer can do direct node work or only delegate/review
+  - if direct node work is allowed, whether it uses overseer-[retired-token-17] or node-[retired-token-17]
+  - how dynamic node [retired-token-16]s interact with explicit node overrides and overseer-controlled delegation
+  - which Orchestrator seam should lead the discussion: runtime ownership boundary, page/tab IA, blocked/remediation UX, lineage across graph/evidence/history/usage
+  - Source Control worktree area likely needs top-level partitioning into [retired-token-20] and Other
+  - [retired-token-20] section likely needs further subdivision by feature seam
+  - Orchestrator page is a high-density information surface with very large detail volume
+  - [retired-token-21] settings structure across project settings, run snapshot, attempt record
+  - precedence between provider/account/execution-role rules
+  - user-configurable threshold that determines when automatic account switching occurs
+  - [retired-token-21] [retired-token-22] should be on by default for every [retired-token-23] that uses a provider
+  - thresholding/policy granularity by provider, account, [retired-token-23]
+  - Replace tier-rooted execution with package/seam/lane model
+  - Define [retired-token-14] + seam overseer roles
+  - Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage
+  - Redefine gates to package-complete / seam-complete
+  - Rename or retire [retired-token-43] UI/tab and tier_tree/progress bars
+  - Replace [retired-token-43]-first navigation
+  - Define Dashboard→Orchestrator→thread routing contract
+  - Add package/seam/lane visualization widgets
+  - Define which overseer's thread opens on click
+  - Make worktree/lane state visible and navigable
+  - Replace or demote [retired-token-34] widgets and layouts.
+  - Add package/seam/lane-aware identity, worktree, and attention surfaces.
+  - Define Dashboard → Orchestrator → chat-thread routing using canonical runtime objects rather than [retired-token-38].
+  - Acceptance, evidence, coverage, GUI automation, and test schemas can represent nodes and checks, but not work package, feature seam, lane, promotion class, contamination state, resolution thread, or effective account identity.
+  - `[retired-token-44]`
+  - [retired-token-44]
+  - Docs involved: `FinalGUISpec.md`, `newtools.md`, `Containers_Registry_and_Unraid.md`, `assistant-chat-design.md`
+  - FinalGUISpec.md
+  - newtools.md
+  - Containers_Registry_and_Unraid.md
+  - assistant-chat-design.md
+  - `[retired-token-44]`, `[retired-token-50]`, `Plans/chain-wizard-flexibility.md`
+  - [retired-token-50]
+  - Plans/chain-wizard-flexibility.md
+  - Existing docs are still too runtime-worktree-centric for the rewrite:
+  - Usage/UI requests for auth-mode/effective-account filtering are already present in adjacent GUI docs even though usage contracts do not yet guarantee them.
+  - which widgets are hostable where after the seam/package rewrite
+  - `selected_tab`
+  - selected_tab
+  - `review_refs[]`
+  - review_refs[]
+  - `gui_alignment`
+  - gui_alignment
+  - Need to distinguish:
+  - `review_id`
+  - review_id
+  - required quorum model
+  - `source_surface`
+  - source_surface
+  - If a surface is `[retired-token-40]` or `[retired-token-39]`, the GUI must not present mutation controls that imply hidden confidence.
+  - [retired-token-40]
+  - [retired-token-39]
+  - `blocked_projection`
+  - blocked_projection
+  - This means those docs are less likely to need conceptual rewrite than the Orchestrator and glossary/help surfaces.
+  - The rewrite now needs a stronger cross-cutting copy discipline so the UI does not casually say:
+  - wizard/builder identity:
+  - `Runtime_Artifacts_Panel.md` is notably disciplined:
+  - Runtime_Artifacts_Panel.md
+  - `destination_surface`
+  - destination_surface
+  - `destination_tab?`
+  - destination_tab?
+  - hover previews or temporary compare pivots should not necessarily rewrite persistent state
+  - `replan_required`
+  - replan_required
+  - remediation should use one canonical resolution family, and the richer lineage-aware enum looks more compatible with the rewrite than a coarse success/failed enum
+  - `Widget_System.md` still widgetizes surfaces that the rewrite increasingly treats as native/specialized tabs
+  - Widget_System.md
+  - The rewrite now expects a stronger requested/effective/provider/account identity split than several non-runtime docs currently expose:
+  - acknowledged concerns must reduce noise without suppressing true blockers
+  - GitHub-facing docs still lag the identity/runtime rewrite:
+  - `FinalGUISpec.md` reinforces the right asymmetry:
+  - `rationale_required`
+  - rationale_required
+  - `merge` / `split` / `supersede`: confirmation `strong`; rationale required; reversibility `compensating_action_only` through new lineage records, never silent history rewrite
+  - merge
+  - split
+  - supersede
+  - strong
+  - compensating_action_only
+  - that no longer fits the current rewrite direction where only `Progress` is widget-composed and the other Orchestrator tabs are native surfaces
+  - Progress
+  - `Prompt_Pipeline.md` still preserves `plan_or_tier_default`, `[retired-token-9]`, and a MUST against new execution tiers while the rewrite replaces tier authority with seam/package/node/lane authority.
+  - Prompt_Pipeline.md
+  - plan_or_tier_default
+  - [retired-token-9]
+  - Widget/account/trust contracts still lag the rewrite:
+  - `project_state:v1:{project_id}` is UI-state heavy, not operational-summary heavy
+  - project_state:v1:{project_id}
+  - `projection_trust_state`
+  - projection_trust_state
+  - `dismissibility_kind` (`none | quiet_only | dismissible`)
+  - dismissibility_kind
+  - none | quiet_only | dismissible
+  - `project_state:v1:{project_id}` is shell/UI state
+  - `project_state:v1:{project_id}` is explicitly UI-state shaped.
+  - panel layout
+  - `quiet_until_utc?`
+  - quiet_until_utc?
+  - `workspace_tab_id?`
+  - workspace_tab_id?
+  - `required`
+  - required
+  - `requirements_builder`
+  - requirements_builder
+  - `prd_builder`
+  - prd_builder
+  - Research Progress - 2026-03-16 - Opus GUI / Surface Contract Deepening
+  - `[retired-token-43]` still survives as a first-class tab where the rewrite now wants seam/package/node surfaces
+  - [retired-token-43]
+  - The concern model is still effectively absent from GUI contracts:
+  - the shared concern surface split across Progress/Seams/Evidence/History/Ledger still has no GUI contract owner
+  - GUI identity projections remain incomplete even after all the identity work upstream:
+  - GUI still claims or implies tier/task/subtask surfaces where rewrite-era seam/package/node surfaces are intended.
+  - Add a concern-model GUI contract and projection-health / [retired-token-39]-trust contract to `FinalGUISpec.md`.
+  - `source_seq?` or equivalent checkpoint/cursor
+  - source_seq?
+  - but the rewrite has already pushed canonical semantics upward into graph/package/seam/lane/runtime-record language
+  - `UI_Command_Catalog.md`
+  - UI_Command_Catalog.md
+  - that conflicts directly with the rewrite direction where lanes/package context/node attempts need to survive even after tier language stops being execution-canonical
+  - Rewrite `orchestrator-subagent-integration.md` so it becomes a consumer/worker-spawn document over canonical runnable units, not a competing tier-era execution model.
+  - orchestrator-subagent-integration.md
+  - Coordination examples and crew creator payloads still treat `[retired-token-9]` as the canonical orchestrator ownership key; that will misalign with lane/package/node-first execution once the rewrite lands.
+  - GUI / command / projection contracts still have live SSOT collisions:
+  - GUI / command / page-ownership conflicts are now pinned to concrete IDs and examples:
+  - GUI / command ownership remains split in concrete, machine-breaking ways:
+  - `requirements_quality_report_ref?` when relevant
+  - requirements_quality_report_ref?
+  - `requirements_quality_report_ref?` when applicable
+  - `Runtime_Artifacts_Panel.md` declares `artifacts_index:v1:{project_id}`
+  - artifacts_index:v1:{project_id}
+  - `worktree_projection.v1:{project_id}:{worktree_id}`
+  - worktree_projection.v1:{project_id}:{worktree_id}
+  - `lane_projection.v1:{project_id}:{lane_id}`
+  - lane_projection.v1:{project_id}:{lane_id}
+  - `Runtime_Artifacts_Panel.md` should own:
+  - aligning requested/effective/account/runtime identity displays
+  - tier/view identity only:
+  - The surface docs are therefore already behaving as if `tier_runtime_record` is canonical, even though the stronger rewrite direction is:
+  - tier_runtime_record
+  - required for all provider-executed attempts:
+  - `[retired-token-41]` remains internally contradictory across AC-CMD02 / AC-CMD07 / AC-CMD10.
+  - [retired-token-41]
+  - `Runtime_Artifacts_Panel.md`
+  - `source_surface?`
+  - source_surface?
+  - `Runtime_Artifacts_Panel.md` calls `artifact_id`, `run_id`, `thread_id`, `task_id`, `linked_artifact_id`, and `logical_artifact_id` the canonical ID set, but that set is still missing the attempt-native/runtime attribution fields the rest of the rewrite now depends on.
+  - artifact_id
+  - run_id
+  - thread_id
+  - task_id
+  - linked_artifact_id
+  - logical_artifact_id
+  - `tab_id?`
+  - tab_id?
+  - required route-payload or subject-open arguments
+  - `arg_passthrough_requirements?`
+  - arg_passthrough_requirements?
+  - If `[retired-token-45]` does not absorb this, routing semantics will keep being redefined in the catalog, GUI docs, and storage docs separately.
+  - [retired-token-45]
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - Attention/CtA surfaces are some of the most operationally important navigation points in the app, yet they still rely on local field conventions rather than the generalized route-target model the rest of the rewrite increasingly wants.
+  - `subject_id` required
+  - subject_id
+  - Required:
+  - The rewrite now has enough stable object families that `object_kind` can no longer stay informal.
+  - object_kind
+  - workspace-tab identity
+  - `primary_view`
+  - primary_view
+  - `side_panel`
+  - side_panel
+  - `bottom_panel`
+  - bottom_panel
+  - `embedded_surface`
+  - embedded_surface
+  - `page_tab`
+  - page_tab
+  - `alias_of_command_id` or equivalent should be for migration/deprecation only
+  - alias_of_command_id
+  - `shell_view`
+  - shell_view
+  - `tab_id`
+  - tab_id
+  - `panel_id`
+  - panel_id
+  - `origin_surface`
+  - origin_surface
+  - `open_preview`
+  - open_preview
+  - `open_review`
+  - open_review
+  - `project_id` is required
+  - project_id
+  - `active_subview`
+  - active_subview
+  - `inspector_target` is not a per-surface arbitrary bag.
+  - inspector_target
+  - `Decision_Log.md` is still essentially empty for the rewrite era while major decisions are being made only in downstream addenda.
+  - Decision_Log.md
+  - `OpenCode_Coverage_Matrix.md` itself is now behind the rewrite: it omits A2A/stream-owner coverage, runtime-correlation records, OpenCode dual-auth-realm ownership, several Multi-Account GUI surfaces, and even some fixes that are already complete.
+  - OpenCode_Coverage_Matrix.md
+  - `[retired-token-42]` still points at [retired-token-40] Final GUI body text, missing project/session browser and attention-center surface ownership, and ungated promoted-feature command families.
+  - [retired-token-42]
+  - `target_kind = primary_view`
+  - target_kind = primary_view
+  - `target_kind = side_panel`
+  - target_kind = side_panel
+  - `target_kind = page_tab`
+  - target_kind = page_tab
+  - `tab_id = node_graph`
+  - tab_id = node_graph
+  - `tab_id = seams`
+  - tab_id = seams
+  - `tab_id` must not be used for:
+  - `tab_id` is a routed page-focus field.
+  - `FinalGUISpec.md`
+  - `[retired-token-44]` still preserves `[retired-token-43]` as a primary page-level surface and still embeds older standalone-surface assumptions that conflict with the tab-first Orchestrator rewrite
+  - Replace [retired-token-40] `[retired-token-43]` tab/page assumptions with the rewrite tab model:
+  - Strong aligned-but-implicit consumer:
+  - The future crew/message examples are especially risky because they would propagate `[retired-token-9]` back into git/worktree coordination even after the broader execution-context rewrite.
+  - Strong aligned consumer:
+  - Strong implicated consumer:
+  - `[retired-token-44]` is carrying two separate [retired-token-40] seams at once:
+  - In `[retired-token-44]`:
+  - `ui_element_id`
+  - ui_element_id
+  - `ui_command_id`
+  - ui_command_id
+  - `[retired-token-44]` still has [retired-token-40] top-level structure for `[retired-token-43]`:
+  - `[retired-token-44]` still treats the deep-link URL as a first-class behavioral object:
+  - Reconcile the required-versus-carried contradiction for `[retired-token-46]` in `[retired-token-45]` and `[retired-token-47]`.
+  - [retired-token-46]
+  - [retired-token-47]
+  - This seam is now an owner-doc contradiction, not just a GUI wording issue.
+  - This split will make the owner-doc rewrite much easier because most refs do not need replacement.
+  - evidence tables and filters by `[retired-token-9]`
+  - 2. command / shell / widget / GUI drift amplifiers
+  - Consumer docs are still asking for provider/model shorthand where the rewrite now expects requested/effective identity disclosure.
+  - `PuppetMasterEvent::UserInteractionRequired`
+  - PuppetMasterEvent::UserInteractionRequired
+  - `UserInteractionRequired`
+  - UserInteractionRequired
+  - `tier_type` string in UI state
+  - tier_type
+  - `[retired-token-44]` appendix C.5 mirrors the backup-preserving version:
+  - `Decision_Log.md` still lacks canonical entries for the very rewrite decisions that are currently only captured as addenda or ledger facts, which is now causing canon ambiguity rather than simple under-documentation.
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - Research Progress - 2026-03-17 - rewrite-root and GUI-drift seam: rewrite tie-in memo, UI command catalog, Final GUI spec
+  - `[retired-token-44]` is still one of the strongest GUI drift amplifiers:
+  - The rewrite-root memo already locks provider/runtime architecture, but it does not yet record the newer Orchestrator/routing/projection decisions that downstream GUI docs now need.
+  - `UI_Command_Catalog.md` needs:
+  - `FinalGUISpec.md` needs:
+  - The lower `Orchestrator_Page.md` addenda are closer to the rewrite:
+  - Orchestrator_Page.md
+  - `GUI_Rebuild_Requirements_Checklist.md` second as status repair
+  - GUI_Rebuild_Requirements_Checklist.md
+  - `Plans/chain-wizard-flexibility.md`, `[retired-token-44]`
+  - `Orchestrator rewrite terms` remains effectively empty relative to the ledger's terminology transfer.
+  - Orchestrator rewrite terms
+  - `[retired-token-44]` / glossary/help surfaces
+  - `Plans/[retired-token-45]`, `Plans/[retired-token-47]`, `[retired-token-44]`, `Plans/UI_Command_Catalog.md`
+  - Plans/[retired-token-45]
+  - Plans/[retired-token-47]
+  - Plans/UI_Command_Catalog.md
+  - `Plans/Orchestrator_Page.md` / `[retired-token-44]` / `Plans/Glossary.md`
+  - Plans/Orchestrator_Page.md
+  - Plans/Glossary.md
+  - `Plans/Orchestrator_Page.md` / `[retired-token-44]`
+  - `Plans/[retired-token-45]`, `Plans/[retired-token-47]`, `Plans/Decision_Policy.md`, `[retired-token-44]`
+  - Plans/Decision_Policy.md
+  - `Plans/Orchestrator_Page.md`, `Plans/[retired-token-47]`, `[retired-token-44]`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`
+  - Plans/Models_System.md
+  - Plans/Multi-Account.md
+  - Plans/Personas.md
+  - Plans/Prompt_Pipeline.md
+  - `[retired-token-44]`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/[retired-token-47]`, `Plans/usage-feature.md`
+  - Plans/usage-feature.md
+  - 5. `[retired-token-44]`
+  - `[retired-token-44]:2092` still references `[retired-token-51]` through `Plans/newfeatures.md`
+  - [retired-token-44]:2092
+  - [retired-token-51]
+  - Plans/newfeatures.md
+  - `[retired-token-44]:2737-2739` separately and correctly says safe points are runtime recovery anchors and MUST NOT be presented as user-facing [retired-token-51]
+  - [retired-token-44]:2737-2739
+  - `[retired-token-44]:2092`
+  - `[retired-token-44]:2737-2739`
+  - `[retired-token-44]` already carries `account_pressure_episode`, `account_switch_event`, `projection_freshness`, and `projection_health`.
+  - account_pressure_episode
+  - account_switch_event
+  - projection_freshness
+  - projection_health
+  - `[retired-token-44]:1842-1845`
+  - [retired-token-44]:1842-1845
+  - `[retired-token-44]:2924-2925`
+  - [retired-token-44]:2924-2925
+  - `[retired-token-49]` still carries the [retired-token-40] tuple `[retired-token-52]`, `[retired-token-50]` still carries `[retired-token-48]`, and `[retired-token-44]` still carries the `[retired-token-51]` contradiction.
+  - [retired-token-49]
+  - [retired-token-52]
+  - [retired-token-48]
+  - `[retired-token-44]` still contains the exact consumer anchor `[retired-token-53]`, so gap-002 remains an owner-heading and [retired-token-40]-survivor problem rather than a missing Final GUI consumer anchor.
+  - [retired-token-53]
+  - `[retired-token-44]:728-735`
+  - [retired-token-44]:728-735
+  - Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `[retired-token-58]` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `[retired-token-54]`, `[retired-token-44]`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `[retired-token-51]`, and the broken `#11. Source Control boundary` reference.
+  - gap-002
+  - gap-006
+  - [retired-token-58]
+  - [retired-token-54]
+  - `[retired-token-58]` sharpened: the broken `[retired-token-55]` reference survives not only in `[retired-token-54]` but also in `Plans/[retired-token-47]` and `[retired-token-56]`, while `[retired-token-44]` still preserves the `[retired-token-51]` contradiction.
+  - [retired-token-55]
+  - [retired-token-56]
+  - `[retired-token-44]:2924-2928`
+  - [retired-token-44]:2924-2928
+  - `[retired-token-58]` downgraded: the prior `[retired-token-51]` contradiction was overstated because `Plans/[retired-token-47]` now cleanly separates runtime safe points from project-scoped [retired-token-51] and `[retired-token-44]` explicitly forbids presenting safe points as [retired-token-51]; the remaining blocker is structural-heading and broken-reference drift.
+  - `[retired-token-44]:2092-2092`
+  - [retired-token-44]:2092-2092
+  - `[retired-token-44]:2736-2739`
+  - [retired-token-44]:2736-2739
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #14 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #15 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #16 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #17 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #18 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #19 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #20 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #21 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #22 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #23 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #24 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #25 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #26 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #27 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #28 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #29 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #30 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #31 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #32 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #33 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #34 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #35 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #36 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #37 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #38 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #39 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #40 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #41 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #42 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #43 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #44 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #45 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #46 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #47 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #48 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #49 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #50 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #51 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #52 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #53 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #54 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #55 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #56 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #57 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #58 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_[retired-token-40]_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+

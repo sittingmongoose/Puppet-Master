@@ -1,0 +1,357 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-040",
+  "timestamp_utc": "2026-04-28T20:58:29Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-157",
+    "coverage-rowgrp-158",
+    "coverage-rowgrp-159",
+    "coverage-rowgrp-160"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-157 cov-636 Plans/Prompt_Pipeline.md",
+    "rowgrp-158 cov-730 Plans/Prompt_Pipeline.md",
+    "rowgrp-159 cov-074,cov-156,cov-183,cov-194,cov-289,cov-541,cov-559,cov-565,cov-628,cov-736 Plans/Prompt_Pipeline.md",
+    "rowgrp-160 cov-1140,cov-1167,cov-1218 Plans/Prompt_Pipeline.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-157": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-158": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-159": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-160": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-636",
+    "cov-730",
+    "cov-074",
+    "cov-156",
+    "cov-183",
+    "cov-194",
+    "cov-289",
+    "cov-541",
+    "cov-559",
+    "cov-565",
+    "cov-628",
+    "cov-736",
+    "cov-1140",
+    "cov-1167",
+    "cov-1218"
+  ],
+  "coverage_ids_completed": [
+    "cov-636",
+    "cov-730",
+    "cov-074",
+    "cov-156",
+    "cov-183",
+    "cov-194",
+    "cov-289",
+    "cov-541",
+    "cov-559",
+    "cov-565",
+    "cov-628",
+    "cov-736",
+    "cov-1140",
+    "cov-1167",
+    "cov-1218"
+  ],
+  "path_groups_assigned": [
+    "Plans/Prompt_Pipeline.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-636",
+      "status": "present",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:510-525 introduces execution_unit_context as the canonical runtime-facing context object, demotes TierContext to derived/compatibility-only status, anchors worker spawn/recovery/remediation/coordination/UI inspection to execution_unit_context, retires tier_id, and defines execution_unit_context fields"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-177"
+      ],
+      "source_seed_ids": [
+        "seed-177"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-730",
+      "status": "present",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:500-508 defines the Effective resolution record, shared runtime identity fields, owner/consumer transfer fields, and the preserved requested/effective identity, execution_role, account_switch_lineage, account_pressure_owner, blocked_sequence, approval, and DAE posture fields"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-199"
+      ],
+      "source_seed_ids": [
+        "seed-199"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-074",
+      "status": "partial",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:63-85 defines run-envelope node/package/lane/seam context fields and states node/package/lane/seam identity is canonical while surviving tier labels are derived grouping metadata only"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Node/package/lane/seam execution identity is covered, but active-agents.json, phase/task/subtask paths, lexicographic_node_id, package/seam/lane storage schema fields, and event-sourced state incompatibility are not directly covered in this file.",
+      "source_obligation_ids": [
+        "obl-030"
+      ],
+      "source_seed_ids": [
+        "seed-030"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-156",
+      "status": "present",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:427-435 defines runtime_selection_source including fallback and persists selection_reason",
+        "Plans/Prompt_Pipeline.md:468-486 adds requested_account_id, requested_account_binding, requested/effective identity through runtime/bridged-provider/permission envelopes, account_switch_reason, the source/request/execution settings model, deterministic resolver matrix, and resolver emit fields including selection_reason"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-043"
+      ],
+      "source_seed_ids": [
+        "seed-043"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-183",
+      "status": "present",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:468-474 adds requested_account_id alongside requested_account_policy, models requested_account_id separately from policy so account choice and policy posture do not collapse, and retains requested_account_policy as routing posture"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-048"
+      ],
+      "source_seed_ids": [
+        "seed-048"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-194",
+      "status": "partial",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:84 states node/package/lane/seam identity is canonical execution context and surviving tier labels are derived grouping metadata",
+        "Plans/Prompt_Pipeline.md:510-514 introduces execution_unit_context as canonical runtime-facing context, demotes TierContext, and retires tier_id in favor of execution_unit_type plus execution_unit_id"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Tier-bound identity replacement is covered, but override owner and execution framing cleanup are not directly addressed.",
+      "source_obligation_ids": [
+        "obl-051"
+      ],
+      "source_seed_ids": [
+        "seed-051"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-289",
+      "status": "partial",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:466-486 freezes requested/effective identity before execution, defines source/request/execution, display grammar for requested/effective runtime values, deterministic resolver matrix order, and resolver emit fields",
+        "Plans/Prompt_Pipeline.md:548-550 requires inspectors to predict effective runtime pre-run and show frozen snapshots and provider deviations after run start"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Requested/effective display and frozen runtime visibility are covered, but exact origin badges, precedence disclosure, support-state disclosure, historical run view freeze language, and honored/skipped/clamped provider-gap taxonomy are incomplete.",
+      "source_obligation_ids": [
+        "obl-084"
+      ],
+      "source_seed_ids": [
+        "seed-084"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-541",
+      "status": "partial",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:468-476 defines requested_account_id, requested_account_binding, requested/effective account identity, execution_role, operational_identity, and account_switch_reason",
+        "Plans/Prompt_Pipeline.md:500-508 carries execution_role and requested/effective operational identity into shared runtime identity, effective-resolution, attempt, usage, and inspector surfaces"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Operational identity, execution_role, and requested concrete account are present, but actor_role is not directly named.",
+      "source_obligation_ids": [
+        "obl-155"
+      ],
+      "source_seed_ids": [
+        "seed-155"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-559",
+      "status": "partial",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:468-476 adds requested_account_id and requested_account_binding and includes requested/effective account identity, execution_role, operational_identity, and account_switch_reason in the shared identity envelope"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Requested concrete account and operational identity pieces are covered, but projection-freshness owner, route-payload schema owner, and project-summary/project-attention projection owner are not directly covered.",
+      "source_obligation_ids": [
+        "obl-159"
+      ],
+      "source_seed_ids": [
+        "seed-159"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-565",
+      "status": "partial",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:476 includes execution_role, operational_identity, and account_switch_reason in the shared identity envelope",
+        "Plans/Prompt_Pipeline.md:500-508 carries execution_role and requested/effective operational identity into effective-resolution, attempt, usage, and inspector surfaces and preserves account_switch_lineage[] and account_pressure_owner",
+        "Plans/Prompt_Pipeline.md:531 preserves execution role, requested/effective account identity, and switch history on usage surfaces when the effective provider or account changes"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Execution role, operational identity, account_switch_reason, and switch lineage are covered, but actor_kind and a durable switch pointer are not directly named.",
+      "source_obligation_ids": [
+        "obl-160"
+      ],
+      "source_seed_ids": [
+        "seed-160"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-628",
+      "status": "present",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:510-525 introduces execution_unit_context as the canonical runtime-facing context object and defines execution_unit_id, execution_unit_type, parent_execution_unit_id, execution_role, worktree_id, and ownership_transition_from"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-175"
+      ],
+      "source_seed_ids": [
+        "seed-175"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-736",
+      "status": "partial",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:510-525 defines execution_unit_context and retires tier_id in favor of execution_unit_type plus execution_unit_id inside execution_unit_context"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Prompt_Pipeline defines execution_unit_context, but the row specifically calls for Executor_Protocol ownership and tier_runtime_record/dispatch-runtime field coverage, which are not directly satisfied here.",
+      "source_obligation_ids": [
+        "obl-203"
+      ],
+      "source_seed_ids": [
+        "seed-203"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1140",
+      "status": "partial",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:476 defines stronger canonical runtime identity fields including requested_account_id, requested_account_binding, effective_provider_identity, execution_role, operational_identity, and account_switch_reason",
+        "Plans/Prompt_Pipeline.md:514 retires tier_id in favor of execution_unit_type plus execution_unit_id inside execution_unit_context"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Canonical runtime fields and tier_id retirement are present, but persona_override_owner_id cleanup is not directly present.",
+      "source_obligation_ids": [
+        "obl-332"
+      ],
+      "source_seed_ids": [
+        "seed-332"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1167",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Prompt_Pipeline.md does not directly contain MUST CHANGE, MUST RECONCILE, MUST VERIFY, or packet-category ownership rules.",
+      "source_obligation_ids": [
+        "obl-339"
+      ],
+      "source_seed_ids": [
+        "seed-339"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1218",
+      "status": "present",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:476 includes requested_account_id, execution_role, operational_identity, and account_switch_reason in the shared identity envelope",
+        "Plans/Prompt_Pipeline.md:500-508 transfers execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, DAE jail/approval policy, and usage switch-history/execution-role follow-through into owner and consumer docs",
+        "Plans/Prompt_Pipeline.md:527-531 mints blocked_sequence once, rebinds execution_unit_context/runtime identity/blocked_sequence during startup recovery, keeps DAE jail and approval posture attached to the effective-resolution record, and preserves switch history plus execution role in usage surfaces"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-346"
+      ],
+      "source_seed_ids": [
+        "seed-346"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

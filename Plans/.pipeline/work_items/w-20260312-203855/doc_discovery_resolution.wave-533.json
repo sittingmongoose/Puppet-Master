@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-533",
+  "group_ids": [
+    "discgrp-2129",
+    "discgrp-2130",
+    "discgrp-2131",
+    "discgrp-2132"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02400",
+      "source_obligation_ids": [
+        "obl-2250"
+      ],
+      "source_seed_ids": [
+        "seed-2922"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02401",
+      "source_obligation_ids": [
+        "obl-2251"
+      ],
+      "source_seed_ids": [
+        "seed-2923"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02402",
+      "source_obligation_ids": [
+        "obl-2252"
+      ],
+      "source_seed_ids": [
+        "seed-2924"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/feature-list.md",
+      "new_heading_hint": "# Puppet Master Feature List (Reference)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/feature-list.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02403",
+      "source_obligation_ids": [
+        "obl-2253"
+      ],
+      "source_seed_ids": [
+        "seed-2925"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "# Puppet Master \u2014 User-Project Project Plan Package Outputs (SSOT)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

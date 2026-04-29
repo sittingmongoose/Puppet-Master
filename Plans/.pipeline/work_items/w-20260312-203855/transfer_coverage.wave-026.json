@@ -1,175 +1,1093 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-026",
-  "timestamp_utc": "2026-04-28T20:23:38Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-101",
-    "coverage-rowgrp-102",
-    "coverage-rowgrp-103",
-    "coverage-rowgrp-104"
+  "row_group_ids": [
+    "rowgrp-0101",
+    "rowgrp-0102",
+    "rowgrp-0103",
+    "rowgrp-0104"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-101 cov-082,cov-103 Plans/MiscPlan.md",
-    "rowgrp-102 cov-1103 Plans/MiscPlan.md",
-    "rowgrp-103 cov-1206 Plans/Models_System.md",
-    "rowgrp-104 cov-297,cov-513 Plans/Models_System.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-101": "completed_reduced_conservatively",
-    "coverage-rowgrp-102": "completed_reduced_conservatively",
-    "coverage-rowgrp-103": "completed_reduced_conservatively",
-    "coverage-rowgrp-104": "completed_reduced_conservatively"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-082",
-    "cov-103",
-    "cov-1103",
-    "cov-1206",
-    "cov-297",
-    "cov-513"
-  ],
-  "coverage_ids_completed": [
-    "cov-082",
-    "cov-103",
-    "cov-1103",
-    "cov-1206",
-    "cov-297",
-    "cov-513"
-  ],
-  "path_groups_assigned": [
-    "Plans/MiscPlan.md",
-    "Plans/Models_System.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-082",
-      "status": "partial",
-      "evidence": [
-        "Plans/MiscPlan.md:127-129 cleanup runs in workspace/worktree paths and still references tier worktree cleanup",
-        "Plans/MiscPlan.md:431-466 cleanup UI can clean current workspace and active worktrees with shared config and confirmation",
-        "Plans/MiscPlan.md:169-170 worktree cleanup behavior is delegated to WorktreeGitImprovement and assistant-chat-design"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "MiscPlan has direct worktree cleanup and tier-scoped residue, but it does not fully resolve the cross-doc no-worktree/per-subtask/singular-active-worktree contradictions or Source Control/Orchestrator visibility gaps.",
+      "coverage_id": "cov-01404",
       "source_obligation_ids": [
-        "obl-032"
+        "obl-1261"
       ],
       "source_seed_ids": [
-        "seed-032"
+        "seed-1512"
       ],
       "source_shard_ids": [
-        "shard-0007"
+        "shard-0024"
       ],
-      "path_field_status": "match"
+      "canon_label": "blocked/recovery surfaces already rely on current runtime projections and valid `allowed_a",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "status": "present",
+      "exact_items": [
+        "blocked/recovery surfaces already rely on current runtime projections and valid `allowed_action_ids[]`",
+        "allowed_action_ids[]"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L808",
+        "Plans/Contracts_V0.md:L824",
+        "Plans/Contracts_V0.md:L828",
+        "Plans/Contracts_V0.md:L1156",
+        "Plans/Contracts_V0.md:L1377"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-103",
-      "status": "partial",
-      "evidence": [
-        "Plans/MiscPlan.md:427 cleanup config shares the existing run config path",
-        "Plans/MiscPlan.md:443-466 cleanup/evidence config use one schema and existing UI widgets for workspace cleanup"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Shared config and cleanup UI are present, but graph-schema constants, package/seam/lane/worktree/account identity fields, contamination/safe-point linkage, ownership boundaries, and duplicated addenda cleanup are not directly covered.",
+      "coverage_id": "cov-01421",
       "source_obligation_ids": [
-        "obl-034"
+        "obl-1278"
       ],
       "source_seed_ids": [
-        "seed-034"
+        "seed-1544"
       ],
       "source_shard_ids": [
-        "shard-0008"
+        "shard-0024"
       ],
-      "path_field_status": "match"
+      "canon_label": "should remain broadly usable under degraded projections because chronological record slice",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "status": "partial",
+      "exact_items": [
+        "should remain broadly usable under degraded projections because chronological record slices can fall back closer to canonical events"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L35",
+        "Plans/Contracts_V0.md:L42"
+      ],
+      "required_action": "consumer_propagation"
     },
     {
-      "coverage_id": "cov-1103",
-      "status": "partial",
-      "evidence": [
-        "Plans/MiscPlan.md:118 force-remove via Doctor applies only to orphan cleanup with no matching binding and no owner_thread_id",
-        "Plans/MiscPlan.md:1251-1260 prepare/cleanup must respect runtime safe points, retry_from_safe_point baselines, and remediation lineage",
-        "Plans/MiscPlan.md:1266-1268 safe-point and remediation lineage metadata must survive until terminal lineage resolution"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Safe-point/remediation lineage and orphan cleanup are covered, but requested/effective execution identity, provider-pool concurrency, projection trust vs scheduler authority, and Decision_Log rewrite owner gaps are not fully represented.",
+      "coverage_id": "cov-01422",
       "source_obligation_ids": [
-        "obl-319"
+        "obl-1279"
       ],
       "source_seed_ids": [
-        "seed-319"
+        "seed-1546"
       ],
       "source_shard_ids": [
-        "shard-0081"
+        "shard-0024"
       ],
-      "path_field_status": "match"
+      "canon_label": "exact ledger browsing should remain available via slice-based record queries even when hig",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "status": "partial",
+      "exact_items": [
+        "exact ledger browsing should remain available via slice-based record queries even when higher-level projections are unhealthy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L35",
+        "Plans/Contracts_V0.md:L42"
+      ],
+      "required_action": "consumer_propagation"
     },
     {
-      "coverage_id": "cov-1206",
-      "status": "partial",
-      "evidence": [
-        "Plans/Models_System.md:51-58 defines source/request/execution axes and display grammar preserving requested/effective values",
-        "Plans/Models_System.md:77-100 resolver inputs and shared emit shape include requested/effective platform/model/auth/account, execution_role, selection_reason, resolver_matrix_entry, worker_policy_display, and skipped controls",
-        "Plans/Models_System.md:603-624 cross-system effective selection fields include requested/effective runtime/account fields, account_switch_reason, execution_role, and selection_reason",
-        "Plans/Models_System.md:819-833 run surfaces display Persona, selection reason, effective platform/model/variant, and skipped controls"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Models_System covers resolver axes, emit shape, and display requirements, but not the three-way export taxonomy, Orchestrator export manifest contract, or exact named display grammar required by the row.",
+      "coverage_id": "cov-01438",
       "source_obligation_ids": [
-        "obl-344"
+        "obl-1295"
       ],
       "source_seed_ids": [
-        "seed-344"
+        "seed-1562"
       ],
       "source_shard_ids": [
-        "shard-0088"
+        "shard-0024"
       ],
-      "path_field_status": "match"
+      "canon_label": "projection-derived inspector -> `Ledger` / `History` / exact record view via `detail_ref`",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "status": "present",
+      "exact_items": [
+        "projection-derived inspector -> `Ledger` / `History` / exact record view via `detail_ref`",
+        "Ledger",
+        "History",
+        "detail_ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L329",
+        "Plans/Contracts_V0.md:L502",
+        "Plans/Contracts_V0.md:L559",
+        "Plans/Contracts_V0.md:L811",
+        "Plans/Contracts_V0.md:L834"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-297",
-      "status": "partial",
-      "evidence": [
-        "Plans/Models_System.md:62-75 defines the canonical precedence chain and deterministic resolver rules",
-        "Plans/Models_System.md:88-100 resolver emits requested/effective fields, selection_reason, resolver_matrix_entry, worker_policy_display, and skipped controls",
-        "Plans/Models_System.md:524-526 resolver fallbacks must disclose the fallback reason"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Deterministic precedence and visible fallback are present, but reviewer/reviewer-pass and seam-overseer persona collapse constraints are not directly represented.",
+      "coverage_id": "cov-01441",
       "source_obligation_ids": [
-        "obl-085"
+        "obl-1298"
       ],
       "source_seed_ids": [
-        "seed-085"
+        "seed-1565"
       ],
       "source_shard_ids": [
-        "shard-0020"
+        "shard-0024"
       ],
-      "path_field_status": "match"
+      "canon_label": "Define one shared projection-trust contract with operational state meanings and action thr",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "Define one shared projection-trust contract with operational state meanings and action thresholds."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "consumer_propagation"
     },
     {
-      "coverage_id": "cov-513",
-      "status": "partial",
-      "evidence": [
-        "Plans/Models_System.md:58 display grammar preserves requested/effective account identity",
-        "Plans/Models_System.md:88-100 resolver emit shape includes requested_account_id, effective_account_id, and execution_role",
-        "Plans/Models_System.md:121-124 requested/effective runtime/account identity fields disclose concrete runtime and provider/account identity",
-        "Plans/Models_System.md:483-497 model selection surfaces distinguish human labels, runtime surface, and canonical stored ids"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Requested/effective account and execution_role are present, but actor_kind, actor-scoped refs, and downstream Orchestrator/Run Graph consumer identity requirements are not fully stated.",
+      "coverage_id": "cov-01442",
       "source_obligation_ids": [
-        "obl-148"
+        "obl-1299"
       ],
       "source_seed_ids": [
-        "seed-148"
+        "seed-1566"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "Standardize fallback toward record-backed views (`History`, `Ledger`, exact record inspect",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "status": "present",
+      "exact_items": [
+        "Standardize fallback toward record-backed views (`History`, `Ledger`, exact record inspectors) when projections are degraded.",
+        "History",
+        "Ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L329",
+        "Plans/Contracts_V0.md:L834",
+        "Plans/Contracts_V0.md:L967",
+        "Plans/Contracts_V0.md:L1319",
+        "Plans/Contracts_V0.md:L1492"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01475",
+      "source_obligation_ids": [
+        "obl-1332"
+      ],
+      "source_seed_ids": [
+        "seed-1617"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "`Ledger` can inspect exact record structure consistently across families without inventing",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "status": "partial",
+      "exact_items": [
+        "`Ledger` can inspect exact record structure consistently across families without inventing a custom viewer for every new object.",
+        "Ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1319"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01611",
+      "source_obligation_ids": [
+        "obl-1468"
+      ],
+      "source_seed_ids": [
+        "seed-1820"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "wizard/interview blocked state is explicit and persistent, not a soft conversational incon",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "status": "partial",
+      "exact_items": [
+        "wizard/interview blocked state is explicit and persistent, not a soft conversational inconvenience"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01720",
+      "source_obligation_ids": [
+        "obl-1577"
+      ],
+      "source_seed_ids": [
+        "seed-1967"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "canon_label": "a canonical blocked event can still drive notification even if some projection surfaces ar",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-175: Concern source-event vs record vs projection split",
+      "status": "partial",
+      "exact_items": [
+        "a canonical blocked event can still drive notification even if some projection surfaces are degraded"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L143",
+        "Plans/Contracts_V0.md:L149"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01736",
+      "source_obligation_ids": [
+        "obl-1593"
+      ],
+      "source_seed_ids": [
+        "seed-1985"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "canon_label": "misroute blocked episodes to the wrong surface",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "status": "partial",
+      "exact_items": [
+        "misroute blocked episodes to the wrong surface"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01753",
+      "source_obligation_ids": [
+        "obl-1610"
+      ],
+      "source_seed_ids": [
+        "seed-2009"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "define one shared routing payload contract rather than separate ad hoc payloads per surfac",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "status": "partial",
+      "exact_items": [
+        "define one shared routing payload contract rather than separate ad hoc payloads per surface"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L774"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01788",
+      "source_obligation_ids": [
+        "obl-1645"
+      ],
+      "source_seed_ids": [
+        "seed-2052"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "`resume_url` is the clearest existing deep-link contract, but it is too narrow to carry th",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "present",
+      "exact_items": [
+        "`resume_url` is the clearest existing deep-link contract, but it is too narrow to carry the full cross-surface model by itself.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L319",
+        "Plans/Contracts_V0.md:L322",
+        "Plans/Contracts_V0.md:L514",
+        "Plans/Contracts_V0.md:L519",
+        "Plans/Contracts_V0.md:L979"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01907",
+      "source_obligation_ids": [
+        "obl-1764"
+      ],
+      "source_seed_ids": [
+        "seed-2258"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "`Run_Graph_View.md` still assumes a simpler phase/task/subtask tree and under-specifies co",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### 4. Remediation lineage events",
+      "status": "partial",
+      "exact_items": [
+        "`Run_Graph_View.md` still assumes a simpler phase/task/subtask tree and under-specifies concern/corroboration/promotion/patch lineage",
+        "Run_Graph_View.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L841"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01977",
+      "source_obligation_ids": [
+        "obl-1834"
+      ],
+      "source_seed_ids": [
+        "seed-2357"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "`Orchestrator_Page.md` still specifies `Tiers` and widget/persistence contracts around tha",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`Orchestrator_Page.md` still specifies `Tiers` and widget/persistence contracts around that obsolete structure",
+        "Orchestrator_Page.md",
+        "Tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L841"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01997",
+      "source_obligation_ids": [
+        "obl-1854"
+      ],
+      "source_seed_ids": [
+        "seed-2385"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "Opus reinforces that contract naming drift and native-surface ownership are among the high",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## Canonical Runtime Event, Outcome, and Action Contract Reconciliation Addendum (2026-03-09)",
+      "status": "partial",
+      "exact_items": [
+        "Opus reinforces that contract naming drift and native-surface ownership are among the highest-risk reconciliation areas"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1473"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02012",
+      "source_obligation_ids": [
+        "obl-1869"
+      ],
+      "source_seed_ids": [
+        "seed-2408"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "Dashboard-hosted push widgets still lack a no-active-run/historical-run render contract",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "Dashboard-hosted push widgets still lack a no-active-run/historical-run render contract"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02165",
+      "source_obligation_ids": [
+        "obl-2022"
+      ],
+      "source_seed_ids": [
+        "seed-2628"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "`Widget_System.md` still references the wrong multi-account keyspace and does not yet defi",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "`Widget_System.md` still references the wrong multi-account keyspace and does not yet define one shared projection-trust chrome contract",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02189",
+      "source_obligation_ids": [
+        "obl-2044"
+      ],
+      "source_seed_ids": [
+        "seed-2653"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "Bind Usage and Widget contracts to canonical `provider_accounts.*` sourcing and a shared p",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## Usage and Billing Contracts Addendum",
+      "status": "partial",
+      "exact_items": [
+        "Bind Usage and Widget contracts to canonical `provider_accounts.*` sourcing and a shared projection-health/trust-state contract rather than page-local heuristics",
+        "provider_accounts.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L637"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02253",
+      "source_obligation_ids": [
+        "obl-2107"
+      ],
+      "source_seed_ids": [
+        "seed-2735"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "page/widget contracts still mostly speak in `tier_id` terms, which will collapse concurren",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "page/widget contracts still mostly speak in `tier_id` terms, which will collapse concurrent actors and remediation lanes into misleading \u201ccurrent work\u201d summaries",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02327",
+      "source_obligation_ids": [
+        "obl-2179"
+      ],
+      "source_seed_ids": [
+        "seed-2830"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "but non-remediation concern posture, projection freshness, and degraded-action gating stil",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-175: Concern source-event vs record vs projection split",
+      "status": "partial",
+      "exact_items": [
+        "but non-remediation concern posture, projection freshness, and degraded-action gating still lack a single contract owner at the canonical layer"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L143",
+        "Plans/Contracts_V0.md:L149"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02336",
+      "source_obligation_ids": [
+        "obl-2187"
+      ],
+      "source_seed_ids": [
+        "seed-2842"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "`storage-plan.md` receipt row shape still conflicts with its own later minimum cross-surfa",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Recommended minimum concern record shape",
+      "status": "present",
+      "exact_items": [
+        "`storage-plan.md` receipt row shape still conflicts with its own later minimum cross-surface receipt contract.",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L340",
+        "Plans/Contracts_V0.md:L341",
+        "Plans/Contracts_V0.md:L362",
+        "Plans/Contracts_V0.md:L364",
+        "Plans/Contracts_V0.md:L496"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02413",
+      "source_obligation_ids": [
+        "obl-2263"
+      ],
+      "source_seed_ids": [
+        "seed-2935"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "canonical blocked episodes should outrank derived projection warnings",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-175: Concern source-event vs record vs projection split",
+      "status": "partial",
+      "exact_items": [
+        "canonical blocked episodes should outrank derived projection warnings"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L143",
+        "Plans/Contracts_V0.md:L149"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02447",
+      "source_obligation_ids": [
+        "obl-2297"
+      ],
+      "source_seed_ids": [
+        "seed-2979"
       ],
       "source_shard_ids": [
         "shard-0037"
       ],
-      "path_field_status": "match"
+      "canon_label": "`attention center` is the canonical shell surface for background, blocked, or action-neede",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "status": "partial",
+      "exact_items": [
+        "`attention center` is the canonical shell surface for background, blocked, or action-needed items outside the current active project/thread",
+        "attention center"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02568",
+      "source_obligation_ids": [
+        "obl-2416"
+      ],
+      "source_seed_ids": [
+        "seed-3137"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "runtime/blocked/wizard objects already use their own record families and projection rows",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-175: Concern source-event vs record vs projection split",
+      "status": "partial",
+      "exact_items": [
+        "runtime/blocked/wizard objects already use their own record families and projection rows"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L143",
+        "Plans/Contracts_V0.md:L149"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02650",
+      "source_obligation_ids": [
+        "obl-2498"
+      ],
+      "source_seed_ids": [
+        "seed-3281"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "but the effective runtime record, usage records, and page/graph identity projections still",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Shared governance and runtime record envelope",
+      "status": "present",
+      "exact_items": [
+        "but the effective runtime record, usage records, and page/graph identity projections still lack a canonical `execution_role` / `actor_role` field",
+        "execution_role",
+        "actor_role"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L278",
+        "Plans/Contracts_V0.md:L291",
+        "Plans/Contracts_V0.md:L328",
+        "Plans/Contracts_V0.md:L428",
+        "Plans/Contracts_V0.md:L452"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02656",
+      "source_obligation_ids": [
+        "obl-2504"
+      ],
+      "source_seed_ids": [
+        "seed-3287"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "GPT-5.2 reinforced that switch-history remains under-owned as an event family, not just a",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "status": "partial",
+      "exact_items": [
+        "GPT-5.2 reinforced that switch-history remains under-owned as an event family, not just a missing view:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L47",
+        "Plans/Contracts_V0.md:L54"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02771",
+      "source_obligation_ids": [
+        "obl-2618"
+      ],
+      "source_seed_ids": [
+        "seed-3434"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "consumer docs that disclose requested/effective runtime identity",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "consumer docs that disclose requested/effective runtime identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02791",
+      "source_obligation_ids": [
+        "obl-2638"
+      ],
+      "source_seed_ids": [
+        "seed-3467"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "but runtime snapshots, usage records, and surface payloads still do not carry a canonical",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "status": "present",
+      "exact_items": [
+        "but runtime snapshots, usage records, and surface payloads still do not carry a canonical `execution_role` / `actor_kind`",
+        "execution_role",
+        "actor_kind"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L278",
+        "Plans/Contracts_V0.md:L291",
+        "Plans/Contracts_V0.md:L328",
+        "Plans/Contracts_V0.md:L428",
+        "Plans/Contracts_V0.md:L452"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02796",
+      "source_obligation_ids": [
+        "obl-2643"
+      ],
+      "source_seed_ids": [
+        "seed-3472"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "this leaves side-effect surfaces at risk of collapsing provider-account identity and opera",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "status": "partial",
+      "exact_items": [
+        "this leaves side-effect surfaces at risk of collapsing provider-account identity and operational identity into one misleading runtime story"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L153",
+        "Plans/Contracts_V0.md:L160"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02816",
+      "source_obligation_ids": [
+        "obl-2663"
+      ],
+      "source_seed_ids": [
+        "seed-3497"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "Preview `trust_tier` and runtime projection-freshness trust still need distinct vocabulari",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "status": "partial",
+      "exact_items": [
+        "Preview `trust_tier` and runtime projection-freshness trust still need distinct vocabularies.",
+        "trust_tier"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L153",
+        "Plans/Contracts_V0.md:L160"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02971",
+      "source_obligation_ids": [
+        "obl-2818"
+      ],
+      "source_seed_ids": [
+        "seed-3716"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "still needs producer identity, trust/provenance, and stronger cross-surface linkage contra",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## Cross-surface runtime, concern, and route/open contracts",
+      "status": "partial",
+      "exact_items": [
+        "still needs producer identity, trust/provenance, and stronger cross-surface linkage contracts"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L251"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02978",
+      "source_obligation_ids": [
+        "obl-2824"
+      ],
+      "source_seed_ids": [
+        "seed-3722"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "Widget/page drill contracts still lack strong, typed route payloads tied to canonical iden",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Widget/page drill contracts still lack strong, typed route payloads tied to canonical identity/trust/linkage fields."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02985",
+      "source_obligation_ids": [
+        "obl-2831"
+      ],
+      "source_seed_ids": [
+        "seed-3729"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "The Orchestrator/Usage/GitHub deep-link story is now blocked more by missing route payload",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "The Orchestrator/Usage/GitHub deep-link story is now blocked more by missing route payload/trust contracts than by missing page chrome."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02988",
+      "source_obligation_ids": [
+        "obl-2834"
+      ],
+      "source_seed_ids": [
+        "seed-3739"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "interview runtime contracts still stop at persona/platform/model-level identity and still",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## Cross-surface runtime, concern, and route/open contracts",
+      "status": "partial",
+      "exact_items": [
+        "interview runtime contracts still stop at persona/platform/model-level identity and still omit auth/account/switch identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L251"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03004",
+      "source_obligation_ids": [
+        "obl-2850"
+      ],
+      "source_seed_ids": [
+        "seed-3760"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "Concern and trust-state escalation still lack a shared conversational/tooling surface cont",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "Concern and trust-state escalation still lack a shared conversational/tooling surface contract."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03057",
+      "source_obligation_ids": [
+        "obl-2903"
+      ],
+      "source_seed_ids": [
+        "seed-3835"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "No owner doc yet explicitly defines projection freshness/health fields as a reusable cross",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "No owner doc yet explicitly defines projection freshness/health fields as a reusable cross-surface contract."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03067",
+      "source_obligation_ids": [
+        "obl-2913"
+      ],
+      "source_seed_ids": [
+        "seed-3845"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "current posture still favors exact record-backed fallback (`History`, `Ledger`, record ins",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-175: Concern source-event vs record vs projection split",
+      "status": "present",
+      "exact_items": [
+        "current posture still favors exact record-backed fallback (`History`, `Ledger`, record inspectors) when projection health is degraded",
+        "History",
+        "Ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L329",
+        "Plans/Contracts_V0.md:L834",
+        "Plans/Contracts_V0.md:L967",
+        "Plans/Contracts_V0.md:L1319",
+        "Plans/Contracts_V0.md:L1492"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03160",
+      "source_obligation_ids": [
+        "obl-3006"
+      ],
+      "source_seed_ids": [
+        "seed-3968"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "`storage-plan.md` already owns canonical runnable identity through `run_id`, `node_id`, `a",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "status": "present",
+      "exact_items": [
+        "`storage-plan.md` already owns canonical runnable identity through `run_id`, `node_id`, `attempt_id`, blocked projections, and attempt/runtime records",
+        "storage-plan.md",
+        "run_id",
+        "node_id",
+        "attempt_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L332",
+        "Plans/Contracts_V0.md:L340",
+        "Plans/Contracts_V0.md:L341",
+        "Plans/Contracts_V0.md:L355",
+        "Plans/Contracts_V0.md:L362"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03382",
+      "source_obligation_ids": [
+        "obl-3228"
+      ],
+      "source_seed_ids": [
+        "seed-4314"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "Wizard/interview docs are increasingly explicit about lineage and blocked-state handling,",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Shared governance and runtime record envelope",
+      "status": "partial",
+      "exact_items": [
+        "Wizard/interview docs are increasingly explicit about lineage and blocked-state handling, but their concrete handoff payloads still stop short of the shared runtime identity model."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L260"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03394",
+      "source_obligation_ids": [
+        "obl-3240"
+      ],
+      "source_seed_ids": [
+        "seed-4326"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`interview-subagent-integration.md` explicitly claims shared runtime alignment and has sep",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "`interview-subagent-integration.md` explicitly claims shared runtime alignment and has separate requested/effective interview contract pieces, but still drops the same execution-governance fields in practice:",
+        "interview-subagent-integration.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "consumer_propagation"
     }
   ]
 }

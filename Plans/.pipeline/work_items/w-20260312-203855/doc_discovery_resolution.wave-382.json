@@ -1,0 +1,106 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-382",
+  "group_ids": [
+    "discgrp-1525",
+    "discgrp-1526",
+    "discgrp-1527",
+    "discgrp-1528"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01777",
+      "source_obligation_ids": [
+        "obl-1634"
+      ],
+      "source_seed_ids": [
+        "seed-2039",
+        "seed-6312",
+        "seed-7261"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0061",
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01778",
+      "source_obligation_ids": [
+        "obl-1635"
+      ],
+      "source_seed_ids": [
+        "seed-2040",
+        "seed-6313",
+        "seed-7262"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0061",
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01779",
+      "source_obligation_ids": [
+        "obl-1636"
+      ],
+      "source_seed_ids": [
+        "seed-2041",
+        "seed-6314",
+        "seed-7263"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0061",
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Progression_Gates.md",
+      "new_heading_hint": "### Fidelity recovery cov-034: Promotion classes and gate evidence",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Progression_Gates.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01780",
+      "source_obligation_ids": [
+        "obl-1637"
+      ],
+      "source_seed_ids": [
+        "seed-2042"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

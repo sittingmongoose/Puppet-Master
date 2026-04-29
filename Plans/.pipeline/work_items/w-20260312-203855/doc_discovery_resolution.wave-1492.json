@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1492",
+  "group_ids": [
+    "discgrp-5965",
+    "discgrp-5966",
+    "discgrp-5967",
+    "discgrp-5968"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06588",
+      "source_obligation_ids": [
+        "obl-6229"
+      ],
+      "source_seed_ids": [
+        "seed-9419"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06589",
+      "source_obligation_ids": [
+        "obl-6230"
+      ],
+      "source_seed_ids": [
+        "seed-9420"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "### Supported authentication inputs",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L149"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06590",
+      "source_obligation_ids": [
+        "obl-6231"
+      ],
+      "source_seed_ids": [
+        "seed-9421"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06591",
+      "source_obligation_ids": [
+        "obl-6232"
+      ],
+      "source_seed_ids": [
+        "seed-9422"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## Canonical Blocked/Recovery Behavior",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2505"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

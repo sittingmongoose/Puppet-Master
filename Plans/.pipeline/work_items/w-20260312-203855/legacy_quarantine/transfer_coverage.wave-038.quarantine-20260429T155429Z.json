@@ -1,0 +1,184 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-038",
+  "timestamp_utc": "2026-04-28T20:53:52Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-149",
+    "coverage-rowgrp-150",
+    "coverage-rowgrp-151",
+    "coverage-rowgrp-152"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-149 cov-932 Plans/Progression_Gates.md",
+    "rowgrp-150 cov-1217 Plans/Project_Output_Artifacts.md",
+    "rowgrp-151 cov-182,cov-721,cov-1241 Plans/Project_Output_Artifacts.md",
+    "rowgrp-152 cov-666,cov-773 Plans/Project_Output_Artifacts.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-149": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-150": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-151": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-152": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-932",
+    "cov-1217",
+    "cov-182",
+    "cov-721",
+    "cov-1241",
+    "cov-666",
+    "cov-773"
+  ],
+  "coverage_ids_completed": [
+    "cov-932",
+    "cov-1217",
+    "cov-182",
+    "cov-721",
+    "cov-1241",
+    "cov-666",
+    "cov-773"
+  ],
+  "path_groups_assigned": [
+    "Plans/Progression_Gates.md",
+    "Plans/Project_Output_Artifacts.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-932",
+      "status": "partial",
+      "evidence": [
+        "Plans/Progression_Gates.md:249-257 defines GATE-010, canonical command binding and route-aware navigation normalization, and failure when a deprecated alias is treated as an independent canonical command"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "GATE-010 alias handling exists, but deprecated alias metadata lifecycle/separation and alias-to-real-canonical-command resolution are not fully explicit.",
+      "source_obligation_ids": [
+        "obl-262"
+      ],
+      "source_seed_ids": [
+        "seed-262"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1217",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Project_Output_Artifacts.md does not directly cover bridge-field precedence, compatibility-only timestamp/run/thread fallback, attempt/provider/usage/receipt join model, RouteTarget/OpenSubject primitive index gaps, wrapper normalization, selector precedence, closed tab_id vocabulary, route examples, ref-family split, or resume_url demotion.",
+      "source_obligation_ids": [
+        "obl-345"
+      ],
+      "source_seed_ids": [
+        "seed-345"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-182",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/Project_Output_Artifacts.md does not contain the assigned blocked-action stale tokens or the scheduler/HITL contradictions for this layout blocker.",
+      "source_obligation_ids": [
+        "obl-047"
+      ],
+      "source_seed_ids": [
+        "seed-047"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-721",
+      "status": "partial",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:62-65 requires both wiring_matrix.json and ui_command_catalog.json when GUI surfaces dispatch UICommand IDs",
+        "Plans/Project_Output_Artifacts.md:385-418 defines artifact_id, artifact_type, and ui_wiring_matrix/ui_command_catalog artifact types"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Related GUI artifact and artifact-event fields exist, but ghost command IDs, cmd.chat.run_user_command registration, dispatcher preconditions, duplicated executor canon, and FileManager addendum gaps are not directly resolved.",
+      "source_obligation_ids": [
+        "obl-197"
+      ],
+      "source_seed_ids": [
+        "seed-197"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1241",
+      "status": "partial",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:485-541 defines validation pass report lineage, required fields, bridge into launchable execution, permission carry-through, and traceability outputs",
+        "Plans/Project_Output_Artifacts.md:723-733 adds a validation artifact lineage section with validation_pass_report, workflow_run_id, pass_verdict, phase_plan_ref, and requirements_quality_report_ref"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Validation artifact lineage is present, but artifact drill-through, bridge-field viewer, and validation/report section headings are not all directly present in the assigned file.",
+      "source_obligation_ids": [
+        "obl-350"
+      ],
+      "source_seed_ids": [
+        "seed-350"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-666",
+      "status": "present",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:418 defines validation_pass_report as one per pass, N=1,2,3, under project validation artifacts",
+        "Plans/Project_Output_Artifacts.md:457-465 requires exactly three validation_pass_report events per validation sweep sharing workflow_run_id, pass_number 1/2/3, provider/model linkage, deterministic sweep provenance, and post-pass artifact finality",
+        "Plans/Project_Output_Artifacts.md:485-533 defines validation pass reports as upstream governance artifacts with project_id, wizard_id, thread_id, phase_plan_ref, staged bundle refs, requirements_quality_report_ref, workflow_run_id, requested/effective runtime identity refs, effective_account_id, execution_role, launched run_id, first-class History/Ledger/export status, and pass fields"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-188"
+      ],
+      "source_seed_ids": [
+        "seed-188"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-773",
+      "status": "missing",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:19 separates Project Plan Package artifacts from Runtime Artifacts and points the full Runtime Artifacts spec to Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Project_Output_Artifacts.md:385-418 uses artifact_id for Project Plan Package artifact events and artifact types"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "The assigned file does not promote the runtime-artifact envelope to a common field contract or define the FileManager second runtime-artifact open category by artifact_id.",
+      "source_obligation_ids": [
+        "obl-213"
+      ],
+      "source_seed_ids": [
+        "seed-213"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

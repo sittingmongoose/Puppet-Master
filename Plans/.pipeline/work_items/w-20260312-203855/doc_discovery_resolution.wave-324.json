@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-324",
+  "group_ids": [
+    "discgrp-1293",
+    "discgrp-1294",
+    "discgrp-1295",
+    "discgrp-1296"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01543",
+      "source_obligation_ids": [
+        "obl-1400"
+      ],
+      "source_seed_ids": [
+        "seed-1717"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01544",
+      "source_obligation_ids": [
+        "obl-1401"
+      ],
+      "source_seed_ids": [
+        "seed-1718"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01545",
+      "source_obligation_ids": [
+        "obl-1402"
+      ],
+      "source_seed_ids": [
+        "seed-1719"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_Integration.md",
+      "new_heading_hint": "### Fidelity recovery cov-040: Source Control and worktree handshake",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GitHub_Integration.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01546",
+      "source_obligation_ids": [
+        "obl-1403"
+      ],
+      "source_seed_ids": [
+        "seed-1720"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-037: Focused run and historical routing contract",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L103"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

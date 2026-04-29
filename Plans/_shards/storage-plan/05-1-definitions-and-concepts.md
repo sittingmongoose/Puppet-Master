@@ -2,6 +2,34 @@
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
 
 ### Additional shell/runtime identities required by the promoted Section 15 feature set
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0662
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - evidence set / source refs
+  - event/addendum supersession should be explicit enough that implementers do not need to diff three addenda to know the final field set
+  - they do not yet expose the non-provider operational identities that live on top of or beside those credentials
+  - Keep the initial canonical set deliberately small:
+  - The canonical `object_kind` set is:
+  - object_kind
+  - After this merge, the entire remaining partial set should sit uniformly at `Gemini + Opus + Sonnet`; there is no longer any unevenness inside the tail.
+  - Gemini + Opus + Sonnet
+  - These should be treated as **secondary** findings behind the ledger-backed missed-transfer set above.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 The storage model MUST treat the following as first-class identities when the feature is enabled:
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
 

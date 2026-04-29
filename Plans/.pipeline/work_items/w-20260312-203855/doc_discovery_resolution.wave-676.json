@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-676",
+  "group_ids": [
+    "discgrp-2701",
+    "discgrp-2702",
+    "discgrp-2703",
+    "discgrp-2704"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02981",
+      "source_obligation_ids": [
+        "obl-2827"
+      ],
+      "source_seed_ids": [
+        "seed-3725"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-033: Concern linkage to adjacent families",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L83"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02982",
+      "source_obligation_ids": [
+        "obl-2828"
+      ],
+      "source_seed_ids": [
+        "seed-3726"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02983",
+      "source_obligation_ids": [
+        "obl-2829"
+      ],
+      "source_seed_ids": [
+        "seed-3727"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-044: Projection trust and action gating",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/storage-plan.md:L91"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02984",
+      "source_obligation_ids": [
+        "obl-2830"
+      ],
+      "source_seed_ids": [
+        "seed-3728"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

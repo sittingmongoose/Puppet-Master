@@ -1,0 +1,112 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1228",
+  "group_ids": [
+    "discgrp-4909",
+    "discgrp-4910",
+    "discgrp-4911",
+    "discgrp-4912"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05313",
+      "source_obligation_ids": [
+        "obl-5085"
+      ],
+      "source_seed_ids": [
+        "seed-7483",
+        "seed-7489",
+        "seed-7495",
+        "seed-7501",
+        "seed-7506",
+        "seed-7513",
+        "seed-7538",
+        "seed-7546",
+        "seed-7553",
+        "seed-7560",
+        "seed-7567",
+        "seed-7574",
+        "seed-7602",
+        "seed-7607",
+        "seed-7615",
+        "seed-7623",
+        "seed-7630",
+        "seed-7637"
+      ],
+      "source_shard_ids": [
+        "shard-0070",
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05314",
+      "source_obligation_ids": [
+        "obl-5086"
+      ],
+      "source_seed_ids": [
+        "seed-7486"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "# Usage Feature -- App/GUI Plan",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05315",
+      "source_obligation_ids": [
+        "obl-5087"
+      ],
+      "source_seed_ids": [
+        "seed-7487"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "# Usage Feature -- App/GUI Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05316",
+      "source_obligation_ids": [
+        "obl-5088"
+      ],
+      "source_seed_ids": [
+        "seed-7492"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-093: Account switch and pressure history",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L221"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

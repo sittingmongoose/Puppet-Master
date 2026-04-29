@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-882",
+  "group_ids": [
+    "discgrp-3525",
+    "discgrp-3526",
+    "discgrp-3527",
+    "discgrp-3528"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03819",
+      "source_obligation_ids": [
+        "obl-3664"
+      ],
+      "source_seed_ids": [
+        "seed-4966"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Recommended minimum concern record shape",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L199"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03820",
+      "source_obligation_ids": [
+        "obl-3665"
+      ],
+      "source_seed_ids": [
+        "seed-4967"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/rewrite-tie-in-memo.md",
+      "new_heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L116"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03821",
+      "source_obligation_ids": [
+        "obl-3666"
+      ],
+      "source_seed_ids": [
+        "seed-4975",
+        "seed-5187"
+      ],
+      "source_shard_ids": [
+        "shard-0051",
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03822",
+      "source_obligation_ids": [
+        "obl-3667"
+      ],
+      "source_seed_ids": [
+        "seed-4976"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-011 -- UI command dispatch only (Rule 1)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L108"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

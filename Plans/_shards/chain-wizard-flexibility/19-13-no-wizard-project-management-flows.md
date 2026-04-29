@@ -16,6 +16,26 @@ Three project management flows are available that do **not** require the Chain W
 
 ### 13.2 Add Existing Project (no wizard)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0587
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - The existing wizard deep-link is a good precedent, but it should become one member of a normalized transport family.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 - Entry: File menu → "Add Existing Project" OR Dashboard → "Add Project"
 - User selects a local folder (native OS picker) OR picks an SSH remote + path
 - Puppet Master auto-detects: git repo presence, language/framework, suggested project name

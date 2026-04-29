@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-982",
+  "group_ids": [
+    "discgrp-3925",
+    "discgrp-3926",
+    "discgrp-3927",
+    "discgrp-3928"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04232",
+      "source_obligation_ids": [
+        "obl-4072"
+      ],
+      "source_seed_ids": [
+        "seed-5634"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04233",
+      "source_obligation_ids": [
+        "obl-4073"
+      ],
+      "source_seed_ids": [
+        "seed-5635"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### GUI behavior rules",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2169"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04234",
+      "source_obligation_ids": [
+        "obl-4074"
+      ],
+      "source_seed_ids": [
+        "seed-5636"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "new_heading_hint": "# GUI Rebuild Requirements Checklist (2026-02-23)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04235",
+      "source_obligation_ids": [
+        "obl-4075"
+      ],
+      "source_seed_ids": [
+        "seed-5637"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,153 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-072",
+  "timestamp_utc": "2026-04-28T21:52:34Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-285",
+    "coverage-rowgrp-286",
+    "coverage-rowgrp-287",
+    "coverage-rowgrp-288"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-285 cov-094,cov-135,cov-180 Plans/plan_graph.schema.json",
+    "rowgrp-286 cov-108 Plans/plan_graph.schema.json",
+    "rowgrp-287 cov-119 Plans/project_plan_graph_index.schema.json",
+    "rowgrp-288 cov-096 Plans/project_plan_graph_index.schema.json"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-285": "completed_reduced_conservatively_with_evidence_stripping",
+    "coverage-rowgrp-286": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-287": "completed_reduced_conservatively_with_evidence_stripping",
+    "coverage-rowgrp-288": "completed_reduced_conservatively_with_downgrade"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-094",
+    "cov-135",
+    "cov-180",
+    "cov-108",
+    "cov-119",
+    "cov-096"
+  ],
+  "coverage_ids_completed": [
+    "cov-094",
+    "cov-135",
+    "cov-180",
+    "cov-108",
+    "cov-119",
+    "cov-096"
+  ],
+  "path_groups_assigned": [
+    "Plans/plan_graph.schema.json",
+    "Plans/project_plan_graph_index.schema.json"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-094",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/plan_graph.schema.json still contains the stale selection_rule constant and does not add package/seam/lane/worktree/account identity fields or contamination/safe-point linkage.",
+      "source_obligation_ids": [
+        "obl-034"
+      ],
+      "source_seed_ids": [
+        "seed-034"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-135",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/plan_graph.schema.json remains node-level schema modeling and lacks package/seam/lane/promotion object families, contamination state, resolution thread, or effective account identity.",
+      "source_obligation_ids": [
+        "obl-038"
+      ],
+      "source_seed_ids": [
+        "seed-038"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-180",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/plan_graph.schema.json only preserves lexicographic selection/acceptance structure and does not directly cover allowed_actions versus allowed_action_ids, tier-boundary HITL, or UI-derived recovery conflicts.",
+      "source_obligation_ids": [
+        "obl-047"
+      ],
+      "source_seed_ids": [
+        "seed-047"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-108",
+      "status": "partial",
+      "evidence": [
+        "Plans/plan_graph.schema.json:38-45 defines ready_rule selection_rule as lexicographic_node_id",
+        "Plans/plan_graph.schema.json:151-160 defines node blockers and unblocks fields"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Lexicographic selection and blockers/unblocks are directly present, but depends_on, reason_code, recovery_options, allowed_actions, blocked_reason, and graph-local Retry/Replan/Reopen/Approve/Deny are absent.",
+      "source_obligation_ids": [
+        "obl-035"
+      ],
+      "source_seed_ids": [
+        "seed-035"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-119",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/project_plan_graph_index.schema.json only defines index/node source constants and does not directly cover the assigned live-doc consumer set or stale tier/Overseer/worktree/scope tokens.",
+      "source_obligation_ids": [
+        "obl-036"
+      ],
+      "source_seed_ids": [
+        "seed-036"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-096",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/project_plan_graph_index.schema.json still contains selection_rule and node-only index fields, but does not add package/seam/lane/worktree/account identity fields or contamination/safe-point linkage.",
+      "source_obligation_ids": [
+        "obl-034"
+      ],
+      "source_seed_ids": [
+        "seed-034"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

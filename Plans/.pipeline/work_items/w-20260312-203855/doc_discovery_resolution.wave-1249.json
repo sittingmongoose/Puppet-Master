@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1249",
+  "group_ids": [
+    "discgrp-4993",
+    "discgrp-4994",
+    "discgrp-4995",
+    "discgrp-4996"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05397",
+      "source_obligation_ids": [
+        "obl-5169"
+      ],
+      "source_seed_ids": [
+        "seed-7661"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Document_Packaging_Policy.md",
+      "new_heading_hint": "### 2.1 Primary split rule",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05398",
+      "source_obligation_ids": [
+        "obl-5170"
+      ],
+      "source_seed_ids": [
+        "seed-7662"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/OpenCode_Deep_Extraction.md",
+      "new_heading_hint": "#### 7C.5 Ask UI semantics (once / always / reject)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L251"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05399",
+      "source_obligation_ids": [
+        "obl-5171"
+      ],
+      "source_seed_ids": [
+        "seed-7663"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/OpenCode_Deep_Extraction.md",
+      "new_heading_hint": "#### 7C.5 Ask UI semantics (once / always / reject)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L251"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05400",
+      "source_obligation_ids": [
+        "obl-5172"
+      ],
+      "source_seed_ids": [
+        "seed-7664"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "#### 6.1.1 Scope selector",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Commands_System.md:L311"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

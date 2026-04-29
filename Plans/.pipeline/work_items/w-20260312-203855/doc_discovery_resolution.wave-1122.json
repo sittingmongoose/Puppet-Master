@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1122",
+  "group_ids": [
+    "discgrp-4485",
+    "discgrp-4486",
+    "discgrp-4487",
+    "discgrp-4488"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04873",
+      "source_obligation_ids": [
+        "obl-4650"
+      ],
+      "source_seed_ids": [
+        "seed-6657"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "## Scope of the Usage Feature",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/usage-feature.md:L172"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04874",
+      "source_obligation_ids": [
+        "obl-4651"
+      ],
+      "source_seed_ids": [
+        "seed-6658"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "# Usage Feature -- App/GUI Plan",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04875",
+      "source_obligation_ids": [
+        "obl-4652"
+      ],
+      "source_seed_ids": [
+        "seed-6660"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Prompt_Pipeline.md",
+      "new_heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04876",
+      "source_obligation_ids": [
+        "obl-4653"
+      ],
+      "source_seed_ids": [
+        "seed-6661"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-086: Requested concrete-account fields",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L145"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

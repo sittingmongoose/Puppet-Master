@@ -1,5 +1,28 @@
 ## 7. Plan graph requirements (**sharded-only canonical** + optional derived export)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0449
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `view export`
+  - view export
+  - Optional derived `decomposition_context` can still carry:
+  - decomposition_context
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 Puppet Master MUST produce user-project plans as a **sharded-only plan graph** under:
 
 ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md
@@ -58,6 +81,36 @@ ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Executo
 
 ### 7.2 `plan_graph/nodes/<node_id>.json` (required; one node per file)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0452
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `node_id?`
+  - node_id?
+  - monotonic per `{ run_id, node_id }`
+  - { run_id, node_id }
+  - that `request_id` maps 1:1 to the underlying `{ run_id, node_id, blocked_sequence }`
+  - request_id
+  - { run_id, node_id, blocked_sequence }
+  - `object_id = <node_id>`
+  - object_id = <node_id>
+  - `blocked_projection.{run_id}.{node_id}.{blocked_sequence}`
+  - blocked_projection.{run_id}.{node_id}.{blocked_sequence}
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 - Path: `.puppet-master/project/plan_graph/nodes/<node_id>.json`
 - Schema: `Plans/project_plan_node.schema.json` (`pm.project-plan-node.v1`)
 
@@ -104,6 +157,26 @@ If present, `.puppet-master/project/plan_graph/edges.json` MUST be consistent wi
 ContractRef: Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md
 
 ### 7.4 Optional derived export: `plan_graph/exports/plan_graph.monolithic.json` (non-canonical)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0453
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - monolithic plan-graph export remains derived, never canonical
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Puppet Master MAY export a monolithic graph for convenience:
 

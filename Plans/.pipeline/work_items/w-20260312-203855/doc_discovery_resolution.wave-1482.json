@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1482",
+  "group_ids": [
+    "discgrp-5925",
+    "discgrp-5926",
+    "discgrp-5927",
+    "discgrp-5928"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06545",
+      "source_obligation_ids": [
+        "obl-6186"
+      ],
+      "source_seed_ids": [
+        "seed-9361"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## 4. Navigation Architecture",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L452"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06546",
+      "source_obligation_ids": [
+        "obl-6187"
+      ],
+      "source_seed_ids": [
+        "seed-9362"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Document_Packaging_Policy.md",
+      "new_heading_hint": "### 2.1 Primary split rule",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06547",
+      "source_obligation_ids": [
+        "obl-6188"
+      ],
+      "source_seed_ids": [
+        "seed-9363"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06548",
+      "source_obligation_ids": [
+        "obl-6189"
+      ],
+      "source_seed_ids": [
+        "seed-9364"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

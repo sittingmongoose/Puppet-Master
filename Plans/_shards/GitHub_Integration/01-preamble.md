@@ -1,2 +1,91 @@
 # GitHub Integration -- Spec
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0333
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - live mutating / decision-bearing actions must tighten on trust state
+  - `current`: all normal actions allowed
+  - current
+  - `Seams`: allow browsing, but gate actions that depend on current promotion/blocker truth
+  - Seams
+  - `Show in ...` actions
+  - Show in ...
+  - example class: reversible local presentation/layout actions, some editor-level reverts
+  - integration/governance persona biased toward cross-package integration truth
+  - `Weak Integration`
+  - Weak Integration
+  - recover / retry / approve / decline / replan / restore / cleanup actions that already have canonical runtime semantics and confirmation rules
+  - bulk actions should be far narrower than bulk navigation
+  - when actions must be gated
+  - `Live actions unavailable until refresh`
+  - Live actions unavailable until refresh
+  - `acknowledged` and `dismissed` are operator/user presentation/governance actions
+  - acknowledged
+  - dismissed
+  - concern actions never hard-delete canonical concern history in normal operation
+  - GitHub integration still lacks the project/repo/account scoping contract the rewrite now needs:
+  - still lack the concrete receipt/usage identity and projection-trust hooks their cross-surface actions now depend on
+  - Bind GitHub Integration to project-scoped `selected_repo_id` and `provider_accounts.*` state, and fold Deferred GitHub Recovery Binding into canonical blocked-episode detail paths.
+  - selected_repo_id
+  - provider_accounts.*
+  - degraded or unavailable should gate mutating actions much more aggressively
+  - `Prompt_Pipeline.md` already has a strong effective-resolution schema, but the integration doc duplicates a thinner subset of those fields directly on `TierContext`.
+  - Prompt_Pipeline.md
+  - TierContext
+  - Owner docs still describe runtime-era actions and records that require stricter registration/verification/routing machinery than the current catalog/matrix/gate stack can express.
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - Treat CtA card actions and blocked-notice actions as first-class consumers of the canonical route-target model.
+  - This is one of the highest-value consumers of the route-target work because attention/CtA actions are exactly where users most need precise restoration.
+  - canonical target/scope object used by navigation/open/focus actions
+  - GitHub Actions: `active_subview`, current branch, pinned workflows, last opened run/job
+  - active_subview
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - `[retired-token-2]` still points to a non-existent `[retired-token-3]`, which sharpens `[retired-token-6]`'s owner-heading defect.
+  - [retired-token-2]
+  - [retired-token-3]
+  - [retired-token-6]
+  - `[retired-token-2]:251-258`
+  - [retired-token-2]:251-258
+  - Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `[retired-token-6]` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `[retired-token-2]`, `[retired-token-1]`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `[retired-token-7]`, and the broken `#11. Source Control boundary` reference.
+  - gap-002
+  - gap-006
+  - Plans/UI_Command_Catalog.md
+  - Plans/Glossary.md
+  - Plans/Orchestrator_Page.md
+  - [retired-token-1]
+  - `[retired-token-6]` sharpened: the broken `[retired-token-3]` reference survives not only in `[retired-token-2]` but also in `[retired-token-5]` and `[retired-token-4]`, while `[retired-token-1]` still preserves the `[retired-token-7]` contradiction.
+  - [retired-token-5]
+  - [retired-token-4]
+  - [retired-token-7]
+  - `[retired-token-2]:258-258`
+  - [retired-token-2]:258-258
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+

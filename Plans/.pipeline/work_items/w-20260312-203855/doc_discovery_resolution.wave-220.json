@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-220",
+  "group_ids": [
+    "discgrp-0877",
+    "discgrp-0878",
+    "discgrp-0879",
+    "discgrp-0880"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01124",
+      "source_obligation_ids": [
+        "obl-981"
+      ],
+      "source_seed_ids": [
+        "seed-1149"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01125",
+      "source_obligation_ids": [
+        "obl-982"
+      ],
+      "source_seed_ids": [
+        "seed-1150"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "### Field-level override",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L286"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01126",
+      "source_obligation_ids": [
+        "obl-983"
+      ],
+      "source_seed_ids": [
+        "seed-1151"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/interview-subagent-integration.md",
+      "new_heading_hint": "# Interview Feature Subagent Integration -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/interview-subagent-integration.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01127",
+      "source_obligation_ids": [
+        "obl-984"
+      ],
+      "source_seed_ids": [
+        "seed-1152"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1310"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

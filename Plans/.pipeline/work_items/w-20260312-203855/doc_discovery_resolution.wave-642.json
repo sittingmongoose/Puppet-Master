@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-642",
+  "group_ids": [
+    "discgrp-2565",
+    "discgrp-2566",
+    "discgrp-2567",
+    "discgrp-2568"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02843",
+      "source_obligation_ids": [
+        "obl-2690"
+      ],
+      "source_seed_ids": [
+        "seed-3537"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Counter semantics",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1575"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02844",
+      "source_obligation_ids": [
+        "obl-2691"
+      ],
+      "source_seed_ids": [
+        "seed-3538"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "### Fidelity recovery cov-185: Approval scope key and approver identity",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L50"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02845",
+      "source_obligation_ids": [
+        "obl-2692"
+      ],
+      "source_seed_ids": [
+        "seed-3539"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "### Fidelity recovery cov-010: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02846",
+      "source_obligation_ids": [
+        "obl-2693"
+      ],
+      "source_seed_ids": [
+        "seed-3540"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "new_heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

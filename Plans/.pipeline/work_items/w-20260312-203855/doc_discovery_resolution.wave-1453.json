@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1453",
+  "group_ids": [
+    "discgrp-5809",
+    "discgrp-5810",
+    "discgrp-5811",
+    "discgrp-5812"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06422",
+      "source_obligation_ids": [
+        "obl-6063"
+      ],
+      "source_seed_ids": [
+        "seed-9161"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-036: Promotion classes and gate evidence",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L95"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06423",
+      "source_obligation_ids": [
+        "obl-6064"
+      ],
+      "source_seed_ids": [
+        "seed-9162"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06424",
+      "source_obligation_ids": [
+        "obl-6065"
+      ],
+      "source_seed_ids": [
+        "seed-9163"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L767"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06425",
+      "source_obligation_ids": [
+        "obl-6066"
+      ],
+      "source_seed_ids": [
+        "seed-9164"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-005 -- Deterministic ordering from SSOT lists",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L61"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

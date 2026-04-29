@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/FileManager.md",
-  "source_sha256": "fe0cef84da215a40b85d3185d4928fb036838b84f97d7d591175fa64fa6452c3",
+  "source_sha256": "7b800fdeb2852ab89d49e162ba5d5b0e7bb6f556b8d8db07c6e227741f6b7f09",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -10,64 +10,64 @@
     {
       "dest_path": "Plans/_shards/FileManager/01-preamble.md",
       "start_line": 1,
-      "end_line": 5,
-      "segment_sha256": "525812d26adc3acda7e70bb9a1ec0bfe56e053b60a0f9101961dee49c389ae38",
+      "end_line": 87,
+      "segment_sha256": "719609fcda18d736d08aee4105b8e8ae61afedfc06458cd45f372f230459f508",
       "heading": null
     },
     {
       "dest_path": "Plans/_shards/FileManager/02-change-summary.md",
-      "start_line": 6,
-      "end_line": 18,
+      "start_line": 88,
+      "end_line": 100,
       "segment_sha256": "cc45779fab8734f629a51f176f483ca3a8b3df7dfd58d59ec8bba7a95ee148e4",
       "heading": "## Change Summary"
     },
     {
       "dest_path": "Plans/_shards/FileManager/03-summary.md",
-      "start_line": 19,
-      "end_line": 41,
+      "start_line": 101,
+      "end_line": 123,
       "segment_sha256": "6897a7ef611cbd0d5de1c4b29fcfdc03447e89f029f74df09ea87cabc07eb8f8",
       "heading": "## Summary"
     },
     {
       "dest_path": "Plans/_shards/FileManager/04-table-of-contents.md",
-      "start_line": 42,
-      "end_line": 72,
+      "start_line": 124,
+      "end_line": 154,
       "segment_sha256": "ad107f488471f90f97f95f606e18eca5be302fe393ff9ec1b5e4a028789b791f",
       "heading": "## Table of Contents"
     },
     {
       "dest_path": "Plans/_shards/FileManager/05-1-file-manager-panel.md",
-      "start_line": 73,
-      "end_line": 160,
+      "start_line": 155,
+      "end_line": 242,
       "segment_sha256": "b9aa9c54fcf17570d76cd507e437b25be4950faa87975aa9365b4e3ab954bf70",
       "heading": "## 1. File Manager panel"
     },
     {
       "dest_path": "Plans/_shards/FileManager/06-2-in-app-ide-style-editor-mvp.md",
-      "start_line": 161,
-      "end_line": 281,
-      "segment_sha256": "43ec93500b99deabc66217df7ec000350704569d587424186bd36ef192abf856",
+      "start_line": 243,
+      "end_line": 403,
+      "segment_sha256": "4888537bf991f725b61a10204ea7711e9fd4dcf29fcd4f9751620eed0714501d",
       "heading": "## 2. In-app IDE-style editor (MVP)"
     },
     {
       "dest_path": "Plans/_shards/FileManager/07-3-mention-in-chat.md",
-      "start_line": 282,
-      "end_line": 292,
+      "start_line": 404,
+      "end_line": 414,
       "segment_sha256": "bfe6a2312e342549fe4bce0bade87a7802104a36f14c69d55bc69506f9b0f1a9",
       "heading": "## 3. @ mention in chat"
     },
     {
       "dest_path": "Plans/_shards/FileManager/08-4-integration-file-manager-editor-and-chat.md",
-      "start_line": 293,
-      "end_line": 322,
+      "start_line": 415,
+      "end_line": 444,
       "segment_sha256": "5b2476bc7ca59a08ff067eb04a7626ccbf19dbbb3a787fc6396733ae7d8cb66f",
       "heading": "## 4. Integration: File Manager, editor, and chat"
     },
     {
       "dest_path": "Plans/_shards/FileManager/09-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md",
-      "start_line": 323,
-      "end_line": 327,
-      "segment_sha256": "558e2d57a455e1d19d75c664ecae1edb2612a4a85c4402db5219ea04b596a6df",
+      "start_line": 445,
+      "end_line": 471,
+      "segment_sha256": "0016a798338425f20b9627440244a7574f6dac9fefd0c1e92a868d6572c66f36",
       "heading": "## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)"
     }
   ]

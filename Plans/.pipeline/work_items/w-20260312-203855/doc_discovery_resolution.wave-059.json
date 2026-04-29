@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-059",
+  "group_ids": [
+    "discgrp-0233",
+    "discgrp-0234",
+    "discgrp-0235",
+    "discgrp-0236"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00478",
+      "source_obligation_ids": [
+        "obl-335"
+      ],
+      "source_seed_ids": [
+        "seed-385"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "### 3. Doctor Gemini plan-mode check: source of tier config",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L879"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00479",
+      "source_obligation_ids": [
+        "obl-336"
+      ],
+      "source_seed_ids": [
+        "seed-387"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00480",
+      "source_obligation_ids": [
+        "obl-337"
+      ],
+      "source_seed_ids": [
+        "seed-389"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### 2.3 Merge conflicts: worktree kept but re-run can destroy it",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L191"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00481",
+      "source_obligation_ids": [
+        "obl-338"
+      ],
+      "source_seed_ids": [
+        "seed-391"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_Integration.md",
+      "new_heading_hint": "### Fidelity recovery cov-040: Source Control and worktree handshake",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GitHub_Integration.md:L7"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1452",
+  "group_ids": [
+    "discgrp-5805",
+    "discgrp-5806",
+    "discgrp-5807",
+    "discgrp-5808"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06418",
+      "source_obligation_ids": [
+        "obl-6059"
+      ],
+      "source_seed_ids": [
+        "seed-9157"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "### Command normalization model",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L111"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06419",
+      "source_obligation_ids": [
+        "obl-6060"
+      ],
+      "source_seed_ids": [
+        "seed-9158"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### route_target, OpenSubject, and command normalization",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L315"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06420",
+      "source_obligation_ids": [
+        "obl-6061"
+      ],
+      "source_seed_ids": [
+        "seed-9159"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### route_target, OpenSubject, and command normalization",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L315"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06421",
+      "source_obligation_ids": [
+        "obl-6062"
+      ],
+      "source_seed_ids": [
+        "seed-9160"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1623"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

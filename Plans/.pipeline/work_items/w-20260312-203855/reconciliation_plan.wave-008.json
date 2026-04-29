@@ -1,0 +1,540 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-008",
+  "group_ids": [
+    "recgrp-0029",
+    "recgrp-0030",
+    "recgrp-0031",
+    "recgrp-0032"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0029",
+      "path": "Plans/00-plans-index.md",
+      "mapped_owner_heading": "# Plans Index (authoritative map)",
+      "live_anchor": "# Plans Index (authoritative map) (Plans/00-plans-index.md:L1)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "Cleanup Priorities"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [
+        "tier-centric ownership",
+        "projection-only overlay",
+        "execution truth vs projections"
+      ],
+      "coverage_row_ids": [
+        "cov-00129",
+        "cov-00177",
+        "cov-01474",
+        "cov-02212",
+        "cov-02456",
+        "cov-02995",
+        "cov-03081",
+        "cov-03455",
+        "cov-03496",
+        "cov-03538",
+        "cov-04452",
+        "cov-04661",
+        "cov-04786",
+        "cov-05302",
+        "cov-05447",
+        "cov-05525",
+        "cov-05985",
+        "cov-06018",
+        "cov-06207",
+        "cov-06221",
+        "cov-06306",
+        "cov-06699",
+        "cov-07025",
+        "cov-07183"
+      ],
+      "source_obligation_ids": [
+        "obl-041",
+        "obl-073",
+        "obl-1331",
+        "obl-2067",
+        "obl-2306",
+        "obl-2841",
+        "obl-2927",
+        "obl-3301",
+        "obl-3342",
+        "obl-3384",
+        "obl-4292",
+        "obl-4439",
+        "obl-4564",
+        "obl-5078",
+        "obl-5219",
+        "obl-5297",
+        "obl-5757",
+        "obl-5790",
+        "obl-5976",
+        "obl-5986",
+        "obl-6009",
+        "obl-6340",
+        "obl-6616",
+        "obl-6750"
+      ],
+      "source_seed_ids": [
+        "seed-041",
+        "seed-073",
+        "seed-192",
+        "seed-6442",
+        "seed-6479",
+        "seed-7379",
+        "seed-7424",
+        "seed-8815",
+        "seed-8856",
+        "seed-8910",
+        "seed-8948",
+        "seed-9008",
+        "seed-9042",
+        "seed-9614",
+        "seed-9654",
+        "seed-1616",
+        "seed-2683",
+        "seed-2988",
+        "seed-3746",
+        "seed-3869",
+        "seed-4423",
+        "seed-4499",
+        "seed-4560",
+        "seed-6001",
+        "seed-6290",
+        "seed-6514",
+        "seed-7472",
+        "seed-7742",
+        "seed-7873",
+        "seed-8563",
+        "seed-8615",
+        "seed-8944",
+        "seed-9006",
+        "seed-9092",
+        "seed-9678",
+        "seed-10086",
+        "seed-10389"
+      ],
+      "source_shard_ids": [
+        "shard-0008",
+        "shard-0009",
+        "shard-0010",
+        "shard-0062",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082",
+        "shard-0086",
+        "shard-0025",
+        "shard-0034",
+        "shard-0037",
+        "shard-0042",
+        "shard-0043",
+        "shard-0047",
+        "shard-0048",
+        "shard-0059",
+        "shard-0061",
+        "shard-0072",
+        "shard-0073",
+        "shard-0078",
+        "shard-0079",
+        "shard-0090",
+        "shard-0092"
+      ],
+      "gap_ids": [
+        "gap-00126",
+        "gap-00166",
+        "gap-01161",
+        "gap-01720",
+        "gap-01919",
+        "gap-02363",
+        "gap-02423",
+        "gap-02700",
+        "gap-02735",
+        "gap-02766",
+        "gap-03484",
+        "gap-03649",
+        "gap-03739",
+        "gap-04109",
+        "gap-04242",
+        "gap-04302",
+        "gap-04635",
+        "gap-04656",
+        "gap-04801",
+        "gap-04810",
+        "gap-04885",
+        "gap-05189",
+        "gap-05447",
+        "gap-05581"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Extend Glossary.md, Crosswalk.md, Decision_Policy.md, and 00-plans-index.md with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.",
+        "Clarify which docs own execution truth vs projections vs UI-only overlays.",
+        "`Plans/00-plans-index.md`",
+        "Plans/00-plans-index.md",
+        "Search can index the shared envelope fields while preserving family-specific filters.",
+        "stop-reason and auth-state vocabularies still do not map cleanly onto Multi-Account switch-trigger and availability-state vocabularies",
+        "projection-derived warnings should still appear, but their rows need trust qualification and should not pretend to be equally authoritative",
+        "`mutation_capable` is declared as authoritative but still barely integrated into schema/event/policy surfaces",
+        "mutation_capable",
+        "Recommended owner map",
+        "`Runtime_Artifacts_Panel.md` still points at schema files that do not exist and an index key not registered in storage-plan.",
+        "Runtime_Artifacts_Panel.md",
+        "The clearest missing family is the runtime-artifact index side:",
+        "missing/corrupt index rows must degrade to record-backed views rather than implying artifact loss",
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md",
+        "Many current payloads already expose stable canonical IDs that can map directly into `object_kind/object_id` without inventing route-local IDs.",
+        "object_kind/object_id",
+        "with `Plans/00-plans-index.md` and `Plans/GUI_Rebuild_Requirements_Checklist.md` important as drift-multipliers.",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "with `Plans/00-plans-index.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/Formatters_System.md` also still clearly above the noise floor.",
+        "Plans/Plugins_System.md",
+        "Plans/Skills_System.md",
+        "Plans/Formatters_System.md",
+        "The routing tranche is now structurally complete enough to map directly onto owner docs.",
+        "Remove the duplicated `cost_usage` section during reconciliation so there is one authoritative consumer section.",
+        "cost_usage",
+        "blocked-state actions map from ordered `allowed_action_ids[]`",
+        "allowed_action_ids[]",
+        "blocked-state actions map from canonical `allowed_action_ids[]`",
+        "`Formatters_System.md` still has no authoritative rule for formatter-vs-LSP ownership, DAE non-triggering host writes, or overlapping formatter detectors.",
+        "Formatters_System.md",
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "22",
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "61",
+        "`Plans/.evidence/**`",
+        "Plans/.evidence/**",
+        "`action_available` still does not have a discoverable owner or consumer presence in the live Plans docs.",
+        "action_available",
+        "summary: Audited the three remaining unresolved transfer-coverage blockers (`cov-034`, `cov-511`, `cov-526`) against the live Plans docs and confirmed that all three remain unresolved owner-definition gaps rather than missing evidence-collection gaps.",
+        "cov-034",
+        "cov-511",
+        "cov-526"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "tier-centric ownership",
+        "projection-only overlay",
+        "execution truth vs projections"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "packet_span_group_id": "span-346ded2c8330",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0030",
+      "path": "Plans/00-plans-index.md",
+      "mapped_owner_heading": "## Anti-drift layer (required reading order)",
+      "live_anchor": "## Anti-drift layer (required reading order) (Plans/00-plans-index.md:L13)",
+      "action": "layout_repair_reference",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-06822"
+      ],
+      "source_obligation_ids": [
+        "obl-6441"
+      ],
+      "source_seed_ids": [
+        "seed-9820"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "gap_ids": [
+        "gap-05295"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "persistent-blocker semantics at the UI layer"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-55e6958b0392",
+      "packet_writer_role": "observe_only",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Observe-only layout repair reference: target records packetizable layout backlog without creating an overlapping mutation writer."
+      ]
+    },
+    {
+      "target_id": "target-0031",
+      "path": "Plans/00-plans-index.md",
+      "mapped_owner_heading": "## Change Summary",
+      "live_anchor": "## Change Summary (Plans/00-plans-index.md:L6)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [
+        "stale"
+      ],
+      "coverage_row_ids": [
+        "cov-00998",
+        "cov-01715",
+        "cov-06692"
+      ],
+      "source_obligation_ids": [
+        "obl-855",
+        "obl-1572",
+        "obl-6333"
+      ],
+      "source_seed_ids": [
+        "seed-1000",
+        "seed-1962",
+        "seed-9633"
+      ],
+      "source_shard_ids": [
+        "shard-0018",
+        "shard-0028",
+        "shard-0086"
+      ],
+      "gap_ids": [
+        "gap-00764",
+        "gap-01345",
+        "gap-05183"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "requested structural change summary",
+        "if a summary surface is `stale`",
+        "stale",
+        "MUST CHANGE"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "stale"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "packet_span_group_id": "span-b8326a6a6b9d",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0032",
+      "path": "Plans/00-plans-index.md",
+      "mapped_owner_heading": "## Known cross-cutting duplication hotspots",
+      "live_anchor": "## Known cross-cutting duplication hotspots (Plans/00-plans-index.md:L156)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-02916"
+      ],
+      "source_obligation_ids": [
+        "obl-2763"
+      ],
+      "source_seed_ids": [
+        "seed-3630"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "gap_ids": [
+        "gap-02300"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "last known reason fields"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-b67482ba1829",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00129",
+    "cov-00177",
+    "cov-01474",
+    "cov-02212",
+    "cov-02456",
+    "cov-02995",
+    "cov-03081",
+    "cov-03455",
+    "cov-03496",
+    "cov-03538",
+    "cov-04452",
+    "cov-04661",
+    "cov-04786",
+    "cov-05302",
+    "cov-05447",
+    "cov-05525",
+    "cov-05985",
+    "cov-06018",
+    "cov-06207",
+    "cov-06221",
+    "cov-06306",
+    "cov-06699",
+    "cov-07025",
+    "cov-07183",
+    "cov-06822",
+    "cov-00998",
+    "cov-01715",
+    "cov-06692",
+    "cov-02916"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-041",
+    "obl-073",
+    "obl-1331",
+    "obl-2067",
+    "obl-2306",
+    "obl-2841",
+    "obl-2927",
+    "obl-3301",
+    "obl-3342",
+    "obl-3384",
+    "obl-4292",
+    "obl-4439",
+    "obl-4564",
+    "obl-5078",
+    "obl-5219",
+    "obl-5297",
+    "obl-5757",
+    "obl-5790",
+    "obl-5976",
+    "obl-5986",
+    "obl-6009",
+    "obl-6340",
+    "obl-6616",
+    "obl-6750",
+    "obl-6441",
+    "obl-855",
+    "obl-1572",
+    "obl-6333",
+    "obl-2763"
+  ],
+  "source_seed_ids_represented": [
+    "seed-041",
+    "seed-073",
+    "seed-192",
+    "seed-6442",
+    "seed-6479",
+    "seed-7379",
+    "seed-7424",
+    "seed-8815",
+    "seed-8856",
+    "seed-8910",
+    "seed-8948",
+    "seed-9008",
+    "seed-9042",
+    "seed-9614",
+    "seed-9654",
+    "seed-1616",
+    "seed-2683",
+    "seed-2988",
+    "seed-3746",
+    "seed-3869",
+    "seed-4423",
+    "seed-4499",
+    "seed-4560",
+    "seed-6001",
+    "seed-6290",
+    "seed-6514",
+    "seed-7472",
+    "seed-7742",
+    "seed-7873",
+    "seed-8563",
+    "seed-8615",
+    "seed-8944",
+    "seed-9006",
+    "seed-9092",
+    "seed-9678",
+    "seed-10086",
+    "seed-10389",
+    "seed-9820",
+    "seed-1000",
+    "seed-1962",
+    "seed-9633",
+    "seed-3630"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0008",
+    "shard-0009",
+    "shard-0010",
+    "shard-0062",
+    "shard-0070",
+    "shard-0081",
+    "shard-0082",
+    "shard-0086",
+    "shard-0025",
+    "shard-0034",
+    "shard-0037",
+    "shard-0042",
+    "shard-0043",
+    "shard-0047",
+    "shard-0048",
+    "shard-0059",
+    "shard-0061",
+    "shard-0072",
+    "shard-0073",
+    "shard-0078",
+    "shard-0079",
+    "shard-0090",
+    "shard-0092",
+    "shard-0088",
+    "shard-0018",
+    "shard-0028",
+    "shard-0041"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": [
+    {
+      "target_id": "target-0030",
+      "path": "Plans/00-plans-index.md",
+      "reason": "observe_only non-packetizable source path"
+    }
+  ]
+}

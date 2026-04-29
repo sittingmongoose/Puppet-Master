@@ -13,6 +13,27 @@ The GUI must expose the packet's runtime state without relying on hidden behavio
 - clear distinction between `attention_required`, `blocked`, `retrying`, and terminal failure
 
 ### Event-driven update rule
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0294
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Update worker/detail surface docs so “worker identity” shows:
+  - 4. Update mirrors/checklists only after owner/consumer canon is stable.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 All scheduler, blocked, and remediation widgets MUST update from runtime events/projections rather than periodic timers.
 
 ### UX safety rule

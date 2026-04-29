@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-187",
+  "group_ids": [
+    "discgrp-0745",
+    "discgrp-0746",
+    "discgrp-0747",
+    "discgrp-0748"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00992",
+      "source_obligation_ids": [
+        "obl-849"
+      ],
+      "source_seed_ids": [
+        "seed-994"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00993",
+      "source_obligation_ids": [
+        "obl-850"
+      ],
+      "source_seed_ids": [
+        "seed-995"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 15.2 Search result card widget",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2658"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00994",
+      "source_obligation_ids": [
+        "obl-851"
+      ],
+      "source_seed_ids": [
+        "seed-996"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00995",
+      "source_obligation_ids": [
+        "obl-852"
+      ],
+      "source_seed_ids": [
+        "seed-997"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

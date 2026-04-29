@@ -1,258 +1,1072 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-062",
-  "timestamp_utc": "2026-04-28T21:36:38Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-245",
-    "coverage-rowgrp-246",
-    "coverage-rowgrp-247",
-    "coverage-rowgrp-248"
+  "row_group_ids": [
+    "rowgrp-0245",
+    "rowgrp-0246",
+    "rowgrp-0247",
+    "rowgrp-0248"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-245 cov-375,cov-402,cov-788,cov-1033,cov-1237,cov-1256 Plans/assistant-chat-design.md",
-    "rowgrp-246 cov-792 Plans/assistant-memory-subsystem.md",
-    "rowgrp-247 cov-683 Plans/chain-wizard-flexibility.md",
-    "rowgrp-248 cov-393,cov-650 Plans/chain-wizard-flexibility.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-245": "completed_reduced_conservatively_with_schema_normalization",
-    "coverage-rowgrp-246": "completed_reduced_conservatively_with_schema_normalization",
-    "coverage-rowgrp-247": "completed_reduced_conservatively_with_schema_normalization",
-    "coverage-rowgrp-248": "completed_reduced_conservatively_with_schema_normalization"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-375",
-    "cov-402",
-    "cov-788",
-    "cov-1033",
-    "cov-1237",
-    "cov-1256",
-    "cov-792",
-    "cov-683",
-    "cov-393",
-    "cov-650"
-  ],
-  "coverage_ids_completed": [
-    "cov-375",
-    "cov-402",
-    "cov-788",
-    "cov-1033",
-    "cov-1237",
-    "cov-1256",
-    "cov-792",
-    "cov-683",
-    "cov-393",
-    "cov-650"
-  ],
-  "path_groups_assigned": [
-    "Plans/assistant-chat-design.md",
-    "Plans/assistant-memory-subsystem.md",
-    "Plans/chain-wizard-flexibility.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-375",
-      "status": "partial",
-      "evidence": [
-        "Plans/assistant-chat-design.md:905-906 defines blocked and attention_required states",
-        "Plans/assistant-chat-design.md:1001 references blocked_reason_code",
-        "Plans/assistant-chat-design.md:1061-1063 lists blocked_reason_code, allowed_action_ids[], and unavailable status",
-        "Plans/assistant-chat-design.md:1100-1103 defines blocked as a card-level state and machine-actionable blocked responses through allowed_action_ids[]",
-        "Plans/assistant-chat-design.md:933 states resume_url is serialized transport only"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "blocked/attention/resume/action fields exist, but the Chat/Interview/Wizard mapping and Orchestrator-semantics warning are incomplete.",
+      "coverage_id": "cov-05333",
       "source_obligation_ids": [
-        "obl-111"
+        "obl-5105"
       ],
       "source_seed_ids": [
-        "seed-111"
+        "seed-7527"
       ],
       "source_shard_ids": [
-        "shard-0027"
+        "shard-0071"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-402",
-      "status": "partial",
-      "evidence": [
-        "Plans/assistant-chat-design.md:911-918 defines superseded investigation state, historical reopen behavior for terminal investigations, new lineage entries linked by supersedes_investigation_id, and resumability only for valid non-terminal states"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Historical/superseded lifecycle exists, but stale_historical older-generation attempts and worktree prune/retire survival are absent.",
-      "source_obligation_ids": [
-        "obl-118"
-      ],
-      "source_seed_ids": [
-        "seed-118"
-      ],
-      "source_shard_ids": [
-        "shard-0029"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-788",
+      "canon_label": "Normalize `usage_event_ref` into `object_kind = usage_event`.",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
       "status": "present",
+      "exact_items": [
+        "Normalize `usage_event_ref` into `object_kind = usage_event`.",
+        "usage_event_ref",
+        "object_kind = usage_event"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/assistant-chat-design.md:930-933 states routed opens resolve through route_target, source opens through OpenSubject/OpenFile, thread usage/artifact usage/ledger pivots/wizard resume/object-focused opens use the same internal route model, and resume_url is serialized transport only and must not outgrow the canonical route contract"
+        "Plans/Contracts_V0.md:L433",
+        "Plans/Contracts_V0.md:L457",
+        "Plans/Contracts_V0.md:L505"
       ],
-      "required_action": "none",
-      "unresolved_reason": "",
-      "source_obligation_ids": [
-        "obl-219"
-      ],
-      "source_seed_ids": [
-        "seed-219"
-      ],
-      "source_shard_ids": [
-        "shard-0055"
-      ],
-      "path_field_status": "match"
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-1033",
+      "coverage_id": "cov-05335",
+      "source_obligation_ids": [
+        "obl-5107"
+      ],
+      "source_seed_ids": [
+        "seed-7529"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "These examples are the pressure test for the contract.",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
       "status": "partial",
+      "exact_items": [
+        "These examples are the pressure test for the contract."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/assistant-chat-design.md:600 states open_source for non-persisted Deep Plan documents opens a transient generated://<artifact_id> buffer",
-        "Plans/assistant-chat-design.md:931-933 states source opens resolve through OpenSubject/OpenFile and shared internal route model covers usage/artifact/ledger/wizard/object opens"
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "OpenSubject/OpenFile and generated buffers exist, but full identity-native resolution across artifacts/drafts/checkpoints/search/runtime artifacts and FileManager/chat consumption contract are incomplete.",
-      "source_obligation_ids": [
-        "obl-290"
-      ],
-      "source_seed_ids": [
-        "seed-290"
-      ],
-      "source_shard_ids": [
-        "shard-0073"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1237",
+      "coverage_id": "cov-05336",
+      "source_obligation_ids": [
+        "obl-5108"
+      ],
+      "source_seed_ids": [
+        "seed-7535"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "The runtime lineage objects now need explicit route recipes so older `attempt_id`-only or",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)",
+      "status": "present",
+      "exact_items": [
+        "The runtime lineage objects now need explicit route recipes so older `attempt_id`-only or `tier_id`-only pivots stop reappearing.",
+        "attempt_id",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L332",
+        "Plans/Contracts_V0.md:L425",
+        "Plans/Contracts_V0.md:L432",
+        "Plans/Contracts_V0.md:L437",
+        "Plans/Contracts_V0.md:L449"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05337",
+      "source_obligation_ids": [
+        "obl-5109"
+      ],
+      "source_seed_ids": [
+        "seed-7541"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_id = <blocked_sequence>`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "`object_id = <blocked_sequence>`",
+        "object_id = <blocked_sequence>"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/assistant-chat-design.md:2233-2244 reuses shared blocked packet instead of local ask-flow tuples and lists blocked_notice, blocked_sequence, approval_scope_key, and allowed_action_ids[]",
-        "Plans/assistant-chat-design.md:2764-2766 states chat actors share runtime identity semantics and exposes requested/effective runtime identity, execution_role, and operational_identity"
+        "Plans/Contracts_V0.md:L1"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Shared identity/blocked packet evidence exists, but TierContext/tier_id, detached_window, stale tool tuple, No remaining gaps, and restore points contradiction are absent.",
-      "source_obligation_ids": [
-        "obl-349"
-      ],
-      "source_seed_ids": [
-        "seed-349"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1256",
+      "coverage_id": "cov-05341",
+      "source_obligation_ids": [
+        "obl-5113"
+      ],
+      "source_seed_ids": [
+        "seed-7548"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_kind = scheduler_pass`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "`object_kind = scheduler_pass`",
+        "object_kind = scheduler_pass"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/assistant-chat-design.md:2233-2244 lists blocked_notice, blocked_sequence, approval_scope_key, and allowed_action_ids[] in shared blocked packet fields",
-        "Plans/assistant-chat-design.md:2773-2776 defines structured blocked_notice with blocked query, blocker reason, and fallback resolution path"
+        "Plans/Contracts_V0.md:L1"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "blocked_notice exists, but escalation_level, action_available ownership, detached_window/result_id survivors, stale verdicts, and restore-points contradiction are absent.",
-      "source_obligation_ids": [
-        "obl-355"
-      ],
-      "source_seed_ids": [
-        "seed-355"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-792",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Plans/assistant-memory-subsystem.md covers assistant-only memory provider wiring but has no CustomHeadlessTool identity, registration timing, permission semantics, or config ownership coverage.",
+      "coverage_id": "cov-05342",
       "source_obligation_ids": [
-        "obl-220"
+        "obl-5114"
       ],
       "source_seed_ids": [
-        "seed-220"
+        "seed-7549"
       ],
       "source_shard_ids": [
-        "shard-0056"
+        "shard-0071"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-683",
+      "canon_label": "`object_id = <scheduler_pass_id>`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "`object_id = <scheduler_pass_id>`",
+        "object_id = <scheduler_pass_id>"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/chain-wizard-flexibility.md:75 references WorktreeGitImprovement, orchestrator/interview plans, assistant-chat-design, and interview-subagent-integration",
-        "Plans/chain-wizard-flexibility.md:487 references interview-subagent-integration",
-        "Plans/chain-wizard-flexibility.md:540 references storage-plan for artifacts in event stream",
-        "Plans/chain-wizard-flexibility.md:1071-1076 maps consumers including assistant-chat-design, interview-subagent-integration, orchestrator-subagent-integration, and WorktreeGitImprovement",
-        "Plans/chain-wizard-flexibility.md:2100-2104 references Executor_Protocol, interview-subagent-integration, Progression_Gates, and Decision_Policy"
+        "Plans/Contracts_V0.md:L1"
       ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Several impacted docs are directly referenced, but Orchestrator_Page, Run_Graph_View, UI_Command_Catalog, Runtime_Artifacts_Panel, human-in-the-loop, and self-consumer coverage are incomplete.",
-      "source_obligation_ids": [
-        "obl-189"
-      ],
-      "source_seed_ids": [
-        "seed-189"
-      ],
-      "source_shard_ids": [
-        "shard-0047"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-393",
-      "status": "partial",
-      "evidence": [
-        "Plans/chain-wizard-flexibility.md:1684-1702 carries wizard_step and resume_url on clarification_request and dashboard card resume/deep-link behavior",
-        "Plans/chain-wizard-flexibility.md:2071-2077 defines shared fields wizard_id, wizard_step, report_ref, resume_url, and optional thread_id"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "resume/deep-link fields exist, but shared routing payload contract and thin Open/Show wrappers are absent; object_kind/object_id/focused_run_id are absent.",
+      "coverage_id": "cov-05344",
       "source_obligation_ids": [
-        "obl-116"
+        "obl-5116"
       ],
       "source_seed_ids": [
-        "seed-116"
+        "seed-7551",
+        "seed-7579"
       ],
       "source_shard_ids": [
-        "shard-0029"
+        "shard-0071"
       ],
-      "path_field_status": "match"
+      "canon_label": "`inspector_target = lineage | details`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### 4. Remediation lineage events",
+      "status": "partial",
+      "exact_items": [
+        "`inspector_target = lineage | details`",
+        "inspector_target = lineage | details"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1243"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-650",
-      "status": "partial",
-      "evidence": [
-        "Plans/chain-wizard-flexibility.md:1921-1938 includes origin_thread_id, project_id, and related context in handoff payload",
-        "Plans/chain-wizard-flexibility.md:1948-1978 requires execution_role, effective_account_id, validation lineage, and explicit runtime attribution in execution/validation handoff"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "thread/project/validation lineage and execution_role/effective account exist, but requested/effective account pair and full adjacent-contract payload are incomplete.",
+      "coverage_id": "cov-05345",
       "source_obligation_ids": [
-        "obl-184"
+        "obl-5117"
       ],
       "source_seed_ids": [
-        "seed-184"
+        "seed-7555"
       ],
       "source_shard_ids": [
-        "shard-0046"
+        "shard-0071"
       ],
-      "path_field_status": "match"
+      "canon_label": "`object_kind = safe_point`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "#### `safe_point.created`",
+      "status": "partial",
+      "exact_items": [
+        "`object_kind = safe_point`",
+        "object_kind = safe_point"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1210",
+        "Plans/Contracts_V0.md:L1381"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05346",
+      "source_obligation_ids": [
+        "obl-5118"
+      ],
+      "source_seed_ids": [
+        "seed-7556"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_id = <safe_point_id>`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`object_id = <safe_point_id>`",
+        "object_id = <safe_point_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05347",
+      "source_obligation_ids": [
+        "obl-5119"
+      ],
+      "source_seed_ids": [
+        "seed-7558"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`inspector_target = lineage | history`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### 4. Remediation lineage events",
+      "status": "partial",
+      "exact_items": [
+        "`inspector_target = lineage | history`",
+        "inspector_target = lineage | history"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1243"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05348",
+      "source_obligation_ids": [
+        "obl-5120"
+      ],
+      "source_seed_ids": [
+        "seed-7562"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_kind = remediation`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)",
+      "status": "partial",
+      "exact_items": [
+        "`object_kind = remediation`",
+        "object_kind = remediation"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1110"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05349",
+      "source_obligation_ids": [
+        "obl-5121"
+      ],
+      "source_seed_ids": [
+        "seed-7563"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_id = <remediation_root_id>`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`object_id = <remediation_root_id>`",
+        "object_id = <remediation_root_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05350",
+      "source_obligation_ids": [
+        "obl-5122"
+      ],
+      "source_seed_ids": [
+        "seed-7565",
+        "seed-7572"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`inspector_target = lineage`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### 4. Remediation lineage events",
+      "status": "partial",
+      "exact_items": [
+        "`inspector_target = lineage`",
+        "inspector_target = lineage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1243"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05351",
+      "source_obligation_ids": [
+        "obl-5123"
+      ],
+      "source_seed_ids": [
+        "seed-7569"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_kind = graph_generation`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`object_kind = graph_generation`",
+        "object_kind = graph_generation"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05352",
+      "source_obligation_ids": [
+        "obl-5124"
+      ],
+      "source_seed_ids": [
+        "seed-7570"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_id = <graph_generation_id>`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`object_id = <graph_generation_id>`",
+        "object_id = <graph_generation_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05353",
+      "source_obligation_ids": [
+        "obl-5125"
+      ],
+      "source_seed_ids": [
+        "seed-7576"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_kind = graph_patch`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`object_kind = graph_patch`",
+        "object_kind = graph_patch"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05354",
+      "source_obligation_ids": [
+        "obl-5126"
+      ],
+      "source_seed_ids": [
+        "seed-7577"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_id = <graph_patch_id>`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`object_id = <graph_patch_id>`",
+        "object_id = <graph_patch_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05357",
+      "source_obligation_ids": [
+        "obl-5129"
+      ],
+      "source_seed_ids": [
+        "seed-7587"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "Older docs still assume history pivots can be attempt-only, which is insufficient for sche",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)",
+      "status": "partial",
+      "exact_items": [
+        "Older docs still assume history pivots can be attempt-only, which is insufficient for scheduler, blocked, and remediation lineage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1110"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05358",
+      "source_obligation_ids": [
+        "obl-5130"
+      ],
+      "source_seed_ids": [
+        "seed-7588"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "Add these lineage examples to the route contract owner docs.",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)",
+      "status": "partial",
+      "exact_items": [
+        "Add these lineage examples to the route contract owner docs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1323"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05360",
+      "source_obligation_ids": [
+        "obl-5132"
+      ],
+      "source_seed_ids": [
+        "seed-7590"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`blocked_sequence` is the canonical id",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`blocked_sequence` is the canonical id",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L328",
+        "Plans/Contracts_V0.md:L332",
+        "Plans/Contracts_V0.md:L805",
+        "Plans/Contracts_V0.md:L822",
+        "Plans/Contracts_V0.md:L831"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05362",
+      "source_obligation_ids": [
+        "obl-5134"
+      ],
+      "source_seed_ids": [
+        "seed-7592"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "Keep scheduler/safe-point/remediation/patch lineage under `inspector_target = lineage` whe",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### 4. Remediation lineage events",
+      "status": "partial",
+      "exact_items": [
+        "Keep scheduler/safe-point/remediation/patch lineage under `inspector_target = lineage` when the object is already selected.",
+        "inspector_target = lineage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1243"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05367",
+      "source_obligation_ids": [
+        "obl-5139"
+      ],
+      "source_seed_ids": [
+        "seed-7604"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_id = <worktree_id>`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`object_id = <worktree_id>`",
+        "object_id = <worktree_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05370",
+      "source_obligation_ids": [
+        "obl-5142"
+      ],
+      "source_seed_ids": [
+        "seed-7610"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_id = <lane_id>`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`object_id = <lane_id>`",
+        "object_id = <lane_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05372",
+      "source_obligation_ids": [
+        "obl-5144"
+      ],
+      "source_seed_ids": [
+        "seed-7612"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`inspector_target = details | lineage`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### 4. Remediation lineage events",
+      "status": "partial",
+      "exact_items": [
+        "`inspector_target = details | lineage`",
+        "inspector_target = details | lineage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1243"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05374",
+      "source_obligation_ids": [
+        "obl-5146"
+      ],
+      "source_seed_ids": [
+        "seed-7617"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_kind = feature_seam`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`object_kind = feature_seam`",
+        "object_kind = feature_seam"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05375",
+      "source_obligation_ids": [
+        "obl-5147"
+      ],
+      "source_seed_ids": [
+        "seed-7618"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_id = <feature_seam_id>`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`object_id = <feature_seam_id>`",
+        "object_id = <feature_seam_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05379",
+      "source_obligation_ids": [
+        "obl-5151"
+      ],
+      "source_seed_ids": [
+        "seed-7625"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_kind = work_package`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`object_kind = work_package`",
+        "object_kind = work_package"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05380",
+      "source_obligation_ids": [
+        "obl-5152"
+      ],
+      "source_seed_ids": [
+        "seed-7626"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_id = <work_package_id>`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`object_id = <work_package_id>`",
+        "object_id = <work_package_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05382",
+      "source_obligation_ids": [
+        "obl-5154"
+      ],
+      "source_seed_ids": [
+        "seed-7632"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_kind = concern`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "status": "partial",
+      "exact_items": [
+        "`object_kind = concern`",
+        "object_kind = concern"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L47",
+        "Plans/Contracts_V0.md:L54"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05383",
+      "source_obligation_ids": [
+        "obl-5155"
+      ],
+      "source_seed_ids": [
+        "seed-7633"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_id = <concern_id>`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`object_id = <concern_id>`",
+        "object_id = <concern_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05386",
+      "source_obligation_ids": [
+        "obl-5158"
+      ],
+      "source_seed_ids": [
+        "seed-7640"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`object_id = <promotion_id>`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`object_id = <promotion_id>`",
+        "object_id = <promotion_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05402",
+      "source_obligation_ids": [
+        "obl-5174"
+      ],
+      "source_seed_ids": [
+        "seed-7666"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "reject when `line` or `range` appears in `route_target`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### route_target, OpenSubject, and command normalization",
+      "status": "present",
+      "exact_items": [
+        "reject when `line` or `range` appears in `route_target`",
+        "line",
+        "range",
+        "route_target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L39",
+        "Plans/Contracts_V0.md:L43",
+        "Plans/Contracts_V0.md:L52",
+        "Plans/Contracts_V0.md:L56",
+        "Plans/Contracts_V0.md:L76"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05407",
+      "source_obligation_ids": [
+        "obl-5179"
+      ],
+      "source_seed_ids": [
+        "seed-7675"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Without rejection rules, route producers will keep slipping local payload habits into the",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "status": "partial",
+      "exact_items": [
+        "Without rejection rules, route producers will keep slipping local payload habits into the base contract."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L774"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05409",
+      "source_obligation_ids": [
+        "obl-5181"
+      ],
+      "source_seed_ids": [
+        "seed-7677"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "State that invalid route payloads are contract failures, not \u201cbest effort\u201d cases.",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "State that invalid route payloads are contract failures, not \u201cbest effort\u201d cases."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05415",
+      "source_obligation_ids": [
+        "obl-5187"
+      ],
+      "source_seed_ids": [
+        "seed-7686"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "`seams`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`seams`",
+        "seams"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05416",
+      "source_obligation_ids": [
+        "obl-5188"
+      ],
+      "source_seed_ids": [
+        "seed-7687"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "`node_graph`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`node_graph`",
+        "node_graph"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05431",
+      "source_obligation_ids": [
+        "obl-5203"
+      ],
+      "source_seed_ids": [
+        "seed-7712"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "base route contract stays small",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "base route contract stays small"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L19",
+        "Plans/Contracts_V0.md:L28"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05435",
+      "source_obligation_ids": [
+        "obl-5207"
+      ],
+      "source_seed_ids": [
+        "seed-7719"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "`object_id = scheduler_pass_id`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`object_id = scheduler_pass_id`",
+        "object_id = scheduler_pass_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05436",
+      "source_obligation_ids": [
+        "obl-5208"
+      ],
+      "source_seed_ids": [
+        "seed-7722"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "`object_id = safe_point_id`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`object_id = safe_point_id`",
+        "object_id = safe_point_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05437",
+      "source_obligation_ids": [
+        "obl-5209"
+      ],
+      "source_seed_ids": [
+        "seed-7725"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "`object_id = remediation_root_id`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`object_id = remediation_root_id`",
+        "object_id = remediation_root_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
     }
   ]
 }

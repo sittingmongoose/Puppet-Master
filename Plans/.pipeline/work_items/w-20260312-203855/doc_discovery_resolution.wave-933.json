@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-933",
+  "group_ids": [
+    "discgrp-3729",
+    "discgrp-3730",
+    "discgrp-3731",
+    "discgrp-3732"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04029",
+      "source_obligation_ids": [
+        "obl-3872"
+      ],
+      "source_seed_ids": [
+        "seed-5318"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "# Runtime Artifacts Panel \u2014 SSOT",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04030",
+      "source_obligation_ids": [
+        "obl-3873"
+      ],
+      "source_seed_ids": [
+        "seed-5319"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "# Runtime Artifacts Panel \u2014 SSOT",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04031",
+      "source_obligation_ids": [
+        "obl-3874"
+      ],
+      "source_seed_ids": [
+        "seed-5320"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "## 6. reasoning_tokens and cost_usage",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L170"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04032",
+      "source_obligation_ids": [
+        "obl-3875"
+      ],
+      "source_seed_ids": [
+        "seed-5321"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "## 10. Phase 2 (native auth) -- when available",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L537"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

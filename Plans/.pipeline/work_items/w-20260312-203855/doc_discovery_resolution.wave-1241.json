@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1241",
+  "group_ids": [
+    "discgrp-4961",
+    "discgrp-4962",
+    "discgrp-4963",
+    "discgrp-4964"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05365",
+      "source_obligation_ids": [
+        "obl-5137"
+      ],
+      "source_seed_ids": [
+        "seed-7600"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05366",
+      "source_obligation_ids": [
+        "obl-5138"
+      ],
+      "source_seed_ids": [
+        "seed-7603"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05367",
+      "source_obligation_ids": [
+        "obl-5139"
+      ],
+      "source_seed_ids": [
+        "seed-7604"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05368",
+      "source_obligation_ids": [
+        "obl-5140"
+      ],
+      "source_seed_ids": [
+        "seed-7605"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "## 3. Node detail inspector",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L54"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

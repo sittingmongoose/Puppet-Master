@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1168",
+  "group_ids": [
+    "discgrp-4669",
+    "discgrp-4670",
+    "discgrp-4671",
+    "discgrp-4672"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05067",
+      "source_obligation_ids": [
+        "obl-4843"
+      ],
+      "source_seed_ids": [
+        "seed-6972"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### Split grid and editor embeddings",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L614"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05068",
+      "source_obligation_ids": [
+        "obl-4844"
+      ],
+      "source_seed_ids": [
+        "seed-6974"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "### B) Project Contracts (generated per user project)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L188"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05069",
+      "source_obligation_ids": [
+        "obl-4845"
+      ],
+      "source_seed_ids": [
+        "seed-6975"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Runtime artifact and projection storage scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05070",
+      "source_obligation_ids": [
+        "obl-4846"
+      ],
+      "source_seed_ids": [
+        "seed-6983"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "## 2. Primitive index (definitions are DRY)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L66"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

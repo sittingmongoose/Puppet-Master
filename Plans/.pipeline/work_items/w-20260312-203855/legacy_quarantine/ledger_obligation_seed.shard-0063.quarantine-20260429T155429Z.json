@@ -1,0 +1,107 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0063",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0063-L012401-L012600.md",
+  "source_line_range": "L012401-L012600",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "resume_url serialized route-target transport",
+      "exact_items": [
+        "The internal route_target model can and should be richer than the serialized URL form.",
+        "Internal: canonical route_target",
+        "External / persisted transport: narrowed serializable form that decodes into route_target",
+        "Define resume_url as a serialized route-target transport in the contract layer once route_target exists."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "route_target",
+        "resume_url"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L12409-L12409",
+        "working_ledger.md:L12421-L12425",
+        "working_ledger.md:L12463-L12467"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "shell state outside base route contract",
+      "exact_items": [
+        "routing chooses the target object and any necessary destination surface/context; shell state decides how that surface is realized inside the current window/workspace layout",
+        "Persisted shell state remains responsible for how the side panel is docked/floated, which workspace tab/window currently hosts the content, and restoring per-project layout and remembered local UI state",
+        "Keep shell/workspace persistence in the shell/storage docs, not in the base route contract."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Crosswalk.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L12492-L12514",
+        "working_ledger.md:L12533-L12537"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "deep-link transport preserves stable identity not ephemeral layout",
+      "exact_items": [
+        "A deep-link transport should preserve stable sharable identity, enough focus to restore the intended task, and deterministic decoding back into internal routing",
+        "It should generally NOT try to preserve ephemeral UI layout state, transient panel widths/split ratios, non-stable local widget state, or every possible inspector subsection detail",
+        "Some current command payloads and surface docs still blur destination intent with shell-state realization."
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L12410-L12418",
+        "working_ledger.md:L12528-L12530"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "controlled coarse destination vocabulary",
+      "exact_items": [
+        "The app already has a fairly stable coarse surface vocabulary.",
+        "destination surface vocabulary stays controlled and coarse; object identity and scope stay separate from destination; remembered local shell state refines the final presentation after landing",
+        "Define a controlled coarse destination enum/family in the route contract layer."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L12552-L12562",
+        "working_ledger.md:L12599-L12600"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "working_ledger.md:L12401-L12404 path list only",
+    "working_ledger.md:L12405-L12408 summary framing without standalone obligation",
+    "working_ledger.md:L12448-L12457 impacted-doc listing only",
+    "working_ledger.md:L12516-L12525 impacted-doc listing only",
+    "working_ledger.md:L12583-L12592 impacted-doc listing only"
+  ],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0063"
+}

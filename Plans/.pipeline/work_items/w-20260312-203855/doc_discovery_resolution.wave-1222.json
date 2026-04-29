@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1222",
+  "group_ids": [
+    "discgrp-4885",
+    "discgrp-4886",
+    "discgrp-4887",
+    "discgrp-4888"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05284",
+      "source_obligation_ids": [
+        "obl-5060"
+      ],
+      "source_seed_ids": [
+        "seed-7408"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Cross-surface runtime, concern, and route/open contracts",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L251"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05285",
+      "source_obligation_ids": [
+        "obl-5061"
+      ],
+      "source_seed_ids": [
+        "seed-7409"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "### 3. Event ledger (existing concept, under Usage umbrella)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/usage-feature.md:L187"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05286",
+      "source_obligation_ids": [
+        "obl-5062"
+      ],
+      "source_seed_ids": [
+        "seed-7410"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05287",
+      "source_obligation_ids": [
+        "obl-5063"
+      ],
+      "source_seed_ids": [
+        "seed-7411"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

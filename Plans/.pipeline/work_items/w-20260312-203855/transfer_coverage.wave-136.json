@@ -1,0 +1,716 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-136",
+  "row_group_ids": [
+    "rowgrp-0541",
+    "rowgrp-0542",
+    "rowgrp-0543",
+    "rowgrp-0544"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-01048",
+      "source_obligation_ids": [
+        "obl-905"
+      ],
+      "source_seed_ids": [
+        "seed-1062"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "canon_label": "evidence summaries",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "#### 7B.5 Compaction triggers and continuation summaries",
+      "status": "partial",
+      "exact_items": [
+        "evidence summaries"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L189"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01809",
+      "source_obligation_ids": [
+        "obl-1666"
+      ],
+      "source_seed_ids": [
+        "seed-2074"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "URL deep links and in-app search routes should decode to the same internal navigation mode",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "# OpenCode Deep Extraction (for Puppet Master)",
+      "status": "partial",
+      "exact_items": [
+        "URL deep links and in-app search routes should decode to the same internal navigation model"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02473",
+      "source_obligation_ids": [
+        "obl-2323"
+      ],
+      "source_seed_ids": [
+        "seed-3015"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "project attention rows should route through the same internal payload model as deep links/",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "# OpenCode Deep Extraction (for Puppet Master)",
+      "status": "partial",
+      "exact_items": [
+        "project attention rows should route through the same internal payload model as deep links/search/palette results"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02629",
+      "source_obligation_ids": [
+        "obl-2477"
+      ],
+      "source_seed_ids": [
+        "seed-3251"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "URL deep links decode into the same route model used by in-app command dispatch",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "# OpenCode Deep Extraction (for Puppet Master)",
+      "status": "partial",
+      "exact_items": [
+        "URL deep links decode into the same route model used by in-app command dispatch"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02637",
+      "source_obligation_ids": [
+        "obl-2485"
+      ],
+      "source_seed_ids": [
+        "seed-3259"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "search results and command-palette results should restore the same target context as deep",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "# OpenCode Deep Extraction (for Puppet Master)",
+      "status": "partial",
+      "exact_items": [
+        "search results and command-palette results should restore the same target context as deep links, not a watered-down approximation"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03312",
+      "source_obligation_ids": [
+        "obl-3158"
+      ],
+      "source_seed_ids": [
+        "seed-4211"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "GPT-5.2 mostly confirmed and sharpened the downstream contradictions into exact field/key",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "## 5. Output format (for downstream agents)",
+      "status": "partial",
+      "exact_items": [
+        "GPT-5.2 mostly confirmed and sharpened the downstream contradictions into exact field/key mismatches."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L59"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04417",
+      "source_obligation_ids": [
+        "obl-4257"
+      ],
+      "source_seed_ids": [
+        "seed-5941"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "coverage verification is still vulnerable to extraction hazards from prose, wildcard token",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "## 7. Expanded Extraction Coverage",
+      "status": "partial",
+      "exact_items": [
+        "coverage verification is still vulnerable to extraction hazards from prose, wildcard tokens, and filename-shaped `cmd.*.json` strings.",
+        "cmd.*.json"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L75"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04480",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L88"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04755",
+      "source_obligation_ids": [
+        "obl-4533"
+      ],
+      "source_seed_ids": [
+        "seed-6450",
+        "seed-6487",
+        "seed-6511",
+        "seed-7393",
+        "seed-7438",
+        "seed-7465",
+        "seed-8412",
+        "seed-8829",
+        "seed-8870",
+        "seed-8898",
+        "seed-8924",
+        "seed-8962",
+        "seed-8997",
+        "seed-9022",
+        "seed-9056"
+      ],
+      "source_shard_ids": [
+        "shard-0062",
+        "shard-0070",
+        "shard-0077",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "canon_label": "`Plans/OpenCode_Deep_Extraction.md`",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/OpenCode_Deep_Extraction.md`",
+        "Plans/OpenCode_Deep_Extraction.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05072",
+      "source_obligation_ids": [
+        "obl-4848"
+      ],
+      "source_seed_ids": [
+        "seed-6985"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "`resume_url` is currently described as a deep link that restores exact app context, but no",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "# OpenCode Deep Extraction (for Puppet Master)",
+      "status": "partial",
+      "exact_items": [
+        "`resume_url` is currently described as a deep link that restores exact app context, but no owner doc states that it serializes route identity rather than source-open identity.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05398",
+      "source_obligation_ids": [
+        "obl-5170"
+      ],
+      "source_seed_ids": [
+        "seed-7662"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "reject when `object_kind` is present without `object_id`",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "#### 7C.5 Ask UI semantics (once / always / reject)",
+      "status": "partial",
+      "exact_items": [
+        "reject when `object_kind` is present without `object_id`",
+        "object_kind",
+        "object_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L251"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05399",
+      "source_obligation_ids": [
+        "obl-5171"
+      ],
+      "source_seed_ids": [
+        "seed-7663"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "reject when `object_id` is present without `object_kind`",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "#### 7C.5 Ask UI semantics (once / always / reject)",
+      "status": "partial",
+      "exact_items": [
+        "reject when `object_id` is present without `object_kind`",
+        "object_id",
+        "object_kind"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L251"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05458",
+      "source_obligation_ids": [
+        "obl-5230"
+      ],
+      "source_seed_ids": [
+        "seed-7757"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "stop treating `resume_url` or page-local deep links as stronger than generic navigation",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "# OpenCode Deep Extraction (for Puppet Master)",
+      "status": "partial",
+      "exact_items": [
+        "stop treating `resume_url` or page-local deep links as stronger than generic navigation",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05931",
+      "source_obligation_ids": [
+        "obl-5703"
+      ],
+      "source_seed_ids": [
+        "seed-8476"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "canon_label": "assembly stages still say `tier/mode/platform/model`",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "#### 7B.4 Prompt assembly pipeline",
+      "status": "partial",
+      "exact_items": [
+        "assembly stages still say `tier/mode/platform/model`",
+        "tier/mode/platform/model"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L170"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06249",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L88",
+        "Plans/OpenCode_Deep_Extraction.md:L292"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04257",
+      "source_obligation_ids": [
+        "obl-4097"
+      ],
+      "source_seed_ids": [
+        "seed-5682"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "Several owner docs are still vulnerable to mechanical false positives/false negatives beca",
+      "row_type": "stale_retirement",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "# OpenCode Deep Extraction (for Puppet Master)",
+      "status": "present",
+      "exact_items": [
+        "Several owner docs are still vulnerable to mechanical false positives/false negatives because their verification guidance assumes structured extraction while their prose/examples leak stale or filename-shaped `cmd.*` tokens.",
+        "cmd.*"
+      ],
+      "stale_tokens": [
+        "cmd.*"
+      ],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L1-L718 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00050",
+      "source_obligation_ids": [
+        "obl-019"
+      ],
+      "source_seed_ids": [
+        "seed-019"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "run ownership",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "Parent-object field-shape direction now discussed",
+      "status": "missing",
+      "exact_items": [
+        "`run` should own execution-session identity/lifecycle, graph linkage, run-level settings snapshot, and active pointers/rollup posture"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00058",
+      "source_obligation_ids": [
+        "obl-024"
+      ],
+      "source_seed_ids": [
+        "seed-024"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "resolution_thread persisted fields",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "Child-record field-shape direction now discussed",
+      "status": "missing",
+      "exact_items": [
+        "`resolution_thread` should persist trigger linkage, resolution kind, issue summary, allowed actions, status, and UI/chat linkage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00334",
+      "source_obligation_ids": [
+        "obl-192"
+      ],
+      "source_seed_ids": [
+        "seed-224"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "`Orchestrator` consumes worktree identity, ownership, blocked state, and lineage for run/h",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "present",
+      "exact_items": [
+        "`Orchestrator` consumes worktree identity, ownership, blocked state, and lineage for run/history/recovery views.",
+        "Orchestrator"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1",
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00353",
+      "source_obligation_ids": [
+        "obl-211"
+      ],
+      "source_seed_ids": [
+        "seed-243"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "Orchestrator should be the stronger lane/worktree operations overview.",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator should be the stronger lane/worktree operations overview."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00456",
+      "source_obligation_ids": [
+        "obl-313"
+      ],
+      "source_seed_ids": [
+        "seed-362"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "Source Control as the Git/worktree inventory/manipulation surface",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-042: Source Control and worktree handshake",
+      "status": "partial",
+      "exact_items": [
+        "Source Control as the Git/worktree inventory/manipulation surface"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L115",
+        "Plans/Orchestrator_Page.md:L122"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00492",
+      "source_obligation_ids": [
+        "obl-349"
+      ],
+      "source_seed_ids": [
+        "seed-404"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "Make `Source Control` the execution surface for Git-native mutations, while `Orchestrator`",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "present",
+      "exact_items": [
+        "Make `Source Control` the execution surface for Git-native mutations, while `Orchestrator` remains the operational surface for why those actions matter.",
+        "Source Control",
+        "Orchestrator"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1",
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00502",
+      "source_obligation_ids": [
+        "obl-359"
+      ],
+      "source_seed_ids": [
+        "seed-414"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "Source Control = concrete Git/worktree inspection and mutation surface",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-042: Source Control and worktree handshake",
+      "status": "partial",
+      "exact_items": [
+        "Source Control = concrete Git/worktree inspection and mutation surface"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L115",
+        "Plans/Orchestrator_Page.md:L122"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00561",
+      "source_obligation_ids": [
+        "obl-418"
+      ],
+      "source_seed_ids": [
+        "seed-480"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "`Progress` hosts orchestrator operational summary widgets",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "present",
+      "exact_items": [
+        "`Progress` hosts orchestrator operational summary widgets",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L139",
+        "Plans/Orchestrator_Page.md:L143",
+        "Plans/Orchestrator_Page.md:L144",
+        "Plans/Orchestrator_Page.md:L146",
+        "Plans/Orchestrator_Page.md:L147"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00621",
+      "source_obligation_ids": [
+        "obl-478"
+      ],
+      "source_seed_ids": [
+        "seed-548"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "No shared projection freshness schema is currently obvious across Usage, Orchestrator, Sou",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "No shared projection freshness schema is currently obvious across Usage, Orchestrator, Source Control, and other projection-backed surfaces."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00653",
+      "source_obligation_ids": [
+        "obl-510"
+      ],
+      "source_seed_ids": [
+        "seed-585"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Orchestrator should surface that without silently replacing the focused context",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator should surface that without silently replacing the focused context"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    }
+  ]
+}

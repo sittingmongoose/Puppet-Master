@@ -1,0 +1,102 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-384",
+  "group_ids": [
+    "discgrp-1533",
+    "discgrp-1534",
+    "discgrp-1535",
+    "discgrp-1536"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01785",
+      "source_obligation_ids": [
+        "obl-1642"
+      ],
+      "source_seed_ids": [
+        "seed-2049",
+        "seed-6298",
+        "seed-7247"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0061",
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "### Thread Lifecycle State Machine",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L850"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01786",
+      "source_obligation_ids": [
+        "obl-1643"
+      ],
+      "source_seed_ids": [
+        "seed-2050",
+        "seed-6300",
+        "seed-7249"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0061",
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01787",
+      "source_obligation_ids": [
+        "obl-1644"
+      ],
+      "source_seed_ids": [
+        "seed-2051"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/BinaryLocator_Spec.md",
+      "new_heading_hint": "#### Cursor Agent versioned bundle resolution (required)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L158"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01788",
+      "source_obligation_ids": [
+        "obl-1645"
+      ],
+      "source_seed_ids": [
+        "seed-2052"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

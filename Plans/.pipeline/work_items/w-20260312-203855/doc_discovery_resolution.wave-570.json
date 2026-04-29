@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-570",
+  "group_ids": [
+    "discgrp-2277",
+    "discgrp-2278",
+    "discgrp-2279",
+    "discgrp-2280"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02552",
+      "source_obligation_ids": [
+        "obl-2400"
+      ],
+      "source_seed_ids": [
+        "seed-3117"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_OpenCode.md",
+      "new_heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02553",
+      "source_obligation_ids": [
+        "obl-2401"
+      ],
+      "source_seed_ids": [
+        "seed-3118"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "new_heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02554",
+      "source_obligation_ids": [
+        "obl-2402"
+      ],
+      "source_seed_ids": [
+        "seed-3119"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02555",
+      "source_obligation_ids": [
+        "obl-2403"
+      ],
+      "source_seed_ids": [
+        "seed-3120"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

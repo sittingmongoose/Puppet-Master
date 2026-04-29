@@ -1,0 +1,268 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-170",
+  "group_ids": [
+    "recgrp-0677",
+    "recgrp-0678",
+    "recgrp-0679",
+    "recgrp-0680"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0677",
+      "path": "Plans/storage-plan.md",
+      "mapped_owner_heading": "### Fidelity recovery cov-182: Bridge-field precedence for attempt/provider/usage/receipt joins",
+      "live_anchor": "### Fidelity recovery cov-182: Bridge-field precedence for attempt/provider/usage/receipt joins (Plans/storage-plan.md:L177)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-03995",
+        "cov-04188"
+      ],
+      "source_obligation_ids": [
+        "obl-3839",
+        "obl-4028"
+      ],
+      "source_seed_ids": [
+        "seed-5263",
+        "seed-5547"
+      ],
+      "source_shard_ids": [
+        "shard-0053",
+        "shard-0055"
+      ],
+      "gap_ids": [
+        "gap-03106",
+        "gap-03262"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Add a bridge-field precedence note to the canonical runtime/storage owner docs:",
+        "evidence / artifact joins still lack the canonical fields needed to move from runtime/worktree receipts to concrete artifact/evidence subjects."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-8107bdac328d",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0678",
+      "path": "Plans/storage-plan.md",
+      "mapped_owner_heading": "### Fidelity recovery cov-188: Projection fields for startup rehydration",
+      "live_anchor": "### Fidelity recovery cov-188: Projection fields for startup rehydration (Plans/storage-plan.md:L189)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-03618",
+        "cov-03653",
+        "cov-04243"
+      ],
+      "source_obligation_ids": [
+        "obl-3464",
+        "obl-3499",
+        "obl-4083"
+      ],
+      "source_seed_ids": [
+        "seed-4666",
+        "seed-4709",
+        "seed-5645"
+      ],
+      "source_shard_ids": [
+        "shard-0049",
+        "shard-0056"
+      ],
+      "gap_ids": [
+        "gap-02833",
+        "gap-02857",
+        "gap-03306"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "startup recovery wakeups are named but not tied to a concrete blocked-episode restoration rule",
+        "startup recovery should rehydrate unresolved blocked episodes, not create fresh ones opportunistically",
+        "startup recovery still lacks a single owner, but GPT-5.2 also exposed that the governance UX wants a stable `blocked_owner` field that the canonical blocked projection schema still does not define.",
+        "blocked_owner"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-a5e26031f7a1",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0679",
+      "path": "Plans/storage-plan.md",
+      "mapped_owner_heading": "### Fidelity recovery cov-205: Lane cleanup lineage fields",
+      "live_anchor": "### Fidelity recovery cov-205: Lane cleanup lineage fields (Plans/storage-plan.md:L211)",
+      "action": "layout_repair_reference",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-03579"
+      ],
+      "source_obligation_ids": [
+        "obl-3425"
+      ],
+      "source_seed_ids": [
+        "seed-4612"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "gap_ids": [
+        "gap-02803"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Source Control being worktree-first in UI does not remove the need for lane lineage in storage"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-0ff6c0434aca",
+      "packet_writer_role": "observe_only",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Observe-only layout repair reference: target records packetizable layout backlog without creating an overlapping mutation writer."
+      ]
+    },
+    {
+      "target_id": "target-0680",
+      "path": "Plans/storage-plan.md",
+      "mapped_owner_heading": "### Naming and migration rules (forward-only storage policy)",
+      "live_anchor": "### Naming and migration rules (forward-only storage policy) (Plans/storage-plan.md:L631)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-02372",
+        "cov-02649"
+      ],
+      "source_obligation_ids": [
+        "obl-2223",
+        "obl-2497"
+      ],
+      "source_seed_ids": [
+        "seed-2890",
+        "seed-3280"
+      ],
+      "source_shard_ids": [
+        "shard-0036",
+        "shard-0039"
+      ],
+      "gap_ids": [
+        "gap-01844",
+        "gap-02083"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "still drifts from canonical storage namespaces and lacks settled hostability, migration, and trust contracts",
+        "role-scoped pools already exist in storage and Multi-Account selection rules"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-6618ec158142",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-03995",
+    "cov-04188",
+    "cov-03618",
+    "cov-03653",
+    "cov-04243",
+    "cov-03579",
+    "cov-02372",
+    "cov-02649"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-3839",
+    "obl-4028",
+    "obl-3464",
+    "obl-3499",
+    "obl-4083",
+    "obl-3425",
+    "obl-2223",
+    "obl-2497"
+  ],
+  "source_seed_ids_represented": [
+    "seed-5263",
+    "seed-5547",
+    "seed-4666",
+    "seed-4709",
+    "seed-5645",
+    "seed-4612",
+    "seed-2890",
+    "seed-3280"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0053",
+    "shard-0055",
+    "shard-0049",
+    "shard-0056",
+    "shard-0048",
+    "shard-0036",
+    "shard-0039"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": [
+    {
+      "target_id": "target-0679",
+      "path": "Plans/storage-plan.md",
+      "reason": "observe_only non-packetizable source path"
+    }
+  ]
+}

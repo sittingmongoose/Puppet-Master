@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-740",
+  "group_ids": [
+    "discgrp-2957",
+    "discgrp-2958",
+    "discgrp-2959",
+    "discgrp-2960"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03237",
+      "source_obligation_ids": [
+        "obl-3083"
+      ],
+      "source_seed_ids": [
+        "seed-4098"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03238",
+      "source_obligation_ids": [
+        "obl-3084"
+      ],
+      "source_seed_ids": [
+        "seed-4099"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03239",
+      "source_obligation_ids": [
+        "obl-3085"
+      ],
+      "source_seed_ids": [
+        "seed-4100"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L43"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03240",
+      "source_obligation_ids": [
+        "obl-3086"
+      ],
+      "source_seed_ids": [
+        "seed-4101"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Runtime artifact and projection storage scope",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

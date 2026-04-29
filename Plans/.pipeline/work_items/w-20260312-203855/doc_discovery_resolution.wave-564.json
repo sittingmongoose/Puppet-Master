@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-564",
+  "group_ids": [
+    "discgrp-2253",
+    "discgrp-2254",
+    "discgrp-2255",
+    "discgrp-2256"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02526",
+      "source_obligation_ids": [
+        "obl-2375"
+      ],
+      "source_seed_ids": [
+        "seed-3088"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L35"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02527",
+      "source_obligation_ids": [
+        "obl-2376"
+      ],
+      "source_seed_ids": [
+        "seed-3089"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Media_Generation_and_Capabilities.md",
+      "new_heading_hint": "# Media Generation and Capabilities (Canonical SSOT)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Media_Generation_and_Capabilities.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02528",
+      "source_obligation_ids": [
+        "obl-2377"
+      ],
+      "source_seed_ids": [
+        "seed-3090"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-011 -- UI command dispatch only (Rule 1)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L108"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02529",
+      "source_obligation_ids": [
+        "obl-2378"
+      ],
+      "source_seed_ids": [
+        "seed-3091"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_OpenCode.md",
+      "new_heading_hint": "## OpenCode Runtime Retry / Blocked-State / Packet Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L567"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

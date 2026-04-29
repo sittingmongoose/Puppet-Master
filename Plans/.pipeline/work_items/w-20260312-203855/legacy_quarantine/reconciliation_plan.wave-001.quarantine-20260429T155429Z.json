@@ -1,0 +1,84 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-001",
+  "timestamp_utc": "2026-04-29T02:34:05Z",
+  "repair_mode": "scribe_blocker_targeted_repair",
+  "status": "blocked",
+  "subagent_tasks": [
+    "recplan-target-157",
+    "recplan-target-221"
+  ],
+  "assigned_input_boundaries": [
+    "recgrp-repair-001: one open gap/coverage row for Plans/STATE_FILES.md; candidates limited to Tools/newtools/assistant-memory/WorktreeGitImprovement focused chunks",
+    "recgrp-repair-002: one open gap/coverage row for Plans/ledger.md; candidates limited to focused historical/requested-effective policy chunks"
+  ],
+  "subagent_result_status": {
+    "recplan-target-157": "blocked: missing Plans/STATE_FILES.md; no safe existing owner-span retarget found",
+    "recplan-target-221": "blocked: missing Plans/ledger.md; no exact Historical-run implication anchor found; suggested Prompt_Pipeline retarget not safe enough to finalize"
+  },
+  "completed_task_count": 2,
+  "failed_task_count": 0,
+  "coverage_row_ids_assigned": [
+    "cov-793",
+    "cov-285"
+  ],
+  "coverage_row_ids_completed": [
+    "cov-793",
+    "cov-285"
+  ],
+  "target_groups_assigned": [
+    "recgrp-repair-001",
+    "recgrp-repair-002"
+  ],
+  "target_groups_completed": [
+    "recgrp-repair-001",
+    "recgrp-repair-002"
+  ],
+  "target_candidates": [],
+  "blockers": [
+    {
+      "target_id": "target-157",
+      "path": "Plans/STATE_FILES.md",
+      "coverage_row_ids": [
+        "cov-793"
+      ],
+      "source_obligation_ids": [
+        "obl-220"
+      ],
+      "source_seed_ids": [
+        "seed-220"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "gap_ids": [
+        "gap-190"
+      ],
+      "reason": "Target file is missing and bounded planning found no safe equivalent existing Plans/** owner span; prior target already used create_section, but Packet Builder emitted update and Scribe could not create the file."
+    },
+    {
+      "target_id": "target-221",
+      "path": "Plans/ledger.md",
+      "coverage_row_ids": [
+        "cov-285"
+      ],
+      "source_obligation_ids": [
+        "obl-083"
+      ],
+      "source_seed_ids": [
+        "seed-083"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "gap_ids": [
+        "gap-272"
+      ],
+      "reason": "Target file is missing and the required Historical-run implication anchor is absent from bounded candidate docs; retargeting would require semantic substitution not safe for this planner pass."
+    }
+  ],
+  "path_field_status": "pass",
+  "span_conflict_risk_groups": 0,
+  "layout_blockers": []
+}

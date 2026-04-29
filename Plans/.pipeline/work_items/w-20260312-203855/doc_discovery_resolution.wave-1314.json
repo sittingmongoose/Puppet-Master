@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1314",
+  "group_ids": [
+    "discgrp-5253",
+    "discgrp-5254",
+    "discgrp-5255",
+    "discgrp-5256"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05684",
+      "source_obligation_ids": [
+        "obl-5456"
+      ],
+      "source_seed_ids": [
+        "seed-8099"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "# Commands System (Canonical SSOT)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05685",
+      "source_obligation_ids": [
+        "obl-5457"
+      ],
+      "source_seed_ids": [
+        "seed-8100"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/OpenCode_Coverage_Matrix.md",
+      "new_heading_hint": "# OpenCode Coverage Matrix (Audit)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05686",
+      "source_obligation_ids": [
+        "obl-5458"
+      ],
+      "source_seed_ids": [
+        "seed-8101"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Recommended minimum concern record shape",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L199"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05687",
+      "source_obligation_ids": [
+        "obl-5459"
+      ],
+      "source_seed_ids": [
+        "seed-8102"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Wiring_Rules.md",
+      "new_heading_hint": "# UI Wiring Rules (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Wiring_Rules.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

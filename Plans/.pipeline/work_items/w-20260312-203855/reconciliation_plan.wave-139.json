@@ -1,0 +1,247 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-139",
+  "group_ids": [
+    "recgrp-0553",
+    "recgrp-0554",
+    "recgrp-0555",
+    "recgrp-0556"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0553",
+      "path": "Plans/agent-rules-context.md",
+      "mapped_owner_heading": "### Context Assembly Semantics (Deterministic Cone)",
+      "live_anchor": "### Context Assembly Semantics (Deterministic Cone) (Plans/agent-rules-context.md:L180)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-02092",
+        "cov-06516"
+      ],
+      "source_obligation_ids": [
+        "obl-1949",
+        "obl-6157"
+      ],
+      "source_seed_ids": [
+        "seed-2526",
+        "seed-9309"
+      ],
+      "source_shard_ids": [
+        "shard-0033",
+        "shard-0084"
+      ],
+      "gap_ids": [
+        "gap-01625",
+        "gap-05052"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`context help`: richer popover, side panel, or surface-local explainer with examples and related concepts",
+        "context help",
+        "`stage/tier/task/repo context`",
+        "stage/tier/task/repo context"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-87c216a87f9b",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0554",
+      "path": "Plans/agent-rules-context.md",
+      "mapped_owner_heading": "### Order and precedence",
+      "live_anchor": "### Order and precedence (Plans/agent-rules-context.md:L63)",
+      "action": "layout_repair_reference",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-06836"
+      ],
+      "source_obligation_ids": [
+        "obl-6448"
+      ],
+      "source_seed_ids": [
+        "seed-9827"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "gap_ids": [
+        "gap-05307"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Contracts_V0.md` still lacks the late refinement layer: selector precedence order, reject rules, closed `tab_id` vocabulary, scoped resolver rules, route examples, ref-family split",
+        "Contracts_V0.md",
+        "tab_id"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-f13f40800ec8",
+      "packet_writer_role": "observe_only",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Observe-only layout repair reference: target records packetizable layout backlog without creating an overlapping mutation writer."
+      ]
+    },
+    {
+      "target_id": "target-0555",
+      "path": "Plans/agent-rules-context.md",
+      "mapped_owner_heading": "#### B) Attempt Journal (Ephemeral, per node attempt)",
+      "live_anchor": "#### B) Attempt Journal (Ephemeral, per node attempt) (Plans/agent-rules-context.md:L167)",
+      "action": "layout_repair_reference",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-04796"
+      ],
+      "source_obligation_ids": [
+        "obl-4573"
+      ],
+      "source_seed_ids": [
+        "seed-6527"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "gap_ids": [
+        "gap-03747"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "ephemeral UI layout state"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-2f4f67ef79d9",
+      "packet_writer_role": "observe_only",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Observe-only layout repair reference: target records packetizable layout backlog without creating an overlapping mutation writer."
+      ]
+    },
+    {
+      "target_id": "target-0556",
+      "path": "Plans/agent-rules-context.md",
+      "mapped_owner_heading": "#### D) Promotion (Controlled, optional)",
+      "live_anchor": "#### D) Promotion (Controlled, optional) (Plans/agent-rules-context.md:L177)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-05154"
+      ],
+      "source_obligation_ids": [
+        "obl-4930"
+      ],
+      "source_seed_ids": [
+        "seed-7136"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "gap_ids": [
+        "gap-04009"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`target_kind` must stay coarse and controlled.",
+        "target_kind"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-79ac96116a0b",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-02092",
+    "cov-06516",
+    "cov-06836",
+    "cov-04796",
+    "cov-05154"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1949",
+    "obl-6157",
+    "obl-6448",
+    "obl-4573",
+    "obl-4930"
+  ],
+  "source_seed_ids_represented": [
+    "seed-2526",
+    "seed-9309",
+    "seed-9827",
+    "seed-6527",
+    "seed-7136"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0033",
+    "shard-0084",
+    "shard-0088",
+    "shard-0063",
+    "shard-0068"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": [
+    {
+      "target_id": "target-0554",
+      "path": "Plans/agent-rules-context.md",
+      "reason": "observe_only non-packetizable source path"
+    },
+    {
+      "target_id": "target-0555",
+      "path": "Plans/agent-rules-context.md",
+      "reason": "observe_only non-packetizable source path"
+    }
+  ]
+}

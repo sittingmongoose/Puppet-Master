@@ -1,5 +1,36 @@
 ## 3. How OpenCode Does It (Reference for Rewrite)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0348
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - must be exact, but exact does not mean fully materialized at once
+  - `account_switch_reason` currently does too much work as a single field.
+  - account_switch_reason
+  - `provider_attempt_ref` does not replace `attempt_id`
+  - provider_attempt_ref
+  - attempt_id
+  - `inspector_target` does not replace `tab_id`.
+  - inspector_target
+  - tab_id
+  - `tab_id` does not replace `target_kind`.
+  - target_kind
+  - `tab_id` does not replace `inspector_target`.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 We are aligning with OpenCode-style architecture where useful; their LSP approach is a good reference.
 
 **Official documentation:** [LSP Servers \| OpenCode](https://opencode.ai/docs/lsp/) -- canonical reference for built-in servers, config, and behavior.
@@ -95,6 +126,30 @@ Fallback rule:
 - if no language-specific marker is found, use the nearest `.git` directory as the root
 
 ### 3.6 Extension conflicts (multiple servers per extension)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0351
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Without a closed vocabulary, `inspector_target` will become a second untyped extension bag.
+  - inspector_target
+  - reject when `tab_id` conflicts with `target_kind`
+  - tab_id
+  - target_kind
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Multiple servers may overlap for one language or file kind; overlap is resolved through explicit selection metadata rather than one-off hard-coded exceptions.
 

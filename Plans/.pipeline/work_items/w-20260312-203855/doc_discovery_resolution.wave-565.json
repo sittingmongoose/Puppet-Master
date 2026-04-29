@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-565",
+  "group_ids": [
+    "discgrp-2257",
+    "discgrp-2258",
+    "discgrp-2259",
+    "discgrp-2260"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02530",
+      "source_obligation_ids": [
+        "obl-2379"
+      ],
+      "source_seed_ids": [
+        "seed-3092"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "### Fidelity recovery cov-010: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02531",
+      "source_obligation_ids": [
+        "obl-2380"
+      ],
+      "source_seed_ids": [
+        "seed-3093"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02532",
+      "source_obligation_ids": [
+        "obl-2381"
+      ],
+      "source_seed_ids": [
+        "seed-3094"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_OpenCode.md",
+      "new_heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02533",
+      "source_obligation_ids": [
+        "obl-2382"
+      ],
+      "source_seed_ids": [
+        "seed-3095"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "new_heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-898",
+  "group_ids": [
+    "discgrp-3589",
+    "discgrp-3590",
+    "discgrp-3591",
+    "discgrp-3592"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03884",
+      "source_obligation_ids": [
+        "obl-3729"
+      ],
+      "source_seed_ids": [
+        "seed-5076"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-003 -- UI SSOT (no bespoke UI behavior)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L45"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03885",
+      "source_obligation_ids": [
+        "obl-3730"
+      ],
+      "source_seed_ids": [
+        "seed-5077"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "## 2. Required artifact set (SSOT) \u2014 Project Plan Package",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L37"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03886",
+      "source_obligation_ids": [
+        "obl-3731"
+      ],
+      "source_seed_ids": [
+        "seed-5078"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "# Glossary (Canonical)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Glossary.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03887",
+      "source_obligation_ids": [
+        "obl-3732"
+      ],
+      "source_seed_ids": [
+        "seed-5079"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1323"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,137 +1,1079 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-073",
-  "timestamp_utc": "2026-04-28T21:53:40Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-289",
-    "coverage-rowgrp-290",
-    "coverage-rowgrp-291",
-    "coverage-rowgrp-292"
+  "row_group_ids": [
+    "rowgrp-0289",
+    "rowgrp-0290",
+    "rowgrp-0291",
+    "rowgrp-0292"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-289 cov-110 Plans/project_plan_graph_index.schema.json",
-    "rowgrp-290 cov-118 Plans/project_plan_node.schema.json",
-    "rowgrp-291 cov-095,cov-136 Plans/project_plan_node.schema.json",
-    "rowgrp-292 cov-109 Plans/project_plan_node.schema.json"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-289": "completed_reduced_conservatively_with_schema_normalization",
-    "coverage-rowgrp-290": "completed_reduced_conservatively_with_evidence_stripping",
-    "coverage-rowgrp-291": "completed_reduced_conservatively_with_evidence_stripping",
-    "coverage-rowgrp-292": "completed_reduced_conservatively_with_schema_normalization"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-110",
-    "cov-118",
-    "cov-095",
-    "cov-136",
-    "cov-109"
-  ],
-  "coverage_ids_completed": [
-    "cov-110",
-    "cov-118",
-    "cov-095",
-    "cov-136",
-    "cov-109"
-  ],
-  "path_groups_assigned": [
-    "Plans/project_plan_graph_index.schema.json",
-    "Plans/project_plan_node.schema.json"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-110",
+      "coverage_id": "cov-02547",
+      "source_obligation_ids": [
+        "obl-2396"
+      ],
+      "source_seed_ids": [
+        "seed-3113"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "still needs runtime-overlay terminology, identity linkage, and approval cache scoping for",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## Recovery Terminology Reconciliation Addendum (2026-03-08)",
       "status": "partial",
+      "exact_items": [
+        "still needs runtime-overlay terminology, identity linkage, and approval cache scoping for multi-actor execution"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/project_plan_graph_index.schema.json:46-64 defines execution_ordering with selection_rule lexicographic_node_id and ready_rule all_blockers_done_and_spec_lock_satisfied",
-        "Plans/project_plan_graph_index.schema.json:32-36 defines optional depends_on for nodes"
+        "Plans/Crosswalk.md:L289"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Lexicographic selection and depends_on are present, but scored ready-set scheduling, blockers/unblocks terminology, reason_code, recovery_options, allowed_actions, blocked_reason, and graph-local Retry/Replan/Reopen/Approve/Deny are absent.",
-      "source_obligation_ids": [
-        "obl-035"
-      ],
-      "source_seed_ids": [
-        "seed-035"
-      ],
-      "source_shard_ids": [
-        "shard-0008"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-118",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Plans/project_plan_node.schema.json does not directly contain the assigned live-doc consumer set or stale tier/Overseer/worktree/scope tokens.",
+      "coverage_id": "cov-02780",
       "source_obligation_ids": [
-        "obl-036"
+        "obl-2627"
       ],
       "source_seed_ids": [
-        "seed-036"
+        "seed-3447"
       ],
       "source_shard_ids": [
-        "shard-0008"
+        "shard-0040"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-095",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Plans/project_plan_node.schema.json does not cover selection_rule/tier-rooted breadcrumb replacement, package/seam/lane/worktree/account identity fields, or contamination/safe-point linkage.",
-      "source_obligation_ids": [
-        "obl-034"
-      ],
-      "source_seed_ids": [
-        "seed-034"
-      ],
-      "source_shard_ids": [
-        "shard-0008"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-136",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Plans/project_plan_node.schema.json remains node-level schema modeling and lacks package/seam/lane/promotion object family fields, contamination state, resolution thread, or effective account identity.",
-      "source_obligation_ids": [
-        "obl-038"
-      ],
-      "source_seed_ids": [
-        "seed-038"
-      ],
-      "source_shard_ids": [
-        "shard-0009"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-109",
+      "canon_label": "`Requested binding`",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.5 Assistant thread worktree binding ownership",
       "status": "partial",
-      "evidence": [
-        "Plans/project_plan_node.schema.json:86-95 defines blockers and unblocks arrays",
-        "Plans/project_plan_node.schema.json:146-150 defines depends_on array"
+      "exact_items": [
+        "`Requested binding`",
+        "Requested binding"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Direct blockers/unblocks and depends_on coverage exists, but lexicographic/scored scheduling, reason_code, recovery_options, allowed_actions, blocked_reason, and graph-local Retry/Replan/Reopen/Approve/Deny are absent.",
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L108"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03022",
       "source_obligation_ids": [
-        "obl-035"
+        "obl-2868"
       ],
       "source_seed_ids": [
-        "seed-035"
+        "seed-3785"
       ],
       "source_shard_ids": [
-        "shard-0008"
+        "shard-0043"
       ],
-      "path_field_status": "match"
+      "canon_label": "no clean lane/worktree binding exists",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "status": "partial",
+      "exact_items": [
+        "no clean lane/worktree binding exists"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03105",
+      "source_obligation_ids": [
+        "obl-2951"
+      ],
+      "source_seed_ids": [
+        "seed-3895"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "own final canonical term definitions for:",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## 2. Primitive index (definitions are DRY)",
+      "status": "partial",
+      "exact_items": [
+        "own final canonical term definitions for:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L66"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03142",
+      "source_obligation_ids": [
+        "obl-2988"
+      ],
+      "source_seed_ids": [
+        "seed-3945"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "lane/worktree refs",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "status": "partial",
+      "exact_items": [
+        "lane/worktree refs"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03152",
+      "source_obligation_ids": [
+        "obl-2998"
+      ],
+      "source_seed_ids": [
+        "seed-3955"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "`TierContext` replacement/wrapper is now one of the most important structural follow-ups s",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Open subject navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "`TierContext` replacement/wrapper is now one of the most important structural follow-ups still open",
+        "TierContext"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03155",
+      "source_obligation_ids": [
+        "obl-3001"
+      ],
+      "source_seed_ids": [
+        "seed-3963"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "workspace binding: `workspace`, `worktree_path`",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.5 Assistant thread worktree binding ownership",
+      "status": "partial",
+      "exact_items": [
+        "workspace binding: `workspace`, `worktree_path`",
+        "workspace",
+        "worktree_path"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L91"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03230",
+      "source_obligation_ids": [
+        "obl-3076"
+      ],
+      "source_seed_ids": [
+        "seed-4079"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "Add an explicit approval-scope field or object, likely something like `approval_scope_key`",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.10 Permission and approval-scope ownership",
+      "status": "partial",
+      "exact_items": [
+        "Add an explicit approval-scope field or object, likely something like `approval_scope_key`, so reusable approvals and one-off blocked-episode approvals cannot bleed together.",
+        "approval_scope_key"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L187"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03295",
+      "source_obligation_ids": [
+        "obl-3141"
+      ],
+      "source_seed_ids": [
+        "seed-4180"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "still missing canonical ownership for `execution_role`, `blocked_sequence` minting, and st",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## Runtime Scheduler / Recovery Ownership and Precedence",
+      "status": "partial",
+      "exact_items": [
+        "still missing canonical ownership for `execution_role`, `blocked_sequence` minting, and startup-recovery scheduler handoff.",
+        "execution_role",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L300"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03602",
+      "source_obligation_ids": [
+        "obl-3448"
+      ],
+      "source_seed_ids": [
+        "seed-4641"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "glossary/crosswalk/TOC dead references and missing advertised sections",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## References",
+      "status": "partial",
+      "exact_items": [
+        "glossary/crosswalk/TOC dead references and missing advertised sections"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L31",
+        "Plans/Crosswalk.md:L102",
+        "Plans/Crosswalk.md:L224"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03693",
+      "source_obligation_ids": [
+        "obl-3538"
+      ],
+      "source_seed_ids": [
+        "seed-4761"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Add the missing runtime-identity open path to FileManager and align evidence/artifact keys",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Open subject navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "Add the missing runtime-identity open path to FileManager and align evidence/artifact keys with attempt-native records."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03890",
+      "source_obligation_ids": [
+        "obl-3735"
+      ],
+      "source_seed_ids": [
+        "seed-5082"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "`Glossary.md` and `Crosswalk.md` remain structurally unsafe as owner docs:",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`Glossary.md` and `Crosswalk.md` remain structurally unsafe as owner docs:",
+        "Glossary.md",
+        "Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29",
+        "Plans/Crosswalk.md:L59"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03895",
+      "source_obligation_ids": [
+        "obl-3740"
+      ],
+      "source_seed_ids": [
+        "seed-5087"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "rewrite-era primitives like `Seglog`, evidence-bundle style outputs, and capability-gating",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "rewrite-era primitives like `Seglog`, evidence-bundle style outputs, and capability-gating concepts still lack Crosswalk routing, so adjacent docs can cite primitives that Crosswalk cannot resolve.",
+        "Seglog"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L115"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03923",
+      "source_obligation_ids": [
+        "obl-3768"
+      ],
+      "source_seed_ids": [
+        "seed-5145"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "with `Plans/Glossary.md` and `Plans/Crosswalk.md` still high-risk due to SSOT routing/term",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "with `Plans/Glossary.md` and `Plans/Crosswalk.md` still high-risk due to SSOT routing/term ownership failures.",
+        "Plans/Glossary.md",
+        "Plans/Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29",
+        "Plans/Crosswalk.md:L59"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03973",
+      "source_obligation_ids": [
+        "obl-3817"
+      ],
+      "source_seed_ids": [
+        "seed-5233"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "Source Control / repo/worktree/branch",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "status": "partial",
+      "exact_items": [
+        "Source Control / repo/worktree/branch"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04003",
+      "source_obligation_ids": [
+        "obl-3847"
+      ],
+      "source_seed_ids": [
+        "seed-5271"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "`usage_event_ref` should be the preferred route for cost-bearing pivots whenever present.",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Route target navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "`usage_event_ref` should be the preferred route for cost-bearing pivots whenever present.",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04081",
+      "source_obligation_ids": [
+        "obl-3923"
+      ],
+      "source_seed_ids": [
+        "seed-5377"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "identity-based open is the canonical entrypoint for:",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Open subject navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "identity-based open is the canonical entrypoint for:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04089",
+      "source_obligation_ids": [
+        "obl-3931"
+      ],
+      "source_seed_ids": [
+        "seed-5385"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "it lets FileManager/editor/Artifacts/Orchestrator share one identity model instead of ad h",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Open subject navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "it lets FileManager/editor/Artifacts/Orchestrator share one identity model instead of ad hoc open handlers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04096",
+      "source_obligation_ids": [
+        "obl-3938"
+      ],
+      "source_seed_ids": [
+        "seed-5397"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "identity-native subject open",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Open subject navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "identity-native subject open"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04141",
+      "source_obligation_ids": [
+        "obl-3981"
+      ],
+      "source_seed_ids": [
+        "seed-5461"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "`resume_url` should not stay the most expressive navigation mechanism in the product.",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Route target navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "`resume_url` should not stay the most expressive navigation mechanism in the product.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04171",
+      "source_obligation_ids": [
+        "obl-4011"
+      ],
+      "source_seed_ids": [
+        "seed-5518"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "identity-native subject/route open",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Open subject navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "identity-native subject/route open"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04241",
+      "source_obligation_ids": [
+        "obl-4081"
+      ],
+      "source_seed_ids": [
+        "seed-5643"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "Crosswalk\u2019s `References`-then-more-content pattern is mirrored in adjacent owner docs like",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "Crosswalk\u2019s `References`-then-more-content pattern is mirrored in adjacent owner docs like `GitHub_Integration.md`, reinforcing that append-after-references drift is systemic, not isolated.",
+        "References",
+        "GitHub_Integration.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L31",
+        "Plans/Crosswalk.md:L102",
+        "Plans/Crosswalk.md:L118",
+        "Plans/Crosswalk.md:L120",
+        "Plans/Crosswalk.md:L224"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04264",
+      "source_obligation_ids": [
+        "obl-4104"
+      ],
+      "source_seed_ids": [
+        "seed-5689"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "Promote `project_id`, `attempt_id`, and generated/runtime subject routing to first-class o",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Open subject navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "Promote `project_id`, `attempt_id`, and generated/runtime subject routing to first-class owners in artifact/file/storage docs.",
+        "project_id",
+        "attempt_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04272",
+      "source_obligation_ids": [
+        "obl-4112"
+      ],
+      "source_seed_ids": [
+        "seed-5700"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "a direct binding to a canonical navigation primitive",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## 2. Primitive index (definitions are DRY)",
+      "status": "partial",
+      "exact_items": [
+        "a direct binding to a canonical navigation primitive"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L66"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04325",
+      "source_obligation_ids": [
+        "obl-4165"
+      ],
+      "source_seed_ids": [
+        "seed-5783"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "canonical navigation primitive",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## 2. Primitive index (definitions are DRY)",
+      "status": "partial",
+      "exact_items": [
+        "canonical navigation primitive"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L66"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04343",
+      "source_obligation_ids": [
+        "obl-4183"
+      ],
+      "source_seed_ids": [
+        "seed-5813"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "`storage-plan.md` is already substantially ahead of the routing docs on subject identity.",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Open subject navigation rules",
+      "status": "present",
+      "exact_items": [
+        "`storage-plan.md` is already substantially ahead of the routing docs on subject identity. It defines:",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L72",
+        "Plans/Crosswalk.md:L78",
+        "Plans/Crosswalk.md:L114",
+        "Plans/Crosswalk.md:L115",
+        "Plans/Crosswalk.md:L117"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04350",
+      "source_obligation_ids": [
+        "obl-4190"
+      ],
+      "source_seed_ids": [
+        "seed-5820"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "artifact-backed content may open source in transient `generated://<artifact_id>` buffers",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Open subject navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "artifact-backed content may open source in transient `generated://<artifact_id>` buffers",
+        "generated://<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04355",
+      "source_obligation_ids": [
+        "obl-4195"
+      ],
+      "source_seed_ids": [
+        "seed-5825"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "routing should target the subject identity first, then resolve to the best openable repres",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Open subject navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "routing should target the subject identity first, then resolve to the best openable representation"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04379",
+      "source_obligation_ids": [
+        "obl-4219"
+      ],
+      "source_seed_ids": [
+        "seed-5862"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "route target identity",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Route target navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "route target identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04426",
+      "source_obligation_ids": [
+        "obl-4266"
+      ],
+      "source_seed_ids": [
+        "seed-5950"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "PR/issues, `Seglog`, `ArtifactStore`, and capability-gating routing remain unresolved in C",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "PR/issues, `Seglog`, `ArtifactStore`, and capability-gating routing remain unresolved in Crosswalk.",
+        "Seglog",
+        "ArtifactStore"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L115"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04459",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04556",
+      "source_obligation_ids": [
+        "obl-4334"
+      ],
+      "source_seed_ids": [
+        "seed-6105"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "`resume_url` remains stronger and more explicit than most other navigation mechanisms.",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Route target navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "`resume_url` remains stronger and more explicit than most other navigation mechanisms.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04566",
+      "source_obligation_ids": [
+        "obl-4344"
+      ],
+      "source_seed_ids": [
+        "seed-6123"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "`Crosswalk.md` explicitly owns a number of neighboring primitives:",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`Crosswalk.md` explicitly owns a number of neighboring primitives:",
+        "Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04570",
+      "source_obligation_ids": [
+        "obl-4348"
+      ],
+      "source_seed_ids": [
+        "seed-6127",
+        "seed-8013"
+      ],
+      "source_shard_ids": [
+        "shard-0060",
+        "shard-0074"
+      ],
+      "canon_label": "`Primitive:DocumentCheckpoint`",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## 2. Primitive index (definitions are DRY)",
+      "status": "partial",
+      "exact_items": [
+        "`Primitive:DocumentCheckpoint`",
+        "Primitive:DocumentCheckpoint"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L78"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04575",
+      "source_obligation_ids": [
+        "obl-4353"
+      ],
+      "source_seed_ids": [
+        "seed-6132"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "`Crosswalk.md`: introduces routing primitives and owner boundaries",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`Crosswalk.md`: introduces routing primitives and owner boundaries",
+        "Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04580",
+      "source_obligation_ids": [
+        "obl-4358"
+      ],
+      "source_seed_ids": [
+        "seed-6147"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "Neighboring primitives are already fragmented because no owner doc says where route payloa",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Route target navigation rules",
+      "status": "partial",
+      "exact_items": [
+        "Neighboring primitives are already fragmented because no owner doc says where route payloads stop, where subject identity starts, and where file-path opening is merely one realization."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04581",
+      "source_obligation_ids": [
+        "obl-4359"
+      ],
+      "source_seed_ids": [
+        "seed-6148"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "`OpenFile` is currently acting like a surrogate navigation primitive because the real prim",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## 2. Primitive index (definitions are DRY)",
+      "status": "partial",
+      "exact_items": [
+        "`OpenFile` is currently acting like a surrogate navigation primitive because the real primitive has no owner.",
+        "OpenFile"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L66"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04582",
+      "source_obligation_ids": [
+        "obl-4360"
+      ],
+      "source_seed_ids": [
+        "seed-6149"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "Add a new Crosswalk primitive for route-target navigation and likely another for subject-o",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Add a new Crosswalk primitive for route-target navigation and likely another for subject-open/open-by-identity, or make one primitive explicitly cover both layers if kept tight."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04612",
+      "source_obligation_ids": [
+        "obl-4390"
+      ],
+      "source_seed_ids": [
+        "seed-6205"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "Add `Primitive:RouteTarget` and likely `Primitive:OpenSubject` to `Crosswalk.md`.",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "Add `Primitive:RouteTarget` and likely `Primitive:OpenSubject` to `Crosswalk.md`.",
+        "Primitive:RouteTarget",
+        "Primitive:OpenSubject",
+        "Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29",
+        "Plans/Crosswalk.md:L83"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04614",
+      "source_obligation_ids": [
+        "obl-4392"
+      ],
+      "source_seed_ids": [
+        "seed-6207"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "Narrow `FileManager.md` so `OpenFile` is explicitly a workspace-document path operation, n",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## 2. Primitive index (definitions are DRY)",
+      "status": "present",
+      "exact_items": [
+        "Narrow `FileManager.md` so `OpenFile` is explicitly a workspace-document path operation, not the universal object-open primitive.",
+        "FileManager.md",
+        "OpenFile"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L74",
+        "Plans/Crosswalk.md:L78",
+        "Plans/Crosswalk.md:L107",
+        "Plans/Crosswalk.md:L122"
+      ],
+      "required_action": "none"
     }
   ]
 }

@@ -1,0 +1,146 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0031",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0031-L006001-L006200.md",
+  "source_line_range": "L006001-L006200",
+  "covered_shard_id": "shard-0031",
+  "seed_candidates": [
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "concern record family / projection contract",
+      "exact_items": [
+        "Add a canonical concern record family and corresponding projection contract.",
+        "Add explicit concern lineage fields for merge/split/supersession.",
+        "Add resolution_kind and rationale requirements for dismiss/resolve paths."
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [
+        "Contradictions / gaps surfaced",
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "concern event family",
+        "concern record family",
+        "resolution_kind"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6086-L6095"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "requested/effective identity disclosure contract",
+      "exact_items": [
+        "Define one shared requested/effective identity disclosure contract reusable across graph detail, artifacts, GitHub/auth surfaces, usage/account-pressure surfaces."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
+        "Plans/FileManager.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Impact of findings",
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "requested identity",
+        "effective identity",
+        "provider/account identity"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6118-L6125",
+        "working_ledger.md:L6147-L6160",
+        "working_ledger.md:L6163-L6168"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "storage / usage attribution pivot away from tier-era routing",
+      "exact_items": [
+        "Rework storage/usage attribution to treat seam_id, package_id, lane_id, and attempt_id as first-class where the runtime model now requires them, instead of centering tier_id.",
+        "Replace or deprecate tier-era event and widget assumptions: run.tier_* -> seam/package/lane-aware runtime events; tier_tree / Tiers ownership -> seam/worktree/package-native surfaces."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FileManager.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Key findings",
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "tier_id",
+        "run.tier_*",
+        "tier_tree",
+        "Tiers"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6122-L6125",
+        "working_ledger.md:L6151-L6153",
+        "working_ledger.md:L6168-L6174"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "governance-layer concern lifecycle / authority rules",
+      "exact_items": [
+        "Decision_Policy.md still lacks first-class concern/corroboration/promotion objects and their authority/lifecycle rules.",
+        "Permissions_System.md does not yet integrate the stricter requested/effective identity model that Contracts_V0.md now makes canonical.",
+        "Architecture_Invariants.md needs to reflect newer runtime invariants like scheduler lane ordering and mutation-safe-point requirements."
+      ],
+      "affected_doc_hints": [
+        "Plans/Decision_Policy.md",
+        "Plans/Permissions_System.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [
+        "concern/corroboration/promotion objects",
+        "requested/effective identity model",
+        "scheduler lane ordering"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6196-L6200"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "L006001-L006014 resolution-kind direction notes",
+    "L006016-L006027 merge/split/supersession direction notes",
+    "L006029-L006038 source update rule notes",
+    "L006040-L006056 interaction with other families notes",
+    "L006058-L006075 UI/search/ledger implication notes",
+    "L006076-L006084 interaction with notifications and blocked routing notes",
+    "L006102-L006115 targeted docs read list",
+    "L006135-L006145 impacted docs list",
+    "L006184-L006194 targeted docs read list"
+  ],
+  "uncertain_items": []
+}

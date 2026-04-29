@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-019",
+  "group_ids": [
+    "discgrp-0073",
+    "discgrp-0074",
+    "discgrp-0075",
+    "discgrp-0076"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00268",
+      "source_obligation_ids": [
+        "obl-145"
+      ],
+      "source_seed_ids": [
+        "seed-151"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00269",
+      "source_obligation_ids": [
+        "obl-146"
+      ],
+      "source_seed_ids": [
+        "seed-152"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "#### Issue 1: False Positives in Documentation",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L2252"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00272",
+      "source_obligation_ids": [
+        "obl-148"
+      ],
+      "source_seed_ids": [
+        "seed-154"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00273",
+      "source_obligation_ids": [
+        "obl-149"
+      ],
+      "source_seed_ids": [
+        "seed-155"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Runtime artifact and projection storage scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

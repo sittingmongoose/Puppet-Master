@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1245",
+  "group_ids": [
+    "discgrp-4977",
+    "discgrp-4978",
+    "discgrp-4979",
+    "discgrp-4980"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05381",
+      "source_obligation_ids": [
+        "obl-5153"
+      ],
+      "source_seed_ids": [
+        "seed-7628"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-079: Project summary projection",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L123"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05382",
+      "source_obligation_ids": [
+        "obl-5154"
+      ],
+      "source_seed_ids": [
+        "seed-7632"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05383",
+      "source_obligation_ids": [
+        "obl-5155"
+      ],
+      "source_seed_ids": [
+        "seed-7633"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05384",
+      "source_obligation_ids": [
+        "obl-5156"
+      ],
+      "source_seed_ids": [
+        "seed-7634"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "### 3. Event ledger (existing concept, under Usage umbrella)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/usage-feature.md:L187"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

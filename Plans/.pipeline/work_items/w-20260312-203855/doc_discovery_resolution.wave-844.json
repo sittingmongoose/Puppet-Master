@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-844",
+  "group_ids": [
+    "discgrp-3373",
+    "discgrp-3374",
+    "discgrp-3375",
+    "discgrp-3376"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03653",
+      "source_obligation_ids": [
+        "obl-3499"
+      ],
+      "source_seed_ids": [
+        "seed-4709"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-188: Projection fields for startup rehydration",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L189"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03654",
+      "source_obligation_ids": [
+        "obl-3500"
+      ],
+      "source_seed_ids": [
+        "seed-4710"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### Progress catalog source and default drills",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L910"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03661",
+      "source_obligation_ids": [
+        "obl-3507"
+      ],
+      "source_seed_ids": [
+        "seed-4723"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/newtools.md",
+      "new_heading_hint": "# GUI Testing Tools & Framework Options -- Implementation Plan",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/newtools.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03662",
+      "source_obligation_ids": [
+        "obl-3508"
+      ],
+      "source_seed_ids": [
+        "seed-4724"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "## 8. OpenCode baseline and Puppet Master deltas",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Commands_System.md:L457"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

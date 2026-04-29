@@ -1,0 +1,2694 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-073",
+  "group_ids": [
+    "gapgrp-0289",
+    "gapgrp-0290",
+    "gapgrp-0291",
+    "gapgrp-0292"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-01357",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01730 is partial for Because projection trust now matters, some notification copy needs qualification.",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01730"
+      ],
+      "source_obligation_ids": [
+        "obl-1587"
+      ],
+      "source_seed_ids": [
+        "seed-1979"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "Because projection trust now matters, some notification copy needs qualification."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01360",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01734 is partial for `Projection degraded; showing canonical history only`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01734"
+      ],
+      "source_obligation_ids": [
+        "obl-1591"
+      ],
+      "source_seed_ids": [
+        "seed-1983"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "`Projection degraded; showing canonical history only`",
+        "Projection degraded; showing canonical history only"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01365",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01740 is partial for projection trust should affect notification confidence, not only action gating",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01740"
+      ],
+      "source_obligation_ids": [
+        "obl-1597"
+      ],
+      "source_seed_ids": [
+        "seed-1989"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "projection trust should affect notification confidence, not only action gating"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01382",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01760 is partial for `destination_surface`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01760"
+      ],
+      "source_obligation_ids": [
+        "obl-1617"
+      ],
+      "source_seed_ids": [
+        "seed-2018",
+        "seed-3233"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "`destination_surface`",
+        "destination_surface"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01406",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01799 is partial for some route activations should update stored view state",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-071: Canonical route payload"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01799"
+      ],
+      "source_obligation_ids": [
+        "obl-1656"
+      ],
+      "source_seed_ids": [
+        "seed-2063"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "some route activations should update stored view state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01409",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01802 is partial for hover previews or temporary compare pivots should not necessarily rewrite persistent state",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01802"
+      ],
+      "source_obligation_ids": [
+        "obl-1659"
+      ],
+      "source_seed_ids": [
+        "seed-2066"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "hover previews or temporary compare pivots should not necessarily rewrite persistent state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01410",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01803 is partial for if the target surface is degraded, the route should still land on the canonical fallback r",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-071: Canonical route payload"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01803"
+      ],
+      "source_obligation_ids": [
+        "obl-1660"
+      ],
+      "source_seed_ids": [
+        "seed-2068"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "if the target surface is degraded, the route should still land on the canonical fallback representation when possible rather than fail opaque"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01502",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01925 is partial for usage/account-pressure surfaces",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01925"
+      ],
+      "source_obligation_ids": [
+        "obl-1782"
+      ],
+      "source_seed_ids": [
+        "seed-2286"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "usage/account-pressure surfaces"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01505",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01928 is partial for `tier_tree` / `Tiers` ownership -> seam/worktree/package-native surfaces",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01928"
+      ],
+      "source_obligation_ids": [
+        "obl-1785"
+      ],
+      "source_seed_ids": [
+        "seed-2289"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "`tier_tree` / `Tiers` ownership -> seam/worktree/package-native surfaces",
+        "tier_tree",
+        "Tiers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01533",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01965 is partial for Research Progress - 2026-03-16 - Opus broader second-sweep delta cluster (canonical contra",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### Drag-and-drop contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01965"
+      ],
+      "source_obligation_ids": [
+        "obl-1822"
+      ],
+      "source_seed_ids": [
+        "seed-2337"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - Opus broader second-sweep delta cluster (canonical contract drift and native-surface ownership)"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01622",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02088 is partial for small surfaces need compact labels plus deeper linked/contextual help, not renamed local j",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Concern, escalation, notification, and help surfaces"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02088"
+      ],
+      "source_obligation_ids": [
+        "obl-1945"
+      ],
+      "source_seed_ids": [
+        "seed-2522"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "small surfaces need compact labels plus deeper linked/contextual help, not renamed local jargon"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01719",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02210 is partial for Projection consumers still cannot derive complete account/pressure truth from provider/run",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02210"
+      ],
+      "source_obligation_ids": [
+        "obl-2065"
+      ],
+      "source_seed_ids": [
+        "seed-2681"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "Projection consumers still cannot derive complete account/pressure truth from provider/runtime streams:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01766",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02272 is partial for Projection trust should be derived from committed state and receipts, not reinvented per p",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02272"
+      ],
+      "source_obligation_ids": [
+        "obl-2125"
+      ],
+      "source_seed_ids": [
+        "seed-2757"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "Projection trust should be derived from committed state and receipts, not reinvented per page with ad-hoc polling language."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01780",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02290 is partial for `SelectSpeakerEvent` is demoted to `raw_observation`, which hides governance-relevant spea",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 10.11 Loading-to-live transitions"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02290"
+      ],
+      "source_obligation_ids": [
+        "obl-2143"
+      ],
+      "source_seed_ids": [
+        "seed-2783"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`SelectSpeakerEvent` is demoted to `raw_observation`, which hides governance-relevant speaker/overseer transitions from downstream projections",
+        "SelectSpeakerEvent",
+        "raw_observation"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01834",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02361 is partial for `Orchestrator_Page.md` still describes widgetized Tiers/Evidence/History/Ledger surfaces",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02361"
+      ],
+      "source_obligation_ids": [
+        "obl-2212"
+      ],
+      "source_seed_ids": [
+        "seed-2875"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator_Page.md` still describes widgetized Tiers/Evidence/History/Ledger surfaces",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01836",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02364 is partial for Widget/account/trust contracts still lag the rewrite:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02364"
+      ],
+      "source_obligation_ids": [
+        "obl-2215"
+      ],
+      "source_seed_ids": [
+        "seed-2878"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Widget/account/trust contracts still lag the rewrite:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01899",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02435 is partial for `projection_trust_state`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02435"
+      ],
+      "source_obligation_ids": [
+        "obl-2285"
+      ],
+      "source_seed_ids": [
+        "seed-2962",
+        "seed-3009",
+        "seed-3173",
+        "seed-3186"
+      ],
+      "source_shard_ids": [
+        "shard-0036",
+        "shard-0037",
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "`projection_trust_state`",
+        "projection_trust_state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01920",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02457 is partial for future Projects/attention-center docs and command/deep-link docs",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## 18. Promoted Features (Formerly Future Considerations)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02457"
+      ],
+      "source_obligation_ids": [
+        "obl-2307"
+      ],
+      "source_seed_ids": [
+        "seed-2993"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "future Projects/attention-center docs and command/deep-link docs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01936",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02476 is partial for if an attention item is projection-derived rather than canonical-runtime-backed, the row s",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02476"
+      ],
+      "source_obligation_ids": [
+        "obl-2326"
+      ],
+      "source_seed_ids": [
+        "seed-3018"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "if an attention item is projection-derived rather than canonical-runtime-backed, the row should show that reduced trust explicitly and avoid overconfident imperative copy"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01937",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02477 is partial for attention center rows should identify the owning object and likely next surface, not merel",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-082: Project attention projection"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02477"
+      ],
+      "source_obligation_ids": [
+        "obl-2327"
+      ],
+      "source_seed_ids": [
+        "seed-3019"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "attention center rows should identify the owning object and likely next surface, not merely repeat severity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02098",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02669 is partial for `requested_persona_id` / `effective_persona_id` remain embedded in consumer docs despite c",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### 7.19.1 Embedded document pane"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02669"
+      ],
+      "source_obligation_ids": [
+        "obl-2516"
+      ],
+      "source_seed_ids": [
+        "seed-3303"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "`requested_persona_id` / `effective_persona_id` remain embedded in consumer docs despite canonical prohibition.",
+        "requested_persona_id",
+        "effective_persona_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02100",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02671 is partial for `trust_tier` is already occupied by Preview, so projection-freshness trust needs a distinc",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02671"
+      ],
+      "source_obligation_ids": [
+        "obl-2518"
+      ],
+      "source_seed_ids": [
+        "seed-3305"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "`trust_tier` is already occupied by Preview, so projection-freshness trust needs a distinct name.",
+        "trust_tier"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02103",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02676 is partial for Define an append-only account-switch / pressure-episode family with shared projection cons",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-022: Concern record family definition"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02676"
+      ],
+      "source_obligation_ids": [
+        "obl-2523"
+      ],
+      "source_seed_ids": [
+        "seed-3310"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Define an append-only account-switch / pressure-episode family with shared projection consumers."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02104",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02677 is partial for Rename or explicitly separate projection-freshness trust vocabulary from Preview `trust_ti",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02677"
+      ],
+      "source_obligation_ids": [
+        "obl-2524"
+      ],
+      "source_seed_ids": [
+        "seed-3311"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Rename or explicitly separate projection-freshness trust vocabulary from Preview `trust_tier`.",
+        "trust_tier"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02105",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02678 is partial for Operational identities must be displayable with provider/account identity but must not imp",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-052: Shared escalation ladder"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02678"
+      ],
+      "source_obligation_ids": [
+        "obl-2525"
+      ],
+      "source_seed_ids": [
+        "seed-3312"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Operational identities must be displayable with provider/account identity but must not imply shared token ownership."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02144",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02728 is partial for missing project-summary / project-attention projection family",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-022: Concern record family definition"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02728"
+      ],
+      "source_obligation_ids": [
+        "obl-2575"
+      ],
+      "source_seed_ids": [
+        "seed-3377"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "missing project-summary / project-attention projection family"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02150",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02735 is partial for one canonical project-summary / project-attention projection owner",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02735"
+      ],
+      "source_obligation_ids": [
+        "obl-2582"
+      ],
+      "source_seed_ids": [
+        "seed-3384"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "one canonical project-summary / project-attention projection owner"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02196",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02789 is partial for Research Progress - 2026-03-16 - GPT-5.3-Codex Identity / Projection Closure",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02789"
+      ],
+      "source_obligation_ids": [
+        "obl-2636"
+      ],
+      "source_seed_ids": [
+        "seed-3456"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - GPT-5.3-Codex Identity / Projection Closure"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02276",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02888 is partial for future provider/surface-specific kinds as needed",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## 18. Promoted Features (Formerly Future Considerations)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02888"
+      ],
+      "source_obligation_ids": [
+        "obl-2735"
+      ],
+      "source_seed_ids": [
+        "seed-3589"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "future provider/surface-specific kinds as needed"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02277",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02889 is partial for operational identity may be displayed alongside provider/account identity",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-090: Execution role and operational identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02889"
+      ],
+      "source_obligation_ids": [
+        "obl-2736"
+      ],
+      "source_seed_ids": [
+        "seed-3590"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "operational identity may be displayed alongside provider/account identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02279",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02891 is partial for consumer docs for graph/detail/history/ledger/runtime inspectors",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.4 Settings and inspectors"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02891"
+      ],
+      "source_obligation_ids": [
+        "obl-2738"
+      ],
+      "source_seed_ids": [
+        "seed-3597"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "consumer docs for graph/detail/history/ledger/runtime inspectors"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02330",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02952 is partial for current-state surfaces can stay simple, but history surfaces need the append-only truth",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02952"
+      ],
+      "source_obligation_ids": [
+        "obl-2799"
+      ],
+      "source_seed_ids": [
+        "seed-3687"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "current-state surfaces can stay simple, but history surfaces need the append-only truth"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02337",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02959 is partial for Projection freshness and degraded-trust remain under-specified at the command/surface laye",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-096: Projection freshness vs projection health"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02959"
+      ],
+      "source_obligation_ids": [
+        "obl-2806"
+      ],
+      "source_seed_ids": [
+        "seed-3701"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "Projection freshness and degraded-trust remain under-specified at the command/surface layer:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02348",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02970 is partial for still needs governance families, route-payload normalization, and projection-freshness gat",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02970"
+      ],
+      "source_obligation_ids": [
+        "obl-2817"
+      ],
+      "source_seed_ids": [
+        "seed-3714"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "still needs governance families, route-payload normalization, and projection-freshness gating"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02399",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03038 is partial for Research Progress - 2026-03-16 - projection-freshness vocabulary and owner cluster",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### Progress catalog source and default drills"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03038"
+      ],
+      "source_obligation_ids": [
+        "obl-2884"
+      ],
+      "source_seed_ids": [
+        "seed-3805"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - projection-freshness vocabulary and owner cluster"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02432",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03093 is partial for projection freshness/health fields on projections",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03093"
+      ],
+      "source_obligation_ids": [
+        "obl-2939"
+      ],
+      "source_seed_ids": [
+        "seed-3883",
+        "seed-4533"
+      ],
+      "source_shard_ids": [
+        "shard-0043",
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "projection freshness/health fields on projections"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02474",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03149 is partial for Rewrite `orchestrator-subagent-integration.md` so it becomes a consumer/worker-spawn docum",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03149"
+      ],
+      "source_obligation_ids": [
+        "obl-2995"
+      ],
+      "source_seed_ids": [
+        "seed-3952"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "Rewrite `orchestrator-subagent-integration.md` so it becomes a consumer/worker-spawn document over canonical runnable units, not a competing tier-era execution model.",
+        "orchestrator-subagent-integration.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02511",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03203 is partial for `tier_runtime_record` may still survive, but only as a derived grouping/view object if exe",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-090: Execution role and operational identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03203"
+      ],
+      "source_obligation_ids": [
+        "obl-3049"
+      ],
+      "source_seed_ids": [
+        "seed-4037"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "`tier_runtime_record` may still survive, but only as a derived grouping/view object if execution ownership moves elsewhere",
+        "tier_runtime_record"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02683",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03436 is partial for command/catalog/template/example integrity is still broken enough to miswire surfaces mech",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03436"
+      ],
+      "source_obligation_ids": [
+        "obl-3282"
+      ],
+      "source_seed_ids": [
+        "seed-4397"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "command/catalog/template/example integrity is still broken enough to miswire surfaces mechanically."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02752",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03519 is partial for lane/worktree projection for current state",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03519"
+      ],
+      "source_obligation_ids": [
+        "obl-3365"
+      ],
+      "source_seed_ids": [
+        "seed-4529"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "lane/worktree projection for current state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-01730",
+    "cov-01734",
+    "cov-01740",
+    "cov-01760",
+    "cov-01799",
+    "cov-01802",
+    "cov-01803",
+    "cov-01925",
+    "cov-01928",
+    "cov-01965",
+    "cov-02088",
+    "cov-02210",
+    "cov-02272",
+    "cov-02290",
+    "cov-02361",
+    "cov-02364",
+    "cov-02435",
+    "cov-02457",
+    "cov-02476",
+    "cov-02477",
+    "cov-02669",
+    "cov-02671",
+    "cov-02676",
+    "cov-02677",
+    "cov-02678",
+    "cov-02728",
+    "cov-02735",
+    "cov-02789",
+    "cov-02888",
+    "cov-02889",
+    "cov-02891",
+    "cov-02952",
+    "cov-02959",
+    "cov-02970",
+    "cov-03038",
+    "cov-03093",
+    "cov-03149",
+    "cov-03203",
+    "cov-03436",
+    "cov-03519"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1587",
+    "obl-1591",
+    "obl-1597",
+    "obl-1617",
+    "obl-1656",
+    "obl-1659",
+    "obl-1660",
+    "obl-1782",
+    "obl-1785",
+    "obl-1822",
+    "obl-1945",
+    "obl-2065",
+    "obl-2125",
+    "obl-2143",
+    "obl-2212",
+    "obl-2215",
+    "obl-2285",
+    "obl-2307",
+    "obl-2326",
+    "obl-2327",
+    "obl-2516",
+    "obl-2518",
+    "obl-2523",
+    "obl-2524",
+    "obl-2525",
+    "obl-2575",
+    "obl-2582",
+    "obl-2636",
+    "obl-2735",
+    "obl-2736",
+    "obl-2738",
+    "obl-2799",
+    "obl-2806",
+    "obl-2817",
+    "obl-2884",
+    "obl-2939",
+    "obl-2995",
+    "obl-3049",
+    "obl-3282",
+    "obl-3365"
+  ],
+  "source_seed_ids_represented": [
+    "seed-1979",
+    "seed-1983",
+    "seed-1989",
+    "seed-2018",
+    "seed-2063",
+    "seed-2066",
+    "seed-2068",
+    "seed-2286",
+    "seed-2289",
+    "seed-2337",
+    "seed-2522",
+    "seed-2681",
+    "seed-2757",
+    "seed-2783",
+    "seed-2875",
+    "seed-2878",
+    "seed-2962",
+    "seed-2993",
+    "seed-3009",
+    "seed-3018",
+    "seed-3019",
+    "seed-3173",
+    "seed-3186",
+    "seed-3233",
+    "seed-3303",
+    "seed-3305",
+    "seed-3310",
+    "seed-3311",
+    "seed-3312",
+    "seed-3377",
+    "seed-3384",
+    "seed-3456",
+    "seed-3589",
+    "seed-3590",
+    "seed-3597",
+    "seed-3687",
+    "seed-3701",
+    "seed-3714",
+    "seed-3805",
+    "seed-3883",
+    "seed-3952",
+    "seed-4037",
+    "seed-4397",
+    "seed-4529",
+    "seed-4533"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0028",
+    "shard-0029",
+    "shard-0031",
+    "shard-0032",
+    "shard-0033",
+    "shard-0034",
+    "shard-0035",
+    "shard-0036",
+    "shard-0037",
+    "shard-0038",
+    "shard-0039",
+    "shard-0040",
+    "shard-0041",
+    "shard-0042",
+    "shard-0043",
+    "shard-0044",
+    "shard-0047",
+    "shard-0048"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-01357",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01730 is partial for Because projection trust now matters, some notification copy needs qualification.",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01730"
+      ],
+      "source_obligation_ids": [
+        "obl-1587"
+      ],
+      "source_seed_ids": [
+        "seed-1979"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "Because projection trust now matters, some notification copy needs qualification."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01360",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01734 is partial for `Projection degraded; showing canonical history only`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01734"
+      ],
+      "source_obligation_ids": [
+        "obl-1591"
+      ],
+      "source_seed_ids": [
+        "seed-1983"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "`Projection degraded; showing canonical history only`",
+        "Projection degraded; showing canonical history only"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01365",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01740 is partial for projection trust should affect notification confidence, not only action gating",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01740"
+      ],
+      "source_obligation_ids": [
+        "obl-1597"
+      ],
+      "source_seed_ids": [
+        "seed-1989"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "projection trust should affect notification confidence, not only action gating"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01382",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01760 is partial for `destination_surface`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01760"
+      ],
+      "source_obligation_ids": [
+        "obl-1617"
+      ],
+      "source_seed_ids": [
+        "seed-2018",
+        "seed-3233"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "`destination_surface`",
+        "destination_surface"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01406",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01799 is partial for some route activations should update stored view state",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-071: Canonical route payload"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01799"
+      ],
+      "source_obligation_ids": [
+        "obl-1656"
+      ],
+      "source_seed_ids": [
+        "seed-2063"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "some route activations should update stored view state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01409",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01802 is partial for hover previews or temporary compare pivots should not necessarily rewrite persistent state",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01802"
+      ],
+      "source_obligation_ids": [
+        "obl-1659"
+      ],
+      "source_seed_ids": [
+        "seed-2066"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "hover previews or temporary compare pivots should not necessarily rewrite persistent state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01410",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01803 is partial for if the target surface is degraded, the route should still land on the canonical fallback r",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-071: Canonical route payload"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01803"
+      ],
+      "source_obligation_ids": [
+        "obl-1660"
+      ],
+      "source_seed_ids": [
+        "seed-2068"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "if the target surface is degraded, the route should still land on the canonical fallback representation when possible rather than fail opaque"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01502",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01925 is partial for usage/account-pressure surfaces",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01925"
+      ],
+      "source_obligation_ids": [
+        "obl-1782"
+      ],
+      "source_seed_ids": [
+        "seed-2286"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "usage/account-pressure surfaces"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01505",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01928 is partial for `tier_tree` / `Tiers` ownership -> seam/worktree/package-native surfaces",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01928"
+      ],
+      "source_obligation_ids": [
+        "obl-1785"
+      ],
+      "source_seed_ids": [
+        "seed-2289"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "`tier_tree` / `Tiers` ownership -> seam/worktree/package-native surfaces",
+        "tier_tree",
+        "Tiers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01533",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01965 is partial for Research Progress - 2026-03-16 - Opus broader second-sweep delta cluster (canonical contra",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### Drag-and-drop contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01965"
+      ],
+      "source_obligation_ids": [
+        "obl-1822"
+      ],
+      "source_seed_ids": [
+        "seed-2337"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - Opus broader second-sweep delta cluster (canonical contract drift and native-surface ownership)"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01622",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02088 is partial for small surfaces need compact labels plus deeper linked/contextual help, not renamed local j",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Concern, escalation, notification, and help surfaces"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02088"
+      ],
+      "source_obligation_ids": [
+        "obl-1945"
+      ],
+      "source_seed_ids": [
+        "seed-2522"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "small surfaces need compact labels plus deeper linked/contextual help, not renamed local jargon"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01719",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02210 is partial for Projection consumers still cannot derive complete account/pressure truth from provider/run",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02210"
+      ],
+      "source_obligation_ids": [
+        "obl-2065"
+      ],
+      "source_seed_ids": [
+        "seed-2681"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "Projection consumers still cannot derive complete account/pressure truth from provider/runtime streams:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01766",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02272 is partial for Projection trust should be derived from committed state and receipts, not reinvented per p",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02272"
+      ],
+      "source_obligation_ids": [
+        "obl-2125"
+      ],
+      "source_seed_ids": [
+        "seed-2757"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "Projection trust should be derived from committed state and receipts, not reinvented per page with ad-hoc polling language."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01780",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02290 is partial for `SelectSpeakerEvent` is demoted to `raw_observation`, which hides governance-relevant spea",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 10.11 Loading-to-live transitions"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02290"
+      ],
+      "source_obligation_ids": [
+        "obl-2143"
+      ],
+      "source_seed_ids": [
+        "seed-2783"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`SelectSpeakerEvent` is demoted to `raw_observation`, which hides governance-relevant speaker/overseer transitions from downstream projections",
+        "SelectSpeakerEvent",
+        "raw_observation"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01834",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02361 is partial for `Orchestrator_Page.md` still describes widgetized Tiers/Evidence/History/Ledger surfaces",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02361"
+      ],
+      "source_obligation_ids": [
+        "obl-2212"
+      ],
+      "source_seed_ids": [
+        "seed-2875"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator_Page.md` still describes widgetized Tiers/Evidence/History/Ledger surfaces",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01836",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02364 is partial for Widget/account/trust contracts still lag the rewrite:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02364"
+      ],
+      "source_obligation_ids": [
+        "obl-2215"
+      ],
+      "source_seed_ids": [
+        "seed-2878"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Widget/account/trust contracts still lag the rewrite:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01899",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02435 is partial for `projection_trust_state`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02435"
+      ],
+      "source_obligation_ids": [
+        "obl-2285"
+      ],
+      "source_seed_ids": [
+        "seed-2962",
+        "seed-3009",
+        "seed-3173",
+        "seed-3186"
+      ],
+      "source_shard_ids": [
+        "shard-0036",
+        "shard-0037",
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "`projection_trust_state`",
+        "projection_trust_state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01920",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02457 is partial for future Projects/attention-center docs and command/deep-link docs",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## 18. Promoted Features (Formerly Future Considerations)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02457"
+      ],
+      "source_obligation_ids": [
+        "obl-2307"
+      ],
+      "source_seed_ids": [
+        "seed-2993"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "future Projects/attention-center docs and command/deep-link docs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01936",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02476 is partial for if an attention item is projection-derived rather than canonical-runtime-backed, the row s",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02476"
+      ],
+      "source_obligation_ids": [
+        "obl-2326"
+      ],
+      "source_seed_ids": [
+        "seed-3018"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "if an attention item is projection-derived rather than canonical-runtime-backed, the row should show that reduced trust explicitly and avoid overconfident imperative copy"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01937",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02477 is partial for attention center rows should identify the owning object and likely next surface, not merel",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-082: Project attention projection"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02477"
+      ],
+      "source_obligation_ids": [
+        "obl-2327"
+      ],
+      "source_seed_ids": [
+        "seed-3019"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "attention center rows should identify the owning object and likely next surface, not merely repeat severity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02098",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02669 is partial for `requested_persona_id` / `effective_persona_id` remain embedded in consumer docs despite c",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### 7.19.1 Embedded document pane"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02669"
+      ],
+      "source_obligation_ids": [
+        "obl-2516"
+      ],
+      "source_seed_ids": [
+        "seed-3303"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "`requested_persona_id` / `effective_persona_id` remain embedded in consumer docs despite canonical prohibition.",
+        "requested_persona_id",
+        "effective_persona_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02100",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02671 is partial for `trust_tier` is already occupied by Preview, so projection-freshness trust needs a distinc",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02671"
+      ],
+      "source_obligation_ids": [
+        "obl-2518"
+      ],
+      "source_seed_ids": [
+        "seed-3305"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "`trust_tier` is already occupied by Preview, so projection-freshness trust needs a distinct name.",
+        "trust_tier"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02103",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02676 is partial for Define an append-only account-switch / pressure-episode family with shared projection cons",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-022: Concern record family definition"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02676"
+      ],
+      "source_obligation_ids": [
+        "obl-2523"
+      ],
+      "source_seed_ids": [
+        "seed-3310"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Define an append-only account-switch / pressure-episode family with shared projection consumers."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02104",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02677 is partial for Rename or explicitly separate projection-freshness trust vocabulary from Preview `trust_ti",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02677"
+      ],
+      "source_obligation_ids": [
+        "obl-2524"
+      ],
+      "source_seed_ids": [
+        "seed-3311"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Rename or explicitly separate projection-freshness trust vocabulary from Preview `trust_tier`.",
+        "trust_tier"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02105",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02678 is partial for Operational identities must be displayable with provider/account identity but must not imp",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-052: Shared escalation ladder"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02678"
+      ],
+      "source_obligation_ids": [
+        "obl-2525"
+      ],
+      "source_seed_ids": [
+        "seed-3312"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Operational identities must be displayable with provider/account identity but must not imply shared token ownership."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02144",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02728 is partial for missing project-summary / project-attention projection family",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-022: Concern record family definition"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02728"
+      ],
+      "source_obligation_ids": [
+        "obl-2575"
+      ],
+      "source_seed_ids": [
+        "seed-3377"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "missing project-summary / project-attention projection family"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02150",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02735 is partial for one canonical project-summary / project-attention projection owner",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02735"
+      ],
+      "source_obligation_ids": [
+        "obl-2582"
+      ],
+      "source_seed_ids": [
+        "seed-3384"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "one canonical project-summary / project-attention projection owner"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02196",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02789 is partial for Research Progress - 2026-03-16 - GPT-5.3-Codex Identity / Projection Closure",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02789"
+      ],
+      "source_obligation_ids": [
+        "obl-2636"
+      ],
+      "source_seed_ids": [
+        "seed-3456"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - GPT-5.3-Codex Identity / Projection Closure"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02276",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02888 is partial for future provider/surface-specific kinds as needed",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## 18. Promoted Features (Formerly Future Considerations)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02888"
+      ],
+      "source_obligation_ids": [
+        "obl-2735"
+      ],
+      "source_seed_ids": [
+        "seed-3589"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "future provider/surface-specific kinds as needed"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02277",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02889 is partial for operational identity may be displayed alongside provider/account identity",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-090: Execution role and operational identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02889"
+      ],
+      "source_obligation_ids": [
+        "obl-2736"
+      ],
+      "source_seed_ids": [
+        "seed-3590"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "operational identity may be displayed alongside provider/account identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02279",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02891 is partial for consumer docs for graph/detail/history/ledger/runtime inspectors",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.4 Settings and inspectors"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02891"
+      ],
+      "source_obligation_ids": [
+        "obl-2738"
+      ],
+      "source_seed_ids": [
+        "seed-3597"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "consumer docs for graph/detail/history/ledger/runtime inspectors"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02330",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02952 is partial for current-state surfaces can stay simple, but history surfaces need the append-only truth",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02952"
+      ],
+      "source_obligation_ids": [
+        "obl-2799"
+      ],
+      "source_seed_ids": [
+        "seed-3687"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "current-state surfaces can stay simple, but history surfaces need the append-only truth"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02337",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02959 is partial for Projection freshness and degraded-trust remain under-specified at the command/surface laye",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-096: Projection freshness vs projection health"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02959"
+      ],
+      "source_obligation_ids": [
+        "obl-2806"
+      ],
+      "source_seed_ids": [
+        "seed-3701"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "Projection freshness and degraded-trust remain under-specified at the command/surface layer:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02348",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02970 is partial for still needs governance families, route-payload normalization, and projection-freshness gat",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02970"
+      ],
+      "source_obligation_ids": [
+        "obl-2817"
+      ],
+      "source_seed_ids": [
+        "seed-3714"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "still needs governance families, route-payload normalization, and projection-freshness gating"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02399",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03038 is partial for Research Progress - 2026-03-16 - projection-freshness vocabulary and owner cluster",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### Progress catalog source and default drills"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03038"
+      ],
+      "source_obligation_ids": [
+        "obl-2884"
+      ],
+      "source_seed_ids": [
+        "seed-3805"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - projection-freshness vocabulary and owner cluster"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02432",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03093 is partial for projection freshness/health fields on projections",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03093"
+      ],
+      "source_obligation_ids": [
+        "obl-2939"
+      ],
+      "source_seed_ids": [
+        "seed-3883",
+        "seed-4533"
+      ],
+      "source_shard_ids": [
+        "shard-0043",
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "projection freshness/health fields on projections"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02474",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03149 is partial for Rewrite `orchestrator-subagent-integration.md` so it becomes a consumer/worker-spawn docum",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03149"
+      ],
+      "source_obligation_ids": [
+        "obl-2995"
+      ],
+      "source_seed_ids": [
+        "seed-3952"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "Rewrite `orchestrator-subagent-integration.md` so it becomes a consumer/worker-spawn document over canonical runnable units, not a competing tier-era execution model.",
+        "orchestrator-subagent-integration.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02511",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03203 is partial for `tier_runtime_record` may still survive, but only as a derived grouping/view object if exe",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-090: Execution role and operational identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03203"
+      ],
+      "source_obligation_ids": [
+        "obl-3049"
+      ],
+      "source_seed_ids": [
+        "seed-4037"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "`tier_runtime_record` may still survive, but only as a derived grouping/view object if execution ownership moves elsewhere",
+        "tier_runtime_record"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02683",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03436 is partial for command/catalog/template/example integrity is still broken enough to miswire surfaces mech",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03436"
+      ],
+      "source_obligation_ids": [
+        "obl-3282"
+      ],
+      "source_seed_ids": [
+        "seed-4397"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "command/catalog/template/example integrity is still broken enough to miswire surfaces mechanically."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02752",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03519 is partial for lane/worktree projection for current state",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03519"
+      ],
+      "source_obligation_ids": [
+        "obl-3365"
+      ],
+      "source_seed_ids": [
+        "seed-4529"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "lane/worktree projection for current state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

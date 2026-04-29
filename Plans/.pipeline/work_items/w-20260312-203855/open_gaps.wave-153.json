@@ -1,0 +1,2581 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-153",
+  "group_ids": [
+    "gapgrp-0609",
+    "gapgrp-0610",
+    "gapgrp-0611",
+    "gapgrp-0612"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-01947",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02490 is partial for the multi-account/runtime model already applies to assistant, interviewer, builders, overs",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02490"
+      ],
+      "source_obligation_ids": [
+        "obl-2340"
+      ],
+      "source_seed_ids": [
+        "seed-3041"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "the multi-account/runtime model already applies to assistant, interviewer, builders, overseers, and node workers, so the missing actor envelope now blocks auditability and replay across non-run actors"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01986",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02543 is partial for Assistant chat is ahead of interview/builder docs on requested/effective auth-account visi",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02543"
+      ],
+      "source_obligation_ids": [
+        "obl-2392"
+      ],
+      "source_seed_ids": [
+        "seed-3105"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "Assistant chat is ahead of interview/builder docs on requested/effective auth-account visibility, which is useful evidence of parity drift across conversational actors"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02185",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02776 is partial for Without `requested_account_binding`, later consumers will infer hard-vs-soft semantics heu",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### 17.3 Context re-pack on model switch (Resolved)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02776"
+      ],
+      "source_obligation_ids": [
+        "obl-2623"
+      ],
+      "source_seed_ids": [
+        "seed-3439"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Without `requested_account_binding`, later consumers will infer hard-vs-soft semantics heuristically from UI context or switch reasons, which will drift immediately.",
+        "requested_account_binding"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02471",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03144 is partial for Consolidate execution-core docs around a single node-native execution context object that",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### 8.8 Approval, queue, and execution handoff"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03144"
+      ],
+      "source_obligation_ids": [
+        "obl-2990"
+      ],
+      "source_seed_ids": [
+        "seed-3947"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "Consolidate execution-core docs around a single node-native execution context object that replaces or wraps `TierContext` and is the canonical handoff between scheduler, worker spawn, verification, remediation, recovery, and UI projections.",
+        "TierContext"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02655",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03400 is partial for `thread_id: None` in multiple handoff/coordination examples even though thread continuity",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### Thread Lifecycle State Machine"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03400"
+      ],
+      "source_obligation_ids": [
+        "obl-3246"
+      ],
+      "source_seed_ids": [
+        "seed-4332"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "`thread_id: None` in multiple handoff/coordination examples even though thread continuity is part of the surrounding model",
+        "thread_id: None"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02675",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03424 is present for `Commands_System.md` and `assistant-chat-design.md` still disagree on whether reserved sla",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## 5. Commands (slash commands and custom commands)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03424"
+      ],
+      "source_obligation_ids": [
+        "obl-3270"
+      ],
+      "source_seed_ids": [
+        "seed-4384"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`Commands_System.md` and `assistant-chat-design.md` still disagree on whether reserved slash commands may be overridden, while `UI_Command_Catalog.md` still lacks the corresponding `cmd.chat.run_user_command` owner row.",
+        "Commands_System.md",
+        "assistant-chat-design.md",
+        "UI_Command_Catalog.md",
+        "cmd.chat.run_user_command"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02864",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03665 is present for `Commands_System.md` defines `cmd.chat.run_user_command`, but the canonical catalog does n",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### W.11 Command catalog"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03665"
+      ],
+      "source_obligation_ids": [
+        "obl-3511"
+      ],
+      "source_seed_ids": [
+        "seed-4727"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "`Commands_System.md` defines `cmd.chat.run_user_command`, but the canonical catalog does not register it; the Wiring Matrix also references ghost chat/orchestrator command IDs (`cmd.chat.branch_from_restore`, `cmd.orchestrator.switch_tab`) that do not exist in the catalog.",
+        "Commands_System.md",
+        "cmd.chat.run_user_command",
+        "cmd.chat.branch_from_restore",
+        "cmd.orchestrator.switch_tab"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02889",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03697 is partial for `cmd.orchestrator.switch_tab` and `cmd.chat.branch_from_restore` are already referenced in",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03697"
+      ],
+      "source_obligation_ids": [
+        "obl-3542"
+      ],
+      "source_seed_ids": [
+        "seed-4765"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "`cmd.orchestrator.switch_tab` and `cmd.chat.branch_from_restore` are already referenced in wiring docs without catalog entries.",
+        "cmd.orchestrator.switch_tab",
+        "cmd.chat.branch_from_restore"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03318",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04255 is present for `attention_required` remains canonical in chat design but non-durable in storage, and Dash",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04255"
+      ],
+      "source_obligation_ids": [
+        "obl-4095"
+      ],
+      "source_seed_ids": [
+        "seed-5657"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "`attention_required` remains canonical in chat design but non-durable in storage, and Dashboard/Assistant handoff CtAs still lack canonical `cmd.*` IDs.",
+        "attention_required",
+        "cmd.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03548",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04516 is present for `FinalGUISpec.md` thread search already says result clicks navigate to the exact message i",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### Fidelity recovery cov-073: Canonical route payload"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04516"
+      ],
+      "source_obligation_ids": [
+        "obl-4294"
+      ],
+      "source_seed_ids": [
+        "seed-6009"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` thread search already says result clicks navigate to the exact message in its thread, but that behavior is still expressed as search-local prose rather than as one normalized route payload.",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03663",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04689 is partial for Keep UI container state (`tab_id`, panel focus, inspector section) as view context around",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### 17.6 Context Lens (Mute / Focus / Subcompact) \u2014 user-directed context shaping (thread-local)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04689"
+      ],
+      "source_obligation_ids": [
+        "obl-4467"
+      ],
+      "source_seed_ids": [
+        "seed-6351"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "Keep UI container state (`tab_id`, panel focus, inspector section) as view context around the target, not as the target taxonomy itself.",
+        "tab_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03852",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04926 is partial for Treat `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, `cmd.project.open`, `cm",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04926"
+      ],
+      "source_obligation_ids": [
+        "obl-4702"
+      ],
+      "source_seed_ids": [
+        "seed-6768"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "Treat `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, `cmd.project.open`, `cmd.artifacts.show_in_*`, and cross-surface Orchestrator pivots as wrapper navigation commands over canonical route targeting rather than as generic layout toggles.",
+        "cmd.chat.open_thread_usage",
+        "cmd.chat.focus_thread_usage",
+        "cmd.project.open",
+        "cmd.artifacts.show_in_*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04313",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05537 is present for chat search and jump behavior is already stable-ID based with `thread_id` and `message_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## 10. Chat History Search"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05537"
+      ],
+      "source_obligation_ids": [
+        "obl-5309"
+      ],
+      "source_seed_ids": [
+        "seed-7887"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "chat search and jump behavior is already stable-ID based with `thread_id` and `message_id`",
+        "thread_id",
+        "message_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04369",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05607 is partial for The blocker is owner adoption, not missing design direction.",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05607"
+      ],
+      "source_obligation_ids": [
+        "obl-5379"
+      ],
+      "source_seed_ids": [
+        "seed-7997"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "The blocker is owner adoption, not missing design direction."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05063",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06530 is present for `Prompt_Pipeline.md` is upstream of requested/effective identity disclosure across chat, b",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### 27.7 Provider compatibility disclosure in chat"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06530"
+      ],
+      "source_obligation_ids": [
+        "obl-6171"
+      ],
+      "source_seed_ids": [
+        "seed-9333"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`Prompt_Pipeline.md` is upstream of requested/effective identity disclosure across chat, builders, Orchestrator, and storage. Scope drift here will keep leaking everywhere else.",
+        "Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05429",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06995 is present for `Plans/assistant-chat-design.md` does contain the exact heading `## Unified Thread Blocked",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06995"
+      ],
+      "source_obligation_ids": [
+        "obl-6591"
+      ],
+      "source_seed_ids": [
+        "seed-10047"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/assistant-chat-design.md` does contain the exact heading `## Unified Thread Blocked-State Lifecycle`.",
+        "Plans/assistant-chat-design.md",
+        "## Unified Thread Blocked-State Lifecycle"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05474",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07059 is present for Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-0",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07059"
+      ],
+      "source_obligation_ids": [
+        "obl-6643"
+      ],
+      "source_seed_ids": [
+        "seed-10135"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.",
+        "gap-003",
+        "gap-004",
+        "gap-005",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01227",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01557 is partial for provider/auth/account selection flow",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### Crew selection flow"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01557"
+      ],
+      "source_obligation_ids": [
+        "obl-1414"
+      ],
+      "source_seed_ids": [
+        "seed-1736"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "exact_missing_items": [
+        "provider/auth/account selection flow"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01278",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01632 is partial for chat subagent blocks preserve persona/task/runtime identity in-thread rather than using a",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01632"
+      ],
+      "source_obligation_ids": [
+        "obl-1489"
+      ],
+      "source_seed_ids": [
+        "seed-1841"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "chat subagent blocks preserve persona/task/runtime identity in-thread rather than using a separate weaker model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01349",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01721 is partial for canonical chronology of everything",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### 10.1 Smart auto-retrieval (RAG) across project sources (NOT \u201calways search everything\u201d)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01721"
+      ],
+      "source_obligation_ids": [
+        "obl-1578"
+      ],
+      "source_seed_ids": [
+        "seed-1969"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "canonical chronology of everything"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01801",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02320 is partial for `usage_event_ref` now needs one authoritative schema because artifacts, receipts, Usage, L",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02320"
+      ],
+      "source_obligation_ids": [
+        "obl-2172"
+      ],
+      "source_seed_ids": [
+        "seed-2823"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`usage_event_ref` now needs one authoritative schema because artifacts, receipts, Usage, Ledger, and chat pivots all rely on it already",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01915",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02452 is partial for the rewrite should generalize that idea beyond wizards so project-level attention objects",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### Fidelity recovery cov-073: Canonical route payload"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02452"
+      ],
+      "source_obligation_ids": [
+        "obl-2302"
+      ],
+      "source_seed_ids": [
+        "seed-2984"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "the rewrite should generalize that idea beyond wizards so project-level attention objects can route to Orchestrator, Chat, Source Control, GitHub, Usage, or Settings with the same internal payload model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02691",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03444 is partial for Several docs now fail because they promise canonical sections/IDs that do not exist at all",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### 23.5 Previously open gaps (now closed)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03444"
+      ],
+      "source_obligation_ids": [
+        "obl-3290"
+      ],
+      "source_seed_ids": [
+        "seed-4412"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "Several docs now fail because they promise canonical sections/IDs that do not exist at all."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02824",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03607 is partial for spec-integrity failures should not be mistaken for fresh design space, but they still bloc",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03607"
+      ],
+      "source_obligation_ids": [
+        "obl-3453"
+      ],
+      "source_seed_ids": [
+        "seed-4646"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "spec-integrity failures should not be mistaken for fresh design space, but they still block safe reconciliation"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03253",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04178 is partial for `cmd.chat.run_user_command` remains the missing core dispatch seam for User Commands, not",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04178"
+      ],
+      "source_obligation_ids": [
+        "obl-4018"
+      ],
+      "source_seed_ids": [
+        "seed-5537"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "`cmd.chat.run_user_command` remains the missing core dispatch seam for User Commands, not merely an uncataloged helper.",
+        "cmd.chat.run_user_command"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03292",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04224 is partial for the `cmd.chat.run_user_command` seam is still missing, but GPT-5.2 also exposed that chat",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## 24. Chat thread performance, virtualization, and flicker avoidance"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04224"
+      ],
+      "source_obligation_ids": [
+        "obl-4064"
+      ],
+      "source_seed_ids": [
+        "seed-5626"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "the `cmd.chat.run_user_command` seam is still missing, but GPT-5.2 also exposed that chat event naming itself is forked across owner docs (`chat.thread.created` vs `chat.thread_created`) and that phantom `chat.message.submitted` sits inside a broader canonical-event mismatch.",
+        "cmd.chat.run_user_command",
+        "chat.thread.created",
+        "chat.thread_created",
+        "chat.message.submitted"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03449",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04413 is partial for the chat event seam is now clearly split not only by phantom events but by canonical names",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## 24. Chat thread performance, virtualization, and flicker avoidance"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04413"
+      ],
+      "source_obligation_ids": [
+        "obl-4253"
+      ],
+      "source_seed_ids": [
+        "seed-5937"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "the chat event seam is now clearly split not only by phantom events but by canonical namespace (`chat.thread.created` vs `chat.thread_created`) and likely terminal-state naming (`run.cancelled` vs `run.completed`).",
+        "chat.thread.created",
+        "chat.thread_created",
+        "run.cancelled",
+        "run.completed"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03534",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04502 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04502"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03601",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04588 is partial for The nearby owner docs point toward a layered design, not a single monolithic \u201copen/navigat",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04588"
+      ],
+      "source_obligation_ids": [
+        "obl-4366"
+      ],
+      "source_seed_ids": [
+        "seed-6159"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "The nearby owner docs point toward a layered design, not a single monolithic \u201copen/navigation\u201d contract."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03636",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04642 is partial for `object_kind = thread`",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### Thread Lifecycle State Machine"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04642"
+      ],
+      "source_obligation_ids": [
+        "obl-4420"
+      ],
+      "source_seed_ids": [
+        "seed-6256"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "`object_kind = thread`",
+        "object_kind = thread"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03756",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04812 is partial for per-project `project_state`",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### 10.3 Scoping and performance: per-project indices (required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04812"
+      ],
+      "source_obligation_ids": [
+        "obl-4589"
+      ],
+      "source_seed_ids": [
+        "seed-6557"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "per-project `project_state`",
+        "project_state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03820",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04879 is partial for `cmd.chat.focus_thread_usage`",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04879"
+      ],
+      "source_obligation_ids": [
+        "obl-4656"
+      ],
+      "source_seed_ids": [
+        "seed-6665",
+        "seed-8043",
+        "seed-9352"
+      ],
+      "source_shard_ids": [
+        "shard-0064",
+        "shard-0074",
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`cmd.chat.focus_thread_usage`",
+        "cmd.chat.focus_thread_usage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03829",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04893 is partial for `Decision_Log.md` is functionally empty for the rewrite era and does not capture major acc",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04893"
+      ],
+      "source_obligation_ids": [
+        "obl-4670"
+      ],
+      "source_seed_ids": [
+        "seed-6689"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "`Decision_Log.md` is functionally empty for the rewrite era and does not capture major accepted design decisions already present in working memory and downstream addenda.",
+        "Decision_Log.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03860",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04935 is partial for `cmd.chat.open_thread_usage`",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04935"
+      ],
+      "source_obligation_ids": [
+        "obl-4711"
+      ],
+      "source_seed_ids": [
+        "seed-6783",
+        "seed-8042",
+        "seed-9351"
+      ],
+      "source_shard_ids": [
+        "shard-0065",
+        "shard-0074",
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`cmd.chat.open_thread_usage`",
+        "cmd.chat.open_thread_usage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04078",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05254 is partial for It must never become a fallback bag for unresolved route design.",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05254"
+      ],
+      "source_obligation_ids": [
+        "obl-5030"
+      ],
+      "source_seed_ids": [
+        "seed-7336"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "It must never become a fallback bag for unresolved route design."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04124",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05318 is partial for `thread_id = <thread_id>` when the associated thread must be restored",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### Thread Lifecycle State Machine"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05318"
+      ],
+      "source_obligation_ids": [
+        "obl-5090"
+      ],
+      "source_seed_ids": [
+        "seed-7498"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`thread_id = <thread_id>` when the associated thread must be restored",
+        "thread_id = <thread_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04322",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05546 is partial for Introduce `OpenSubject` as the named identity-open contract consumed by FileManager and as",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05546"
+      ],
+      "source_obligation_ids": [
+        "obl-5318"
+      ],
+      "source_seed_ids": [
+        "seed-7903"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "Introduce `OpenSubject` as the named identity-open contract consumed by FileManager and assistant chat.",
+        "OpenSubject"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-02490",
+    "cov-02543",
+    "cov-02776",
+    "cov-03144",
+    "cov-03400",
+    "cov-03424",
+    "cov-03665",
+    "cov-03697",
+    "cov-04255",
+    "cov-04516",
+    "cov-04689",
+    "cov-04926",
+    "cov-05537",
+    "cov-05607",
+    "cov-06530",
+    "cov-06995",
+    "cov-07059",
+    "cov-01557",
+    "cov-01632",
+    "cov-01721",
+    "cov-02320",
+    "cov-02452",
+    "cov-03444",
+    "cov-03607",
+    "cov-04178",
+    "cov-04224",
+    "cov-04413",
+    "cov-04502",
+    "cov-04588",
+    "cov-04642",
+    "cov-04812",
+    "cov-04879",
+    "cov-04893",
+    "cov-04935",
+    "cov-05254",
+    "cov-05318",
+    "cov-05546"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1414",
+    "obl-1489",
+    "obl-1578",
+    "obl-2172",
+    "obl-2302",
+    "obl-2340",
+    "obl-2392",
+    "obl-2623",
+    "obl-2990",
+    "obl-3246",
+    "obl-3270",
+    "obl-3290",
+    "obl-3453",
+    "obl-3511",
+    "obl-3542",
+    "obl-4018",
+    "obl-4064",
+    "obl-4095",
+    "obl-4253",
+    "obl-4292",
+    "obl-4294",
+    "obl-4366",
+    "obl-4420",
+    "obl-4467",
+    "obl-4589",
+    "obl-4656",
+    "obl-4670",
+    "obl-4702",
+    "obl-4711",
+    "obl-5030",
+    "obl-5090",
+    "obl-5309",
+    "obl-5318",
+    "obl-5379",
+    "obl-6171",
+    "obl-6591",
+    "obl-6643"
+  ],
+  "source_seed_ids_represented": [
+    "seed-10047",
+    "seed-10135",
+    "seed-1736",
+    "seed-1841",
+    "seed-1969",
+    "seed-2823",
+    "seed-2984",
+    "seed-3041",
+    "seed-3105",
+    "seed-3439",
+    "seed-3947",
+    "seed-4332",
+    "seed-4384",
+    "seed-4412",
+    "seed-4646",
+    "seed-4727",
+    "seed-4765",
+    "seed-5537",
+    "seed-5626",
+    "seed-5657",
+    "seed-5937",
+    "seed-6001",
+    "seed-6009",
+    "seed-6159",
+    "seed-6256",
+    "seed-6351",
+    "seed-6557",
+    "seed-6665",
+    "seed-6689",
+    "seed-6768",
+    "seed-6783",
+    "seed-7336",
+    "seed-7498",
+    "seed-7887",
+    "seed-7903",
+    "seed-7997",
+    "seed-8042",
+    "seed-8043",
+    "seed-9333",
+    "seed-9351",
+    "seed-9352"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0026",
+    "shard-0027",
+    "shard-0028",
+    "shard-0035",
+    "shard-0037",
+    "shard-0040",
+    "shard-0044",
+    "shard-0046",
+    "shard-0047",
+    "shard-0049",
+    "shard-0050",
+    "shard-0055",
+    "shard-0056",
+    "shard-0058",
+    "shard-0059",
+    "shard-0060",
+    "shard-0061",
+    "shard-0063",
+    "shard-0064",
+    "shard-0065",
+    "shard-0069",
+    "shard-0070",
+    "shard-0073",
+    "shard-0074",
+    "shard-0084",
+    "shard-0089",
+    "shard-0090"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-01947",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02490 is partial for the multi-account/runtime model already applies to assistant, interviewer, builders, overs",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02490"
+      ],
+      "source_obligation_ids": [
+        "obl-2340"
+      ],
+      "source_seed_ids": [
+        "seed-3041"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "the multi-account/runtime model already applies to assistant, interviewer, builders, overseers, and node workers, so the missing actor envelope now blocks auditability and replay across non-run actors"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01986",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02543 is partial for Assistant chat is ahead of interview/builder docs on requested/effective auth-account visi",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02543"
+      ],
+      "source_obligation_ids": [
+        "obl-2392"
+      ],
+      "source_seed_ids": [
+        "seed-3105"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "Assistant chat is ahead of interview/builder docs on requested/effective auth-account visibility, which is useful evidence of parity drift across conversational actors"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02185",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02776 is partial for Without `requested_account_binding`, later consumers will infer hard-vs-soft semantics heu",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### 17.3 Context re-pack on model switch (Resolved)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02776"
+      ],
+      "source_obligation_ids": [
+        "obl-2623"
+      ],
+      "source_seed_ids": [
+        "seed-3439"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Without `requested_account_binding`, later consumers will infer hard-vs-soft semantics heuristically from UI context or switch reasons, which will drift immediately.",
+        "requested_account_binding"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02471",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03144 is partial for Consolidate execution-core docs around a single node-native execution context object that",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### 8.8 Approval, queue, and execution handoff"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03144"
+      ],
+      "source_obligation_ids": [
+        "obl-2990"
+      ],
+      "source_seed_ids": [
+        "seed-3947"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "Consolidate execution-core docs around a single node-native execution context object that replaces or wraps `TierContext` and is the canonical handoff between scheduler, worker spawn, verification, remediation, recovery, and UI projections.",
+        "TierContext"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02655",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03400 is partial for `thread_id: None` in multiple handoff/coordination examples even though thread continuity",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### Thread Lifecycle State Machine"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03400"
+      ],
+      "source_obligation_ids": [
+        "obl-3246"
+      ],
+      "source_seed_ids": [
+        "seed-4332"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "`thread_id: None` in multiple handoff/coordination examples even though thread continuity is part of the surrounding model",
+        "thread_id: None"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02675",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03424 is present for `Commands_System.md` and `assistant-chat-design.md` still disagree on whether reserved sla",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## 5. Commands (slash commands and custom commands)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03424"
+      ],
+      "source_obligation_ids": [
+        "obl-3270"
+      ],
+      "source_seed_ids": [
+        "seed-4384"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`Commands_System.md` and `assistant-chat-design.md` still disagree on whether reserved slash commands may be overridden, while `UI_Command_Catalog.md` still lacks the corresponding `cmd.chat.run_user_command` owner row.",
+        "Commands_System.md",
+        "assistant-chat-design.md",
+        "UI_Command_Catalog.md",
+        "cmd.chat.run_user_command"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02864",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03665 is present for `Commands_System.md` defines `cmd.chat.run_user_command`, but the canonical catalog does n",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### W.11 Command catalog"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03665"
+      ],
+      "source_obligation_ids": [
+        "obl-3511"
+      ],
+      "source_seed_ids": [
+        "seed-4727"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "`Commands_System.md` defines `cmd.chat.run_user_command`, but the canonical catalog does not register it; the Wiring Matrix also references ghost chat/orchestrator command IDs (`cmd.chat.branch_from_restore`, `cmd.orchestrator.switch_tab`) that do not exist in the catalog.",
+        "Commands_System.md",
+        "cmd.chat.run_user_command",
+        "cmd.chat.branch_from_restore",
+        "cmd.orchestrator.switch_tab"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02889",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03697 is partial for `cmd.orchestrator.switch_tab` and `cmd.chat.branch_from_restore` are already referenced in",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03697"
+      ],
+      "source_obligation_ids": [
+        "obl-3542"
+      ],
+      "source_seed_ids": [
+        "seed-4765"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "`cmd.orchestrator.switch_tab` and `cmd.chat.branch_from_restore` are already referenced in wiring docs without catalog entries.",
+        "cmd.orchestrator.switch_tab",
+        "cmd.chat.branch_from_restore"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03318",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04255 is present for `attention_required` remains canonical in chat design but non-durable in storage, and Dash",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04255"
+      ],
+      "source_obligation_ids": [
+        "obl-4095"
+      ],
+      "source_seed_ids": [
+        "seed-5657"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "`attention_required` remains canonical in chat design but non-durable in storage, and Dashboard/Assistant handoff CtAs still lack canonical `cmd.*` IDs.",
+        "attention_required",
+        "cmd.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03548",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04516 is present for `FinalGUISpec.md` thread search already says result clicks navigate to the exact message i",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### Fidelity recovery cov-073: Canonical route payload"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04516"
+      ],
+      "source_obligation_ids": [
+        "obl-4294"
+      ],
+      "source_seed_ids": [
+        "seed-6009"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` thread search already says result clicks navigate to the exact message in its thread, but that behavior is still expressed as search-local prose rather than as one normalized route payload.",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03663",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04689 is partial for Keep UI container state (`tab_id`, panel focus, inspector section) as view context around",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### 17.6 Context Lens (Mute / Focus / Subcompact) \u2014 user-directed context shaping (thread-local)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04689"
+      ],
+      "source_obligation_ids": [
+        "obl-4467"
+      ],
+      "source_seed_ids": [
+        "seed-6351"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "Keep UI container state (`tab_id`, panel focus, inspector section) as view context around the target, not as the target taxonomy itself.",
+        "tab_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03852",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04926 is partial for Treat `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, `cmd.project.open`, `cm",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04926"
+      ],
+      "source_obligation_ids": [
+        "obl-4702"
+      ],
+      "source_seed_ids": [
+        "seed-6768"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "Treat `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, `cmd.project.open`, `cmd.artifacts.show_in_*`, and cross-surface Orchestrator pivots as wrapper navigation commands over canonical route targeting rather than as generic layout toggles.",
+        "cmd.chat.open_thread_usage",
+        "cmd.chat.focus_thread_usage",
+        "cmd.project.open",
+        "cmd.artifacts.show_in_*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04313",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05537 is present for chat search and jump behavior is already stable-ID based with `thread_id` and `message_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## 10. Chat History Search"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05537"
+      ],
+      "source_obligation_ids": [
+        "obl-5309"
+      ],
+      "source_seed_ids": [
+        "seed-7887"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "chat search and jump behavior is already stable-ID based with `thread_id` and `message_id`",
+        "thread_id",
+        "message_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04369",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05607 is partial for The blocker is owner adoption, not missing design direction.",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05607"
+      ],
+      "source_obligation_ids": [
+        "obl-5379"
+      ],
+      "source_seed_ids": [
+        "seed-7997"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "The blocker is owner adoption, not missing design direction."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05063",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06530 is present for `Prompt_Pipeline.md` is upstream of requested/effective identity disclosure across chat, b",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### 27.7 Provider compatibility disclosure in chat"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06530"
+      ],
+      "source_obligation_ids": [
+        "obl-6171"
+      ],
+      "source_seed_ids": [
+        "seed-9333"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`Prompt_Pipeline.md` is upstream of requested/effective identity disclosure across chat, builders, Orchestrator, and storage. Scope drift here will keep leaking everywhere else.",
+        "Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05429",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06995 is present for `Plans/assistant-chat-design.md` does contain the exact heading `## Unified Thread Blocked",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06995"
+      ],
+      "source_obligation_ids": [
+        "obl-6591"
+      ],
+      "source_seed_ids": [
+        "seed-10047"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/assistant-chat-design.md` does contain the exact heading `## Unified Thread Blocked-State Lifecycle`.",
+        "Plans/assistant-chat-design.md",
+        "## Unified Thread Blocked-State Lifecycle"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05474",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07059 is present for Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-0",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07059"
+      ],
+      "source_obligation_ids": [
+        "obl-6643"
+      ],
+      "source_seed_ids": [
+        "seed-10135"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.",
+        "gap-003",
+        "gap-004",
+        "gap-005",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01227",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01557 is partial for provider/auth/account selection flow",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### Crew selection flow"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01557"
+      ],
+      "source_obligation_ids": [
+        "obl-1414"
+      ],
+      "source_seed_ids": [
+        "seed-1736"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "exact_missing_items": [
+        "provider/auth/account selection flow"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01278",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01632 is partial for chat subagent blocks preserve persona/task/runtime identity in-thread rather than using a",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01632"
+      ],
+      "source_obligation_ids": [
+        "obl-1489"
+      ],
+      "source_seed_ids": [
+        "seed-1841"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "chat subagent blocks preserve persona/task/runtime identity in-thread rather than using a separate weaker model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01349",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01721 is partial for canonical chronology of everything",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### 10.1 Smart auto-retrieval (RAG) across project sources (NOT \u201calways search everything\u201d)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01721"
+      ],
+      "source_obligation_ids": [
+        "obl-1578"
+      ],
+      "source_seed_ids": [
+        "seed-1969"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "canonical chronology of everything"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01801",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02320 is partial for `usage_event_ref` now needs one authoritative schema because artifacts, receipts, Usage, L",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02320"
+      ],
+      "source_obligation_ids": [
+        "obl-2172"
+      ],
+      "source_seed_ids": [
+        "seed-2823"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`usage_event_ref` now needs one authoritative schema because artifacts, receipts, Usage, Ledger, and chat pivots all rely on it already",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01915",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02452 is partial for the rewrite should generalize that idea beyond wizards so project-level attention objects",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### Fidelity recovery cov-073: Canonical route payload"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02452"
+      ],
+      "source_obligation_ids": [
+        "obl-2302"
+      ],
+      "source_seed_ids": [
+        "seed-2984"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "the rewrite should generalize that idea beyond wizards so project-level attention objects can route to Orchestrator, Chat, Source Control, GitHub, Usage, or Settings with the same internal payload model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02691",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03444 is partial for Several docs now fail because they promise canonical sections/IDs that do not exist at all",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### 23.5 Previously open gaps (now closed)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03444"
+      ],
+      "source_obligation_ids": [
+        "obl-3290"
+      ],
+      "source_seed_ids": [
+        "seed-4412"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "Several docs now fail because they promise canonical sections/IDs that do not exist at all."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02824",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03607 is partial for spec-integrity failures should not be mistaken for fresh design space, but they still bloc",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03607"
+      ],
+      "source_obligation_ids": [
+        "obl-3453"
+      ],
+      "source_seed_ids": [
+        "seed-4646"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "spec-integrity failures should not be mistaken for fresh design space, but they still block safe reconciliation"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03253",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04178 is partial for `cmd.chat.run_user_command` remains the missing core dispatch seam for User Commands, not",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04178"
+      ],
+      "source_obligation_ids": [
+        "obl-4018"
+      ],
+      "source_seed_ids": [
+        "seed-5537"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "`cmd.chat.run_user_command` remains the missing core dispatch seam for User Commands, not merely an uncataloged helper.",
+        "cmd.chat.run_user_command"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03292",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04224 is partial for the `cmd.chat.run_user_command` seam is still missing, but GPT-5.2 also exposed that chat",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## 24. Chat thread performance, virtualization, and flicker avoidance"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04224"
+      ],
+      "source_obligation_ids": [
+        "obl-4064"
+      ],
+      "source_seed_ids": [
+        "seed-5626"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "the `cmd.chat.run_user_command` seam is still missing, but GPT-5.2 also exposed that chat event naming itself is forked across owner docs (`chat.thread.created` vs `chat.thread_created`) and that phantom `chat.message.submitted` sits inside a broader canonical-event mismatch.",
+        "cmd.chat.run_user_command",
+        "chat.thread.created",
+        "chat.thread_created",
+        "chat.message.submitted"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03449",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04413 is partial for the chat event seam is now clearly split not only by phantom events but by canonical names",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## 24. Chat thread performance, virtualization, and flicker avoidance"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04413"
+      ],
+      "source_obligation_ids": [
+        "obl-4253"
+      ],
+      "source_seed_ids": [
+        "seed-5937"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "the chat event seam is now clearly split not only by phantom events but by canonical namespace (`chat.thread.created` vs `chat.thread_created`) and likely terminal-state naming (`run.cancelled` vs `run.completed`).",
+        "chat.thread.created",
+        "chat.thread_created",
+        "run.cancelled",
+        "run.completed"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03534",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04502 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04502"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03601",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04588 is partial for The nearby owner docs point toward a layered design, not a single monolithic \u201copen/navigat",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04588"
+      ],
+      "source_obligation_ids": [
+        "obl-4366"
+      ],
+      "source_seed_ids": [
+        "seed-6159"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "The nearby owner docs point toward a layered design, not a single monolithic \u201copen/navigation\u201d contract."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03636",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04642 is partial for `object_kind = thread`",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### Thread Lifecycle State Machine"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04642"
+      ],
+      "source_obligation_ids": [
+        "obl-4420"
+      ],
+      "source_seed_ids": [
+        "seed-6256"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "`object_kind = thread`",
+        "object_kind = thread"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03756",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04812 is partial for per-project `project_state`",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### 10.3 Scoping and performance: per-project indices (required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04812"
+      ],
+      "source_obligation_ids": [
+        "obl-4589"
+      ],
+      "source_seed_ids": [
+        "seed-6557"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "per-project `project_state`",
+        "project_state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03820",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04879 is partial for `cmd.chat.focus_thread_usage`",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04879"
+      ],
+      "source_obligation_ids": [
+        "obl-4656"
+      ],
+      "source_seed_ids": [
+        "seed-6665",
+        "seed-8043",
+        "seed-9352"
+      ],
+      "source_shard_ids": [
+        "shard-0064",
+        "shard-0074",
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`cmd.chat.focus_thread_usage`",
+        "cmd.chat.focus_thread_usage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03829",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04893 is partial for `Decision_Log.md` is functionally empty for the rewrite era and does not capture major acc",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04893"
+      ],
+      "source_obligation_ids": [
+        "obl-4670"
+      ],
+      "source_seed_ids": [
+        "seed-6689"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "`Decision_Log.md` is functionally empty for the rewrite era and does not capture major accepted design decisions already present in working memory and downstream addenda.",
+        "Decision_Log.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03860",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04935 is partial for `cmd.chat.open_thread_usage`",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04935"
+      ],
+      "source_obligation_ids": [
+        "obl-4711"
+      ],
+      "source_seed_ids": [
+        "seed-6783",
+        "seed-8042",
+        "seed-9351"
+      ],
+      "source_shard_ids": [
+        "shard-0065",
+        "shard-0074",
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`cmd.chat.open_thread_usage`",
+        "cmd.chat.open_thread_usage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04078",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05254 is partial for It must never become a fallback bag for unresolved route design.",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05254"
+      ],
+      "source_obligation_ids": [
+        "obl-5030"
+      ],
+      "source_seed_ids": [
+        "seed-7336"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "It must never become a fallback bag for unresolved route design."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04124",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05318 is partial for `thread_id = <thread_id>` when the associated thread must be restored",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### Thread Lifecycle State Machine"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05318"
+      ],
+      "source_obligation_ids": [
+        "obl-5090"
+      ],
+      "source_seed_ids": [
+        "seed-7498"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`thread_id = <thread_id>` when the associated thread must be restored",
+        "thread_id = <thread_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04322",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05546 is partial for Introduce `OpenSubject` as the named identity-open contract consumed by FileManager and as",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "# Assistant & Chat UI -- Design Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05546"
+      ],
+      "source_obligation_ids": [
+        "obl-5318"
+      ],
+      "source_seed_ids": [
+        "seed-7903"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "Introduce `OpenSubject` as the named identity-open contract consumed by FileManager and assistant chat.",
+        "OpenSubject"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

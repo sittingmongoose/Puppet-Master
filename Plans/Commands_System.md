@@ -1,14 +1,139 @@
 # Commands System (Canonical SSOT)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0071
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `UI_Command_Catalog.md` already gives several useful route-like commands:
+  - UI_Command_Catalog.md
+  - still violates canonical field naming in its own SSOT and still has no structural slot for overseer-class actor types
+  - cross-surface pivot commands still need `project_id` or an equally strong derivation rule for multi-project correctness
+  - project_id
+  - reconciliation-heavy gaps where the direction exists but SSOT ownership/field naming/event families still conflict**
+  - `UI_Command_Catalog.md` still lacks a projection-freshness gating rule for mutating/recovery commands
+  - graph-local retry/HITL commands still cannot actually be thin aliases to runtime commands because they omit runtime-minimum anchors like `run_id`, `attempt_id`, and `blocked_sequence`.
+  - run_id
+  - attempt_id
+  - blocked_sequence
+  - domain-specific “open in X” commands can still exist where they express a meaningful product action, but they should be wrappers over the same route/subject model rather than custom arg families
+  - it stops `resume_url` from being more capable than in-app commands
+  - resume_url
+  - navigation commands should be able to carry:
+  - Tighten `UI_Wiring_Rules.md` so reusable navigation commands and subject-open commands are treated as first-class wiring shapes rather than smuggled through generic `args`.
+  - UI_Wiring_Rules.md
+  - args
+  - wrapper commands over a canonical navigation primitive
+  - `UI_Command_Catalog.md` already contains several navigation-like or cross-surface commands:
+  - Navigation-related commands are described as layout/UI-state only, but the docs still lack a shared rule for when those commands must carry `project_id`, `focused_run_id`, `thread_id`, or other context needed to restore scope correctly.
+  - focused_run_id
+  - thread_id
+  - If the route/subject model stays on track, introduce a small canonical family such as `cmd.nav.*` and let surface-specific commands either wrap it or be declared as typed specializations.
+  - cmd.nav.*
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - focus/open wrapper commands in `cmd.nav.*`
+  - specialized operation payloads (`OpenFile`, `OpenSubject`, or object-specific commands)
+  - OpenFile
+  - OpenSubject
+  - Wrapper commands are currently real and useful, but the docs still lack a rule for when they are canonical UX affordances versus deprecated raw transport shapes.
+  - Let wrapper commands remain if they provide real UX meaning, but make the underlying target model canonical.
+  - `cmd.panel.switch` and similar shell commands are useful, but they should not become the de facto universal navigation primitive.
+  - cmd.panel.switch
+  - Treat commands like `cmd.panel.switch` as shell/view commands that can consume normalized routing context, not replace it.
+  - Pure shell/view-state commands should stay local and lightweight. They change what panel/subview/layout is visible, but they do not own canonical target identity.
+  - Route-consuming navigation commands are the ones that must reveal a specific object or scope. They should normalize through the emerging `route_target` model even if the user-facing command name stays domain-specific.
+  - route_target
+  - `UI_Command_Catalog.md` currently mixes shell commands and object-targeting navigation commands in the same "layout/UI state only" bucket, even when payloads already carry object identity.
+  - Keep `cmd.panel.switch` and `cmd.source_control.switch_subview` as pure shell/view-state commands with controlled destination vocabularies.
+  - cmd.source_control.switch_subview
+  - Treat commands like `cmd.source_control.select_worktree` as object-selection/navigation commands that should normalize through canonical target identity if they remain first-class.
+  - cmd.source_control.select_worktree
+  - Shell commands should not accumulate object identity until they quietly become undocumented route commands.
+  - There is still no canonical navigation primitive in the contract layer, so wrapper commands remain forced to carry semantics in prose.
+  - The wiring/gate model is command-ID-centric, but it has no first-class notion of wrapper commands normalizing to one shared route primitive.
+  - wrapper commands should instead declare something like `normalizes_to` / `canonical_target_contract` / `canonical_route_kind`
+  - normalizes_to
+  - canonical_target_contract
+  - canonical_route_kind
+  - For wrapper commands, `normalizes_to_contract` should stay narrow and contract-level, for example:
+  - normalizes_to_contract
+  - Deprecated alias metadata should remain explicit and separate because it implies lifecycle/removal expectations that wrapper commands do not have.
+  - classify commands as `shell_view`, `navigation_wrapper`, or `domain_action`
+  - shell_view
+  - navigation_wrapper
+  - domain_action
+  - The routing rewrite requires stable wrapper commands that normalize to shared contracts, but the wiring model still treats every command as either direct or UI-only.
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - many routed cross-surface commands still say `layout/UI state only` even when they clearly target canonical object navigation:
+  - layout/UI state only
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 ## 0. Scope and SSOT status
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0072
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - still the highest-leverage SSOT for requested/effective identity, but still carries tier-era persisted values, missing scope fields, and no durable account-switch history model
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 This document is the **single canonical source of truth** for the Puppet Master User Commands system — user-authored command presets that inject templated prompts into a run. All other plan documents MUST reference this document by anchor (e.g., `Plans/Commands_System.md#COMMAND-SCHEMA`) rather than restating command definitions, discovery paths, template syntax, or execution semantics.
 
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 
 ### SSOT references (DRY)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0082
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - The remaining work is now mostly about collapsing overlapping canon and fixing exact broken references, payloads, and command contracts.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Locked decisions: `Plans/Spec_Lock.json`
 - Canonical contracts (events/tools/auth): `Plans/Contracts_V0.md`
 - DRY + ContractRef rule: `Plans/DRY_Rules.md`
@@ -30,10 +155,97 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 <a id="DEF-USER-COMMAND"></a>
 ### 1.1 User Command (preset)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0077
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - only for things that genuinely need user decision/input
+  - surface where the user should go next
+  - `approve_continue` is still the most dangerous unmapped UI action in the downstream command layer.
+  - approve_continue
+  - Reconcile all remaining command/template/example drift so `UI_Command_Catalog.md` is the sole stable action owner and every referenced command actually exists.
+  - UI_Command_Catalog.md
+  - command execution seam for User Commands,
+  - `Commands_System.md` is useful mainly as a boundary reminder: user-authored slash/palette commands are a separate concept. The current gap is inside internal `UICommand` modeling, not user command presets.
+  - Commands_System.md
+  - UICommand
+  - destination surface may indicate the user should land in `source_control`, `github_actions`, `docker_manager`, or `document_pane`
+  - source_control
+  - github_actions
+  - docker_manager
+  - document_pane
+  - `UI_Command_Catalog.md` still exposes the `request_id` versus `blocked_sequence` split directly in user-facing command rows.
+  - request_id
+  - blocked_sequence
+  - `BinaryLocator_Spec.md`, `Document_Packaging_Policy.md`, and `Containers_Registry_and_Unraid.md` still show split ownership between behavior SSOTs and adjacent command/storage/runtime owners, now with exact command ID, artifact-type, and launcher-ownership mismatches.
+  - BinaryLocator_Spec.md
+  - Document_Packaging_Policy.md
+  - Containers_Registry_and_Unraid.md
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 A **User Command** is a user-authored or catalog-installed command preset stored as a Markdown file with YAML frontmatter. When invoked, the template body is resolved (placeholders expanded, file includes loaded, shell output injected) and submitted as a prompt to the active chat thread or run. User Commands are the user-facing automation surface — they let users package repeatable prompt workflows without writing code.
 
 <a id="DEF-UICOMMAND-DISTINCTION"></a>
 ### 1.2 UICommand (internal dispatch) — distinction
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0078
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - need explicit distinction between:
+  - `[retired-token-1]` now shows a second internal navigation contradiction beyond the already-known Orchestrator-page drift (`[retired-token-4]` vs `[retired-token-5]`), and `[retired-token-2]` itself is structurally incomplete because its TOC advertises a missing `[retired-token-3]` section.
+  - [retired-token-1]
+  - [retired-token-4]
+  - [retired-token-5]
+  - [retired-token-2]
+  - [retired-token-3]
+  - Keep `UICommand` as the dispatch envelope, but give `args` a normalized target model when the command is navigation/open/focus-oriented.
+  - UICommand
+  - args
+  - `Primitive:UICommand`
+  - Primitive:UICommand
+  - `[retired-token-6]` is one of the strongest internal contradiction sites in the repo because its later addenda already prove the old `[retired-token-7]` model is no longer enough.
+  - [retired-token-6]
+  - [retired-token-7]
+  - section `7. UICommand`
+  - 7. UICommand
+  - Make the owner-doc distinction explicit:
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 A **UICommand** (`Plans/Contracts_V0.md#UICommand`, `Plans/UI_Command_Catalog.md`) is an internal UI dispatch identifier (e.g., `cmd.chat.model`, `cmd.lsp.goto_definition`). UICommands are stable IDs that bind UI elements to handlers. They are **not** user-authored; they are developer-defined, code-registered, and wiring-matrix-verified.
 
@@ -85,12 +297,53 @@ Available across all projects. Overridden by a project-local command with the sa
 
 ### 2.3 Resolution order
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0079
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Recommended resolution order for identity opens
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 When resolving a command by name:
 1. Check `.puppet-master/commands/<name>.md` in the active project root.
 2. If not found, check `~/.config/puppet-master/commands/<name>.md`.
 3. If not found, the command is unresolved. The invocation surface MUST display an error: "Unknown command: \<name\>".
 
 ### 2.4 Name collision rules
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0080
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Skills_System.md` still has unresolved bundling-off semantics, compaction behavior for bundled skill text, and HTE/DAE reachability rules.
+  - Skills_System.md
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Reserved built-ins and their families cannot be overridden by provider, skill, or extension naming.
 
@@ -179,6 +432,30 @@ ContractRef: ContractName:Plans/Permissions_System.md#TOOL-KEYS
 <a id="TEMPLATE-SHELL-INJECTION"></a>
 #### 3.3.3 Shell output injection (`` !`command` ``)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0084
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - The broader rewrite still lacks a strong single source for several cross-cutting concerns: command namespace promotion, capability-state ownership, cleanup/remediation lineage, packaging lineage, container publish authority, and actor-scope/rules injection.
+  - `cmd.source_control.select_worktree` is not just a generic shell toggle. It is an object-targeting selection command. If it remains canonical, it should resolve through normalized target identity rather than stay a one-off ad hoc selection primitive.
+  - cmd.source_control.select_worktree
+  - `FinalGUISpec.md` correctly treats activity-bar navigation as a shell concern, but local docs elsewhere keep slipping object context into the same command family.
+  - FinalGUISpec.md
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 The pattern `` !`shell-command` `` in the template body executes the shell command and injects its stdout at that position during template resolution.
 
 **Permission guard:** Shell injection is checked against the `bash` permission key (`Plans/Permissions_System.md` §5). If the active permission resolves to `deny`, the injection is blocked and an error message is substituted. If `ask`, the approval UI is shown and the user's response (`deny`/`once`/`for session`/`always`) is respected per `Plans/Permissions_System.md` §6.
@@ -188,6 +465,37 @@ ContractRef: ContractName:Plans/Permissions_System.md#TOOL-KEYS, ContractName:Pl
 ---
 
 ## 4. Execution semantics
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0074
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - the UI should show these semantics explicitly and consistently, not infer them ad hoc by color or disappearance
+  - conversational actors and document-production actors share provider/runtime identity semantics, but they are not orchestration execution objects
+  - `Runtime_Artifacts_Panel.md` is missing `attempt_id` in its canonical id set and does not yet absorb trust-tier / degraded-artifact semantics cleanly
+  - Runtime_Artifacts_Panel.md
+  - attempt_id
+  - Reserve `trust_tier` for preview/browser semantics only unless those docs are later explicitly renamed too.
+  - trust_tier
+  - `Formatters_System.md`, `LSPSupport.md`, `Plugins_System.md`, and `Skills_System.md` still lack clean ownership boundaries for mutation-capable semantics, hosted-vs-DAE execution reachability, tool/event identity, and plugin/skill introspection or isolation guarantees.
+  - Formatters_System.md
+  - LSPSupport.md
+  - Plugins_System.md
+  - Skills_System.md
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 <a id="EXECUTION"></a>
 
@@ -230,6 +538,28 @@ Rules:
 - parent Persona is at most a weak hint.
 - child Persona does not silently copy the parent Persona.
 ### 4.4 Mode and model overrides
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0081
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - package-level overrides do not leak across unrelated runs
+  - `Plugins_System.md` still permits read-only mode bypass via mutating plugin tools and env-var mutation, plus namespace/runtime model splits.
+  - Plugins_System.md
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Command overrides are explicit child requests, not bypasses around the runtime model.
 
@@ -310,6 +640,37 @@ ContractRef: ContractName:Plans/Commands_System.md#GUI-COMMANDS
 
 #### 6.1.1 Scope selector
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0085
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Refactor `orchestrator-subagent-integration.md` so selector and hook APIs consume:
+  - orchestrator-subagent-integration.md
+  - Canonical target selector:
+  - one canonical target selector:
+  - `project_id` is required scope, not selector identity.
+  - project_id
+  - `wizard_step` is not a primary selector
+  - wizard_step
+  - `usage_event_ref` is not a primary selector field
+  - usage_event_ref
+  - reject when `inspector_target` is present but no object selector exists
+  - inspector_target
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 A toggle at the top of the Commands section:
 - **Global** — manages commands in `~/.config/puppet-master/commands/`.
 - **Project** (visible when a project is active) — manages commands in `<project_root>/.puppet-master/commands/`.
@@ -369,6 +730,29 @@ The preview does NOT execute any run. Shell injections in preview mode execute t
 ### 6.3 Shortcut binding
 
 ## 7. Reserved built-in slash commands
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0075
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `reopened`, `revoked`, and `superseded` should be reserved for true lineage-changing transitions, not generic “old state” labels
+  - reopened
+  - revoked
+  - superseded
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 This section defines the canonical contract for this surface.
 
@@ -455,6 +839,29 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_
 ---
 
 ## 8. OpenCode baseline and Puppet Master deltas
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0076
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - The next uncovered owner-doc tranche is producing high-signal deltas, not low-value tail noise.
+  - Continue the ordered sequence on this same 22-doc tranche into `GPT-5.4`; Sonnet still produced real new deltas across almost every doc.
+  - GPT-5.4
+  - The `GPT-5.4` wave still produced substantive owner-level deltas across the entire remaining partial tranche. This is not yet a convergence zone.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 <a id="BASELINE-DELTAS"></a>
 

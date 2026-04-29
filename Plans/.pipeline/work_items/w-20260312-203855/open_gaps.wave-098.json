@@ -1,0 +1,1814 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-098",
+  "group_ids": [
+    "gapgrp-0389",
+    "gapgrp-0390",
+    "gapgrp-0391",
+    "gapgrp-0392"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-00136",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-00139 is missing for blocked-state normalization",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "Cleanup Priorities"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00139"
+      ],
+      "source_obligation_ids": [
+        "obl-043"
+      ],
+      "source_seed_ids": [
+        "seed-043"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "exact_missing_items": [
+        "Remove legacy `reason_code` / `recovery_options[]` drift and older singular worktree assumptions.",
+        "Normalize safe-point / restore-point / rollback / contamination terminology into one authoritative mapping and event taxonomy."
+      ],
+      "stale_tokens": [
+        "reason_code",
+        "recovery_options[]",
+        "safe-point",
+        "restore-point",
+        "rollback",
+        "contamination",
+        "older singular worktree assumptions"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00358",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00458 is partial for The biggest GPT-5.4 value-add was not just \"tier drift exists\"; it was showing where old a",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "# Models System (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00458"
+      ],
+      "source_obligation_ids": [
+        "obl-315"
+      ],
+      "source_seed_ids": [
+        "seed-364"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "The biggest GPT-5.4 value-add was not just \"tier drift exists\"; it was showing where old and new models are both still treated as canonical in the same surface area."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00902",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01158 is partial for a reviewer/reviewer-pass should not silently become a coding persona just because the repo",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01158"
+      ],
+      "source_obligation_ids": [
+        "obl-1015"
+      ],
+      "source_seed_ids": [
+        "seed-1189"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "a reviewer/reviewer-pass should not silently become a coding persona just because the repo is Rust-heavy"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00907",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01163 is partial for review persona distinct from drafting/implementation persona",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01163"
+      ],
+      "source_obligation_ids": [
+        "obl-1020"
+      ],
+      "source_seed_ids": [
+        "seed-1196"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "review persona distinct from drafting/implementation persona"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00908",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01164 is partial for review/challenge persona distinct from original claimer",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01164"
+      ],
+      "source_obligation_ids": [
+        "obl-1021"
+      ],
+      "source_seed_ids": [
+        "seed-1197"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "review/challenge persona distinct from original claimer"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01288",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01645 is partial for Reuse one runtime-identity disclosure grammar across these surfaces without collapsing the",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "# Models System (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01645"
+      ],
+      "source_obligation_ids": [
+        "obl-1502"
+      ],
+      "source_seed_ids": [
+        "seed-1856"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "Reuse one runtime-identity disclosure grammar across these surfaces without collapsing their lifecycle models."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02375",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03008 is partial for Persona display is not a substitute for actor/role identity.",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03008"
+      ],
+      "source_obligation_ids": [
+        "obl-2854"
+      ],
+      "source_seed_ids": [
+        "seed-3764"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "Persona display is not a substitute for actor/role identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04588",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05926 is partial for This is now a direct owner-versus-consumer mismatch. The canonical field names already exi",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "### 6.7 Model aliases (friendly names)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05926"
+      ],
+      "source_obligation_ids": [
+        "obl-5698"
+      ],
+      "source_seed_ids": [
+        "seed-8466"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "This is now a direct owner-versus-consumer mismatch. The canonical field names already exist."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04909",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06331 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06331"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00361",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00462 is present for `Contracts_V0.md` is closer to the target than many downstream docs, but it still needs ad",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## Model Selection Versus Runtime Retry Ownership Consolidation Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00462"
+      ],
+      "source_obligation_ids": [
+        "obl-319"
+      ],
+      "source_seed_ids": [
+        "seed-368"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`Contracts_V0.md` is closer to the target than many downstream docs, but it still needs addendum consolidation to stop reintroducing ambiguity from inside the supposed SSOT.",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00890",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01142 is present for Separate `source`, `requested`, and `effective` in UI language and data models.",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## Requested / Effective Model Snapshot Alignment"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01142"
+      ],
+      "source_obligation_ids": [
+        "obl-999"
+      ],
+      "source_seed_ids": [
+        "seed-1167"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "Separate `source`, `requested`, and `effective` in UI language and data models.",
+        "source",
+        "requested",
+        "effective"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01577",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02022 is partial for storage/contracts often require richer snapshots in prose than they enumerate in their reg",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "### Required attempt snapshots"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02022"
+      ],
+      "source_obligation_ids": [
+        "obl-1879"
+      ],
+      "source_seed_ids": [
+        "seed-2426"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "storage/contracts often require richer snapshots in prose than they enumerate in their registered field tables"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02508",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03200 is partial for Migrate coordination and crew models from `tier_id` anchoring to canonical execution refs",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "# Models System (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03200"
+      ],
+      "source_obligation_ids": [
+        "obl-3046"
+      ],
+      "source_seed_ids": [
+        "seed-4028"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "Migrate coordination and crew models from `tier_id` anchoring to canonical execution refs plus secondary labels:",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02613",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03336 is partial for Event/persistence contracts continue to claim shared-runtime alignment while dropping auth",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "### 4.5 Web tool provider capability alignment"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03336"
+      ],
+      "source_obligation_ids": [
+        "obl-3182"
+      ],
+      "source_seed_ids": [
+        "seed-4242"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "Event/persistence contracts continue to claim shared-runtime alignment while dropping auth/account/role fields exactly where those become auditable."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03022",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03875 is partial for The strongest existing anchor for `operational_identity` is the receipt/bridge family, not",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03875"
+      ],
+      "source_obligation_ids": [
+        "obl-3720"
+      ],
+      "source_seed_ids": [
+        "seed-5055"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "The strongest existing anchor for `operational_identity` is the receipt/bridge family, not the persona snapshot family.",
+        "operational_identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05274",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06799 is present for `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Mod",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06799"
+      ],
+      "source_obligation_ids": [
+        "obl-6427"
+      ],
+      "source_seed_ids": [
+        "seed-9806"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00106",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "owner coverage row cov-00109 is missing for execution identity + lineage fields",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "Runtime / Storage / Contract Impacts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00109"
+      ],
+      "source_obligation_ids": [
+        "obl-037"
+      ],
+      "source_seed_ids": [
+        "seed-037"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Add node_id",
+        "Add package_id",
+        "Add seam_id",
+        "Add lane_id",
+        "Add attempt_id",
+        "Add effective_identity",
+        "Normalize requested/effective account identity shapes",
+        "Normalize blocked_reason_code/allowed_action_ids and safe-point/restore-point/rollback terminology"
+      ],
+      "stale_tokens": [
+        "phase_id",
+        "task_id",
+        "tier-identity",
+        "requested_auth_mode",
+        "effective_capabilities[]",
+        "active-agents.json",
+        "seglog",
+        "redb"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00157",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00160 is partial for per-provider caps",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "### 3.1 Per-provider options"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00160"
+      ],
+      "source_obligation_ids": [
+        "obl-057"
+      ],
+      "source_seed_ids": [
+        "seed-057"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "per-provider caps"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00827",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01066 is partial for scoped override lifecycle for Persona overrides",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "### 6.6 Per-Persona variant overrides"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01066"
+      ],
+      "source_obligation_ids": [
+        "obl-923"
+      ],
+      "source_seed_ids": [
+        "seed-1087"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "scoped override lifecycle for Persona overrides"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00863",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01111 is partial for `Reasoning effort: High -> Skipped`",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "### 7.3 Variant and effort controls"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01111"
+      ],
+      "source_obligation_ids": [
+        "obl-968"
+      ],
+      "source_seed_ids": [
+        "seed-1135"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "`Reasoning effort: High -> Skipped`",
+        "Reasoning effort: High -> Skipped"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00882",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01134 is partial for `Switch reason: rate_limit_pressure`",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "### Selection reason and audit trail"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01134"
+      ],
+      "source_obligation_ids": [
+        "obl-991"
+      ],
+      "source_seed_ids": [
+        "seed-1159"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "`Switch reason: rate_limit_pressure`",
+        "Switch reason: rate_limit_pressure"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00904",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01160 is partial for execution/governance persona biased toward package-local delivery and readiness truth",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01160"
+      ],
+      "source_obligation_ids": [
+        "obl-1017"
+      ],
+      "source_seed_ids": [
+        "seed-1192"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "execution/governance persona biased toward package-local delivery and readiness truth"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00906",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01162 is partial for implementation persona biased by language/framework/work type",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01162"
+      ],
+      "source_obligation_ids": [
+        "obl-1019"
+      ],
+      "source_seed_ids": [
+        "seed-1195"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "implementation persona biased by language/framework/work type"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00909",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01165 is partial for troubleshooting/recovery persona",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01165"
+      ],
+      "source_obligation_ids": [
+        "obl-1022"
+      ],
+      "source_seed_ids": [
+        "seed-1198"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "troubleshooting/recovery persona"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00910",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01166 is partial for planning/architecture persona",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01166"
+      ],
+      "source_obligation_ids": [
+        "obl-1023"
+      ],
+      "source_seed_ids": [
+        "seed-1199"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "planning/architecture persona"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00913",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01169 is partial for do not block solely because a preferred Persona is unavailable",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01169"
+      ],
+      "source_obligation_ids": [
+        "obl-1026"
+      ],
+      "source_seed_ids": [
+        "seed-1202"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "do not block solely because a preferred Persona is unavailable"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00139",
+    "cov-00458",
+    "cov-01158",
+    "cov-01163",
+    "cov-01164",
+    "cov-01645",
+    "cov-03008",
+    "cov-05926",
+    "cov-06331",
+    "cov-00462",
+    "cov-01142",
+    "cov-02022",
+    "cov-03200",
+    "cov-03336",
+    "cov-03875",
+    "cov-06799",
+    "cov-00109",
+    "cov-00160",
+    "cov-01066",
+    "cov-01111",
+    "cov-01134",
+    "cov-01160",
+    "cov-01162",
+    "cov-01165",
+    "cov-01166",
+    "cov-01169"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-037",
+    "obl-043",
+    "obl-057",
+    "obl-1015",
+    "obl-1017",
+    "obl-1019",
+    "obl-1020",
+    "obl-1021",
+    "obl-1022",
+    "obl-1023",
+    "obl-1026",
+    "obl-1502",
+    "obl-1879",
+    "obl-2854",
+    "obl-3046",
+    "obl-315",
+    "obl-3182",
+    "obl-319",
+    "obl-3720",
+    "obl-5698",
+    "obl-6009",
+    "obl-6427",
+    "obl-923",
+    "obl-968",
+    "obl-991",
+    "obl-999"
+  ],
+  "source_seed_ids_represented": [
+    "seed-037",
+    "seed-043",
+    "seed-057",
+    "seed-1087",
+    "seed-1135",
+    "seed-1159",
+    "seed-1167",
+    "seed-1189",
+    "seed-1192",
+    "seed-1195",
+    "seed-1196",
+    "seed-1197",
+    "seed-1198",
+    "seed-1199",
+    "seed-1202",
+    "seed-1856",
+    "seed-2426",
+    "seed-364",
+    "seed-368",
+    "seed-3764",
+    "seed-4028",
+    "seed-4242",
+    "seed-5055",
+    "seed-8466",
+    "seed-9092",
+    "seed-9806"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0007",
+    "shard-0008",
+    "shard-0009",
+    "shard-0011",
+    "shard-0019",
+    "shard-0020",
+    "shard-0027",
+    "shard-0032",
+    "shard-0042",
+    "shard-0044",
+    "shard-0046",
+    "shard-0052",
+    "shard-0078",
+    "shard-0082",
+    "shard-0088"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-00136",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-00139 is missing for blocked-state normalization",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "Cleanup Priorities"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00139"
+      ],
+      "source_obligation_ids": [
+        "obl-043"
+      ],
+      "source_seed_ids": [
+        "seed-043"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "exact_missing_items": [
+        "Remove legacy `reason_code` / `recovery_options[]` drift and older singular worktree assumptions.",
+        "Normalize safe-point / restore-point / rollback / contamination terminology into one authoritative mapping and event taxonomy."
+      ],
+      "stale_tokens": [
+        "reason_code",
+        "recovery_options[]",
+        "safe-point",
+        "restore-point",
+        "rollback",
+        "contamination",
+        "older singular worktree assumptions"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00358",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00458 is partial for The biggest GPT-5.4 value-add was not just \"tier drift exists\"; it was showing where old a",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "# Models System (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00458"
+      ],
+      "source_obligation_ids": [
+        "obl-315"
+      ],
+      "source_seed_ids": [
+        "seed-364"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "The biggest GPT-5.4 value-add was not just \"tier drift exists\"; it was showing where old and new models are both still treated as canonical in the same surface area."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00902",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01158 is partial for a reviewer/reviewer-pass should not silently become a coding persona just because the repo",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01158"
+      ],
+      "source_obligation_ids": [
+        "obl-1015"
+      ],
+      "source_seed_ids": [
+        "seed-1189"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "a reviewer/reviewer-pass should not silently become a coding persona just because the repo is Rust-heavy"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00907",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01163 is partial for review persona distinct from drafting/implementation persona",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01163"
+      ],
+      "source_obligation_ids": [
+        "obl-1020"
+      ],
+      "source_seed_ids": [
+        "seed-1196"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "review persona distinct from drafting/implementation persona"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00908",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01164 is partial for review/challenge persona distinct from original claimer",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01164"
+      ],
+      "source_obligation_ids": [
+        "obl-1021"
+      ],
+      "source_seed_ids": [
+        "seed-1197"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "review/challenge persona distinct from original claimer"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01288",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01645 is partial for Reuse one runtime-identity disclosure grammar across these surfaces without collapsing the",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "# Models System (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01645"
+      ],
+      "source_obligation_ids": [
+        "obl-1502"
+      ],
+      "source_seed_ids": [
+        "seed-1856"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "Reuse one runtime-identity disclosure grammar across these surfaces without collapsing their lifecycle models."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02375",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-03008 is partial for Persona display is not a substitute for actor/role identity.",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03008"
+      ],
+      "source_obligation_ids": [
+        "obl-2854"
+      ],
+      "source_seed_ids": [
+        "seed-3764"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "Persona display is not a substitute for actor/role identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04588",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05926 is partial for This is now a direct owner-versus-consumer mismatch. The canonical field names already exi",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "### 6.7 Model aliases (friendly names)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05926"
+      ],
+      "source_obligation_ids": [
+        "obl-5698"
+      ],
+      "source_seed_ids": [
+        "seed-8466"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "This is now a direct owner-versus-consumer mismatch. The canonical field names already exist."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04909",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06331 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06331"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00361",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00462 is present for `Contracts_V0.md` is closer to the target than many downstream docs, but it still needs ad",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## Model Selection Versus Runtime Retry Ownership Consolidation Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00462"
+      ],
+      "source_obligation_ids": [
+        "obl-319"
+      ],
+      "source_seed_ids": [
+        "seed-368"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`Contracts_V0.md` is closer to the target than many downstream docs, but it still needs addendum consolidation to stop reintroducing ambiguity from inside the supposed SSOT.",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00890",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01142 is present for Separate `source`, `requested`, and `effective` in UI language and data models.",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## Requested / Effective Model Snapshot Alignment"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01142"
+      ],
+      "source_obligation_ids": [
+        "obl-999"
+      ],
+      "source_seed_ids": [
+        "seed-1167"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "Separate `source`, `requested`, and `effective` in UI language and data models.",
+        "source",
+        "requested",
+        "effective"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01577",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02022 is partial for storage/contracts often require richer snapshots in prose than they enumerate in their reg",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "### Required attempt snapshots"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02022"
+      ],
+      "source_obligation_ids": [
+        "obl-1879"
+      ],
+      "source_seed_ids": [
+        "seed-2426"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "storage/contracts often require richer snapshots in prose than they enumerate in their registered field tables"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02508",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03200 is partial for Migrate coordination and crew models from `tier_id` anchoring to canonical execution refs",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "# Models System (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03200"
+      ],
+      "source_obligation_ids": [
+        "obl-3046"
+      ],
+      "source_seed_ids": [
+        "seed-4028"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "Migrate coordination and crew models from `tier_id` anchoring to canonical execution refs plus secondary labels:",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02613",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03336 is partial for Event/persistence contracts continue to claim shared-runtime alignment while dropping auth",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "### 4.5 Web tool provider capability alignment"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03336"
+      ],
+      "source_obligation_ids": [
+        "obl-3182"
+      ],
+      "source_seed_ids": [
+        "seed-4242"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "Event/persistence contracts continue to claim shared-runtime alignment while dropping auth/account/role fields exactly where those become auditable."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03022",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03875 is partial for The strongest existing anchor for `operational_identity` is the receipt/bridge family, not",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03875"
+      ],
+      "source_obligation_ids": [
+        "obl-3720"
+      ],
+      "source_seed_ids": [
+        "seed-5055"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "The strongest existing anchor for `operational_identity` is the receipt/bridge family, not the persona snapshot family.",
+        "operational_identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05274",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06799 is present for `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Mod",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06799"
+      ],
+      "source_obligation_ids": [
+        "obl-6427"
+      ],
+      "source_seed_ids": [
+        "seed-9806"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00106",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "owner coverage row cov-00109 is missing for execution identity + lineage fields",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "Runtime / Storage / Contract Impacts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00109"
+      ],
+      "source_obligation_ids": [
+        "obl-037"
+      ],
+      "source_seed_ids": [
+        "seed-037"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Add node_id",
+        "Add package_id",
+        "Add seam_id",
+        "Add lane_id",
+        "Add attempt_id",
+        "Add effective_identity",
+        "Normalize requested/effective account identity shapes",
+        "Normalize blocked_reason_code/allowed_action_ids and safe-point/restore-point/rollback terminology"
+      ],
+      "stale_tokens": [
+        "phase_id",
+        "task_id",
+        "tier-identity",
+        "requested_auth_mode",
+        "effective_capabilities[]",
+        "active-agents.json",
+        "seglog",
+        "redb"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00157",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00160 is partial for per-provider caps",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "### 3.1 Per-provider options"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00160"
+      ],
+      "source_obligation_ids": [
+        "obl-057"
+      ],
+      "source_seed_ids": [
+        "seed-057"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "per-provider caps"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00827",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01066 is partial for scoped override lifecycle for Persona overrides",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "### 6.6 Per-Persona variant overrides"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01066"
+      ],
+      "source_obligation_ids": [
+        "obl-923"
+      ],
+      "source_seed_ids": [
+        "seed-1087"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "scoped override lifecycle for Persona overrides"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00863",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01111 is partial for `Reasoning effort: High -> Skipped`",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "### 7.3 Variant and effort controls"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01111"
+      ],
+      "source_obligation_ids": [
+        "obl-968"
+      ],
+      "source_seed_ids": [
+        "seed-1135"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "`Reasoning effort: High -> Skipped`",
+        "Reasoning effort: High -> Skipped"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00882",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01134 is partial for `Switch reason: rate_limit_pressure`",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "### Selection reason and audit trail"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01134"
+      ],
+      "source_obligation_ids": [
+        "obl-991"
+      ],
+      "source_seed_ids": [
+        "seed-1159"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "`Switch reason: rate_limit_pressure`",
+        "Switch reason: rate_limit_pressure"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00904",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01160 is partial for execution/governance persona biased toward package-local delivery and readiness truth",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01160"
+      ],
+      "source_obligation_ids": [
+        "obl-1017"
+      ],
+      "source_seed_ids": [
+        "seed-1192"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "execution/governance persona biased toward package-local delivery and readiness truth"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00906",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01162 is partial for implementation persona biased by language/framework/work type",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01162"
+      ],
+      "source_obligation_ids": [
+        "obl-1019"
+      ],
+      "source_seed_ids": [
+        "seed-1195"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "implementation persona biased by language/framework/work type"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00909",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01165 is partial for troubleshooting/recovery persona",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01165"
+      ],
+      "source_obligation_ids": [
+        "obl-1022"
+      ],
+      "source_seed_ids": [
+        "seed-1198"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "troubleshooting/recovery persona"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00910",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01166 is partial for planning/architecture persona",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01166"
+      ],
+      "source_obligation_ids": [
+        "obl-1023"
+      ],
+      "source_seed_ids": [
+        "seed-1199"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "planning/architecture persona"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00913",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01169 is partial for do not block solely because a preferred Persona is unavailable",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01169"
+      ],
+      "source_obligation_ids": [
+        "obl-1026"
+      ],
+      "source_seed_ids": [
+        "seed-1202"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "do not block solely because a preferred Persona is unavailable"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

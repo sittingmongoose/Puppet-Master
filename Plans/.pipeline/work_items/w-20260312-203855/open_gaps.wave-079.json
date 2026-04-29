@@ -1,0 +1,2769 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-079",
+  "group_ids": [
+    "gapgrp-0313",
+    "gapgrp-0314",
+    "gapgrp-0315",
+    "gapgrp-0316"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-02535",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03239 is present for `FinalGUISpec.md` also sharpens the projection-state naming issue: generic \u201cprojection tru",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03239"
+      ],
+      "source_obligation_ids": [
+        "obl-3085"
+      ],
+      "source_seed_ids": [
+        "seed-4100"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` also sharpens the projection-state naming issue: generic \u201cprojection trust\u201d language will collide with existing preview/browser `trust_tier`; the cleaner split remains `projection_freshness` vs `projection_health`.",
+        "FinalGUISpec.md",
+        "trust_tier",
+        "projection_freshness",
+        "projection_health"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02563",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03275 is partial for GUI / command / projection contracts still have live SSOT collisions:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03275"
+      ],
+      "source_obligation_ids": [
+        "obl-3121"
+      ],
+      "source_seed_ids": [
+        "seed-4155"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "GUI / command / projection contracts still have live SSOT collisions:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02593",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03313 is partial for GUI / command / page-ownership conflicts are now pinned to concrete IDs and examples:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03313"
+      ],
+      "source_obligation_ids": [
+        "obl-3159"
+      ],
+      "source_seed_ids": [
+        "seed-4212"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "GUI / command / page-ownership conflicts are now pinned to concrete IDs and examples:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02605",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03328 is partial for command/wiring/template drift is now concrete enough to break gate logic and stable action",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### 7.19.2 Bundle controls and review gate"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03328"
+      ],
+      "source_obligation_ids": [
+        "obl-3174"
+      ],
+      "source_seed_ids": [
+        "seed-4228"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "command/wiring/template drift is now concrete enough to break gate logic and stable action IDs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02672",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03421 is partial for GUI / command ownership remains split in concrete, machine-breaking ways:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03421"
+      ],
+      "source_obligation_ids": [
+        "obl-3267"
+      ],
+      "source_seed_ids": [
+        "seed-4381"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "GUI / command ownership remains split in concrete, machine-breaking ways:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02697",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03452 is partial for Replace pseudo-tier interview/wizard/runtime lineage keys with the same canonical thread/p",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 6.1 Three Theme Families (Three User-Facing Choices)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03452"
+      ],
+      "source_obligation_ids": [
+        "obl-3298"
+      ],
+      "source_seed_ids": [
+        "seed-4420"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "Replace pseudo-tier interview/wizard/runtime lineage keys with the same canonical thread/project/run/attempt identity families already required elsewhere."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02714",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03472 is partial for `staged_bundle_ref?` or equivalent pre/post-unification bundle refs",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### 7.19.2 Bundle controls and review gate"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03472"
+      ],
+      "source_obligation_ids": [
+        "obl-3318"
+      ],
+      "source_seed_ids": [
+        "seed-4448"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`staged_bundle_ref?` or equivalent pre/post-unification bundle refs",
+        "staged_bundle_ref?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02715",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03473 is partial for `requirements_quality_report_ref?` when relevant",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03473"
+      ],
+      "source_obligation_ids": [
+        "obl-3319"
+      ],
+      "source_seed_ids": [
+        "seed-4449"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`requirements_quality_report_ref?` when relevant",
+        "requirements_quality_report_ref?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02724",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03483 is partial for `requirements_quality_report_ref?` when applicable",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03483"
+      ],
+      "source_obligation_ids": [
+        "obl-3329"
+      ],
+      "source_seed_ids": [
+        "seed-4474"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`requirements_quality_report_ref?` when applicable",
+        "requirements_quality_report_ref?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02736",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03497 is present for `Runtime_Artifacts_Panel.md` declares `artifacts_index:v1:{project_id}`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03497"
+      ],
+      "source_obligation_ids": [
+        "obl-3343"
+      ],
+      "source_seed_ids": [
+        "seed-4500"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "`Runtime_Artifacts_Panel.md` declares `artifacts_index:v1:{project_id}`",
+        "Runtime_Artifacts_Panel.md",
+        "artifacts_index:v1:{project_id}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02796",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03570 is present for `Runtime_Artifacts_Panel.md` should own:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03570"
+      ],
+      "source_obligation_ids": [
+        "obl-3416"
+      ],
+      "source_seed_ids": [
+        "seed-4599"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "`Runtime_Artifacts_Panel.md` should own:",
+        "Runtime_Artifacts_Panel.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02863",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03664 is present for `Commands_System.md` contains an internal acceptance-criteria contradiction on reserved sl",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 10.7 Event-driven refresh rule"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03664"
+      ],
+      "source_obligation_ids": [
+        "obl-3510"
+      ],
+      "source_seed_ids": [
+        "seed-4726"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "`Commands_System.md` contains an internal acceptance-criteria contradiction on reserved slash-command overrides, while `assistant-chat-design.md` and `UI_Command_Catalog.md` still state the opposite rule and do not even mention `override_builtin`.",
+        "Commands_System.md",
+        "assistant-chat-design.md",
+        "UI_Command_Catalog.md",
+        "override_builtin"
+      ],
+      "stale_tokens": [
+        "Commands_System.md",
+        "UI_Command_Catalog.md",
+        "assistant-chat-design.md",
+        "override_builtin"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02878",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03682 is partial for now a visible blocker because multiple docs point to definitions that do not exist.",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 2. Plan vs Deep Plan visible behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03682"
+      ],
+      "source_obligation_ids": [
+        "obl-3528"
+      ],
+      "source_seed_ids": [
+        "seed-4749"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "now a visible blocker because multiple docs point to definitions that do not exist."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02929",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03752 is partial for executor docs define required presence at dispatch/runtime boundaries",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 9.5 Persistence boundaries"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03752"
+      ],
+      "source_obligation_ids": [
+        "obl-3597"
+      ],
+      "source_seed_ids": [
+        "seed-4863"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "executor docs define required presence at dispatch/runtime boundaries"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02960",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03797 is partial for immutable attempt handoff identity",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 5. Post-acceptance wizard handoff surface"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03797"
+      ],
+      "source_obligation_ids": [
+        "obl-3642"
+      ],
+      "source_seed_ids": [
+        "seed-4925"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "immutable attempt handoff identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02962",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03799 is partial for workspace/isolation refs required for side effects and recovery",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Fidelity recovery addendum"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03799"
+      ],
+      "source_obligation_ids": [
+        "obl-3644"
+      ],
+      "source_seed_ids": [
+        "seed-4927"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "workspace/isolation refs required for side effects and recovery"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02973",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03810 is partial for required for all provider-executed attempts:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03810"
+      ],
+      "source_obligation_ids": [
+        "obl-3655"
+      ],
+      "source_seed_ids": [
+        "seed-4949"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "required for all provider-executed attempts:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02987",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03827 is partial for `Prompt_Pipeline.md` captures the immutable handoff bundle, but its later packet omits som",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03827"
+      ],
+      "source_obligation_ids": [
+        "obl-3672"
+      ],
+      "source_seed_ids": [
+        "seed-4989"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "`Prompt_Pipeline.md` captures the immutable handoff bundle, but its later packet omits some fields that executor/runtime surfaces now want to inspect, such as blocked/recovery anchors when a resumed flow launches.",
+        "Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03026",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03881 is partial for `override_builtin` remains internally contradictory across AC-CMD02 / AC-CMD07 / AC-CMD10.",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03881"
+      ],
+      "source_obligation_ids": [
+        "obl-3726"
+      ],
+      "source_seed_ids": [
+        "seed-5073"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "`override_builtin` remains internally contradictory across AC-CMD02 / AC-CMD07 / AC-CMD10.",
+        "override_builtin"
+      ],
+      "stale_tokens": [
+        "override_builtin"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03039",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03898 is partial for `Run_Modes.md` still does not resolve the Contribute(PR) vs DAE isolation conflict, DAE-ja",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-027: Concern routing and object-first search behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03898"
+      ],
+      "source_obligation_ids": [
+        "obl-3743"
+      ],
+      "source_seed_ids": [
+        "seed-5090"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "`Run_Modes.md` still does not resolve the Contribute(PR) vs DAE isolation conflict, DAE-jail durability across pause/resume, the `yolo` step-1 vs step-7 guard ambiguity, `external_publish_side_effect` behavior inside DAE, or mid-run account-switch invalidation of committed strategy.",
+        "Run_Modes.md",
+        "yolo",
+        "external_publish_side_effect"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03042",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03901 is present for GATE evidence still cannot verify `attention_required` persistence because the storage/eve",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-022: Concern record family definition"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03901"
+      ],
+      "source_obligation_ids": [
+        "obl-3746"
+      ],
+      "source_seed_ids": [
+        "seed-5093"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "GATE evidence still cannot verify `attention_required` persistence because the storage/event family for that state remains unowned.",
+        "attention_required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03081",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03957 is present for `Runtime_Artifacts_Panel.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03957"
+      ],
+      "source_obligation_ids": [
+        "obl-3801"
+      ],
+      "source_seed_ids": [
+        "seed-5205"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "`Runtime_Artifacts_Panel.md`",
+        "Runtime_Artifacts_Panel.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03142",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04044 is present for `Runtime_Artifacts_Panel.md` calls `artifact_id`, `run_id`, `thread_id`, `task_id`, `linke",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04044"
+      ],
+      "source_obligation_ids": [
+        "obl-3887"
+      ],
+      "source_seed_ids": [
+        "seed-5338"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "exact_missing_items": [
+        "`Runtime_Artifacts_Panel.md` calls `artifact_id`, `run_id`, `thread_id`, `task_id`, `linked_artifact_id`, and `logical_artifact_id` the canonical ID set, but that set is still missing the attempt-native/runtime attribution fields the rest of the rewrite now depends on.",
+        "Runtime_Artifacts_Panel.md",
+        "artifact_id",
+        "run_id",
+        "thread_id",
+        "task_id",
+        "linked_artifact_id",
+        "logical_artifact_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03207",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04127 is partial for `tab_id?`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04127"
+      ],
+      "source_obligation_ids": [
+        "obl-3967"
+      ],
+      "source_seed_ids": [
+        "seed-5438",
+        "seed-5501",
+        "seed-5889",
+        "seed-6040",
+        "seed-6175",
+        "seed-6230"
+      ],
+      "source_shard_ids": [
+        "shard-0055",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "`tab_id?`",
+        "tab_id?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03216",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04139 is present for Update `FinalGUISpec.md` so `OpenFile` remains true for workspace files, while identity-na",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-027: Concern routing and object-first search behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04139"
+      ],
+      "source_obligation_ids": [
+        "obl-3979"
+      ],
+      "source_seed_ids": [
+        "seed-5459"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "Update `FinalGUISpec.md` so `OpenFile` remains true for workspace files, while identity-native opens route through `OpenSubject` under the same higher-level routing model.",
+        "FinalGUISpec.md",
+        "OpenFile",
+        "OpenSubject"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03273",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04200 is present for `attention_required` still lacks a durable persisted shape parallel to `blocked_notice`, s",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Recommended minimum concern record shape"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04200"
+      ],
+      "source_obligation_ids": [
+        "obl-4040"
+      ],
+      "source_seed_ids": [
+        "seed-5559"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "`attention_required` still lacks a durable persisted shape parallel to `blocked_notice`, so the gate\u2019s evidence expectations remain only partially machine-verifiable.",
+        "attention_required",
+        "blocked_notice"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03317",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04254 is partial for AutoMilestone/project-switch handoff still require observable events/commands that the own",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 5. Post-acceptance wizard handoff surface"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04254"
+      ],
+      "source_obligation_ids": [
+        "obl-4094"
+      ],
+      "source_seed_ids": [
+        "seed-5656"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "AutoMilestone/project-switch handoff still require observable events/commands that the owner docs do not register."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03335",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04274 is partial for required route-payload or subject-open arguments",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04274"
+      ],
+      "source_obligation_ids": [
+        "obl-4114"
+      ],
+      "source_seed_ids": [
+        "seed-5702"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "required route-payload or subject-open arguments"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03352",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04292 is partial for `arg_passthrough_requirements?`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04292"
+      ],
+      "source_obligation_ids": [
+        "obl-4132"
+      ],
+      "source_seed_ids": [
+        "seed-5729"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "`arg_passthrough_requirements?`",
+        "arg_passthrough_requirements?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03392",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04347 is present for `FinalGUISpec.md` aligns with that newer model in the embedded document pane:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### 7.19.1 Embedded document pane"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04347"
+      ],
+      "source_obligation_ids": [
+        "obl-4187"
+      ],
+      "source_seed_ids": [
+        "seed-5817"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` aligns with that newer model in the embedded document pane:",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03402",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04358 is partial for Artifact-backed open/restore behavior exists in storage and GUI prose, but there is no sin",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### GUI behavior rules"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04358"
+      ],
+      "source_obligation_ids": [
+        "obl-4198"
+      ],
+      "source_seed_ids": [
+        "seed-5837"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "Artifact-backed open/restore behavior exists in storage and GUI prose, but there is no single owner doc that clearly says the resolution order is `subject_id -> backing document or transient generated buffer -> routed surface`.",
+        "subject_id -> backing document or transient generated buffer -> routed surface"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03423",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04385 is present for `resume_url` is currently a stronger navigation primitive than generic `UICommand.args`, w",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## 4. Navigation Architecture"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04385"
+      ],
+      "source_obligation_ids": [
+        "obl-4225"
+      ],
+      "source_seed_ids": [
+        "seed-5876"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "`resume_url` is currently a stronger navigation primitive than generic `UICommand.args`, which inverts the desired architecture.",
+        "resume_url",
+        "UICommand.args"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03430",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04393 is present for If `Contracts_V0.md` does not absorb this, routing semantics will keep being redefined in",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04393"
+      ],
+      "source_obligation_ids": [
+        "obl-4233"
+      ],
+      "source_seed_ids": [
+        "seed-5892"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "If `Contracts_V0.md` does not absorb this, routing semantics will keep being redefined in the catalog, GUI docs, and storage docs separately.",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03452",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04416 is partial for normative ghost IDs still survive through examples, Final GUI remediation actions, and non",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04416"
+      ],
+      "source_obligation_ids": [
+        "obl-4256"
+      ],
+      "source_seed_ids": [
+        "seed-5940"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "normative ghost IDs still survive through examples, Final GUI remediation actions, and non-catalog command references."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03612",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04603 is present for `subject_id` required",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04603"
+      ],
+      "source_obligation_ids": [
+        "obl-4381"
+      ],
+      "source_seed_ids": [
+        "seed-6185"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "`subject_id` required",
+        "subject_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03618",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04610 is partial for `UICommand.args` is too generic to express reusable navigation semantics without a normali",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## 4. Navigation Architecture"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04610"
+      ],
+      "source_obligation_ids": [
+        "obl-4388"
+      ],
+      "source_seed_ids": [
+        "seed-6203"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "`UICommand.args` is too generic to express reusable navigation semantics without a normalized target object.",
+        "UICommand.args"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03619",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04615 is partial for Use `cmd.nav.*` or equivalent wrappers to route through `route_target` without forcing eve",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-071: Canonical route payload"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04615"
+      ],
+      "source_obligation_ids": [
+        "obl-4393"
+      ],
+      "source_seed_ids": [
+        "seed-6208"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "Use `cmd.nav.*` or equivalent wrappers to route through `route_target` without forcing every consumer doc to restate the model.",
+        "cmd.nav.*",
+        "route_target"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03625",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04625 is present for Required:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04625"
+      ],
+      "source_obligation_ids": [
+        "obl-4403"
+      ],
+      "source_seed_ids": [
+        "seed-6224"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "Required:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03633",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04639 is partial for `inspector_target` only when the field is really a detail-pane selection, not the main ide",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 2.4 Backend Selection"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04639"
+      ],
+      "source_obligation_ids": [
+        "obl-4417"
+      ],
+      "source_seed_ids": [
+        "seed-6252"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "`inspector_target` only when the field is really a detail-pane selection, not the main identity",
+        "inspector_target"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03648",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04658 is present for The rewrite now has enough stable object families that `object_kind` can no longer stay in",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04658"
+      ],
+      "source_obligation_ids": [
+        "obl-4436"
+      ],
+      "source_seed_ids": [
+        "seed-6287"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "The rewrite now has enough stable object families that `object_kind` can no longer stay informal.",
+        "object_kind"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-03239",
+    "cov-03275",
+    "cov-03313",
+    "cov-03328",
+    "cov-03421",
+    "cov-03452",
+    "cov-03472",
+    "cov-03473",
+    "cov-03483",
+    "cov-03497",
+    "cov-03570",
+    "cov-03664",
+    "cov-03682",
+    "cov-03752",
+    "cov-03797",
+    "cov-03799",
+    "cov-03810",
+    "cov-03827",
+    "cov-03881",
+    "cov-03898",
+    "cov-03901",
+    "cov-03957",
+    "cov-04044",
+    "cov-04127",
+    "cov-04139",
+    "cov-04200",
+    "cov-04254",
+    "cov-04274",
+    "cov-04292",
+    "cov-04347",
+    "cov-04358",
+    "cov-04385",
+    "cov-04393",
+    "cov-04416",
+    "cov-04603",
+    "cov-04610",
+    "cov-04615",
+    "cov-04625",
+    "cov-04639",
+    "cov-04658"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-3085",
+    "obl-3121",
+    "obl-3159",
+    "obl-3174",
+    "obl-3267",
+    "obl-3298",
+    "obl-3318",
+    "obl-3319",
+    "obl-3329",
+    "obl-3343",
+    "obl-3416",
+    "obl-3510",
+    "obl-3528",
+    "obl-3597",
+    "obl-3642",
+    "obl-3644",
+    "obl-3655",
+    "obl-3672",
+    "obl-3726",
+    "obl-3743",
+    "obl-3746",
+    "obl-3801",
+    "obl-3887",
+    "obl-3967",
+    "obl-3979",
+    "obl-4040",
+    "obl-4094",
+    "obl-4114",
+    "obl-4132",
+    "obl-4187",
+    "obl-4198",
+    "obl-4225",
+    "obl-4233",
+    "obl-4256",
+    "obl-4381",
+    "obl-4388",
+    "obl-4393",
+    "obl-4403",
+    "obl-4417",
+    "obl-4436"
+  ],
+  "source_seed_ids_represented": [
+    "seed-4100",
+    "seed-4155",
+    "seed-4212",
+    "seed-4228",
+    "seed-4381",
+    "seed-4420",
+    "seed-4448",
+    "seed-4449",
+    "seed-4474",
+    "seed-4500",
+    "seed-4599",
+    "seed-4726",
+    "seed-4749",
+    "seed-4863",
+    "seed-4925",
+    "seed-4927",
+    "seed-4949",
+    "seed-4989",
+    "seed-5073",
+    "seed-5090",
+    "seed-5093",
+    "seed-5205",
+    "seed-5338",
+    "seed-5438",
+    "seed-5459",
+    "seed-5501",
+    "seed-5559",
+    "seed-5656",
+    "seed-5702",
+    "seed-5729",
+    "seed-5817",
+    "seed-5837",
+    "seed-5876",
+    "seed-5889",
+    "seed-5892",
+    "seed-5940",
+    "seed-6040",
+    "seed-6175",
+    "seed-6185",
+    "seed-6203",
+    "seed-6208",
+    "seed-6224",
+    "seed-6230",
+    "seed-6252",
+    "seed-6287"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0045",
+    "shard-0046",
+    "shard-0047",
+    "shard-0048",
+    "shard-0049",
+    "shard-0050",
+    "shard-0051",
+    "shard-0052",
+    "shard-0053",
+    "shard-0054",
+    "shard-0055",
+    "shard-0056",
+    "shard-0057",
+    "shard-0058",
+    "shard-0059",
+    "shard-0060",
+    "shard-0061"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-02535",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03239 is present for `FinalGUISpec.md` also sharpens the projection-state naming issue: generic \u201cprojection tru",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03239"
+      ],
+      "source_obligation_ids": [
+        "obl-3085"
+      ],
+      "source_seed_ids": [
+        "seed-4100"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` also sharpens the projection-state naming issue: generic \u201cprojection trust\u201d language will collide with existing preview/browser `trust_tier`; the cleaner split remains `projection_freshness` vs `projection_health`.",
+        "FinalGUISpec.md",
+        "trust_tier",
+        "projection_freshness",
+        "projection_health"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02563",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03275 is partial for GUI / command / projection contracts still have live SSOT collisions:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03275"
+      ],
+      "source_obligation_ids": [
+        "obl-3121"
+      ],
+      "source_seed_ids": [
+        "seed-4155"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "GUI / command / projection contracts still have live SSOT collisions:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02593",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03313 is partial for GUI / command / page-ownership conflicts are now pinned to concrete IDs and examples:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03313"
+      ],
+      "source_obligation_ids": [
+        "obl-3159"
+      ],
+      "source_seed_ids": [
+        "seed-4212"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "GUI / command / page-ownership conflicts are now pinned to concrete IDs and examples:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02605",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03328 is partial for command/wiring/template drift is now concrete enough to break gate logic and stable action",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### 7.19.2 Bundle controls and review gate"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03328"
+      ],
+      "source_obligation_ids": [
+        "obl-3174"
+      ],
+      "source_seed_ids": [
+        "seed-4228"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "command/wiring/template drift is now concrete enough to break gate logic and stable action IDs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02672",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03421 is partial for GUI / command ownership remains split in concrete, machine-breaking ways:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03421"
+      ],
+      "source_obligation_ids": [
+        "obl-3267"
+      ],
+      "source_seed_ids": [
+        "seed-4381"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "GUI / command ownership remains split in concrete, machine-breaking ways:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02697",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03452 is partial for Replace pseudo-tier interview/wizard/runtime lineage keys with the same canonical thread/p",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 6.1 Three Theme Families (Three User-Facing Choices)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03452"
+      ],
+      "source_obligation_ids": [
+        "obl-3298"
+      ],
+      "source_seed_ids": [
+        "seed-4420"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "Replace pseudo-tier interview/wizard/runtime lineage keys with the same canonical thread/project/run/attempt identity families already required elsewhere."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02714",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03472 is partial for `staged_bundle_ref?` or equivalent pre/post-unification bundle refs",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### 7.19.2 Bundle controls and review gate"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03472"
+      ],
+      "source_obligation_ids": [
+        "obl-3318"
+      ],
+      "source_seed_ids": [
+        "seed-4448"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`staged_bundle_ref?` or equivalent pre/post-unification bundle refs",
+        "staged_bundle_ref?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02715",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03473 is partial for `requirements_quality_report_ref?` when relevant",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03473"
+      ],
+      "source_obligation_ids": [
+        "obl-3319"
+      ],
+      "source_seed_ids": [
+        "seed-4449"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`requirements_quality_report_ref?` when relevant",
+        "requirements_quality_report_ref?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02724",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03483 is partial for `requirements_quality_report_ref?` when applicable",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03483"
+      ],
+      "source_obligation_ids": [
+        "obl-3329"
+      ],
+      "source_seed_ids": [
+        "seed-4474"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`requirements_quality_report_ref?` when applicable",
+        "requirements_quality_report_ref?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02736",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03497 is present for `Runtime_Artifacts_Panel.md` declares `artifacts_index:v1:{project_id}`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03497"
+      ],
+      "source_obligation_ids": [
+        "obl-3343"
+      ],
+      "source_seed_ids": [
+        "seed-4500"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "`Runtime_Artifacts_Panel.md` declares `artifacts_index:v1:{project_id}`",
+        "Runtime_Artifacts_Panel.md",
+        "artifacts_index:v1:{project_id}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02796",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03570 is present for `Runtime_Artifacts_Panel.md` should own:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03570"
+      ],
+      "source_obligation_ids": [
+        "obl-3416"
+      ],
+      "source_seed_ids": [
+        "seed-4599"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "`Runtime_Artifacts_Panel.md` should own:",
+        "Runtime_Artifacts_Panel.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02863",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03664 is present for `Commands_System.md` contains an internal acceptance-criteria contradiction on reserved sl",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 10.7 Event-driven refresh rule"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03664"
+      ],
+      "source_obligation_ids": [
+        "obl-3510"
+      ],
+      "source_seed_ids": [
+        "seed-4726"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "`Commands_System.md` contains an internal acceptance-criteria contradiction on reserved slash-command overrides, while `assistant-chat-design.md` and `UI_Command_Catalog.md` still state the opposite rule and do not even mention `override_builtin`.",
+        "Commands_System.md",
+        "assistant-chat-design.md",
+        "UI_Command_Catalog.md",
+        "override_builtin"
+      ],
+      "stale_tokens": [
+        "Commands_System.md",
+        "UI_Command_Catalog.md",
+        "assistant-chat-design.md",
+        "override_builtin"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02878",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03682 is partial for now a visible blocker because multiple docs point to definitions that do not exist.",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 2. Plan vs Deep Plan visible behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03682"
+      ],
+      "source_obligation_ids": [
+        "obl-3528"
+      ],
+      "source_seed_ids": [
+        "seed-4749"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "now a visible blocker because multiple docs point to definitions that do not exist."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02929",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03752 is partial for executor docs define required presence at dispatch/runtime boundaries",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 9.5 Persistence boundaries"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03752"
+      ],
+      "source_obligation_ids": [
+        "obl-3597"
+      ],
+      "source_seed_ids": [
+        "seed-4863"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "executor docs define required presence at dispatch/runtime boundaries"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02960",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03797 is partial for immutable attempt handoff identity",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 5. Post-acceptance wizard handoff surface"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03797"
+      ],
+      "source_obligation_ids": [
+        "obl-3642"
+      ],
+      "source_seed_ids": [
+        "seed-4925"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "immutable attempt handoff identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02962",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03799 is partial for workspace/isolation refs required for side effects and recovery",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Fidelity recovery addendum"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03799"
+      ],
+      "source_obligation_ids": [
+        "obl-3644"
+      ],
+      "source_seed_ids": [
+        "seed-4927"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "workspace/isolation refs required for side effects and recovery"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02973",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03810 is partial for required for all provider-executed attempts:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03810"
+      ],
+      "source_obligation_ids": [
+        "obl-3655"
+      ],
+      "source_seed_ids": [
+        "seed-4949"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "required for all provider-executed attempts:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02987",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03827 is partial for `Prompt_Pipeline.md` captures the immutable handoff bundle, but its later packet omits som",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03827"
+      ],
+      "source_obligation_ids": [
+        "obl-3672"
+      ],
+      "source_seed_ids": [
+        "seed-4989"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "`Prompt_Pipeline.md` captures the immutable handoff bundle, but its later packet omits some fields that executor/runtime surfaces now want to inspect, such as blocked/recovery anchors when a resumed flow launches.",
+        "Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03026",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03881 is partial for `override_builtin` remains internally contradictory across AC-CMD02 / AC-CMD07 / AC-CMD10.",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03881"
+      ],
+      "source_obligation_ids": [
+        "obl-3726"
+      ],
+      "source_seed_ids": [
+        "seed-5073"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "`override_builtin` remains internally contradictory across AC-CMD02 / AC-CMD07 / AC-CMD10.",
+        "override_builtin"
+      ],
+      "stale_tokens": [
+        "override_builtin"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03039",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03898 is partial for `Run_Modes.md` still does not resolve the Contribute(PR) vs DAE isolation conflict, DAE-ja",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-027: Concern routing and object-first search behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03898"
+      ],
+      "source_obligation_ids": [
+        "obl-3743"
+      ],
+      "source_seed_ids": [
+        "seed-5090"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "`Run_Modes.md` still does not resolve the Contribute(PR) vs DAE isolation conflict, DAE-jail durability across pause/resume, the `yolo` step-1 vs step-7 guard ambiguity, `external_publish_side_effect` behavior inside DAE, or mid-run account-switch invalidation of committed strategy.",
+        "Run_Modes.md",
+        "yolo",
+        "external_publish_side_effect"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03042",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03901 is present for GATE evidence still cannot verify `attention_required` persistence because the storage/eve",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-022: Concern record family definition"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03901"
+      ],
+      "source_obligation_ids": [
+        "obl-3746"
+      ],
+      "source_seed_ids": [
+        "seed-5093"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "GATE evidence still cannot verify `attention_required` persistence because the storage/event family for that state remains unowned.",
+        "attention_required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03081",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03957 is present for `Runtime_Artifacts_Panel.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03957"
+      ],
+      "source_obligation_ids": [
+        "obl-3801"
+      ],
+      "source_seed_ids": [
+        "seed-5205"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "`Runtime_Artifacts_Panel.md`",
+        "Runtime_Artifacts_Panel.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03142",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04044 is present for `Runtime_Artifacts_Panel.md` calls `artifact_id`, `run_id`, `thread_id`, `task_id`, `linke",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04044"
+      ],
+      "source_obligation_ids": [
+        "obl-3887"
+      ],
+      "source_seed_ids": [
+        "seed-5338"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "exact_missing_items": [
+        "`Runtime_Artifacts_Panel.md` calls `artifact_id`, `run_id`, `thread_id`, `task_id`, `linked_artifact_id`, and `logical_artifact_id` the canonical ID set, but that set is still missing the attempt-native/runtime attribution fields the rest of the rewrite now depends on.",
+        "Runtime_Artifacts_Panel.md",
+        "artifact_id",
+        "run_id",
+        "thread_id",
+        "task_id",
+        "linked_artifact_id",
+        "logical_artifact_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03207",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04127 is partial for `tab_id?`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04127"
+      ],
+      "source_obligation_ids": [
+        "obl-3967"
+      ],
+      "source_seed_ids": [
+        "seed-5438",
+        "seed-5501",
+        "seed-5889",
+        "seed-6040",
+        "seed-6175",
+        "seed-6230"
+      ],
+      "source_shard_ids": [
+        "shard-0055",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "`tab_id?`",
+        "tab_id?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03216",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04139 is present for Update `FinalGUISpec.md` so `OpenFile` remains true for workspace files, while identity-na",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-027: Concern routing and object-first search behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04139"
+      ],
+      "source_obligation_ids": [
+        "obl-3979"
+      ],
+      "source_seed_ids": [
+        "seed-5459"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "Update `FinalGUISpec.md` so `OpenFile` remains true for workspace files, while identity-native opens route through `OpenSubject` under the same higher-level routing model.",
+        "FinalGUISpec.md",
+        "OpenFile",
+        "OpenSubject"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03273",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04200 is present for `attention_required` still lacks a durable persisted shape parallel to `blocked_notice`, s",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Recommended minimum concern record shape"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04200"
+      ],
+      "source_obligation_ids": [
+        "obl-4040"
+      ],
+      "source_seed_ids": [
+        "seed-5559"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "`attention_required` still lacks a durable persisted shape parallel to `blocked_notice`, so the gate\u2019s evidence expectations remain only partially machine-verifiable.",
+        "attention_required",
+        "blocked_notice"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03317",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04254 is partial for AutoMilestone/project-switch handoff still require observable events/commands that the own",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 5. Post-acceptance wizard handoff surface"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04254"
+      ],
+      "source_obligation_ids": [
+        "obl-4094"
+      ],
+      "source_seed_ids": [
+        "seed-5656"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "AutoMilestone/project-switch handoff still require observable events/commands that the owner docs do not register."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03335",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04274 is partial for required route-payload or subject-open arguments",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04274"
+      ],
+      "source_obligation_ids": [
+        "obl-4114"
+      ],
+      "source_seed_ids": [
+        "seed-5702"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "required route-payload or subject-open arguments"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03352",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04292 is partial for `arg_passthrough_requirements?`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04292"
+      ],
+      "source_obligation_ids": [
+        "obl-4132"
+      ],
+      "source_seed_ids": [
+        "seed-5729"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "`arg_passthrough_requirements?`",
+        "arg_passthrough_requirements?"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03392",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04347 is present for `FinalGUISpec.md` aligns with that newer model in the embedded document pane:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### 7.19.1 Embedded document pane"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04347"
+      ],
+      "source_obligation_ids": [
+        "obl-4187"
+      ],
+      "source_seed_ids": [
+        "seed-5817"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` aligns with that newer model in the embedded document pane:",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03402",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04358 is partial for Artifact-backed open/restore behavior exists in storage and GUI prose, but there is no sin",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### GUI behavior rules"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04358"
+      ],
+      "source_obligation_ids": [
+        "obl-4198"
+      ],
+      "source_seed_ids": [
+        "seed-5837"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "Artifact-backed open/restore behavior exists in storage and GUI prose, but there is no single owner doc that clearly says the resolution order is `subject_id -> backing document or transient generated buffer -> routed surface`.",
+        "subject_id -> backing document or transient generated buffer -> routed surface"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03423",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04385 is present for `resume_url` is currently a stronger navigation primitive than generic `UICommand.args`, w",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## 4. Navigation Architecture"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04385"
+      ],
+      "source_obligation_ids": [
+        "obl-4225"
+      ],
+      "source_seed_ids": [
+        "seed-5876"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "`resume_url` is currently a stronger navigation primitive than generic `UICommand.args`, which inverts the desired architecture.",
+        "resume_url",
+        "UICommand.args"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03430",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04393 is present for If `Contracts_V0.md` does not absorb this, routing semantics will keep being redefined in",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04393"
+      ],
+      "source_obligation_ids": [
+        "obl-4233"
+      ],
+      "source_seed_ids": [
+        "seed-5892"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "If `Contracts_V0.md` does not absorb this, routing semantics will keep being redefined in the catalog, GUI docs, and storage docs separately.",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03452",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04416 is partial for normative ghost IDs still survive through examples, Final GUI remediation actions, and non",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04416"
+      ],
+      "source_obligation_ids": [
+        "obl-4256"
+      ],
+      "source_seed_ids": [
+        "seed-5940"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "normative ghost IDs still survive through examples, Final GUI remediation actions, and non-catalog command references."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03612",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04603 is present for `subject_id` required",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04603"
+      ],
+      "source_obligation_ids": [
+        "obl-4381"
+      ],
+      "source_seed_ids": [
+        "seed-6185"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "`subject_id` required",
+        "subject_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03618",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04610 is partial for `UICommand.args` is too generic to express reusable navigation semantics without a normali",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## 4. Navigation Architecture"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04610"
+      ],
+      "source_obligation_ids": [
+        "obl-4388"
+      ],
+      "source_seed_ids": [
+        "seed-6203"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "`UICommand.args` is too generic to express reusable navigation semantics without a normalized target object.",
+        "UICommand.args"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03619",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04615 is partial for Use `cmd.nav.*` or equivalent wrappers to route through `route_target` without forcing eve",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-071: Canonical route payload"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04615"
+      ],
+      "source_obligation_ids": [
+        "obl-4393"
+      ],
+      "source_seed_ids": [
+        "seed-6208"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "Use `cmd.nav.*` or equivalent wrappers to route through `route_target` without forcing every consumer doc to restate the model.",
+        "cmd.nav.*",
+        "route_target"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03625",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04625 is present for Required:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04625"
+      ],
+      "source_obligation_ids": [
+        "obl-4403"
+      ],
+      "source_seed_ids": [
+        "seed-6224"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "Required:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03633",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04639 is partial for `inspector_target` only when the field is really a detail-pane selection, not the main ide",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 2.4 Backend Selection"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04639"
+      ],
+      "source_obligation_ids": [
+        "obl-4417"
+      ],
+      "source_seed_ids": [
+        "seed-6252"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "`inspector_target` only when the field is really a detail-pane selection, not the main identity",
+        "inspector_target"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03648",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04658 is present for The rewrite now has enough stable object families that `object_kind` can no longer stay in",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04658"
+      ],
+      "source_obligation_ids": [
+        "obl-4436"
+      ],
+      "source_seed_ids": [
+        "seed-6287"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "The rewrite now has enough stable object families that `object_kind` can no longer stay informal.",
+        "object_kind"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "uncertain_items": []
+}

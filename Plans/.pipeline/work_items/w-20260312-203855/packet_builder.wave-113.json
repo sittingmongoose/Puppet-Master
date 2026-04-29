@@ -1,0 +1,347 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-113",
+  "group_ids": [
+    "pktgrp-0449",
+    "pktgrp-0450",
+    "pktgrp-0451",
+    "pktgrp-0452"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "packet-target-0449",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## Shared actor-boundary, route payload, and blocked_notice packet (Plans/assistant-chat-design.md:L2761)",
+      "path": "Plans/assistant-chat-design.md",
+      "coverage_row_ids": [
+        "cov-07165"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-07165"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-6733"
+      ],
+      "source_seed_ids": [
+        "seed-10350"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-6733"
+        ],
+        "source_seed_ids": [
+          "seed-10350"
+        ],
+        "source_shard_ids": [
+          "shard-0091"
+        ]
+      },
+      "gap_ids": [
+        "gap-05564"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, chat, usage, HITL, and tool docs and only reconfirmed the already-recorded missing `5.1B` owner anchor, incomplete `execution_unit_context` required-field list, live `detached_window` / `result_id` survivors, skeletal `blocked_notice` payload, and stale closure verdict.",
+        "gap-001",
+        "gap-002",
+        "gap-005",
+        "5.1B",
+        "execution_unit_context",
+        "detached_window",
+        "result_id",
+        "blocked_notice"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "5.1B",
+        "blocked_notice",
+        "detached_window",
+        "execution_unit_context",
+        "gap-001",
+        "gap-002",
+        "gap-005",
+        "result_id"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "5.1B",
+        "blocked_notice",
+        "detached_window",
+        "execution_unit_context",
+        "gap-001",
+        "gap-002",
+        "gap-005",
+        "result_id"
+      ],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-852e1e9753cf",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0565",
+      "source_reconciliation_target_ids": [
+        "target-0565"
+      ],
+      "source_target_ids": [
+        "target-0565"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n#### Source target target-0565\n- Reconciliation action: stale_retirement\n- Replace scope: exact_section\n- Exact required items represented:\n  - Wave 1 rechecked `[retired-token-5]`, `[retired-token-6]`, and `[retired-token-7]` against live Contracts, UI command, chat, usage, HITL, and tool docs and only reconfirmed the already-recorded missing `[retired-token-1]` owner anchor, incomplete `[retired-token-4]` required-field list, live `[retired-token-3]` / `[retired-token-8]` survivors, skeletal `[retired-token-2]` payload, and stale closure verdict.\n  - [retired-token-5]\n  - [retired-token-6]\n  - [retired-token-7]\n  - [retired-token-1]\n  - [retired-token-4]\n  - [retired-token-3]\n  - [retired-token-8]\n  - [retired-token-2]\n- Legacy token retirement handling:\n  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0450",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## Unified Thread Blocked-State Lifecycle (Plans/assistant-chat-design.md:L2232)",
+      "path": "Plans/assistant-chat-design.md",
+      "coverage_row_ids": [
+        "cov-06629"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-06629"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-6270"
+      ],
+      "source_seed_ids": [
+        "seed-9486"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-6270"
+        ],
+        "source_seed_ids": [
+          "seed-9486"
+        ],
+        "source_shard_ids": [
+          "shard-0085"
+        ]
+      },
+      "gap_ids": [
+        "gap-05141"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "thread blocked-state addenda already align to blocked/runtime actions"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-11ec22644ed7",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0566",
+      "source_reconciliation_target_ids": [
+        "target-0566"
+      ],
+      "source_target_ids": [
+        "target-0566"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0566\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - thread blocked-state addenda already align to blocked/runtime actions\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0451",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### 10.1 Smart auto-retrieval (RAG) across project sources (NOT \u201calways search everything\u201d) (Plans/assistant-chat-design.md:L769)",
+      "path": "Plans/assistant-chat-design.md",
+      "coverage_row_ids": [
+        "cov-01721"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-01721"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-1578"
+      ],
+      "source_seed_ids": [
+        "seed-1969"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1578"
+        ],
+        "source_seed_ids": [
+          "seed-1969"
+        ],
+        "source_shard_ids": [
+          "shard-0028"
+        ]
+      },
+      "gap_ids": [
+        "gap-01349"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "canonical chronology of everything"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-a10b5e9e8bc8",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0567",
+      "source_reconciliation_target_ids": [
+        "target-0567"
+      ],
+      "source_target_ids": [
+        "target-0567"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0567\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - canonical chronology of everything\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0452",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### 10.3 Scoping and performance: per-project indices (required) (Plans/assistant-chat-design.md:L814)",
+      "path": "Plans/assistant-chat-design.md",
+      "coverage_row_ids": [
+        "cov-04812"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-04812"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-4589"
+      ],
+      "source_seed_ids": [
+        "seed-6557"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4589"
+        ],
+        "source_seed_ids": [
+          "seed-6557"
+        ],
+        "source_shard_ids": [
+          "shard-0063"
+        ]
+      },
+      "gap_ids": [
+        "gap-03756"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "per-project `project_state`",
+        "project_state"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-0f8c1ce7a515",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0568",
+      "source_reconciliation_target_ids": [
+        "target-0568"
+      ],
+      "source_target_ids": [
+        "target-0568"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0568\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - per-project `project_state`\n  - project_state\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-07165",
+    "cov-06629",
+    "cov-01721",
+    "cov-04812"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-6733",
+    "obl-6270",
+    "obl-1578",
+    "obl-4589"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-10350",
+    "seed-9486",
+    "seed-1969",
+    "seed-6557"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0091",
+    "shard-0085",
+    "shard-0028",
+    "shard-0063"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "preserved_exact_required_items": [
+    "Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, chat, usage, HITL, and tool docs and only reconfirmed the already-recorded missing `5.1B` owner anchor, incomplete `execution_unit_context` required-field list, live `detached_window` / `result_id` survivors, skeletal `blocked_notice` payload, and stale closure verdict.",
+    "gap-001",
+    "gap-002",
+    "gap-005",
+    "5.1B",
+    "execution_unit_context",
+    "detached_window",
+    "result_id",
+    "blocked_notice",
+    "thread blocked-state addenda already align to blocked/runtime actions",
+    "canonical chronology of everything",
+    "per-project `project_state`",
+    "project_state"
+  ],
+  "blocked_targets": []
+}

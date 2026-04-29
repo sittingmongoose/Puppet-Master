@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-333",
+  "group_ids": [
+    "discgrp-1329",
+    "discgrp-1330",
+    "discgrp-1331",
+    "discgrp-1332"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01579",
+      "source_obligation_ids": [
+        "obl-1436"
+      ],
+      "source_seed_ids": [
+        "seed-1782"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### Fidelity recovery cov-059: Lane vs worktree lifecycle split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01580",
+      "source_obligation_ids": [
+        "obl-1437"
+      ],
+      "source_seed_ids": [
+        "seed-1783",
+        "seed-2540"
+      ],
+      "source_shard_ids": [
+        "shard-0026",
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1310"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01581",
+      "source_obligation_ids": [
+        "obl-1438"
+      ],
+      "source_seed_ids": [
+        "seed-1784"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "## Safe Point / Worktree Recovery Alignment Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L706"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01582",
+      "source_obligation_ids": [
+        "obl-1439"
+      ],
+      "source_seed_ids": [
+        "seed-1785"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-075: Historical semantic consistency",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L107"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

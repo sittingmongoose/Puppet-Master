@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-776",
+  "group_ids": [
+    "discgrp-3101",
+    "discgrp-3102",
+    "discgrp-3103",
+    "discgrp-3104"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03381",
+      "source_obligation_ids": [
+        "obl-3227"
+      ],
+      "source_seed_ids": [
+        "seed-4308"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "## Tool Policy Outcome Taxonomy Addendum (2026-03-08)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Tools.md:L1197"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03382",
+      "source_obligation_ids": [
+        "obl-3228"
+      ],
+      "source_seed_ids": [
+        "seed-4314"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Shared governance and runtime record envelope",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L260"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03383",
+      "source_obligation_ids": [
+        "obl-3229"
+      ],
+      "source_seed_ids": [
+        "seed-4315"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L774"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03384",
+      "source_obligation_ids": [
+        "obl-3230"
+      ],
+      "source_seed_ids": [
+        "seed-4316"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

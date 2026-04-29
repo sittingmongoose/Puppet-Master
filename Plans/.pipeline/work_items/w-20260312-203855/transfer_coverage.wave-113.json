@@ -1,0 +1,439 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-113",
+  "row_group_ids": [
+    "rowgrp-0449",
+    "rowgrp-0450",
+    "rowgrp-0451",
+    "rowgrp-0452"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-04234",
+      "source_obligation_ids": [
+        "obl-4074"
+      ],
+      "source_seed_ids": [
+        "seed-5636"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "`validation_pass_report` still conflicts with workflow-required `skipped`, but GPT-5.2 als",
+      "row_type": "layout_blocker",
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "heading_hint": "# GUI Rebuild Requirements Checklist (2026-02-23)",
+      "status": "partial",
+      "exact_items": [
+        "`validation_pass_report` still conflicts with workflow-required `skipped`, but GPT-5.2 also pinned missing `auto_fixes_applied[]`, a Pass-1 scope contradiction around requirements creation, and unresolved `workflow_run_id` vs canonical `run_id` identity.",
+        "validation_pass_report",
+        "skipped",
+        "auto_fixes_applied[]",
+        "workflow_run_id",
+        "run_id"
+      ],
+      "stale_tokens": [
+        "auto_fixes_applied[]",
+        "run_id",
+        "skipped",
+        "validation_pass_report",
+        "workflow_run_id"
+      ],
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L49",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L50"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06202",
+      "source_obligation_ids": [
+        "obl-5971"
+      ],
+      "source_seed_ids": [
+        "seed-8939"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`MiscPlan.md` now has a tighter cleanup contradiction: best-effort prepare/cleanup can sti",
+      "row_type": "layout_blocker",
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "heading_hint": "### Concern cleanup and retention",
+      "status": "partial",
+      "exact_items": [
+        "`MiscPlan.md` now has a tighter cleanup contradiction: best-effort prepare/cleanup can still invalidate safe-point prerequisites and mtime-based evidence pruning can cut across attempt-lineage retention requirements.",
+        "MiscPlan.md"
+      ],
+      "stale_tokens": [
+        "MiscPlan.md"
+      ],
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L131"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-01168",
+      "source_obligation_ids": [
+        "obl-1025"
+      ],
+      "source_seed_ids": [
+        "seed-1201"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "canon_label": "if the preferred candidate is unavailable after capability/provider/model filtering, fall",
+      "row_type": "owner",
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "heading_hint": "### Concern visibility and filtering",
+      "status": "partial",
+      "exact_items": [
+        "if the preferred candidate is unavailable after capability/provider/model filtering, fall through deterministically to the next candidate"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L113"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01531",
+      "source_obligation_ids": [
+        "obl-1388"
+      ],
+      "source_seed_ids": [
+        "seed-1705"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "lane/package complete and no retention reason remains",
+      "row_type": "owner",
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "heading_hint": "### Concern cleanup and retention",
+      "status": "partial",
+      "exact_items": [
+        "lane/package complete and no retention reason remains"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L131"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03981",
+      "source_obligation_ids": [
+        "obl-3825"
+      ],
+      "source_seed_ids": [
+        "seed-5241"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "follow `usage_event_ref` to canonical Usage/Ledger identity",
+      "row_type": "owner",
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "heading_hint": "## 2026-03-09 addendum \u2014 Artifacts panel and Usage/Ledger linkage",
+      "status": "partial",
+      "exact_items": [
+        "follow `usage_event_ref` to canonical Usage/Ledger identity",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L52"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04469",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05576",
+      "source_obligation_ids": [
+        "obl-5348"
+      ],
+      "source_seed_ids": [
+        "seed-7948"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "`cost_usage` already routes to canonical Usage/Ledger identity",
+      "row_type": "owner",
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "heading_hint": "## 2026-03-09 addendum \u2014 Artifacts panel and Usage/Ledger linkage",
+      "status": "partial",
+      "exact_items": [
+        "`cost_usage` already routes to canonical Usage/Ledger identity",
+        "cost_usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L101"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06238",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04306",
+      "source_obligation_ids": [
+        "obl-4146"
+      ],
+      "source_seed_ids": [
+        "seed-5746"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "stale/degraded projection revalidation requirements before mutation",
+      "row_type": "stale_retirement",
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "heading_hint": "# GUI Rebuild Requirements Checklist (2026-02-23)",
+      "status": "present",
+      "exact_items": [
+        "stale/degraded projection revalidation requirements before mutation"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L1-L137 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06658",
+      "source_obligation_ids": [
+        "obl-6299"
+      ],
+      "source_seed_ids": [
+        "seed-9530"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "the main risk is not fresh contradictions here; it is stale pass/fail references if upstre",
+      "row_type": "stale_retirement",
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "heading_hint": "# GUI Rebuild Requirements Checklist (2026-02-23)",
+      "status": "present",
+      "exact_items": [
+        "the main risk is not fresh contradictions here; it is stale pass/fail references if upstream specs move and this checklist is not updated"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L1-L137 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02787",
+      "source_obligation_ids": [
+        "obl-2634"
+      ],
+      "source_seed_ids": [
+        "seed-3454"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "this requested-account model is orthogonal to auth-surface selection; both requested auth",
+      "row_type": "consumer",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "this requested-account model is orthogonal to auth-surface selection; both requested auth mode and requested account can coexist"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04110",
+      "source_obligation_ids": [
+        "obl-3950"
+      ],
+      "source_seed_ids": [
+        "seed-5414"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "But wizard/attention flows already use exact deep links via `resume_url`, and Usage/artifa",
+      "row_type": "consumer",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "But wizard/attention flows already use exact deep links via `resume_url`, and Usage/artifact surfaces already imply identity-native jumps using `usage_event_ref` and related canonical refs.",
+        "resume_url",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04401",
+      "source_obligation_ids": [
+        "obl-4241"
+      ],
+      "source_seed_ids": [
+        "seed-5913"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "Upstream draft/generation flows already rely on artifact-first behavior, but there is stil",
+      "row_type": "consumer",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "Upstream draft/generation flows already rely on artifact-first behavior, but there is still no single shared contract saying these surfaces open by subject identity first and path second."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04522",
+      "source_obligation_ids": [
+        "obl-4300"
+      ],
+      "source_seed_ids": [
+        "seed-6028"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "`resume_url` and some attention flows are more exact than general-purpose search and cross",
+      "row_type": "consumer",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "`resume_url` and some attention flows are more exact than general-purpose search and cross-surface pivots, which is backwards.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06324",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06766",
+      "source_obligation_ids": [
+        "obl-6402"
+      ],
+      "source_seed_ids": [
+        "seed-9781"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "3. Reconcile routing, blocked-family, and attribution flows end-to-end across owner + cons",
+      "row_type": "consumer",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "3. Reconcile routing, blocked-family, and attribution flows end-to-end across owner + consumer docs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    }
+  ]
+}

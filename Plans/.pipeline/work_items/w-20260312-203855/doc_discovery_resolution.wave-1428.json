@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1428",
+  "group_ids": [
+    "discgrp-5709",
+    "discgrp-5710",
+    "discgrp-5711",
+    "discgrp-5712"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06180",
+      "source_obligation_ids": [
+        "obl-5952"
+      ],
+      "source_seed_ids": [
+        "seed-8851"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06181",
+      "source_obligation_ids": [
+        "obl-5953"
+      ],
+      "source_seed_ids": [
+        "seed-8852"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-007 -- No stringly-typed IDs outside SSOT",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L75"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06182",
+      "source_obligation_ids": [
+        "obl-5954"
+      ],
+      "source_seed_ids": [
+        "seed-8853"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "### 4.4 Mode and model overrides",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Commands_System.md:L232"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06183",
+      "source_obligation_ids": [
+        "obl-5955"
+      ],
+      "source_seed_ids": [
+        "seed-8854"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "### 2.4 Name collision rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Commands_System.md:L93"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-577",
+  "group_ids": [
+    "discgrp-2305",
+    "discgrp-2306",
+    "discgrp-2307",
+    "discgrp-2308"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02580",
+      "source_obligation_ids": [
+        "obl-2428"
+      ],
+      "source_seed_ids": [
+        "seed-3152"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Projection freshness and health terms",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L82"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02581",
+      "source_obligation_ids": [
+        "obl-2429"
+      ],
+      "source_seed_ids": [
+        "seed-3153"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.3 Search and Source Control keep separate projection state",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02582",
+      "source_obligation_ids": [
+        "obl-2430"
+      ],
+      "source_seed_ids": [
+        "seed-3154",
+        "seed-7106"
+      ],
+      "source_shard_ids": [
+        "shard-0038",
+        "shard-0067"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-02583",
+      "source_obligation_ids": [
+        "obl-2431"
+      ],
+      "source_seed_ids": [
+        "seed-3155"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Document_Packaging_Policy.md",
+      "new_heading_hint": "### 7.4 Canonical truth rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L229"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

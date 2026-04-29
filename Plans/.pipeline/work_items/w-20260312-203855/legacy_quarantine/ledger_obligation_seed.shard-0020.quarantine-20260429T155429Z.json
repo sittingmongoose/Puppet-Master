@@ -1,0 +1,85 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0020",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0020-L003801-L004000.md",
+  "source_line_range": "L003801-L004000",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "shared override-display grammar",
+      "exact_items": [
+        "Define a shared override-display grammar for all runtime-related settings surfaces.",
+        "Separate source, requested, and effective in UI language and data models.",
+        "Add origin badges / precedence disclosure in Settings.",
+        "Add requested/effective + support-state disclosure blocks in runtime/history surfaces."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/Models_System.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Contradictions / gaps surfaced",
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "historical run views must stay frozen to historical requested/effective state",
+        "provider-gap disclosure (honored / skipped / clamped) is a third concept"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L3815-L3828"
+      ],
+      "notes": [
+        "Cross-surface UI/data-model obligation for runtime-related settings and history."
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "deterministic orchestrator auto-resolver",
+      "exact_items": [
+        "keep one global precedence chain",
+        "each surface auto resolver to emit a deterministic ranked candidate set plus explanation metadata",
+        "actor type and operation type should dominate stack hints",
+        "if the preferred candidate is unavailable after capability/provider/model filtering, fall through deterministically to the next candidate"
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/Models_System.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Recommended resolver shape",
+        "Deterministic input priority direction",
+        "Fallback direction"
+      ],
+      "stale_tokens": [
+        "reviewer/reviewer-pass should not silently become a coding persona",
+        "a seam overseer should not collapse into a narrow implementation persona"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L3867-L3940"
+      ],
+      "notes": [
+        "Needs explicit matrix for actor type, operation type, scope, and stack/domain hints."
+      ]
+    }
+  ],
+  "noise_items": [
+    "Current settings/inheritance may still be shown elsewhere, but must not overwrite history.",
+    "The global precedence chain is clear, but Orchestrator auto-resolver specifics are still too qualitative."
+  ],
+  "uncertain_items": [
+    "Exact doc ownership among the listed Plans/** files is not resolved in this shard.",
+    "working_ledger.md line mapping is inferred from the shard text, not directly verified here."
+  ],
+  "covered_shard_id": "shard-0020"
+}

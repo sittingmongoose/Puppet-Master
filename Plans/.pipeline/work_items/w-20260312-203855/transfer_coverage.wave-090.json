@@ -1,0 +1,430 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-090",
+  "row_group_ids": [
+    "rowgrp-0357",
+    "rowgrp-0358",
+    "rowgrp-0359",
+    "rowgrp-0360"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-04571",
+      "source_obligation_ids": [
+        "obl-4349"
+      ],
+      "source_seed_ids": [
+        "seed-6128"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "subject-open / open-by-identity",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)",
+      "status": "partial",
+      "exact_items": [
+        "subject-open / open-by-identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:L323"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04578",
+      "source_obligation_ids": [
+        "obl-4356"
+      ],
+      "source_seed_ids": [
+        "seed-6135"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "`FileManager.md`: owns workspace-file open semantics and editor realization only",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "`FileManager.md`: owns workspace-file open semantics and editor realization only",
+        "FileManager.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04607",
+      "source_obligation_ids": [
+        "obl-4385"
+      ],
+      "source_seed_ids": [
+        "seed-6190"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "remains the right tool for real file opens and code-navigation clicks when a canonical wor",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "remains the right tool for real file opens and code-navigation clicks when a canonical workspace path is already known"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04656",
+      "source_obligation_ids": [
+        "obl-4434"
+      ],
+      "source_seed_ids": [
+        "seed-6279"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "If the base target object grows too large, it stops being canonical and just becomes a new",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "### 2.7 Large files",
+      "status": "partial",
+      "exact_items": [
+        "If the base target object grows too large, it stops being canonical and just becomes a new dumping ground."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:L256"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05076",
+      "source_obligation_ids": [
+        "obl-4852"
+      ],
+      "source_seed_ids": [
+        "seed-6989"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "Keep `OpenFile` as the path-based editor contract only.",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "Keep `OpenFile` as the path-based editor contract only.",
+        "OpenFile"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:L312"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05084",
+      "source_obligation_ids": [
+        "obl-4860"
+      ],
+      "source_seed_ids": [
+        "seed-6999"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "`OpenFile` = path-based editor open",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "`OpenFile` = path-based editor open",
+        "OpenFile"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:L312"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05529",
+      "source_obligation_ids": [
+        "obl-5301"
+      ],
+      "source_seed_ids": [
+        "seed-7879"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "`Plans/FileManager.md` still states one universal open primitive:",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/FileManager.md` still states one universal open primitive:",
+        "Plans/FileManager.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05768",
+      "source_obligation_ids": [
+        "obl-5540"
+      ],
+      "source_seed_ids": [
+        "seed-8224"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "many earlier event examples in the file still center `tier_id`",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "many earlier event examples in the file still center `tier_id`",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06234",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:L67"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06382",
+      "source_obligation_ids": [
+        "obl-6023"
+      ],
+      "source_seed_ids": [
+        "seed-9110"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "the file is self-referential in its compliance line and therefore cannot serve as an indep",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "the file is self-referential in its compliance line and therefore cannot serve as an independent example of owner-routing discipline"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06448",
+      "source_obligation_ids": [
+        "obl-6089"
+      ],
+      "source_seed_ids": [
+        "seed-9199"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "`remediation.resolved` is also internally inconsistent inside the same file:",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "`remediation.resolved` is also internally inconsistent inside the same file:",
+        "remediation.resolved"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06476",
+      "source_obligation_ids": [
+        "obl-6117"
+      ],
+      "source_seed_ids": [
+        "seed-9248"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "The file still claims HITL semantics must not change, while later sections already change",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "The file still claims HITL semantics must not change, while later sections already change the meaning from request-centric tier-boundary approvals to blocked/runtime overlays."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06539",
+      "source_obligation_ids": [
+        "obl-6180"
+      ],
+      "source_seed_ids": [
+        "seed-9349"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "the same file later defines canonical `cmd.runtime.*` recovery commands keyed by `run_id`,",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "the same file later defines canonical `cmd.runtime.*` recovery commands keyed by `run_id`, `node_id`, and `blocked_sequence`",
+        "cmd.runtime.*",
+        "run_id",
+        "node_id",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:L75",
+        "Plans/FileManager.md:L116"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03457",
+      "source_obligation_ids": [
+        "obl-3303"
+      ],
+      "source_seed_ids": [
+        "seed-4425"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "The coordination-canon contradiction in `orchestrator-subagent-integration.md` is now expl",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "status": "partial",
+      "exact_items": [
+        "The coordination-canon contradiction in `orchestrator-subagent-integration.md` is now explicit in the same file.",
+        "orchestrator-subagent-integration.md"
+      ],
+      "stale_tokens": [
+        "orchestrator-subagent-integration.md"
+      ],
+      "evidence": [
+        "Plans/FileManager.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06472",
+      "source_obligation_ids": [
+        "obl-6113"
+      ],
+      "source_seed_ids": [
+        "seed-9237"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "The middle of the file still preserves stale execution ontology:",
+      "row_type": "stale_retirement",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "status": "present",
+      "exact_items": [
+        "The middle of the file still preserves stale execution ontology:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:L1-L327 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06479",
+      "source_obligation_ids": [
+        "obl-6120"
+      ],
+      "source_seed_ids": [
+        "seed-9251"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "Reconciliation should retire the request-centric opening contract and rebuild the file aro",
+      "row_type": "stale_retirement",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "# File Manager & IDE-style Editor -- Plan",
+      "status": "present",
+      "exact_items": [
+        "Reconciliation should retire the request-centric opening contract and rebuild the file around:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:L1-L327 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

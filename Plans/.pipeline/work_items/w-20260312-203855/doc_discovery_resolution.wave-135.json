@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-135",
+  "group_ids": [
+    "discgrp-0537",
+    "discgrp-0538",
+    "discgrp-0539",
+    "discgrp-0540"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00784",
+      "source_obligation_ids": [
+        "obl-641"
+      ],
+      "source_seed_ids": [
+        "seed-736"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "## Relationship to existing plans",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L17"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00785",
+      "source_obligation_ids": [
+        "obl-642"
+      ],
+      "source_seed_ids": [
+        "seed-737"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "### Fidelity recovery cov-038: Focused run and historical routing contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00786",
+      "source_obligation_ids": [
+        "obl-643"
+      ],
+      "source_seed_ids": [
+        "seed-738"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00787",
+      "source_obligation_ids": [
+        "obl-644"
+      ],
+      "source_seed_ids": [
+        "seed-739"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

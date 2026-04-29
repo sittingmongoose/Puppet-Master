@@ -1,5 +1,30 @@
 ## GUI and Backend Scope (All In-Scope Now)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0620
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - This seam is now tightly coupled to historical-run behavior:
+  - owner clarity matters as much as field choice now; otherwise the same seam will keep reopening under different names
+  - this seam now looks resolvable; the missing piece was ownership, not concept invention
+  - This seam is now mostly an ownership cleanup, not a concept invention problem.
+  - the capability-gating seam now has a direct contradiction: one owner implies frozen capability state/events while the media/capability owner says capability is recomputed live and not carried as a separate persisted state stream.
+  - This seam is now a consumer-doc sourcing problem, not a missing-runtime-contract problem.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 All previously "optional" or "later" plan-mode and subagent GUI/backend items are **in scope now**. The following specifies frontend and backend so they work end-to-end.
 
 ### 1. Plan Mode -- Backend
@@ -55,6 +80,27 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contra
 - **Check:** In `doctor/` (new check or inside existing config check): if any tier has platform Gemini, validate that a Google Gemini API key is configured. Gemini is a Direct API provider; no CLI settings file check is needed.
 
 ### 7. Implementation Checklist (GUI & Backend -- Add/Expand)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0629
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Node implementation match: Rust + backend`
+  - Node implementation match: Rust + backend
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 See the updated **Implementation checklist** below; it includes all of the above as concrete tasks.
 

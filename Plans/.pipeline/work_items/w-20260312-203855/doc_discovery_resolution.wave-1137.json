@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1137",
+  "group_ids": [
+    "discgrp-4545",
+    "discgrp-4546",
+    "discgrp-4547",
+    "discgrp-4548"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04943",
+      "source_obligation_ids": [
+        "obl-4719"
+      ],
+      "source_seed_ids": [
+        "seed-6799"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "#### Catalog lifecycle commands",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L526"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04944",
+      "source_obligation_ids": [
+        "obl-4720"
+      ],
+      "source_seed_ids": [
+        "seed-6800"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04945",
+      "source_obligation_ids": [
+        "obl-4721"
+      ],
+      "source_seed_ids": [
+        "seed-6801"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### route_target, OpenSubject, and command normalization",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L315"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04946",
+      "source_obligation_ids": [
+        "obl-4722"
+      ],
+      "source_seed_ids": [
+        "seed-6802"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "#### Route target navigation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

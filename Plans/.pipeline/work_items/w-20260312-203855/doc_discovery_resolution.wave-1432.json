@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1432",
+  "group_ids": [
+    "discgrp-5725",
+    "discgrp-5726",
+    "discgrp-5727",
+    "discgrp-5728"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06200",
+      "source_obligation_ids": [
+        "obl-5969"
+      ],
+      "source_seed_ids": [
+        "seed-8937"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "# Architecture Invariants (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06201",
+      "source_obligation_ids": [
+        "obl-5970"
+      ],
+      "source_seed_ids": [
+        "seed-8938"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "### 11.1 FileSafe: Write scope (CRITICAL)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L1215"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06202",
+      "source_obligation_ids": [
+        "obl-5971"
+      ],
+      "source_seed_ids": [
+        "seed-8939"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "new_heading_hint": "### Concern cleanup and retention",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L131"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06203",
+      "source_obligation_ids": [
+        "obl-5972"
+      ],
+      "source_seed_ids": [
+        "seed-8940"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/rewrite-tie-in-memo.md",
+      "new_heading_hint": "# Puppet Master Rewrite Tie-In Contract (Active)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

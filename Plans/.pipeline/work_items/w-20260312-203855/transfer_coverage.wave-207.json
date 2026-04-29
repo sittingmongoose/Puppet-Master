@@ -1,0 +1,673 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-207",
+  "row_group_ids": [
+    "rowgrp-0825",
+    "rowgrp-0826",
+    "rowgrp-0827",
+    "rowgrp-0828"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-03319",
+      "source_obligation_ids": [
+        "obl-3165"
+      ],
+      "source_seed_ids": [
+        "seed-4218"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`human-in-the-loop.md` now exposes a sharper self-contradiction: it deprecates `allowed_ac",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "present",
+      "exact_items": [
+        "`human-in-the-loop.md` now exposes a sharper self-contradiction: it deprecates `allowed_actions[]` in favor of `allowed_action_ids[]`, but `Contracts_V0.md` and `storage-plan.md` still publish `allowed_actions` in HITL-adjacent canonical shapes.",
+        "human-in-the-loop.md",
+        "allowed_actions[]",
+        "allowed_action_ids[]",
+        "Contracts_V0.md",
+        "storage-plan.md",
+        "allowed_actions"
+      ],
+      "stale_tokens": [
+        "Contracts_V0.md",
+        "allowed_action_ids[]",
+        "allowed_actions",
+        "allowed_actions[]",
+        "human-in-the-loop.md",
+        "storage-plan.md"
+      ],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L15",
+        "Plans/human-in-the-loop.md:L34",
+        "Plans/human-in-the-loop.md:L36",
+        "Plans/human-in-the-loop.md:L45",
+        "Plans/human-in-the-loop.md:L48"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03428",
+      "source_obligation_ids": [
+        "obl-3274"
+      ],
+      "source_seed_ids": [
+        "seed-4388"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "`human-in-the-loop.md` still contains an intra-doc contradiction on `allowed_actions` vs `",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "present",
+      "exact_items": [
+        "`human-in-the-loop.md` still contains an intra-doc contradiction on `allowed_actions` vs `allowed_action_ids`, still leaves `request_id <-> blocked_sequence` mapping unowned, and still keeps approval-scope/session semantics under-keyed while neighboring docs cascade approvals broadly.",
+        "human-in-the-loop.md",
+        "allowed_actions",
+        "allowed_action_ids",
+        "request_id <-> blocked_sequence"
+      ],
+      "stale_tokens": [
+        "allowed_action_ids",
+        "allowed_actions",
+        "human-in-the-loop.md",
+        "request_id <-> blocked_sequence"
+      ],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L15",
+        "Plans/human-in-the-loop.md:L34",
+        "Plans/human-in-the-loop.md:L36",
+        "Plans/human-in-the-loop.md:L45",
+        "Plans/human-in-the-loop.md:L48"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00216",
+      "source_obligation_ids": [
+        "obl-111"
+      ],
+      "source_seed_ids": [
+        "seed-114"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "why impacted: these still define approval boundaries and workspace/storage identity in leg",
+      "row_type": "stale_retirement",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Fidelity recovery cov-101: Provider-native correlation and approval scope",
+      "status": "present",
+      "exact_items": [
+        "why impacted: these still define approval boundaries and workspace/storage identity in legacy terms."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1-L389 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03220",
+      "source_obligation_ids": [
+        "obl-3066"
+      ],
+      "source_seed_ids": [
+        "seed-4059"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "Because the older HITL contract is tier-keyed, it is still vulnerable to the same stale-ow",
+      "row_type": "stale_retirement",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Canonical HITL request contract",
+      "status": "present",
+      "exact_items": [
+        "Because the older HITL contract is tier-keyed, it is still vulnerable to the same stale-ownership problem as `TierContext`. Under the rewrite, approval must anchor to canonical execution-unit context first, with any tier/package/seam label only as secondary presentation metadata.",
+        "TierContext"
+      ],
+      "stale_tokens": [
+        "TierContext"
+      ],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1-L389 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03221",
+      "source_obligation_ids": [
+        "obl-3067"
+      ],
+      "source_seed_ids": [
+        "seed-4067"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "`Contracts_V0.md` still publishes `HITLRequest` with legacy `allowed_actions[]` and `appro",
+      "row_type": "stale_retirement",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "status": "missing",
+      "exact_items": [
+        "`Contracts_V0.md` still publishes `HITLRequest` with legacy `allowed_actions[]` and `approve_continue`, while the later correction in `human-in-the-loop.md` says deprecated field names must not appear in new canonical schemas.",
+        "Contracts_V0.md",
+        "HITLRequest",
+        "allowed_actions[]",
+        "approve_continue",
+        "human-in-the-loop.md"
+      ],
+      "stale_tokens": [
+        "Contracts_V0.md",
+        "HITLRequest",
+        "allowed_actions[]",
+        "approve_continue",
+        "human-in-the-loop.md"
+      ],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L15",
+        "Plans/human-in-the-loop.md:L34",
+        "Plans/human-in-the-loop.md:L36",
+        "Plans/human-in-the-loop.md:L45",
+        "Plans/human-in-the-loop.md:L48"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-06461",
+      "source_obligation_ids": [
+        "obl-6102"
+      ],
+      "source_seed_ids": [
+        "seed-9220"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "retire `HITLRequest` as peer canonical approval identity and reduce `request_id` to lineag",
+      "row_type": "stale_retirement",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Fidelity recovery cov-006: Retire tier-era canon and shadow fields",
+      "status": "present",
+      "exact_items": [
+        "retire `HITLRequest` as peer canonical approval identity and reduce `request_id` to lineage/compatibility metadata",
+        "HITLRequest",
+        "request_id"
+      ],
+      "stale_tokens": [
+        "HITLRequest",
+        "request_id"
+      ],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1-L389 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06655",
+      "source_obligation_ids": [
+        "obl-6296"
+      ],
+      "source_seed_ids": [
+        "seed-9523"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Run_Graph_View.md` and `usage-feature.md` are now the highest-risk remaining stale consum",
+      "row_type": "stale_retirement",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "### Approval Scope Key and provider-native correlation",
+      "status": "present",
+      "exact_items": [
+        "`Run_Graph_View.md` and `usage-feature.md` are now the highest-risk remaining stale consumer pair because they still share the same old correlation key.",
+        "Run_Graph_View.md",
+        "usage-feature.md"
+      ],
+      "stale_tokens": [
+        "Run_Graph_View.md",
+        "usage-feature.md"
+      ],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1-L389 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01149",
+      "source_obligation_ids": [
+        "obl-1006"
+      ],
+      "source_seed_ids": [
+        "seed-1176",
+        "seed-1805",
+        "seed-1936",
+        "seed-3080",
+        "seed-3731",
+        "seed-3753",
+        "seed-4093",
+        "seed-4150",
+        "seed-4181",
+        "seed-4207",
+        "seed-4235",
+        "seed-4309",
+        "seed-4338",
+        "seed-4377",
+        "seed-4406",
+        "seed-5896",
+        "seed-5906",
+        "seed-9631",
+        "seed-9672",
+        "seed-9932",
+        "seed-10019",
+        "seed-10068",
+        "seed-10109",
+        "seed-10123",
+        "seed-10145",
+        "seed-10187",
+        "seed-10222",
+        "seed-10365"
+      ],
+      "source_shard_ids": [
+        "shard-0020",
+        "shard-0027",
+        "shard-0028",
+        "shard-0037",
+        "shard-0042",
+        "shard-0045",
+        "shard-0046",
+        "shard-0047",
+        "shard-0058",
+        "shard-0086",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/interview-subagent-integration.md`",
+      "row_type": "consumer",
+      "path": "Plans/interview-subagent-integration.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/interview-subagent-integration.md`",
+        "Plans/interview-subagent-integration.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/interview-subagent-integration.md:L14",
+        "Plans/interview-subagent-integration.md:L17"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02549",
+      "source_obligation_ids": [
+        "obl-2397"
+      ],
+      "source_seed_ids": [
+        "seed-3114"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "`Plans/assistant-chat-design.md` + `Plans/interview-subagent-integration.md`",
+      "row_type": "consumer",
+      "path": "Plans/interview-subagent-integration.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md` + `Plans/interview-subagent-integration.md`",
+        "Plans/assistant-chat-design.md",
+        "Plans/interview-subagent-integration.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/interview-subagent-integration.md:L14",
+        "Plans/interview-subagent-integration.md:L17"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06362",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/interview-subagent-integration.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/interview-subagent-integration.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06932",
+      "source_obligation_ids": [
+        "obl-6532"
+      ],
+      "source_seed_ids": [
+        "seed-9924"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/interview-subagent-integration.md` already carries requested/effective runtime visi",
+      "row_type": "consumer",
+      "path": "Plans/interview-subagent-integration.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/interview-subagent-integration.md` already carries requested/effective runtime visibility and `operational_identity`.",
+        "Plans/interview-subagent-integration.md",
+        "operational_identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/interview-subagent-integration.md:L14",
+        "Plans/interview-subagent-integration.md:L17",
+        "Plans/interview-subagent-integration.md:L37"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06944",
+      "source_obligation_ids": [
+        "obl-6544"
+      ],
+      "source_seed_ids": [
+        "seed-9949"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/interview-subagent-integration.md:257`",
+      "row_type": "consumer",
+      "path": "Plans/interview-subagent-integration.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/interview-subagent-integration.md:257`",
+        "Plans/interview-subagent-integration.md:257"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/interview-subagent-integration.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06945",
+      "source_obligation_ids": [
+        "obl-6545"
+      ],
+      "source_seed_ids": [
+        "seed-9950",
+        "seed-10041",
+        "seed-10112"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090"
+      ],
+      "canon_label": "`Plans/interview-subagent-integration.md:1692-1698`",
+      "row_type": "consumer",
+      "path": "Plans/interview-subagent-integration.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/interview-subagent-integration.md:1692-1698`",
+        "Plans/interview-subagent-integration.md:1692-1698"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/interview-subagent-integration.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06946",
+      "source_obligation_ids": [
+        "obl-6546"
+      ],
+      "source_seed_ids": [
+        "seed-9951"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/interview-subagent-integration.md:1966`",
+      "row_type": "consumer",
+      "path": "Plans/interview-subagent-integration.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/interview-subagent-integration.md:1966`",
+        "Plans/interview-subagent-integration.md:1966"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/interview-subagent-integration.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-07010",
+      "source_obligation_ids": [
+        "obl-6604"
+      ],
+      "source_seed_ids": [
+        "seed-10073",
+        "seed-10127",
+        "seed-10161",
+        "seed-10207",
+        "seed-10239"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/interview-subagent-integration.md:1686-1698`",
+      "row_type": "consumer",
+      "path": "Plans/interview-subagent-integration.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/interview-subagent-integration.md:1686-1698`",
+        "Plans/interview-subagent-integration.md:1686-1698"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/interview-subagent-integration.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-07034",
+      "source_obligation_ids": [
+        "obl-6625"
+      ],
+      "source_seed_ids": [
+        "seed-10105"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "`Plans/interview-subagent-integration.md` still carries `requested_account_binding` and `o",
+      "row_type": "consumer",
+      "path": "Plans/interview-subagent-integration.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/interview-subagent-integration.md` still carries `requested_account_binding` and `operational_identity`, but still omits `requested_account_policy` and `tool_use_id` in its runtime-identity section.",
+        "Plans/interview-subagent-integration.md",
+        "requested_account_binding",
+        "operational_identity",
+        "requested_account_policy",
+        "tool_use_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/interview-subagent-integration.md:L14",
+        "Plans/interview-subagent-integration.md:L17",
+        "Plans/interview-subagent-integration.md:L37"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07004",
+      "source_obligation_ids": [
+        "obl-6600"
+      ],
+      "source_seed_ids": [
+        "seed-10064"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/interview-subagent-integration.md` does contain `### Runtime identity visibility`,",
+      "row_type": "layout_blocker",
+      "path": "Plans/interview-subagent-integration.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/interview-subagent-integration.md` does contain `### Runtime identity visibility`, but its required fields still stop at `requested_account_binding` / `operational_identity` and do not carry `requested_account_policy` or `tool_use_id`.",
+        "Plans/interview-subagent-integration.md",
+        "### Runtime identity visibility",
+        "requested_account_binding",
+        "operational_identity",
+        "requested_account_policy",
+        "tool_use_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/interview-subagent-integration.md:L14",
+        "Plans/interview-subagent-integration.md:L17",
+        "Plans/interview-subagent-integration.md:L37"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07009",
+      "source_obligation_ids": [
+        "obl-6603"
+      ],
+      "source_seed_ids": [
+        "seed-10067"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interv",
+      "row_type": "layout_blocker",
+      "path": "Plans/interview-subagent-integration.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings.",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "validation artifact lineage",
+        "bridge-field viewer",
+        "validation/report section"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/interview-subagent-integration.md:L14",
+        "Plans/interview-subagent-integration.md:L17",
+        "Plans/interview-subagent-integration.md:L26",
+        "Plans/interview-subagent-integration.md:L28"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07042",
+      "source_obligation_ids": [
+        "obl-6633"
+      ],
+      "source_seed_ids": [
+        "seed-10118"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "`gap-001` now points at `Plans/interview-subagent-integration.md` \u2014 `### Runtime identity",
+      "row_type": "layout_blocker",
+      "path": "Plans/interview-subagent-integration.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "`gap-001` now points at `Plans/interview-subagent-integration.md` \u2014 `### Runtime identity visibility` instead of a non-existent requested/effective identity heading.",
+        "gap-001",
+        "Plans/interview-subagent-integration.md",
+        "### Runtime identity visibility"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/interview-subagent-integration.md:L14",
+        "Plans/interview-subagent-integration.md:L17"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07060",
+      "source_obligation_ids": [
+        "obl-6643"
+      ],
+      "source_seed_ids": [
+        "seed-10135"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-0",
+      "row_type": "layout_blocker",
+      "path": "Plans/interview-subagent-integration.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.",
+        "gap-003",
+        "gap-004",
+        "gap-005",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/interview-subagent-integration.md:L14",
+        "Plans/interview-subagent-integration.md:L17",
+        "Plans/interview-subagent-integration.md:L26",
+        "Plans/interview-subagent-integration.md:L28"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1346",
+  "group_ids": [
+    "discgrp-5381",
+    "discgrp-5382",
+    "discgrp-5383",
+    "discgrp-5384"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05827",
+      "source_obligation_ids": [
+        "obl-5599"
+      ],
+      "source_seed_ids": [
+        "seed-8317"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "# Runtime Artifacts Panel \u2014 SSOT",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05828",
+      "source_obligation_ids": [
+        "obl-5600"
+      ],
+      "source_seed_ids": [
+        "seed-8318"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05829",
+      "source_obligation_ids": [
+        "obl-5601"
+      ],
+      "source_seed_ids": [
+        "seed-8319"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "# Usage Feature -- App/GUI Plan",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05830",
+      "source_obligation_ids": [
+        "obl-5602"
+      ],
+      "source_seed_ids": [
+        "seed-8320"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "#### Route target navigation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

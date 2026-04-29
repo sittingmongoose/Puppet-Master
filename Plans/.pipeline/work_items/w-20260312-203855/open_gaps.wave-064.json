@@ -1,0 +1,2349 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-064",
+  "group_ids": [
+    "gapgrp-0253",
+    "gapgrp-0254",
+    "gapgrp-0255",
+    "gapgrp-0256"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-02327",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02949 is partial for a failed or blocked switch decision is still historically important even when the effectiv",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02949"
+      ],
+      "source_obligation_ids": [
+        "obl-2796"
+      ],
+      "source_seed_ids": [
+        "seed-3684"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "a failed or blocked switch decision is still historically important even when the effective account did not change"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02389",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03026 is partial for still needs CUP governance, handoff identity completeness, and explicit isolation/worktree",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03026"
+      ],
+      "source_obligation_ids": [
+        "obl-2872"
+      ],
+      "source_seed_ids": [
+        "seed-3793"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "still needs CUP governance, handoff identity completeness, and explicit isolation/worktree policy fields"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02392",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03029 is partial for Wizard handoff still leaves identity/worktree policy implicit where the rewrite now needs",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03029"
+      ],
+      "source_obligation_ids": [
+        "obl-2875"
+      ],
+      "source_seed_ids": [
+        "seed-3796"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "Wizard handoff still leaves identity/worktree policy implicit where the rewrite now needs them explicit."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02416",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03069 is partial for The remaining unresolved seams now look less like \u201cmissing content\u201d and more like \u201cowner m",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03069"
+      ],
+      "source_obligation_ids": [
+        "obl-2915"
+      ],
+      "source_seed_ids": [
+        "seed-3856"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "The remaining unresolved seams now look less like \u201cmissing content\u201d and more like \u201cowner mismatch\u201d."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02418",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03073 is partial for `Multi-Account.md` should own policy, selection rules, provider capability posture, and ac",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03073"
+      ],
+      "source_obligation_ids": [
+        "obl-2919"
+      ],
+      "source_seed_ids": [
+        "seed-3860"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "`Multi-Account.md` should own policy, selection rules, provider capability posture, and account-routing semantics",
+        "Multi-Account.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02436",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03099 is partial for own selection policy and role/account precedence rules",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03099"
+      ],
+      "source_obligation_ids": [
+        "obl-2945"
+      ],
+      "source_seed_ids": [
+        "seed-3889"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "own selection policy and role/account precedence rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02521",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03219 is partial for whether the approval is specific to one blocked episode vs reusable session policy",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "### 2. Deterministic blocked and approval identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03219"
+      ],
+      "source_obligation_ids": [
+        "obl-3065"
+      ],
+      "source_seed_ids": [
+        "seed-4058"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "whether the approval is specific to one blocked episode vs reusable session policy"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02531",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03233 is partial for the important split is blocked-episode approval versus session-wide policy; the docs still",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03233"
+      ],
+      "source_obligation_ids": [
+        "obl-3079"
+      ],
+      "source_seed_ids": [
+        "seed-4082"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "the important split is blocked-episode approval versus session-wide policy; the docs still do not formalize that boundary"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02560",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03272 is partial for Sonnet confirms the downstream cohort still contains enough high-signal drift that stoppin",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03272"
+      ],
+      "source_obligation_ids": [
+        "obl-3118"
+      ],
+      "source_seed_ids": [
+        "seed-4141"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Sonnet confirms the downstream cohort still contains enough high-signal drift that stopping at Opus+Sonnet would leave the user\u2019s requested multi-model breadth visibly unfinished."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02698",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "owner coverage row cov-03453 is partial for `Orchestrator_Page.md` currently advertises a missing section; that is a spec-integrity pr",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03453"
+      ],
+      "source_obligation_ids": [
+        "obl-3299"
+      ],
+      "source_seed_ids": [
+        "seed-4421"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator_Page.md` currently advertises a missing section; that is a spec-integrity problem, not only a content gap.",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02712",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03470 is partial for The missing fields are now fairly clear:",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03470"
+      ],
+      "source_obligation_ids": [
+        "obl-3316"
+      ],
+      "source_seed_ids": [
+        "seed-4443"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "The missing fields are now fairly clear:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02805",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03582 is partial for still-structural gaps** where canonical model/owner decisions are still missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03582"
+      ],
+      "source_obligation_ids": [
+        "obl-3428"
+      ],
+      "source_seed_ids": [
+        "seed-4621"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "still-structural gaps** where canonical model/owner decisions are still missing"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02834",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03619 is partial for Recommended owner decision",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03619"
+      ],
+      "source_obligation_ids": [
+        "obl-3465"
+      ],
+      "source_seed_ids": [
+        "seed-4667"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "Recommended owner decision"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02870",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03672 is partial for Boundary / term / policy owner docs are also lagging the rewrite:",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03672"
+      ],
+      "source_obligation_ids": [
+        "obl-3518"
+      ],
+      "source_seed_ids": [
+        "seed-4734"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "Boundary / term / policy owner docs are also lagging the rewrite:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02903",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03719 is partial for It should consume canonical execution/runtime context by reference and keep only selection",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03719"
+      ],
+      "source_obligation_ids": [
+        "obl-3564"
+      ],
+      "source_seed_ids": [
+        "seed-4795"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "It should consume canonical execution/runtime context by reference and keep only selection/decomposition helpers that are local to subagent policy."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02925",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03743 is partial for This object is allowed to stay tier-shaped if the integration policy still wants phase/tas",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03743"
+      ],
+      "source_obligation_ids": [
+        "obl-3588"
+      ],
+      "source_seed_ids": [
+        "seed-4846"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "This object is allowed to stay tier-shaped if the integration policy still wants phase/task/subtask/iteration selectors, but it should no longer pretend to be the canonical runtime context."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02969",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03806 is partial for these fields identify the concrete execution unit and the scheduler decision that produced",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03806"
+      ],
+      "source_obligation_ids": [
+        "obl-3651"
+      ],
+      "source_seed_ids": [
+        "seed-4939"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "these fields identify the concrete execution unit and the scheduler decision that produced it"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02997",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03843 is partial for `Multi-Account.md` already makes execution-role-aware routing canonical through role-by-pr",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03843"
+      ],
+      "source_obligation_ids": [
+        "obl-3688"
+      ],
+      "source_seed_ids": [
+        "seed-5010"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "`Multi-Account.md` already makes execution-role-aware routing canonical through role-by-provider and role-by-account policy, but the runtime event/attempt packets still do not carry an explicit `execution_role`.",
+        "Multi-Account.md",
+        "execution_role"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03294",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04226 is partial for reserved-name policy remains split across command-system, chat-design, and command-catalog",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04226"
+      ],
+      "source_obligation_ids": [
+        "obl-4066"
+      ],
+      "source_seed_ids": [
+        "seed-5628"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "reserved-name policy remains split across command-system, chat-design, and command-catalog owners with no single enforceable boundary."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03307",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04244 is partial for counter-family ownership is clearer, but backoff shape remains unowned and policy still ne",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04244"
+      ],
+      "source_obligation_ids": [
+        "obl-4084"
+      ],
+      "source_seed_ids": [
+        "seed-5646"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "counter-family ownership is clearer, but backoff shape remains unowned and policy still needs to bind ceilings to canonical stored counters, not generic \u201cattempts.\u201d"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03494",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04462 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04462"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03808",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04866 is partial for MUST override:",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "### Field-level override"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04866"
+      ],
+      "source_obligation_ids": [
+        "obl-4643"
+      ],
+      "source_seed_ids": [
+        "seed-6649"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "MUST override:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04103",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05295 is partial for `Formatters_System.md` still conflicts with LSP formatting ownership, has no DAE reconcili",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05295"
+      ],
+      "source_obligation_ids": [
+        "obl-5071"
+      ],
+      "source_seed_ids": [
+        "seed-7419"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`Formatters_System.md` still conflicts with LSP formatting ownership, has no DAE reconciliation semantics for formatter writes, bypasses FileSafe/tool policy for custom formatter commands, and defines unregistered `format.*` / `file.edited` event families.",
+        "Formatters_System.md",
+        "format.*",
+        "file.edited"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04199",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05396 is partial for reject when `project_id` is missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05396"
+      ],
+      "source_obligation_ids": [
+        "obl-5168"
+      ],
+      "source_seed_ids": [
+        "seed-7660"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "reject when `project_id` is missing",
+        "project_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04205",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05404 is partial for `subject_id` routes are valid for content subjects only.",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "### 6.1 Ambiguity (multiple valid choices)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05404"
+      ],
+      "source_obligation_ids": [
+        "obl-5176"
+      ],
+      "source_seed_ids": [
+        "seed-7668"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "`subject_id` routes are valid for content subjects only.",
+        "subject_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04206",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05405 is partial for `object_kind` routes are valid for non-subject objects only.",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "### 6.1 Ambiguity (multiple valid choices)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05405"
+      ],
+      "source_obligation_ids": [
+        "obl-5177"
+      ],
+      "source_seed_ids": [
+        "seed-7669"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "`object_kind` routes are valid for non-subject objects only.",
+        "object_kind"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04551",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05878 is partial for remaining issues are increasingly exact structural mismatches rather than missing concepts",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05878"
+      ],
+      "source_obligation_ids": [
+        "obl-5650"
+      ],
+      "source_seed_ids": [
+        "seed-8382"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "remaining issues are increasingly exact structural mismatches rather than missing concepts"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04765",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06163 is partial for Treat this as a persistence-contract decision, not as appendix-level wording trivia.",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06163"
+      ],
+      "source_obligation_ids": [
+        "obl-5935"
+      ],
+      "source_seed_ids": [
+        "seed-8812"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "Treat this as a persistence-contract decision, not as appendix-level wording trivia."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04802",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06208 is partial for `Plugins_System.md` still contains a concrete post-permission mutation bypass, TOML namesp",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06208"
+      ],
+      "source_obligation_ids": [
+        "obl-5977"
+      ],
+      "source_seed_ids": [
+        "seed-8945"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "`Plugins_System.md` still contains a concrete post-permission mutation bypass, TOML namespace collisions for plugin tool IDs, and mutation-capable mode bypass risk when policy keys remain name-based.",
+        "Plugins_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04820",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06231 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06231"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05025",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06482 is partial for If tier-level settings remain as user-facing configuration, they need to be reframed as ap",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06482"
+      ],
+      "source_obligation_ids": [
+        "obl-6123"
+      ],
+      "source_seed_ids": [
+        "seed-9254"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "If tier-level settings remain as user-facing configuration, they need to be reframed as approval-trigger policy, not as canonical approval object identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05235",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06755 is partial for Do **not** treat these as missing transfer:",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06755"
+      ],
+      "source_obligation_ids": [
+        "obl-6391"
+      ],
+      "source_seed_ids": [
+        "seed-9755"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Do **not** treat these as missing transfer:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05252",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06774 is partial for The rerun did **not** overturn the prior conclusion that the major issue is incomplete led",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06774"
+      ],
+      "source_obligation_ids": [
+        "obl-6410"
+      ],
+      "source_seed_ids": [
+        "seed-9789"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "The rerun did **not** overturn the prior conclusion that the major issue is incomplete ledger transfer rather than missing whole primitives."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05312",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06857 is partial for some earlier baseline framing implied a fully new trust-state model was missing; the stron",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06857"
+      ],
+      "source_obligation_ids": [
+        "obl-6460"
+      ],
+      "source_seed_ids": [
+        "seed-9839"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "some earlier baseline framing implied a fully new trust-state model was missing; the stronger reading is that the **operationalization** of trust states is missing, not the base freshness/health model itself."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05314",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06859 is partial for major missing material is still concentrated in:",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06859"
+      ],
+      "source_obligation_ids": [
+        "obl-6462"
+      ],
+      "source_seed_ids": [
+        "seed-9841"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "major missing material is still concentrated in:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-02949",
+    "cov-03026",
+    "cov-03029",
+    "cov-03069",
+    "cov-03073",
+    "cov-03099",
+    "cov-03219",
+    "cov-03233",
+    "cov-03272",
+    "cov-03453",
+    "cov-03470",
+    "cov-03582",
+    "cov-03619",
+    "cov-03672",
+    "cov-03719",
+    "cov-03743",
+    "cov-03806",
+    "cov-03843",
+    "cov-04226",
+    "cov-04244",
+    "cov-04462",
+    "cov-04866",
+    "cov-05295",
+    "cov-05396",
+    "cov-05404",
+    "cov-05405",
+    "cov-05878",
+    "cov-06163",
+    "cov-06208",
+    "cov-06231",
+    "cov-06482",
+    "cov-06755",
+    "cov-06774",
+    "cov-06857",
+    "cov-06859"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-2796",
+    "obl-2872",
+    "obl-2875",
+    "obl-2915",
+    "obl-2919",
+    "obl-2945",
+    "obl-3065",
+    "obl-3079",
+    "obl-3118",
+    "obl-3299",
+    "obl-3316",
+    "obl-3428",
+    "obl-3465",
+    "obl-3518",
+    "obl-3564",
+    "obl-3588",
+    "obl-3651",
+    "obl-3688",
+    "obl-4066",
+    "obl-4084",
+    "obl-4292",
+    "obl-4643",
+    "obl-5071",
+    "obl-5168",
+    "obl-5176",
+    "obl-5177",
+    "obl-5650",
+    "obl-5935",
+    "obl-5977",
+    "obl-5986",
+    "obl-6123",
+    "obl-6391",
+    "obl-6410",
+    "obl-6460",
+    "obl-6462"
+  ],
+  "source_seed_ids_represented": [
+    "seed-3684",
+    "seed-3793",
+    "seed-3796",
+    "seed-3856",
+    "seed-3860",
+    "seed-3889",
+    "seed-4058",
+    "seed-4082",
+    "seed-4141",
+    "seed-4421",
+    "seed-4443",
+    "seed-4621",
+    "seed-4667",
+    "seed-4734",
+    "seed-4795",
+    "seed-4846",
+    "seed-4939",
+    "seed-5010",
+    "seed-5628",
+    "seed-5646",
+    "seed-6001",
+    "seed-6649",
+    "seed-7419",
+    "seed-7660",
+    "seed-7668",
+    "seed-7669",
+    "seed-8382",
+    "seed-8812",
+    "seed-8945",
+    "seed-9006",
+    "seed-9254",
+    "seed-9755",
+    "seed-9789",
+    "seed-9839",
+    "seed-9841"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0042",
+    "shard-0043",
+    "shard-0045",
+    "shard-0047",
+    "shard-0049",
+    "shard-0050",
+    "shard-0051",
+    "shard-0056",
+    "shard-0059",
+    "shard-0064",
+    "shard-0070",
+    "shard-0072",
+    "shard-0077",
+    "shard-0080",
+    "shard-0081",
+    "shard-0082",
+    "shard-0083",
+    "shard-0087",
+    "shard-0088"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-02327",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02949 is partial for a failed or blocked switch decision is still historically important even when the effectiv",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02949"
+      ],
+      "source_obligation_ids": [
+        "obl-2796"
+      ],
+      "source_seed_ids": [
+        "seed-3684"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "a failed or blocked switch decision is still historically important even when the effective account did not change"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02389",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03026 is partial for still needs CUP governance, handoff identity completeness, and explicit isolation/worktree",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03026"
+      ],
+      "source_obligation_ids": [
+        "obl-2872"
+      ],
+      "source_seed_ids": [
+        "seed-3793"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "still needs CUP governance, handoff identity completeness, and explicit isolation/worktree policy fields"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02392",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03029 is partial for Wizard handoff still leaves identity/worktree policy implicit where the rewrite now needs",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03029"
+      ],
+      "source_obligation_ids": [
+        "obl-2875"
+      ],
+      "source_seed_ids": [
+        "seed-3796"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "Wizard handoff still leaves identity/worktree policy implicit where the rewrite now needs them explicit."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02416",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03069 is partial for The remaining unresolved seams now look less like \u201cmissing content\u201d and more like \u201cowner m",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03069"
+      ],
+      "source_obligation_ids": [
+        "obl-2915"
+      ],
+      "source_seed_ids": [
+        "seed-3856"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "The remaining unresolved seams now look less like \u201cmissing content\u201d and more like \u201cowner mismatch\u201d."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02418",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03073 is partial for `Multi-Account.md` should own policy, selection rules, provider capability posture, and ac",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03073"
+      ],
+      "source_obligation_ids": [
+        "obl-2919"
+      ],
+      "source_seed_ids": [
+        "seed-3860"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "`Multi-Account.md` should own policy, selection rules, provider capability posture, and account-routing semantics",
+        "Multi-Account.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02436",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03099 is partial for own selection policy and role/account precedence rules",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03099"
+      ],
+      "source_obligation_ids": [
+        "obl-2945"
+      ],
+      "source_seed_ids": [
+        "seed-3889"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "own selection policy and role/account precedence rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02521",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03219 is partial for whether the approval is specific to one blocked episode vs reusable session policy",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "### 2. Deterministic blocked and approval identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03219"
+      ],
+      "source_obligation_ids": [
+        "obl-3065"
+      ],
+      "source_seed_ids": [
+        "seed-4058"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "whether the approval is specific to one blocked episode vs reusable session policy"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02531",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03233 is partial for the important split is blocked-episode approval versus session-wide policy; the docs still",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03233"
+      ],
+      "source_obligation_ids": [
+        "obl-3079"
+      ],
+      "source_seed_ids": [
+        "seed-4082"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "the important split is blocked-episode approval versus session-wide policy; the docs still do not formalize that boundary"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02560",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03272 is partial for Sonnet confirms the downstream cohort still contains enough high-signal drift that stoppin",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03272"
+      ],
+      "source_obligation_ids": [
+        "obl-3118"
+      ],
+      "source_seed_ids": [
+        "seed-4141"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Sonnet confirms the downstream cohort still contains enough high-signal drift that stopping at Opus+Sonnet would leave the user\u2019s requested multi-model breadth visibly unfinished."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02698",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "owner coverage row cov-03453 is partial for `Orchestrator_Page.md` currently advertises a missing section; that is a spec-integrity pr",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03453"
+      ],
+      "source_obligation_ids": [
+        "obl-3299"
+      ],
+      "source_seed_ids": [
+        "seed-4421"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator_Page.md` currently advertises a missing section; that is a spec-integrity problem, not only a content gap.",
+        "Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02712",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03470 is partial for The missing fields are now fairly clear:",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03470"
+      ],
+      "source_obligation_ids": [
+        "obl-3316"
+      ],
+      "source_seed_ids": [
+        "seed-4443"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "The missing fields are now fairly clear:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02805",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03582 is partial for still-structural gaps** where canonical model/owner decisions are still missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03582"
+      ],
+      "source_obligation_ids": [
+        "obl-3428"
+      ],
+      "source_seed_ids": [
+        "seed-4621"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "still-structural gaps** where canonical model/owner decisions are still missing"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02834",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03619 is partial for Recommended owner decision",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03619"
+      ],
+      "source_obligation_ids": [
+        "obl-3465"
+      ],
+      "source_seed_ids": [
+        "seed-4667"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "Recommended owner decision"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02870",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03672 is partial for Boundary / term / policy owner docs are also lagging the rewrite:",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03672"
+      ],
+      "source_obligation_ids": [
+        "obl-3518"
+      ],
+      "source_seed_ids": [
+        "seed-4734"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "Boundary / term / policy owner docs are also lagging the rewrite:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02903",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03719 is partial for It should consume canonical execution/runtime context by reference and keep only selection",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03719"
+      ],
+      "source_obligation_ids": [
+        "obl-3564"
+      ],
+      "source_seed_ids": [
+        "seed-4795"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "It should consume canonical execution/runtime context by reference and keep only selection/decomposition helpers that are local to subagent policy."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02925",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03743 is partial for This object is allowed to stay tier-shaped if the integration policy still wants phase/tas",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03743"
+      ],
+      "source_obligation_ids": [
+        "obl-3588"
+      ],
+      "source_seed_ids": [
+        "seed-4846"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "This object is allowed to stay tier-shaped if the integration policy still wants phase/task/subtask/iteration selectors, but it should no longer pretend to be the canonical runtime context."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02969",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03806 is partial for these fields identify the concrete execution unit and the scheduler decision that produced",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03806"
+      ],
+      "source_obligation_ids": [
+        "obl-3651"
+      ],
+      "source_seed_ids": [
+        "seed-4939"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "these fields identify the concrete execution unit and the scheduler decision that produced it"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02997",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03843 is partial for `Multi-Account.md` already makes execution-role-aware routing canonical through role-by-pr",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03843"
+      ],
+      "source_obligation_ids": [
+        "obl-3688"
+      ],
+      "source_seed_ids": [
+        "seed-5010"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "`Multi-Account.md` already makes execution-role-aware routing canonical through role-by-provider and role-by-account policy, but the runtime event/attempt packets still do not carry an explicit `execution_role`.",
+        "Multi-Account.md",
+        "execution_role"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03294",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04226 is partial for reserved-name policy remains split across command-system, chat-design, and command-catalog",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04226"
+      ],
+      "source_obligation_ids": [
+        "obl-4066"
+      ],
+      "source_seed_ids": [
+        "seed-5628"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "reserved-name policy remains split across command-system, chat-design, and command-catalog owners with no single enforceable boundary."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03307",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04244 is partial for counter-family ownership is clearer, but backoff shape remains unowned and policy still ne",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04244"
+      ],
+      "source_obligation_ids": [
+        "obl-4084"
+      ],
+      "source_seed_ids": [
+        "seed-5646"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "counter-family ownership is clearer, but backoff shape remains unowned and policy still needs to bind ceilings to canonical stored counters, not generic \u201cattempts.\u201d"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03494",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04462 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04462"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03808",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04866 is partial for MUST override:",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "### Field-level override"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04866"
+      ],
+      "source_obligation_ids": [
+        "obl-4643"
+      ],
+      "source_seed_ids": [
+        "seed-6649"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "MUST override:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04103",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05295 is partial for `Formatters_System.md` still conflicts with LSP formatting ownership, has no DAE reconcili",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05295"
+      ],
+      "source_obligation_ids": [
+        "obl-5071"
+      ],
+      "source_seed_ids": [
+        "seed-7419"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`Formatters_System.md` still conflicts with LSP formatting ownership, has no DAE reconciliation semantics for formatter writes, bypasses FileSafe/tool policy for custom formatter commands, and defines unregistered `format.*` / `file.edited` event families.",
+        "Formatters_System.md",
+        "format.*",
+        "file.edited"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04199",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05396 is partial for reject when `project_id` is missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05396"
+      ],
+      "source_obligation_ids": [
+        "obl-5168"
+      ],
+      "source_seed_ids": [
+        "seed-7660"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "reject when `project_id` is missing",
+        "project_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04205",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05404 is partial for `subject_id` routes are valid for content subjects only.",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "### 6.1 Ambiguity (multiple valid choices)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05404"
+      ],
+      "source_obligation_ids": [
+        "obl-5176"
+      ],
+      "source_seed_ids": [
+        "seed-7668"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "`subject_id` routes are valid for content subjects only.",
+        "subject_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04206",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05405 is partial for `object_kind` routes are valid for non-subject objects only.",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "### 6.1 Ambiguity (multiple valid choices)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05405"
+      ],
+      "source_obligation_ids": [
+        "obl-5177"
+      ],
+      "source_seed_ids": [
+        "seed-7669"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "`object_kind` routes are valid for non-subject objects only.",
+        "object_kind"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04551",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05878 is partial for remaining issues are increasingly exact structural mismatches rather than missing concepts",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05878"
+      ],
+      "source_obligation_ids": [
+        "obl-5650"
+      ],
+      "source_seed_ids": [
+        "seed-8382"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "remaining issues are increasingly exact structural mismatches rather than missing concepts"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04765",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06163 is partial for Treat this as a persistence-contract decision, not as appendix-level wording trivia.",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06163"
+      ],
+      "source_obligation_ids": [
+        "obl-5935"
+      ],
+      "source_seed_ids": [
+        "seed-8812"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "Treat this as a persistence-contract decision, not as appendix-level wording trivia."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04802",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06208 is partial for `Plugins_System.md` still contains a concrete post-permission mutation bypass, TOML namesp",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06208"
+      ],
+      "source_obligation_ids": [
+        "obl-5977"
+      ],
+      "source_seed_ids": [
+        "seed-8945"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "`Plugins_System.md` still contains a concrete post-permission mutation bypass, TOML namespace collisions for plugin tool IDs, and mutation-capable mode bypass risk when policy keys remain name-based.",
+        "Plugins_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04820",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06231 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06231"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05025",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06482 is partial for If tier-level settings remain as user-facing configuration, they need to be reframed as ap",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "# Decision Policy (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06482"
+      ],
+      "source_obligation_ids": [
+        "obl-6123"
+      ],
+      "source_seed_ids": [
+        "seed-9254"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "If tier-level settings remain as user-facing configuration, they need to be reframed as approval-trigger policy, not as canonical approval object identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05235",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06755 is partial for Do **not** treat these as missing transfer:",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06755"
+      ],
+      "source_obligation_ids": [
+        "obl-6391"
+      ],
+      "source_seed_ids": [
+        "seed-9755"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Do **not** treat these as missing transfer:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05252",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06774 is partial for The rerun did **not** overturn the prior conclusion that the major issue is incomplete led",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06774"
+      ],
+      "source_obligation_ids": [
+        "obl-6410"
+      ],
+      "source_seed_ids": [
+        "seed-9789"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "The rerun did **not** overturn the prior conclusion that the major issue is incomplete ledger transfer rather than missing whole primitives."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05312",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06857 is partial for some earlier baseline framing implied a fully new trust-state model was missing; the stron",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06857"
+      ],
+      "source_obligation_ids": [
+        "obl-6460"
+      ],
+      "source_seed_ids": [
+        "seed-9839"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "some earlier baseline framing implied a fully new trust-state model was missing; the stronger reading is that the **operationalization** of trust states is missing, not the base freshness/health model itself."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05314",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06859 is partial for major missing material is still concentrated in:",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## 6. Ambiguity vs. Missing User Intent"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06859"
+      ],
+      "source_obligation_ids": [
+        "obl-6462"
+      ],
+      "source_seed_ids": [
+        "seed-9841"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "major missing material is still concentrated in:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

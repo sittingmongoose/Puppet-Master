@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-364",
+  "group_ids": [
+    "discgrp-1453",
+    "discgrp-1454",
+    "discgrp-1455",
+    "discgrp-1456"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01705",
+      "source_obligation_ids": [
+        "obl-1562"
+      ],
+      "source_seed_ids": [
+        "seed-1949"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Concern ownership / authority direction",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L211"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01706",
+      "source_obligation_ids": [
+        "obl-1563"
+      ],
+      "source_seed_ids": [
+        "seed-1950"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Degraded draft warning",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2500"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01707",
+      "source_obligation_ids": [
+        "obl-1564"
+      ],
+      "source_seed_ids": [
+        "seed-1951"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Degraded draft warning",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2500"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01708",
+      "source_obligation_ids": [
+        "obl-1565"
+      ],
+      "source_seed_ids": [
+        "seed-1952"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Progression_Gates.md",
+      "new_heading_hint": "### Fidelity recovery cov-034: Promotion classes and gate evidence",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Progression_Gates.md:L7"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1507",
+  "group_ids": [
+    "discgrp-6025",
+    "discgrp-6026",
+    "discgrp-6027",
+    "discgrp-6028"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06652",
+      "source_obligation_ids": [
+        "obl-6293"
+      ],
+      "source_seed_ids": [
+        "seed-9520"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-06653",
+      "source_obligation_ids": [
+        "obl-6294"
+      ],
+      "source_seed_ids": [
+        "seed-9521"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L91"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06654",
+      "source_obligation_ids": [
+        "obl-6295"
+      ],
+      "source_seed_ids": [
+        "seed-9522"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/BinaryLocator_Spec.md",
+      "new_heading_hint": "### Locked decisions (no drift)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L18"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06655",
+      "source_obligation_ids": [
+        "obl-6296"
+      ],
+      "source_seed_ids": [
+        "seed-9523"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "### Approval Scope Key and provider-native correlation",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L268"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

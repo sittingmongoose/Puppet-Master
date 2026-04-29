@@ -1,5 +1,51 @@
 # Chain Wizard & Interview Flexibility -- Intent-Based Workflows
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0583
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md`
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+  - Plans/chain-wizard-flexibility.md
+  - `Resume Wizard`
+  - Resume Wizard
+  - Wizard / interview / worktree lineage gaps continue to sharpen at the seams:
+  - `thread_id: None` in interview examples is now a concrete drift signal, not just omitted detail
+  - thread_id: None
+  - Wizard / interview / worktree seams still expose the remaining high-risk lineage holes:
+  - wizard resume via `wizard_id + step`
+  - wizard_id + step
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - `object_kind = wizard`
+  - object_kind = wizard
+  - `puppet-master://wizard/<wizard_id>/step/<wizard_step_id>/clarify`
+  - puppet-master://wizard/<wizard_id>/step/<wizard_step_id>/clarify
+  - must override to the wizard surface and the correct wizard/step context
+  - The concrete wizard deep-link format is defined, but there is still no owner doc that states what class of route data is allowed into serialized transport.
+  - The routing model now has a clear owner chain.
+  - Reconciliation should follow that owner chain or it will fragment again.
+  - concrete `puppet-master://wizard/...` format
+  - puppet-master://wizard/...
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - `Plans/chain-wizard-flexibility.md`, `Plans/FinalGUISpec.md`
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
@@ -152,6 +198,26 @@ The wizard and Interview must support **four distinct intents**. Each intent cha
 - **State:** Store the selected intent in app state (and optionally in `.puppet-master/` for recovery). All downstream steps (Interview, start chain, orchestrator) receive intent so they can adapt.
 
 ### 2.1 Wizard State Shape
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0590
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - The current wizard URL shape is useful, but it should stop standing alone as the only precise deep-link contract in the app.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 The app must hold a single, explicit **wizard state** that drives project setup, requirements, and downstream Interview/start chain. The struct below captures the core form/state fields; the normative runtime fields table that follows is also required.
 
@@ -1486,6 +1552,26 @@ Three project management flows are available that do **not** require the Chain W
 
 ### 13.2 Add Existing Project (no wizard)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0587
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - The existing wizard deep-link is a good precedent, but it should become one member of a normalized transport family.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 - Entry: File menu → "Add Existing Project" OR Dashboard → "Add Project"
 - User selects a local folder (native OS picker) OR picks an SSH remote + path
 - Puppet Master auto-detects: git repo presence, language/framework, suggested project name
@@ -1677,6 +1763,26 @@ The wizard returns to its normal state only when all `needs_user_clarification[]
 
 ### 15.3 UI Surfaces (Mandatory — Both Required)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0588
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - both are presented as canonical in different sections
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 #### Surface 1: Thread Badge + In-Thread Clarification Message
 
 In the relevant chat thread (the thread for this chain/wizard instance), a system message is posted with:
@@ -1752,6 +1858,26 @@ Alignment rules:
 This addendum defines Persona behavior for the Requirements Builder / chain wizard flow.
 
 ### Builder stages requiring explicit Persona strategy
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0594
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - give startup recovery, backoff, counter ceilings, DAE/jail lifecycle, account-switch strategy invalidation, and wizard blocked-escalation semantics explicit homes in the policy/run-mode/gate docs rather than leaving them implied across addenda.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Requirements Builder and related wizard generation/review work should distinguish at least these stages:
 - intake / clarification
@@ -1872,6 +1998,26 @@ Use reviewer Personas such as:
 Requirements Builder settings must allow platform/model selection per stage or pass, and these settings must still pass through provider capability filtering.
 
 ### Requested vs effective visibility
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0595
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - what likely new model pressure is: package/seam overseers, package/seam/lane visibility, promotion-class state, requested vs effective execution/account identity.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Requirements Builder UI should display:
 - effective Persona,
@@ -2064,6 +2210,30 @@ Required `blocked` rules:
 
 ### 3. Dashboard / thread / resume behavior
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0591
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - multiple surfaces already emit attention-like objects: wizard cards, thread badges, dashboard CtAs, blocked-node lists, auth badges, and resume URLs
+  - `FinalGUISpec.md` wizard attention and blocked CtA cards are especially explicit: they already define concrete actions like `Resume Wizard` and `View in Thread`, but those actions still resolve through special-case fields rather than a shared navigation object.
+  - FinalGUISpec.md
+  - Resume Wizard
+  - View in Thread
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 The wizard packet must support both:
 - `wizard_attention_required`
 - `wizard_blocked`
@@ -2173,6 +2343,29 @@ A wizard leaves `blocked` only when:
 
 Reopening the same blocked wizard without one of those changes does not clear blocked state and does not reset `clarification_round_count`.
 ## Canonical Wizard Blocked Lifecycle
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0586
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - wizard blocked state
+  - the `wizard.blocked` minimum payload earlier in the file requires `resume_url`
+  - wizard.blocked
+  - resume_url
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 ### Canonical `wizard_status`
 See canonical `wizard_status` definition in §2.1.

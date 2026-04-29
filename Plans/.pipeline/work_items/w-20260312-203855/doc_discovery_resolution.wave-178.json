@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-178",
+  "group_ids": [
+    "discgrp-0709",
+    "discgrp-0710",
+    "discgrp-0711",
+    "discgrp-0712"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00956",
+      "source_obligation_ids": [
+        "obl-813"
+      ],
+      "source_seed_ids": [
+        "seed-937"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00957",
+      "source_obligation_ids": [
+        "obl-814"
+      ],
+      "source_seed_ids": [
+        "seed-938"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/rewrite-tie-in-memo.md",
+      "new_heading_hint": "### Plans likely needing the most rewrite-aware edits",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L99"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00958",
+      "source_obligation_ids": [
+        "obl-815"
+      ],
+      "source_seed_ids": [
+        "seed-939"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Log.md",
+      "new_heading_hint": "### DL-008: Graph patch lineage",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Log.md:L43"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00959",
+      "source_obligation_ids": [
+        "obl-816"
+      ],
+      "source_seed_ids": [
+        "seed-940"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

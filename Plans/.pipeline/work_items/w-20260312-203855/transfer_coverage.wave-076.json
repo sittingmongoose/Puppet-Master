@@ -1,540 +1,767 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-076",
-  "timestamp_utc": "2026-04-28T21:59:39Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-301",
-    "coverage-rowgrp-302",
-    "coverage-rowgrp-303",
-    "coverage-rowgrp-304"
+  "row_group_ids": [
+    "rowgrp-0301",
+    "rowgrp-0302",
+    "rowgrp-0303",
+    "rowgrp-0304"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-301 cov-635,cov-693,cov-702,cov-754,cov-763,cov-780,cov-799,cov-994,cov-1048,cov-1065 Plans/storage-plan.md",
-    "rowgrp-302 cov-1080,cov-1239,cov-1262 Plans/storage-plan.md",
-    "rowgrp-303 cov-027,cov-268,cov-449,cov-524,cov-758,cov-818,cov-830,cov-837,cov-847,cov-884 Plans/storage-plan.md",
-    "rowgrp-304 cov-890 Plans/storage-plan.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-301": "completed_reduced_conservatively_with_action_normalization",
-    "coverage-rowgrp-302": "completed_reduced_conservatively_with_action_normalization",
-    "coverage-rowgrp-303": "completed_reduced_conservatively_with_action_normalization",
-    "coverage-rowgrp-304": "completed_reduced_conservatively_with_schema_normalization"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-635",
-    "cov-693",
-    "cov-702",
-    "cov-754",
-    "cov-763",
-    "cov-780",
-    "cov-799",
-    "cov-994",
-    "cov-1048",
-    "cov-1065",
-    "cov-1080",
-    "cov-1239",
-    "cov-1262",
-    "cov-027",
-    "cov-268",
-    "cov-449",
-    "cov-524",
-    "cov-758",
-    "cov-818",
-    "cov-830",
-    "cov-837",
-    "cov-847",
-    "cov-884",
-    "cov-890"
-  ],
-  "coverage_ids_completed": [
-    "cov-635",
-    "cov-693",
-    "cov-702",
-    "cov-754",
-    "cov-763",
-    "cov-780",
-    "cov-799",
-    "cov-994",
-    "cov-1048",
-    "cov-1065",
-    "cov-1080",
-    "cov-1239",
-    "cov-1262",
-    "cov-027",
-    "cov-268",
-    "cov-449",
-    "cov-524",
-    "cov-758",
-    "cov-818",
-    "cov-830",
-    "cov-837",
-    "cov-847",
-    "cov-884",
-    "cov-890"
-  ],
-  "path_groups_assigned": [
-    "Plans/storage-plan.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-635",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:602-612 introduces execution_unit_context as canonical runtime-facing context, demotes TierContext to compatibility-only helper, and says TierContext/tier_id must not own runtime canon/storage keys/join identity"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "TierContext is demoted, but full replacement ownership model is not completely closed.",
+      "coverage_id": "cov-00598",
       "source_obligation_ids": [
-        "obl-177"
+        "obl-455"
       ],
       "source_seed_ids": [
-        "seed-177"
+        "seed-525"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "read-only navigation may continue on `stale` and some `degraded` projections if the UI say",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "#### Route target navigation rules",
+      "status": "missing",
+      "exact_items": [
+        "read-only navigation may continue on `stale` and some `degraded` projections if the UI says so clearly",
+        "stale",
+        "degraded"
+      ],
+      "stale_tokens": [
+        "degraded",
+        "stale"
+      ],
+      "evidence": [
+        "Plans/Crosswalk.md:L125",
+        "Plans/Crosswalk.md:L131",
+        "Plans/Crosswalk.md:L135",
+        "Plans/Crosswalk.md:L270",
+        "Plans/Crosswalk.md:L313"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-00627",
+      "source_obligation_ids": [
+        "obl-484"
+      ],
+      "source_seed_ids": [
+        "seed-554"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Define explicit record-backed fallback behavior when projections are stale/degraded/unavai",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### Fidelity recovery cov-200: Route/open compatibility-only fallback marking",
+      "status": "present",
+      "exact_items": [
+        "Define explicit record-backed fallback behavior when projections are stale/degraded/unavailable."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01728",
+      "source_obligation_ids": [
+        "obl-1585"
+      ],
+      "source_seed_ids": [
+        "seed-1977"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "canon_label": "unchanged scheduler ticks or repeated identical stale summaries",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## Runtime Scheduler / Recovery Ownership and Precedence",
+      "status": "present",
+      "exact_items": [
+        "unchanged scheduler ticks or repeated identical stale summaries"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02274",
+      "source_obligation_ids": [
+        "obl-2127"
+      ],
+      "source_seed_ids": [
+        "seed-2767"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "`tier_boundary` is not just stale prose here; it is a reserved diagnostic category with ha",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## Recovery Terminology Reconciliation Addendum (2026-03-08)",
+      "status": "present",
+      "exact_items": [
+        "`tier_boundary` is not just stale prose here; it is a reserved diagnostic category with hard detail keys (`from_tier` / `to_tier`). That means the tier model is still embedded at the stream-schema layer and cannot be reconciled by a simple terminology sweep.",
+        "tier_boundary",
+        "from_tier",
+        "to_tier"
+      ],
+      "stale_tokens": [
+        "from_tier",
+        "tier_boundary",
+        "to_tier"
+      ],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02388",
+      "source_obligation_ids": [
+        "obl-2238"
+      ],
+      "source_seed_ids": [
+        "seed-2905"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Dashboard-hosted widgets must not become independent scope engines or stale-action loophol",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## 0. Scope",
+      "status": "present",
+      "exact_items": [
+        "Dashboard-hosted widgets must not become independent scope engines or stale-action loopholes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03145",
+      "source_obligation_ids": [
+        "obl-2991"
+      ],
+      "source_seed_ids": [
+        "seed-3948"
       ],
       "source_shard_ids": [
         "shard-0044"
       ],
-      "path_field_status": "match"
+      "canon_label": "Treat tier language as legacy decomposition/help/view terminology unless a specific derive",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## Runtime Scheduler / Recovery Ownership and Precedence",
+      "status": "present",
+      "exact_items": [
+        "Treat tier language as legacy decomposition/help/view terminology unless a specific derived UI surface still needs it. Stop letting tier IDs remain runtime ownership keys for worktrees, crews, or agent coordination."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-693",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:255-270 lists workspace/window/browser/terminal/dev session identifiers",
-        "Plans/storage-plan.md:619-620 lets Contracts_V0 own route_target and OpenSubject contracts"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Navigation/session IDs and route ownership exist, but UICommand IDs and cmd.orchestrator.switch_tab/cmd.chat.run_user_command are absent.",
+      "coverage_id": "cov-03151",
       "source_obligation_ids": [
-        "obl-190"
+        "obl-2997"
       ],
       "source_seed_ids": [
-        "seed-190"
+        "seed-3954"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "the problem is no longer just stale terminology; there is a real split-brain between execu",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## Recovery Terminology Reconciliation Addendum (2026-03-08)",
+      "status": "present",
+      "exact_items": [
+        "the problem is no longer just stale terminology; there is a real split-brain between execution context keys"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03415",
+      "source_obligation_ids": [
+        "obl-3261"
+      ],
+      "source_seed_ids": [
+        "seed-4364"
       ],
       "source_shard_ids": [
         "shard-0047"
       ],
-      "path_field_status": "match"
+      "canon_label": "Treat interview-phase `tier_id`-style coordination keys as legacy/local labels only; do no",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### 3.3 Navigation and source-open ownership",
+      "status": "present",
+      "exact_items": [
+        "Treat interview-phase `tier_id`-style coordination keys as legacy/local labels only; do not let them become canonical ownership or routing keys.",
+        "tier_id"
+      ],
+      "stale_tokens": [
+        "tier_id"
+      ],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-702",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:541-553 lists artifacts_index, projector.checkpoint.runtime_artifacts, worktree_record, and lane_projection keys",
-        "Plans/storage-plan.md:476-489 defines historical vocabulary and says stale projections are recomputed at startup"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Required keys exist, but exact rebuild/current/historical ownership rules are incomplete.",
+      "coverage_id": "cov-05627",
       "source_obligation_ids": [
-        "obl-194"
+        "obl-5399"
       ],
       "source_seed_ids": [
-        "seed-194"
+        "seed-8024"
       ],
       "source_shard_ids": [
-        "shard-0048"
+        "shard-0074"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-754",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:556-575 defines attempt_id, provider_attempt_ref, usage_event_ref, and receipt refs as bridge anchors",
-        "Plans/storage-plan.md:610-614 says execution_unit_context is persisted with runtime artifacts/receipts/usage joins, Contracts_V0 owns cross-family attribution packet shape, and storage-plan owns persistence/projection of attempt/usage/receipt/artifact joins"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Attribution anchors exist, but tool events/evidence and exact receipt/tool stale-token replacement are incomplete.",
-      "source_obligation_ids": [
-        "obl-208"
-      ],
-      "source_seed_ids": [
-        "seed-208"
-      ],
-      "source_shard_ids": [
-        "shard-0052"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-763",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:573-575 says provider_attempt_ref, usage_event_ref, and receipt refs are bridge fields and runtime artifacts are attempt-native by default",
-        "Plans/storage-plan.md:610-614 says execution_unit_context is persisted with runtime artifacts, receipts, and usage joins and TierContext/tier_id is compatibility-only"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Runtime artifact attribution is related, but tool.invoked/tool.denied and usage_record tier-join cleanup are incomplete.",
-      "source_obligation_ids": [
-        "obl-211"
-      ],
-      "source_seed_ids": [
-        "seed-211"
-      ],
-      "source_shard_ids": [
-        "shard-0053"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-780",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:617-620 makes runtime artifacts attempt-native by default, resolves artifact open flows by artifact_id and linked envelope refs, and lets Contracts_V0 own route_target/OpenSubject"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "OpenSubject/artifact flow coverage exists, but explicit OpenArtifact/OpenSubject paired contract and full attempt-native artifact identity set are incomplete.",
-      "source_obligation_ids": [
-        "obl-215"
-      ],
-      "source_seed_ids": [
-        "seed-215"
-      ],
-      "source_shard_ids": [
-        "shard-0054"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-799",
+      "canon_label": "`Crosswalk.md` also still carries stale Orchestrator ownership text:",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
       "status": "missing",
-      "evidence": [],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Plans/storage-plan.md does not directly cover GATE-007/GATE-008/GATE-011/GATE-012 or attention_required evidence schema gaps.",
-      "source_obligation_ids": [
-        "obl-222"
+      "exact_items": [
+        "`Crosswalk.md` also still carries stale Orchestrator ownership text:",
+        "Crosswalk.md"
       ],
-      "source_seed_ids": [
-        "seed-222"
+      "stale_tokens": [
+        "Crosswalk.md"
       ],
-      "source_shard_ids": [
-        "shard-0056"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-994",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Plans/storage-plan.md does not directly contain target_kind=page_tab, object_kind=node, object_id=<node_id>, tab_id, node_graph, inspector_target, or focused_run_id coverage for this row.",
-      "source_obligation_ids": [
-        "obl-278"
-      ],
-      "source_seed_ids": [
-        "seed-278"
-      ],
-      "source_shard_ids": [
-        "shard-0070"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1048",
-      "status": "partial",
       "evidence": [
-        "Plans/storage-plan.md:616-620 makes runtime artifacts attempt-native with routing refs and lets Contracts_V0 own route_target/OpenSubject"
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29"
       ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Route/open ownership is present, but resume_url serialized-transport versus navigation identity is only indirect.",
-      "source_obligation_ids": [
-        "obl-295"
-      ],
-      "source_seed_ids": [
-        "seed-295"
-      ],
-      "source_shard_ids": [
-        "shard-0075"
-      ],
-      "path_field_status": "match"
+      "required_action": "stale_retirement"
     },
     {
-      "coverage_id": "cov-1065",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:560-574 defines usage_event_ref as the usage bridge",
-        "Plans/storage-plan.md:610-614 says TierContext/tier_id decomposition is compatibility-only and must not own runtime canon/storage keys/join identity"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "usage_event_ref and tier_id deprecation exist, but usage_record/tier coexistence is not fully resolved.",
+      "coverage_id": "cov-05915",
       "source_obligation_ids": [
-        "obl-303"
+        "obl-5687"
       ],
       "source_seed_ids": [
-        "seed-303"
-      ],
-      "source_shard_ids": [
-        "shard-0077"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1080",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:1526-1554 defines canonical scheduler.pass, node.blocked, remediation.spawned events, supersedes blocked_projection with blocked_sequence, and uses allowed_action_ids",
-        "Plans/storage-plan.md:604-611 demotes TierContext/tier_id to compatibility-only metadata not owning runtime canon/storage keys/join identity"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Canonical blocked/event coverage exists, but stale tier-boundary/HITL request tokens are not fully covered.",
-      "source_obligation_ids": [
-        "obl-310"
-      ],
-      "source_seed_ids": [
-        "seed-310"
+        "seed-8453"
       ],
       "source_shard_ids": [
         "shard-0078"
       ],
-      "path_field_status": "match"
+      "canon_label": "Strong owner docs with residual stale scope wording:",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## 0. Scope",
+      "status": "present",
+      "exact_items": [
+        "Strong owner docs with residual stale scope wording:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-1239",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Plans/storage-plan.md does not contain exact artifact drill-through, validation artifact lineage, bridge-field viewer, or validation-report headings.",
+      "coverage_id": "cov-05921",
       "source_obligation_ids": [
-        "obl-350"
+        "obl-5693"
       ],
       "source_seed_ids": [
-        "seed-350"
+        "seed-8461"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "canon_label": "`tier` is still present in owner-level prompt/runtime wording, which keeps leaking stale e",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## 0. Scope",
+      "status": "present",
+      "exact_items": [
+        "`tier` is still present in owner-level prompt/runtime wording, which keeps leaking stale execution scope back into downstream docs.",
+        "tier"
+      ],
+      "stale_tokens": [
+        "tier"
+      ],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06040",
+      "source_obligation_ids": [
+        "obl-5812"
+      ],
+      "source_seed_ids": [
+        "seed-8641"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Treat the earlier request-centric text as retired or compatibility-only rather than leavin",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### Fidelity recovery cov-200: Route/open compatibility-only fallback marking",
+      "status": "present",
+      "exact_items": [
+        "Treat the earlier request-centric text as retired or compatibility-only rather than leaving it as live canonical base prose."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06383",
+      "source_obligation_ids": [
+        "obl-6024"
+      ],
+      "source_seed_ids": [
+        "seed-9111"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "`Plans/Crosswalk.md` still publishes stale top-level ownership guidance for the rewrite:",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Crosswalk.md` still publishes stale top-level ownership guidance for the rewrite:",
+        "Plans/Crosswalk.md"
+      ],
+      "stale_tokens": [
+        "Plans/Crosswalk.md"
+      ],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-06393",
+      "source_obligation_ids": [
+        "obl-6034"
+      ],
+      "source_seed_ids": [
+        "seed-9129"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "`Crosswalk.md` still routes readers into stale Orchestrator and widget canon",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "# Crosswalk (Canonical)",
+      "status": "missing",
+      "exact_items": [
+        "`Crosswalk.md` still routes readers into stale Orchestrator and widget canon",
+        "Crosswalk.md"
+      ],
+      "stale_tokens": [
+        "Crosswalk.md"
+      ],
+      "evidence": [
+        "Plans/Crosswalk.md:L14",
+        "Plans/Crosswalk.md:L17",
+        "Plans/Crosswalk.md:L26",
+        "Plans/Crosswalk.md:L29"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-06511",
+      "source_obligation_ids": [
+        "obl-6152"
+      ],
+      "source_seed_ids": [
+        "seed-9304"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "But the owner doc still frames those fields through stale scope vocabulary:",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## 0. Scope",
+      "status": "present",
+      "exact_items": [
+        "But the owner doc still frames those fields through stale scope vocabulary:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06999",
+      "source_obligation_ids": [
+        "obl-6595"
+      ],
+      "source_seed_ids": [
+        "seed-10051"
       ],
       "source_shard_ids": [
         "shard-0089"
       ],
-      "path_field_status": "match"
+      "canon_label": "No blocker families resolved; the live defects remain owner-anchor absence, skeletal consu",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### Fidelity recovery cov-170: Coverage blocker worktree allocation strategy",
+      "status": "present",
+      "exact_items": [
+        "No blocker families resolved; the live defects remain owner-anchor absence, skeletal consumer carry-through, and exact stale contradictory survivors."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-1262",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:457 has Canonical records baseline",
-        "Plans/storage-plan.md:516 has Canonical records (runtime/storage families)",
-        "Plans/storage-plan.md:640 has Canonical records (owner reconciliation)"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Canonical records headings exist, but glossary help-entry fields are absent and exact discoverability remains incomplete.",
+      "coverage_id": "cov-07112",
       "source_obligation_ids": [
-        "obl-356"
+        "obl-6687"
       ],
       "source_seed_ids": [
-        "seed-356"
+        "seed-10259"
       ],
       "source_shard_ids": [
         "shard-0091"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-027",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:956-957 says usage attribution records store effective billing/entity context for active quota bucket and not scheduler-only debug internals"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Usage-related storage rule exists, but usage-feature ownership for quota/alerts/analytics/product-shape is incomplete.",
-      "source_obligation_ids": [
-        "obl-021"
-      ],
-      "source_seed_ids": [
-        "seed-021"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-268",
+      "canon_label": "Follow-up Wave 2 rechecked the storage/receipt/usage cluster and added no new exact missin",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### Fidelity recovery cov-170: Coverage blocker worktree allocation strategy",
       "status": "present",
+      "exact_items": [
+        "Follow-up Wave 2 rechecked the storage/receipt/usage cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/storage-plan.md:31-36 defines record export, bundle export, and view export as distinct export classes and requires manifests with export_id/export_kind/project scope/included IDs/trust-state disclosure"
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
       ],
-      "required_action": "none",
-      "unresolved_reason": "Record, bundle, and view export taxonomy is directly covered.",
-      "source_obligation_ids": [
-        "obl-077"
-      ],
-      "source_seed_ids": [
-        "seed-077"
-      ],
-      "source_shard_ids": [
-        "shard-0018"
-      ],
-      "path_field_status": "match"
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-449",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:535-536 fixes resolution_kind values including fixed, accepted_risk, superseded, merged, split, invalidated, obsoleted_by_patch, and obsoleted_by_recovery",
-        "Plans/storage-plan.md:539-545 lists blocked_projection key and fields including blocked_reason_code, blocked_family, approval_scope_key, and allowed_action_ids"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Concern/action statuses exist, but no full action policy table with actor/confirmation/rationale/reversibility/audit fields.",
+      "coverage_id": "cov-07113",
       "source_obligation_ids": [
-        "obl-131"
+        "obl-6688"
       ],
       "source_seed_ids": [
-        "seed-131"
+        "seed-10260"
       ],
       "source_shard_ids": [
-        "shard-0033"
+        "shard-0091"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-524",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:527-528 lists project_summary and project_attention_item keys",
-        "Plans/storage-plan.md:540-548 lists required project/runtime redb keys including project_summary and project_attention_item"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Keys exist, but record shapes and archival/resolution behavior are incomplete.",
-      "source_obligation_ids": [
-        "obl-151"
-      ],
-      "source_seed_ids": [
-        "seed-151"
-      ],
-      "source_shard_ids": [
-        "shard-0038"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-758",
+      "canon_label": "Follow-up Wave 3 rechecked the blocked/chat/routing cluster and added no new exact missing",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### Fidelity recovery cov-170: Coverage blocker worktree allocation strategy",
       "status": "present",
+      "exact_items": [
+        "Follow-up Wave 3 rechecked the blocked/chat/routing cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/storage-plan.md:610-614 says Contracts_V0 owns the cross-family attribution packet shape and storage-plan owns persistence/projection of attempt, usage, receipt, and artifact joins"
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
       ],
-      "required_action": "none",
-      "unresolved_reason": "Storage-plan directly owns persistence/projection of the shared attribution packet across attempt/usage/receipt/artifact records.",
-      "source_obligation_ids": [
-        "obl-209"
-      ],
-      "source_seed_ids": [
-        "seed-209"
-      ],
-      "source_shard_ids": [
-        "shard-0053"
-      ],
-      "path_field_status": "match"
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-818",
+      "coverage_id": "cov-07129",
+      "source_obligation_ids": [
+        "obl-6702"
+      ],
+      "source_seed_ids": [
+        "seed-10291"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Follow-up Wave 2 rechecked the runtime-identity and blocked-episode cluster and added no n",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### Fidelity recovery cov-170: Coverage blocker worktree allocation strategy",
+      "status": "present",
+      "exact_items": [
+        "Follow-up Wave 2 rechecked the runtime-identity and blocked-episode cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the current blocker wording."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07130",
+      "source_obligation_ids": [
+        "obl-6703"
+      ],
+      "source_seed_ids": [
+        "seed-10292"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Follow-up Wave 3 rechecked the storage/receipt/account-history cluster and added no new ex",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### Fidelity recovery cov-170: Coverage blocker worktree allocation strategy",
+      "status": "present",
+      "exact_items": [
+        "Follow-up Wave 3 rechecked the storage/receipt/account-history cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07131",
+      "source_obligation_ids": [
+        "obl-6704"
+      ],
+      "source_seed_ids": [
+        "seed-10293"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Follow-up Wave 4 rechecked the route/open, blocked-action, and projection-health consumer",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### Fidelity recovery cov-170: Coverage blocker worktree allocation strategy",
+      "status": "present",
+      "exact_items": [
+        "Follow-up Wave 4 rechecked the route/open, blocked-action, and projection-health consumer surfaces and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the current blocker wording."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07153",
+      "source_obligation_ids": [
+        "obl-6721"
+      ],
+      "source_seed_ids": [
+        "seed-10322"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Follow-up Wave 2 rechecked the route/open and blocked-state survivor set (`detached_window",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### Fidelity recovery cov-170: Coverage blocker worktree allocation strategy",
+      "status": "present",
+      "exact_items": [
+        "Follow-up Wave 2 rechecked the route/open and blocked-state survivor set (`detached_window`, `result_id`, `blocked_notice`, `action_available`, `No remaining gaps`) and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.",
+        "detached_window",
+        "result_id",
+        "blocked_notice",
+        "action_available",
+        "No remaining gaps"
+      ],
+      "stale_tokens": [
+        "No remaining gaps",
+        "action_available",
+        "blocked_notice",
+        "detached_window",
+        "result_id"
+      ],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07154",
+      "source_obligation_ids": [
+        "obl-6722"
+      ],
+      "source_seed_ids": [
+        "seed-10323"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Follow-up Wave 3 rechecked the storage/help/history cluster and added no new exact missing",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### Fidelity recovery cov-170: Coverage blocker worktree allocation strategy",
+      "status": "present",
+      "exact_items": [
+        "Follow-up Wave 3 rechecked the storage/help/history cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07170",
+      "source_obligation_ids": [
+        "obl-6737"
+      ],
+      "source_seed_ids": [
+        "seed-10354"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Follow-up local stability sweeps across usage/help/blocked/storage clusters added no new e",
+      "row_type": "stale_retirement",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "### Fidelity recovery cov-170: Coverage blocker worktree allocation strategy",
+      "status": "present",
+      "exact_items": [
+        "Follow-up local stability sweeps across usage/help/blocked/storage clusters added no new exact missing field, heading, stale survivor, affected target, or blocker family."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L346 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03025",
+      "source_obligation_ids": [
+        "obl-2871"
+      ],
+      "source_seed_ids": [
+        "seed-3791"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "still needs node/lane-aware vocabulary and projection authority rules",
+      "row_type": "consumer",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "still needs node/lane-aware vocabulary and projection authority rules"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05134",
+      "source_obligation_ids": [
+        "obl-4910"
+      ],
+      "source_seed_ids": [
+        "seed-7091"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "`inspector_target` remains allowed because it is a reusable detail-focus field rather than",
+      "row_type": "consumer",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "## 6. ContractRef taxonomy (allowed categories)",
+      "status": "partial",
+      "exact_items": [
+        "`inspector_target` remains allowed because it is a reusable detail-focus field rather than per-surface noise.",
+        "inspector_target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L100"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05499",
+      "source_obligation_ids": [
+        "obl-5271"
+      ],
+      "source_seed_ids": [
+        "seed-7829"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "Reconcile owner docs first, then update these four consumer docs to consume the canonical",
+      "row_type": "consumer",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "# DRY Rules (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Reconcile owner docs first, then update these four consumer docs to consume the canonical route/object model rather than invent page-local identity rules."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06314",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/DRY_Rules.md",
+      "heading_hint": "",
       "status": "missing",
-      "evidence": [],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Plans/storage-plan.md does not directly cover persisted preview-subject identity or restore joins.",
-      "source_obligation_ids": [
-        "obl-228"
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
       ],
-      "source_seed_ids": [
-        "seed-228"
-      ],
-      "source_shard_ids": [
-        "shard-0058"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-830",
-      "status": "partial",
+      "stale_tokens": [],
       "evidence": [
-        "Plans/storage-plan.md:31-36 requires export manifests with export_id/export_kind/project scope/included IDs/trust-state disclosure",
-        "Plans/storage-plan.md:496-498 says export manifests bind artifact collections to project deliverables"
+        "Plans/DRY_Rules.md:content_absent_after_scan"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Export manifests are covered, but identity-preserving discipline for non-trivial bundle exports is incomplete.",
-      "source_obligation_ids": [
-        "obl-233"
-      ],
-      "source_seed_ids": [
-        "seed-233"
-      ],
-      "source_shard_ids": [
-        "shard-0059"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-837",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:616-621 lets Contracts_V0 own route_target/OpenSubject and carries route/open linkage by reference"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Canonical route/open ownership exists, but attention/CtA and blocked-notice actions as route-target consumers are not explicit.",
-      "source_obligation_ids": [
-        "obl-234"
-      ],
-      "source_seed_ids": [
-        "seed-234"
-      ],
-      "source_shard_ids": [
-        "shard-0059"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-847",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:616-621 lets Contracts_V0 own route_target/OpenSubject, keeps FileManager OpenFile path-based, and carries route/open linkage by reference rather than redefining route payload shapes"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Route/open ownership split exists, but subject-open/open-by-identity boundaries are incomplete.",
-      "source_obligation_ids": [
-        "obl-236"
-      ],
-      "source_seed_ids": [
-        "seed-236"
-      ],
-      "source_shard_ids": [
-        "shard-0060"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-884",
-      "status": "partial",
-      "evidence": [
-        "Plans/storage-plan.md:616-621 carries route/open linkage by reference rather than redefining route payload shapes locally"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Route/open split exists, but target object/context versus shell-state realization/persistence split is incomplete.",
-      "source_obligation_ids": [
-        "obl-249"
-      ],
-      "source_seed_ids": [
-        "seed-249"
-      ],
-      "source_shard_ids": [
-        "shard-0063"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-890",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Plans/storage-plan.md does not directly move panel-local subviews/selectors out of route identity into destination/view-state handling.",
-      "source_obligation_ids": [
-        "obl-252"
-      ],
-      "source_seed_ids": [
-        "seed-252"
-      ],
-      "source_shard_ids": [
-        "shard-0064"
-      ],
-      "path_field_status": "match"
+      "required_action": "consumer_propagation"
     }
   ]
 }

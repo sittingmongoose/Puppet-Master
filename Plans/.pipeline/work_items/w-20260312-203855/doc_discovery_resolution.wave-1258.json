@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1258",
+  "group_ids": [
+    "discgrp-5029",
+    "discgrp-5030",
+    "discgrp-5031",
+    "discgrp-5032"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05433",
+      "source_obligation_ids": [
+        "obl-5205"
+      ],
+      "source_seed_ids": [
+        "seed-7714"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/DRY_Rules.md",
+      "new_heading_hint": "# DRY Rules (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/DRY_Rules.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05434",
+      "source_obligation_ids": [
+        "obl-5206"
+      ],
+      "source_seed_ids": [
+        "seed-7717",
+        "seed-7720",
+        "seed-7723",
+        "seed-7726",
+        "seed-7729"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# display-font = \"CustomFont\"  # requires font file in ~/.puppet-master/fonts/",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L871"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05435",
+      "source_obligation_ids": [
+        "obl-5207"
+      ],
+      "source_seed_ids": [
+        "seed-7719"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05436",
+      "source_obligation_ids": [
+        "obl-5208"
+      ],
+      "source_seed_ids": [
+        "seed-7722"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

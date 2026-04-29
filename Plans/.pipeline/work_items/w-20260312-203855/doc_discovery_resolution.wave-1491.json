@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1491",
+  "group_ids": [
+    "discgrp-5961",
+    "discgrp-5962",
+    "discgrp-5963",
+    "discgrp-5964"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06584",
+      "source_obligation_ids": [
+        "obl-6225"
+      ],
+      "source_seed_ids": [
+        "seed-9411"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06585",
+      "source_obligation_ids": [
+        "obl-6226"
+      ],
+      "source_seed_ids": [
+        "seed-9412"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06586",
+      "source_obligation_ids": [
+        "obl-6227"
+      ],
+      "source_seed_ids": [
+        "seed-9413"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L193"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06587",
+      "source_obligation_ids": [
+        "obl-6228"
+      ],
+      "source_seed_ids": [
+        "seed-9414"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "### 1.1 Builder / node worker",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L82"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

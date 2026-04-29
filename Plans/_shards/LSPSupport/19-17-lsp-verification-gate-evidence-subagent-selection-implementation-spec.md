@@ -112,6 +112,27 @@ Store one JSON file per snapshot (e.g. one per gate run). Each entry in the snap
 
 #### File format and location
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0352
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `to_tier_id: Some(format!(\"interview-phase-...\"))`
+  - to_tier_id: Some(format!(\"interview-phase-...\"))
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 - **Directory:** `.puppet-master/evidence/lsp-snapshots/`.
 - **Filename:** `lsp-snapshot-{gate_id}-{timestamp}.json` or `lsp-snapshot-{tier_id}-{session_id}.json` so it is unique and tied to the gate run.
 - **Content:** Single JSON object: `{ "captured_at": "ISO8601", "scope": "changed_files"|"open"|"project", "project_root": "...", "diagnostics": [ {...}, ... ] }`.

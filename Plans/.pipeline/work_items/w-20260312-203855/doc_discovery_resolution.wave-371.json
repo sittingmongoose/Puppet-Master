@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-371",
+  "group_ids": [
+    "discgrp-1481",
+    "discgrp-1482",
+    "discgrp-1483",
+    "discgrp-1484"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01733",
+      "source_obligation_ids": [
+        "obl-1590"
+      ],
+      "source_seed_ids": [
+        "seed-1982"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 10.7 Event-driven refresh rule",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1251"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01734",
+      "source_obligation_ids": [
+        "obl-1591"
+      ],
+      "source_seed_ids": [
+        "seed-1983"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L43"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01735",
+      "source_obligation_ids": [
+        "obl-1592"
+      ],
+      "source_seed_ids": [
+        "seed-1984"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01736",
+      "source_obligation_ids": [
+        "obl-1593"
+      ],
+      "source_seed_ids": [
+        "seed-1985"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

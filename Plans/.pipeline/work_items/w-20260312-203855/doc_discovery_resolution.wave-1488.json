@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1488",
+  "group_ids": [
+    "discgrp-5949",
+    "discgrp-5950",
+    "discgrp-5951",
+    "discgrp-5952"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06570",
+      "source_obligation_ids": [
+        "obl-6211"
+      ],
+      "source_seed_ids": [
+        "seed-9397"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-011 -- UI command dispatch only (Rule 1)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L108"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06571",
+      "source_obligation_ids": [
+        "obl-6212"
+      ],
+      "source_seed_ids": [
+        "seed-9398"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "### 1. FileSafe outcomes are first-class blocked outcomes",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L2465"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06572",
+      "source_obligation_ids": [
+        "obl-6213"
+      ],
+      "source_seed_ids": [
+        "seed-9399"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "### 1. FileSafe outcomes are first-class blocked outcomes",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L2465"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06573",
+      "source_obligation_ids": [
+        "obl-6214"
+      ],
+      "source_seed_ids": [
+        "seed-9400"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1110"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

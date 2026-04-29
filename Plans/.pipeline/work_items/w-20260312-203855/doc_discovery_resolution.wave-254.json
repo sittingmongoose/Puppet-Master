@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-254",
+  "group_ids": [
+    "discgrp-1013",
+    "discgrp-1014",
+    "discgrp-1015",
+    "discgrp-1016"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01263",
+      "source_obligation_ids": [
+        "obl-1120"
+      ],
+      "source_seed_ids": [
+        "seed-1332"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "## 2. Problem Statement",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L76"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01264",
+      "source_obligation_ids": [
+        "obl-1121"
+      ],
+      "source_seed_ids": [
+        "seed-1333"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01265",
+      "source_obligation_ids": [
+        "obl-1122"
+      ],
+      "source_seed_ids": [
+        "seed-1334"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "### Fidelity recovery cov-101: Provider-native correlation and approval scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L28"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01266",
+      "source_obligation_ids": [
+        "obl-1123"
+      ],
+      "source_seed_ids": [
+        "seed-1335"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "# Orchestrator Subagent Integration -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

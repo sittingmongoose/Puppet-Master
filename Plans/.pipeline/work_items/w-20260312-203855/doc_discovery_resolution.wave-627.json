@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-627",
+  "group_ids": [
+    "discgrp-2505",
+    "discgrp-2506",
+    "discgrp-2507",
+    "discgrp-2508"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02783",
+      "source_obligation_ids": [
+        "obl-2630"
+      ],
+      "source_seed_ids": [
+        "seed-3450"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "# Usage Feature -- App/GUI Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02784",
+      "source_obligation_ids": [
+        "obl-2631"
+      ],
+      "source_seed_ids": [
+        "seed-3451"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02785",
+      "source_obligation_ids": [
+        "obl-2632"
+      ],
+      "source_seed_ids": [
+        "seed-3452"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02786",
+      "source_obligation_ids": [
+        "obl-2633"
+      ],
+      "source_seed_ids": [
+        "seed-3453"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1310"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

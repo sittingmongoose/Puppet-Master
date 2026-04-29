@@ -1,0 +1,711 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-032",
+  "timestamp_utc": "2026-04-28T20:41:45Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-125",
+    "coverage-rowgrp-126",
+    "coverage-rowgrp-127",
+    "coverage-rowgrp-128"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-125 cov-1068,cov-1084,cov-1151,cov-1154,cov-1261 Plans/Orchestrator_Page.md",
+    "rowgrp-126 cov-015,cov-029,cov-270,cov-450,cov-467,cov-829,cov-839 Plans/Orchestrator_Page.md",
+    "rowgrp-127 cov-140,cov-211,cov-225,cov-236,cov-302,cov-307,cov-313,cov-370,cov-412,cov-421 Plans/Orchestrator_Page.md",
+    "rowgrp-128 cov-429,cov-544,cov-570,cov-663,cov-671,cov-698,cov-975,cov-980,cov-1000,cov-1011 Plans/Orchestrator_Page.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-125": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-126": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-127": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-128": "completed_reduced_conservatively"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-1068",
+    "cov-1084",
+    "cov-1151",
+    "cov-1154",
+    "cov-1261",
+    "cov-015",
+    "cov-029",
+    "cov-270",
+    "cov-450",
+    "cov-467",
+    "cov-829",
+    "cov-839",
+    "cov-140",
+    "cov-211",
+    "cov-225",
+    "cov-236",
+    "cov-302",
+    "cov-307",
+    "cov-313",
+    "cov-370",
+    "cov-412",
+    "cov-421",
+    "cov-429",
+    "cov-544",
+    "cov-570",
+    "cov-663",
+    "cov-671",
+    "cov-698",
+    "cov-975",
+    "cov-980",
+    "cov-1000",
+    "cov-1011"
+  ],
+  "coverage_ids_completed": [
+    "cov-1068",
+    "cov-1084",
+    "cov-1151",
+    "cov-1154",
+    "cov-1261",
+    "cov-015",
+    "cov-029",
+    "cov-270",
+    "cov-450",
+    "cov-467",
+    "cov-829",
+    "cov-839",
+    "cov-140",
+    "cov-211",
+    "cov-225",
+    "cov-236",
+    "cov-302",
+    "cov-307",
+    "cov-313",
+    "cov-370",
+    "cov-412",
+    "cov-421",
+    "cov-429",
+    "cov-544",
+    "cov-570",
+    "cov-663",
+    "cov-671",
+    "cov-698",
+    "cov-975",
+    "cov-980",
+    "cov-1000",
+    "cov-1011"
+  ],
+  "path_groups_assigned": [
+    "Plans/Orchestrator_Page.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-1068",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:390-402 prefers usage_event_ref for cost-bearing artifact routing and has Usage, History, Ledger, and Orchestrator consume the same durable event family"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "usage_event_ref and shared durable event consumption are present, but the tier_id split, usage_record instability, and attempt-native node routing path are not directly resolved.",
+      "source_obligation_ids": [
+        "obl-303"
+      ],
+      "source_seed_ids": [
+        "seed-303"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1084",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not directly contain request_id, tier_id, tier_type, tier_boundary_approval, HITL command IDs, hitl_request_id, node.blocked, blocked_sequence, or allowed_action_ids[] event-family cleanup.",
+      "source_obligation_ids": [
+        "obl-310"
+      ],
+      "source_seed_ids": [
+        "seed-310"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1151",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not directly cover UI_Command_Catalog stale command canon, FinalGUISpec Tiers retirement, or resume_url transport cleanup.",
+      "source_obligation_ids": [
+        "obl-334"
+      ],
+      "source_seed_ids": [
+        "seed-334"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1154",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:373-388 defines a non-tier Progress widget catalog with execution units, focused_run_id, lanes/worktrees, concerns, artifacts, and account event projections",
+        "Plans/Orchestrator_Page.md:443-455 defines Seam Overseer roles, promotion classes, and Source Control/worktree handshake"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "The current page has non-tier progress/worktree/seam evidence, but does not explicitly retire Tiers, define Seams/Evidence/History/Ledger as native tabs, or replace tier_id filters with node/attempt/runtime identity.",
+      "source_obligation_ids": [
+        "obl-336"
+      ],
+      "source_seed_ids": [
+        "seed-336"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1261",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:457-465 defines glossary/help references, layered help, help-entry template, and related-concept clusters"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Help-entry structure is present locally, but Glossary headings, full help-entry fields, and storage anchor gaps are not resolved in this path.",
+      "source_obligation_ids": [
+        "obl-356"
+      ],
+      "source_seed_ids": [
+        "seed-356"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-015",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:1 identifies the page as the Single-Page 6-Tab Specification",
+        "Plans/Orchestrator_Page.md:19-29 defines shared governance/runtime record-envelope ownership"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "The page-shell owner is identified, but the scheduler-contract consumer relationship to orchestrator-subagent-integration is not direct.",
+      "source_obligation_ids": [
+        "obl-014"
+      ],
+      "source_seed_ids": [
+        "seed-014"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-029",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:91-101 defines promotion classes lane_to_package, package_to_seam_available, and seam_complete",
+        "Plans/Orchestrator_Page.md:443-455 defines Package Overseer and Seam Overseer owner kinds plus worktree rows with package/lane/run refs"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Feature seam/work package concepts are present, but independent provider/model/effort settings, node persona policy, and project-scoped orchestration storage are incomplete.",
+      "source_obligation_ids": [
+        "obl-022"
+      ],
+      "source_seed_ids": [
+        "seed-022"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-270",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:19-29 defines a shared record envelope with lineage refs and artifact/evidence refs",
+        "Plans/Orchestrator_Page.md:390-392 requires usage_event_ref routing and receipt linkage for runtime artifacts"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Record/artifact envelope pieces are present, but record/bundle/view export taxonomy and manifest backbone/fields are absent.",
+      "source_obligation_ids": [
+        "obl-077"
+      ],
+      "source_seed_ids": [
+        "seed-077"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-450",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:357-359 defines concern action authority, confirmation, rationale, reversibility, audit fields, and distinct actions",
+        "Plans/Orchestrator_Page.md:414-416 enforces dismissal/resolution rationale and accepted_risk as a resolution path"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Concern action policy fields are present, but no full canonical policy table with allowed_actor_kinds, confirmation levels, result/lineage, and default action matrix is defined.",
+      "source_obligation_ids": [
+        "obl-131"
+      ],
+      "source_seed_ids": [
+        "seed-131"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-467",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:396-398 defines active_run_id/focused_run_id with live|historical focus mode and coherent cross-tab pivots"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Focused run context is present, but project_id, object focus, and explicit page/router state ownership are incomplete.",
+      "source_obligation_ids": [
+        "obl-136"
+      ],
+      "source_seed_ids": [
+        "seed-136"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-829",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:353-355 routes concern search results as object-first results with focused-run and target-tab context",
+        "Plans/Orchestrator_Page.md:396-398 keeps cross-tab deep links and search pivots coherent on focused_run_id"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Search/concern routing is related, but one canonical route-target model for search, attention, usage, and artifacts is not direct.",
+      "source_obligation_ids": [
+        "obl-232"
+      ],
+      "source_seed_ids": [
+        "seed-232"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-839",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:435-437 gives project_attention_item a primary route payload consumable across Orchestrator, Dashboard, and notifications",
+        "Plans/Orchestrator_Page.md:379-387 maps blocked concerns, escalation stack, and attention summary to Progress widgets"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Attention routing is present, but CTAs and blocked-notice actions as first-class canonical route-target consumers are incomplete.",
+      "source_obligation_ids": [
+        "obl-234"
+      ],
+      "source_seed_ids": [
+        "seed-234"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-140",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:349 defines Orchestrator as the runtime-identity management system",
+        "Plans/Orchestrator_Page.md:400-402 stores account switch/pressure event families consumed across Usage, History, Ledger, and Orchestrator"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Runtime identity and account switch history are related, but requested/effective account fields and overseer role identity are not direct.",
+      "source_obligation_ids": [
+        "obl-039"
+      ],
+      "source_seed_ids": [
+        "seed-039"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-211",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:361-363 defines projection states and action gating on current or canonical revalidation",
+        "Plans/Orchestrator_Page.md:431-437 defines project summary/attention projection-trust disclosure"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Projection trust states and disclosure exist, but last-updated fields and a shared trust policy across Usage/Source Control/other surfaces are incomplete.",
+      "source_obligation_ids": [
+        "obl-058"
+      ],
+      "source_seed_ids": [
+        "seed-058"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-225",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:396-398 defines active_run_id, focused_run_id, focus_mode live|historical, and coherent focused-run pivots",
+        "Plans/Orchestrator_Page.md:375-387 maps Progress widgets to focused_run_id and project_attention_item route payloads"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "focused_run_id and focus_mode are present, but orchestrator.project_state.{project_id}, selected_tab, per-tab refs, and persisted last focused run are not direct.",
+      "source_obligation_ids": [
+        "obl-062"
+      ],
+      "source_seed_ids": [
+        "seed-062"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-236",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:353-355 routes concern search results as object-first results with focused-run and target-tab context",
+        "Plans/Orchestrator_Page.md:396-398 keeps cross-tab deep links and search pivots coherent on focused_run_id"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Focused-run search routing is partly covered, but canonical route target fields, explicit run-focus switch disclosure, and search scope behavior are incomplete.",
+      "source_obligation_ids": [
+        "obl-066"
+      ],
+      "source_seed_ids": [
+        "seed-066"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-302",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:459-465 defines Glossary/help governance, inline/context/canonical help layers, help-entry template, and related-concept clusters"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Help layers and stable names are present, but ELI5/friendly-name anti-drift and explicit canonical/contextual/help-system split are incomplete.",
+      "source_obligation_ids": [
+        "obl-086"
+      ],
+      "source_seed_ids": [
+        "seed-086"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-307",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:431-437 defines project_summary activity_state, attention_state, health_state, owner, projection-trust disclosure, and project_attention_item",
+        "Plans/Orchestrator_Page.md:439-445 defines project taxonomy and escalation surfaces"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Project health/activity/attention fields exist, but their exact setup/activity/action-needed semantics are not fully direct.",
+      "source_obligation_ids": [
+        "obl-088"
+      ],
+      "source_seed_ids": [
+        "seed-088"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-313",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:423-425 separates attention_required from blocked and defines resurfacing",
+        "Plans/Orchestrator_Page.md:500-503 defines concern owner surfaces and reassignment without identity change"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Blocked/attention ownership concepts are present, but dominant current owner display and who/what the project waits on are incomplete.",
+      "source_obligation_ids": [
+        "obl-091"
+      ],
+      "source_seed_ids": [
+        "seed-091"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-370",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:353-355 routes concern results with focused-run and target-tab context",
+        "Plans/Orchestrator_Page.md:407-408 links concerns to adjacent runtime families while preserving concern identity",
+        "Plans/Orchestrator_Page.md:492-494 separates source events, records, and projections"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Object identity layers are represented, but distinct actor/run kinds, shared identity grammar, and actor-specific lifecycle preservation are incomplete.",
+      "source_obligation_ids": [
+        "obl-109"
+      ],
+      "source_seed_ids": [
+        "seed-109"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-412",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:475-481 defines concern as a durable record with lifecycle states active, acknowledged, resolved, dismissed and resolution kinds",
+        "Plans/Orchestrator_Page.md:483-485 defines concern lifecycle semantics and confirmation matrix",
+        "Plans/Orchestrator_Page.md:496-497 defines minimum concern record fields including concern_id, project_id, run_ref, scope_ref, evidence_refs, lineage_refs, severity, category, and status"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-122"
+      ],
+      "source_seed_ids": [
+        "seed-122"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-421",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:349 defines Orchestrator as runtime-identity management",
+        "Plans/Orchestrator_Page.md:400-402 stores account switch/pressure event families consumed by Usage, History, Ledger, and Orchestrator"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Runtime/account identity is adjacent, but a requested/effective identity disclosure contract across graph detail, artifacts, GitHub/auth, usage, and pressure surfaces is not direct.",
+      "source_obligation_ids": [
+        "obl-124"
+      ],
+      "source_seed_ids": [
+        "seed-124"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-429",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:391-402 uses usage_event_ref and shared durable event families for Usage, History, Ledger, and Orchestrator"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Usage attribution pivots are partly present, but seam_id/package_id/lane_id/attempt_id and explicit tier-era event/widget deprecation are absent.",
+      "source_obligation_ids": [
+        "obl-125"
+      ],
+      "source_seed_ids": [
+        "seed-125"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-544",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not directly define execution_role, actor_role, operational identity, or requested concrete-account fields.",
+      "source_obligation_ids": [
+        "obl-155"
+      ],
+      "source_seed_ids": [
+        "seed-155"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-570",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:400-402 stores append-only account_pressure_episode and account_switch_event families consumed across Usage, History, Ledger, and Orchestrator"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Account switch event family is present, but execution_role, actor_kind, operational identity block, account_switch_reason, and durable switch pointer schema are absent.",
+      "source_obligation_ids": [
+        "obl-160"
+      ],
+      "source_seed_ids": [
+        "seed-160"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-663",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not define wizard/interview runtime identity bridge, wizard_id/run_id lineage, or conversational actor handoff payloads.",
+      "source_obligation_ids": [
+        "obl-187"
+      ],
+      "source_seed_ids": [
+        "seed-187"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-671",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not define validation pass report identity, launch bridge fields, or validation_pass_report artifact context.",
+      "source_obligation_ids": [
+        "obl-188"
+      ],
+      "source_seed_ids": [
+        "seed-188"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-698",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:383 maps progress.worktree-state to a Source Control worktree row with lane/package/run refs",
+        "Plans/Orchestrator_Page.md:453-455 defines Source Control/worktree handshake and worktree rows with lifecycle plus blocked/recovery state"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Worktree/lane lifecycle representation is adjacent, but durable storage families and orchestrator.receipt bridge boundaries are not direct.",
+      "source_obligation_ids": [
+        "obl-192"
+      ],
+      "source_seed_ids": [
+        "seed-192"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-975",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:83-84 exposes blocked_episode_refs on concerns and allows blocked episodes to reference concerns without replacing concern identity",
+        "Plans/Orchestrator_Page.md:407-408 repeats blocked_episode_refs and blocked episode linkage"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "blocked_episode appears as related identity, but object_kind enum, object_id=blocked_sequence, focused_run_id/run_id, and node_id scope are absent.",
+      "source_obligation_ids": [
+        "obl-272"
+      ],
+      "source_seed_ids": [
+        "seed-272"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-980",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not define inspector_target or its closed enum.",
+      "source_obligation_ids": [
+        "obl-273"
+      ],
+      "source_seed_ids": [
+        "seed-273"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1000",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not define blocked_sequence as canonical id or its run/node resolver context.",
+      "source_obligation_ids": [
+        "obl-280"
+      ],
+      "source_seed_ids": [
+        "seed-280"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1011",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not define tab_id as stable page-tab focus.",
+      "source_obligation_ids": [
+        "obl-284"
+      ],
+      "source_seed_ids": [
+        "seed-284"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

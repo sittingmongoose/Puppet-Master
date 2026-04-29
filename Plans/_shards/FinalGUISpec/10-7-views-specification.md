@@ -1,5 +1,32 @@
 ## 7. Views Specification
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0256
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - lineage views must preserve:
+  - when necessary, fall back to canonical record-backed views:
+  - when the UI should fall back to record-backed views
+  - Keep Source Control worktree-first and compact, with historical/retained material behind filters or lineage views.
+  - tier-shaped records should be overlays or derived views
+  - relevant evidence / trace views
+  - Keep `cost_usage` and receipt views strictly canonical:
+  - cost_usage
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 The GUI surface is responsible for displaying concerns, progress, artifacts, and help through carefully scoped views. Canonical concern definitions, approval scope semantics, and route/open ownership are defined in Plans/Contracts_V0.md; this section owns the visible widget and interaction layer.
 
 ### 7.1 Orchestrator
@@ -11,6 +38,63 @@ Only `Progress` is widget-composed inside Orchestrator. The `orchestrator:progre
 Action surfaces classify every affordance by navigation vs mutation, palette visibility, shortcut eligibility, multi-target safety, and confirmation/reversibility. Bulk affordances default to navigation and triage rather than live execution mutation.
 
 #### Progress catalog source and default drills
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0320
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - many `Progress` widgets may also be hostable on `Dashboard`
+  - Progress
+  - Dashboard
+  - The UI should not expose a noisy “scored all candidates” explanation by default.
+  - Research Progress - 2026-03-16 - Sonnet broader second-sweep delta cluster (requested-account asymmetry and event-schema precision)
+  - Research Progress - 2026-03-16 - GPT-5.4 Identity / Actor Envelope Deepening
+  - Research Progress - 2026-03-16 - GPT-5.2 Identity Semantics / Role-Routing Clarifications
+  - Research Progress - 2026-03-16 - projection-freshness vocabulary and owner cluster
+  - Research Progress - 2026-03-16 - remaining-owner-doc convergence cluster
+  - Research Progress - 2026-03-16 - Validation-pass report identity and lineage
+  - Research Progress - 2026-03-16 - Opus owner-doc tranche synthesis
+  - Research Progress - 2026-03-16 - `tier_runtime_record` as derived overlay and downstream surface drift
+  - tier_runtime_record
+  - Research Progress - 2026-03-16 - Sonnet owner-doc tranche synthesis
+  - Research Progress - 2026-03-16 - Routing/deep-link normalization with `OpenSubject`
+  - OpenSubject
+  - Research Progress - 2026-03-16 - Command-catalog implications of route/subject normalization
+  - Research Progress - 2026-03-16 - GPT-5.4 owner-doc tranche synthesis
+  - Research Progress - 2026-03-16 - GPT-5.2 owner-doc tranche synthesis
+  - Research Progress - 2026-03-16 - Storage/routing handshake for subject-open and preview identity
+  - Research Progress - 2026-03-16 - GPT-5.3-Codex owner-doc tranche synthesis
+  - Research Progress - 2026-03-16 - Exports still need identity-preserving manifest discipline
+  - Research Progress - 2026-03-16 - Sub-selection and `inspector_target` should stay secondary
+  - inspector_target
+  - Research Progress - 2026-03-16 - Destination-surface vocabulary should stay controlled and coarse
+  - Research Progress - 2026-03-16 - Subviews and panel-local selectors belong to view state, not target identity
+  - Research Progress - 2026-03-16 - Override rule: route-target should override only what is necessary
+  - Research Progress - 2026-03-17 - `route_target` owner placement
+  - route_target
+  - Research Progress - 2026-03-17 - `route_target` vs `OpenSubject`
+  - Research Progress - 2026-03-17 - Exact `target_kind` vocabulary
+  - target_kind
+  - Research Progress - 2026-03-17 - Selector precedence inside `route_target`
+  - Research Progress - 2026-03-17 - Exact `inspector_target` vocabulary
+  - `tab_id = progress` or `tab_id = seams`
+  - tab_id = progress
+  - tab_id = seams
+  - Research Progress - 2026-03-17 - Current cleanup posture after extended owner-pass
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Orchestrator consumes the named Progress catalog from FinalGUISpec Appendix C. The promoted 13-widget Progress catalog and default drill targets are:
 1. `progress.run-overview` → Execution unit tree scoped to `focused_run_id`
 2. `progress.current-task` → Node inspector for the active execution unit
@@ -27,6 +111,30 @@ Orchestrator consumes the named Progress catalog from FinalGUISpec Appendix C. T
 13. `progress.attention-summary` → `project_attention_item.primary_route_payload` list
 
 #### Progress labels and taxonomy
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0321
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - decomposition/view identity (`tier_type`, `tier_id`, titles, focus labels)
+  - tier_type
+  - tier_id
+  - `gap-008` now points at the real storage/usage/interview sections that currently carry the partial account-history and requested/effective identity transfer, rather than pseudo owner-section labels that do not yet exist verbatim.
+  - gap-008
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - State labels: `queued`, `running`, `attention_required`, `blocked`, `recovering`, `degraded`, `complete`
 - Action labels: `Inspect`, `Focus run`, `Open evidence`, `Request approval`, `Acknowledge`, `Dismiss`, `Resolve`, `Retry recovery`
 - Alert taxonomy: `advisory`, `attention_required`, `blocked`, `escalated`, `degraded_projection`
@@ -34,6 +142,32 @@ Orchestrator consumes the named Progress catalog from FinalGUISpec Appendix C. T
 - Condition-aging policy: advisory warnings may quiet after one stable refresh window; `attention_required` resurfaces on meaningful change or persistence; `blocked` and `escalated` never auto-quiet
 
 ### 7.3 Shared route and open behavior
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0285
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - open transient `generated://...` or specialized viewer
+  - generated://...
+  - resolution may end in a workspace path open, a transient `generated://` buffer, or a routed non-editor surface
+  - generated://
+  - `assistant-chat-design.md` already relies on stable identity for message/search/jump behavior but still lacks the shared named primitive that should connect those behaviors to the route/object model.
+  - assistant-chat-design.md
+  - blocker inventory remains materially open
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 All search results, palette actions, widgets, recovery links, and cross-surface pivots emit one shared route/deep-link payload. `resume_url` is the serialized transport form of that payload, not a second routing model.
 
@@ -45,6 +179,28 @@ All search results, palette actions, widgets, recovery links, and cross-surface 
 - Destination/context overrides are allowed only when needed to restore the target surface.
 
 ### 7.4 Settings and inspectors
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0286
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - direct evidence/record inspectors
+  - consumer docs for graph/detail/history/ledger/runtime inspectors
+  - dashboard and settings language brought in line with the graph/seam/package model
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 The settings model separates `requested_account_id` from `requested_account_policy`. It adds `requested_account_binding` with `none`, `preferred`, and `required` semantics, and every inspector renders the same identity grammar: Requested account / Requested binding / Effective account / Switch reason.
 
@@ -64,6 +220,28 @@ Resolver display grammar is deterministic: show worker-policy display first, the
 `project_attention_item` is the reusable attention-row object. Each row carries a primary route payload, projection-trust disclosure, blocked-owner kind, escalation level, and summary text. The same row contract is consumable in Orchestrator, Dashboard, and notification surfaces without re-minting attention identities.
 
 ### Concern, escalation, notification, and help surfaces
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0292
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - seam-blocking weak integration concern with no progress for hours -> blocked surfaces + possible system notification
+  - small surfaces need compact labels plus deeper linked/contextual help, not renamed local jargon
+  - Degraded-trust and concern escalation remain under-owned across provider/runtime/UI boundaries:
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request. The visible concern contract carries `concern_id`, `project_id`, run refs, scope refs, evidence refs, source refs, lineage refs, severity, category, status, and governance metadata.
 
@@ -101,6 +279,29 @@ Layout:
 - header remains sticky while the message stream scrolls independently
 
 #### 7.16.1 Thread header and message stream
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0315
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `message_id` when the real target is the message itself
+  - message_id
+  - `object_kind = message`
+  - object_kind = message
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Thread header content:
 - editable thread title
@@ -184,6 +385,27 @@ Required behavior summary:
 
 ### 7.19A Dedicated log and audit inspector
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0284
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - rather than a dedicated top-level `usage_event_ref`
+  - usage_event_ref
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 PM ships two complementary audit surfaces: lightweight in-thread transparency and a dedicated searchable log/audit inspector.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
@@ -198,6 +420,31 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md
 
 #### 7.19.1 Embedded document pane
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0316
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `requested_persona_id` / `effective_persona_id` remain embedded in consumer docs despite canonical prohibition.
+  - requested_persona_id
+  - effective_persona_id
+  - `FinalGUISpec.md` aligns with that newer model in the embedded document pane:
+  - FinalGUISpec.md
+  - the embedded document pane already shares canonical document identity and backend restore pipelines rather than pure path opens
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 The embedded document pane is a shared-buffer review/document surface used by Interview, Builder, and bundle-review workflows.
 
 Rules:
@@ -206,6 +453,31 @@ Rules:
 - findings summaries and approval gates render adjacent to the document, not inside unrelated chat-local controls
 
 #### 7.19.2 Bundle controls and review gate
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0317
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - what the provider/runtime actually used and whether controls were honored/skipped/clamped
+  - provider-specific caveats shown near the relevant controls
+  - command/wiring/template drift is now concrete enough to break gate logic and stable action IDs.
+  - `staged_bundle_ref?` or equivalent pre/post-unification bundle refs
+  - staged_bundle_ref?
+  - The next best stage is condensation so the compact blocker bundle matches the sharper live-doc evidence.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Bundle Controls govern revision loops and approval readiness for reviewed document/file bundles.
 

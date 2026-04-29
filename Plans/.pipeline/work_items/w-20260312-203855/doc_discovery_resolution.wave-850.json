@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-850",
+  "group_ids": [
+    "discgrp-3397",
+    "discgrp-3398",
+    "discgrp-3399",
+    "discgrp-3400"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03683",
+      "source_obligation_ids": [
+        "obl-3529"
+      ],
+      "source_seed_ids": [
+        "seed-4752"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L193"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03686",
+      "source_obligation_ids": [
+        "obl-3531"
+      ],
+      "source_seed_ids": [
+        "seed-4754"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-007 -- No stringly-typed IDs outside SSOT",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L75"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03687",
+      "source_obligation_ids": [
+        "obl-3532"
+      ],
+      "source_seed_ids": [
+        "seed-4755"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-010 -- Platform naming compliance",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L99"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03688",
+      "source_obligation_ids": [
+        "obl-3533"
+      ],
+      "source_seed_ids": [
+        "seed-4756"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### `tool.denied` alignment",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1399"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

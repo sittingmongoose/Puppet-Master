@@ -1,0 +1,2662 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-141",
+  "group_ids": [
+    "gapgrp-0561",
+    "gapgrp-0562",
+    "gapgrp-0563",
+    "gapgrp-0564"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-02066",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02631 is partial for Recommended command model:",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02631"
+      ],
+      "source_obligation_ids": [
+        "obl-2479"
+      ],
+      "source_seed_ids": [
+        "seed-3253"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Recommended command model:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02421",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03078 is partial for route payload vs command args",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### Fidelity recovery cov-072: Canonical route payload"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03078"
+      ],
+      "source_obligation_ids": [
+        "obl-2924"
+      ],
+      "source_seed_ids": [
+        "seed-3866"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "route payload vs command args"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02440",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03103 is partial for align command args with canonical route payload vocabulary once that payload is owned else",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### Fidelity recovery cov-072: Canonical route payload"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03103"
+      ],
+      "source_obligation_ids": [
+        "obl-2949"
+      ],
+      "source_seed_ids": [
+        "seed-3893"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "align command args with canonical route payload vocabulary once that payload is owned elsewhere"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02576",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03293 is partial for still internally split on blocked/HITL mutator ownership and still missing command familie",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### 2.0A Promoted Section 15 command families"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03293"
+      ],
+      "source_obligation_ids": [
+        "obl-3139"
+      ],
+      "source_seed_ids": [
+        "seed-4176"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "still internally split on blocked/HITL mutator ownership and still missing command families for account/concern/promotion flows."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02615",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03338 is partial for Command and wiring SSOTs still cannot mechanically express freshness/health gating or cano",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03338"
+      ],
+      "source_obligation_ids": [
+        "obl-3184"
+      ],
+      "source_seed_ids": [
+        "seed-4244"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "Command and wiring SSOTs still cannot mechanically express freshness/health gating or canonical mutation ownership."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02808",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03586 is partial for ghost command IDs",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## 2. Canonical command IDs"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03586"
+      ],
+      "source_obligation_ids": [
+        "obl-3432"
+      ],
+      "source_seed_ids": [
+        "seed-4625"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "ghost command IDs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02809",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03587 is partial for missing catalog rows for referenced commands",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "#### Catalog lifecycle commands"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03587"
+      ],
+      "source_obligation_ids": [
+        "obl-3433"
+      ],
+      "source_seed_ids": [
+        "seed-4626"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "missing catalog rows for referenced commands"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02875",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03679 is partial for internal AC contradiction and uncataloged command IDs now directly threaten wiring verific",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## 2. Canonical command IDs"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03679"
+      ],
+      "source_obligation_ids": [
+        "obl-3525"
+      ],
+      "source_seed_ids": [
+        "seed-4743"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "internal AC contradiction and uncataloged command IDs now directly threaten wiring verification."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03024",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03877 is partial for The owner-doc tranche deepened from generic drift into hard SSOT-integrity failures across",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### 2.0.1 Acceptance hooks contract (wiring verification)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03877"
+      ],
+      "source_obligation_ids": [
+        "obl-3722"
+      ],
+      "source_seed_ids": [
+        "seed-5069"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "The owner-doc tranche deepened from generic drift into hard SSOT-integrity failures across command registration, wiring verification, and dispatcher/runtime gating."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03045",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03907 is partial for Register/fix the missing command families and remove false catalog/wiring claims:",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### 2.0A Promoted Section 15 command families"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03907"
+      ],
+      "source_obligation_ids": [
+        "obl-3752"
+      ],
+      "source_seed_ids": [
+        "seed-5119"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "Register/fix the missing command families and remove false catalog/wiring claims:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03191",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04107 is partial for command IDs plus ad hoc args",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## 2. Canonical command IDs"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04107"
+      ],
+      "source_obligation_ids": [
+        "obl-3947"
+      ],
+      "source_seed_ids": [
+        "seed-5411"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "exact_missing_items": [
+        "command IDs plus ad hoc args"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03215",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04138 is partial for Introduce explicit subject-open command coverage in the command catalog instead of overloa",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04138"
+      ],
+      "source_obligation_ids": [
+        "obl-3978"
+      ],
+      "source_seed_ids": [
+        "seed-5458"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "Introduce explicit subject-open command coverage in the command catalog instead of overloading path-open semantics everywhere."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03217",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04140 is partial for The system now wants a routing contract, not just more command IDs.",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## 2. Canonical command IDs"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04140"
+      ],
+      "source_obligation_ids": [
+        "obl-3980"
+      ],
+      "source_seed_ids": [
+        "seed-5460"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "The system now wants a routing contract, not just more command IDs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03220",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04143 is partial for The command catalog already contains many specific pivots:",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04143"
+      ],
+      "source_obligation_ids": [
+        "obl-3983"
+      ],
+      "source_seed_ids": [
+        "seed-5468"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "The command catalog already contains many specific pivots:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03230",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04153 is partial for `cmd.nav.open_subject`",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "#### `cmd.github.connect`"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04153"
+      ],
+      "source_obligation_ids": [
+        "obl-3993"
+      ],
+      "source_seed_ids": [
+        "seed-5482",
+        "seed-5486"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "`cmd.nav.open_subject`",
+        "cmd.nav.open_subject"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03231",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04154 is partial for `cmd.nav.open_usage_subject`",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "#### `cmd.github.connect`"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04154"
+      ],
+      "source_obligation_ids": [
+        "obl-3994"
+      ],
+      "source_seed_ids": [
+        "seed-5483",
+        "seed-5489"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "`cmd.nav.open_usage_subject`",
+        "cmd.nav.open_usage_subject"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03232",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04155 is partial for `cmd.nav.focus_route`",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "#### `cmd.github.connect`"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04155"
+      ],
+      "source_obligation_ids": [
+        "obl-3995"
+      ],
+      "source_seed_ids": [
+        "seed-5484",
+        "seed-5488"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "`cmd.nav.focus_route`",
+        "cmd.nav.focus_route"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03237",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04160 is partial for it reduces command sprawl",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04160"
+      ],
+      "source_obligation_ids": [
+        "obl-4000"
+      ],
+      "source_seed_ids": [
+        "seed-5492"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "it reduces command sprawl"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03246",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04169 is partial for add a canonical navigation/open command family to the command catalog",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04169"
+      ],
+      "source_obligation_ids": [
+        "obl-4009"
+      ],
+      "source_seed_ids": [
+        "seed-5516"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "add a canonical navigation/open command family to the command catalog"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03248",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04172 is partial for The catalog gap is now structural, not just a few missing IDs.",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04172"
+      ],
+      "source_obligation_ids": [
+        "obl-4012"
+      ],
+      "source_seed_ids": [
+        "seed-5519"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "The catalog gap is now structural, not just a few missing IDs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03324",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04262 is partial for Reconcile event naming and command extraction rules across catalog/storage/wiring before t",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## 1. Naming rules"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04262"
+      ],
+      "source_obligation_ids": [
+        "obl-4102"
+      ],
+      "source_seed_ids": [
+        "seed-5687"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "Reconcile event naming and command extraction rules across catalog/storage/wiring before trusting any automated gate based on doc parsing."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03336",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04275 is partial for canonical command IDs versus deprecated aliases/wrappers",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## 2. Canonical command IDs"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04275"
+      ],
+      "source_obligation_ids": [
+        "obl-4115"
+      ],
+      "source_seed_ids": [
+        "seed-5703"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "canonical command IDs versus deprecated aliases/wrappers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03361",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04302 is partial for That is enough for a flat `element -> command -> handler` contract, but not for the route-",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### 2.0 Command entry contract (doc-level)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04302"
+      ],
+      "source_obligation_ids": [
+        "obl-4142"
+      ],
+      "source_seed_ids": [
+        "seed-5742"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "That is enough for a flat `element -> command -> handler` contract, but not for the route-aware/navigation-aware model the rewrite is moving toward.",
+        "element -> command -> handler"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03372",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04322 is partial for Research Progress - 2026-03-16 - Command catalog wrapper/alias gap for navigation",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04322"
+      ],
+      "source_obligation_ids": [
+        "obl-4162"
+      ],
+      "source_seed_ids": [
+        "seed-5772"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - Command catalog wrapper/alias gap for navigation"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03381",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04332 is partial for The catalog can list payload keys, but it cannot currently say whether two commands are di",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### Fidelity recovery cov-072: Canonical route payload"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04332"
+      ],
+      "source_obligation_ids": [
+        "obl-4172"
+      ],
+      "source_seed_ids": [
+        "seed-5798"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "The catalog can list payload keys, but it cannot currently say whether two commands are different user-facing wrappers over one canonical route target."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03386",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04340 is partial for Make shared navigation context fields explicit at the catalog level instead of burying the",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04340"
+      ],
+      "source_obligation_ids": [
+        "obl-4180"
+      ],
+      "source_seed_ids": [
+        "seed-5806"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "Make shared navigation context fields explicit at the catalog level instead of burying them in per-command notes."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03387",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04341 is partial for The command catalog is not hostile to the new navigation model, but it is still too flat t",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04341"
+      ],
+      "source_obligation_ids": [
+        "obl-4181"
+      ],
+      "source_seed_ids": [
+        "seed-5807"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "The command catalog is not hostile to the new navigation model, but it is still too flat to describe it cleanly."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03416",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04378 is partial for That is enough to standardize command dispatch mechanically, but not enough to standardize",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### 2.0 Command entry contract (doc-level)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04378"
+      ],
+      "source_obligation_ids": [
+        "obl-4218"
+      ],
+      "source_seed_ids": [
+        "seed-5861"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "That is enough to standardize command dispatch mechanically, but not enough to standardize navigation semantics. There is still no canonical contract for:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03528",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04496 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04496"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03708",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04746 is partial for Teach the wiring/gate docs to understand canonical command vs wrapper vs deprecated alias,",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04746"
+      ],
+      "source_obligation_ids": [
+        "obl-4524"
+      ],
+      "source_seed_ids": [
+        "seed-6437"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "Teach the wiring/gate docs to understand canonical command vs wrapper vs deprecated alias, not just \u201ccommand id exists.\u201d"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03729",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04774 is partial for `Containers_Registry_and_Unraid.md` is itself a second source of ghost command IDs and sti",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04774"
+      ],
+      "source_obligation_ids": [
+        "obl-4552"
+      ],
+      "source_seed_ids": [
+        "seed-6469"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "`Containers_Registry_and_Unraid.md` is itself a second source of ghost command IDs and still defines auth/publish/repo-management command families absent from the catalog.",
+        "Containers_Registry_and_Unraid.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03836",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04908 is partial for The command layer wants a three-way split, not a binary split:",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04908"
+      ],
+      "source_obligation_ids": [
+        "obl-4684"
+      ],
+      "source_seed_ids": [
+        "seed-6742"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "The command layer wants a three-way split, not a binary split:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03849",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04923 is partial for Formalize the three-way command taxonomy:",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04923"
+      ],
+      "source_obligation_ids": [
+        "obl-4699"
+      ],
+      "source_seed_ids": [
+        "seed-6765"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "Formalize the three-way command taxonomy:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03856",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04930 is partial for The catalog can keep UX-facing wrapper names; the important change is the canonical contra",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04930"
+      ],
+      "source_obligation_ids": [
+        "obl-4706"
+      ],
+      "source_seed_ids": [
+        "seed-6772"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "The catalog can keep UX-facing wrapper names; the important change is the canonical contract beneath them."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03868",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04943 is partial for too many public `cmd.nav.*` commands added to the catalog",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "#### Catalog lifecycle commands"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04943"
+      ],
+      "source_obligation_ids": [
+        "obl-4719"
+      ],
+      "source_seed_ids": [
+        "seed-6799"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "too many public `cmd.nav.*` commands added to the catalog",
+        "cmd.nav.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03876",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04953 is partial for The command layer now needs two distinct patterns, not one:",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04953"
+      ],
+      "source_obligation_ids": [
+        "obl-4729"
+      ],
+      "source_seed_ids": [
+        "seed-6815"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "The command layer now needs two distinct patterns, not one:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03877",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04954 is partial for deprecated command aliases during migration",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04954"
+      ],
+      "source_obligation_ids": [
+        "obl-4730"
+      ],
+      "source_seed_ids": [
+        "seed-6816"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "deprecated command aliases during migration"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03879",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04956 is partial for a wrapper command may remain permanently because it is useful UX-facing vocabulary",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04956"
+      ],
+      "source_obligation_ids": [
+        "obl-4732"
+      ],
+      "source_seed_ids": [
+        "seed-6818"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "a wrapper command may remain permanently because it is useful UX-facing vocabulary"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03882",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04959 is partial for dead command detection",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04959"
+      ],
+      "source_obligation_ids": [
+        "obl-4735"
+      ],
+      "source_seed_ids": [
+        "seed-6821"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "dead command detection"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03886",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04966 is partial for deprecated command alias",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04966"
+      ],
+      "source_obligation_ids": [
+        "obl-4742"
+      ],
+      "source_seed_ids": [
+        "seed-6835"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "deprecated command alias"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-02631",
+    "cov-03078",
+    "cov-03103",
+    "cov-03293",
+    "cov-03338",
+    "cov-03586",
+    "cov-03587",
+    "cov-03679",
+    "cov-03877",
+    "cov-03907",
+    "cov-04107",
+    "cov-04138",
+    "cov-04140",
+    "cov-04143",
+    "cov-04153",
+    "cov-04154",
+    "cov-04155",
+    "cov-04160",
+    "cov-04169",
+    "cov-04172",
+    "cov-04262",
+    "cov-04275",
+    "cov-04302",
+    "cov-04322",
+    "cov-04332",
+    "cov-04340",
+    "cov-04341",
+    "cov-04378",
+    "cov-04496",
+    "cov-04746",
+    "cov-04774",
+    "cov-04908",
+    "cov-04923",
+    "cov-04930",
+    "cov-04943",
+    "cov-04953",
+    "cov-04954",
+    "cov-04956",
+    "cov-04959",
+    "cov-04966"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-2479",
+    "obl-2924",
+    "obl-2949",
+    "obl-3139",
+    "obl-3184",
+    "obl-3432",
+    "obl-3433",
+    "obl-3525",
+    "obl-3722",
+    "obl-3752",
+    "obl-3947",
+    "obl-3978",
+    "obl-3980",
+    "obl-3983",
+    "obl-3993",
+    "obl-3994",
+    "obl-3995",
+    "obl-4000",
+    "obl-4009",
+    "obl-4012",
+    "obl-4102",
+    "obl-4115",
+    "obl-4142",
+    "obl-4162",
+    "obl-4172",
+    "obl-4180",
+    "obl-4181",
+    "obl-4218",
+    "obl-4292",
+    "obl-4524",
+    "obl-4552",
+    "obl-4684",
+    "obl-4699",
+    "obl-4706",
+    "obl-4719",
+    "obl-4729",
+    "obl-4730",
+    "obl-4732",
+    "obl-4735",
+    "obl-4742"
+  ],
+  "source_seed_ids_represented": [
+    "seed-3253",
+    "seed-3866",
+    "seed-3893",
+    "seed-4176",
+    "seed-4244",
+    "seed-4625",
+    "seed-4626",
+    "seed-4743",
+    "seed-5069",
+    "seed-5119",
+    "seed-5411",
+    "seed-5458",
+    "seed-5460",
+    "seed-5468",
+    "seed-5482",
+    "seed-5483",
+    "seed-5484",
+    "seed-5486",
+    "seed-5488",
+    "seed-5489",
+    "seed-5492",
+    "seed-5516",
+    "seed-5519",
+    "seed-5687",
+    "seed-5703",
+    "seed-5742",
+    "seed-5772",
+    "seed-5798",
+    "seed-5806",
+    "seed-5807",
+    "seed-5861",
+    "seed-6001",
+    "seed-6437",
+    "seed-6469",
+    "seed-6742",
+    "seed-6765",
+    "seed-6772",
+    "seed-6799",
+    "seed-6815",
+    "seed-6816",
+    "seed-6818",
+    "seed-6821",
+    "seed-6835"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0039",
+    "shard-0043",
+    "shard-0045",
+    "shard-0046",
+    "shard-0049",
+    "shard-0052",
+    "shard-0054",
+    "shard-0055",
+    "shard-0056",
+    "shard-0057",
+    "shard-0058",
+    "shard-0059",
+    "shard-0062",
+    "shard-0065"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-02066",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02631 is partial for Recommended command model:",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02631"
+      ],
+      "source_obligation_ids": [
+        "obl-2479"
+      ],
+      "source_seed_ids": [
+        "seed-3253"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Recommended command model:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02421",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03078 is partial for route payload vs command args",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### Fidelity recovery cov-072: Canonical route payload"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03078"
+      ],
+      "source_obligation_ids": [
+        "obl-2924"
+      ],
+      "source_seed_ids": [
+        "seed-3866"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "route payload vs command args"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02440",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03103 is partial for align command args with canonical route payload vocabulary once that payload is owned else",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### Fidelity recovery cov-072: Canonical route payload"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03103"
+      ],
+      "source_obligation_ids": [
+        "obl-2949"
+      ],
+      "source_seed_ids": [
+        "seed-3893"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "align command args with canonical route payload vocabulary once that payload is owned elsewhere"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02576",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03293 is partial for still internally split on blocked/HITL mutator ownership and still missing command familie",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### 2.0A Promoted Section 15 command families"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03293"
+      ],
+      "source_obligation_ids": [
+        "obl-3139"
+      ],
+      "source_seed_ids": [
+        "seed-4176"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "still internally split on blocked/HITL mutator ownership and still missing command families for account/concern/promotion flows."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02615",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03338 is partial for Command and wiring SSOTs still cannot mechanically express freshness/health gating or cano",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03338"
+      ],
+      "source_obligation_ids": [
+        "obl-3184"
+      ],
+      "source_seed_ids": [
+        "seed-4244"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "Command and wiring SSOTs still cannot mechanically express freshness/health gating or canonical mutation ownership."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02808",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03586 is partial for ghost command IDs",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## 2. Canonical command IDs"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03586"
+      ],
+      "source_obligation_ids": [
+        "obl-3432"
+      ],
+      "source_seed_ids": [
+        "seed-4625"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "ghost command IDs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02809",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03587 is partial for missing catalog rows for referenced commands",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "#### Catalog lifecycle commands"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03587"
+      ],
+      "source_obligation_ids": [
+        "obl-3433"
+      ],
+      "source_seed_ids": [
+        "seed-4626"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "missing catalog rows for referenced commands"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02875",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03679 is partial for internal AC contradiction and uncataloged command IDs now directly threaten wiring verific",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## 2. Canonical command IDs"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03679"
+      ],
+      "source_obligation_ids": [
+        "obl-3525"
+      ],
+      "source_seed_ids": [
+        "seed-4743"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "internal AC contradiction and uncataloged command IDs now directly threaten wiring verification."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03024",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03877 is partial for The owner-doc tranche deepened from generic drift into hard SSOT-integrity failures across",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### 2.0.1 Acceptance hooks contract (wiring verification)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03877"
+      ],
+      "source_obligation_ids": [
+        "obl-3722"
+      ],
+      "source_seed_ids": [
+        "seed-5069"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "The owner-doc tranche deepened from generic drift into hard SSOT-integrity failures across command registration, wiring verification, and dispatcher/runtime gating."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03045",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03907 is partial for Register/fix the missing command families and remove false catalog/wiring claims:",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### 2.0A Promoted Section 15 command families"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03907"
+      ],
+      "source_obligation_ids": [
+        "obl-3752"
+      ],
+      "source_seed_ids": [
+        "seed-5119"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "Register/fix the missing command families and remove false catalog/wiring claims:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03191",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04107 is partial for command IDs plus ad hoc args",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## 2. Canonical command IDs"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04107"
+      ],
+      "source_obligation_ids": [
+        "obl-3947"
+      ],
+      "source_seed_ids": [
+        "seed-5411"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "exact_missing_items": [
+        "command IDs plus ad hoc args"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03215",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04138 is partial for Introduce explicit subject-open command coverage in the command catalog instead of overloa",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04138"
+      ],
+      "source_obligation_ids": [
+        "obl-3978"
+      ],
+      "source_seed_ids": [
+        "seed-5458"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "Introduce explicit subject-open command coverage in the command catalog instead of overloading path-open semantics everywhere."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03217",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04140 is partial for The system now wants a routing contract, not just more command IDs.",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## 2. Canonical command IDs"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04140"
+      ],
+      "source_obligation_ids": [
+        "obl-3980"
+      ],
+      "source_seed_ids": [
+        "seed-5460"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "The system now wants a routing contract, not just more command IDs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03220",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04143 is partial for The command catalog already contains many specific pivots:",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04143"
+      ],
+      "source_obligation_ids": [
+        "obl-3983"
+      ],
+      "source_seed_ids": [
+        "seed-5468"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "The command catalog already contains many specific pivots:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03230",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04153 is partial for `cmd.nav.open_subject`",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "#### `cmd.github.connect`"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04153"
+      ],
+      "source_obligation_ids": [
+        "obl-3993"
+      ],
+      "source_seed_ids": [
+        "seed-5482",
+        "seed-5486"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "`cmd.nav.open_subject`",
+        "cmd.nav.open_subject"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03231",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04154 is partial for `cmd.nav.open_usage_subject`",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "#### `cmd.github.connect`"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04154"
+      ],
+      "source_obligation_ids": [
+        "obl-3994"
+      ],
+      "source_seed_ids": [
+        "seed-5483",
+        "seed-5489"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "`cmd.nav.open_usage_subject`",
+        "cmd.nav.open_usage_subject"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03232",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04155 is partial for `cmd.nav.focus_route`",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "#### `cmd.github.connect`"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04155"
+      ],
+      "source_obligation_ids": [
+        "obl-3995"
+      ],
+      "source_seed_ids": [
+        "seed-5484",
+        "seed-5488"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "`cmd.nav.focus_route`",
+        "cmd.nav.focus_route"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03237",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04160 is partial for it reduces command sprawl",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04160"
+      ],
+      "source_obligation_ids": [
+        "obl-4000"
+      ],
+      "source_seed_ids": [
+        "seed-5492"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "it reduces command sprawl"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03246",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04169 is partial for add a canonical navigation/open command family to the command catalog",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04169"
+      ],
+      "source_obligation_ids": [
+        "obl-4009"
+      ],
+      "source_seed_ids": [
+        "seed-5516"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "add a canonical navigation/open command family to the command catalog"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03248",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04172 is partial for The catalog gap is now structural, not just a few missing IDs.",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04172"
+      ],
+      "source_obligation_ids": [
+        "obl-4012"
+      ],
+      "source_seed_ids": [
+        "seed-5519"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "The catalog gap is now structural, not just a few missing IDs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03324",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04262 is partial for Reconcile event naming and command extraction rules across catalog/storage/wiring before t",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## 1. Naming rules"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04262"
+      ],
+      "source_obligation_ids": [
+        "obl-4102"
+      ],
+      "source_seed_ids": [
+        "seed-5687"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "Reconcile event naming and command extraction rules across catalog/storage/wiring before trusting any automated gate based on doc parsing."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03336",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04275 is partial for canonical command IDs versus deprecated aliases/wrappers",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## 2. Canonical command IDs"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04275"
+      ],
+      "source_obligation_ids": [
+        "obl-4115"
+      ],
+      "source_seed_ids": [
+        "seed-5703"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "canonical command IDs versus deprecated aliases/wrappers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03361",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04302 is partial for That is enough for a flat `element -> command -> handler` contract, but not for the route-",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### 2.0 Command entry contract (doc-level)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04302"
+      ],
+      "source_obligation_ids": [
+        "obl-4142"
+      ],
+      "source_seed_ids": [
+        "seed-5742"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "That is enough for a flat `element -> command -> handler` contract, but not for the route-aware/navigation-aware model the rewrite is moving toward.",
+        "element -> command -> handler"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03372",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04322 is partial for Research Progress - 2026-03-16 - Command catalog wrapper/alias gap for navigation",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04322"
+      ],
+      "source_obligation_ids": [
+        "obl-4162"
+      ],
+      "source_seed_ids": [
+        "seed-5772"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - Command catalog wrapper/alias gap for navigation"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03381",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04332 is partial for The catalog can list payload keys, but it cannot currently say whether two commands are di",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### Fidelity recovery cov-072: Canonical route payload"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04332"
+      ],
+      "source_obligation_ids": [
+        "obl-4172"
+      ],
+      "source_seed_ids": [
+        "seed-5798"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "The catalog can list payload keys, but it cannot currently say whether two commands are different user-facing wrappers over one canonical route target."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03386",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04340 is partial for Make shared navigation context fields explicit at the catalog level instead of burying the",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04340"
+      ],
+      "source_obligation_ids": [
+        "obl-4180"
+      ],
+      "source_seed_ids": [
+        "seed-5806"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "Make shared navigation context fields explicit at the catalog level instead of burying them in per-command notes."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03387",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04341 is partial for The command catalog is not hostile to the new navigation model, but it is still too flat t",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04341"
+      ],
+      "source_obligation_ids": [
+        "obl-4181"
+      ],
+      "source_seed_ids": [
+        "seed-5807"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "The command catalog is not hostile to the new navigation model, but it is still too flat to describe it cleanly."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03416",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04378 is partial for That is enough to standardize command dispatch mechanically, but not enough to standardize",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### 2.0 Command entry contract (doc-level)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04378"
+      ],
+      "source_obligation_ids": [
+        "obl-4218"
+      ],
+      "source_seed_ids": [
+        "seed-5861"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "That is enough to standardize command dispatch mechanically, but not enough to standardize navigation semantics. There is still no canonical contract for:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03528",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04496 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04496"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03708",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04746 is partial for Teach the wiring/gate docs to understand canonical command vs wrapper vs deprecated alias,",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04746"
+      ],
+      "source_obligation_ids": [
+        "obl-4524"
+      ],
+      "source_seed_ids": [
+        "seed-6437"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "Teach the wiring/gate docs to understand canonical command vs wrapper vs deprecated alias, not just \u201ccommand id exists.\u201d"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03729",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04774 is partial for `Containers_Registry_and_Unraid.md` is itself a second source of ghost command IDs and sti",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04774"
+      ],
+      "source_obligation_ids": [
+        "obl-4552"
+      ],
+      "source_seed_ids": [
+        "seed-6469"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "`Containers_Registry_and_Unraid.md` is itself a second source of ghost command IDs and still defines auth/publish/repo-management command families absent from the catalog.",
+        "Containers_Registry_and_Unraid.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03836",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04908 is partial for The command layer wants a three-way split, not a binary split:",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04908"
+      ],
+      "source_obligation_ids": [
+        "obl-4684"
+      ],
+      "source_seed_ids": [
+        "seed-6742"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "The command layer wants a three-way split, not a binary split:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03849",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04923 is partial for Formalize the three-way command taxonomy:",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04923"
+      ],
+      "source_obligation_ids": [
+        "obl-4699"
+      ],
+      "source_seed_ids": [
+        "seed-6765"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "Formalize the three-way command taxonomy:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03856",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04930 is partial for The catalog can keep UX-facing wrapper names; the important change is the canonical contra",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04930"
+      ],
+      "source_obligation_ids": [
+        "obl-4706"
+      ],
+      "source_seed_ids": [
+        "seed-6772"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "The catalog can keep UX-facing wrapper names; the important change is the canonical contract beneath them."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03868",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04943 is partial for too many public `cmd.nav.*` commands added to the catalog",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "#### Catalog lifecycle commands"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04943"
+      ],
+      "source_obligation_ids": [
+        "obl-4719"
+      ],
+      "source_seed_ids": [
+        "seed-6799"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "too many public `cmd.nav.*` commands added to the catalog",
+        "cmd.nav.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03876",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04953 is partial for The command layer now needs two distinct patterns, not one:",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04953"
+      ],
+      "source_obligation_ids": [
+        "obl-4729"
+      ],
+      "source_seed_ids": [
+        "seed-6815"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "The command layer now needs two distinct patterns, not one:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03877",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04954 is partial for deprecated command aliases during migration",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04954"
+      ],
+      "source_obligation_ids": [
+        "obl-4730"
+      ],
+      "source_seed_ids": [
+        "seed-6816"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "deprecated command aliases during migration"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03879",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04956 is partial for a wrapper command may remain permanently because it is useful UX-facing vocabulary",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04956"
+      ],
+      "source_obligation_ids": [
+        "obl-4732"
+      ],
+      "source_seed_ids": [
+        "seed-6818"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "a wrapper command may remain permanently because it is useful UX-facing vocabulary"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03882",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04959 is partial for dead command detection",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04959"
+      ],
+      "source_obligation_ids": [
+        "obl-4735"
+      ],
+      "source_seed_ids": [
+        "seed-6821"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "dead command detection"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03886",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04966 is partial for deprecated command alias",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "# UI Command Catalog (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04966"
+      ],
+      "source_obligation_ids": [
+        "obl-4742"
+      ],
+      "source_seed_ids": [
+        "seed-6835"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "deprecated command alias"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

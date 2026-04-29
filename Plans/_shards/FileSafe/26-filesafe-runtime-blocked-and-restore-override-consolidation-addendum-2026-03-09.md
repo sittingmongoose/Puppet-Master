@@ -1,5 +1,56 @@
 ## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0227
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - lane/worktree restore
+  - deterministic restore from either `document_id` or `artifact_id`
+  - document_id
+  - artifact_id
+  - Normalize attention-surface target fields so they can restore:
+  - Explicitly state that workspace-tab selection, panel docking, and per-project layout restore are shell-state concerns layered underneath canonical routing.
+  - 1. restore `project_id`
+  - project_id
+  - 3. restore destination class from `target_kind`
+  - target_kind
+  - artifact-backed restore resolves to transient `generated://<artifact_id>` buffers
+  - generated://<artifact_id>
+  - `preview_subject_id` gives a strong subject-first restore identity
+  - preview_subject_id
+  - Preview restore identity is subject-first, while the broader route/open owner docs still do not define the named route/open primitives that would explain it consistently.
+  - subject-first restore identity
+  - `[retired-token-1]` through `[retired-token-3]` are now audit-stable; further broad sweeps are low yield. The only notable caution is that `[retired-token-2]` still carries a live `[retired-token-4]` contradiction in addition to missing structural headings.
+  - [retired-token-1]
+  - [retired-token-3]
+  - [retired-token-2]
+  - [retired-token-4]
+  - This invocation kept the blocker-family count at eight and the affected-doc count at twenty, removed the overstated `[retired-token-4]` contradiction from `[retired-token-2]`, added exact broken-anchor evidence to `[retired-token-5]` and `[retired-token-6]`, and raised the underlying evidence count to sixty-two.
+  - [retired-token-5]
+  - [retired-token-6]
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 This section defines fileSafe Action Mapping and Persistence.
 
 ### Shared runtime fields

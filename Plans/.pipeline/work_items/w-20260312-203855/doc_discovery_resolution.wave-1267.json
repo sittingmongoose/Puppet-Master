@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1267",
+  "group_ids": [
+    "discgrp-5065",
+    "discgrp-5066",
+    "discgrp-5067",
+    "discgrp-5068"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05469",
+      "source_obligation_ids": [
+        "obl-5241"
+      ],
+      "source_seed_ids": [
+        "seed-7786"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "# Widget System -- Cross-Cutting Specification",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Widget_System.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05470",
+      "source_obligation_ids": [
+        "obl-5242"
+      ],
+      "source_seed_ids": [
+        "seed-7787"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-001: Owner-first fidelity recovery order",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05471",
+      "source_obligation_ids": [
+        "obl-5243"
+      ],
+      "source_seed_ids": [
+        "seed-7791",
+        "seed-8784"
+      ],
+      "source_shard_ids": [
+        "shard-0073",
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05472",
+      "source_obligation_ids": [
+        "obl-5244"
+      ],
+      "source_seed_ids": [
+        "seed-7792"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "new_heading_hint": "### 3.2 Branching Conversations (Restore Then Fork)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L316"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

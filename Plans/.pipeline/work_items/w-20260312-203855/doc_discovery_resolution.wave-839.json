@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-839",
+  "group_ids": [
+    "discgrp-3353",
+    "discgrp-3354",
+    "discgrp-3355",
+    "discgrp-3356"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03633",
+      "source_obligation_ids": [
+        "obl-3479"
+      ],
+      "source_seed_ids": [
+        "seed-4681"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "### 7.2 `plan_graph/nodes/<node_id>.json` (required; one node per file)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L314"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03634",
+      "source_obligation_ids": [
+        "obl-3480"
+      ],
+      "source_seed_ids": [
+        "seed-4682"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-016 -- Token fields are never aggregated at storage layer",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L148"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03635",
+      "source_obligation_ids": [
+        "obl-3481"
+      ],
+      "source_seed_ids": [
+        "seed-4683"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03636",
+      "source_obligation_ids": [
+        "obl-3482"
+      ],
+      "source_seed_ids": [
+        "seed-4684"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "### Blocked episode identity and restart recovery",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L603"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

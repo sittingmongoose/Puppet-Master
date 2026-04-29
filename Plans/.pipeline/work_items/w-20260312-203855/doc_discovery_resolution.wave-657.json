@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-657",
+  "group_ids": [
+    "discgrp-2625",
+    "discgrp-2626",
+    "discgrp-2627",
+    "discgrp-2628"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02903",
+      "source_obligation_ids": [
+        "obl-2750"
+      ],
+      "source_seed_ids": [
+        "seed-3611"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02904",
+      "source_obligation_ids": [
+        "obl-2751"
+      ],
+      "source_seed_ids": [
+        "seed-3612"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-02905",
+      "source_obligation_ids": [
+        "obl-2752"
+      ],
+      "source_seed_ids": [
+        "seed-3613"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02906",
+      "source_obligation_ids": [
+        "obl-2753"
+      ],
+      "source_seed_ids": [
+        "seed-3614"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Prompt_Pipeline.md",
+      "new_heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

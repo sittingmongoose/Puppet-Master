@@ -1,0 +1,106 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1365",
+  "group_ids": [
+    "discgrp-5457",
+    "discgrp-5458",
+    "discgrp-5459",
+    "discgrp-5460"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05907",
+      "source_obligation_ids": [
+        "obl-5679"
+      ],
+      "source_seed_ids": [
+        "seed-8441"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05908",
+      "source_obligation_ids": [
+        "obl-5680"
+      ],
+      "source_seed_ids": [
+        "seed-8442",
+        "seed-8719",
+        "seed-9457"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0080",
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05909",
+      "source_obligation_ids": [
+        "obl-5681"
+      ],
+      "source_seed_ids": [
+        "seed-8443",
+        "seed-8720",
+        "seed-9458"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0080",
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05910",
+      "source_obligation_ids": [
+        "obl-5682"
+      ],
+      "source_seed_ids": [
+        "seed-8444",
+        "seed-8721",
+        "seed-9459"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0080",
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

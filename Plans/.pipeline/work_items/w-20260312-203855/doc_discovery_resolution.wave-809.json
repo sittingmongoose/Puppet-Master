@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-809",
+  "group_ids": [
+    "discgrp-3233",
+    "discgrp-3234",
+    "discgrp-3235",
+    "discgrp-3236"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03513",
+      "source_obligation_ids": [
+        "obl-3359"
+      ],
+      "source_seed_ids": [
+        "seed-4523"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### Fidelity recovery cov-041: Source Control and worktree handshake",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03514",
+      "source_obligation_ids": [
+        "obl-3360"
+      ],
+      "source_seed_ids": [
+        "seed-4524"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03515",
+      "source_obligation_ids": [
+        "obl-3361"
+      ],
+      "source_seed_ids": [
+        "seed-4525"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 2.3 redb: schema, migrations, key patterns",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L455"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03516",
+      "source_obligation_ids": [
+        "obl-3362"
+      ],
+      "source_seed_ids": [
+        "seed-4526"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

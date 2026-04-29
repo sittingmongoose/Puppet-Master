@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-707",
+  "group_ids": [
+    "discgrp-2825",
+    "discgrp-2826",
+    "discgrp-2827",
+    "discgrp-2828"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03105",
+      "source_obligation_ids": [
+        "obl-2951"
+      ],
+      "source_seed_ids": [
+        "seed-3895"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "## 2. Primitive index (definitions are DRY)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L66"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03106",
+      "source_obligation_ids": [
+        "obl-2952"
+      ],
+      "source_seed_ids": [
+        "seed-3896"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Projection freshness, health, and startup rehydration (operational rules)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L585"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03107",
+      "source_obligation_ids": [
+        "obl-2953"
+      ],
+      "source_seed_ids": [
+        "seed-3897"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "### 10.2 orchestrator-subagent-integration.md",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L1139"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03108",
+      "source_obligation_ids": [
+        "obl-2954"
+      ],
+      "source_seed_ids": [
+        "seed-3898"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

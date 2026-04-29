@@ -1,0 +1,110 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-241",
+  "group_ids": [
+    "discgrp-0961",
+    "discgrp-0962",
+    "discgrp-0963",
+    "discgrp-0964"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01210",
+      "source_obligation_ids": [
+        "obl-1067"
+      ],
+      "source_seed_ids": [
+        "seed-1258",
+        "seed-1745",
+        "seed-1777",
+        "seed-2505",
+        "seed-2533"
+      ],
+      "source_shard_ids": [
+        "shard-0021",
+        "shard-0026",
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_Integration.md",
+      "new_heading_hint": "# GitHub Integration -- Spec",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01211",
+      "source_obligation_ids": [
+        "obl-1068"
+      ],
+      "source_seed_ids": [
+        "seed-1259",
+        "seed-1746",
+        "seed-1780",
+        "seed-2507",
+        "seed-2534"
+      ],
+      "source_shard_ids": [
+        "shard-0021",
+        "shard-0026",
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Progression_Gates.md",
+      "new_heading_hint": "### Fidelity recovery cov-034: Promotion classes and gate evidence",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Progression_Gates.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01212",
+      "source_obligation_ids": [
+        "obl-1069"
+      ],
+      "source_seed_ids": [
+        "seed-1262",
+        "seed-1755"
+      ],
+      "source_shard_ids": [
+        "shard-0021",
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01213",
+      "source_obligation_ids": [
+        "obl-1070"
+      ],
+      "source_seed_ids": [
+        "seed-1263",
+        "seed-1756"
+      ],
+      "source_shard_ids": [
+        "shard-0021",
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

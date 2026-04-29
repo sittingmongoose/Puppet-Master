@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-680",
+  "group_ids": [
+    "discgrp-2717",
+    "discgrp-2718",
+    "discgrp-2719",
+    "discgrp-2720"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02997",
+      "source_obligation_ids": [
+        "obl-2843"
+      ],
+      "source_seed_ids": [
+        "seed-3750"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Progression_Gates.md",
+      "new_heading_hint": "### Compatibility fallback and contradiction-fail rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Progression_Gates.md:L70"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02998",
+      "source_obligation_ids": [
+        "obl-2844"
+      ],
+      "source_seed_ids": [
+        "seed-3752"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1409"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02999",
+      "source_obligation_ids": [
+        "obl-2845"
+      ],
+      "source_seed_ids": [
+        "seed-3754"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03000",
+      "source_obligation_ids": [
+        "obl-2846"
+      ],
+      "source_seed_ids": [
+        "seed-3756"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "### Fidelity recovery cov-010: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L7"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

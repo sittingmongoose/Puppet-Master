@@ -1,0 +1,120 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-994",
+  "group_ids": [
+    "discgrp-3973",
+    "discgrp-3974",
+    "discgrp-3975",
+    "discgrp-3976"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04281",
+      "source_obligation_ids": [
+        "obl-4121"
+      ],
+      "source_seed_ids": [
+        "seed-5713",
+        "seed-5754",
+        "seed-5791",
+        "seed-5831",
+        "seed-5870",
+        "seed-5908",
+        "seed-6024",
+        "seed-6066",
+        "seed-6099",
+        "seed-6141",
+        "seed-6196",
+        "seed-6267",
+        "seed-6338",
+        "seed-6389",
+        "seed-6426",
+        "seed-6541",
+        "seed-6571",
+        "seed-6603",
+        "seed-6626",
+        "seed-6670"
+      ],
+      "source_shard_ids": [
+        "shard-0057",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060",
+        "shard-0061",
+        "shard-0062",
+        "shard-0063",
+        "shard-0064"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-04282",
+      "source_obligation_ids": [
+        "obl-4122"
+      ],
+      "source_seed_ids": [
+        "seed-5719"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/OpenCode_Coverage_Matrix.md",
+      "new_heading_hint": "# OpenCode Coverage Matrix (Audit)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04283",
+      "source_obligation_ids": [
+        "obl-4123"
+      ],
+      "source_seed_ids": [
+        "seed-5720"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04284",
+      "source_obligation_ids": [
+        "obl-4124"
+      ],
+      "source_seed_ids": [
+        "seed-5721"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "new_heading_hint": "# GUI Rebuild Requirements Checklist (2026-02-23)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

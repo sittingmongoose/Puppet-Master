@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-245",
+  "group_ids": [
+    "discgrp-0977",
+    "discgrp-0978",
+    "discgrp-0979",
+    "discgrp-0980"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01226",
+      "source_obligation_ids": [
+        "obl-1083"
+      ],
+      "source_seed_ids": [
+        "seed-1277"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "### Fidelity recovery cov-032: Concern linkage to adjacent families",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01227",
+      "source_obligation_ids": [
+        "obl-1084"
+      ],
+      "source_seed_ids": [
+        "seed-1278"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01228",
+      "source_obligation_ids": [
+        "obl-1085"
+      ],
+      "source_seed_ids": [
+        "seed-1279"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### Fidelity recovery cov-059: Lane vs worktree lifecycle split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01229",
+      "source_obligation_ids": [
+        "obl-1086"
+      ],
+      "source_seed_ids": [
+        "seed-1280"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1310"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-902",
+  "group_ids": [
+    "discgrp-3605",
+    "discgrp-3606",
+    "discgrp-3607",
+    "discgrp-3608"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03901",
+      "source_obligation_ids": [
+        "obl-3746"
+      ],
+      "source_seed_ids": [
+        "seed-5093"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-022: Concern record family definition",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03902",
+      "source_obligation_ids": [
+        "obl-3747"
+      ],
+      "source_seed_ids": [
+        "seed-5106"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03903",
+      "source_obligation_ids": [
+        "obl-3748"
+      ],
+      "source_seed_ids": [
+        "seed-5115"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "## 28. Markdown and Mermaid Rendering in Chat and Planning Surfaces (2026-03-07)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L2093"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03904",
+      "source_obligation_ids": [
+        "obl-3749"
+      ],
+      "source_seed_ids": [
+        "seed-5116"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

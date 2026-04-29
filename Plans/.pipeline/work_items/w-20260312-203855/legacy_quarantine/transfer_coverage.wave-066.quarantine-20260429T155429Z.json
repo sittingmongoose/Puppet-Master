@@ -1,0 +1,391 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-066",
+  "timestamp_utc": "2026-04-28T21:43:20Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-261",
+    "coverage-rowgrp-262",
+    "coverage-rowgrp-263",
+    "coverage-rowgrp-264"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-261 cov-1187 Plans/human-in-the-loop.md",
+    "rowgrp-262 cov-058,cov-177,cov-1081 Plans/human-in-the-loop.md",
+    "rowgrp-263 cov-056,cov-488,cov-641,cov-707,cov-1089,cov-1166,cov-1226 Plans/human-in-the-loop.md",
+    "rowgrp-264 cov-151,cov-639,cov-645,cov-654,cov-745,cov-1133 Plans/human-in-the-loop.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-261": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-262": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-263": "completed_reduced_conservatively_with_action_normalization",
+    "coverage-rowgrp-264": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-1187",
+    "cov-058",
+    "cov-177",
+    "cov-1081",
+    "cov-056",
+    "cov-488",
+    "cov-641",
+    "cov-707",
+    "cov-1089",
+    "cov-1166",
+    "cov-1226",
+    "cov-151",
+    "cov-639",
+    "cov-645",
+    "cov-654",
+    "cov-745",
+    "cov-1133"
+  ],
+  "coverage_ids_completed": [
+    "cov-1187",
+    "cov-058",
+    "cov-177",
+    "cov-1081",
+    "cov-056",
+    "cov-488",
+    "cov-641",
+    "cov-707",
+    "cov-1089",
+    "cov-1166",
+    "cov-1226",
+    "cov-151",
+    "cov-639",
+    "cov-645",
+    "cov-654",
+    "cov-745",
+    "cov-1133"
+  ],
+  "path_groups_assigned": [
+    "Plans/human-in-the-loop.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-1187",
+      "status": "partial",
+      "evidence": [
+        "Plans/human-in-the-loop.md:62 references Plans/Contracts_V0.md as an SSOT contract",
+        "Plans/human-in-the-loop.md:109 references Plans/storage-plan.md and Plans/assistant-chat-design.md",
+        "Plans/human-in-the-loop.md:145 references Plans/Contracts_V0.md, Plans/Executor_Protocol.md, and Plans/Orchestrator_Page.md",
+        "Plans/human-in-the-loop.md:200 references Plans/WorktreeGitImprovement.md, Plans/orchestrator-subagent-integration.md, and Plans/storage-plan.md"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "The file names several hot-list plans, but not the complete same-file supersession hot list.",
+      "source_obligation_ids": [
+        "obl-341"
+      ],
+      "source_seed_ids": [
+        "seed-341"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-058",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/human-in-the-loop.md does not directly state the same-file supersession/canon-collapse hot-list item or the exact stale tokens TierContext, TierType, active-agents.json, Phase/Task/Subtask/Iteration, or Tiers tab.",
+      "source_obligation_ids": [
+        "obl-029"
+      ],
+      "source_seed_ids": [
+        "seed-029"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-177",
+      "status": "partial",
+      "evidence": [
+        "Plans/human-in-the-loop.md:90-97 defines allowed_action_ids and blocked_sequence as runtime-facing approval fields",
+        "Plans/human-in-the-loop.md:141-143 says approvals do not bind to tier_id and approval/recovery flows bind to runtime blocked episodes"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Blocked-runtime approval and tier-boundary semantics are covered, but allowed_actions versus allowed_action_ids dual canonicality and scheduler/mid-tier conflict are incomplete.",
+      "source_obligation_ids": [
+        "obl-047"
+      ],
+      "source_seed_ids": [
+        "seed-047"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1081",
+      "status": "partial",
+      "evidence": [
+        "Plans/human-in-the-loop.md:81-98 defines the canonical HITL contract as a blocked-runtime overlay with allowed_action_ids and blocked_sequence",
+        "Plans/human-in-the-loop.md:141-143 says approvals do not bind to tier_id and bind to runtime blocked episodes anchored by run_id, node_id, blocked_sequence, and attempt_id"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Related blocked-runtime coverage exists, but event-family stale semantics and request_id/tier_type/tier_boundary_approval/cmd.graph tokens are not directly present.",
+      "source_obligation_ids": [
+        "obl-310"
+      ],
+      "source_seed_ids": [
+        "seed-310"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-056",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/human-in-the-loop.md does not directly cover execution-object-level provider/model settings, overseer policies, central worktree behavior, or overseer role versus dynamic node-worker selection.",
+      "source_obligation_ids": [
+        "obl-028"
+      ],
+      "source_seed_ids": [
+        "seed-028"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-488",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/human-in-the-loop.md does not directly cover tier_boundary as a reserved diagnostic category, singular Overseer audit_kind protocol, two reviewer subagents, minority-advisory outcome, or diagnostic attempt_id gaps.",
+      "source_obligation_ids": [
+        "obl-141"
+      ],
+      "source_seed_ids": [
+        "seed-141"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-641",
+      "status": "partial",
+      "evidence": [
+        "Plans/human-in-the-loop.md:268-273 defines approval_scope_key as the durable blocked-episode scope key across actor, lane, run, node, and account context and says approval/rejection events persist durable approver identity fields"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Approval-scope anchoring and approver identity are covered, but legacy allowed_actions/approve_continue contract handling is absent.",
+      "source_obligation_ids": [
+        "obl-179"
+      ],
+      "source_seed_ids": [
+        "seed-179"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-707",
+      "status": "partial",
+      "evidence": [
+        "Plans/human-in-the-loop.md:265-270 calls for transfer of execution_role, requested_account_id, operational_identity, blocked_sequence minting, startup recovery handshake, and DAE approval policy, and defines approval_scope_key across actor/lane/run/node/account context"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Blocked-sequence and identity transfer language exists, but TierContext successor ownership, request/block bridge, runtime-artifact/worktree-lane storage families, and a clear blocked_sequence minting owner are incomplete.",
+      "source_obligation_ids": [
+        "obl-195"
+      ],
+      "source_seed_ids": [
+        "seed-195"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1089",
+      "status": "partial",
+      "evidence": [
+        "Plans/human-in-the-loop.md:81-98 defines the canonical HITL contract as a blocked-runtime overlay with blocked_sequence, blocked_reason_code, allowed_action_ids, approval_scope_key, detail_ref, and approver_identity"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Blocked/runtime overlay and several canonical fields are present, but waiting_approval framing, preserved-local-work, prerequisite metadata, and persistence requirements are incomplete.",
+      "source_obligation_ids": [
+        "obl-312"
+      ],
+      "source_seed_ids": [
+        "seed-312"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1166",
+      "status": "partial",
+      "evidence": [
+        "Plans/human-in-the-loop.md:275-284 retires legacy tier-era runtime canon and defines canonical blocked-episode identity, classification, and action enumeration"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Retirement/drift language exists, but MUST CHANGE/MUST RECONCILE/MUST VERIFY ownership distinctions are absent.",
+      "source_obligation_ids": [
+        "obl-339"
+      ],
+      "source_seed_ids": [
+        "seed-339"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1226",
+      "status": "partial",
+      "evidence": [
+        "Plans/human-in-the-loop.md:265-273 mentions execution_role, requested_account_id, operational_identity, blocked_sequence minting, and approval_scope_key across actor/lane/run/node/account context"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "The requested identity fields are named, but missing-field distribution and operational_identity transfer completeness are not directly covered.",
+      "source_obligation_ids": [
+        "obl-346"
+      ],
+      "source_seed_ids": [
+        "seed-346"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-151",
+      "status": "partial",
+      "evidence": [
+        "Plans/human-in-the-loop.md:275-284 retires legacy tier-era runtime canon and uses ordered allowed_action_ids as canonical action enumeration",
+        "Plans/human-in-the-loop.md:326-370 defines canonical HITL recovery action alignment and visible labels for runtime surfaces"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Runtime canonicalization and allowed_action_ids retirement exist, but tier-boundary HITL versus blocked-node overlay and graph-local cmd.graph/cmd.runtime conflict are incomplete.",
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "source_seed_ids": [
+        "seed-042"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-639",
+      "status": "present",
+      "evidence": [
+        "Plans/human-in-the-loop.md:275-279 says legacy tier-era runtime canon is retired and former runtime context, identifier, type, collection labels, and Phase-Task-Subtask wording are compatibility-only display/grouping aliases that MUST NOT appear in runtime-owned blocked payloads"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "Legacy tier language and keys are directly retired in favor of canonical runtime execution references.",
+      "source_obligation_ids": [
+        "obl-178"
+      ],
+      "source_seed_ids": [
+        "seed-178"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-645",
+      "status": "partial",
+      "evidence": [
+        "Plans/human-in-the-loop.md:280-283 says canonical action enumeration uses ordered allowed_action_ids only and blocked-episode recovery semantics are canonical"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "allowed_action_ids canonicalization is present, but cmd.runtime mapping, approve_continue retirement, and pre-attempt attempt_id rule are incomplete.",
+      "source_obligation_ids": [
+        "obl-182"
+      ],
+      "source_seed_ids": [
+        "seed-182"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-654",
+      "status": "partial",
+      "evidence": [
+        "Plans/human-in-the-loop.md:81-98 defines allowed_action_ids as the runtime-owned HITL field",
+        "Plans/human-in-the-loop.md:275-283 retires tier-era canon and uses ordered allowed_action_ids only"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "This file shows the deprecation direction, but not the cross-doc self-contradiction with Contracts_V0/storage-plan or neighboring allowed_actions survival.",
+      "source_obligation_ids": [
+        "obl-185"
+      ],
+      "source_seed_ids": [
+        "seed-185"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-745",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Plans/human-in-the-loop.md does not directly mention tier_runtime_record, tier-shaped projection, or storage-plan compatibility/overlay projection handling.",
+      "source_obligation_ids": [
+        "obl-205"
+      ],
+      "source_seed_ids": [
+        "seed-205"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1133",
+      "status": "partial",
+      "evidence": [
+        "Plans/human-in-the-loop.md:81-98 defines the canonical HITL request contract as a blocked-runtime overlay with run_id, node_id, blocked_sequence, attempt_id, blocked_reason_code, allowed_action_ids, approval_scope_key, detail_ref, and approver_identity"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "The file uses the stronger blocked-runtime model, but does not contain or explicitly retire the stale request-centric opening contract terms targeted by the row.",
+      "source_obligation_ids": [
+        "obl-330"
+      ],
+      "source_seed_ids": [
+        "seed-330"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-753",
+  "group_ids": [
+    "discgrp-3009",
+    "discgrp-3010",
+    "discgrp-3011",
+    "discgrp-3012"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03289",
+      "source_obligation_ids": [
+        "obl-3135"
+      ],
+      "source_seed_ids": [
+        "seed-4169"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03290",
+      "source_obligation_ids": [
+        "obl-3136"
+      ],
+      "source_seed_ids": [
+        "seed-4170"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### 2.3 Merge conflicts: worktree kept but re-run can destroy it",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L191"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03291",
+      "source_obligation_ids": [
+        "obl-3137"
+      ],
+      "source_seed_ids": [
+        "seed-4172"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1323"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03292",
+      "source_obligation_ids": [
+        "obl-3138"
+      ],
+      "source_seed_ids": [
+        "seed-4174"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "### Fidelity recovery cov-101: Provider-native correlation and approval scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L28"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

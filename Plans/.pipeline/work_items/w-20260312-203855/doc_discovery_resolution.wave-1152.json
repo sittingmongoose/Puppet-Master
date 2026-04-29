@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1152",
+  "group_ids": [
+    "discgrp-4605",
+    "discgrp-4606",
+    "discgrp-4607",
+    "discgrp-4608"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05003",
+      "source_obligation_ids": [
+        "obl-4779"
+      ],
+      "source_seed_ids": [
+        "seed-6885"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 2.3 redb: schema, migrations, key patterns",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L455"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05004",
+      "source_obligation_ids": [
+        "obl-4780"
+      ],
+      "source_seed_ids": [
+        "seed-6886"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Progression_Gates.md",
+      "new_heading_hint": "## Field Name Verification Gate Update Addendum",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Progression_Gates.md:L536"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05005",
+      "source_obligation_ids": [
+        "obl-4781"
+      ],
+      "source_seed_ids": [
+        "seed-6887"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05006",
+      "source_obligation_ids": [
+        "obl-4782"
+      ],
+      "source_seed_ids": [
+        "seed-6889"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### route_target, OpenSubject, and command normalization",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L315"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

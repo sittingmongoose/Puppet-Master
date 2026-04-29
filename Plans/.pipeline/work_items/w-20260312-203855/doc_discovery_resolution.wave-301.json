@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-301",
+  "group_ids": [
+    "discgrp-1201",
+    "discgrp-1202",
+    "discgrp-1203",
+    "discgrp-1204"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01451",
+      "source_obligation_ids": [
+        "obl-1308"
+      ],
+      "source_seed_ids": [
+        "seed-1581"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01452",
+      "source_obligation_ids": [
+        "obl-1309"
+      ],
+      "source_seed_ids": [
+        "seed-1582"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01453",
+      "source_obligation_ids": [
+        "obl-1310"
+      ],
+      "source_seed_ids": [
+        "seed-1583",
+        "seed-4496"
+      ],
+      "source_shard_ids": [
+        "shard-0025",
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01454",
+      "source_obligation_ids": [
+        "obl-1311"
+      ],
+      "source_seed_ids": [
+        "seed-1584"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### 2.9 PR creation after restart uses main repo branch",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L264"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,103 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-541",
+  "group_ids": [
+    "discgrp-2161",
+    "discgrp-2162",
+    "discgrp-2163",
+    "discgrp-2164"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02432",
+      "source_obligation_ids": [
+        "obl-2282"
+      ],
+      "source_seed_ids": [
+        "seed-2959",
+        "seed-3168"
+      ],
+      "source_shard_ids": [
+        "shard-0036",
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-02433",
+      "source_obligation_ids": [
+        "obl-2283"
+      ],
+      "source_seed_ids": [
+        "seed-2960",
+        "seed-3170"
+      ],
+      "source_shard_ids": [
+        "shard-0036",
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-02434",
+      "source_obligation_ids": [
+        "obl-2284"
+      ],
+      "source_seed_ids": [
+        "seed-2961"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-02435",
+      "source_obligation_ids": [
+        "obl-2285"
+      ],
+      "source_seed_ids": [
+        "seed-2962",
+        "seed-3009",
+        "seed-3173",
+        "seed-3186"
+      ],
+      "source_shard_ids": [
+        "shard-0036",
+        "shard-0037",
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,5 +1,41 @@
 ## 4. Navigation Architecture
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0255
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `cmd.panel.switch` is the best local starting point for general navigation, but it is still too panel-centric and too shallow for:
+  - cmd.panel.switch
+  - `resume_url` is currently a stronger navigation primitive than generic `UICommand.args`, which inverts the desired architecture.
+  - resume_url
+  - UICommand.args
+  - but they still frame those as view-specific navigation instructions, not as a canonical target model.
+  - `UICommand.args` is too generic to express reusable navigation semantics without a normalized target object.
+  - Research Progress - 2026-03-16 - Migration pattern for `route_target` and navigation wrappers
+  - route_target
+  - Keep `resume_url` portability and persistence, but remove its status as the strongest implicit navigation mechanism.
+  - Research Progress - 2026-03-17 - Artifact preview identity versus navigation primitive ownership
+  - If reconciliation starts in Stratum 3 or Stratum 4 before Stratum 1 is fixed, the consumer docs will keep restating local navigation semantics and drift will recur.
+  - add a primitive for route-target / open-by-identity navigation near `Primitive:UICommand` and `Primitive:DocumentPane`
+  - Primitive:UICommand
+  - Primitive:DocumentPane
+  - `wizard_attention_required` still treats `resume_url` as the primary navigation object
+  - wizard_attention_required
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 ### 4.1 Activity Bar
 
 The activity bar is the canonical entry point for persistent right-hand side-panel operational surfaces.

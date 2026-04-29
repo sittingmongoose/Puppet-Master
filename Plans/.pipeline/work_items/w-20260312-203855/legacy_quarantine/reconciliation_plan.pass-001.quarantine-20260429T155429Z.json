@@ -1,0 +1,42 @@
+{
+  "schema_id": "pm.reconciliation_plan_pass.v3",
+  "work_id": "w-20260312-203855",
+  "pass_id": "pass-001",
+  "timestamp_utc": "2026-04-29T02:34:05Z",
+  "repair_mode": "scribe_blocker_targeted_repair",
+  "status": "blocked",
+  "subagent_tasks": [
+    "recplan-target-157",
+    "recplan-target-221"
+  ],
+  "assigned_input_boundaries": [
+    "targeted Scribe blocker rows cov-793 and cov-285 only"
+  ],
+  "subagent_result_status": {
+    "targeted_repair_verification": "blocked_exact_blockers_remain"
+  },
+  "completed_task_count": 2,
+  "failed_task_count": 0,
+  "coverage_row_ids_assigned": [
+    "cov-793",
+    "cov-285"
+  ],
+  "coverage_row_ids_completed": [
+    "cov-793",
+    "cov-285"
+  ],
+  "target_groups_assigned": [
+    "recgrp-repair-001",
+    "recgrp-repair-002"
+  ],
+  "target_groups_completed": [
+    "recgrp-repair-001",
+    "recgrp-repair-002"
+  ],
+  "material_findings": [
+    "Plans/STATE_FILES.md missing for target-157",
+    "Plans/ledger.md missing for target-221"
+  ],
+  "path_field_status": "pass",
+  "source_lineage_status": "pass"
+}

@@ -1,0 +1,126 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0001",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0001-L000001-L000200.md",
+  "source_line_range": "L000001-L000200",
+  "seed_candidates": [
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "tab-first orchestrator shell",
+      "exact_items": [
+        "Orchestrator should remain tab-first, not widget-first",
+        "Progress remains the first tab and is the tab that contains orchestrator widgets",
+        "existing Tiers tab should be replaced by a seam/package-oriented tab (name still open; likely Seams or equivalent)",
+        "Node Graph Display tab remains, but must evolve to show graph-patch lineage",
+        "Evidence tab remains but needs major redesign",
+        "History and Ledger both remain candidates, but merging them is on the table"
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Key Facts and Findings"
+      ],
+      "stale_tokens": [
+        "Tiers",
+        "Node Graph Display"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L29-L40",
+        "working_ledger.md:L46-L58",
+        "working_ledger.md:L59-L74"
+      ],
+      "notes": [
+        "Canonical layout blocker spans multiple tabs and naming/structure decisions."
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Progress widget drill targets",
+      "exact_items": [
+        "Default Progress-widget drill targets were made deterministic:",
+        "Run Status -> History",
+        "Current Activity -> Node Graph",
+        "Attention / Blockers -> Node Graph",
+        "Seam Health -> Seams",
+        "Package Activity -> Seams",
+        "Promotion Queue -> Ledger",
+        "Worktree Lanes -> Node Graph",
+        "Account / Usage Pressure -> Usage",
+        "Recent Major Events -> History",
+        "Overseer Activity -> Seams",
+        "Corroboration Queue -> Evidence",
+        "Recovery State -> Evidence",
+        "Throughput / Capacity -> History"
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Key Facts and Findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L92-L105"
+      ],
+      "notes": [
+        "Consumer carry-through is explicit via deterministic drill-target mappings."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "blocked ownership labels",
+      "exact_items": [
+        "blocked states should always expose:",
+        "blocked reason",
+        "blocked owner",
+        "time blocked",
+        "next step",
+        "blocked ownership should be normalized with stable labels:"
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Key Facts and Findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L193-L200"
+      ],
+      "notes": [
+        "Owner-grade obligation is the normalized blocked-owner requirement."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "replace Tiers with Seams",
+      "exact_items": [
+        "existing Tiers tab should be replaced by a seam/package-oriented tab (name still open; likely Seams or equivalent)",
+        "replace Tiers with a seam/package-oriented tab",
+        "likely canonical tab/object labels: Seams, Feature Seam, Work Package, Package Overseer, Seam Overseer"
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Key Facts and Findings"
+      ],
+      "stale_tokens": [
+        "Tiers"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L30-L33",
+        "working_ledger.md:L55-L58",
+        "working_ledger.md:L145-L153"
+      ],
+      "notes": [
+        "Legacy token retirement is explicit and tied to canonical label replacement."
+      ]
+    }
+  ],
+  "noise_items": [
+    "Ledger is execution memory only; it is not canonical and must not be cited in planning docs.",
+    "Do not write planning-doc changes during work-item stewardship.",
+    "pass completed"
+  ],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0001"
+}

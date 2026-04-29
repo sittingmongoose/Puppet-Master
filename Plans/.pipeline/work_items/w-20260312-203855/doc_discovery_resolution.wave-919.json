@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-919",
+  "group_ids": [
+    "discgrp-3673",
+    "discgrp-3674",
+    "discgrp-3675",
+    "discgrp-3676"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03971",
+      "source_obligation_ids": [
+        "obl-3815"
+      ],
+      "source_seed_ids": [
+        "seed-5231"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03972",
+      "source_obligation_ids": [
+        "obl-3816"
+      ],
+      "source_seed_ids": [
+        "seed-5232"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "new_heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03973",
+      "source_obligation_ids": [
+        "obl-3817"
+      ],
+      "source_seed_ids": [
+        "seed-5233"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "### 3.4 Source Control and lane/worktree ownership",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L104"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03974",
+      "source_obligation_ids": [
+        "obl-3818"
+      ],
+      "source_seed_ids": [
+        "seed-5234"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-011 -- UI command dispatch only (Rule 1)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L108"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

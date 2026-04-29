@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-294",
+  "group_ids": [
+    "discgrp-1173",
+    "discgrp-1174",
+    "discgrp-1175",
+    "discgrp-1176"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01423",
+      "source_obligation_ids": [
+        "obl-1280"
+      ],
+      "source_seed_ids": [
+        "seed-1547"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Concern ownership / authority direction",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L211"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01424",
+      "source_obligation_ids": [
+        "obl-1281"
+      ],
+      "source_seed_ids": [
+        "seed-1548"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01425",
+      "source_obligation_ids": [
+        "obl-1282"
+      ],
+      "source_seed_ids": [
+        "seed-1549"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01426",
+      "source_obligation_ids": [
+        "obl-1283"
+      ],
+      "source_seed_ids": [
+        "seed-1550"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2374"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

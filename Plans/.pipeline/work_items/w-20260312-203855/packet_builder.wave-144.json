@@ -1,0 +1,313 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-144",
+  "group_ids": [
+    "pktgrp-0573",
+    "pktgrp-0574",
+    "pktgrp-0575",
+    "pktgrp-0576"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0018",
+      "source_reconciliation_target_id": "target-0018",
+      "source_reconciliation_target_ids": [
+        "target-0018"
+      ],
+      "path": "Plans/.../ownership normalization docs",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../ownership normalization docs:L1",
+      "coverage_row_ids": [
+        "cov-00005"
+      ],
+      "source_obligation_ids": [
+        "obl-002"
+      ],
+      "source_seed_ids": [
+        "seed-002"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-002"
+        ],
+        "source_seed_ids": [
+          "seed-002"
+        ],
+        "source_shard_ids": [
+          "shard-0001"
+        ]
+      },
+      "gap_ids": [
+        "gap-00005"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "blocked reason",
+        "blocked owner",
+        "time blocked",
+        "next step",
+        "blocked ownership should be normalized with stable labels: `Runtime`; `Package Overseer`; `Seam Overseer`"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "Key Facts and Findings"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-5020606cd9f2",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0019",
+      "source_reconciliation_target_id": "target-0019",
+      "source_reconciliation_target_ids": [
+        "target-0019"
+      ],
+      "path": "Plans/.../progress*",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../progress*:L1",
+      "coverage_row_ids": [
+        "cov-00031"
+      ],
+      "source_obligation_ids": [
+        "obl-011"
+      ],
+      "source_seed_ids": [
+        "seed-011"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-011"
+        ],
+        "source_seed_ids": [
+          "seed-011"
+        ],
+        "source_shard_ids": [
+          "shard-0002"
+        ]
+      },
+      "gap_ids": [
+        "gap-00031"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "All major surfaces should project the same concern model rather than inventing local versions",
+        "`Progress` = operational attention projection",
+        "`Seams` = integration/governance projection",
+        "`Evidence` = proof-backed concern projection",
+        "`History` = concern lifecycle timeline projection",
+        "`Ledger` = exact structured concern-record projection"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "local versions"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "local versions"
+      ],
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "Shared concern projection rule now clarified"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-19011af4a70c",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0020",
+      "source_reconciliation_target_id": "target-0020",
+      "source_reconciliation_target_ids": [
+        "target-0020"
+      ],
+      "path": "Plans/.../record views*",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../record views*:L1",
+      "coverage_row_ids": [
+        "cov-00023"
+      ],
+      "source_obligation_ids": [
+        "obl-008"
+      ],
+      "source_seed_ids": [
+        "seed-008"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-008"
+        ],
+        "source_seed_ids": [
+          "seed-008"
+        ],
+        "source_shard_ids": [
+          "shard-0002"
+        ]
+      },
+      "gap_ids": [
+        "gap-00023"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Degrade from summary/projection surfaces to direct record-backed inspection",
+        "Ledger and direct record views become the trust anchor under degraded projection health",
+        "Only certain current/generation-matched direct records should support action",
+        "Direct record views that allow action should explicitly show currentness, generation match, superseded yes/no, actionable yes/no"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "summary/projection surfaces",
+        "direct record views"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "summary/projection surfaces",
+        "direct record views"
+      ],
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "Fallback path under stale projections is now clearer"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-0393f7608ae5",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0021",
+      "source_reconciliation_target_id": "target-0021",
+      "source_reconciliation_target_ids": [
+        "target-0021"
+      ],
+      "path": "Plans/.../seams*",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../seams*:L1",
+      "coverage_row_ids": [
+        "cov-00032"
+      ],
+      "source_obligation_ids": [
+        "obl-011"
+      ],
+      "source_seed_ids": [
+        "seed-011"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-011"
+        ],
+        "source_seed_ids": [
+          "seed-011"
+        ],
+        "source_shard_ids": [
+          "shard-0002"
+        ]
+      },
+      "gap_ids": [
+        "gap-00032"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "All major surfaces should project the same concern model rather than inventing local versions",
+        "`Progress` = operational attention projection",
+        "`Seams` = integration/governance projection",
+        "`Evidence` = proof-backed concern projection",
+        "`History` = concern lifecycle timeline projection",
+        "`Ledger` = exact structured concern-record projection"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "local versions"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "local versions"
+      ],
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "Shared concern projection rule now clarified"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-6fef3c874952",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-00005",
+    "cov-00031",
+    "cov-00023",
+    "cov-00032"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-002",
+    "obl-011",
+    "obl-008"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-002",
+    "seed-011",
+    "seed-008"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0001",
+    "shard-0002"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "preserved_exact_required_items": [
+    "blocked reason",
+    "blocked owner",
+    "time blocked",
+    "next step",
+    "blocked ownership should be normalized with stable labels: `Runtime`; `Package Overseer`; `Seam Overseer`",
+    "All major surfaces should project the same concern model rather than inventing local versions",
+    "`Progress` = operational attention projection",
+    "`Seams` = integration/governance projection",
+    "`Evidence` = proof-backed concern projection",
+    "`History` = concern lifecycle timeline projection",
+    "`Ledger` = exact structured concern-record projection",
+    "Degrade from summary/projection surfaces to direct record-backed inspection",
+    "Ledger and direct record views become the trust anchor under degraded projection health",
+    "Only certain current/generation-matched direct records should support action",
+    "Direct record views that allow action should explicitly show currentness, generation match, superseded yes/no, actionable yes/no"
+  ],
+  "blocked_targets": []
+}

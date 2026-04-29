@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1429",
+  "group_ids": [
+    "discgrp-5713",
+    "discgrp-5714",
+    "discgrp-5715",
+    "discgrp-5716"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06184",
+      "source_obligation_ids": [
+        "obl-5956"
+      ],
+      "source_seed_ids": [
+        "seed-8855"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "#### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Tools.md:L218"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06185",
+      "source_obligation_ids": [
+        "obl-5957"
+      ],
+      "source_seed_ids": [
+        "seed-8892"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Log.md",
+      "new_heading_hint": "# Decision Log",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Decision_Log.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06186",
+      "source_obligation_ids": [
+        "obl-5958"
+      ],
+      "source_seed_ids": [
+        "seed-8893"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_OpenCode.md",
+      "new_heading_hint": "## OpenCode Runtime Retry / Blocked-State / Packet Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L567"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06187",
+      "source_obligation_ids": [
+        "obl-5959"
+      ],
+      "source_seed_ids": [
+        "seed-8894"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "### 7.3 Signal handling and process lifecycle",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L378"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

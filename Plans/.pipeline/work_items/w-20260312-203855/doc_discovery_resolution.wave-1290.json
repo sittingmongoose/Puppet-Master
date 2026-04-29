@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1290",
+  "group_ids": [
+    "discgrp-5157",
+    "discgrp-5158",
+    "discgrp-5159",
+    "discgrp-5160"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05569",
+      "source_obligation_ids": [
+        "obl-5341"
+      ],
+      "source_seed_ids": [
+        "seed-7936"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "### 6.4 Requirements quality report boundary, severity, and persistence",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L198"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05570",
+      "source_obligation_ids": [
+        "obl-5342"
+      ],
+      "source_seed_ids": [
+        "seed-7937"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1409"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05571",
+      "source_obligation_ids": [
+        "obl-5343"
+      ],
+      "source_seed_ids": [
+        "seed-7938"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## 4. Navigation Architecture",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L452"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05573",
+      "source_obligation_ids": [
+        "obl-5345"
+      ],
+      "source_seed_ids": [
+        "seed-7945"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L2518"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

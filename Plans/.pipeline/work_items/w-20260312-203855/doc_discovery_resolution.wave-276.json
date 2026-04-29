@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-276",
+  "group_ids": [
+    "discgrp-1101",
+    "discgrp-1102",
+    "discgrp-1103",
+    "discgrp-1104"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01351",
+      "source_obligation_ids": [
+        "obl-1208"
+      ],
+      "source_seed_ids": [
+        "seed-1444"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 15.2 seglog Projections (for Usage)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1664"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01352",
+      "source_obligation_ids": [
+        "obl-1209"
+      ],
+      "source_seed_ids": [
+        "seed-1445"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L193"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01353",
+      "source_obligation_ids": [
+        "obl-1210"
+      ],
+      "source_seed_ids": [
+        "seed-1446"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01354",
+      "source_obligation_ids": [
+        "obl-1211"
+      ],
+      "source_seed_ids": [
+        "seed-1447"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### 3.10 Doctor: git usable in project",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L372"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

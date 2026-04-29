@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0058",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0058-L011401-L011600.md",
+  "source_line_range": "L011401-L011600",
+  "covered_shard_id": "shard-0058",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "persisted preview-subject identity owner",
+      "exact_items": [
+        "Keep Plans/storage-plan.md as the owner of persisted preview-subject identity and restore joins.",
+        "storage already contains most of the right model; the lag is mainly in the universal-open/file-centric docs."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L11404-L11413"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "FileManager OpenFile scope narrowing",
+      "exact_items": [
+        "Narrow Plans/FileManager.md so OpenFile { path... } is explicitly the workspace-document path contract only, not the universal object-open contract."
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "OpenFile"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L11405-L11447"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "route-target subject-open contract family",
+      "exact_items": [
+        "Add a canonical route-target / subject-open contract family to Plans/Contracts_V0.md, above individual surface commands.",
+        "UI_Command_Catalog.md has to carry routing meaning indirectly in per-command arg tables instead of relying on a shared contract family."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L11439-L11458"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "artifact-bearing surfaces use subject-open resolver",
+      "exact_items": [
+        "Make Runtime_Artifacts_Panel.md and other artifact-bearing surfaces consume the same subject-open resolver rather than bespoke artifact-opening rules."
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L11409-L11505"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "targeted docs and impacted docs lists L011419-L011600"
+  ],
+  "uncertain_items": []
+}

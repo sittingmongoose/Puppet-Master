@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1539",
+  "group_ids": [
+    "discgrp-6153",
+    "discgrp-6154",
+    "discgrp-6155",
+    "discgrp-6156"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06818",
+      "source_obligation_ids": [
+        "obl-6437"
+      ],
+      "source_seed_ids": [
+        "seed-9816"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "# Puppet Master \u2014 User-Project Project Plan Package Outputs (SSOT)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06819",
+      "source_obligation_ids": [
+        "obl-6438"
+      ],
+      "source_seed_ids": [
+        "seed-9817"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "# Puppet Master \u2014 User-Project Project Plan Package Outputs (SSOT)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06820",
+      "source_obligation_ids": [
+        "obl-6439"
+      ],
+      "source_seed_ids": [
+        "seed-9818"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-080: Project attention projection",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L133"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06821",
+      "source_obligation_ids": [
+        "obl-6440"
+      ],
+      "source_seed_ids": [
+        "seed-9819"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

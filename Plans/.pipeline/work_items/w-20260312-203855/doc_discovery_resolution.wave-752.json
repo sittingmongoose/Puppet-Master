@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-752",
+  "group_ids": [
+    "discgrp-3005",
+    "discgrp-3006",
+    "discgrp-3007",
+    "discgrp-3008"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03285",
+      "source_obligation_ids": [
+        "obl-3131"
+      ],
+      "source_seed_ids": [
+        "seed-4165"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "#### `scheduler.pass`",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1116"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03286",
+      "source_obligation_ids": [
+        "obl-3132"
+      ],
+      "source_seed_ids": [
+        "seed-4166"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03287",
+      "source_obligation_ids": [
+        "obl-3133"
+      ],
+      "source_seed_ids": [
+        "seed-4167"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1310"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03288",
+      "source_obligation_ids": [
+        "obl-3134"
+      ],
+      "source_seed_ids": [
+        "seed-4168"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Prompt_Pipeline.md",
+      "new_heading_hint": "# Prompt Pipeline (Canonical SSOT)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

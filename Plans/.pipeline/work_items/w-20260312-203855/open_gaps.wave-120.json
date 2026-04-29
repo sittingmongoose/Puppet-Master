@@ -1,0 +1,1499 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-120",
+  "group_ids": [
+    "gapgrp-0477",
+    "gapgrp-0478",
+    "gapgrp-0479",
+    "gapgrp-0480"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-02085",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02652 is partial for Prompt Pipeline still has the sharpest canonical gap for requested-vs-effective truth:",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "# Prompt Pipeline (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02652"
+      ],
+      "source_obligation_ids": [
+        "obl-2500"
+      ],
+      "source_seed_ids": [
+        "seed-3283"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Prompt Pipeline still has the sharpest canonical gap for requested-vs-effective truth:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02291",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02906 is partial for `effective_project_id` remains useful correlation context, but it is not a substitute for",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02906"
+      ],
+      "source_obligation_ids": [
+        "obl-2753"
+      ],
+      "source_seed_ids": [
+        "seed-3614"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "`effective_project_id` remains useful correlation context, but it is not a substitute for operational identity",
+        "effective_project_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02329",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02951 is partial for this history must not become a second quota system; it should plug into the shared Usage/r",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "# Prompt Pipeline (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02951"
+      ],
+      "source_obligation_ids": [
+        "obl-2798"
+      ],
+      "source_seed_ids": [
+        "seed-3686"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "this history must not become a second quota system; it should plug into the shared Usage/runtime pipeline"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02444",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03110 is partial for lane/worktree-aware scheduling context",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03110"
+      ],
+      "source_obligation_ids": [
+        "obl-2956"
+      ],
+      "source_seed_ids": [
+        "seed-3900"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "lane/worktree-aware scheduling context"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02479",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03157 is partial for That mixture is the core reason it cannot become the rewrite-era canonical execution conte",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03157"
+      ],
+      "source_obligation_ids": [
+        "obl-3003"
+      ],
+      "source_seed_ids": [
+        "seed-3965"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "That mixture is the core reason it cannot become the rewrite-era canonical execution context. It is trying to be both a planner/decomposition helper and a runtime/audit object."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02509",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03201 is partial for Treat worktree/lane binding and requested/effective account/runtime identity as mandatory",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### Fidelity recovery cov-009: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03201"
+      ],
+      "source_obligation_ids": [
+        "obl-3047"
+      ],
+      "source_seed_ids": [
+        "seed-4035"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "Treat worktree/lane binding and requested/effective account/runtime identity as mandatory parts of the canonical execution context, not optional downstream embellishments."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02963",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03800 is partial for That context should be strict enough to support:",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03800"
+      ],
+      "source_obligation_ids": [
+        "obl-3645"
+      ],
+      "source_seed_ids": [
+        "seed-4928"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "That context should be strict enough to support:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03004",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03851 is partial for `attempt_record` when side-effect context exists",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03851"
+      ],
+      "source_obligation_ids": [
+        "obl-3696"
+      ],
+      "source_seed_ids": [
+        "seed-5019"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "`attempt_record` when side-effect context exists",
+        "attempt_record"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03519",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04487 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04487"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03556",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04527 is partial for The issue here is less missing identity than missing normalization; the local docs already",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04527"
+      ],
+      "source_obligation_ids": [
+        "obl-4305"
+      ],
+      "source_seed_ids": [
+        "seed-6042"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The issue here is less missing identity than missing normalization; the local docs already know what context they need."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03644",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04650 is partial for Some existing payloads probably carry both context and target in a way that should be spli",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04650"
+      ],
+      "source_obligation_ids": [
+        "obl-4428"
+      ],
+      "source_seed_ids": [
+        "seed-6273"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "Some existing payloads probably carry both context and target in a way that should be split once `route_target` exists.",
+        "route_target"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03761",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04817 is partial for which project/workspace context should be activated",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04817"
+      ],
+      "source_obligation_ids": [
+        "obl-4594"
+      ],
+      "source_seed_ids": [
+        "seed-6562"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "which project/workspace context should be activated"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03816",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04875 is partial for must land in Source Control with the relevant run/worktree/repo context available",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04875"
+      ],
+      "source_obligation_ids": [
+        "obl-4652"
+      ],
+      "source_seed_ids": [
+        "seed-6660"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "must land in Source Control with the relevant run/worktree/repo context available"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03985",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05118 is partial for if a caller needs navigation context, it uses `route_target`",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05118"
+      ],
+      "source_obligation_ids": [
+        "obl-4894"
+      ],
+      "source_seed_ids": [
+        "seed-7053"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "exact_missing_items": [
+        "if a caller needs navigation context, it uses `route_target`",
+        "route_target"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04229",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05432 is partial for resolver context comes from existing scope fields such as `project_id`, `focused_run_id`,",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "## 0. Scope and SSOT status"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05432"
+      ],
+      "source_obligation_ids": [
+        "obl-5204"
+      ],
+      "source_seed_ids": [
+        "seed-7713"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "resolver context comes from existing scope fields such as `project_id`, `focused_run_id`, and the destination\u2019s canonical object store",
+        "project_id",
+        "focused_run_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04592",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05932 is partial for orchestration rules still say the prompt flow must not create new execution tiers",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "# Prompt Pipeline (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05932"
+      ],
+      "source_obligation_ids": [
+        "obl-5704"
+      ],
+      "source_seed_ids": [
+        "seed-8477"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "orchestration rules still say the prompt flow must not create new execution tiers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04593",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05933 is partial for Persona resolver text still refers to stage/tier/task context",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 6.2A Settings, persona, and resolver model"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05933"
+      ],
+      "source_obligation_ids": [
+        "obl-5705"
+      ],
+      "source_seed_ids": [
+        "seed-8478"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "Persona resolver text still refers to stage/tier/task context"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04604",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05948 is partial for Reconcile Prompt Pipeline scope terms and override-owner wording at the same time as graph",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "# Prompt Pipeline (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05948"
+      ],
+      "source_obligation_ids": [
+        "obl-5720"
+      ],
+      "source_seed_ids": [
+        "seed-8500"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "Reconcile Prompt Pipeline scope terms and override-owner wording at the same time as graph/Orchestrator identity cleanup."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04844",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06256 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06256"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05047",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06508 is partial for Research Progress - 2026-03-17 - owner-contract seam: Prompt Pipeline scope and runtime id",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "# Prompt Pipeline (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06508"
+      ],
+      "source_obligation_ids": [
+        "obl-6149"
+      ],
+      "source_seed_ids": [
+        "seed-9297"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - owner-contract seam: Prompt Pipeline scope and runtime identity drift"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05120",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06599 is partial for explicit owner placement for the execution-unit context replacing `TierContext`",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06599"
+      ],
+      "source_obligation_ids": [
+        "obl-6240"
+      ],
+      "source_seed_ids": [
+        "seed-9438"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "explicit owner placement for the execution-unit context replacing `TierContext`",
+        "TierContext"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04579",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-05913 is missing for `Plans/Prompt_Pipeline.md` is mostly aligned on field names, but it still carries stale sc",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05913"
+      ],
+      "source_obligation_ids": [
+        "obl-5685"
+      ],
+      "source_seed_ids": [
+        "seed-8447"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "`Plans/Prompt_Pipeline.md` is mostly aligned on field names, but it still carries stale scope wording:",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-02652",
+    "cov-02906",
+    "cov-02951",
+    "cov-03110",
+    "cov-03157",
+    "cov-03201",
+    "cov-03800",
+    "cov-03851",
+    "cov-04487",
+    "cov-04527",
+    "cov-04650",
+    "cov-04817",
+    "cov-04875",
+    "cov-05118",
+    "cov-05432",
+    "cov-05932",
+    "cov-05933",
+    "cov-05948",
+    "cov-06256",
+    "cov-06508",
+    "cov-06599",
+    "cov-05913"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-2500",
+    "obl-2753",
+    "obl-2798",
+    "obl-2956",
+    "obl-3003",
+    "obl-3047",
+    "obl-3645",
+    "obl-3696",
+    "obl-4292",
+    "obl-4305",
+    "obl-4428",
+    "obl-4594",
+    "obl-4652",
+    "obl-4894",
+    "obl-5204",
+    "obl-5685",
+    "obl-5704",
+    "obl-5705",
+    "obl-5720",
+    "obl-5986",
+    "obl-6149",
+    "obl-6240"
+  ],
+  "source_seed_ids_represented": [
+    "seed-3283",
+    "seed-3614",
+    "seed-3686",
+    "seed-3900",
+    "seed-3965",
+    "seed-4035",
+    "seed-4928",
+    "seed-5019",
+    "seed-6001",
+    "seed-6042",
+    "seed-6273",
+    "seed-6562",
+    "seed-6660",
+    "seed-7053",
+    "seed-7713",
+    "seed-8447",
+    "seed-8477",
+    "seed-8478",
+    "seed-8500",
+    "seed-9006",
+    "seed-9297",
+    "seed-9438"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0039",
+    "shard-0041",
+    "shard-0042",
+    "shard-0043",
+    "shard-0044",
+    "shard-0051",
+    "shard-0059",
+    "shard-0061",
+    "shard-0063",
+    "shard-0064",
+    "shard-0067",
+    "shard-0072",
+    "shard-0078",
+    "shard-0082",
+    "shard-0084",
+    "shard-0085"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-02085",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02652 is partial for Prompt Pipeline still has the sharpest canonical gap for requested-vs-effective truth:",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "# Prompt Pipeline (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02652"
+      ],
+      "source_obligation_ids": [
+        "obl-2500"
+      ],
+      "source_seed_ids": [
+        "seed-3283"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Prompt Pipeline still has the sharpest canonical gap for requested-vs-effective truth:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02291",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02906 is partial for `effective_project_id` remains useful correlation context, but it is not a substitute for",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02906"
+      ],
+      "source_obligation_ids": [
+        "obl-2753"
+      ],
+      "source_seed_ids": [
+        "seed-3614"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "`effective_project_id` remains useful correlation context, but it is not a substitute for operational identity",
+        "effective_project_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02329",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02951 is partial for this history must not become a second quota system; it should plug into the shared Usage/r",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "# Prompt Pipeline (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02951"
+      ],
+      "source_obligation_ids": [
+        "obl-2798"
+      ],
+      "source_seed_ids": [
+        "seed-3686"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "this history must not become a second quota system; it should plug into the shared Usage/runtime pipeline"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02444",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03110 is partial for lane/worktree-aware scheduling context",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03110"
+      ],
+      "source_obligation_ids": [
+        "obl-2956"
+      ],
+      "source_seed_ids": [
+        "seed-3900"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "lane/worktree-aware scheduling context"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02479",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03157 is partial for That mixture is the core reason it cannot become the rewrite-era canonical execution conte",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03157"
+      ],
+      "source_obligation_ids": [
+        "obl-3003"
+      ],
+      "source_seed_ids": [
+        "seed-3965"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "That mixture is the core reason it cannot become the rewrite-era canonical execution context. It is trying to be both a planner/decomposition helper and a runtime/audit object."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02509",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03201 is partial for Treat worktree/lane binding and requested/effective account/runtime identity as mandatory",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### Fidelity recovery cov-009: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03201"
+      ],
+      "source_obligation_ids": [
+        "obl-3047"
+      ],
+      "source_seed_ids": [
+        "seed-4035"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "Treat worktree/lane binding and requested/effective account/runtime identity as mandatory parts of the canonical execution context, not optional downstream embellishments."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02963",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03800 is partial for That context should be strict enough to support:",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03800"
+      ],
+      "source_obligation_ids": [
+        "obl-3645"
+      ],
+      "source_seed_ids": [
+        "seed-4928"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "That context should be strict enough to support:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03004",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03851 is partial for `attempt_record` when side-effect context exists",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03851"
+      ],
+      "source_obligation_ids": [
+        "obl-3696"
+      ],
+      "source_seed_ids": [
+        "seed-5019"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "`attempt_record` when side-effect context exists",
+        "attempt_record"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03519",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04487 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04487"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03556",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04527 is partial for The issue here is less missing identity than missing normalization; the local docs already",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04527"
+      ],
+      "source_obligation_ids": [
+        "obl-4305"
+      ],
+      "source_seed_ids": [
+        "seed-6042"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The issue here is less missing identity than missing normalization; the local docs already know what context they need."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03644",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04650 is partial for Some existing payloads probably carry both context and target in a way that should be spli",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04650"
+      ],
+      "source_obligation_ids": [
+        "obl-4428"
+      ],
+      "source_seed_ids": [
+        "seed-6273"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "Some existing payloads probably carry both context and target in a way that should be split once `route_target` exists.",
+        "route_target"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03761",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04817 is partial for which project/workspace context should be activated",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04817"
+      ],
+      "source_obligation_ids": [
+        "obl-4594"
+      ],
+      "source_seed_ids": [
+        "seed-6562"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "which project/workspace context should be activated"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03816",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04875 is partial for must land in Source Control with the relevant run/worktree/repo context available",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04875"
+      ],
+      "source_obligation_ids": [
+        "obl-4652"
+      ],
+      "source_seed_ids": [
+        "seed-6660"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "must land in Source Control with the relevant run/worktree/repo context available"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03985",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05118 is partial for if a caller needs navigation context, it uses `route_target`",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05118"
+      ],
+      "source_obligation_ids": [
+        "obl-4894"
+      ],
+      "source_seed_ids": [
+        "seed-7053"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "exact_missing_items": [
+        "if a caller needs navigation context, it uses `route_target`",
+        "route_target"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04229",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05432 is partial for resolver context comes from existing scope fields such as `project_id`, `focused_run_id`,",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "## 0. Scope and SSOT status"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05432"
+      ],
+      "source_obligation_ids": [
+        "obl-5204"
+      ],
+      "source_seed_ids": [
+        "seed-7713"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "resolver context comes from existing scope fields such as `project_id`, `focused_run_id`, and the destination\u2019s canonical object store",
+        "project_id",
+        "focused_run_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04592",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05932 is partial for orchestration rules still say the prompt flow must not create new execution tiers",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "# Prompt Pipeline (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05932"
+      ],
+      "source_obligation_ids": [
+        "obl-5704"
+      ],
+      "source_seed_ids": [
+        "seed-8477"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "orchestration rules still say the prompt flow must not create new execution tiers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04593",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05933 is partial for Persona resolver text still refers to stage/tier/task context",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 6.2A Settings, persona, and resolver model"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05933"
+      ],
+      "source_obligation_ids": [
+        "obl-5705"
+      ],
+      "source_seed_ids": [
+        "seed-8478"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "Persona resolver text still refers to stage/tier/task context"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04604",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05948 is partial for Reconcile Prompt Pipeline scope terms and override-owner wording at the same time as graph",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "# Prompt Pipeline (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05948"
+      ],
+      "source_obligation_ids": [
+        "obl-5720"
+      ],
+      "source_seed_ids": [
+        "seed-8500"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "Reconcile Prompt Pipeline scope terms and override-owner wording at the same time as graph/Orchestrator identity cleanup."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04844",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06256 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06256"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05047",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06508 is partial for Research Progress - 2026-03-17 - owner-contract seam: Prompt Pipeline scope and runtime id",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "# Prompt Pipeline (Canonical SSOT)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06508"
+      ],
+      "source_obligation_ids": [
+        "obl-6149"
+      ],
+      "source_seed_ids": [
+        "seed-9297"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - owner-contract seam: Prompt Pipeline scope and runtime identity drift"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05120",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06599 is partial for explicit owner placement for the execution-unit context replacing `TierContext`",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 1.2A Structured attachment normalization for browser element context"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06599"
+      ],
+      "source_obligation_ids": [
+        "obl-6240"
+      ],
+      "source_seed_ids": [
+        "seed-9438"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "explicit owner placement for the execution-unit context replacing `TierContext`",
+        "TierContext"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04579",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-05913 is missing for `Plans/Prompt_Pipeline.md` is mostly aligned on field names, but it still carries stale sc",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05913"
+      ],
+      "source_obligation_ids": [
+        "obl-5685"
+      ],
+      "source_seed_ids": [
+        "seed-8447"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "`Plans/Prompt_Pipeline.md` is mostly aligned on field names, but it still carries stale scope wording:",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

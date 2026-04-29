@@ -1,0 +1,416 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-114",
+  "group_ids": [
+    "pktgrp-0453",
+    "pktgrp-0454",
+    "pktgrp-0455",
+    "pktgrp-0456"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "packet-target-0453",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### 12.0 Normal thread context usage (Plans/assistant-chat-design.md:L954)",
+      "path": "Plans/assistant-chat-design.md",
+      "coverage_row_ids": [
+        "cov-04880",
+        "cov-04914"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-04880",
+          "cov-04914"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-4657",
+        "obl-4690"
+      ],
+      "source_seed_ids": [
+        "seed-6666",
+        "seed-6748"
+      ],
+      "source_shard_ids": [
+        "shard-0064",
+        "shard-0065"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4657",
+          "obl-4690"
+        ],
+        "source_seed_ids": [
+          "seed-6666",
+          "seed-6748"
+        ],
+        "source_shard_ids": [
+          "shard-0064",
+          "shard-0065"
+        ]
+      },
+      "gap_ids": [
+        "gap-03821",
+        "gap-03842"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "must focus the thread Usage detail surface for that thread",
+        "`cmd.chat.open_thread_usage` and `cmd.chat.focus_thread_usage` sit on the boundary. They should remain wrapper navigation commands, not pure shell toggles, because they are trying to reveal the Usage surface for a specific thread. They should normalize to canonical route context underneath.",
+        "cmd.chat.open_thread_usage",
+        "cmd.chat.focus_thread_usage"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-dde1819b912b",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0569",
+      "source_reconciliation_target_ids": [
+        "target-0569"
+      ],
+      "source_target_ids": [
+        "target-0569"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0569\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - must focus the thread Usage detail surface for that thread\n  - `cmd.chat.open_thread_usage` and `cmd.chat.focus_thread_usage` sit on the boundary. They should remain wrapper navigation commands, not pure shell toggles, because they are trying to reveal the Usage surface for a specific thread. They should normalize to canonical route context underneath.\n  - cmd.chat.open_thread_usage\n  - cmd.chat.focus_thread_usage\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0454",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### 23.5 Previously open gaps (now closed) (Plans/assistant-chat-design.md:L1801)",
+      "path": "Plans/assistant-chat-design.md",
+      "coverage_row_ids": [
+        "cov-03444",
+        "cov-04902",
+        "cov-06017",
+        "cov-06882"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-03444",
+          "cov-04902",
+          "cov-06017",
+          "cov-06882"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-3290",
+        "obl-4679",
+        "obl-5789",
+        "obl-6484"
+      ],
+      "source_seed_ids": [
+        "seed-4412",
+        "seed-6721",
+        "seed-8614",
+        "seed-9863"
+      ],
+      "source_shard_ids": [
+        "shard-0047",
+        "shard-0064",
+        "shard-0079",
+        "shard-0088"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3290",
+          "obl-4679",
+          "obl-5789",
+          "obl-6484"
+        ],
+        "source_seed_ids": [
+          "seed-4412",
+          "seed-6721",
+          "seed-8614",
+          "seed-9863"
+        ],
+        "source_shard_ids": [
+          "shard-0047",
+          "shard-0064",
+          "shard-0079",
+          "shard-0088"
+        ]
+      },
+      "gap_ids": [
+        "gap-02691",
+        "gap-03833",
+        "gap-04655",
+        "gap-05328"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Several docs now fail because they promise canonical sections/IDs that do not exist at all.",
+        "The remaining partial surface is now fully confirmed as meaningful; none of these docs should be treated as low-signal leftovers.",
+        "Consumer docs now simultaneously claim:",
+        "fields present now include `provider_attempt_ref`, `usage_event_ref`, `detail_ref`, and `report_ref`",
+        "provider_attempt_ref",
+        "usage_event_ref",
+        "detail_ref",
+        "report_ref"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-d334b8bbaf8f",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0572",
+      "source_reconciliation_target_ids": [
+        "target-0572"
+      ],
+      "source_target_ids": [
+        "target-0572"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0572\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Several docs now fail because they promise canonical sections/IDs that do not exist at all.\n  - The remaining partial surface is now fully confirmed as meaningful; none of these docs should be treated as low-signal leftovers.\n  - Consumer docs now simultaneously claim:\n  - fields present now include `provider_attempt_ref`, `usage_event_ref`, `detail_ref`, and `report_ref`\n  - provider_attempt_ref\n  - usage_event_ref\n  - detail_ref\n  - report_ref\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0455",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### Crew selection flow (Plans/assistant-chat-design.md:L1454)",
+      "path": "Plans/assistant-chat-design.md",
+      "coverage_row_ids": [
+        "cov-01557"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-01557"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-1414"
+      ],
+      "source_seed_ids": [
+        "seed-1736"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1414"
+        ],
+        "source_seed_ids": [
+          "seed-1736"
+        ],
+        "source_shard_ids": [
+          "shard-0026"
+        ]
+      },
+      "gap_ids": [
+        "gap-01227"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "provider/auth/account selection flow"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-737b7b812761",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0575",
+      "source_reconciliation_target_ids": [
+        "target-0575"
+      ],
+      "source_target_ids": [
+        "target-0575"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0575\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - provider/auth/account selection flow\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0456",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### Fidelity recovery cov-073: Canonical route payload (Plans/assistant-chat-design.md:L19)",
+      "path": "Plans/assistant-chat-design.md",
+      "coverage_row_ids": [
+        "cov-02452",
+        "cov-04516",
+        "cov-04824"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-02452",
+          "cov-04516",
+          "cov-04824"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-2302",
+        "obl-4294",
+        "obl-4601"
+      ],
+      "source_seed_ids": [
+        "seed-2984",
+        "seed-6009",
+        "seed-6578"
+      ],
+      "source_shard_ids": [
+        "shard-0037",
+        "shard-0059",
+        "shard-0063"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-2302",
+          "obl-4294",
+          "obl-4601"
+        ],
+        "source_seed_ids": [
+          "seed-2984",
+          "seed-6009",
+          "seed-6578"
+        ],
+        "source_shard_ids": [
+          "shard-0037",
+          "shard-0059",
+          "shard-0063"
+        ]
+      },
+      "gap_ids": [
+        "gap-01915",
+        "gap-03548",
+        "gap-03768"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "the rewrite should generalize that idea beyond wizards so project-level attention objects can route to Orchestrator, Chat, Source Control, GitHub, Usage, or Settings with the same internal payload model",
+        "`FinalGUISpec.md` thread search already says result clicks navigate to the exact message in its thread, but that behavior is still expressed as search-local prose rather than as one normalized route payload.",
+        "FinalGUISpec.md",
+        "`project_state:v1:{project_id}` and surface-local project-state records are adjacent restore context, not the canonical route payload.",
+        "project_state:v1:{project_id}"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-8b882c8f7729",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0576",
+      "source_reconciliation_target_ids": [
+        "target-0576"
+      ],
+      "source_target_ids": [
+        "target-0576"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0576\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - the rewrite should generalize that idea beyond wizards so project-level attention objects can route to Orchestrator, Chat, Source Control, GitHub, Usage, or Settings with the same internal payload model\n  - `FinalGUISpec.md` thread search already says result clicks navigate to the exact message in its thread, but that behavior is still expressed as search-local prose rather than as one normalized route payload.\n  - FinalGUISpec.md\n  - `project_state:v1:{project_id}` and surface-local project-state records are adjacent restore context, not the canonical route payload.\n  - project_state:v1:{project_id}\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-04880",
+    "cov-04914",
+    "cov-03444",
+    "cov-04902",
+    "cov-06017",
+    "cov-06882",
+    "cov-01557",
+    "cov-02452",
+    "cov-04516",
+    "cov-04824"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-4657",
+    "obl-4690",
+    "obl-3290",
+    "obl-4679",
+    "obl-5789",
+    "obl-6484",
+    "obl-1414",
+    "obl-2302",
+    "obl-4294",
+    "obl-4601"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-6666",
+    "seed-6748",
+    "seed-4412",
+    "seed-6721",
+    "seed-8614",
+    "seed-9863",
+    "seed-1736",
+    "seed-2984",
+    "seed-6009",
+    "seed-6578"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0064",
+    "shard-0065",
+    "shard-0047",
+    "shard-0079",
+    "shard-0088",
+    "shard-0026",
+    "shard-0037",
+    "shard-0059",
+    "shard-0063"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "must focus the thread Usage detail surface for that thread",
+    "`cmd.chat.open_thread_usage` and `cmd.chat.focus_thread_usage` sit on the boundary. They should remain wrapper navigation commands, not pure shell toggles, because they are trying to reveal the Usage surface for a specific thread. They should normalize to canonical route context underneath.",
+    "cmd.chat.open_thread_usage",
+    "cmd.chat.focus_thread_usage",
+    "Several docs now fail because they promise canonical sections/IDs that do not exist at all.",
+    "The remaining partial surface is now fully confirmed as meaningful; none of these docs should be treated as low-signal leftovers.",
+    "Consumer docs now simultaneously claim:",
+    "fields present now include `provider_attempt_ref`, `usage_event_ref`, `detail_ref`, and `report_ref`",
+    "provider_attempt_ref",
+    "usage_event_ref",
+    "detail_ref",
+    "report_ref",
+    "provider/auth/account selection flow",
+    "the rewrite should generalize that idea beyond wizards so project-level attention objects can route to Orchestrator, Chat, Source Control, GitHub, Usage, or Settings with the same internal payload model",
+    "`FinalGUISpec.md` thread search already says result clicks navigate to the exact message in its thread, but that behavior is still expressed as search-local prose rather than as one normalized route payload.",
+    "FinalGUISpec.md",
+    "`project_state:v1:{project_id}` and surface-local project-state records are adjacent restore context, not the canonical route payload.",
+    "project_state:v1:{project_id}"
+  ],
+  "blocked_targets": []
+}

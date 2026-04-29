@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-168",
+  "group_ids": [
+    "discgrp-0669",
+    "discgrp-0670",
+    "discgrp-0671",
+    "discgrp-0672"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00916",
+      "source_obligation_ids": [
+        "obl-773"
+      ],
+      "source_seed_ids": [
+        "seed-880",
+        "seed-2235"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0031"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "new_heading_hint": "# GUI Rebuild Requirements Checklist (2026-02-23)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00917",
+      "source_obligation_ids": [
+        "obl-774"
+      ],
+      "source_seed_ids": [
+        "seed-881"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "### 3. Remediation Loop for Critical/Major Findings",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L2731"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00918",
+      "source_obligation_ids": [
+        "obl-775"
+      ],
+      "source_seed_ids": [
+        "seed-882"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "### Shared vs local actions",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FileSafe.md:L2532"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00919",
+      "source_obligation_ids": [
+        "obl-776"
+      ],
+      "source_seed_ids": [
+        "seed-883"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-096: Projection freshness vs projection health",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L167"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

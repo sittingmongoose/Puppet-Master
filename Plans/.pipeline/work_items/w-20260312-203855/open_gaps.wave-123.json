@@ -1,0 +1,2682 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-123",
+  "group_ids": [
+    "gapgrp-0489",
+    "gapgrp-0490",
+    "gapgrp-0491",
+    "gapgrp-0492"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-02616",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03339 is partial for Reconcile all approval/recovery schemas onto one key strategy and one field family (`allow",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03339"
+      ],
+      "source_obligation_ids": [
+        "obl-3185"
+      ],
+      "source_seed_ids": [
+        "seed-4245"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "Reconcile all approval/recovery schemas onto one key strategy and one field family (`allowed_action_ids[]`, `blocked_sequence`, explicit mapping for any retained `request_id`).",
+        "allowed_action_ids[]",
+        "blocked_sequence",
+        "request_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02731",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03490 is partial for these reports should bridge into execution; they should not be mistaken for execution",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03490"
+      ],
+      "source_obligation_ids": [
+        "obl-3336"
+      ],
+      "source_seed_ids": [
+        "seed-4484"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "these reports should bridge into execution; they should not be mistaken for execution"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02972",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03809 is partial for 3. Mandatory requested/effective runtime snapshots by reference",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03809"
+      ],
+      "source_obligation_ids": [
+        "obl-3654"
+      ],
+      "source_seed_ids": [
+        "seed-4948"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "3. Mandatory requested/effective runtime snapshots by reference"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03847 is partial for That receipt-style bridge is much closer to where `operational_identity` belongs than the",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03847"
+      ],
+      "source_obligation_ids": [
+        "obl-3692"
+      ],
+      "source_seed_ids": [
+        "seed-5014"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "That receipt-style bridge is much closer to where `operational_identity` belongs than the persona/runtime snapshot is.",
+        "operational_identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03003",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03850 is partial for `operational_identity` belongs in the operational bridge family:",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03850"
+      ],
+      "source_obligation_ids": [
+        "obl-3695"
+      ],
+      "source_seed_ids": [
+        "seed-5018"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "`operational_identity` belongs in the operational bridge family:",
+        "operational_identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03006",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03855 is partial for what external side-effect identity or target context was in play",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03855"
+      ],
+      "source_obligation_ids": [
+        "obl-3700"
+      ],
+      "source_seed_ids": [
+        "seed-5023"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "what external side-effect identity or target context was in play"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03089",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03970 is partial for The bridge fields now want a precedence rule, not just a field inventory.",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03970"
+      ],
+      "source_obligation_ids": [
+        "obl-3814"
+      ],
+      "source_seed_ids": [
+        "seed-5230"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "The bridge fields now want a precedence rule, not just a field inventory."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03091",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03972 is partial for `usage_event_ref` appears on receipts and Usage/docs as the canonical bridge into Ledger/U",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03972"
+      ],
+      "source_obligation_ids": [
+        "obl-3816"
+      ],
+      "source_seed_ids": [
+        "seed-5232"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "`usage_event_ref` appears on receipts and Usage/docs as the canonical bridge into Ledger/Usage history.",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03095",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03978 is partial for receipt records are the canonical bridge to external side-effect lineage for that attempt.",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03978"
+      ],
+      "source_obligation_ids": [
+        "obl-3822"
+      ],
+      "source_seed_ids": [
+        "seed-5238"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "receipt records are the canonical bridge to external side-effect lineage for that attempt."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03099",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03983 is partial for none of these bridge fields should become a replacement primary key:",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03983"
+      ],
+      "source_obligation_ids": [
+        "obl-3827"
+      ],
+      "source_seed_ids": [
+        "seed-5243"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "none of these bridge fields should become a replacement primary key:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03108",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03998 is partial for usage bridge = `usage_event_ref`",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03998"
+      ],
+      "source_obligation_ids": [
+        "obl-3842"
+      ],
+      "source_seed_ids": [
+        "seed-5266"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "usage bridge = `usage_event_ref`",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03112",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04002 is partial for The big risk here is accidental \u201cprimary key drift,\u201d where bridge refs start being treated",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04002"
+      ],
+      "source_obligation_ids": [
+        "obl-3846"
+      ],
+      "source_seed_ids": [
+        "seed-5270"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "The big risk here is accidental \u201cprimary key drift,\u201d where bridge refs start being treated like canonical local identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03466",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04433 is partial for `run-gates` still executes checks with no numbered gate mapping.",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04433"
+      ],
+      "source_obligation_ids": [
+        "obl-4273"
+      ],
+      "source_seed_ids": [
+        "seed-5957"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "`run-gates` still executes checks with no numbered gate mapping.",
+        "run-gates"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03483",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04451 is partial for The owner-doc tranche now has the full requested multi-model sequence and is a strong refe",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04451"
+      ],
+      "source_obligation_ids": [
+        "obl-4291"
+      ],
+      "source_seed_ids": [
+        "seed-6000"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The owner-doc tranche now has the full requested multi-model sequence and is a strong reference set for what \u201cfully swept\u201d looks like."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03521",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04489 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04489"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03908",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04993 is partial for exactly one target field depending on kind:",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "### 8.8 Terminal event arbitration (exactly one `done`)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04993"
+      ],
+      "source_obligation_ids": [
+        "obl-4769"
+      ],
+      "source_seed_ids": [
+        "seed-6867"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "exact_missing_items": [
+        "exactly one target field depending on kind:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04549",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05875 is partial for Research Progress - 2026-03-17 - External full-doc audit integrated into current owner-cle",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05875"
+      ],
+      "source_obligation_ids": [
+        "obl-5647"
+      ],
+      "source_seed_ids": [
+        "seed-8379"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - External full-doc audit integrated into current owner-cleanup stack"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04556",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05886 is partial for 4. provider/runtime identity and bridge adjacencies",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05886"
+      ],
+      "source_obligation_ids": [
+        "obl-5658"
+      ],
+      "source_seed_ids": [
+        "seed-8409"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "4. provider/runtime identity and bridge adjacencies"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04846",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06258 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06258"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05326",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06880 is partial for result: preserve this as an unresolved false-cognate / cross-reference survivor; the probl",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06880"
+      ],
+      "source_obligation_ids": [
+        "obl-6482"
+      ],
+      "source_seed_ids": [
+        "seed-9861"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "result: preserve this as an unresolved false-cognate / cross-reference survivor; the problem is not absence of safe-point canon, it is coexistence of a misleading alternate restore-point reference"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00051",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00051 is missing for run ownership",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "Parent-object field-shape direction now discussed"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00051"
+      ],
+      "source_obligation_ids": [
+        "obl-019"
+      ],
+      "source_seed_ids": [
+        "seed-019"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "exact_missing_items": [
+        "`run` should own execution-session identity/lifecycle, graph linkage, run-level settings snapshot, and active pointers/rollup posture"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00053",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00053 is missing for lane persisted fields",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "Child-record field-shape direction now discussed"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00053"
+      ],
+      "source_obligation_ids": [
+        "obl-021"
+      ],
+      "source_seed_ids": [
+        "seed-021"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "exact_missing_items": [
+        "`lane` should persist project/package linkage, worktree binding, lifecycle, contamination state, safe-point linkage, ancestry, and ownership/display grouping for UI separation"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00265",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00326 is partial for why it matters: define one canonical field envelope for `{project, run, seam, package, nod",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00326"
+      ],
+      "source_obligation_ids": [
+        "obl-184"
+      ],
+      "source_seed_ids": [
+        "seed-210"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "why it matters: define one canonical field envelope for `{project, run, seam, package, node, attempt, lane, promotion, review, resolution_thread}` so schemas stop drifting independently.",
+        "{project, run, seam, package, node, attempt, lane, promotion, review, resolution_thread}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00266",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00327 is partial for why it matters: decide how package overseer and seam overseer divide authority across sche",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00327"
+      ],
+      "source_obligation_ids": [
+        "obl-185"
+      ],
+      "source_seed_ids": [
+        "seed-211"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "why it matters: decide how package overseer and seam overseer divide authority across scheduling, review, promotion, remediation, and graph patch requests."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00419",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00531 is partial for `Node Graph` is explicitly not a widget",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00531"
+      ],
+      "source_obligation_ids": [
+        "obl-388"
+      ],
+      "source_seed_ids": [
+        "seed-450"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "`Node Graph` is explicitly not a widget",
+        "Node Graph"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00432",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00549 is partial for seam health projection",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00549"
+      ],
+      "source_obligation_ids": [
+        "obl-406"
+      ],
+      "source_seed_ids": [
+        "seed-468"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "seam health projection"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00433",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00550 is partial for package activity projection",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00550"
+      ],
+      "source_obligation_ids": [
+        "obl-407"
+      ],
+      "source_seed_ids": [
+        "seed-469"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "package activity projection"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00458",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00578 is partial for `Node Graph` remains a fixed native surface with right-side inspector, not a widget.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00578"
+      ],
+      "source_obligation_ids": [
+        "obl-435"
+      ],
+      "source_seed_ids": [
+        "seed-500"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "`Node Graph` remains a fixed native surface with right-side inspector, not a widget.",
+        "Node Graph"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00519",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00667 is partial for in historical mode, `Progress` becomes a historical run summary surface",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00667"
+      ],
+      "source_obligation_ids": [
+        "obl-524"
+      ],
+      "source_seed_ids": [
+        "seed-600"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "in historical mode, `Progress` becomes a historical run summary surface",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00638",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00813 is partial for `concern source event/ref` = review finding, corroboration result, blocked episode, patch",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-032: Concern linkage to adjacent families"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00813"
+      ],
+      "source_obligation_ids": [
+        "obl-670"
+      ],
+      "source_seed_ids": [
+        "seed-770"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "exact_missing_items": [
+        "`concern source event/ref` = review finding, corroboration result, blocked episode, patch result, recovery outcome, etc. that supports the concern",
+        "concern source event/ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00750",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00983 is partial for package review",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00983"
+      ],
+      "source_obligation_ids": [
+        "obl-840"
+      ],
+      "source_seed_ids": [
+        "seed-985"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "exact_missing_items": [
+        "package review"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00751",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00984 is partial for seam review",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00984"
+      ],
+      "source_obligation_ids": [
+        "obl-841"
+      ],
+      "source_seed_ids": [
+        "seed-986"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "exact_missing_items": [
+        "seam review"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00837",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01077 is partial for Good canonical display groups:",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01077"
+      ],
+      "source_obligation_ids": [
+        "obl-934"
+      ],
+      "source_seed_ids": [
+        "seed-1101"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "Good canonical display groups:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00856",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01104 is partial for if requested == effective and nothing was skipped/clamped, compact display is fine",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01104"
+      ],
+      "source_obligation_ids": [
+        "obl-961"
+      ],
+      "source_seed_ids": [
+        "seed-1128"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "if requested == effective and nothing was skipped/clamped, compact display is fine"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00872",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01123 is partial for The same display grammar should extend beyond provider/model/persona/account.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01123"
+      ],
+      "source_obligation_ids": [
+        "obl-980"
+      ],
+      "source_seed_ids": [
+        "seed-1148"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "The same display grammar should extend beyond provider/model/persona/account."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00883",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01135 is partial for Historical run views should show the frozen requested/effective state from that run, not r",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01135"
+      ],
+      "source_obligation_ids": [
+        "obl-992"
+      ],
+      "source_seed_ids": [
+        "seed-1160"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "Historical run views should show the frozen requested/effective state from that run, not recompute from current settings."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00893",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01145 is partial for historical run views must stay frozen to historical requested/effective state",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01145"
+      ],
+      "source_obligation_ids": [
+        "obl-1002"
+      ],
+      "source_seed_ids": [
+        "seed-1170"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "historical run views must stay frozen to historical requested/effective state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00921",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01177 is partial for `Review pass default`",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01177"
+      ],
+      "source_obligation_ids": [
+        "obl-1034"
+      ],
+      "source_seed_ids": [
+        "seed-1212"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "`Review pass default`",
+        "Review pass default"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01058",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01349 is partial for So the rewrite should not assume the graph is the only heavy surface.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01349"
+      ],
+      "source_obligation_ids": [
+        "obl-1206"
+      ],
+      "source_seed_ids": [
+        "seed-1442"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "exact_missing_items": [
+        "So the rewrite should not assume the graph is the only heavy surface."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01086",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01382 is partial for This seam reinforces the earlier search/deep-link work:",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01382"
+      ],
+      "source_obligation_ids": [
+        "obl-1239"
+      ],
+      "source_seed_ids": [
+        "seed-1480"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "exact_missing_items": [
+        "This seam reinforces the earlier search/deep-link work:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-03339",
+    "cov-03490",
+    "cov-03809",
+    "cov-03847",
+    "cov-03850",
+    "cov-03855",
+    "cov-03970",
+    "cov-03972",
+    "cov-03978",
+    "cov-03983",
+    "cov-03998",
+    "cov-04002",
+    "cov-04433",
+    "cov-04451",
+    "cov-04489",
+    "cov-04993",
+    "cov-05875",
+    "cov-05886",
+    "cov-06258",
+    "cov-06880",
+    "cov-00051",
+    "cov-00053",
+    "cov-00326",
+    "cov-00327",
+    "cov-00531",
+    "cov-00549",
+    "cov-00550",
+    "cov-00578",
+    "cov-00667",
+    "cov-00813",
+    "cov-00983",
+    "cov-00984",
+    "cov-01077",
+    "cov-01104",
+    "cov-01123",
+    "cov-01135",
+    "cov-01145",
+    "cov-01177",
+    "cov-01349",
+    "cov-01382"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-019",
+    "obl-021",
+    "obl-1002",
+    "obl-1034",
+    "obl-1206",
+    "obl-1239",
+    "obl-184",
+    "obl-185",
+    "obl-3185",
+    "obl-3336",
+    "obl-3654",
+    "obl-3692",
+    "obl-3695",
+    "obl-3700",
+    "obl-3814",
+    "obl-3816",
+    "obl-3822",
+    "obl-3827",
+    "obl-3842",
+    "obl-3846",
+    "obl-388",
+    "obl-406",
+    "obl-407",
+    "obl-4273",
+    "obl-4291",
+    "obl-4292",
+    "obl-435",
+    "obl-4769",
+    "obl-524",
+    "obl-5647",
+    "obl-5658",
+    "obl-5986",
+    "obl-6482",
+    "obl-670",
+    "obl-840",
+    "obl-841",
+    "obl-934",
+    "obl-961",
+    "obl-980",
+    "obl-992"
+  ],
+  "source_seed_ids_represented": [
+    "seed-019",
+    "seed-021",
+    "seed-1101",
+    "seed-1128",
+    "seed-1148",
+    "seed-1160",
+    "seed-1170",
+    "seed-1212",
+    "seed-1442",
+    "seed-1480",
+    "seed-210",
+    "seed-211",
+    "seed-4245",
+    "seed-4484",
+    "seed-450",
+    "seed-468",
+    "seed-469",
+    "seed-4948",
+    "seed-500",
+    "seed-5014",
+    "seed-5018",
+    "seed-5023",
+    "seed-5230",
+    "seed-5232",
+    "seed-5238",
+    "seed-5243",
+    "seed-5266",
+    "seed-5270",
+    "seed-5957",
+    "seed-600",
+    "seed-6000",
+    "seed-6001",
+    "seed-6867",
+    "seed-770",
+    "seed-8379",
+    "seed-8409",
+    "seed-9006",
+    "seed-985",
+    "seed-986",
+    "seed-9861"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0004",
+    "shard-0010",
+    "shard-0012",
+    "shard-0014",
+    "shard-0016",
+    "shard-0018",
+    "shard-0019",
+    "shard-0020",
+    "shard-0023",
+    "shard-0024",
+    "shard-0046",
+    "shard-0048",
+    "shard-0051",
+    "shard-0052",
+    "shard-0053",
+    "shard-0058",
+    "shard-0059",
+    "shard-0066",
+    "shard-0077",
+    "shard-0082",
+    "shard-0088"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-02616",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03339 is partial for Reconcile all approval/recovery schemas onto one key strategy and one field family (`allow",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03339"
+      ],
+      "source_obligation_ids": [
+        "obl-3185"
+      ],
+      "source_seed_ids": [
+        "seed-4245"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "Reconcile all approval/recovery schemas onto one key strategy and one field family (`allowed_action_ids[]`, `blocked_sequence`, explicit mapping for any retained `request_id`).",
+        "allowed_action_ids[]",
+        "blocked_sequence",
+        "request_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02731",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03490 is partial for these reports should bridge into execution; they should not be mistaken for execution",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03490"
+      ],
+      "source_obligation_ids": [
+        "obl-3336"
+      ],
+      "source_seed_ids": [
+        "seed-4484"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "these reports should bridge into execution; they should not be mistaken for execution"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02972",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03809 is partial for 3. Mandatory requested/effective runtime snapshots by reference",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03809"
+      ],
+      "source_obligation_ids": [
+        "obl-3654"
+      ],
+      "source_seed_ids": [
+        "seed-4948"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "3. Mandatory requested/effective runtime snapshots by reference"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03847 is partial for That receipt-style bridge is much closer to where `operational_identity` belongs than the",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03847"
+      ],
+      "source_obligation_ids": [
+        "obl-3692"
+      ],
+      "source_seed_ids": [
+        "seed-5014"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "That receipt-style bridge is much closer to where `operational_identity` belongs than the persona/runtime snapshot is.",
+        "operational_identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03003",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03850 is partial for `operational_identity` belongs in the operational bridge family:",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03850"
+      ],
+      "source_obligation_ids": [
+        "obl-3695"
+      ],
+      "source_seed_ids": [
+        "seed-5018"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "`operational_identity` belongs in the operational bridge family:",
+        "operational_identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03006",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03855 is partial for what external side-effect identity or target context was in play",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03855"
+      ],
+      "source_obligation_ids": [
+        "obl-3700"
+      ],
+      "source_seed_ids": [
+        "seed-5023"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "what external side-effect identity or target context was in play"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03089",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03970 is partial for The bridge fields now want a precedence rule, not just a field inventory.",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03970"
+      ],
+      "source_obligation_ids": [
+        "obl-3814"
+      ],
+      "source_seed_ids": [
+        "seed-5230"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "The bridge fields now want a precedence rule, not just a field inventory."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03091",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03972 is partial for `usage_event_ref` appears on receipts and Usage/docs as the canonical bridge into Ledger/U",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03972"
+      ],
+      "source_obligation_ids": [
+        "obl-3816"
+      ],
+      "source_seed_ids": [
+        "seed-5232"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "`usage_event_ref` appears on receipts and Usage/docs as the canonical bridge into Ledger/Usage history.",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03095",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03978 is partial for receipt records are the canonical bridge to external side-effect lineage for that attempt.",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03978"
+      ],
+      "source_obligation_ids": [
+        "obl-3822"
+      ],
+      "source_seed_ids": [
+        "seed-5238"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "receipt records are the canonical bridge to external side-effect lineage for that attempt."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03099",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03983 is partial for none of these bridge fields should become a replacement primary key:",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03983"
+      ],
+      "source_obligation_ids": [
+        "obl-3827"
+      ],
+      "source_seed_ids": [
+        "seed-5243"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "none of these bridge fields should become a replacement primary key:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03108",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03998 is partial for usage bridge = `usage_event_ref`",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03998"
+      ],
+      "source_obligation_ids": [
+        "obl-3842"
+      ],
+      "source_seed_ids": [
+        "seed-5266"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "usage bridge = `usage_event_ref`",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03112",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04002 is partial for The big risk here is accidental \u201cprimary key drift,\u201d where bridge refs start being treated",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04002"
+      ],
+      "source_obligation_ids": [
+        "obl-3846"
+      ],
+      "source_seed_ids": [
+        "seed-5270"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "The big risk here is accidental \u201cprimary key drift,\u201d where bridge refs start being treated like canonical local identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03466",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04433 is partial for `run-gates` still executes checks with no numbered gate mapping.",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04433"
+      ],
+      "source_obligation_ids": [
+        "obl-4273"
+      ],
+      "source_seed_ids": [
+        "seed-5957"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "`run-gates` still executes checks with no numbered gate mapping.",
+        "run-gates"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03483",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04451 is partial for The owner-doc tranche now has the full requested multi-model sequence and is a strong refe",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04451"
+      ],
+      "source_obligation_ids": [
+        "obl-4291"
+      ],
+      "source_seed_ids": [
+        "seed-6000"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The owner-doc tranche now has the full requested multi-model sequence and is a strong reference set for what \u201cfully swept\u201d looks like."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03521",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04489 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04489"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03908",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04993 is partial for exactly one target field depending on kind:",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "### 8.8 Terminal event arbitration (exactly one `done`)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04993"
+      ],
+      "source_obligation_ids": [
+        "obl-4769"
+      ],
+      "source_seed_ids": [
+        "seed-6867"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "exact_missing_items": [
+        "exactly one target field depending on kind:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04549",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05875 is partial for Research Progress - 2026-03-17 - External full-doc audit integrated into current owner-cle",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05875"
+      ],
+      "source_obligation_ids": [
+        "obl-5647"
+      ],
+      "source_seed_ids": [
+        "seed-8379"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - External full-doc audit integrated into current owner-cleanup stack"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04556",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05886 is partial for 4. provider/runtime identity and bridge adjacencies",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05886"
+      ],
+      "source_obligation_ids": [
+        "obl-5658"
+      ],
+      "source_seed_ids": [
+        "seed-8409"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "4. provider/runtime identity and bridge adjacencies"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04846",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06258 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06258"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05326",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06880 is partial for result: preserve this as an unresolved false-cognate / cross-reference survivor; the probl",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06880"
+      ],
+      "source_obligation_ids": [
+        "obl-6482"
+      ],
+      "source_seed_ids": [
+        "seed-9861"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "result: preserve this as an unresolved false-cognate / cross-reference survivor; the problem is not absence of safe-point canon, it is coexistence of a misleading alternate restore-point reference"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00051",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00051 is missing for run ownership",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "Parent-object field-shape direction now discussed"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00051"
+      ],
+      "source_obligation_ids": [
+        "obl-019"
+      ],
+      "source_seed_ids": [
+        "seed-019"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "exact_missing_items": [
+        "`run` should own execution-session identity/lifecycle, graph linkage, run-level settings snapshot, and active pointers/rollup posture"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00053",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00053 is missing for lane persisted fields",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "Child-record field-shape direction now discussed"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00053"
+      ],
+      "source_obligation_ids": [
+        "obl-021"
+      ],
+      "source_seed_ids": [
+        "seed-021"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "exact_missing_items": [
+        "`lane` should persist project/package linkage, worktree binding, lifecycle, contamination state, safe-point linkage, ancestry, and ownership/display grouping for UI separation"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00265",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00326 is partial for why it matters: define one canonical field envelope for `{project, run, seam, package, nod",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00326"
+      ],
+      "source_obligation_ids": [
+        "obl-184"
+      ],
+      "source_seed_ids": [
+        "seed-210"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "why it matters: define one canonical field envelope for `{project, run, seam, package, node, attempt, lane, promotion, review, resolution_thread}` so schemas stop drifting independently.",
+        "{project, run, seam, package, node, attempt, lane, promotion, review, resolution_thread}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00266",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00327 is partial for why it matters: decide how package overseer and seam overseer divide authority across sche",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00327"
+      ],
+      "source_obligation_ids": [
+        "obl-185"
+      ],
+      "source_seed_ids": [
+        "seed-211"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "why it matters: decide how package overseer and seam overseer divide authority across scheduling, review, promotion, remediation, and graph patch requests."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00419",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00531 is partial for `Node Graph` is explicitly not a widget",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00531"
+      ],
+      "source_obligation_ids": [
+        "obl-388"
+      ],
+      "source_seed_ids": [
+        "seed-450"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "`Node Graph` is explicitly not a widget",
+        "Node Graph"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00432",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00549 is partial for seam health projection",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00549"
+      ],
+      "source_obligation_ids": [
+        "obl-406"
+      ],
+      "source_seed_ids": [
+        "seed-468"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "seam health projection"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00433",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00550 is partial for package activity projection",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00550"
+      ],
+      "source_obligation_ids": [
+        "obl-407"
+      ],
+      "source_seed_ids": [
+        "seed-469"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "package activity projection"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00458",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00578 is partial for `Node Graph` remains a fixed native surface with right-side inspector, not a widget.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00578"
+      ],
+      "source_obligation_ids": [
+        "obl-435"
+      ],
+      "source_seed_ids": [
+        "seed-500"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "`Node Graph` remains a fixed native surface with right-side inspector, not a widget.",
+        "Node Graph"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00519",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00667 is partial for in historical mode, `Progress` becomes a historical run summary surface",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00667"
+      ],
+      "source_obligation_ids": [
+        "obl-524"
+      ],
+      "source_seed_ids": [
+        "seed-600"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "in historical mode, `Progress` becomes a historical run summary surface",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00638",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00813 is partial for `concern source event/ref` = review finding, corroboration result, blocked episode, patch",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-032: Concern linkage to adjacent families"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00813"
+      ],
+      "source_obligation_ids": [
+        "obl-670"
+      ],
+      "source_seed_ids": [
+        "seed-770"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "exact_missing_items": [
+        "`concern source event/ref` = review finding, corroboration result, blocked episode, patch result, recovery outcome, etc. that supports the concern",
+        "concern source event/ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00750",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00983 is partial for package review",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00983"
+      ],
+      "source_obligation_ids": [
+        "obl-840"
+      ],
+      "source_seed_ids": [
+        "seed-985"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "exact_missing_items": [
+        "package review"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00751",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00984 is partial for seam review",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00984"
+      ],
+      "source_obligation_ids": [
+        "obl-841"
+      ],
+      "source_seed_ids": [
+        "seed-986"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "exact_missing_items": [
+        "seam review"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00837",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01077 is partial for Good canonical display groups:",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01077"
+      ],
+      "source_obligation_ids": [
+        "obl-934"
+      ],
+      "source_seed_ids": [
+        "seed-1101"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "Good canonical display groups:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00856",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01104 is partial for if requested == effective and nothing was skipped/clamped, compact display is fine",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01104"
+      ],
+      "source_obligation_ids": [
+        "obl-961"
+      ],
+      "source_seed_ids": [
+        "seed-1128"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "if requested == effective and nothing was skipped/clamped, compact display is fine"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00872",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01123 is partial for The same display grammar should extend beyond provider/model/persona/account.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01123"
+      ],
+      "source_obligation_ids": [
+        "obl-980"
+      ],
+      "source_seed_ids": [
+        "seed-1148"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "The same display grammar should extend beyond provider/model/persona/account."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00883",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01135 is partial for Historical run views should show the frozen requested/effective state from that run, not r",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01135"
+      ],
+      "source_obligation_ids": [
+        "obl-992"
+      ],
+      "source_seed_ids": [
+        "seed-1160"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "Historical run views should show the frozen requested/effective state from that run, not recompute from current settings."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00893",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01145 is partial for historical run views must stay frozen to historical requested/effective state",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Fidelity recovery cov-038: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01145"
+      ],
+      "source_obligation_ids": [
+        "obl-1002"
+      ],
+      "source_seed_ids": [
+        "seed-1170"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "historical run views must stay frozen to historical requested/effective state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00921",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01177 is partial for `Review pass default`",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01177"
+      ],
+      "source_obligation_ids": [
+        "obl-1034"
+      ],
+      "source_seed_ids": [
+        "seed-1212"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "`Review pass default`",
+        "Review pass default"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01058",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01349 is partial for So the rewrite should not assume the graph is the only heavy surface.",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01349"
+      ],
+      "source_obligation_ids": [
+        "obl-1206"
+      ],
+      "source_seed_ids": [
+        "seed-1442"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "exact_missing_items": [
+        "So the rewrite should not assume the graph is the only heavy surface."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01086",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01382 is partial for This seam reinforces the earlier search/deep-link work:",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01382"
+      ],
+      "source_obligation_ids": [
+        "obl-1239"
+      ],
+      "source_seed_ids": [
+        "seed-1480"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "exact_missing_items": [
+        "This seam reinforces the earlier search/deep-link work:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

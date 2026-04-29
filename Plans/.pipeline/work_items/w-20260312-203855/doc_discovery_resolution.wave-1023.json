@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1023",
+  "group_ids": [
+    "discgrp-4089",
+    "discgrp-4090",
+    "discgrp-4091",
+    "discgrp-4092"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04403",
+      "source_obligation_ids": [
+        "obl-4243"
+      ],
+      "source_seed_ids": [
+        "seed-5915"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04404",
+      "source_obligation_ids": [
+        "obl-4244"
+      ],
+      "source_seed_ids": [
+        "seed-5916"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Runtime and routing terms",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L70"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04405",
+      "source_obligation_ids": [
+        "obl-4245"
+      ],
+      "source_seed_ids": [
+        "seed-5917"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "# Puppet Master \u2014 User-Project Project Plan Package Outputs (SSOT)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04406",
+      "source_obligation_ids": [
+        "obl-4246"
+      ],
+      "source_seed_ids": [
+        "seed-5918"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Scope split (durable store boundaries)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L577"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

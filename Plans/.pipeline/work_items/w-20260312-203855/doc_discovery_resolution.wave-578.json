@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-578",
+  "group_ids": [
+    "discgrp-2309",
+    "discgrp-2310",
+    "discgrp-2311",
+    "discgrp-2312"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02584",
+      "source_obligation_ids": [
+        "obl-2432"
+      ],
+      "source_seed_ids": [
+        "seed-3156"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-02585",
+      "source_obligation_ids": [
+        "obl-2433"
+      ],
+      "source_seed_ids": [
+        "seed-3157"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-02586",
+      "source_obligation_ids": [
+        "obl-2434"
+      ],
+      "source_seed_ids": [
+        "seed-3158"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/rewrite-tie-in-memo.md",
+      "new_heading_hint": "# Puppet Master Rewrite Tie-In Contract (Active)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02587",
+      "source_obligation_ids": [
+        "obl-2435"
+      ],
+      "source_seed_ids": [
+        "seed-3159"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Recommended minimum concern record shape",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L199"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

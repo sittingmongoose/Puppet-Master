@@ -1,0 +1,115 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-193",
+  "group_ids": [
+    "discgrp-0769",
+    "discgrp-0770",
+    "discgrp-0771",
+    "discgrp-0772"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01016",
+      "source_obligation_ids": [
+        "obl-873"
+      ],
+      "source_seed_ids": [
+        "seed-1023"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-018: Export taxonomy and manifest contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L31"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01017",
+      "source_obligation_ids": [
+        "obl-874"
+      ],
+      "source_seed_ids": [
+        "seed-1024",
+        "seed-1027",
+        "seed-1877",
+        "seed-1880",
+        "seed-1885",
+        "seed-6074"
+      ],
+      "source_shard_ids": [
+        "shard-0018",
+        "shard-0027",
+        "shard-0059"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L35"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01018",
+      "source_obligation_ids": [
+        "obl-875"
+      ],
+      "source_seed_ids": [
+        "seed-1025",
+        "seed-1029",
+        "seed-1878",
+        "seed-1882",
+        "seed-1886",
+        "seed-6075"
+      ],
+      "source_shard_ids": [
+        "shard-0018",
+        "shard-0027",
+        "shard-0059"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-018: Export taxonomy and manifest contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L31"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01019",
+      "source_obligation_ids": [
+        "obl-876"
+      ],
+      "source_seed_ids": [
+        "seed-1026",
+        "seed-1030",
+        "seed-1879",
+        "seed-1884",
+        "seed-1890",
+        "seed-6073"
+      ],
+      "source_shard_ids": [
+        "shard-0018",
+        "shard-0027",
+        "shard-0059"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "## 7. Plan graph requirements (**sharded-only canonical** + optional derived export)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L256"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

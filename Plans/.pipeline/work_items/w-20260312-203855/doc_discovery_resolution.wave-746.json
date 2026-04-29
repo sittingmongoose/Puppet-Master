@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-746",
+  "group_ids": [
+    "discgrp-2981",
+    "discgrp-2982",
+    "discgrp-2983",
+    "discgrp-2984"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03261",
+      "source_obligation_ids": [
+        "obl-3107"
+      ],
+      "source_seed_ids": [
+        "seed-4130"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "## Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Tools.md:L1254"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03262",
+      "source_obligation_ids": [
+        "obl-3108"
+      ],
+      "source_seed_ids": [
+        "seed-4131"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### Fidelity recovery cov-041: Source Control and worktree handshake",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03263",
+      "source_obligation_ids": [
+        "obl-3109"
+      ],
+      "source_seed_ids": [
+        "seed-4132"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Widget_System.md",
+      "new_heading_hint": "## 4. Orchestrator Progress widget scope and catalog linkage",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Widget_System.md:L57"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03264",
+      "source_obligation_ids": [
+        "obl-3110"
+      ],
+      "source_seed_ids": [
+        "seed-4133"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

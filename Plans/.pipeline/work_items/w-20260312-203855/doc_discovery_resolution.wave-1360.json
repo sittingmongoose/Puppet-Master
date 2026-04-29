@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1360",
+  "group_ids": [
+    "discgrp-5437",
+    "discgrp-5438",
+    "discgrp-5439",
+    "discgrp-5440"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05884",
+      "source_obligation_ids": [
+        "obl-5656"
+      ],
+      "source_seed_ids": [
+        "seed-8388"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05885",
+      "source_obligation_ids": [
+        "obl-5657"
+      ],
+      "source_seed_ids": [
+        "seed-8396"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05886",
+      "source_obligation_ids": [
+        "obl-5658"
+      ],
+      "source_seed_ids": [
+        "seed-8409"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "new_heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05887",
+      "source_obligation_ids": [
+        "obl-5659"
+      ],
+      "source_seed_ids": [
+        "seed-8415"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/BinaryLocator_Spec.md",
+      "new_heading_hint": "### Canonical sources (reference, don't duplicate)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L23"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

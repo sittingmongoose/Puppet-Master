@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-877",
+  "group_ids": [
+    "discgrp-3505",
+    "discgrp-3506",
+    "discgrp-3507",
+    "discgrp-3508"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03799",
+      "source_obligation_ids": [
+        "obl-3644"
+      ],
+      "source_seed_ids": [
+        "seed-4927"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## Fidelity recovery addendum",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03800",
+      "source_obligation_ids": [
+        "obl-3645"
+      ],
+      "source_seed_ids": [
+        "seed-4928"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Prompt_Pipeline.md",
+      "new_heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03801",
+      "source_obligation_ids": [
+        "obl-3646"
+      ],
+      "source_seed_ids": [
+        "seed-4929"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1110"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03802",
+      "source_obligation_ids": [
+        "obl-3647"
+      ],
+      "source_seed_ids": [
+        "seed-4930"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-036: Promotion classes and gate evidence",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L95"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,262 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-175",
+  "group_ids": [
+    "pktgrp-0697",
+    "pktgrp-0698",
+    "pktgrp-0699",
+    "pktgrp-0700"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0142",
+      "source_reconciliation_target_id": "target-0649",
+      "source_reconciliation_target_ids": [
+        "target-0649"
+      ],
+      "path": "Plans/storage-plan.md",
+      "operation": "observe_only",
+      "live_anchor": "## Fidelity recovery addendum (Plans/storage-plan.md:L3)",
+      "coverage_row_ids": [
+        "cov-04182"
+      ],
+      "source_obligation_ids": [
+        "obl-4022"
+      ],
+      "source_seed_ids": [
+        "seed-5541"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4022"
+        ],
+        "source_seed_ids": [
+          "seed-5541"
+        ],
+        "source_shard_ids": [
+          "shard-0055"
+        ]
+      },
+      "gap_ids": [
+        "gap-03257"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Wiring_Matrix.schema.json` still cannot represent the normative recovery producer/consumer rows or wildcard command-family requirements now described in the doc.",
+        "Wiring_Matrix.schema.json"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-bb30de093a79",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0143",
+      "source_reconciliation_target_id": "target-0666",
+      "source_reconciliation_target_ids": [
+        "target-0666"
+      ],
+      "path": "Plans/storage-plan.md",
+      "operation": "observe_only",
+      "live_anchor": "### Cross-surface receipt record (storage rules) (Plans/storage-plan.md:L653)",
+      "coverage_row_ids": [
+        "cov-07144"
+      ],
+      "source_obligation_ids": [
+        "obl-6717"
+      ],
+      "source_seed_ids": [
+        "seed-10318"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-6717"
+        ],
+        "source_seed_ids": [
+          "seed-10318"
+        ],
+        "source_shard_ids": [
+          "shard-0091"
+        ]
+      },
+      "gap_ids": [
+        "gap-05546"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and receipt blocker families with additional broken storage-plan anchor evidence and downgraded the overstated restore-point contradiction, and two bounded follow-up sweeps then produced zero new exact missing items."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-fb37e762cefe",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0144",
+      "source_reconciliation_target_id": "target-0669",
+      "source_reconciliation_target_ids": [
+        "target-0669"
+      ],
+      "path": "Plans/storage-plan.md",
+      "operation": "observe_only",
+      "live_anchor": "### Fidelity recovery cov-020: Concern record family definition (Plans/storage-plan.md:L43)",
+      "coverage_row_ids": [
+        "cov-04418"
+      ],
+      "source_obligation_ids": [
+        "obl-4258"
+      ],
+      "source_seed_ids": [
+        "seed-5942"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4258"
+        ],
+        "source_seed_ids": [
+          "seed-5942"
+        ],
+        "source_shard_ids": [
+          "shard-0058"
+        ]
+      },
+      "gap_ids": [
+        "gap-03454"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Wiring_Matrix.schema.json` still cannot represent wildcard family rows or the producer/consumer normative rows the docs already require.",
+        "Wiring_Matrix.schema.json"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-1457a82c1b0d",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0145",
+      "source_reconciliation_target_id": "target-0672",
+      "source_reconciliation_target_ids": [
+        "target-0672"
+      ],
+      "path": "Plans/storage-plan.md",
+      "operation": "observe_only",
+      "live_anchor": "### Fidelity recovery cov-043: Source Control and worktree handshake (Plans/storage-plan.md:L79)",
+      "coverage_row_ids": [
+        "cov-03540"
+      ],
+      "source_obligation_ids": [
+        "obl-3386"
+      ],
+      "source_seed_ids": [
+        "seed-4562"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3386"
+        ],
+        "source_seed_ids": [
+          "seed-4562"
+        ],
+        "source_shard_ids": [
+          "shard-0048"
+        ]
+      },
+      "gap_ids": [
+        "gap-02768"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Keep Source Control worktree-first at the UI level, but storage needs both durable worktree identity and lane lineage."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-db4975d9dd9f",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-04182",
+    "cov-07144",
+    "cov-04418",
+    "cov-03540"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-4022",
+    "obl-6717",
+    "obl-4258",
+    "obl-3386"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-5541",
+    "seed-10318",
+    "seed-5942",
+    "seed-4562"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0055",
+    "shard-0091",
+    "shard-0058",
+    "shard-0048"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "`Wiring_Matrix.schema.json` still cannot represent the normative recovery producer/consumer rows or wildcard command-family requirements now described in the doc.",
+    "Wiring_Matrix.schema.json",
+    "summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and receipt blocker families with additional broken storage-plan anchor evidence and downgraded the overstated restore-point contradiction, and two bounded follow-up sweeps then produced zero new exact missing items.",
+    "`Wiring_Matrix.schema.json` still cannot represent wildcard family rows or the producer/consumer normative rows the docs already require.",
+    "Keep Source Control worktree-first at the UI level, but storage needs both durable worktree identity and lane lineage."
+  ],
+  "blocked_targets": []
+}

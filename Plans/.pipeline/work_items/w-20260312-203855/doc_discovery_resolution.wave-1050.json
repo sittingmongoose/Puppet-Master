@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1050",
+  "group_ids": [
+    "discgrp-4197",
+    "discgrp-4198",
+    "discgrp-4199",
+    "discgrp-4200"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04574",
+      "source_obligation_ids": [
+        "obl-4352"
+      ],
+      "source_seed_ids": [
+        "seed-6131"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FileSafe.md:L2518"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04575",
+      "source_obligation_ids": [
+        "obl-4353"
+      ],
+      "source_seed_ids": [
+        "seed-6132"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "# Crosswalk (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04576",
+      "source_obligation_ids": [
+        "obl-4354"
+      ],
+      "source_seed_ids": [
+        "seed-6133"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04577",
+      "source_obligation_ids": [
+        "obl-4355"
+      ],
+      "source_seed_ids": [
+        "seed-6134"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

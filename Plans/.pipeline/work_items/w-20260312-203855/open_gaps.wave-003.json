@@ -1,0 +1,330 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-003",
+  "group_ids": [
+    "gapgrp-0009",
+    "gapgrp-0010",
+    "gapgrp-0011",
+    "gapgrp-0012"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-00012",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-00012 is missing for override-display / settings hierarchy tokens to retire",
+      "affected_targets": [
+        {
+          "path": "Plans/.../current_state.md",
+          "heading": "Override-display direction now clarified"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00012"
+      ],
+      "source_obligation_ids": [
+        "obl-005"
+      ],
+      "source_seed_ids": [
+        "seed-005"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "Retire/replace legacy locality tokens with explicit scope labels: `Inherited`, `Explicit`, `Computed`",
+        "Treat `Runtime only` as computed truth, not user configuration"
+      ],
+      "stale_tokens": [
+        "Runtime only",
+        "Inherited",
+        "Explicit",
+        "Computed"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00020",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "consumer coverage row cov-00020 is missing for projection consumers and widget shell contract",
+      "affected_targets": [
+        {
+          "path": "Plans/.../dashboard*",
+          "heading": "Widget-system data-contract direction now clarified"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00020"
+      ],
+      "source_obligation_ids": [
+        "obl-007"
+      ],
+      "source_seed_ids": [
+        "seed-007"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "Orchestrator widgets should consume stable shared projections rather than raw event streams or bespoke queries",
+        "widget shell needs widget identity/type, scope, filter/sort/display config, projection ref",
+        "Run Summary, Seam Summary, Concern Summary, Account / Usage Pressure, Recent Major Events should be broadly reusable across Orchestrator / Dashboard / Projects"
+      ],
+      "stale_tokens": [
+        "raw event streams",
+        "bespoke queries"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00026",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00026 is missing for stale projection gating / trust degradation",
+      "affected_targets": [
+        {
+          "path": "Plans/.../dashboard*",
+          "heading": "Action-gating direction under degraded projections now clarified"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00026"
+      ],
+      "source_obligation_ids": [
+        "obl-009"
+      ],
+      "source_seed_ids": [
+        "seed-009"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "Actions that change execution/promotion/recovery/approval truth require fresh-enough projection state",
+        "UI should explain gating inline: what is stale, why it matters, what the user can do next",
+        "Projection health becoming an operational concern must mint a real concern rather than stay a silent widget problem"
+      ],
+      "stale_tokens": [
+        "silent widget problem"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00033",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "consumer coverage row cov-00033 is missing for shared concern projection across surfaces",
+      "affected_targets": [
+        {
+          "path": "Plans/.../evidence*",
+          "heading": "Shared concern projection rule now clarified"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00033"
+      ],
+      "source_obligation_ids": [
+        "obl-011"
+      ],
+      "source_seed_ids": [
+        "seed-011"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "All major surfaces should project the same concern model rather than inventing local versions",
+        "`Progress` = operational attention projection",
+        "`Seams` = integration/governance projection",
+        "`Evidence` = proof-backed concern projection",
+        "`History` = concern lifecycle timeline projection",
+        "`Ledger` = exact structured concern-record projection"
+      ],
+      "stale_tokens": [
+        "local versions"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00012",
+    "cov-00020",
+    "cov-00026",
+    "cov-00033"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-005",
+    "obl-007",
+    "obl-009",
+    "obl-011"
+  ],
+  "source_seed_ids_represented": [
+    "seed-005",
+    "seed-007",
+    "seed-009",
+    "seed-011"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0002"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-00012",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-00012 is missing for override-display / settings hierarchy tokens to retire",
+      "affected_targets": [
+        {
+          "path": "Plans/.../current_state.md",
+          "heading": "Override-display direction now clarified"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00012"
+      ],
+      "source_obligation_ids": [
+        "obl-005"
+      ],
+      "source_seed_ids": [
+        "seed-005"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "Retire/replace legacy locality tokens with explicit scope labels: `Inherited`, `Explicit`, `Computed`",
+        "Treat `Runtime only` as computed truth, not user configuration"
+      ],
+      "stale_tokens": [
+        "Runtime only",
+        "Inherited",
+        "Explicit",
+        "Computed"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00020",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "consumer coverage row cov-00020 is missing for projection consumers and widget shell contract",
+      "affected_targets": [
+        {
+          "path": "Plans/.../dashboard*",
+          "heading": "Widget-system data-contract direction now clarified"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00020"
+      ],
+      "source_obligation_ids": [
+        "obl-007"
+      ],
+      "source_seed_ids": [
+        "seed-007"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "Orchestrator widgets should consume stable shared projections rather than raw event streams or bespoke queries",
+        "widget shell needs widget identity/type, scope, filter/sort/display config, projection ref",
+        "Run Summary, Seam Summary, Concern Summary, Account / Usage Pressure, Recent Major Events should be broadly reusable across Orchestrator / Dashboard / Projects"
+      ],
+      "stale_tokens": [
+        "raw event streams",
+        "bespoke queries"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00026",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00026 is missing for stale projection gating / trust degradation",
+      "affected_targets": [
+        {
+          "path": "Plans/.../dashboard*",
+          "heading": "Action-gating direction under degraded projections now clarified"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00026"
+      ],
+      "source_obligation_ids": [
+        "obl-009"
+      ],
+      "source_seed_ids": [
+        "seed-009"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "Actions that change execution/promotion/recovery/approval truth require fresh-enough projection state",
+        "UI should explain gating inline: what is stale, why it matters, what the user can do next",
+        "Projection health becoming an operational concern must mint a real concern rather than stay a silent widget problem"
+      ],
+      "stale_tokens": [
+        "silent widget problem"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00033",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "consumer coverage row cov-00033 is missing for shared concern projection across surfaces",
+      "affected_targets": [
+        {
+          "path": "Plans/.../evidence*",
+          "heading": "Shared concern projection rule now clarified"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00033"
+      ],
+      "source_obligation_ids": [
+        "obl-011"
+      ],
+      "source_seed_ids": [
+        "seed-011"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "All major surfaces should project the same concern model rather than inventing local versions",
+        "`Progress` = operational attention projection",
+        "`Seams` = integration/governance projection",
+        "`Evidence` = proof-backed concern projection",
+        "`History` = concern lifecycle timeline projection",
+        "`Ledger` = exact structured concern-record projection"
+      ],
+      "stale_tokens": [
+        "local versions"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

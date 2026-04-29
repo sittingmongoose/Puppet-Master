@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-711",
+  "group_ids": [
+    "discgrp-2841",
+    "discgrp-2842",
+    "discgrp-2843",
+    "discgrp-2844"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03121",
+      "source_obligation_ids": [
+        "obl-2967"
+      ],
+      "source_seed_ids": [
+        "seed-3915"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "# Models System (Canonical SSOT)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Models_System.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03122",
+      "source_obligation_ids": [
+        "obl-2968"
+      ],
+      "source_seed_ids": [
+        "seed-3916"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "## Dynamic Subagent Selection Architecture",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L144"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03123",
+      "source_obligation_ids": [
+        "obl-2969"
+      ],
+      "source_seed_ids": [
+        "seed-3917"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "## Runtime Worktree Conflict Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L715"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03124",
+      "source_obligation_ids": [
+        "obl-2970"
+      ],
+      "source_seed_ids": [
+        "seed-3918"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1323"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,10 +1,1083 @@
 # Contracts V0 (Canonical)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+  - Emerging execution-settings direction
+  - runtime/model precedence
+  - Highest-Impact Docs
+  - Runtime / Storage / Contract Impacts
+  - Cleanup Priorities
+
+#### Source target target-0106
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+  - Emerging execution-settings direction
+  - runtime/model precedence
+  - Highest-Impact Docs
+  - Runtime / Storage / Contract Impacts
+  - Cleanup Priorities
+- Exact required items represented:
+  - Define distinct defaults/overrides for provider/model at run/global, feature seam, work package, node, work package overseer, feature seam overseer, and overseer-delegated node worker levels.
+  - Make requested vs effective provider/model visible at all levels where [retired-token-3] can occur.
+  - Specify node [retired-token-5] selection as dynamic-by-default from node scope/type; node-worker [retired-token-5] override is policy-owned, not per-node [retired-token-1].
+  - Specify whether overseers may use subagents for node work and what provider/model policy applies to delegated node workers.
+  - provider/model precedence order across run, seam, package, node, overseer, and delegated-subagent levels
+  - whether seam/package/node provider-model settings are hard constraints, defaults, or hints
+  - whether an overseer can do direct node work or only delegate/review
+  - if direct node work is allowed, whether it uses overseer-[retired-token-6] or node-[retired-token-6]
+  - how dynamic node [retired-token-5]s interact with explicit node overrides and overseer-controlled delegation
+  - Replace tier-rooted execution with package/seam/lane model
+  - Define package overseer + seam overseer roles
+  - Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage
+  - Redefine gates to package-complete / seam-complete
+  - Rename or retire Tiers UI/tab and tier_tree/progress bars
+  - Add node_id
+  - Add package_id
+  - Add seam_id
+  - Add lane_id
+  - Add attempt_id
+  - Add effective_identity
+  - Normalize requested/effective account identity shapes
+  - Normalize blocked_[retired-token-25]/allowed_action_ids and safe-point/restore-point/rollback terminology
+  - Relax or replace stale graph-schema constants `[retired-token-23]` and [retired-token-24].
+  - Add package/seam/lane/worktree/account identity fields to canonical runtime/event/envelope contracts.
+  - Define contamination and safe-point linkage explicitly in storage and blocked-payload contracts.
+  - Priority 1 — Canonical contracts that cannot safely coexist with the new model**
+  - 4. **`requested_[retired-token-5]_id` vs canonical `requested_[retired-token-5]`**
+  - requested_[retired-token-5]_id
+  - requested_[retired-token-5]
+  - Why it matters: GPT-5.4 found almost no owner docs that actually define these objects, even where many other contracts now depend on them.
+  - impacted contract/runtime/storage area: identity fields.
+  - this collides with the newer package-based lane-pool model
+  - `suspect`
+  - suspect
+  - `restoring`
+  - restoring
+  - `retained`
+  - retained
+  - `cleanup_eligible`
+  - cleanup_eligible
+  - now needs explicit requested/effective identity, trust-state, and governance-record drill-in contracts to stay viable as the graph-native surface
+  - `worktree_id`
+  - worktree_id
+  - owning package/lane identity when applicable
+  - owner run/package/lane
+  - from `TierChanged` / `IterationStart` / `TierTree`
+  - TierChanged
+  - IterationStart
+  - TierTree
+  - `refreshing`
+  - refreshing
+  - `active_run_id?`
+  - active_run_id?
+  - `focused_run_id?`
+  - focused_run_id?
+  - `focus_mode = live` when `focused_run_id == active_run_id`
+  - focus_mode = live
+  - focused_run_id == active_run_id
+  - inspect evidence
+  - Candidate fields:
+  - `focus_mode`
+  - focus_mode
+  - `last_live_run_id?`
+  - last_live_run_id?
+  - evidence/artifact when directly addressable
+  - `focused_run_id`
+  - focused_run_id
+  - and/or command-palette integrated
+  - canonical names/titles
+  - `Reopened by New Evidence`
+  - Reopened by New Evidence
+  - Compared with attempts/blocked/remediation, concerns currently lack:
+  - `seam_id?`
+  - seam_id?
+  - `package_id?`
+  - package_id?
+  - `lane_id?`
+  - lane_id?
+  - `worktree_id?`
+  - worktree_id?
+  - `owner_ref?`
+  - owner_ref?
+  - `created_by_ref?`
+  - created_by_ref?
+  - `first_seen_at_utc`
+  - first_seen_at_utc
+  - `last_seen_at_utc`
+  - last_seen_at_utc
+  - `resolved_at_utc?`
+  - resolved_at_utc?
+  - `dismissed_at_utc?`
+  - dismissed_at_utc?
+  - `acknowledged_at_utc?`
+  - acknowledged_at_utc?
+  - `artifact_refs[]`
+  - artifact_refs[]
+  - `parent_concern_id?`
+  - parent_concern_id?
+  - `superseded_by_concern_id?`
+  - superseded_by_concern_id?
+  - `merged_into_concern_id?`
+  - merged_into_concern_id?
+  - `split_from_concern_id?`
+  - split_from_concern_id?
+  - `state_contract`
+  - state_contract
+  - `design_architecture`
+  - design_architecture
+  - `evidence_gap`
+  - evidence_gap
+  - `account_usage_pressure`
+  - account_usage_pressure
+  - append sources/evidence
+  - `Seams`
+  - Seams
+  - `strong`
+  - strong
+  - `hard_gate`
+  - hard_gate
+  - `immediate_undo`
+  - immediate_undo
+  - `compensating_action_only`
+  - compensating_action_only
+  - `non_reversible`
+  - non_reversible
+  - `Reapply`
+  - Reapply
+  - merge/split should be `strong`
+  - strong confirmations should be consequence-specific, not generic "Are you sure?"
+  - `record_id`
+  - record_id
+  - `record_kind`
+  - record_kind
+  - `promotion_id?`
+  - promotion_id?
+  - `concern_id?`
+  - concern_id?
+  - `created_at_utc`
+  - created_at_utc
+  - `superseded_by_record_id?`
+  - superseded_by_record_id?
+  - linked artifacts/evidence
+  - `corroboration_result`
+  - corroboration_result
+  - `graph_patch_result`
+  - graph_patch_result
+  - requester identity
+  - `seam_completion`
+  - seam_completion
+  - `export_id`
+  - export_id
+  - `export_kind`
+  - export_kind
+  - `generated_at_utc`
+  - generated_at_utc
+  - `filter_summary`
+  - filter_summary
+  - `record_counts`
+  - record_counts
+  - `artifact_counts`
+  - artifact_counts
+  - `included_record_ids[]`
+  - included_record_ids[]
+  - `included_artifact_ids[]`
+  - included_artifact_ids[]
+  - `status_notes`
+  - status_notes
+  - `schema_version`
+  - schema_version
+  - These should not be treated as canonical archival formats.
+  - `source axis`
+  - source axis
+  - `execution/result axis`
+  - execution/result axis
+  - `Inherited from`
+  - Inherited from
+  - `Overridden by`
+  - Overridden by
+  - provider/model/variant/effort
+  - `Temperature: 0.2 -> Honored`
+  - Temperature: 0.2 -> Honored
+  - `Top-p: 1.0 -> Clamped to 0.9`
+  - Top-p: 1.0 -> Clamped to 0.9
+  - This should answer:
+  - `background_active`
+  - background_active
+  - dominant concern/blocked owner
+  - `system_notification`
+  - system_notification
+  - System/tray notifications should stay narrow.
+  - Usage/account-pressure implication
+  - or only `compensating_action_only`
+  - bulk-forbidden
+  - `freshness_state`
+  - freshness_state
+  - `last_updated_at`
+  - last_updated_at
+  - `data_source_kind`
+  - data_source_kind
+  - `degraded_reason?`
+  - degraded_reason?
+  - `action_gate_reason?`
+  - action_gate_reason?
+  - `attempt_record`
+  - attempt_record
+  - `tier_runtime_record`
+  - tier_runtime_record
+  - `evidence_record`
+  - evidence_record
+  - `thread_blocked_notice`
+  - thread_blocked_notice
+  - `wizard_runtime_state`
+  - wizard_runtime_state
+  - `scope_type`
+  - scope_type
+  - `scope_id`
+  - scope_id
+  - `updated_at_utc?`
+  - updated_at_utc?
+  - `summary_kind?`
+  - summary_kind?
+  - `related_record_refs[]`
+  - related_record_refs[]
+  - `actor_ref?`
+  - actor_ref?
+  - `requested_effective_snapshot_refs?`
+  - requested_effective_snapshot_refs?
+  - Worktree-oriented state implication
+  - `orphaned`
+  - orphaned
+  - `recovering`
+  - recovering
+  - prune/remove should usually be `strong`
+  - `selection_reason`
+  - selection_reason
+  - lane-pool objects
+  - package/seam-governance objects
+  - same provider/account/model/runtime machinery
+  - `filter_summary?`
+  - filter_summary?
+  - `included_file_paths[]?`
+  - included_file_paths[]?
+  - `lineage_notes?`
+  - lineage_notes?
+  - `trust_state_at_export?`
+  - trust_state_at_export?
+  - `thread/chat`
+  - thread/chat
+  - This should apply across:
+  - Good common fields:
+  - `actor_run_kind?`
+  - actor_run_kind?
+  - `wizard_id?`
+  - wizard_id?
+  - `object_kind?`
+  - object_kind?
+  - `object_id?`
+  - object_id?
+  - `record_id?`
+  - record_id?
+  - `artifact_id?`
+  - artifact_id?
+  - `usage_event_ref?`
+  - usage_event_ref?
+  - `filter_payload?`
+  - filter_payload?
+  - `inspector_target?`
+  - inspector_target?
+  - `scroll_target?`
+  - scroll_target?
+  - `focus_behavior?`
+  - focus_behavior?
+  - `feature_seam`
+  - feature_seam
+  - `work_package`
+  - work_package
+  - `recovery_record`
+  - recovery_record
+  - The real need is:
+  - `deleted`
+  - deleted
+  - `description?`
+  - description?
+  - `owner_kind?`
+  - owner_kind?
+  - `origin_kind`
+  - origin_kind
+  - `updated_at_utc`
+  - updated_at_utc
+  - `first_observed_at_utc`
+  - first_observed_at_utc
+  - `last_observed_at_utc`
+  - last_observed_at_utc
+  - `resolution_kind?`
+  - resolution_kind?
+  - `resolution_rationale?`
+  - resolution_rationale?
+  - `acknowledged_by?`
+  - acknowledged_by?
+  - `dismissed_by?`
+  - dismissed_by?
+  - `blocked_episode_refs[]?`
+  - blocked_episode_refs[]?
+  - `promotion_refs[]?`
+  - promotion_refs[]?
+  - `graph_patch_refs[]?`
+  - graph_patch_refs[]?
+  - `recovery_refs[]?`
+  - recovery_refs[]?
+  - concern-linked findings/evidence
+  - `Orchestrator_Page.md` still specifies `Tiers` and widget/persistence contracts around that obsolete structure
+  - Orchestrator_Page.md
+  - Tiers
+  - canonical contracts want stable internal `account_id`
+  - account_id
+  - `allowed_actor_kinds`
+  - allowed_actor_kinds
+  - `confirmation_level`
+  - confirmation_level
+  - `resulting_status_or_lineage`
+  - resulting_status_or_lineage
+  - page/widget contracts still mostly speak in `[retired-token-10]` terms, which will collapse concurrent actors and remediation lanes into misleading “current work” summaries
+  - [retired-token-10]
+  - `audit_kind = start_of_tier | end_of_tier`
+  - audit_kind = start_of_tier | end_of_tier
+  - no `actor_kind`
+  - actor_kind
+  - `primary_owner_kind?`
+  - primary_owner_kind?
+  - `primary_[retired-token-25]?`
+  - primary_[retired-token-25]?
+  - `primary_object_ref?`
+  - primary_object_ref?
+  - `active_run_count`
+  - active_run_count
+  - `blocked_run_count`
+  - blocked_run_count
+  - `attention_object_count`
+  - attention_object_count
+  - `last_activity_at_utc`
+  - last_activity_at_utc
+  - `historical_run_count`
+  - historical_run_count
+  - `attention_item_id`
+  - attention_item_id
+  - `source_kind`
+  - source_kind
+  - `source_object_ref`
+  - source_object_ref
+  - `primary_route_payload`
+  - primary_route_payload
+  - `secondary_route_payload?`
+  - secondary_route_payload?
+  - `recent_switch_reason` and `account_switch_reason` exist
+  - recent_switch_reason
+  - account_switch_reason
+  - Bridged-provider contracts are now visibly weaker than direct-provider contracts in the exact places the rewrite needs strongest parity:
+  - `project_summary.v1:{project_id}`
+  - project_summary.v1:{project_id}
+  - `project_attention_item.v1:{project_id}:{attention_item_id}`
+  - project_attention_item.v1:{project_id}:{attention_item_id}
+  - `activity_state`
+  - activity_state
+  - `attention_state`
+  - attention_state
+  - `health_state`
+  - health_state
+  - `primary_attention_item_id?`
+  - primary_attention_item_id?
+  - `background_run_count`
+  - background_run_count
+  - `attention_item_count`
+  - attention_item_count
+  - `summary_generated_at_utc`
+  - summary_generated_at_utc
+  - `dismissibility_kind`
+  - dismissibility_kind
+  - There is still no canonical internal `route_payload` or equivalent schema in the contracts docs.
+  - route_payload
+  - `project_id?`
+  - project_id?
+  - `historical_mode?`
+  - historical_mode?
+  - `account_switch_reason` and `recent_switch_reason` exist
+  - current `working_ledger.md`
+  - working_ledger.md
+  - `requested_account_id?`
+  - requested_account_id?
+  - `effective_account_id?`
+  - effective_account_id?
+  - `account_switch_reason?`
+  - account_switch_reason?
+  - `requested_account_binding?`
+  - requested_account_binding?
+  - Bridged contracts still cannot legally carry all correlation/account/trust metadata their addenda already imply.
+  - current canonical fields cover provider/model/auth/account identity
+  - `requested_operational_identity?`
+  - requested_operational_identity?
+  - `effective_operational_identity?`
+  - effective_operational_identity?
+  - `node_worker`
+  - node_worker
+  - `recovery_actor`
+  - recovery_actor
+  - `requested_ref?`
+  - requested_ref?
+  - `effective_ref?`
+  - effective_ref?
+  - `selection_reason?`
+  - selection_reason?
+  - `partial_capability?`
+  - partial_capability?
+  - `github_api_account`
+  - github_api_account
+  - `registry_namespace`
+  - registry_namespace
+  - `kubernetes_context`
+  - kubernetes_context
+  - overload provider/account fields incorrectly
+  - `signal_confidence`
+  - signal_confidence
+  - role/account interactions
+  - `account_pressure_episode`
+  - account_pressure_episode
+  - `account_switch_event`
+  - account_switch_event
+  - `execution_role?`
+  - execution_role?
+  - `pressure_kind`
+  - pressure_kind
+  - `projected_remaining?`
+  - projected_remaining?
+  - `reset_at?`
+  - reset_at?
+  - `started_at_utc`
+  - started_at_utc
+  - `ended_at_utc?`
+  - ended_at_utc?
+  - `switch_event_id`
+  - switch_event_id
+  - `from_account_id?`
+  - from_account_id?
+  - `to_account_id?`
+  - to_account_id?
+  - `source_episode_id?`
+  - source_episode_id?
+  - Widget/page drill contracts still lack strong, typed route payloads tied to canonical identity/trust/linkage fields.
+  - The Orchestrator/Usage/GitHub deep-link story is now blocked more by missing route payload/trust contracts than by missing page chrome.
+  - `last_projected_at_utc`
+  - last_projected_at_utc
+  - `degraded_[retired-token-25]?`
+  - degraded_[retired-token-25]?
+  - `refresh_in_progress?`
+  - refresh_in_progress?
+  - `project_summary`
+  - project_summary
+  - `project_attention_item`
+  - project_attention_item
+  - Before reconciliation, define an explicit owner table for the remaining open contracts so downstream edits do not keep re-litigating field placement.
+  - `owner run/tier`
+  - owner run/tier
+  - `get_tier_worktree([retired-token-10])`
+  - get_tier_worktree([retired-token-10])
+  - `feature_seam_id?`
+  - feature_seam_id?
+  - `work_package_id?`
+  - work_package_id?
+  - `scheduler_lane`
+  - scheduler_lane
+  - `manual_priority?`
+  - manual_priority?
+  - `remediation_root_id?`
+  - remediation_root_id?
+  - `remediation_parent_attempt_id?`
+  - remediation_parent_attempt_id?
+  - `safe_point_id?`
+  - safe_point_id?
+  - `workspace_path`
+  - workspace_path
+  - `worktree_path?`
+  - worktree_path?
+  - `snapshot_ref?`
+  - snapshot_ref?
+  - `requested_account_policy?`
+  - requested_account_policy?
+  - `operational_identity?`
+  - operational_identity?
+  - `blocked_[retired-token-25]?`
+  - blocked_[retired-token-25]?
+  - `allowed_action_ids[]?`
+  - allowed_action_ids[]?
+  - `permission_snapshot_id?`
+  - permission_snapshot_id?
+  - `model_snapshot_id?`
+  - model_snapshot_id?
+  - `provider_attempt_ref?`
+  - provider_attempt_ref?
+  - `waiting_approval` is `blocked_[retired-token-25] = waiting_approval`
+  - waiting_approval
+  - blocked_[retired-token-25] = waiting_approval
+  - still leaves pre-run governance lineage under-keyed relative to adjacent canonical event/artifact contracts.
+  - receipts and evidence
+  - `handoff_source`
+  - handoff_source
+  - `handoff_reason`
+  - handoff_reason
+  - `origin_thread_id`
+  - origin_thread_id
+  - `origin_message_id`
+  - origin_message_id
+  - `default_intent`
+  - default_intent
+  - `requested_[retired-token-5]?` / `effective_[retired-token-5]?`
+  - requested_[retired-token-5]?
+  - effective_[retired-token-5]?
+  - `requested_platform?` / `effective_platform?`
+  - requested_platform?
+  - effective_platform?
+  - `requested_model?` / `effective_model?`
+  - requested_model?
+  - effective_model?
+  - grouped by `workflow_run_id`
+  - workflow_run_id
+  - `phase_plan_ref?`
+  - phase_plan_ref?
+  - `scheduler_pass_record`
+  - scheduler_pass_record
+  - `artifacts_index.v1:{project_id}:{artifact_id}`
+  - artifacts_index.v1:{project_id}:{artifact_id}
+  - `artifacts_project_state.v1:{project_id}`
+  - artifacts_project_state.v1:{project_id}
+  - `worktree_record.v1:{project_id}:{worktree_id}`
+  - worktree_record.v1:{project_id}:{worktree_id}
+  - `lane_record.v1:{project_id}:{lane_id}`
+  - lane_record.v1:{project_id}:{lane_id}
+  - `repo_id`
+  - repo_id
+  - `branch_ref`
+  - branch_ref
+  - `baseline_ref?`
+  - baseline_ref?
+  - `created_by_run_id?`
+  - created_by_run_id?
+  - `created_by_attempt_id?`
+  - created_by_attempt_id?
+  - `historical_lineage_refs[]?`
+  - historical_lineage_refs[]?
+  - `dirty_state`
+  - dirty_state
+  - `conflict_state`
+  - conflict_state
+  - `owner_run_id?`
+  - owner_run_id?
+  - `owner_attempt_id?`
+  - owner_attempt_id?
+  - latest `blocked_[retired-token-25]?`
+  - `wake_reason = approval_resolved | clarification_resolved | auth_recovered | startup_recovered | ...`
+  - wake_reason = approval_resolved | clarification_resolved | auth_recovered | startup_recovered | ...
+  - `decomposition_context` or `selection_context`
+  - decomposition_context
+  - selection_context
+  - `blocked_sequence?`
+  - blocked_sequence?
+  - `workspace_ref` or canonical path ref
+  - workspace_ref
+  - `[retired-token-18]?`
+  - [retired-token-18]?
+  - `effective_auth_mode?`
+  - effective_auth_mode?
+  - `tier_type`
+  - tier_type
+  - `[retired-token-10]`
+  - `primary_language?`
+  - primary_language?
+  - `domain?`
+  - domain?
+  - `subtask_focus?`
+  - subtask_focus?
+  - `has_errors?`
+  - has_errors?
+  - `needs_testing?`
+  - needs_testing?
+  - `error_patterns[]?`
+  - error_patterns[]?
+  - `parent_subagents[]?`
+  - parent_subagents[]?
+  - `TierChanged`
+  - It should not be treated as the canonical source for:
+  - `scheduler_pass_id`
+  - scheduler_pass_id
+  - `effective_project_id?`
+  - effective_project_id?
+  - conditional recovery/blocked fields
+  - worktree/branch refs
+  - Cross-owner docs repeatedly implicated by this tranche:
+  - `[retired-token-16]`
+  - [retired-token-16]
+  - `linked_artifact_id`
+  - linked_artifact_id
+  - `logical_artifact_id`
+  - logical_artifact_id
+  - `repo_id?`
+  - repo_id?
+  - `branch_ref?`
+  - branch_ref?
+  - `commit_range?`
+  - commit_range?
+  - `workflow_refs?`
+  - workflow_refs?
+  - `docker_refs?`
+  - docker_refs?
+  - `kubernetes_refs?`
+  - kubernetes_refs?
+  - `linked_artifact_id?`
+  - linked_artifact_id?
+  - `logical_artifact_id?`
+  - logical_artifact_id?
+  - attempt-scoped evidence
+  - `artifact_kind`
+  - artifact_kind
+  - `content_ref?`
+  - content_ref?
+  - `tool_llm_trace`
+  - tool_llm_trace
+  - `content_ref`
+  - content_ref
+  - `scheduler_pass:<scheduler_pass_id>`
+  - scheduler_pass:<scheduler_pass_id>
+  - `open_file`
+  - open_file
+  - identity-based target:
+  - `open_subject`
+  - open_subject
+  - `subject_id?`
+  - subject_id?
+  - `target_kind?`
+  - target_kind?
+  - `route_payload?`
+  - route_payload?
+  - deprecated-vs-canonical command-family status still cannot be represented in the catalog/matrix/gate contracts.
+  - `STATE_FILES.md`
+  - STATE_FILES.md
+  - slash-command reservation,
+  - Cross-owner docs repeatedly implicated by GPT-5.2:
+  - `command_arg_contract_ref?`
+  - command_arg_contract_ref?
+  - `route_target_kind?`
+  - route_target_kind?
+  - `subject_kind?`
+  - subject_kind?
+  - `deprecated_alias_for?`
+  - deprecated_alias_for?
+  - `preconditions?`
+  - preconditions?
+  - `correlation_passthrough?`
+  - correlation_passthrough?
+  - Event contracts already have a recognizable alias/migration pattern, but command contracts do not.
+  - `issued_at`
+  - issued_at
+  - `correlation_id`
+  - correlation_id
+  - subject-open identity
+  - Gate/evidence closeout stayed productive:
+  - wiring/gate extraction/schema hardening,
+  - artifact/run/workflow identity closure,
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - `wizard_step`
+  - wizard_step
+  - `message_id`
+  - message_id
+  - `wizard_step?`
+  - wizard_step?
+  - `message_id?`
+  - message_id?
+  - So the best model is not “two unrelated contracts” and not “one giant contract that does everything.” It is a layered contract family.
+  - `range?`
+  - range?
+  - or `object_kind?` + `object_id?`
+  - `workflow_run_id`
+  - `range`
+  - range
+  - These should normally normalize into:
+  - `subject_id = doc:<document_id>`
+  - subject_id = doc:<document_id>
+  - `object_id = <thread_id>`
+  - object_id = <thread_id>
+  - `object_id = <wizard_id>`
+  - object_id = <wizard_id>
+  - prefer `object_kind = usage_event`
+  - object_kind = usage_event
+  - `graph_generation`
+  - graph_generation
+  - `object_id = <message_id>`
+  - object_id = <message_id>
+  - `object_id = <id>`
+  - object_id = <id>
+  - new docs/producers MUST prefer canonical route-target forms
+  ContractRef: ContractName:Plans/Contracts_V0.md, Primitive:RouteTarget, Primitive:OpenSubject
+  - Keep `active_subview`, filters, compare targets, pinned selections, and similar fields in destination/view-state contracts.
+  - active_subview
+  - `focus_thread_usage`
+  - focus_thread_usage
+  - `navigation_wrapper`
+  - navigation_wrapper
+  - `domain_action`
+  - domain_action
+  - contracts own canonical route identity
+  - `backing_document_id`
+  - backing_document_id
+  - `last_saved_path`
+  - last_saved_path
+  - Those fields belong elsewhere:
+  - The narrow scope-restoration fields are:
+  - The narrow focus-refinement fields are:
+  - Good serialized fields
+  - Bad serialized fields
+  - `object_kind = blocked_episode`
+  - object_kind = blocked_episode
+  - `focused_run_id = run_id`
+  - focused_run_id = run_id
+  - `object_id = blocked_sequence`
+  - object_id = blocked_sequence
+  - It must stay small.
+  - `object_kind = usage_event`
+  - `agent-rules-context.md` still under-enumerates callers, omits execution-role input, conflicts with Personas/Prompt_Pipeline on bundle ordering, and has weaker disclosure/help contracts than adjacent systems.
+  - agent-rules-context.md
+  - `project_id = <project_id>`
+  - project_id = <project_id>
+  - `thread_id = <thread_id>`
+  - thread_id = <thread_id>
+  - `focused_run_id = <run_id>`
+  - focused_run_id = <run_id>
+  - `object_id = <attempt_id>`
+  - object_id = <attempt_id>
+  - `object_id = <blocked_sequence>`
+  - object_id = <blocked_sequence>
+  - `object_kind = scheduler_pass`
+  - object_kind = scheduler_pass
+  - `object_id = <scheduler_pass_id>`
+  - object_id = <scheduler_pass_id>
+  - `object_id = <safe_point_id>`
+  - object_id = <safe_point_id>
+  - `object_id = <remediation_root_id>`
+  - object_id = <remediation_root_id>
+  - `object_kind = graph_generation`
+  - object_kind = graph_generation
+  - `object_id = <graph_generation_id>`
+  - object_id = <graph_generation_id>
+  - `object_kind = graph_patch`
+  - object_kind = graph_patch
+  - `object_id = <graph_patch_id>`
+  - object_id = <graph_patch_id>
+  - `object_id = <worktree_id>`
+  - object_id = <worktree_id>
+  - `object_id = <lane_id>`
+  - object_id = <lane_id>
+  - `object_kind = feature_seam`
+  - object_kind = feature_seam
+  - `object_id = <feature_seam_id>`
+  - object_id = <feature_seam_id>
+  - `object_kind = work_package`
+  - object_kind = work_package
+  - `object_id = <work_package_id>`
+  - object_id = <work_package_id>
+  - `object_id = <concern_id>`
+  - object_id = <concern_id>
+  - `object_id = <promotion_id>`
+  - object_id = <promotion_id>
+  - `seams`
+  - seams
+  - `node_graph`
+  - node_graph
+  - `object_id = scheduler_pass_id`
+  - object_id = scheduler_pass_id
+  - `object_id = safe_point_id`
+  - object_id = safe_point_id
+  - `object_id = remediation_root_id`
+  - object_id = remediation_root_id
+  - `object_id = attempt_id`
+  - object_id = attempt_id
+  - Stratum 1: owner docs
+  - Treat the routing tranche as structurally closed after the owner-doc contracts are added.
+  - subsection `7.2 WiringEntry`
+  - 7.2 WiringEntry
+  - `handler_location`
+  - handler_location
+  - `expected_event_types`
+  - expected_event_types
+  - unknown-command rejection
+  - report/evidence refs
+  - `workflow_refs`
+  - workflow_refs
+  - `docker_refs`
+  - docker_refs
+  - `kubernetes_refs`
+  - kubernetes_refs
+  - `attempt_record` with scheduler/safe-point/remediation/runtime identity fields
+  - they correctly carry blocked/wizard state
+  - wizard-blocked keeps wizard-specific clarification/report fields
+  - `usage_record` with `[retired-token-10]`
+  - usage_record
+  - tier-adjacent `evidence_record`
+  - `thread_blocked_notice` / `wizard_runtime_state` with `resume_url?`
+  - resume_url?
+  - exact command-arg mismatches
+  - `requested_[retired-token-5]`
+  - `effective_[retired-token-5]`
+  - effective_[retired-token-5]
+  - `requested_platform`
+  - requested_platform
+  - `effective_platform`
+  - effective_platform
+  - `requested_model`
+  - requested_model
+  - `effective_model`
+  - effective_model
+  - `requested_[retired-token-5]_id`
+  - `effective_[retired-token-5]_id`
+  - effective_[retired-token-5]_id
+  - `worker_provider`
+  - worker_provider
+  - `worker_model`
+  - worker_model
+  - `verifier_provider`
+  - verifier_provider
+  - `verifier_model`
+  - verifier_model
+  - `request_id`
+  - request_id
+  - `request_kind = tier_boundary_approval`
+  - request_kind = tier_boundary_approval
+  - Strong aligned owner:
+  - with `request_id` args
+  - `PuppetMasterEvent::TierChanged`
+  - PuppetMasterEvent::TierChanged
+  - `PuppetMasterEvent::IterationStart`
+  - PuppetMasterEvent::IterationStart
+  - `PuppetMasterEvent::EvidenceStored`
+  - PuppetMasterEvent::EvidenceStored
+  - `IterationStart`
+  - `GateStart`
+  - GateStart
+  - `GateComplete`
+  - GateComplete
+  - `EvidenceStored`
+  - EvidenceStored
+  - Strong owner docs:
+  - `hitl_request_id`
+  - hitl_request_id
+  - Reconcile the base `GraphNode` and `GraphNodeUI` contracts to the later runtime-lineage model.
+  - GraphNode
+  - GraphNodeUI
+  - `Orchestrator_Page.md`
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - `3.13` appears twice
+  - 3.13
+  - `3.14` appears twice
+  - 3.14
+  - `3.15` appears twice
+  - 3.15
+  - `DRY_Rules.md` second
+  - DRY_Rules.md
+  - `Decision_Log.md` third
+  - Decision_Log.md
+  - `DRY_Rules.md` needs:
+  - `Decision_Log.md` needs:
+  - `plan_or_tier_default`
+  - plan_or_tier_default
+  - `Orchestrator_Page.md` needs:
+  - mixed-canon owner docs
+  - MUST RECONCILE
+  - MUST VERIFY
+  ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/DRY_Rules.md, PolicyRule:Decision_Policy.md§2
+  - `Plans/_shards/**`
+  - Plans/_shards/**
+  - `[retired-token-30]`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`
+  - [retired-token-30]
+  - Plans/storage-plan.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+  - 1. Reconcile owner contracts and schemas first.
+  - `[retired-token-30]`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/FinalGUISpec.md`
+  - Plans/Decision_Policy.md
+  - The rerun confirms that these were not just vague "help gaps", but concrete missing contracts:
+  - pressure-summary field
+  - `[retired-token-30]`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`
+  - Plans/Crosswalk.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Progression_Gates.md
+  - Plans/FileManager.md
+  - Plans/Project_Output_Artifacts.md
+  - `Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but `[retired-token-30]` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` heading.
+  - Plans/Executor_Protocol.md
+  - execution_unit_context
+  - ### 5.1B Persona/Runtime Snapshot Payload Contract
+  - `[retired-token-30]:778-806`
+  - [retired-token-30]:778-806
+  - `[retired-token-30]:684-692`
+  - [retired-token-30]:684-692
+  - `[retired-token-30]:1218-1229`
+  - [retired-token-30]:1218-1229
+  - `[retired-token-30]:461-465`
+  - [retired-token-30]:461-465
+  - `gap-001` sharpened: the exact owner anchor `### 5.1B Persona/Runtime Snapshot Payload Contract` is still absent, and the explicit `execution_unit_context` required-field list in `[retired-token-30]` still omits `requested_account_binding`, `requested_account_policy`, and `operational_identity` even though the surrounding canon expects requested/effective identity carry-through.
+  - gap-001
+  - requested_account_binding
+  - requested_account_policy
+  - operational_identity
+  - `[retired-token-30]:557-624`
+  - [retired-token-30]:557-624
+  - `[retired-token-35]` sharpened: `[retired-token-30]` still points at the missing `Plans/storage-plan.md#[retired-token-29]` anchor, and both `[retired-token-31]` and `[retired-token-32]` still point at the missing `[retired-token-34]` anchor in addition to the already-carried missing `[retired-token-29]` heading.
+  - [retired-token-35]
+  - Plans/storage-plan.md#[retired-token-29]
+  - [retired-token-31]
+  - [retired-token-32]
+  - [retired-token-34]
+  - [retired-token-29]
+  - `[retired-token-30]:55-60`
+  - [retired-token-30]:55-60
+  - `[retired-token-30]:800-807`
+  - [retired-token-30]:800-807
+  - `[retired-token-30]:50-58`
+  - [retired-token-30]:50-58
+  - `[retired-token-30]:800-806`
+  - [retired-token-30]:800-806
+  - `cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resolution_kind` coverage including `accepted_risk`, and a concern-action confirmation matrix, but the live docs only expose fragments: `[retired-token-31]:12-13` keeps concern and notification surfaces distinct from health/activity, `Plans/storage-plan.md:294` lists `concern_record.v1`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31` calls for first-class concern lifecycle and lineage, and `[retired-token-30]:649` only names `concern` as a routable object. Exact ledger evidence remains at `working_ledger.md:L3070-L3092`, `working_ledger.md:L3170-L3182`, `working_ledger.md:L5990-L6015`, and `working_ledger.md:L6442-L6490`.
+  - cov-034
+  - obl-016
+  - active
+  - acknowledged
+  - resolved
+  - dismissed
+  - resolution_kind
+  - accepted_risk
+  - `working_ledger.md:L806`
+  - working_ledger.md:L806
+  - `working_ledger.md:L1030`
+  - working_ledger.md:L1030
+  - `working_ledger.md:L1035-L1036`
+  - working_ledger.md:L1035-L1036
+  - `working_ledger.md:L1283-L1290`
+  - working_ledger.md:L1283-L1290
+  - `working_ledger.md:L1539`
+  - working_ledger.md:L1539
+  - `working_ledger.md:L3070-L3092`
+  - working_ledger.md:L3070-L3092
+  - `working_ledger.md:L3170-L3182`
+  - working_ledger.md:L3170-L3182
+  - `working_ledger.md:L5990-L6015`
+  - working_ledger.md:L5990-L6015
+  - `working_ledger.md:L6442-L6490`
+  - working_ledger.md:L6442-L6490
+  - `[retired-token-30]:649`
+  - [retired-token-30]:649
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #14 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #15 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #16 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #17 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #18 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #19 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #20 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #21 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #22 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #23 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #24 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #25 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #26 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #27 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #28 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #29 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #30 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #31 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #32 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #33 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #34 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #35 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 ## Fidelity recovery addendum
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0113
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - safe-point / recovery history
+  - recovery / safe-point object where applicable
+  - canonical recovery path
+  - `Recovery actor default`
+  - Recovery actor default
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
 
 ### Fidelity recovery cov-001: Owner-first fidelity recovery order
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0129
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Reconcile owner docs in this order:
+  - This is not just a missing paragraph. The owner-doc section order already tells us where the contract belongs.
+  - Reconciliation order for this tranche should be:
+  - Impacted docs and likely owner order
+  - Owner-doc-first order still holds:
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-001
 - Fidelity gap refs: cov-001
 - Required fidelity items:
@@ -17,6 +1090,218 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-001` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-012: Requested/effective account identity contract
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0130
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - remains the best place to lock requested/effective identity semantics, but currently stops short of requested concrete-account identity and still embeds tier-era override ownership
+  - none of them define one shared persisted trust/freshness contract with action gating and Ledger/direct-record fallback
+  - UI contract direction
+  - FinalGUISpec has good safety language, but it does not yet appear to define one reusable trust-state UI contract for projection-backed tabs/widgets/panels.
+  - Add a shared projection health/trust contract used by:
+  - This needs a sharper contract later.
+  - No explicit `historical-run mode` contract yet.
+  - historical-run mode
+  - Recommended contract:
+  - requested/effective platform/model/variant/runtime controls
+  - Requested/effective direction
+  - This is not the same as requested/effective difference in general.
+  - two-column requested/effective block
+  - hard requirement from plan/tier/surface contract
+  - Research Progress - 2026-03-16 - Help System Contract
+  - The current help/copy contract is mostly tooltip-oriented.
+  - The current dual-copy contract is strong for tooltip/help text, but not yet for a concept-help system.
+  - Define a dedicated help-entry contract with a fixed structure and related-concept links.
+  - The current Projects page contract is still fairly basic:
+  - There is no one explicit cross-surface escalation contract yet.
+  - treat scale as a cross-tab contract, not just a graph-tab concern
+  - Current graph-scale guidance is much stronger than the scale contract for `Seams`, `Evidence`, `History`, and `Ledger`.
+  - Seams
+  - Evidence
+  - History
+  - Ledger
+  - Define one shared projection-trust contract with operational state meanings and action thresholds.
+  - requested/effective state at a high level
+  - requested/effective visibility
+  - the runtime/provider docs already provide a solid requested/effective foundation; do not reinvent that vocabulary
+  - requested/effective provider/model/persona/account/auth semantics
+  - open-file contract
+  - Not every route uses every field, but the contract should make these composable rather than reinvented.
+  - Requested/effective identity pressure is now showing up across more than persona/runtime docs:
+  - graph/page/artifact docs require identity disclosure but do not yet define a shared display/record contract
+  - `Runtime_Artifacts_Panel.md` and related surfaces still need a tighter canonical id/trust/freshness contract
+  - Runtime_Artifacts_Panel.md
+  - Define one shared requested/effective identity disclosure contract reusable across:
+  - adaptive phase planning and contract unification create a broader orchestration-mode matrix than older docs assume
+  - Contract unification is treated as deterministic, but the conflict-resolution authority/rules are still underdefined for contradictory upstream phase outputs.
+  - Dashboard-hosted push widgets still lack a no-active-run/historical-run render contract
+  - username rename risk is now a concrete contract inconsistency, not just a theoretical identity concern
+  - Research Progress - 2026-03-16 - help system contract and concept-depth cluster
+  - Define a three-depth help contract:
+  - no clear contract yet separates:
+  - `Widget_System.md` still references the wrong multi-account keyspace and does not yet define one shared projection-trust chrome contract
+  - Widget_System.md
+  - The canonical identity/account contract still fails to enter the dispatch boundary cleanly:
+  - Research Progress - 2026-03-16 - GPT-5.3-Codex Contract / Actor Envelope Hotspot
+  - The canonical contract layer still has unresolved intra-doc collisions, not just downstream drift:
+  - There is still no canonical `project_summary` or equivalent projection contract.
+  - project_summary
+  - What is still missing is a shared project-attention item contract.
+  - Recommended contract direction
+  - consumer docs that disclose requested/effective runtime identity
+  - requested/effective provider/account identity
+  - Conversational docs promise or imply requested/effective runtime truth but still omit account/auth details in their concrete sections.
+  - Concern and trust-state escalation still lack a shared conversational/tooling surface contract.
+  - Contract Unification Pass still lacks concrete provider/model/persona governance
+  - No owner doc yet explicitly defines projection freshness/health fields as a reusable cross-surface contract.
+  - own route-payload envelope name only if it becomes a generic cross-cutting contract
+  - own requested/effective runtime resolution semantics, including:
+  - requested/effective operational identity disclosure
+  - requested/effective runtime identity
+  - requested/effective runtime state: persona/platform/model snapshot fragments
+  - requested/effective runtime identity:
+  - older request-local contract: `HITLRequest` with `tier_id`, `tier_type`, and HITL-only `allowed_actions[]` like `approve_continue`
+  - HITLRequest
+  - tier_id
+  - tier_type
+  - allowed_actions[]
+  - approve_continue
+  - GPT-5.4 sharpened several downstream issues from “drift” into concrete contract breaks.
+  - `interview-subagent-integration.md` explicitly claims shared runtime alignment and has separate requested/effective interview contract pieces, but still drops the same execution-governance fields in practice:
+  - interview-subagent-integration.md
+  - no single pass-report contract currently ties those together cleanly
+  - richer requested/effective runtime snapshot than provider/model alone
+  - requested/effective persona/platform/model snapshot refs
+  - execution-unit context owner and minimum field contract
+  - `Prompt_Pipeline.md` already owns the canonical effective-resolution contract through the `effective resolution record`. It defines requested/effective persona/platform/model/auth/account fields and the required selection metadata.
+  - Prompt_Pipeline.md
+  - effective resolution record
+  - canonical runtime identity (`requested/effective persona/platform/model`)
+  - requested/effective persona/platform/model
+  - It owns which requested/effective runtime identity fields exist and what they mean.
+  - It owns where requested/effective identity is stored for attempts and current runtime projections.
+  - requested/effective model/platform refs or embedded snapshot refs
+  - The highest-risk duplication is requested/effective runtime identity being defined three times:
+  - The missing contract is not “which fields exist somewhere”; it is the executor-facing statement of which fields are mandatory for correctness at dispatch time versus optional disclosure/overlay fields.
+  - required when applicable, but canonical field names must exist in the contract:
+  - requested/effective model snapshot ref
+  - The executor-facing contract is now mostly a normalization task across existing owner docs, not a greenfield schema invention.
+  - define an `OpenArtifact`-style FileManager contract plus required supporting projections,
+  - OpenArtifact
+  - Research Progress - 2026-03-16 - Runtime-artifact envelope minimum contract
+  - Recommended contract rule
+  - The missing piece is no longer “we need schemas”; it is “the common envelope contract is underspecified.”
+  - Research Progress - 2026-03-16 - FileManager open-by-identity contract split
+  - That preview contract is effectively the model FileManager now wants more broadly.
+  - Recommended contract split
+  - add a second canonical open contract for identity-native objects, e.g.:
+  - Split FileManager’s canonical open contract into:
+  - the file-open contract in `FinalGUISpec.md`
+  - FinalGUISpec.md
+  - `OpenFile { path }` is directly incompatible with generated/runtime identity opens; the missing contract is now clearly an open-by-identity router, not a bigger `OpenFile`.
+  - OpenFile { path }
+  - OpenFile
+  - The matrix/schema mismatch is now the same kind of issue as earlier gate/evidence mismatches: prose is promising stronger guarantees than the machine-readable contract can support.
+  - This is now the gate-side version of the same drift pattern seen in the matrix/schema seam: the prose is expanding faster than the verifiable contract.
+  - shared route-payload contract
+  - shared subject-open/open-by-identity contract
+  - `FileManager.md` is now the main lagging owner. It still presents `OpenFile { path... }` as the single internal open contract for all callers, which is correct for real workspace files but no longer sufficient for generated/runtime/preview-backed subjects.
+  - FileManager.md
+  - OpenFile { path... }
+  - The storage/UI model already admits identity-native preview subjects, but the universal open contract in `FileManager.md` still assumes everything meaningful is a path.
+  - Research Progress - 2026-03-16 - Missing canonical route-target contract in Contracts_V0
+  - The remaining mismatch is that this stance is still distributed across planning/UI docs rather than being tied back to one canonical subject-open contract.
+  - `Project_Output_Artifacts.md` gets canonical persistence right, but does not itself own the GUI/open-resolution contract.
+  - Project_Output_Artifacts.md
+  - Link the planning/output docs back to the same canonical route-target / subject-open contract once that owner exists.
+  - pass-report finality is still tied to `workflow_run_id` without that key being fully carried through the base artifact-event contract.
+  - workflow_run_id
+  - Usage/artifact/search/attention all now look like natural consumers of the same route-target contract.
+  - `FileManager.md` still legitimately needs a path-based `OpenFile { path... }` contract for real workspace documents.
+  - identity-native open contract
+  - workspace-path contract only
+  - This means many existing ad hoc payloads should collapse into a smaller vocabulary rather than being copied verbatim into the new contract.
+  - Allow some object-family-specific anchors, but force them to justify themselves instead of defaulting every special case into the base route contract.
+  - `FileSafe.md` still contains silent or under-owned bypass/degradation paths, HTE-only enforcement assumptions, and no complete DAE-side contract for write-scope or remote side-effect enforcement.
+  - FileSafe.md
+  - mixed mutation semantics inside `lsp` remain unresolved against the `mutation_capable: bool` contract.
+  - lsp
+  - mutation_capable: bool
+  - scroll offsets except when the target contract explicitly depends on them
+  - Keep shell/workspace persistence in the shell/storage docs, not in the base route contract.
+  - Shell persistence and route identity should cooperate, but they should not collapse into one contract.
+  - Define a controlled coarse destination enum/family in the route contract layer.
+  - `cmd.panel.switch` currently accepts contextual object refs (`repo_id`, `worktree_id`, `workflow_run_id`, `publish_result_id`, `k8s_ref`) even though the shell model increasingly wants object targeting to route through a shared target contract instead of the panel-switch primitive.
+  - cmd.panel.switch
+  - repo_id
+  - worktree_id
+  - publish_result_id
+  - k8s_ref
+  - Research Progress - 2026-03-17 - Exact shape of the command-normalization contract
+  - The normalization contract needs to stay deliberately small.
+  - Add a minimal command-classification / normalization contract to the command-definition layer:
+  - route contract owns route-target structure
+  - The ledger should preserve firm contract language instead of drifting into ambiguous wording.
+  - `FinalGUISpec.md`, `FileManager.md`, and `UI_Command_Catalog.md` are also consumers. They should reference the route contract and the primitive boundary instead of restating them.
+  - UI_Command_Catalog.md
+  - another subject-native preview/open path defined by the subject contract
+  - If `OpenSubject` starts carrying panel/tab/shell destination semantics, it will collapse back into a second route contract.
+  - OpenSubject
+  - `assistant-chat-design.md` and `FinalGUISpec.md` already treat `open_source` as a real action, but the action still lacks a contract owner.
+  - assistant-chat-design.md
+  - open_source
+  - Keep resolver-support metadata out of the contract.
+  - `wizard_step` is sub-selection, not base route identity. It belongs in serialized deep-link detail or another narrower subtarget contract.
+  - wizard_step
+  - Keep destination-local refinements outside the enum and outside the base route contract.
+  - internal canonical contract:
+  - The contract now has enough shape to define concrete route normalization for the most common user-facing flows.
+  - Keep wizard-step focus in serialized anchor detail, not in the base route contract.
+  - These examples are the pressure test for the contract.
+  - State that invalid route payloads are contract failures, not “best effort” cases.
+  - Keep panel-subview and shell-tab identities outside the route base contract.
+  - base route contract stays small
+  - The route contract does not need to grow extra top-level scope ids for each of these families.
+  - Small contract, strong resolver.
+  - it still says all open-file actions share that one internal contract and one code path
+  - The clean contract placement is:
+  - shell/navigation language that still lets deep-link behavior live outside a shared route contract
+  - route/open contract consumption
+  - canonical target contract
+  - The owner docs already settled the canonical requested/effective runtime identity field names:
+  - `requested_persona_id` and `effective_persona_id` are still being named in consumer docs even though the owner contract already disallows them as canonical fields.
+  - requested_persona_id
+  - effective_persona_id
+  - it correctly locks canonical requested/effective runtime field names
+  - `00-plans-index.md`, `Decision_Log.md`, and `rewrite-tie-in-memo.md` still under-route or fail to record rewrite-era owner decisions around Seams/Packages/Overseers, requested/effective identity scope, operational identity classes, and Crosswalk-based owner precedence.
+  - 00-plans-index.md
+  - Decision_Log.md
+  - rewrite-tie-in-memo.md
+  - `Execution contract (recommended)`
+  - Execution contract (recommended)
+  - Gemini requested/effective auth/account identity is already framed correctly
+  - the canonical execution context replacement for `TierContext` still is not named here as a first-class owner contract
+  - TierContext
+  - worker/verifier identity fields aligned to canonical requested/effective runtime disclosure
+  - Cross-doc primitives are referenced in prose but not elevated into **machine-verifiable contract owners**.
+  - cases where a doc implies a stronger shared contract should exist but does not clearly own it
+  - account-switch / pressure families named but still under-owned at the contract level
+  - finding_type: contract
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-012
 - Fidelity gap refs: cov-012
 - Required fidelity items:
@@ -33,6 +1318,81 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-012` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-014: Shared governance/runtime record envelope
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0131
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Ledger` = exact record inspection
+  - Ledger
+  - Likely missing project-state record:
+  - explicit canonical record schema
+  - Candidate shared envelope fields:
+  - A review record likely needs:
+  - Promotion record should likely include:
+  - Recovery record likely needs:
+  - record = canonical structured object in Ledger/export/search/routing
+  - Export contracts should likely use the record envelope as the manifest backbone.
+  - `record export`
+  - record export
+  - `Record export` for single exact records
+  - Record export
+  - JSON/JSONL should remain close to canonical record structure
+  - absence of a live backing file/worktree should not corrupt the exported record bundle
+  - Chat/Interview/Builder/Orchestrator should still share the same effective resolution record and display grammar.
+  - dense event bursts should be summarized when collapsed, not force every low-level record into the initial viewport
+  - exact record inspection in `Ledger` still needs paging; exactness does not require eager full materialization
+  - Good shared payload fields:
+  - should remain broadly usable under degraded projections because chronological record slices can fall back closer to canonical events
+  - exact ledger browsing should remain available via slice-based record queries even when higher-level projections are unhealthy
+  - `Ledger` and record inspectors should be the stable fallback when summary surfaces lose trust
+  - What is still missing is a shared envelope pattern that keeps those families structurally compatible.
+  - Good base envelope fields:
+  - `Ledger` can inspect exact record structure consistently across families without inventing a custom viewer for every new object.
+  - The envelope should not collapse these into one generic old-state bit.
+  - Some current docs are better at record identity than at record-family consistency.
+  - Define a shared record-envelope contract for governance/runtime record families.
+  - the envelope should carry enough shared identity for search, export, and inspector routing without flattening family-specific meaning
+  - Search and record systems should be able to span these actors without flattening them into one type.
+  - exact canonical record(s) with stable ids/refs and schema-aware payloads
+  - but export does not itself authorize deletion of the canonical/historical record model
+  - What is still missing is one shared destination payload model that can span:
+  - Candidate shared payload fields
+  - all “Open in …” / “Show in …” actions should become thin wrappers over the shared routing payload
+  - safe-point restore creates a new attempt record rather than mutating the old one
+  - early envelope is only `{ run_id, seq, type, payload }`
+  - { run_id, seq, type, payload }
+  - now clearly needs a versioned correlation/event envelope and bridged-provider capability parity
+  - but the shared effective-resolution record still only models provider/model/persona/auth/account identity
+  - missing shared route-payload schema
+  - Add blocked/degraded reason fields and confidence/source hooks to the effective-resolution record.
+  - effective-resolution record
+  - declares envelope and per-type schema files
+  - the runtime-artifact envelope should be attempt-native by default.
+  - Extend evidence checks enough to record structured normalization verification instead of only free-form details text.
+  - This is a family-contract mismatch, not a request for one giant shared blocked payload.
+  - visible labels must bind to the shared runtime recovery commands
+  - The effective-resolution record is close to the rewrite direction, but it still lacks the newer identity layers already established elsewhere:
+  - Still missing field schemas for `project_summary.v1`, `project_attention_item.v1`, `account_pressure_episode.v1`, `account_switch_event.v1`, and broader governance/runtime record-envelope families.
+  - project_summary.v1
+  - project_attention_item.v1
+  - account_pressure_episode.v1
+  - account_switch_event.v1
+  - the gap record is now detailed enough that the next stage should be condensation rather than another broad evidence sweep
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-014
 - Fidelity gap refs: cov-014
 - Required fidelity items:
@@ -45,6 +1405,89 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-014` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-019: Concern record family definition
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0132
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - 1. **Define the package/seam/lane/promotion object family canonically.**
+  - `concern source event/ref`
+  - concern source event/ref
+  - Concern record should likely carry:
+  - may nominate a concern or attach evidence to an existing concern
+  - should be able to turn a nominated concern into an accepted canonical concern
+  - concern owner for follow-up
+  - A concern should be allowed to change owner over time without changing identity.
+  - Concern results should be object-first.
+  - exact concern record / merge-split lineage -> `Ledger`
+  - Ledger
+  - Concern result should carry:
+  - grouped concern clusters by seam/package and weak-integration category
+  - There is no obvious current concern event family or concern record family in the local docs comparable to attempts/blocked/remediation.
+  - Add a canonical concern record family and corresponding projection contract.
+  - Add explicit concern lineage fields for merge/split/supersession.
+  - review findings may nominate or update concerns, but the review record itself should remain distinct from concern records
+  - This aligns with earlier concern and blocked-state work:
+  - Concern / blocked-owner implication
+  - Concern / lane / record density implication
+  - concern severity alone should not drive escalation
+  - This means many concern changes should remain in-app only unless:
+  - Keep concern acknowledgment as a noise-control mechanism, not a blocked-state suppressor.
+  - The local docs still do not define a canonical concern record family the way they define:
+  - concern replaced by a newer concern or broader canonical object framing
+  - but should not be replaced by the concern record
+  - seam/package concern rollups
+  - concern owner = who is responsible for the concern
+  - There is still no obvious concern event family or concern record family in the local docs comparable to attempts/blocked/remediation.
+  - if a concern is currently tied to active blocked status, acknowledgment alone must not clear the block
+  - Add a canonical account-switch history family:
+  - GPT-5.2 reinforced that switch-history remains under-owned as an event family, not just a missing view:
+  - GPT-5.2 sharpened that this likely needs a distinct account-health / pressure event or record family instead of overloading auth-state
+  - Extend the effective-resolution/runtime snapshot family with:
+  - The missing piece is an append-only switch/pressure episode family.
+  - Add a canonical append-only event/record family for account-pressure and switching.
+  - `provider_accounts.health` is a current-state family, not a durable episode history.
+  - provider_accounts.health
+  - Notification copy already assumes switch outcomes like `threshold_preemptive_switch` and `no eligible backup`, but there is no canonical durable event family behind that assumption.
+  - threshold_preemptive_switch
+  - no eligible backup
+  - Freshness and degradation are currently discussed together often enough that later docs could collapse them into one field family by accident.
+  - The required runtime-artifact schema family is not merely incomplete; it is absent.
+  - schema family references
+  - The canonical field family is already mostly clear:
+  - The concrete field family is already present, but split across three owner docs:
+  - one conditional family for blocked/remediation/recovery cases
+  - `UI_Command_Catalog.md` is mostly action-oriented, not target-model-oriented. It has strong runtime action IDs, but no generalized subject-open/routing payload family.
+  - UI_Command_Catalog.md
+  - but add a small canonical navigation/open family for target resolution:
+  - That becomes a real limitation if the rewrite adopts a reusable navigation family such as `cmd.nav.open_subject` or route-payload-driven wrappers. The wiring schema cannot currently distinguish:
+  - cmd.nav.open_subject
+  - canonical wrapper family such as `cmd.nav.*` if adopted
+  - cmd.nav.*
+  - Recommend against making a large public `cmd.nav.*` family the main catalog-facing answer.
+  - potentially another future canonical primitive family
+  - point to the canonical primitive family
+  - Wrapper normalization metadata is about canonical primitive family, not about serializing the exact route payload.
+  - definition of canonical route identity does not
+  - `object_kind = concern`
+  - object_kind = concern
+  - The blocked family is no longer conceptually unclear, but the owner docs still describe its members at different maturity levels.
+  - concern record canonical field set
+  - concern owner-kind enum
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-019
 - Fidelity gap refs: cov-019
 - Required fidelity items:
@@ -57,6 +1500,36 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-019` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-023: Concern lifecycle and resolution kinds
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0133
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - impacted contract/runtime/storage area: scheduling and blocked/recovery lifecycle.
+  - Good owner kinds still look like:
+  - Owner kinds already align with prior ledger work:
+  - severity, category, owner, lifecycle, resolution_kind
+  - unresolved conflict worktrees may need to survive until user resolution
+  - What is still missing is a full lifecycle that separates:
+  - annotation lifecycle (`open -> addressed -> resolved`)
+  - open -> addressed -> resolved
+  - Recommended operational-identity kinds:
+  - Give startup recovery, counter ceilings/backoff, DAE/jail lifecycle, and attention/blocked escalation one authoritative owner each instead of leaving them to cross-doc inference.
+  - lane/worktree lifecycle
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-023
 - Fidelity gap refs: cov-023
 - Required fidelity items:
@@ -69,6 +1542,26 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-023` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-029: Concern action policy and authority model
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0134
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - this cluster suggests reconciliation risk now lives in authority semantics as much as in storage/schema drift
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-029
 - Fidelity gap refs: cov-029
 - Required fidelity items:
@@ -81,6 +1574,55 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-029` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-033: Concern linkage to adjacent families
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0135
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - 5. **Graph-local recovery commands vs canonical runtime action families**
+  - likely issue: lexicographic dispatch, scored scheduler, blocked overlays, and graph-local retry families still coexist without one canonical model.
+  - Compared to attempts/blocked/usage, these families still lack a normalized envelope and linkage story.
+  - The docs imply multiple identity families that must stay distinct:
+  - preserve run/thread/attempt/worktree linkage
+  - The docs have enough adjacent durable-record rigor to make the absence of a concern contract more risky now than earlier.
+  - canonical runtime object families
+  - `UsageRecord` carries effective-account attribution, but still lacks first-class switch-history and requested-side linkage
+  - UsageRecord
+  - still needs explicit binding to project-scoped repo/account selection, degraded-trust signaling, and blocked-episode recovery linkage
+  - The promised runtime-artifact schemas are absent today, so any linkage that depends on them is currently documentation-only.
+  - needs actor-scoped snapshots and durable account-switch/pressure history families
+  - Extend runtime-artifact envelopes and `cost_usage` linkage with canonical identity/trust/switch fields or refs.
+  - cost_usage
+  - The missing storage-owner work is now specific enough to propose concrete families rather than leaving it as a generic gap.
+  - package/work-package linkage
+  - New supporting docs (`newtools.md`, `assistant-memory-subsystem.md`) are now independently inventing command/event families faster than the canonical owners are registering them.
+  - newtools.md
+  - assistant-memory-subsystem.md
+  - The biggest repeated pattern is that runtime-era concepts already exist in adjacent docs, but the owner docs for registration/verification/routing still lag behind them.
+  - runtime-artifact and project-artifact families are staying distinct, but they now need parallel discipline about canonical versus derived identity.
+  - Other ref families are mostly record-inspection or provenance links already, but the owner docs still do not state that distinction clearly.
+  - `evidence_record` in a section surrounded by tier-keyed families
+  - evidence_record
+  - canonical key families
+  - Strong adjacent owner:
+  - Adjacent references checked through existing owner docs:
+  - action binding is through canonical runtime action families
+  - canonical runtime action families
+  - The rerun makes it clear that the concern/action/governance tranche is missing not just "some schemas", but the following concrete families:
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-033
 - Fidelity gap refs: cov-033
 - Required fidelity items:
@@ -93,6 +1635,32 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-033` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
 
 ### Fidelity recovery cov-036: Promotion classes and gate evidence
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0136
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Good category set likely needs to align with weak-integration groupings plus runtime/governance classes:
+  - Recommended executor-facing field classes
+  - `run-gates` currently enforces plan-shard freshness, but Progression_Gates does not admit that as part of its gate inventory/status model.
+  - run-gates
+  - Align evidence schema with the actual gate outputs expected by GATE-011/GATE-012 or reduce gate claims to what the schema can encode today.
+  - The doc still uses non-deterministic phrasing in owner-level gate text:
+  - route primitive indexing / bridge precedence / gate schema follow-through
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-036
 - Fidelity gap refs: cov-036
 - Required fidelity items:
@@ -105,6 +1673,41 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-036` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-075: Historical semantic consistency
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0137
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `focus_mode = live | historical`
+  - focus_mode = live | historical
+  - replaced by a newer canonical successor for the same semantic slot
+  - still needs historical semantics:
+  - neither should imply lineage or semantic succession relative to the other unless an explicit relationship exists
+  - Exports must preserve historical truth even when live backing objects no longer exist.
+  - a project with only historical runs is not inherently degraded or blocked
+  - live backing removed; only historical identity and lineage remain
+  - Preserve historical lane/worktree records after archive/prune/remove.
+  - `historical vs superseded vs revoked`
+  - historical vs superseded vs revoked
+  - these should remain family-specific, while still allowing cross-family historical overlays where relevant
+  - `historical vs superseded vs revoked vs reopened`
+  - historical vs superseded vs revoked vs reopened
+  - wrapper-to-canonical navigation consistency
+  - explicit `focus_mode = live | historical`
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-075
 - Fidelity gap refs: cov-075
 - Required fidelity items:
@@ -129,6 +1732,26 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-164` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-173: Concern owner vs creator vs resolver separation
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0139
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - The auto resolver should emit concise but structured reason text.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-173
 - Fidelity gap refs: cov-173
 - Required fidelity items:
@@ -141,6 +1764,50 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-173` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-175: Concern source-event vs record vs projection split
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0140
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - a canonical blocked event can still drive notification even if some projection surfaces are degraded
+  - one concern is reframed into multiple more precise concerns; original resolves with `resolution_kind = split`
+  - resolution_kind = split
+  - but non-remediation concern posture, projection freshness, and degraded-action gating still lack a single contract owner at the canonical layer
+  - canonical blocked episodes should outrank derived projection warnings
+  - runtime/blocked/wizard objects already use their own record families and projection rows
+  - without a canonical replacement execution-context object, downstream docs keep papering over the split locally
+  - That means the replacement should not be “TierContext but with more fields.” The cleaner model is a split:
+  - The owner split is now explicit enough to stop treating this as a vague “replace `TierContext`” task.
+  - TierContext
+  - Recommended owner split
+  - The provider/account snapshot fields are at risk of becoming a dumping ground for non-provider identity unless this split is made explicit.
+  - startup recovery is still split not only by owner doc but by incompatible recovery objects and emission boundaries.
+  - blocked-governance attribution (`blocked_owner` or equivalent) is still absent from canonical blocked projection shape even though UX/governance needs it.
+  - blocked_owner
+  - The conceptual work is largely done; the missing piece is declaring the owner split in the docs that are supposed to stop duplication.
+  - The clean owner split is:
+  - The owner-doc adoption split is:
+  - `thread_blocked_notice` and `wizard_runtime_state` still treat `resume_url?` as stored state alongside canonical blocked metadata, which keeps the navigation transport/model split unresolved.
+  - thread_blocked_notice
+  - wizard_runtime_state
+  - resume_url?
+  - That split keeps teaching implementers that `TierChanged` and `UserInteractionRequired` are the primary operational truth even though the runtime/storage owner docs have already moved to canonical event and projection families.
+  - TierChanged
+  - UserInteractionRequired
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-175
 - Fidelity gap refs: cov-175
 - Required fidelity items:
@@ -151,6 +1818,177 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-175` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-180: Runtime attribution ownership split
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0141
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Why it matters: tier-boundary approvals, graph-local commands, and blocked-node runtime actions currently coexist as competing canonical mechanisms.
+  - Research Progress - 2026-03-16 - Opus Identity / Runtime Batch
+  - Runtime ownership is still tier-bound in the identity-facing docs:
+  - Replace tier-first aggregation and event anchoring in usage/storage/UI docs with attempt/node/lane/package/seam-aware attribution, leaving tier terms only as compatibility aliases if needed.
+  - `runtime blocked/recovery state`
+  - runtime blocked/recovery state
+  - page state must not silently stand in for runtime state when freshness/trust is insufficient
+  - object context menus should show only actions valid for that object's current state, with canonical labels from runtime semantics
+  - or perform an authoritative revalidation against canonical/current runtime state before executing
+  - `dirty_worktree` and `worktree_conflict` are explicit runtime blocked reasons
+  - dirty_worktree
+  - worktree_conflict
+  - acknowledged concerns can reduce noise, but they must not create fake health when the runtime is still blocked
+  - runtime execution stop with canonical recovery metadata
+  - seam/package/lane/worktree lineage is not yet treated as first-class storage/usage attribution everywhere it needs to be
+  - Rework storage/usage attribution to treat `seam_id`, `package_id`, `lane_id`, and `attempt_id` as first-class where the runtime model now requires them, instead of centering `tier_id`
+  - seam_id
+  - package_id
+  - lane_id
+  - attempt_id
+  - tier_id
+  - `HITLRequest` / blocked-flow thinking still leans on `tier_id` / `tier_type` in places while the runtime increasingly uses `node_id` and attempt-scoped records as the canonical execution anchors.
+  - HITLRequest
+  - tier_type
+  - node_id
+  - Canonical field-name and schema ownership drift is sharper than the earlier Gemini pass suggested:
+  - Rework usage/storage attribution around lane/package/seam/attempt/remediation dimensions instead of centering `tier_id`.
+  - Canonical runtime identity is still split between strong normative prose and weaker tables/consumers:
+  - strongest remaining table-vs-prose conflict for runtime identity, usage attribution, and receipt/projection ownership
+  - either inline the canonical runtime snapshot fields explicitly
+  - graph-local recovery IDs still conflict with the canonical `[retired-token-1] -> cmd.runtime.*` model
+  - [retired-token-1] -> cmd.runtime.*
+  - app-default plus project override matches the already-emerging inherited/override/effective grammar used elsewhere in settings and runtime disclosure
+  - now clearly needs one canonical handoff/runtime object and execution-role ownership
+  - still cannot faithfully render the runtime identity bundle or pivot by the newer attempt/receipt/usage anchors
+  - now clearly needs explicit transport-vs-upstream identity ownership and full auth/account runtime disclosure
+  - still needs requested concrete-account ownership plus explicit role/actor semantics in the canonical runtime record
+  - requested concrete-account ownership
+  - this leaves side-effect surfaces at risk of collapsing provider-account identity and operational identity into one misleading runtime story
+  - Preview `trust_tier` and runtime projection-freshness trust still need distinct vocabularies.
+  - trust_tier
+  - this leaves blocked overlays unable to explain who/what would have executed the side effect under the final runtime identity model
+  - needs immediate correction of canonical/session identity ownership
+  - Add operational-identity blocks to runtime records where side-effectful or externally-scoped actions matter.
+  - `account_switch_reason` on runtime snapshots
+  - account_switch_reason
+  - runtime-artifact payload ownership is still split across docs without an actually-populated canonical schema family
+  - Replace or wrap `TierContext` with a node-native execution context carrying full canonical runtime identity.
+  - TierContext
+  - need a consolidation pass as the eventual runtime owner for:
+  - The cross-cutting canonical runtime fields already exist elsewhere:
+  - `[retired-token-2]` aligns with the newer runtime model:
+  - [retired-token-2]
+  - Move approval anchoring onto canonical runtime identity:
+  - `FinalGUISpec.md` still has no true Orchestrator-page owner section, still leaves Dashboard/Orchestrator operational surfaces identity-thin, still conflicts with `[retired-token-2]` on slash-command canon, and still mixes `restore point` language with runtime safe-point recovery.
+  - FinalGUISpec.md
+  - restore point
+  - runtime identity looks declared but is not actually materialized by its own constructor/coordination path.
+  - Several docs still claim to align with canonical runtime records while silently dropping auth/account/role fields that those records already own elsewhere.
+  - Contribute(PR) still needs isolated runtime execution even if the user-facing PR branch stays singular.
+  - still mismatches `worktree_id` ownership, base-branch ownership, and canonical blocked-emitter semantics.
+  - worktree_id
+  - `persona_override_owner_id` still allows `tier_id`-style ownership in shared runtime docs, while wizard/interview are simultaneously trying to align with newer non-tier execution semantics.
+  - persona_override_owner_id
+  - Extend wizard/interview handoff payloads so they can carry the upstream subset of canonical runtime identity:
+  - active coordination and context construction still cannot be trusted as canonical runtime identity.
+  - The same owner docs still claim both file-based canon and event-sourced canon for runtime coordination/audit.
+  - Add the upstream subset of canonical runtime identity to pass reports when a provider/model actually executed the pass:
+  - this makes it unclear where authoritative schema registration and projector ownership actually live
+  - clear schema ownership boundary
+  - canonical execution-context replacement / `TierContext` successor ownership
+  - `blocked_sequence` should be owned by the runtime scheduler/executor layer, not by UI/HITL/chat/storage.
+  - blocked_sequence
+  - canonical runtime action routing
+  - now has multiple ghost-ID dependents and remains the weak link for command-family ownership.
+  - Move all requested/effective runtime identity field definitions back behind the owner split:
+  - If `TierContext` survives at all, it should survive as a derived selection/view helper, not as the thing that owns canonical runtime identity.
+  - `Runtime_Artifacts_Panel.md` is stronger about canonical runtime identity, but its canonical ID set is still artifact-centric:
+  - Runtime_Artifacts_Panel.md
+  - every side-effect-bearing or evidence-bearing runtime object should be able to answer:
+  - `attempt_id` remains the canonical local runtime execution anchor.
+  - local runtime anchor = `attempt_id`
+  - `logical_artifact_id` and `linked_artifact_id` are lineage/navigation helpers, not replacements for runtime identity.
+  - logical_artifact_id
+  - linked_artifact_id
+  - `cmd.runtime.open_attempt_details`
+  - cmd.runtime.open_attempt_details
+  - `cmd.runtime.open_queue_analysis`
+  - cmd.runtime.open_queue_analysis
+  - `cmd.runtime.open_remediation_lineage`
+  - cmd.runtime.open_remediation_lineage
+  - `cmd.runtime.open_safe_point_history`
+  - cmd.runtime.open_safe_point_history
+  - Command/wiring ownership tightened further:
+  - Gate/evidence integrity still is not caught up to the runtime model:
+  - The `[retired-token-1]` and stale/degraded revalidation issues are not just runtime concerns; they also need a verification home.
+  - [retired-token-1]
+  - Command/event ownership tightened at the end:
+  - Runtime-governance docs still lack a few critical ownership fields/rules (startup recovery handshake, blocked-owner attribution, DAE restart/intercept model).
+  - startup/blocked/DAE governance ownership.
+  - The existing `cmd.runtime.*` consolidation shows a related but different pattern:
+  - cmd.runtime.*
+  - `Skills_System.md` still has unresolved HTE/DAE runtime delivery mechanics, bundling-off ambiguity, bundled-skill compaction loss, actor-scope ambiguity for subagents/rotated runs, and provider-affinity ambiguity for `.claude/` discovery roots.
+  - Skills_System.md
+  - .claude/
+  - The rewrite still lacks clean owner boundaries for several cross-cutting areas: runtime identity invariants, safe-point cleanup ordering, OpenCode server/session limits, project/session browser ownership, attention-center ownership, runtime-recovery command family coverage, and plugin/skill/formatter runtime safety.
+  - Current docs still sometimes imply that scoped runtime identities need bespoke top-level route fields.
+  - resume/retry controls must map to canonical runtime actions
+  - thread blocked notices stay as rendered/persisted consumer state, not canonical blocked ownership
+  - The result is that node-first routing and attempt-native runtime identity still cannot flow cleanly through Usage and Evidence without compatibility translation.
+  - later runtime recovery / canonical-record addenda
+  - Keep any graph-local display structs derived from the canonical runtime snapshot rather than naming parallel canonical fields.
+  - Reconcile owner docs so canonical runtime wording is graph/node/package/seam/lane aligned rather than tier-aligned.
+  - canonical runtime commands use:
+  - canonical runtime actions
+  - `decline` -> `cmd.runtime.decline` -> `{ run_id, node_id, blocked_sequence, attempt_id? }`
+  - decline
+  - cmd.runtime.decline
+  - { run_id, node_id, blocked_sequence, attempt_id? }
+  - The canonical runtime action model has already made both versions obsolete.
+  - newer canonical runtime records and projections
+  - The owner docs already provide a stronger canonical runtime source set:
+  - Keep any surviving tier labels explicitly as derived display/grouping metadata, not as the core runtime identity shape.
+  - worker/runtime detail should key from runtime identity, not only active-tier heuristics
+  - Runtime identity and recovery semantics sharpened again:
+  - `Media_Generation_and_Capabilities.md` and `OpenCode_Coverage_Matrix.md` both show that caller-scoped identity and transient runtime capability state still lack proper request/event surfaces.
+  - Media_Generation_and_Capabilities.md
+  - OpenCode_Coverage_Matrix.md
+  - Research Progress - 2026-03-17 - owner-contract seam: Contracts_V0 runtime identity, blocked identity, route/open ownership
+  - Research Progress - 2026-03-17 - owner-contract seam: storage-plan mixed runtime eras
+  - The owner doc says runtime identity is canonical, while still anchoring key override and selection concepts to `tier`.
+  - tier
+  - The runtime identity model across the rewrite now needs more than Persona/model/account disclosure. It also needs execution-role and operational-identity disclosure, and this owner doc has not caught up yet.
+  - `[retired-token-2]` now has a direct same-file contradiction between graph-HITL commands and canonical runtime recovery commands.
+  - Cluster C - Identity / attribution / owner-doc transfer misses
+  - `[retired-token-6]` downgraded: `[retired-token-7]` and `[retired-token-8]` are no longer kept in the unresolved exact-missing list; the remaining live defect is the skeletal `[retired-token-4]` payload, missing usage observability carry-through for `[retired-token-5]`, missing `[retired-token-3]` ownership, and the stale tuple / stale verdict survivors.
+  - [retired-token-6]
+  - [retired-token-7]
+  - [retired-token-8]
+  - [retired-token-4]
+  - [retired-token-5]
+  - [retired-token-3]
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-180
 - Fidelity gap refs: cov-180
 - Required fidelity items:
@@ -163,6 +2001,32 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-180` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-186: Approval scope key and approver identity
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0142
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `ActiveAgent`, crew structs, and coordination payloads are still tier-keyed and therefore inherit the same problem. They should key on canonical execution refs first, with tier/package/seam labels only as secondary metadata when still useful.
+  - ActiveAgent
+  - Add durable approver identity fields to approval/rejection records/events so audit/history can explain who approved or declined, not just that it happened.
+  - Several downstream docs now fail on exact key or field names rather than broad conceptual drift.
+  - Worktree/source-control docs still lack one agreed durable identity key (`worktree_id` vs tier/path) and one agreed base-branch owner.
+  - worktree_id
+  - Ledger with event identity in scope
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-186
 - Fidelity gap refs: cov-186
 - Required fidelity items:
@@ -175,6 +2039,28 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-186` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-193: Concern update heuristics
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0143
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - But those must be explicit metadata, not inferred by heuristics.
+  - workspace heuristics (`workspace`, language/domain/framework detection)
+  - workspace
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-193
 - Fidelity gap refs: cov-193
 - Required fidelity items:
@@ -185,6 +2071,32 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-193` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
 
 ### Fidelity recovery cov-199: Route/open compatibility-only fallback marking
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0144
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - canonical fallback
+  - fallback reason when the preferred candidate is not the effective one
+  - deprecated `allowed_actions[]` is compatibility-only and MUST NOT appear in new canonical schemas
+  ContractRef: ContractName:Plans/Contracts_V0.md, Primitive:RouteTarget, Primitive:OpenSubject
+  - allowed_actions[]
+  - Base route/open primitives landed, but missing:
+  - Route/open auditing must stay focused on **refinement omissions**, not on re-claiming absence of primitives that already landed.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-199
 - Fidelity gap refs: cov-199
 - Required fidelity items:
@@ -197,6 +2109,54 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-199` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
 
 ### Recommended minimum concern record shape
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0145
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Object-first search targets should include at minimum:
+  - Minimum runtime-facing fields still align with earlier findings:
+  - Recommended lane-oriented states
+  - Recommended `project_summary` fields:
+  - project_summary
+  - Recommended `project_attention_item` fields:
+  - project_attention_item
+  - Recommended minimum route payload fields:
+  - Recommended operational-identity shape:
+  - Recommended fields
+  - Recommended supporting fields:
+  - Minimum indexed fields should include:
+  - Minimum `worktree_record` fields:
+  - worktree_record
+  - Recommended derived `decomposition_context` / `selection_context`
+  - decomposition_context
+  - selection_context
+  - 5. Optional but strongly recommended disclosure fields
+  - Recommended minimum contract additions
+  - Strongly recommended execution/runtime fields
+  - Recommended runtime-artifact envelope minimum fields
+  - Recommended command-family responsibilities
+  - Recommended minimum field set
+  - Some current surfaces still behave as if every target kind needs its own bespoke payload shape.
+  - The canonical minimum is:
+  - Downstream docs already imply several subject-open intents, but there is still no owner contract that states the minimum shape directly.
+  - The canonical minimum field set is:
+  - The evidence schema cannot carry structured normalization proof, so GATE-010 can only verify flat dispatch behavior unless its proof shape expands.
+  - Define a cross-family blocked minimum for canonical blocked objects:
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-207
 - Fidelity gap refs: cov-207
 - Required fidelity items:
@@ -209,6 +2169,42 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-207` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
 
 ### Concern ownership / authority direction
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0124
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Concerns and blocked ownership should feed escalation, but not every concern should become a system notification.
+  - Canonical-validation direction
+  - Identity-model direction
+  - escalation should be based on concern severity + execution impact + persistence + ownership
+  - `[retired-token-2]` still sits in a three-way ownership contradiction with `[retired-token-1]` and `[retired-token-3]` over payload schema authority; it still points at missing schema files and still lacks a concrete artifact-projection key family in `[retired-token-3]`.
+  - [retired-token-2]
+  - [retired-token-1]
+  - [retired-token-3]
+  - The later sections in the same doc already show the stronger direction, so this is a local reconciliation problem rather than a missing concept.
+  - Still preserves `TierContext`-era live canon rather than fully reflecting `execution_unit_context` direction.
+  - TierContext
+  - execution_unit_context
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-210
 - Fidelity gap refs: cov-210
 - Required fidelity items:
@@ -250,6 +2246,49 @@ ContractRef: ContractName:Plans/Contracts_V0.md
 
 ## Cross-surface runtime, concern, and route/open contracts
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0112
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Bridged-provider contracts remain materially weaker than the canonical runtime identity contract:
+  - any approval path whose allowed actions are defined by runtime blocked/HITL contracts rather than generic UI choice
+  - Bind high-consequence runtime actions to canonical blocked/HITL command contracts where appropriate instead of ad hoc UI confirms.
+  - Replace worker/verifier/page contracts with canonical runtime snapshot refs or inline canonical runtime bundles instead of ad hoc persona/provider/model strings.
+  - still the broadest consumer doc and still missing concern, trust, switch/pressure, and rewrite-era widget/tab contracts
+  - still needs producer identity, trust/provenance, and stronger cross-surface linkage contracts
+  - interview runtime contracts still stop at persona/platform/model-level identity and still omit auth/account/switch identity
+  - Wizard/Builder handoff contracts are still incomplete for runtime identity and worktree policy:
+  - the replacement should inherit existing canonical runtime snapshot contracts, not create a parallel runtime-resolution schema
+  - still contains concrete runtime structs that cannot carry the rewrite’s full execution identity or concern model.
+  - `UI_Wiring_Rules.md` still cannot express dispatcher preconditions such as freshness/health gating, permission gating, dynamic `allowed_action_ids[]`, or mutation safety tiers; GATE-010 currently can’t verify the contracts the runtime docs now rely on.
+  - UI_Wiring_Rules.md
+  - allowed_action_ids[]
+  - Canonical runtime actions and states exist upstream, but dispatcher, matrix, and gate contracts still do not express the runtime checks needed to enforce them safely.
+  - `MiscPlan.md` still conflicts with safe-point cleanup ordering, remediation lineage preservation, attempt-scoped evidence retention, and also carries orphan cleanup/crew runtime contracts not owned anywhere else.
+  - MiscPlan.md
+  - Demote `tier_id` from cross-surface navigation identity and realign usage consumers around runtime object routing plus canonical usage-event identity.
+  - tier_id
+  - Research Progress - 2026-03-17 - Exact owner-doc insertion points for route/open contracts
+  - The document is still missing the canonical route/open contracts entirely.
+  - `WiringEntry` must consume route/open contracts, not become their surrogate owner.
+  - WiringEntry
+  - route/open contracts missing by name
+  - These docs should be treated as mirrors and summaries, not as places to re-own runtime or surface contracts.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 This section is the single canonical owner for runtime identity, concern/episode lifecycle, route_target primitives, and OpenSubject routing semantics across all surfaces and execution contexts.
 
 ### Fidelity recovery order
@@ -258,6 +2297,49 @@ This section is the single canonical owner for runtime identity, concern/episode
 - The recovery sequence in this owner section is strict: canonical owner repairs first, dependent consumer updates second, mirror cleanup third, and fidelity rerun evidence last.
 
 ### Shared governance and runtime record envelope
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0148
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Research Progress - 2026-03-16 - Shared Conversational-Actor / Runtime Identity Boundary
+  - requested/effective provider/model/effort/persona/auth/account and selection reason are already shared runtime concepts
+  - This is useful because it means the shared runtime contract should stay broad.
+  - Add a canonical actor envelope shared by runtime records, provider-account snapshots, receipts, Usage pivots, and conversational actor telemetry.
+  - §6.5 defines a rich runtime identity record with auth/account/switch fields
+  - now clearly needs a binding path from operational identity and role-scoped pools into the shared runtime grammar
+  - Add an OperationalIdentity block or equivalent disclosure layer to the shared runtime identity grammar.
+  - now clearly needs version governance for new actor/account/trust categories or fields
+  - needs explicit role/actor and blocked/degraded disclosure in the canonical runtime record
+  - Operational identities are declared but still absent from shared runtime snapshots.
+  - `tier_runtime_record` or successor graph-owned runtime record
+  - tier_runtime_record
+  - Conversational actor docs still lag the shared runtime identity model in concrete ways:
+  - package/seam governance identity
+  - package/seam overseers are governance actors, not the scheduler
+  - `chain-wizard-flexibility.md` still leaves CUP without requested/effective runtime governance, still has no `wizard_id -> run_id` lineage bridge, and still carries the actively misleading “no change to tier/subtask execution” claim.
+  - chain-wizard-flexibility.md
+  - wizard_id -> run_id
+  - still claims shared runtime alignment while dropping auth/account identity and reintroducing pseudo-tier execution keys.
+  - Wizard/interview docs are increasingly explicit about lineage and blocked-state handling, but their concrete handoff payloads still stop short of the shared runtime identity model.
+  - the upstream actors are not orchestration nodes, but they still need shared runtime identity semantics when handing off into execution
+  - if there is no concrete attempt, the envelope should still carry the strongest available runtime anchor:
+  - Gate/evidence schema mismatch is now a first-class governance defect, not just a tooling gap.
+  - clear relationship between runtime scheduler/execution roles and the newer package/seam overseer governance model
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Define one shared record envelope with canonical lineage refs and artifact/evidence refs.
 - Keep record objects distinct from artifacts and rendered summaries.
 - Define shared historical vocabulary: historical, stale_historical, superseded, revoked, reopened, archived, removed.
@@ -268,6 +2350,45 @@ This section is the single canonical owner for runtime identity, concern/episode
 - Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins.
 
 ### Requested/effective account and execution identity
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0146
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - why impacted: still the main SCM/worktree execution owner.
+  - what likely new model pressure is: first-class seam/package/lane nodes, promotion-class badges, requested/effective execution identity, blocked/recovery action unification.
+  - The requested/effective execution identity model is still strongest on the effective side and still weak on the requested side:
+  - the docs have not been rewritten around node/package/seam/lane-aware execution identity
+  - but remain upstream conversational/document-production actors, not package/seam/node execution objects
+  - This is especially important when usage/account pressure turns into a real blocked execution condition.
+  - `ContributePr` explicitly disables tier worktrees and forces single-branch execution
+  - ContributePr
+  - `Permissions_System.md` still scopes `always` approvals and reject-cascades to the whole session, which is unsafe for multi-lane/multi-actor execution
+  - Permissions_System.md
+  - always
+  - package/seam/corroboration/concern-aware execution hooks
+  - A specific structural problem is emerging: execution identity is spread across incompatible keys:
+  - `attempt_record` and blocked/runtime records hold canonical execution truth
+  - attempt_record
+  - `effective state` is still too broad relative to requested/effective execution identity.
+  - effective state
+  - `MUST RECONCILE` docs are not primary execution owners, but they will drift or mislead if omitted from the packet.
+  - MUST RECONCILE
+  ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Permissions_System.md, Primitive:RuntimeIdentity
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Required rules:
 - Add requested_account_id alongside requested_account_policy
@@ -292,6 +2413,29 @@ Projection/display rules:
 - Bridged-provider and permission envelopes preserve the same requested/effective account pair instead of collapsing them into provider-native identifiers or policy-only selectors.
 
 ### Concern record family, lifecycle, and deferred visibility
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0125
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `concern record` = canonical durable object with stable identity and lifecycle
+  - concern record
+  - palette visibility must not silently downgrade confirmation strength
+  - The other major missing family is worktree/lane lifecycle state:
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request.
 - Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata.
 - Use active/acknowledged/resolved/dismissed as concern lifecycle states.
@@ -313,6 +2457,47 @@ Projection/display rules:
 - Allow concern ownership reassignment without changing concern identity.
 
 ### route_target, OpenSubject, and command normalization
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0152
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - still lag behind command/catalog normalization and still encode compatibility-era identity/action fields
+  - `OpenSubject { subject_id, target_group?, open_mode?, location? }`
+  - OpenSubject { subject_id, target_group?, open_mode?, location? }
+  - uses `OpenSubject { subject_id, target_group?, open_mode?, location? }`
+  - Proceed to the final `GPT-5.3-Codex` pass because GPT-5.2 still found concrete mechanical deltas, especially around extraction hazards, event naming, gate-schema mismatch, and missing final command IDs.
+  - GPT-5.3-Codex
+  - Reuse the event-alias and recovery-command migration style as the template for navigation normalization.
+  - Move object-targeting payload semantics out of `cmd.panel.switch` and into canonical route-consuming commands or normalized `route_target` wrappers.
+  - cmd.panel.switch
+  - route_target
+  - optional `normalization { kind, normalizes_to_contract? | alias_of_command_id? }`
+  - normalization { kind, normalizes_to_contract? | alias_of_command_id? }
+  - `OpenSubject(subject_id = doc:...)` resolves to workspace-backed source opening
+  - OpenSubject(subject_id = doc:...)
+  - one command/wiring normalization gap
+  - The clean fix is catalog-owned normalization metadata consumed by wiring/gates, not a second routing schema inside the matrix.
+  - promoted-shell command-family completeness and persistence-scope normalization second
+  - evidence structures that can encode normalization and alias failures
+  - insert `route_target` and `OpenSubject` into the UI-command/navigation section
+  - OpenSubject
+  - `Wiring_Matrix.md` still cannot structurally express wrapper/canonical normalization or route-aware fields
+  - Wiring_Matrix.md
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Define lane_to_package, package_to_seam_available, and seam_complete promotions.
 - Attach exact gate/evidence expectations to each promotion class.
 - Use one shared routing/deep-link payload for search, palette, widgets, recovery links, and cross-surface pivots.
@@ -325,6 +2510,108 @@ Projection/display rules:
 - Keep ref-family split explicit when route/open normalization is transferred.
 
 ### Blocked episode, approval scope, and compatibility fallback
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0122
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - why a lane is blocked, weakly integrated, or cleanup-eligible
+  - `Attention`: `none | attention_required | blocked | degraded`
+  - Attention
+  - none | attention_required | blocked | degraded
+  - show one `primary attention reason` / `primary blocked reason`
+  - primary attention reason
+  - primary blocked reason
+  - run-graph/node blocked badges
+  - show active warnings / attention / blocked states
+  - real blocked states should remain represented until underlying truth changes
+  - `attention_required` and `blocked` must remain distinct everywhere
+  - attention_required
+  - blocked
+  - approve multiple HITL/runtime blocked actions with one generic confirm
+  - wizard/interview blocked state is explicit and persistent, not a soft conversational inconvenience
+  - thread badges preserve highest severity and blocked counts
+  - direct user-action path when the blocked owner or flow genuinely needs user input
+  - `Blocked: waiting on user approval`
+  - Blocked: waiting on user approval
+  - misroute blocked episodes to the wrong surface
+  - Allow quiet windows for advisory/pressure warnings, not for canonical blocked episodes that still require action.
+  - `attention_required` vs `blocked`
+  - Interaction with notifications and blocked routing
+  - Introduce a versioned replacement for `tier_boundary` such as `governance_boundary`, keeping compatibility aliases only as an explicit migration strategy.
+  - tier_boundary
+  - governance_boundary
+  - title bar shows current project context plus badges for background activity / blocked items / unsaved shell state
+  - project cards should not just say “blocked”
+  - they should identify the primary blocked owner / attention owner when one exists
+  - `attention_required` and `blocked` must remain distinct
+  - trust state may downgrade confidence, but should not automatically manufacture a blocked state
+  - some talk about blocked items
+  - `attention_state` (`none | advisory | attention_required | blocked`)
+  - attention_state
+  - none | advisory | attention_required | blocked
+  - `health_state` (`healthy | degraded | blocked`)
+  - health_state
+  - healthy | degraded | blocked
+  - canonical active blocked episodes win over derived warnings
+  - `blocked` outranks `attention_required`
+  - a project can have background activity and still not be blocked
+  - `attention center` is the canonical shell surface for background, blocked, or action-needed items outside the current active project/thread
+  - attention center
+  - canonical blocked episodes, approval waits, and persisted thread/wizard states can drive strong routing
+  - `severity` (`advisory | attention_required | blocked`)
+  - severity
+  - advisory | attention_required | blocked
+  - rows remain object-linked; they do not collapse into one synthetic “project blocked” blob
+  - Permissions still use tier-boundary wording and still cannot explain which effective account/identity a blocked action would have used.
+  - it must not invent synthetic blocked states unsupported by canonical owners
+  - Approval and blocked records still cannot explain which effective account/identity would have executed the action.
+  - Keep any replacement for `TierContext` as a compatibility wrapper at most:
+  - TierContext
+  - newer model treats approval as a blocked episode attached to canonical runtime execution
+  - what exact blocked episode is being approved
+  - one blocked episode approval
+  - pre-attempt blocked episodes must not invent an `attempt_id`; `blocked_sequence` is already the cleaner anchor
+  - attempt_id
+  - blocked_sequence
+  - Research Progress - 2026-03-16 - Blocked episode ownership and startup-recovery handshake
+  - no doc clearly says when a new blocked episode starts versus an existing one being updated
+  - A blocked episode is the canonical unit for:
+  - Updating metadata for the same unresolved blocked prerequisite must retain the same `blocked_sequence`.
+  - the prior blocked episode was resolved/unblocked and a later distinct blocked condition occurs, or
+  - Approval commands should route by blocked episode identity; any retained `request_id` is lookup metadata, not the canonical recovery target.
+  - request_id
+  - That startup-recovery pass does not mint new blocked episodes by itself; it rehydrates existing unresolved episodes and reevaluates runnable work.
+  - Update storage/event docs so approval records and blocked projections are consistent on:
+  - what is the latest active attempt or blocked episode pointer for this grouping
+  - Treat timestamp/run/thread fallback routing as compatibility behavior only when canonical bridge refs are absent.
+  - attempt-scoped evidence remains blocked not just by missing filters but by storage/UI keying that is still tier/node-centric instead of attempt-centric.
+  - Once normalized, Dashboard, thread badges, and blocked notices should stop behaving like separate navigation systems.
+  - `blocked_sequence` has canonical identity meaning, but current docs still tend to route blocked work through node/attempt views instead of treating blocked episodes as their own targetable object.
+  - Keep wizard/thread blocked records on:
+  - The docs do not yet say clearly which blocked fields are cross-family minimums versus family-local additions.
+  - Research Progress - 2026-03-17 - Approval identity still splits between blocked episodes and HITL requests
+  - or a blocked/runtime episode
+  - graph/orchestrator live-status bindings that bypass canonical blocked projections
+  - `hitl_action(node_id, action, rationale)` callback rather than a runtime-native blocked action target
+  - hitl_action(node_id, action, rationale)
+  - Research Progress - 2026-03-17 - owner-contract seam: human-in-the-loop blocked identity collapse
+  - lineage-preserving persistence through blocked records
+  - Any surviving `request_id` wording belongs only in compatibility or lineage notes.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs.
 - Carry usage switch-history and usage execution-role follow-through.
 - Separate blocked-episode approval scope from session-wide policy scope.
@@ -332,6 +2619,29 @@ Projection/display rules:
 - Approval lineage stays keyed to blocked-episode identity (`run_id`, `node_id`, `blocked_sequence`, `attempt_id?`) instead of being inferred from session-wide policy state.
 
 ## 1. Events (persisted)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0107
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `WorktreeGitImprovement.md` still lacks a durable `worktree_record` / `worktree_projection` family, still has no explicit precedence rule between persisted runtime lineage and filesystem rediscovery, and still treats git-hook blocks and state files as if they could substitute for canonical blocked/runtime events.
+  - WorktreeGitImprovement.md
+  - worktree_record
+  - worktree_projection
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 ### 1.1 Assistant worktree seglog events
 Assistant worktree seglog events keep assistant-worktree lifecycle local while pointing shared record ownership back to canonical storage.
@@ -366,6 +2676,30 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 ---
 
 ## 2. Provider normalized stream (non-persisted contract)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0108
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - non-persisted drafts use transient `generated://<artifact_id>` buffers
+  - generated://<artifact_id>
+  - Once the route/subject contract is normalized, these docs should mostly reconcile cleanly rather than needing conceptual redesign.
+  - rather than a normalized identity-preserving export contract
+  - canonical primitive or normalized target contract
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Providers emit a normalized stream for live UI consumption. Persistent storage remains governed by `EventRecord` in §1.
 
 **Normative:** See `Plans/CLI_Bridged_Providers.md` for the full schema (event envelope + event types). This contracts file only asserts the boundary: normalized provider stream events are transport-facing, while seglog events are persistence-facing.
@@ -766,12 +3100,94 @@ Permission carry-through:
 - `effective_account_id` must remain available to approval and permission snapshots
 ## 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0109
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Settings > Branching` and `Settings > Health` expose config/diagnostics, not primary active-worktree management.
+  - Settings > Branching
+  - Settings > Health
+  - mutation-safe-point enforcement
+  - `Runtime_Artifacts_Panel.md` assumes concrete runtime-artifact schema enforcement that is not currently present in the repo.
+  - Runtime_Artifacts_Panel.md
+  - must exist for any dispatched attempt:
+  - `summary?`
+  - summary?
+  - `attempt:<attempt_id>`
+  - attempt:<attempt_id>
+  - `object_kind = attempt`
+  - object_kind = attempt
+  - `targeted for future enforcement`
+  - targeted for future enforcement
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 Context management keeps runtime identity explicit across prompt assembly, execution, approval, and historical review.
 
 ### 5.1A InvestigationContextAttachment
 Investigation attachments remain additive and do not rename or shadow the shared runtime snapshot fields.
 
 ### 5.1B Persona/Runtime Snapshot Payload Contract
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0118
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - why it matters: `needs_review` and blocked/failure payload semantics disagree inside the same doc, which will leak into automation-first operator flows.
+  - needs_review
+  - define one shared routing payload contract rather than separate ad hoc payloads per surface
+  - but normalize their decoded payload into the same routing contract used by in-app search and command routing
+  - URLs and in-app actions should decode to the same route payload
+  - `primary_route_payload_ref` or inline route payload
+  - primary_route_payload_ref
+  - allow navigation/open/focus commands to carry or resolve into the canonical route payload
+  - route payload should use canonical surface/tab/object terms
+  - attention-center items should likely store either an inline route payload or a stable ref to one; they should not depend on ambient current UI state to open correctly
+  - add/own canonical snapshot field names such as:
+  - operational-identity snapshot block names
+  - `UI_Command_Catalog.md` is currently being used as a de facto navigation contract in places where a deeper route payload is still unowned.
+  - UI_Command_Catalog.md
+  - refs or embedded snapshot for canonical requested/effective persona/runtime record
+  - `chain-wizard-flexibility.md` has a reasonably solid assistant-to-wizard handoff payload:
+  - chain-wizard-flexibility.md
+  - permission/runtime snapshot refs when a pass is provider-executed rather than purely structural
+  - `path_ref` or canonical path snapshot
+  - path_ref
+  - define one canonical internal route/target payload for navigation
+  - `UI_Command_Catalog.md` has many action IDs but no explicit generalized subject-open command family or route payload contract.
+  - Add a canonical route payload / target model owner section, likely in `Contracts_V0.md` or an equivalent routing owner doc.
+  - Contracts_V0.md
+  - docs should explicitly mark older/raw payload conventions as migration aliases where needed
+  - `UI_Command_Catalog.md` still presents many navigation commands with ad hoc payload shapes that should eventually normalize into this bounded field set.
+  - Without rejection rules, route producers will keep slipping local payload habits into the base contract.
+  - `gap-005` stays open because the blocked-packet payload is still under-specified even though the assistant-chat headings are now confirmed.
+  - gap-005
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 `execution_unit_context` is the authoritative runtime snapshot packet.
 
 Required fields:
@@ -827,6 +3243,30 @@ Permission carry-through:
 - approval scope remains blocked-episode-scoped rather than session-global
 - ordered `allowed_action_ids[]` must survive into approval UI
 ### 6.2 Scope and persistence rules
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0120
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - recovery/conflict persistence phrased in `tier_id` terms
+  - tier_id
+  - persistence should be through canonical blocked/runtime records
+  - remaining drift is concentrated around compatibility-era fields like `resume_url?` in blocked-notice persistence rather than broad ontology problems
+  - resume_url?
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Rules:
 - approvals bind to canonical runtime identity first: `run_id`, `node_id`, `blocked_sequence`, and `attempt_id?`
 - a blocked-episode approval does not imply a broader policy approval unless the `approval_scope_key` says so explicitly
@@ -1051,13 +3491,78 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#7.4, ContractName:Plans/FinalGUI
 
 ## Usage and Billing Contracts Addendum
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0116
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Bind Usage and Widget contracts to canonical `provider_accounts.*` sourcing and a shared projection-health/trust-state contract rather than page-local heuristics
+  - provider_accounts.*
+  - older sections still drive detail panes, worker activity, verification streams, Usage links, and event correlation by `tier_id` / `tier_type`
+  - tier_id
+  - tier_type
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 ### Cost field type contract
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0126
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - actor type and operation type should dominate stack hints
+  - this should probably be rare and usually resolved by actor type + operation type
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 All persisted usage/cost values are stored as integer microdollars (`u64`). Presentation converts to decimal currency strings; storage and accumulation do not.
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
 
 ### Token bucket contract
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0149
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - but it must not be implied to share the same ownership or token source unless the owning auth contract says so
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 The canonical token fields are:
 - `input_tokens`
@@ -1109,11 +3614,78 @@ ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged
 
 ## Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0115
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - resurfacing should respond to meaningful change, not spam the user on every scheduler tick
+  - safe-point creation/restore
+  - `remediation:<remediation_root_id>`
+  - remediation:<remediation_root_id>
+  - scheduler / blocked / safe point / remediation
+  - `object_kind = remediation`
+  - object_kind = remediation
+  - Older docs still assume history pivots can be attempt-only, which is insufficient for scheduler, blocked, and remediation lineage.
+  - safe-point, remediation, worktree-conflict, and blocked/runtime state are already present
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 Add the following event families to the canonical contract set.
 
 ### 1. Scheduler analysis and readiness events
 
 #### `scheduler.pass`
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0156
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - The scheduler then emits a scheduler pass with `wake_reason = startup_recovered`.
+  - wake_reason = startup_recovered
+  - The GPT-5.4 pass confirmed the owner-doc tranche still has strong signal after Opus and Sonnet; it did not plateau into repetition.
+  - Repeated cross-owner dependencies sharpened by this pass:
+  - GPT-5.2 is still producing signal strong enough to justify the last requested model pass.
+  - The final Codex pass still added meaningful last-mile contradictions instead of flattening into simple confirmation, especially where owner docs remain mechanically unverifiable or structurally inconsistent.
+  - The `GPT-5.2` continuation wave still produced substantive new deltas across the full 22-doc tail, so the tranche has still not converged before the final `GPT-5.3-Codex` pass.
+  - GPT-5.2
+  - GPT-5.3-Codex
+  - The tail still has broad, meaningful signal at the fifth model pass; it still merits carrying the full tranche into the final `GPT-5.3-Codex` pass rather than narrowing early.
+  - The final `GPT-5.3-Codex` pass still produced meaningful last-mile deltas, but they were now mostly mechanical canon-integrity failures rather than entirely new thematic seams. That makes this a strong closeout tranche rather than a flat confirmation pass.
+  - `Section15_MVP_Promoted_Features_Spec.md` last as a verification pass against the corrected upstream owners
+  - Section15_MVP_Promoted_Features_Spec.md
+  - This packet must be a canon-collapse pass, not a light additive pass.
+  - Constraint for this pass: do **not** edit planning docs directly; use the existing work-item ledger plus current canonical docs.
+  - Evidence base used for this pass:
+  - This rerun adds confidence that reconciliation should proceed as a **canon-collapse and owner-schema completion pass**, not as a generic polish pass.
+  - This pass narrowed `gap-005` exact-missing wording from blanket field absence to consumer-propagation defects for the fields already owned elsewhere.
+  - gap-005
+  - This pass removed only one overstated exact-missing item from gap-008 and further sharpened the identity-carrythrough wording.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Migration note:** `run.scheduler_analysis` is a deprecated legacy alias for this event. New producers MUST emit `scheduler.pass`. Consumers SHOULD accept both during migration.
 
@@ -1208,6 +3780,29 @@ Minimum payload:
 ### 3. Safe-point events
 
 #### `safe_point.created`
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0155
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `safe_point:<safe_point_id>`
+  - safe_point:<safe_point_id>
+  - `object_kind = safe_point`
+  - object_kind = safe_point
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Minimum payload:
 - `safe_point_id`
 - `run_id`
@@ -1242,6 +3837,48 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage
 
 ### 4. Remediation lineage events
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0117
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - promotion_class, source_scope, target_scope, canonical verdict, revoked/reopened lineage
+  - no newer lineage operation depending on that lane/worktree still being live
+  - replaced by a newer canonical successor in the same lineage
+  - concerns need durable identity and lineage, not just severity/status
+  - `Run_Graph_View.md` still assumes a simpler phase/task/subtask tree and under-specifies concern/corroboration/promotion/patch lineage
+  - Run_Graph_View.md
+  - `workflow_run_id` is useful grouping identity, but not enough lineage by itself
+  - workflow_run_id
+  - package/lane operational lineage object
+  - still too thin for modern event/runtime/account lineage.
+  - identity / lineage:
+  - Use `inspector_target = lineage` for scheduler/remediation/safe-point/patch lineage drill-ins.
+  - inspector_target = lineage
+  - `inspector_target = lineage | details`
+  - inspector_target = lineage | details
+  - `inspector_target = lineage | history`
+  - inspector_target = lineage | history
+  - `inspector_target = lineage`
+  - Keep scheduler/safe-point/remediation/patch lineage under `inspector_target = lineage` when the object is already selected.
+  - `inspector_target = details | lineage`
+  - inspector_target = details | lineage
+  - normalize seam/package/lane/worktree/concern/promotion/graph lineage pivots through object-first route recipes
+  - The blocked/runtime lineage work already moved toward:
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 #### `remediation.spawned`
 
 > **Migration note:** `run.remediation_started` is a deprecated legacy alias for this event. New producers MUST emit `remediation.spawned`.
@@ -1260,6 +3897,27 @@ Minimum payload:
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
 
 #### `remediation.resolved`
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0154
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `open -> addressed -> resolved`
+  - open -> addressed -> resolved
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 > **Migration note:** `run.remediation_completed` is a deprecated legacy alias for this event. New producers MUST emit `remediation.resolved`.
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
@@ -1298,6 +3956,29 @@ Minimum payload:
 
 ### 6. Wizard blocked escalation events
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0119
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - What is still missing is a shared escalation ladder across concerns, blocked states, usage pressure, and persistent unresolved conditions.
+  - GATE-012 still collapses `attention_required` and true `blocked` escalation in its evidence path.
+  - attention_required
+  - blocked
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 #### `wizard.blocked`
 Minimum payload:
 - `wizard_id`
@@ -1321,6 +4002,51 @@ Minimum payload:
 - `safe_point.*` events are runtime-internal recovery records and are distinct from user-facing `restore_point.*` / `rollback.*` contracts.
 - `plan.decomposition_degraded` is allowed only before canonical graph lock.
 ## Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0114
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - why impacted: core runtime contract already shows drift against UI/runtime consumers.
+  - simple help must not mutate runtime truth or contract semantics
+  - `Models_System.md` calls its runtime contract cross-system while omitting already-canonical auth/account fields.
+  - Models_System.md
+  - result: the doc is effectively trying to consume a node/lane scheduler while still operationalizing execution via tier-native runtime structs
+  - runtime scheduler remains canonical readiness/transition authority
+  - schema family absent, attempt identity incomplete, receipt/artifact drill contract still unimplementable.
+  - but their handoff payloads still need to carry enough canonical identity and lineage so downstream runtime, history, ledger, search, and audit can explain how execution began
+  - `FileManager.md` still cannot satisfy its own addendum requiring open-by-runtime-identity because its core open contract is path-only; `generated://` only covers preview restore, and `evidence_record` is still tier-keyed where attempt-native pivots are now required.
+  - FileManager.md
+  - generated://
+  - evidence_record
+  - `Prompt_Pipeline.md` already owns the immutable runtime handoff bundle captured at attempt start.
+  - Prompt_Pipeline.md
+  - Push tier/group surfaces to consume pointers into this contract instead of reconstructing runtime identity from `tier_id` plus ambient state.
+  - tier_id
+  - `attempt.started` is the canonical runtime start packet
+  - attempt.started
+  - `FileManager.md`'s addendum requires open-by-identity and generated non-repo drafts, but `OpenFile { path: PathBuf }` plus root-path validation cannot satisfy it; no `OpenArtifact`-style contract, no `evidence_by_attempt` projection, and no artifact-index freshness/degraded fallback exist.
+  - OpenFile { path: PathBuf }
+  - OpenArtifact
+  - evidence_by_attempt
+  - related runtime attempt/evidence lineage
+  - `FileManager.md` still describes one internal open-file contract while its own runtime-artifact addendum already requires identity-native opens that cannot be expressed as safe path opens.
+  - Add these lineage examples to the route contract owner docs.
+  - `tier_id` is still treated as a required usage identity/correlation key even though the broader runtime and routing direction is object-first and node/attempt/block lineage aware.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Add the following canonical runtime event families and required fields.
 
@@ -1351,6 +4077,27 @@ Behavioral rules:
 - The first scheduler pass after startup recovery persists `wake_reason = startup_recovered`.
 - Blocked and recovery wake ownership is carried by `scheduler.pass` rather than inferred from prompt text.
 ### `attempt.started`
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0150
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `attempt.started`
+  - attempt.started
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Required fields:
 - `run_id`, `thread_id`, `node_id`, `attempt_id`
 - `scheduler_lane`
@@ -1397,6 +4144,27 @@ Required fields:
 - resolution enum (`fixed`, `superseded`, `abandoned`, `replan_required`)
 
 ### `tool.denied` alignment
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0151
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Several owner docs claim EventRecord/runtime alignment but still omit project/thread/run/attempt/account identity in their own schemas.
+  - This is now a clear owner-doc gap, not a vague alignment issue.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 `tool.denied` MUST carry canonical runtime mapping fields when the denial affects scheduler state:
 ContractRef: EventType:tool.denied, ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md
 - `blocked_reason_code`
@@ -1407,6 +4175,58 @@ ContractRef: EventType:tool.denied, ContractName:Plans/Tools.md, ContractName:Pl
 
 All of the above are canonical contract fields, not UI-only projection conveniences.
 ## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0111
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `storage-plan.md` still splits tier-era event tables from newer attempt-centric records
+  - storage-plan.md
+  - The global requested-Persona precedence is already strong and should remain the backbone:
+  - canonical event fields instead of GUI-only aliases
+  - Require requested/effective identity fields in decision/permission records, not just runtime event records.
+  - this must move into provider-native correlation before shared-runtime event joins become trustworthy
+  - still needs richer event payloads, reconciled outcome taxonomy, and DAE tool-event reconstruction
+  - Must-fix spec-integrity failures before reconciliation**
+  - Repair structural owner docs before downstream reconciliation work depends on them:
+  - likely owner doc for formal field precedence:
+  - Repair structural owner docs before downstream reconciliation relies on them:
+  - Any future reconciliation work should prioritize:
+  - canonical event names with explicit legacy aliases in `[retired-token-1]`
+  - [retired-token-1]
+  - Right now navigation has no explicit migration discipline comparable to event aliases or `cmd.runtime.*` consolidation.
+  - cmd.runtime.*
+  - The git/worktree coordination examples are a high-risk backdoor for reintroducing tier-era identity after reconciliation.
+  - many earlier event examples and keys still centered on `tier_id`
+  - tier_id
+  - early canonical event table still centers `tier_id`
+  - The authored sweep itself is complete and should now hand off to reconciliation rather than additional model passes.
+  - Future reconciliation should prioritize:
+  - later reconciliation addendum weakens it to `resume_url?`
+  - resume_url?
+  - event tables keyed to `tier_id`
+  - The page doc still contains enough lower aligned material that reconciliation should collapse same-file contradictions instead of replacing the whole thing blindly.
+  - mirror/checklist docs that will need revalidation after owner reconciliation
+  - The ledger contains enough owner-routing, contradiction, and cleanup-order detail for downstream reconciliation without restarting discovery.
+  - Primary owner docs for reconciliation:
+  - Verification / mirror followers should remain downstream of owner reconciliation.
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 This section is an exact compatibility mirror of the later canonical runtime contract so readers do not stop at stale transitional enum lists.
 
 ### Event-name precedence
@@ -1457,6 +4277,26 @@ This section is an exact compatibility mirror of the later canonical runtime con
 - `open_details`
 
 ### Blocking payload rule
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0123
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Severity should probably stay independent from blocking semantics:
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Every runtime-facing blocked event or projection MUST expose:
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Executor_Protocol.md
 - `blocked_reason_code`
@@ -1471,6 +4311,29 @@ No section in this file may present an earlier shorter enum set as the canonical
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Executor_Protocol.md
 ## Canonical Runtime Event, Outcome, and Action Contract Reconciliation Addendum (2026-03-09)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0110
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Opus reinforces that contract naming drift and native-surface ownership are among the highest-risk reconciliation areas
+  - must decide whether these field additions are V0 extensions or a V1 event contract
+  - The contract layer has canonical event aliasing and blocked-action vocabulary, but still no canonical route/subject vocabulary.
+  - Several Sonnet findings sharpened prior generic flags into precise contract failures or source-verified architecture limits; these should not be collapsed back into generic summary language during reconciliation.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 The canonical runtime event contract extends to child runs, crew coordination, and effective-context shaping. These contracts are part of the same runtime event and action family as parent execution. They are not an optional overlay and they do not define a separate event grammar.
 
@@ -1489,6 +4352,35 @@ ContractRef: ContractName: child_projection_identity. Any projection event that 
 
 ### Retry, reroute, replacement, and resume
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0147
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - separate `time status`, `replacement status`, and `validity status`
+  - time status
+  - replacement status
+  - validity status
+  - `Decision_Policy.md` still lacks startup-recovery defaults, misstates retry ceilings in terms that collide with policy-prohibited derived fields, and leaves backoff plus manual/prerequisite resume ceilings unowned.
+  - Decision_Policy.md
+  - `tier_runtime_record`, tier-keyed `usage_record`, and tier-keyed `evidence_record` need owner-level demotion or replacement.
+  - tier_runtime_record
+  - usage_record
+  - evidence_record
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 `retry`, `reroute`, `replacement`, and `resume` are distinct runtime concepts and must remain distinct in contracts, storage, and event history.
 
 - `resume`: continue the same paused or interrupted child without semantically resetting the task.
@@ -1503,6 +4395,27 @@ ContractRef: Disposable-by-default child lifecycle is canonical; resume/reopen b
 
 ### Crew-board coordination contracts
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0127
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - several future crew/message examples still propagate `tier_id` through git/worktree coordination
+  - tier_id
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 Crew coordination uses an explicit crew board. Child-to-child communication in crew mode occurs through board messages or other explicit crew-scoped coordination records, not hidden direct peer channels. Crew board messages are task-scoped, attributable, timestamped, and persisted as part of shared crew coordination state.
 ContractRef: Crew-board coordination MUST remain attributable, inspectable, and task-scoped; hidden direct peer messaging is not a canonical runtime channel. [Source: assistant-chat-design.md#14-subagents--crew; storage-plan.md#canonical-child-run-records-and-batch-structure]
 
@@ -1510,6 +4423,32 @@ Crew members do not gain new authority through board traffic. Permissions, tools
 ContractRef: Crew coordination messages MUST NOT widen authority, permissions, or capability availability beyond the child's effective runtime envelope. [Source: Permissions_System.md#child-permission-ceiling-and-blocked-vs-awaiting-parent; Skills_System.md#child-capability-subset-clarification]
 
 #### Stable subagent and crew event families
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0153
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `provider_attempt_ref?` and similar continuity fields are still conceptually present but not fully owned by a stable schema slot
+  - provider_attempt_ref?
+  - `Contracts_V0.md` should own cross-cutting persisted-envelope field families and stable event names
+  - Contracts_V0.md
+  - any new blocked/recovery/governance event families
+  - The evidence schema cannot cleanly encode route-payload mismatch reports, alias/deprecation findings, or passthrough/correlation failures in a stable machine-readable form.
+  - canonical event families
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 In addition to the effective-context projection events defined below (`subagent.context_shrunk` and `subagent.context_rehydrated`), the following stable runtime event families are canonical for subagent and crew orchestration. Child identity and lineage are not optional metadata: they are part of the event contract.
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md
@@ -1570,6 +4509,25 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/orc
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
 ### Dynamic context shrinking and effective-context projection
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+#### Source target target-0128
+- Reconciliation action: [retired-token-1]_retirement
+- Replace scope: exact_section
+- Exact required items represented:
+  - `[retired-token-1]`: projection is usable for context but may not reflect current runtime truth
+  - [retired-token-1]
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_[retired-token-1]_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Dynamic context shrinking is a canonical effective-context mechanism distinct from compaction, retrieval injection, rotation, and Assistant memory. It operates during ordinary tool-driven work and may replace stale effective-context blocks with shorter summaries while preserving canonical source state and rehydration references.
 ContractRef: Dynamic context shrinking MUST preserve canonical source state and MUST operate on effective context only, not rewrite source-of-truth history. [Source: Prompt_Pipeline.md#dynamic-context-shrinking; storage-plan.md#canonical-child-run-records-and-batch-structure]

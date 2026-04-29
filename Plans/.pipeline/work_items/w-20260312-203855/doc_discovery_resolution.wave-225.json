@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-225",
+  "group_ids": [
+    "discgrp-0897",
+    "discgrp-0898",
+    "discgrp-0899",
+    "discgrp-0900"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01144",
+      "source_obligation_ids": [
+        "obl-1001"
+      ],
+      "source_seed_ids": [
+        "seed-1169"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01145",
+      "source_obligation_ids": [
+        "obl-1002"
+      ],
+      "source_seed_ids": [
+        "seed-1170"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "### Fidelity recovery cov-038: Focused run and historical routing contract",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01146",
+      "source_obligation_ids": [
+        "obl-1003"
+      ],
+      "source_seed_ids": [
+        "seed-1171"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L193"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01147",
+      "source_obligation_ids": [
+        "obl-1004"
+      ],
+      "source_seed_ids": [
+        "seed-1172"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "### Field-level override",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L286"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

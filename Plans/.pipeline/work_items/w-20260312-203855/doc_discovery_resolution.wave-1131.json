@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1131",
+  "group_ids": [
+    "discgrp-4521",
+    "discgrp-4522",
+    "discgrp-4523",
+    "discgrp-4524"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04919",
+      "source_obligation_ids": [
+        "obl-4695"
+      ],
+      "source_seed_ids": [
+        "seed-6761"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04920",
+      "source_obligation_ids": [
+        "obl-4696"
+      ],
+      "source_seed_ids": [
+        "seed-6762"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "# Crosswalk (Canonical)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04921",
+      "source_obligation_ids": [
+        "obl-4697"
+      ],
+      "source_seed_ids": [
+        "seed-6763"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L774"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04922",
+      "source_obligation_ids": [
+        "obl-4698"
+      ],
+      "source_seed_ids": [
+        "seed-6764"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "#### 3.3.3 Shell output injection (`` !`command` ``)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Commands_System.md:L180"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

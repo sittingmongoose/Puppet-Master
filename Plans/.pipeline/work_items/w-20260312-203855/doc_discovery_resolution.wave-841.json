@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-841",
+  "group_ids": [
+    "discgrp-3361",
+    "discgrp-3362",
+    "discgrp-3363",
+    "discgrp-3364"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03641",
+      "source_obligation_ids": [
+        "obl-3487"
+      ],
+      "source_seed_ids": [
+        "seed-4695"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "### Canonical HITL request contract",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L81"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03642",
+      "source_obligation_ids": [
+        "obl-3488"
+      ],
+      "source_seed_ids": [
+        "seed-4696"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03643",
+      "source_obligation_ids": [
+        "obl-3489"
+      ],
+      "source_seed_ids": [
+        "seed-4697"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "### 2. Deterministic blocked and approval identity",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L232"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03644",
+      "source_obligation_ids": [
+        "obl-3490"
+      ],
+      "source_seed_ids": [
+        "seed-4698"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L2518"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

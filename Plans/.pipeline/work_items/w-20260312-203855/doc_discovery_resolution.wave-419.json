@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-419",
+  "group_ids": [
+    "discgrp-1673",
+    "discgrp-1674",
+    "discgrp-1675",
+    "discgrp-1676"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01927",
+      "source_obligation_ids": [
+        "obl-1784"
+      ],
+      "source_seed_ids": [
+        "seed-2288"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01928",
+      "source_obligation_ids": [
+        "obl-1785"
+      ],
+      "source_seed_ids": [
+        "seed-2289"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L193"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01929",
+      "source_obligation_ids": [
+        "obl-1786"
+      ],
+      "source_seed_ids": [
+        "seed-2290"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01930",
+      "source_obligation_ids": [
+        "obl-1787"
+      ],
+      "source_seed_ids": [
+        "seed-2291"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

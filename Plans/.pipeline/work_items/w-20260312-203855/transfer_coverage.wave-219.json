@@ -1,0 +1,901 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-219",
+  "row_group_ids": [
+    "rowgrp-0873",
+    "rowgrp-0874",
+    "rowgrp-0875",
+    "rowgrp-0876"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-05715",
+      "source_obligation_ids": [
+        "obl-5487"
+      ],
+      "source_seed_ids": [
+        "seed-8144"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "`Plans/storage-plan.md` continues that ambiguity:",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/storage-plan.md` continues that ambiguity:",
+        "Plans/storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06370",
+      "source_obligation_ids": [
+        "obl-6011"
+      ],
+      "source_seed_ids": [
+        "seed-9094"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "No planning-doc edits were made outside the required work-item ledger/meta files; session-",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "status": "present",
+      "exact_items": [
+        "No planning-doc edits were made outside the required work-item ledger/meta files; session-local `plan.md` was updated for execution tracking only.",
+        "plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06750",
+      "source_obligation_ids": [
+        "obl-6386"
+      ],
+      "source_seed_ids": [
+        "seed-9750"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Comma",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06792",
+      "source_obligation_ids": [
+        "obl-6421"
+      ],
+      "source_seed_ids": [
+        "seed-9800"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/Final",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/FinalGUISpec.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Decision_Policy.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06804",
+      "source_obligation_ids": [
+        "obl-6427"
+      ],
+      "source_seed_ids": [
+        "seed-9806"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Mod",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06815",
+      "source_obligation_ids": [
+        "obl-6435"
+      ],
+      "source_seed_ids": [
+        "seed-9814"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06830",
+      "source_obligation_ids": [
+        "obl-6442"
+      ],
+      "source_seed_ids": [
+        "seed-9821"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Cr",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Crosswalk.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md",
+        "Plans/FileManager.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06883",
+      "source_obligation_ids": [
+        "obl-6485"
+      ],
+      "source_seed_ids": [
+        "seed-9864"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "result: storage receipt/activity gaps should continue to be treated as under-transfer / an",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "status": "partial",
+      "exact_items": [
+        "result: storage receipt/activity gaps should continue to be treated as under-transfer / anchor failures, not as total missing-content claims"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06886",
+      "source_obligation_ids": [
+        "obl-6488"
+      ],
+      "source_seed_ids": [
+        "seed-9867"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "summary: Rewrote the work item bundle to the v2 artifact shapes and re-confirmed that muta",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Fidelity recovery cov-077: Project summary projection",
+      "status": "partial",
+      "exact_items": [
+        "summary: Rewrote the work item bundle to the v2 artifact shapes and re-confirmed that mutation planning is still blocked because eight material blocker families remain."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L123",
+        "Plans/storage-plan.md:L129"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06933",
+      "source_obligation_ids": [
+        "obl-6533"
+      ],
+      "source_seed_ids": [
+        "seed-9925"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`gap-004` therefore narrows to the missing `### Cross-surface receipt record` anchor, the",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "#### Cross-surface receipt record baseline",
+      "status": "present",
+      "exact_items": [
+        "`gap-004` therefore narrows to the missing `### Cross-surface receipt record` anchor, the unresolved fields `run_id`, `pass_verdict`, `phase_plan_ref`, and `requirements_quality_report_ref`, and the still-missing consumer anchors.",
+        "gap-004",
+        "### Cross-surface receipt record",
+        "run_id",
+        "pass_verdict",
+        "phase_plan_ref",
+        "requirements_quality_report_ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L71",
+        "Plans/storage-plan.md:L75",
+        "Plans/storage-plan.md:L470",
+        "Plans/storage-plan.md:L481",
+        "Plans/storage-plan.md:L556"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06962",
+      "source_obligation_ids": [
+        "obl-6562"
+      ],
+      "source_seed_ids": [
+        "seed-9973"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`gap-004` is stable as written; no further storage/lineage audit was productive beyond con",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "#### Cross-surface receipt record baseline",
+      "status": "present",
+      "exact_items": [
+        "`gap-004` is stable as written; no further storage/lineage audit was productive beyond confirming that the remaining defects are the missing `### Cross-surface receipt record` anchor, four unresolved receipt fields, and the absent consumer anchors.",
+        "gap-004",
+        "### Cross-surface receipt record"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L481",
+        "Plans/storage-plan.md:L556",
+        "Plans/storage-plan.md:L653"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06969",
+      "source_obligation_ids": [
+        "obl-6569"
+      ],
+      "source_seed_ids": [
+        "seed-9999"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "summary: Re-audited the condensed blocker bundle against live plan sections in bounded chu",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "status": "partial",
+      "exact_items": [
+        "summary: Re-audited the condensed blocker bundle against live plan sections in bounded chunks and confirmed all eight blocker families remain, but one storage item was overstated and several blocker reasons needed sharper exact wording."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06972",
+      "source_obligation_ids": [
+        "obl-6572"
+      ],
+      "source_seed_ids": [
+        "seed-10002"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/storage-plan.md` still omits `run_id` from the receipt minimum-fields list and stil",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/storage-plan.md` still omits `run_id` from the receipt minimum-fields list and still does not carry `pass_verdict`, `phase_plan_ref`, or `requirements_quality_report_ref`.",
+        "Plans/storage-plan.md",
+        "run_id",
+        "pass_verdict",
+        "phase_plan_ref",
+        "requirements_quality_report_ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07061",
+      "source_obligation_ids": [
+        "obl-6643"
+      ],
+      "source_seed_ids": [
+        "seed-10135"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-0",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.",
+        "gap-003",
+        "gap-004",
+        "gap-005",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07067",
+      "source_obligation_ids": [
+        "obl-6648"
+      ],
+      "source_seed_ids": [
+        "seed-10168"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "summary: Re-audited the condensed blocker bundle against live plan sections in delegated c",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "status": "partial",
+      "exact_items": [
+        "summary: Re-audited the condensed blocker bundle against live plan sections in delegated chunks and found one material overstatement in receipt lineage plus several exact owner/consumer refinements that leave all eight blocker families unresolved but sharper."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07124",
+      "source_obligation_ids": [
+        "obl-6699"
+      ],
+      "source_seed_ids": [
+        "seed-10288"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "summary: Ran another bounded audit pass after the blocked Ready Check; the first wave shar",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "status": "partial",
+      "exact_items": [
+        "summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and glossary blocker families with missing discoverable anchors and broken consumer references, and the follow-up sweeps produced zero new exact missing items beyond those refinements."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07126",
+      "source_obligation_ids": [
+        "obl-6700"
+      ],
+      "source_seed_ids": [
+        "seed-10289"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`gap-003` sharpened: `Plans/storage-plan.md` still lacks a discoverable `Canonical records",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`gap-003` sharpened: `Plans/storage-plan.md` still lacks a discoverable `Canonical records` heading even though it contains inline `Canonical records for this feature set...` prose and a `canonical_record.v1:{project_id}:{record_id}` authoritative container, and `Plans/Orchestrator_Page.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor from three different sections.",
+        "gap-003",
+        "Plans/storage-plan.md",
+        "Canonical records",
+        "Canonical records for this feature set...",
+        "canonical_record.v1:{project_id}:{record_id}",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md#Canonical records"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07144",
+      "source_obligation_ids": [
+        "obl-6717"
+      ],
+      "source_seed_ids": [
+        "seed-10318"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "summary: Ran another bounded audit pass after the blocked Ready Check; the first wave shar",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Cross-surface receipt record (storage rules)",
+      "status": "partial",
+      "exact_items": [
+        "summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and receipt blocker families with additional broken storage-plan anchor evidence and downgraded the overstated restore-point contradiction, and two bounded follow-up sweeps then produced zero new exact missing items."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L653"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07150",
+      "source_obligation_ids": [
+        "obl-6719"
+      ],
+      "source_seed_ids": [
+        "seed-10320"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missi",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missing `Plans/storage-plan.md#Cross-surface receipt record` anchor, so the receipt blocker now includes a live broken consumer reference rather than only missing owner/consumer headings.",
+        "gap-004",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md#Cross-surface receipt record"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L395",
+        "Plans/storage-plan.md:L963",
+        "Plans/storage-plan.md:L1099",
+        "Plans/storage-plan.md:L1250"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07166",
+      "source_obligation_ids": [
+        "obl-6734"
+      ],
+      "source_seed_ids": [
+        "seed-10351"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Wave 1 rechecked `gap-003`, `gap-004`, and `gap-008` against live storage, runtime-artifac",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Wave 1 rechecked `gap-003`, `gap-004`, and `gap-008` against live storage, runtime-artifact, receipt, and usage docs and only reconfirmed the already-recorded missing storage/receipt headings, broken `Plans/storage-plan.md` anchor consumers, missing `orchestrator.project_state.{project_id}` naming, and missing usage-side account-history / degrade sections.",
+        "gap-003",
+        "gap-004",
+        "gap-008",
+        "Plans/storage-plan.md",
+        "orchestrator.project_state.{project_id}"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07187",
+      "source_obligation_ids": [
+        "obl-6751"
+      ],
+      "source_seed_ids": [
+        "seed-10390"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "`cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-l",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resolution_kind` coverage including `accepted_risk`, and a concern-action confirmation matrix, but the live docs only expose fragments: `Plans/Orchestrator_Page.md:12-13` keeps concern and notification surfaces distinct from health/activity, `Plans/storage-plan.md:294` lists `concern_record.v1`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31` calls for first-class concern lifecycle and lineage, and `Plans/Contracts_V0.md:649` only names `concern` as a routable object. Exact ledger evidence remains at `working_ledger.md:L3070-L3092`, `working_ledger.md:L3170-L3182`, `working_ledger.md:L5990-L6015`, and `working_ledger.md:L6442-L6490`.",
+        "cov-034",
+        "obl-016",
+        "active",
+        "acknowledged",
+        "resolved",
+        "dismissed",
+        "resolution_kind",
+        "accepted_risk"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L55",
+        "Plans/storage-plan.md:L59",
+        "Plans/storage-plan.md:L60",
+        "Plans/storage-plan.md:L62",
+        "Plans/storage-plan.md:L63"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00036",
+      "source_obligation_ids": [
+        "obl-012"
+      ],
+      "source_seed_ids": [
+        "seed-012"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "handoff storage/delivery mapping",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Storage/delivery clarification pressure from user",
+      "status": "missing",
+      "exact_items": [
+        "pin down whether handoff/retry artifacts are literally JSON/JSONL/redb-backed records/projections",
+        "specify the concrete project-scoped paths or storage domains that own them",
+        "specify how a worker receives the handoff packet: inline prompt block, referenced artifact, fetched context, or mixed model"
+      ],
+      "stale_tokens": [
+        "optional JSON"
+      ],
+      "evidence": [
+        "Plans/storage-plan.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00097",
+      "source_obligation_ids": [
+        "obl-036"
+      ],
+      "source_seed_ids": [
+        "seed-036"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "package/seam overseer + lane-aware execution model",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "missing",
+      "exact_items": [
+        "Replace tier-rooted execution with package/seam/lane model",
+        "Define package overseer + seam overseer roles",
+        "Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage",
+        "Redefine gates to package-complete / seam-complete",
+        "Rename or retire Tiers UI/tab and tier_tree/progress bars"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars",
+        "phase/task/subtask"
+      ],
+      "evidence": [
+        "Plans/storage-plan.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03273",
+      "source_obligation_ids": [
+        "obl-3119"
+      ],
+      "source_seed_ids": [
+        "seed-4153"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "adjacent owner docs pulled for contradiction checks (`Contracts_V0.md`, `Prompt_Pipeline.m",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 2.3 redb: schema, migrations, key patterns",
+      "status": "present",
+      "exact_items": [
+        "adjacent owner docs pulled for contradiction checks (`Contracts_V0.md`, `Prompt_Pipeline.md`, `storage-plan.md`, `Multi-Account.md`, `Orchestrator_Page.md`, `Run_Graph_View.md`, `UI_Wiring_Rules.md`, `Wiring_Matrix.schema.json`, `GitHub_Integration.md`, `GitHub_API_Auth_and_Flows.md`, `Project_Output_Artifacts.md`)",
+        "Contracts_V0.md",
+        "Prompt_Pipeline.md",
+        "storage-plan.md",
+        "Multi-Account.md",
+        "Orchestrator_Page.md",
+        "Run_Graph_View.md",
+        "UI_Wiring_Rules.md",
+        "Wiring_Matrix.schema.json"
+      ],
+      "stale_tokens": [
+        "Contracts_V0.md",
+        "GitHub_API_Auth_and_Flows.md",
+        "GitHub_Integration.md",
+        "Multi-Account.md",
+        "Orchestrator_Page.md",
+        "Project_Output_Artifacts.md",
+        "Prompt_Pipeline.md",
+        "Run_Graph_View.md",
+        "UI_Wiring_Rules.md",
+        "Wiring_Matrix.schema.json",
+        "storage-plan.md"
+      ],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03325",
+      "source_obligation_ids": [
+        "obl-3171"
+      ],
+      "source_seed_ids": [
+        "seed-4224"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`interview-subagent-integration.md` still contradicts itself on persona field names, still",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Fidelity recovery cov-039: Focused run and historical routing contract",
+      "status": "partial",
+      "exact_items": [
+        "`interview-subagent-integration.md` still contradicts itself on persona field names, still truncates auth/account identity from its shared-runtime contract, still writes \u201cblocked bundle\u201d language against `attention_required`, and still contains a likely routing bug (`interview-phase-phase-*`) inside its pseudo-tier message keys.",
+        "interview-subagent-integration.md",
+        "attention_required",
+        "interview-phase-phase-*"
+      ],
+      "stale_tokens": [
+        "attention_required",
+        "interview-phase-phase-*",
+        "interview-subagent-integration.md"
+      ],
+      "evidence": [
+        "Plans/storage-plan.md:L67",
+        "Plans/storage-plan.md:L74"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07111",
+      "source_obligation_ids": [
+        "obl-6686"
+      ],
+      "source_seed_ids": [
+        "seed-10258"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` r",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference survives not only in `Plans/GitHub_Integration.md` but also in `Plans/storage-plan.md` and `Plans/WorktreeGitImprovement.md`, while `Plans/FinalGUISpec.md` still preserves the `restore points` contradiction.",
+        "gap-007",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "Plans/GitHub_Integration.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FinalGUISpec.md",
+        "restore points"
+      ],
+      "stale_tokens": [
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md",
+        "gap-007",
+        "restore points"
+      ],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07152",
+      "source_obligation_ids": [
+        "obl-6720"
+      ],
+      "source_seed_ids": [
+        "seed-10321"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`gap-007` downgraded: the prior `restore points` contradiction was overstated because `Pla",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`gap-007` downgraded: the prior `restore points` contradiction was overstated because `Plans/storage-plan.md` now cleanly separates runtime safe points from project-scoped restore points and `Plans/FinalGUISpec.md` explicitly forbids presenting safe points as restore points; the remaining blocker is structural-heading and broken-reference drift.",
+        "gap-007",
+        "restore points",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_tokens": [
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "gap-007",
+        "restore points"
+      ],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

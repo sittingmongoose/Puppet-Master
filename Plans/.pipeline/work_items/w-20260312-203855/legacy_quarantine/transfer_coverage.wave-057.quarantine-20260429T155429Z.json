@@ -1,0 +1,252 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-057",
+  "timestamp_utc": "2026-04-28T21:28:03Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-225",
+    "coverage-rowgrp-226",
+    "coverage-rowgrp-227",
+    "coverage-rowgrp-228"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-225 cov-687,cov-719,cov-1201 Plans/Wiring_Matrix.md",
+    "rowgrp-226 cov-804,cov-810 Plans/Wiring_Matrix.md",
+    "rowgrp-227 cov-873 Plans/Wiring_Matrix.md",
+    "rowgrp-228 cov-154,cov-800,cov-815,cov-881 Plans/Wiring_Matrix.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-225": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-226": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-227": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-228": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-687",
+    "cov-719",
+    "cov-1201",
+    "cov-804",
+    "cov-810",
+    "cov-873",
+    "cov-154",
+    "cov-800",
+    "cov-815",
+    "cov-881"
+  ],
+  "coverage_ids_completed": [
+    "cov-687",
+    "cov-719",
+    "cov-1201",
+    "cov-804",
+    "cov-810",
+    "cov-873",
+    "cov-154",
+    "cov-800",
+    "cov-815",
+    "cov-881"
+  ],
+  "path_groups_assigned": [
+    "Plans/Wiring_Matrix.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-687",
+      "status": "partial",
+      "evidence": [
+        "Plans/Wiring_Matrix.md:84-87 includes an example row using cmd.orchestrator.switch_tab for the Orchestrator page tab bar",
+        "Plans/Wiring_Matrix.md:191-194 references UI_Wiring_Rules, Wiring_Matrix.schema.json, and UI_Command_Catalog as canonical command definitions"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "cmd.orchestrator.switch_tab appears directly, but missing UICommand IDs section, cmd.chat.run_user_command absence, and reserved slash contradictions are not covered.",
+      "source_obligation_ids": [
+        "obl-190"
+      ],
+      "source_seed_ids": [
+        "seed-190"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-719",
+      "status": "partial",
+      "evidence": [
+        "Plans/Wiring_Matrix.md:69-72 marks rows as examples drawn from UI_Command_Catalog and validated by Wiring_Matrix.schema.json",
+        "Plans/Wiring_Matrix.md:84-87 includes an example row using cmd.orchestrator.switch_tab"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Related example/catalog wiring evidence exists, but ghost IDs, missing owner rows, runtime-artifact schema/storage registration, duplicated executor canon, and reserved slash contradiction are not directly satisfied.",
+      "source_obligation_ids": [
+        "obl-197"
+      ],
+      "source_seed_ids": [
+        "seed-197"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1201",
+      "status": "partial",
+      "evidence": [
+        "Plans/Wiring_Matrix.md:7-17 marks timestamp/run/thread fallback compatibility-only and keeps ref-family split explicit when route/open normalization transfers",
+        "Plans/Wiring_Matrix.md:277-280 requires Context Lens wiring to stay aligned with command IDs, chat placement, and overlay persistence semantics"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Route/open compatibility language exists, but the exact primitive presence/refinement guidance and stale token set are not directly covered.",
+      "source_obligation_ids": [
+        "obl-343"
+      ],
+      "source_seed_ids": [
+        "seed-343"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-804",
+      "status": "partial",
+      "evidence": [
+        "Plans/Wiring_Matrix.md:35 references Wiring_Matrix.schema.json, UI_Wiring_Rules, and Gate:GATE-010",
+        "Plans/Wiring_Matrix.md:160-177 describes GATE-010 wiring verification and evidence on module resolution failures",
+        "Plans/Wiring_Matrix.md:192-196 references UI_Wiring_Rules, Wiring_Matrix.schema.json, UI_Command_Catalog, Contracts_V0, and Progression_Gates"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Generic GATE-010 wiring validation exists, but correlation_id passthrough into downstream events, subject IDs, and route-payload continuity are not directly covered.",
+      "source_obligation_ids": [
+        "obl-224"
+      ],
+      "source_seed_ids": [
+        "seed-224"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-810",
+      "status": "partial",
+      "evidence": [
+        "Plans/Wiring_Matrix.md:35 references Wiring_Matrix.schema.json and Gate:GATE-010",
+        "Plans/Wiring_Matrix.md:51-52 defines acceptance_checks and evidence_required fields for GATE-010 verification",
+        "Plans/Wiring_Matrix.md:160-187 describes GATE-010 wiring verification and references Invariant and schema IDs"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "GATE-010/checks/contract refs exist, but evidence.schema.json limitations and stable reporting of route-payload mismatch, alias/deprecation, and passthrough/correlation failures are not directly covered.",
+      "source_obligation_ids": [
+        "obl-225"
+      ],
+      "source_seed_ids": [
+        "seed-225"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-873",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Plans/Wiring_Matrix.md has no direct coverage for producer preference for canonical route-target forms, consumer acceptance of wrapper-local payloads during migration, or non-permanent migration aliases.",
+      "source_obligation_ids": [
+        "obl-245"
+      ],
+      "source_seed_ids": [
+        "seed-245"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-154",
+      "status": "partial",
+      "evidence": [
+        "Plans/Wiring_Matrix.md:261-263 keys recovery UI handlers by canonical allowed_action_id families and binds domain-specific command IDs through blocked payload metadata",
+        "Plans/Wiring_Matrix.md:378 maps a Debug Automation approve banner to cmd.runtime.approve"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "allowed_action_id/cmd.runtime recovery evidence exists, but tier-boundary HITL versus blocked-node/runtime overlay HITL and lingering allowed_actions[] are not directly covered.",
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "source_seed_ids": [
+        "seed-042"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-800",
+      "status": "partial",
+      "evidence": [
+        "Plans/Wiring_Matrix.md:33-35 states project wiring matrices are JSON validated against Wiring_Matrix.schema.json",
+        "Plans/Wiring_Matrix.md:70 states example rows are validated against Wiring_Matrix.schema.json",
+        "Plans/Wiring_Matrix.md:76-85 includes cmd.* example rows such as cmd.graph.select_node and cmd.graph.retry_node"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Schema reliance and cmd.* examples exist, but wildcard schema limitations and false-positive/negative structured extraction risks are not directly stated.",
+      "source_obligation_ids": [
+        "obl-223"
+      ],
+      "source_seed_ids": [
+        "seed-223"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-815",
+      "status": "partial",
+      "evidence": [
+        "Plans/Wiring_Matrix.md:69-70 marks rows as examples from UI_Command_Catalog",
+        "Plans/Wiring_Matrix.md:82-83 includes example cmd.graph.select_node and cmd.graph.retry_node rows"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Example drift/stale graph command examples exist, but cmd.nav.* family and explicit wrapper/typed-specialization migration guidance are absent.",
+      "source_obligation_ids": [
+        "obl-227"
+      ],
+      "source_seed_ids": [
+        "seed-227"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-881",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Plans/Wiring_Matrix.md has no direct navigation migration discipline or normalized subject_id/object_kind/object_id replacement guidance.",
+      "source_obligation_ids": [
+        "obl-247"
+      ],
+      "source_seed_ids": [
+        "seed-247"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

@@ -1,0 +1,624 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-084",
+  "group_ids": [
+    "pktgrp-0333",
+    "pktgrp-0334",
+    "pktgrp-0335",
+    "pktgrp-0336"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "packet-target-0333",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### Fidelity recovery cov-042: Source Control and worktree handshake (Plans/Orchestrator_Page.md:L115)",
+      "path": "Plans/Orchestrator_Page.md",
+      "coverage_row_ids": [
+        "cov-00253",
+        "cov-00456",
+        "cov-00502",
+        "cov-00520",
+        "cov-02213",
+        "cov-03023",
+        "cov-05563"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-00253",
+          "cov-00456",
+          "cov-00502",
+          "cov-00520",
+          "cov-02213",
+          "cov-03023",
+          "cov-05563"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-136",
+        "obl-313",
+        "obl-359",
+        "obl-377",
+        "obl-2068",
+        "obl-2869",
+        "obl-5335"
+      ],
+      "source_seed_ids": [
+        "seed-142",
+        "seed-362",
+        "seed-414",
+        "seed-435",
+        "seed-2684",
+        "seed-3786",
+        "seed-7930"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0011",
+        "shard-0012",
+        "shard-0034",
+        "shard-0043",
+        "shard-0074"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-136",
+          "obl-313",
+          "obl-359",
+          "obl-377",
+          "obl-2068",
+          "obl-2869",
+          "obl-5335"
+        ],
+        "source_seed_ids": [
+          "seed-142",
+          "seed-362",
+          "seed-414",
+          "seed-435",
+          "seed-2684",
+          "seed-3786",
+          "seed-7930"
+        ],
+        "source_shard_ids": [
+          "shard-0009",
+          "shard-0011",
+          "shard-0012",
+          "shard-0034",
+          "shard-0043",
+          "shard-0074"
+        ]
+      },
+      "gap_ids": [
+        "gap-00226",
+        "gap-00356",
+        "gap-00394",
+        "gap-00410",
+        "gap-01721",
+        "gap-02386",
+        "gap-04336"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "likely issue: row ownership is still `run/tier`, not package-lane ownership, so Orchestrator and Source Control cannot share a coherent worktree model.",
+        "run/tier",
+        "Source Control as the Git/worktree inventory/manipulation surface",
+        "Source Control = concrete Git/worktree inspection and mutation surface",
+        "Source Control rows and tabs must stay information-dense but selective.",
+        "no lane/package/worktree identity enters the bridged envelope where Source Control / Orchestrator handshake now needs it",
+        "no single authority is declared between Source Control worktree state and Orchestrator receipt lineage",
+        "The worktree doc correctly sets the Source Control versus Orchestrator surface boundary, but its identity model still hangs on `tier_id`.",
+        "tier_id"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-30d94b86c932",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0414",
+      "source_reconciliation_target_ids": [
+        "target-0414"
+      ],
+      "source_target_ids": [
+        "target-0414"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0414\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - likely issue: row ownership is still `run/tier`, not package-lane ownership, so Orchestrator and Source Control cannot share a coherent worktree model.\n  - run/tier\n  - Source Control as the Git/worktree inventory/manipulation surface\n  - Source Control = concrete Git/worktree inspection and mutation surface\n  - Source Control rows and tabs must stay information-dense but selective.\n  - no lane/package/worktree identity enters the bridged envelope where Source Control / Orchestrator handshake now needs it\n  - no single authority is declared between Source Control worktree state and Orchestrator receipt lineage\n  - The worktree doc correctly sets the Source Control versus Orchestrator surface boundary, but its identity model still hangs on `tier_id`.\n  - tier_id\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0334",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### Fidelity recovery cov-081: Project attention projection (Plans/Orchestrator_Page.md:L209)",
+      "path": "Plans/Orchestrator_Page.md",
+      "coverage_row_ids": [
+        "cov-01287"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-01287"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-1144"
+      ],
+      "source_seed_ids": [
+        "seed-1356"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1144"
+        ],
+        "source_seed_ids": [
+          "seed-1356"
+        ],
+        "source_shard_ids": [
+          "shard-0022"
+        ]
+      },
+      "gap_ids": [
+        "gap-01003"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Existing `orchestrator status` (`idle/running/paused`) is too weak on its own to explain why a project needs attention.",
+        "orchestrator status",
+        "idle/running/paused"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-632d677fa879",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0416",
+      "source_reconciliation_target_ids": [
+        "target-0416"
+      ],
+      "source_target_ids": [
+        "target-0416"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0416\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Existing `orchestrator status` (`idle/running/paused`) is too weak on its own to explain why a project needs attention.\n  - orchestrator status\n  - idle/running/paused\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0335",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### Fidelity recovery cov-093: Account switch and pressure history (Plans/Orchestrator_Page.md:L221)",
+      "path": "Plans/Orchestrator_Page.md",
+      "coverage_row_ids": [
+        "cov-01323",
+        "cov-01676",
+        "cov-02670",
+        "cov-02924",
+        "cov-04324",
+        "cov-04741",
+        "cov-05316",
+        "cov-05338",
+        "cov-05343",
+        "cov-05387",
+        "cov-05604",
+        "cov-05643",
+        "cov-06604",
+        "cov-07040"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-01323",
+          "cov-01676",
+          "cov-02670",
+          "cov-02924",
+          "cov-04324",
+          "cov-04741",
+          "cov-05316",
+          "cov-05338",
+          "cov-05343",
+          "cov-05387",
+          "cov-05604",
+          "cov-05643",
+          "cov-06604",
+          "cov-07040"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-1180",
+        "obl-1533",
+        "obl-2517",
+        "obl-2771",
+        "obl-4164",
+        "obl-4519",
+        "obl-5088",
+        "obl-5110",
+        "obl-5115",
+        "obl-5159",
+        "obl-5376",
+        "obl-5415",
+        "obl-6245",
+        "obl-6631"
+      ],
+      "source_seed_ids": [
+        "seed-1402",
+        "seed-1910",
+        "seed-3304",
+        "seed-3639",
+        "seed-5782",
+        "seed-6432",
+        "seed-7492",
+        "seed-7542",
+        "seed-7550",
+        "seed-7557",
+        "seed-7564",
+        "seed-7578",
+        "seed-7642",
+        "seed-7994",
+        "seed-8044",
+        "seed-9443",
+        "seed-10115"
+      ],
+      "source_shard_ids": [
+        "shard-0023",
+        "shard-0028",
+        "shard-0039",
+        "shard-0041",
+        "shard-0057",
+        "shard-0062",
+        "shard-0070",
+        "shard-0071",
+        "shard-0074",
+        "shard-0085",
+        "shard-0090"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1180",
+          "obl-1533",
+          "obl-2517",
+          "obl-2771",
+          "obl-4164",
+          "obl-4519",
+          "obl-5088",
+          "obl-5110",
+          "obl-5115",
+          "obl-5159",
+          "obl-5376",
+          "obl-5415",
+          "obl-6245",
+          "obl-6631"
+        ],
+        "source_seed_ids": [
+          "seed-1402",
+          "seed-1910",
+          "seed-3304",
+          "seed-3639",
+          "seed-5782",
+          "seed-6432",
+          "seed-7492",
+          "seed-7542",
+          "seed-7550",
+          "seed-7557",
+          "seed-7564",
+          "seed-7578",
+          "seed-7642",
+          "seed-7994",
+          "seed-8044",
+          "seed-9443",
+          "seed-10115"
+        ],
+        "source_shard_ids": [
+          "shard-0023",
+          "shard-0028",
+          "shard-0039",
+          "shard-0041",
+          "shard-0057",
+          "shard-0062",
+          "shard-0070",
+          "shard-0071",
+          "shard-0074",
+          "shard-0085",
+          "shard-0090"
+        ]
+      },
+      "gap_ids": [
+        "gap-01034",
+        "gap-01314",
+        "gap-02099",
+        "gap-02307",
+        "gap-03374",
+        "gap-03703",
+        "gap-04122",
+        "gap-04142",
+        "gap-04147",
+        "gap-04190",
+        "gap-04366",
+        "gap-04393",
+        "gap-05124",
+        "gap-05457"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "the system should not silently demote a persistent blocker into history just because time passed",
+        "filtered CSV is a view export, not canonical history",
+        "Switch history is still reason fields without a durable event/projection family.",
+        "it still needs both pressure cause and switch outcome fields; otherwise history will stay ambiguous",
+        "`cmd.panel.switch`",
+        "cmd.panel.switch",
+        "Without that discipline, consumer docs may either freeze old payloads forever or overclaim an immediate canonical switch that downstream docs cannot actually absorb.",
+        "`thread_id = <thread_id>` when thread-scoped history is required",
+        "thread_id = <thread_id>",
+        "`tab_id = node_graph` or `tab_id = history`",
+        "tab_id = node_graph",
+        "tab_id = history",
+        "`tab_id = history`",
+        "`inspector_target = details | history | reviews`",
+        "inspector_target = details | history | reviews",
+        "`UI_Command_Catalog.md` and `FinalGUISpec.md` are the pressure points that will either spread the canonical route/object vocabulary cleanly or re-fragment it.",
+        "UI_Command_Catalog.md",
+        "FinalGUISpec.md",
+        "`cmd.panel.switch` with contextual object refs",
+        "`Evidence`, `History`, and `Ledger` treated as native tabs",
+        "Evidence",
+        "History",
+        "Ledger",
+        "Material blocker counts, pressure docs, and next stage remain unchanged."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-4722cde2affd",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0417",
+      "source_reconciliation_target_ids": [
+        "target-0417"
+      ],
+      "source_target_ids": [
+        "target-0417"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0417\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - the system should not silently demote a persistent blocker into history just because time passed\n  - filtered CSV is a view export, not canonical history\n  - Switch history is still reason fields without a durable event/projection family.\n  - it still needs both pressure cause and switch outcome fields; otherwise history will stay ambiguous\n  - `cmd.panel.switch`\n  - cmd.panel.switch\n  - Without that discipline, consumer docs may either freeze old payloads forever or overclaim an immediate canonical switch that downstream docs cannot actually absorb.\n  - `thread_id = <thread_id>` when thread-scoped history is required\n  - thread_id = <thread_id>\n  - `tab_id = node_graph` or `tab_id = history`\n  - tab_id = node_graph\n  - tab_id = history\n  - `tab_id = history`\n  - `inspector_target = details | history | reviews`\n  - inspector_target = details | history | reviews\n  - `UI_Command_Catalog.md` and `FinalGUISpec.md` are the pressure points that will either spread the canonical route/object vocabulary cleanly or re-fragment it.\n  - UI_Command_Catalog.md\n  - FinalGUISpec.md\n  - `cmd.panel.switch` with contextual object refs\n  - `Evidence`, `History`, and `Ledger` treated as native tabs\n  - Evidence\n  - History\n  - Ledger\n  - Material blocker counts, pressure docs, and next stage remain unchanged.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0336",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### Fidelity recovery cov-177: Concern source-event vs record vs projection split (Plans/Orchestrator_Page.md:L257)",
+      "path": "Plans/Orchestrator_Page.md",
+      "coverage_row_ids": [
+        "cov-02345"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-02345"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-2196"
+      ],
+      "source_seed_ids": [
+        "seed-2851"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-2196"
+        ],
+        "source_seed_ids": [
+          "seed-2851"
+        ],
+        "source_shard_ids": [
+          "shard-0036"
+        ]
+      },
+      "gap_ids": [
+        "gap-01820"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Allow short-term concern rendering to piggyback on `finding_refs[]`, but define a minimal non-remediation `node_concerns[]` projection next.",
+        "finding_refs[]",
+        "node_concerns[]"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-4bbbfd73be62",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0419",
+      "source_reconciliation_target_ids": [
+        "target-0419"
+      ],
+      "source_target_ids": [
+        "target-0419"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0419\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Allow short-term concern rendering to piggyback on `finding_refs[]`, but define a minimal non-remediation `node_concerns[]` projection next.\n  - finding_refs[]\n  - node_concerns[]\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-00253",
+    "cov-00456",
+    "cov-00502",
+    "cov-00520",
+    "cov-02213",
+    "cov-03023",
+    "cov-05563",
+    "cov-01287",
+    "cov-01323",
+    "cov-01676",
+    "cov-02670",
+    "cov-02924",
+    "cov-04324",
+    "cov-04741",
+    "cov-05316",
+    "cov-05338",
+    "cov-05343",
+    "cov-05387",
+    "cov-05604",
+    "cov-05643",
+    "cov-06604",
+    "cov-07040",
+    "cov-02345"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-136",
+    "obl-313",
+    "obl-359",
+    "obl-377",
+    "obl-2068",
+    "obl-2869",
+    "obl-5335",
+    "obl-1144",
+    "obl-1180",
+    "obl-1533",
+    "obl-2517",
+    "obl-2771",
+    "obl-4164",
+    "obl-4519",
+    "obl-5088",
+    "obl-5110",
+    "obl-5115",
+    "obl-5159",
+    "obl-5376",
+    "obl-5415",
+    "obl-6245",
+    "obl-6631",
+    "obl-2196"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-142",
+    "seed-362",
+    "seed-414",
+    "seed-435",
+    "seed-2684",
+    "seed-3786",
+    "seed-7930",
+    "seed-1356",
+    "seed-1402",
+    "seed-1910",
+    "seed-3304",
+    "seed-3639",
+    "seed-5782",
+    "seed-6432",
+    "seed-7492",
+    "seed-7542",
+    "seed-7550",
+    "seed-7557",
+    "seed-7564",
+    "seed-7578",
+    "seed-7642",
+    "seed-7994",
+    "seed-8044",
+    "seed-9443",
+    "seed-10115",
+    "seed-2851"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0009",
+    "shard-0011",
+    "shard-0012",
+    "shard-0034",
+    "shard-0043",
+    "shard-0074",
+    "shard-0022",
+    "shard-0023",
+    "shard-0028",
+    "shard-0039",
+    "shard-0041",
+    "shard-0057",
+    "shard-0062",
+    "shard-0070",
+    "shard-0071",
+    "shard-0085",
+    "shard-0090",
+    "shard-0036"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "likely issue: row ownership is still `run/tier`, not package-lane ownership, so Orchestrator and Source Control cannot share a coherent worktree model.",
+    "run/tier",
+    "Source Control as the Git/worktree inventory/manipulation surface",
+    "Source Control = concrete Git/worktree inspection and mutation surface",
+    "Source Control rows and tabs must stay information-dense but selective.",
+    "no lane/package/worktree identity enters the bridged envelope where Source Control / Orchestrator handshake now needs it",
+    "no single authority is declared between Source Control worktree state and Orchestrator receipt lineage",
+    "The worktree doc correctly sets the Source Control versus Orchestrator surface boundary, but its identity model still hangs on `tier_id`.",
+    "tier_id",
+    "Existing `orchestrator status` (`idle/running/paused`) is too weak on its own to explain why a project needs attention.",
+    "orchestrator status",
+    "idle/running/paused",
+    "the system should not silently demote a persistent blocker into history just because time passed",
+    "filtered CSV is a view export, not canonical history",
+    "Switch history is still reason fields without a durable event/projection family.",
+    "it still needs both pressure cause and switch outcome fields; otherwise history will stay ambiguous",
+    "`cmd.panel.switch`",
+    "cmd.panel.switch",
+    "Without that discipline, consumer docs may either freeze old payloads forever or overclaim an immediate canonical switch that downstream docs cannot actually absorb.",
+    "`thread_id = <thread_id>` when thread-scoped history is required",
+    "thread_id = <thread_id>",
+    "`tab_id = node_graph` or `tab_id = history`",
+    "tab_id = node_graph",
+    "tab_id = history",
+    "`tab_id = history`",
+    "`inspector_target = details | history | reviews`",
+    "inspector_target = details | history | reviews",
+    "`UI_Command_Catalog.md` and `FinalGUISpec.md` are the pressure points that will either spread the canonical route/object vocabulary cleanly or re-fragment it.",
+    "UI_Command_Catalog.md",
+    "FinalGUISpec.md",
+    "`cmd.panel.switch` with contextual object refs",
+    "`Evidence`, `History`, and `Ledger` treated as native tabs",
+    "Evidence",
+    "History",
+    "Ledger",
+    "Material blocker counts, pressure docs, and next stage remain unchanged.",
+    "Allow short-term concern rendering to piggyback on `finding_refs[]`, but define a minimal non-remediation `node_concerns[]` projection next.",
+    "finding_refs[]",
+    "node_concerns[]"
+  ],
+  "blocked_targets": []
+}

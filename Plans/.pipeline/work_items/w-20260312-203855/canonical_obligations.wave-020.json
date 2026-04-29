@@ -1,0 +1,1124 @@
+{
+  "schema_id": "pm.canonical_obligations_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-020",
+  "seed_group_ids": [
+    "seedgrp-077",
+    "seedgrp-078",
+    "seedgrp-079",
+    "seedgrp-080"
+  ],
+  "obligation_candidates": [
+    {
+      "source_seed_id": "seed-1141",
+      "canon_label": "should answer: \"what did this run/attempt request, what actually happened, and why?\"",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "should answer: \"what did this run/attempt request, what actually happened, and why?\""
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003772"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1142",
+      "canon_label": "`Progress`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Progress`",
+        "Progress"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003773"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1143",
+      "canon_label": "compact requested/effective summary for live context",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "compact requested/effective summary for live context"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003774"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1144",
+      "canon_label": "`History` / `Ledger`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`History` / `Ledger`",
+        "History",
+        "Ledger"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003775"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1145",
+      "canon_label": "exact audit trail of requested/effective + reason + source snapshot refs",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "exact audit trail of requested/effective + reason + source snapshot refs"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003776"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1146",
+      "canon_label": "`Authentication` / `Usage`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Authentication` / `Usage`",
+        "Authentication",
+        "Usage"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003777"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1147",
+      "canon_label": "effective account/auth emphasis, with project-policy and manual-preferred-account source d",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "effective account/auth emphasis, with project-policy and manual-preferred-account source disclosure where relevant"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003778"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1148",
+      "canon_label": "The same display grammar should extend beyond provider/model/persona/account.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "The same display grammar should extend beyond provider/model/persona/account."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003781"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1149",
+      "canon_label": "Worker policy likely needs the same treatment:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Worker policy likely needs the same treatment:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003782"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1150",
+      "canon_label": "source: project/package/node override source",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "source: project/package/node override source"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003783"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1151",
+      "canon_label": "requested: `subagent`, `fresh_worker`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "requested: `subagent`, `fresh_worker`",
+        "subagent",
+        "fresh_worker"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003784"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1152",
+      "canon_label": "effective: what runtime actually used",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "effective: what runtime actually used"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003785"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1153",
+      "canon_label": "Multi-account implication",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Multi-account implication"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003789"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1154",
+      "canon_label": "Multi-account adds a second layer of confusion if not presented carefully:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Multi-account adds a second layer of confusion if not presented carefully:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003790"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1155",
+      "canon_label": "requested account policy is not the same as effective account",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "requested account policy is not the same as effective account"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003791"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1156",
+      "canon_label": "manual preferred account is not the same as guaranteed selected account",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "manual preferred account is not the same as guaranteed selected account"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003792"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1157",
+      "canon_label": "`Account policy: Auto switch (Project policy)`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Account policy: Auto switch (Project policy)`",
+        "Account policy: Auto switch (Project policy)"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003795"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1158",
+      "canon_label": "`Effective account: gemini-oauth-2`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Effective account: gemini-oauth-2`",
+        "Effective account: gemini-oauth-2"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003796"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1159",
+      "canon_label": "`Switch reason: rate_limit_pressure`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Switch reason: rate_limit_pressure`",
+        "Switch reason: rate_limit_pressure"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003797"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1160",
+      "canon_label": "Historical run views should show the frozen requested/effective state from that run, not r",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Historical run views should show the frozen requested/effective state from that run, not recompute from current settings."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0019",
+      "source_evidence": [
+        "working_ledger.md:L003800"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1161",
+      "canon_label": "Current settings/inheritance may still be shown elsewhere, but must not overwrite history.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Current settings/inheritance may still be shown elsewhere, but must not overwrite history."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003801"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1162",
+      "canon_label": "two-column requested/effective block",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "two-column requested/effective block"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003808"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1163",
+      "canon_label": "Requested/effective is well defined in runtime docs, but inherited/override presentation i",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Requested/effective is well defined in runtime docs, but inherited/override presentation is not unified across settings surfaces."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003816"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1164",
+      "canon_label": "Manual override lifecycle exists for Persona, but similar presentation rules are less expl",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Manual override lifecycle exists for Persona, but similar presentation rules are less explicit for provider/model/account/worker-policy overrides."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003817"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1165",
+      "canon_label": "requested run state",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "requested run state"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003820"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1166",
+      "canon_label": "effective runtime result",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "effective runtime result"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003821"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1167",
+      "canon_label": "Separate `source`, `requested`, and `effective` in UI language and data models.",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Separate `source`, `requested`, and `effective` in UI language and data models.",
+        "source",
+        "requested",
+        "effective"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003825"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1168",
+      "canon_label": "Add requested/effective + support-state disclosure blocks in runtime/history surfaces.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Add requested/effective + support-state disclosure blocks in runtime/history surfaces."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003827"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1169",
+      "canon_label": "Extend the same model to worker policy, not just provider/model/persona/account.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Extend the same model to worker policy, not just provider/model/persona/account."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003828"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1170",
+      "canon_label": "historical run views must stay frozen to historical requested/effective state",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "historical run views must stay frozen to historical requested/effective state"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003831"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1171",
+      "canon_label": "compact surfaces should show deltas only when they matter",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "compact surfaces should show deltas only when they matter"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003832"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1172",
+      "canon_label": "provider-gap disclosure (`honored` / `skipped` / `clamped`) is a third concept, not just a",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "provider-gap disclosure (`honored` / `skipped` / `clamped`) is a third concept, not just another word for override",
+        "honored",
+        "skipped",
+        "clamped"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003833"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1173",
+      "canon_label": "Research Progress - 2026-03-16 - Auto Persona Resolution Rules",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Research Progress - 2026-03-16 - Auto Persona Resolution Rules"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003835"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1174",
+      "canon_label": "`Plans/Personas.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Personas.md`",
+        "Plans/Personas.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003838"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1175",
+      "canon_label": "`Plans/Prompt_Pipeline.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Prompt_Pipeline.md`",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003839"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1176",
+      "canon_label": "`Plans/interview-subagent-integration.md`",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/interview-subagent-integration.md`",
+        "Plans/interview-subagent-integration.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/interview-subagent-integration.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003840"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1177",
+      "canon_label": "`Plans/Models_System.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Models_System.md`",
+        "Plans/Models_System.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Models_System.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003841"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1178",
+      "canon_label": "`Plans/orchestrator-subagent-integration.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/orchestrator-subagent-integration.md`",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003842"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1179",
+      "canon_label": "`Plans/FinalGUISpec.md`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Plans/FinalGUISpec.md`",
+        "Plans/FinalGUISpec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003843"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1180",
+      "canon_label": "The global requested-Persona precedence is already strong and should remain the backbone:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The global requested-Persona precedence is already strong and should remain the backbone:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003846"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1181",
+      "canon_label": "canonical fallback",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "canonical fallback"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003852"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1182",
+      "canon_label": "Candidate resolver inputs for Orchestrator should likely include:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Candidate resolver inputs for Orchestrator should likely include:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003871"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1183",
+      "canon_label": "package overseer",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "package overseer"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003873"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1184",
+      "canon_label": "seam overseer",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "seam overseer"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003874"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1185",
+      "canon_label": "seam",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "seam"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003888"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1186",
+      "canon_label": "package",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "package"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003889"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1187",
+      "canon_label": "hard requirement from plan/tier/surface contract",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "hard requirement from plan/tier/surface contract"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003900"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1188",
+      "canon_label": "actor type and operation type should dominate stack hints",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "actor type and operation type should dominate stack hints"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003908"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1189",
+      "canon_label": "a reviewer/reviewer-pass should not silently become a coding persona just because the repo",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "a reviewer/reviewer-pass should not silently become a coding persona just because the repo is Rust-heavy"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003910"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1190",
+      "canon_label": "a seam overseer should not collapse into a narrow implementation persona just because a fr",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "a seam overseer should not collapse into a narrow implementation persona just because a framework is detected"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003911"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1191",
+      "canon_label": "package overseer",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "package overseer"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003915"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1192",
+      "canon_label": "execution/governance persona biased toward package-local delivery and readiness truth",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "execution/governance persona biased toward package-local delivery and readiness truth"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003916"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1193",
+      "canon_label": "seam overseer",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "seam overseer"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003917"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1194",
+      "canon_label": "integration/governance persona biased toward cross-package integration truth",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "integration/governance persona biased toward cross-package integration truth"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003918"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1195",
+      "canon_label": "implementation persona biased by language/framework/work type",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "implementation persona biased by language/framework/work type"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003920"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1196",
+      "canon_label": "review persona distinct from drafting/implementation persona",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "review persona distinct from drafting/implementation persona"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003922"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1197",
+      "canon_label": "review/challenge persona distinct from original claimer",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "review/challenge persona distinct from original claimer"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003924"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1198",
+      "canon_label": "troubleshooting/recovery persona",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "troubleshooting/recovery persona"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003926"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1199",
+      "canon_label": "planning/architecture persona",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "planning/architecture persona"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003928"
+      ]
+    },
+    {
+      "source_seed_id": "seed-1200",
+      "canon_label": "The exact persona ids may still evolve, but the mapping policy should be explicit now.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The exact persona ids may still evolve, but the mapping policy should be explicit now."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0020",
+      "source_evidence": [
+        "working_ledger.md:L003929"
+      ]
+    }
+  ],
+  "represented_seed_ids": [
+    "seed-1141",
+    "seed-1142",
+    "seed-1143",
+    "seed-1144",
+    "seed-1145",
+    "seed-1146",
+    "seed-1147",
+    "seed-1148",
+    "seed-1149",
+    "seed-1150",
+    "seed-1151",
+    "seed-1152",
+    "seed-1153",
+    "seed-1154",
+    "seed-1155",
+    "seed-1156",
+    "seed-1157",
+    "seed-1158",
+    "seed-1159",
+    "seed-1160",
+    "seed-1161",
+    "seed-1162",
+    "seed-1163",
+    "seed-1164",
+    "seed-1165",
+    "seed-1166",
+    "seed-1167",
+    "seed-1168",
+    "seed-1169",
+    "seed-1170",
+    "seed-1171",
+    "seed-1172",
+    "seed-1173",
+    "seed-1174",
+    "seed-1175",
+    "seed-1176",
+    "seed-1177",
+    "seed-1178",
+    "seed-1179",
+    "seed-1180",
+    "seed-1181",
+    "seed-1182",
+    "seed-1183",
+    "seed-1184",
+    "seed-1185",
+    "seed-1186",
+    "seed-1187",
+    "seed-1188",
+    "seed-1189",
+    "seed-1190",
+    "seed-1191",
+    "seed-1192",
+    "seed-1193",
+    "seed-1194",
+    "seed-1195",
+    "seed-1196",
+    "seed-1197",
+    "seed-1198",
+    "seed-1199",
+    "seed-1200"
+  ],
+  "represented_source_shard_ids": [
+    "shard-0019",
+    "shard-0020"
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "affected_doc_discovery_notes": []
+}

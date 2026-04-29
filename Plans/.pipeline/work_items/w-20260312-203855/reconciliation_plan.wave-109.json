@@ -1,0 +1,319 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-109",
+  "group_ids": [
+    "recgrp-0433",
+    "recgrp-0434",
+    "recgrp-0435",
+    "recgrp-0436"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0433",
+      "path": "Plans/Plugins_System.md",
+      "mapped_owner_heading": "#### `tool.execute.after`",
+      "live_anchor": "#### `tool.execute.after` (Plans/Plugins_System.md:L205)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-04201"
+      ],
+      "source_obligation_ids": [
+        "obl-4041"
+      ],
+      "source_seed_ids": [
+        "seed-5560"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "gap_ids": [
+        "gap-03274"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`newtools.md` and assistant-memory still add net-new owner failures even after Sonnet:",
+        "newtools.md"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-c17fb34a1812",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0434",
+      "path": "Plans/Progression_Gates.md",
+      "mapped_owner_heading": "# Progression Gates (Canonical)",
+      "live_anchor": "# Progression Gates (Canonical) (Plans/Progression_Gates.md:L1)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-04485",
+        "cov-04951",
+        "cov-05679",
+        "cov-06254",
+        "cov-06339",
+        "cov-06381",
+        "cov-06412",
+        "cov-06769",
+        "cov-06826"
+      ],
+      "source_obligation_ids": [
+        "obl-4292",
+        "obl-4727",
+        "obl-5451",
+        "obl-5986",
+        "obl-6009",
+        "obl-6022",
+        "obl-6053",
+        "obl-6405",
+        "obl-6442"
+      ],
+      "source_seed_ids": [
+        "seed-6001",
+        "seed-6807",
+        "seed-8088",
+        "seed-9006",
+        "seed-9092",
+        "seed-9109",
+        "seed-9148",
+        "seed-9784",
+        "seed-9821"
+      ],
+      "source_shard_ids": [
+        "shard-0059",
+        "shard-0065",
+        "shard-0075",
+        "shard-0082",
+        "shard-0083",
+        "shard-0087",
+        "shard-0088"
+      ],
+      "gap_ids": [
+        "gap-03517",
+        "gap-03875",
+        "gap-04423",
+        "gap-04842",
+        "gap-04917",
+        "gap-04954",
+        "gap-04979",
+        "gap-05247",
+        "gap-05299"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md",
+        "Research Progress - 2026-03-17 - Wrapper/alias contract in wiring and gates",
+        "`Plans/Progression_Gates.md` and `UI_Wiring_Rules.md` still assume command verification is:",
+        "Plans/Progression_Gates.md",
+        "UI_Wiring_Rules.md",
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "22",
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "61",
+        "section `7` uses `Plans/Progression_Gates.md#GATE-009` while the references block later lists `Plans/Progression_Gates.md#GATE-011`; the doc is mixing path-only and path-plus-anchor styles inside its own canon examples",
+        "7",
+        "Plans/Progression_Gates.md#GATE-009",
+        "Plans/Progression_Gates.md#GATE-011",
+        "Research Progress - 2026-03-17 - owner-traceability seam: Progression Gates",
+        "Missing route/ref-family boundaries will invite shadow routing and ad hoc payloads that gates cannot verify.",
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Crosswalk.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/FileManager.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-22a9de80ca6c",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0435",
+      "path": "Plans/Progression_Gates.md",
+      "mapped_owner_heading": "## 0. Scope",
+      "live_anchor": "## 0. Scope (Plans/Progression_Gates.md:L30)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-06531"
+      ],
+      "source_obligation_ids": [
+        "obl-6172"
+      ],
+      "source_seed_ids": [
+        "seed-9334"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "gap_ids": [
+        "gap-05064"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "This seam is about ownership and scope, not renaming `requested_persona` back into older field families. The field names are already mostly right.",
+        "requested_persona"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-4ac6f363f1ff",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0436",
+      "path": "Plans/Progression_Gates.md",
+      "mapped_owner_heading": "## GATE-002 -- Spec Lock integrity",
+      "live_anchor": "## GATE-002 -- Spec Lock integrity (Plans/Progression_Gates.md:L172)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-01956"
+      ],
+      "source_obligation_ids": [
+        "obl-1813"
+      ],
+      "source_seed_ids": [
+        "seed-2328"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "gap_ids": [
+        "gap-01525"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "lane scheduler integrity"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-f2d77a8635a3",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-04201",
+    "cov-04485",
+    "cov-04951",
+    "cov-05679",
+    "cov-06254",
+    "cov-06339",
+    "cov-06381",
+    "cov-06412",
+    "cov-06769",
+    "cov-06826",
+    "cov-06531",
+    "cov-01956"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-4041",
+    "obl-4292",
+    "obl-4727",
+    "obl-5451",
+    "obl-5986",
+    "obl-6009",
+    "obl-6022",
+    "obl-6053",
+    "obl-6405",
+    "obl-6442",
+    "obl-6172",
+    "obl-1813"
+  ],
+  "source_seed_ids_represented": [
+    "seed-5560",
+    "seed-6001",
+    "seed-6807",
+    "seed-8088",
+    "seed-9006",
+    "seed-9092",
+    "seed-9109",
+    "seed-9148",
+    "seed-9784",
+    "seed-9821",
+    "seed-9334",
+    "seed-2328"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0056",
+    "shard-0059",
+    "shard-0065",
+    "shard-0075",
+    "shard-0082",
+    "shard-0083",
+    "shard-0087",
+    "shard-0088",
+    "shard-0084",
+    "shard-0032"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": []
+}

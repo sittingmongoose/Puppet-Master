@@ -1,0 +1,115 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0085",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0085-L016801-L017000.md",
+  "source_line_range": "L016801-L017000",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Executor Protocol execution-unit ownership",
+      "exact_items": [
+        "Executor_Protocol.md needs explicit owner placement for the execution-unit context replacing TierContext",
+        "Executor_Protocol.md needs clear relationship between runtime scheduler/execution roles and the newer package/seam overseer governance model"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "TierContext"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16859-L16863"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Orchestrator tier retirement and native tabs",
+      "exact_items": [
+        "Orchestrator_Page.md needs Tiers retired and replaced by Seams",
+        "Orchestrator_Page.md needs Evidence, History, and Ledger treated as native tabs",
+        "Orchestrator_Page.md needs tier_id filters and worker identity fields replaced with canonical node/attempt/runtime identity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "Tiers",
+        "Seams",
+        "Evidence",
+        "History",
+        "Ledger",
+        "tier_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16864-L16869"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "usage correlation identity migration",
+      "exact_items": [
+        "usage-feature.md needs usage correlation moved off tier_id as primary cross-surface key",
+        "usage-feature.md needs run/node/attempt identity and usage_event_ref elevated"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "tier_id",
+        "usage_event_ref"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16949-L16958"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Run Graph usage pivots and Widget hostability",
+      "exact_items": [
+        "Run_Graph_View.md needs graph detail and usage pivots aligned to node/attempt/runtime identity",
+        "Run_Graph_View.md needs stale hitl_request_id, View in Tiers, and tier_id-centric event filtering removed",
+        "Widget_System.md needs Orchestrator hostability narrowed to Progress"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "hitl_request_id",
+        "View in Tiers",
+        "tier_id",
+        "Progress"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16959-L16966"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "assistant-chat-design health note",
+    "Section15 comparative note",
+    "feature-list stale-spec mirror note",
+    "newfeatures mirror note"
+  ],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0085"
+}

@@ -1,1686 +1,1506 @@
 {
   "schema_id": "pm.legacy_quarantine_manifest.v2",
   "work_id": "w-20260312-203855",
-  "timestamp_utc": "2026-04-28T17:30:17Z",
+  "timestamp_utc": "2026-04-29T15:54:29.904377Z",
   "reason": "legacy_downstream_artifacts_quarantined",
   "files_moved": [
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.json.20260428T173017Z"
+      "from": "canonical_obligations.json",
+      "to": "legacy_quarantine/canonical_obligations.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.noise-001.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.noise-001.json.20260428T173017Z"
+      "from": "canonical_obligations.noise-001.json",
+      "to": "legacy_quarantine/canonical_obligations.noise-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.pass-001.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.pass-001.json.20260428T173017Z"
+      "from": "canonical_obligations.noise-002.json",
+      "to": "legacy_quarantine/canonical_obligations.noise-002.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-001.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-001.json.20260428T173017Z"
+      "from": "canonical_obligations.noise-003.json",
+      "to": "legacy_quarantine/canonical_obligations.noise-003.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-002.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-002.json.20260428T173017Z"
+      "from": "canonical_obligations.noise-004.json",
+      "to": "legacy_quarantine/canonical_obligations.noise-004.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-003.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-003.json.20260428T173017Z"
+      "from": "canonical_obligations.noise-005.json",
+      "to": "legacy_quarantine/canonical_obligations.noise-005.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-004.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-004.json.20260428T173017Z"
+      "from": "canonical_obligations.noise-006.json",
+      "to": "legacy_quarantine/canonical_obligations.noise-006.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-005.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-005.json"
+      "from": "canonical_obligations.pass-001.json",
+      "to": "legacy_quarantine/canonical_obligations.pass-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-006.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-006.json"
+      "from": "canonical_obligations.wave-001.json",
+      "to": "legacy_quarantine/canonical_obligations.wave-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-007.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-007.json"
+      "from": "canonical_obligations.wave-002.json",
+      "to": "legacy_quarantine/canonical_obligations.wave-002.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-008.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-008.json"
+      "from": "canonical_obligations.wave-003.json",
+      "to": "legacy_quarantine/canonical_obligations.wave-003.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-009.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-009.json"
+      "from": "canonical_obligations.wave-004.json",
+      "to": "legacy_quarantine/canonical_obligations.wave-004.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-010.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-010.json"
+      "from": "canonical_obligations.wave-005.json",
+      "to": "legacy_quarantine/canonical_obligations.wave-005.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-011.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-011.json"
+      "from": "canonical_obligations.wave-006.json",
+      "to": "legacy_quarantine/canonical_obligations.wave-006.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-012.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-012.json"
+      "from": "canonical_obligations.worklist.json",
+      "to": "legacy_quarantine/canonical_obligations.worklist.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-013.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-013.json"
+      "from": "canonical_obligations_source_coverage_report.json",
+      "to": "legacy_quarantine/canonical_obligations_source_coverage_report.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-014.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-014.json"
+      "from": "current_state.md",
+      "to": "legacy_quarantine/current_state.quarantine-20260429T155429Z.md"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-015.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-015.json"
+      "from": "doc_discovery_resolution.json",
+      "to": "legacy_quarantine/doc_discovery_resolution.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-016.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-016.json"
+      "from": "doc_discovery_resolution.noise-001.json",
+      "to": "legacy_quarantine/doc_discovery_resolution.noise-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-017.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-017.json"
+      "from": "doc_discovery_resolution.noise-002.json",
+      "to": "legacy_quarantine/doc_discovery_resolution.noise-002.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-018.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-018.json"
+      "from": "doc_discovery_resolution.noise-003.json",
+      "to": "legacy_quarantine/doc_discovery_resolution.noise-003.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-019.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-019.json"
+      "from": "doc_discovery_resolution.pass-001.json",
+      "to": "legacy_quarantine/doc_discovery_resolution.pass-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-020.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-020.json"
+      "from": "doc_discovery_resolution.pass-002.json",
+      "to": "legacy_quarantine/doc_discovery_resolution.pass-002.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-021.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-021.json"
+      "from": "doc_discovery_resolution.pass-003.json",
+      "to": "legacy_quarantine/doc_discovery_resolution.pass-003.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-022.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-022.json"
+      "from": "doc_discovery_resolution.wave-001.json",
+      "to": "legacy_quarantine/doc_discovery_resolution.wave-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-023.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-023.json"
+      "from": "doc_discovery_resolution.wave-002.json",
+      "to": "legacy_quarantine/doc_discovery_resolution.wave-002.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-024.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-024.json"
+      "from": "doc_discovery_resolution.wave-003.json",
+      "to": "legacy_quarantine/doc_discovery_resolution.wave-003.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-025.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-025.json"
+      "from": "doc_discovery_resolution.worklist.json",
+      "to": "legacy_quarantine/doc_discovery_resolution.worklist.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-026.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-026.json"
+      "from": "ledger_obligation_seed.completeness-noise.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.completeness-noise.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-027.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-027.json"
+      "from": "ledger_obligation_seed.finalizer-noise.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.finalizer-noise.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-028.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-028.json"
+      "from": "ledger_obligation_seed.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-029.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-029.json"
+      "from": "ledger_obligation_seed.noise-001.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-030.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-030.json"
+      "from": "ledger_obligation_seed.noise-002.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-002.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-031.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-031.json"
+      "from": "ledger_obligation_seed.noise-003.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-003.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-032.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-032.json"
+      "from": "ledger_obligation_seed.noise-004.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-004.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-033.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-033.json"
+      "from": "ledger_obligation_seed.noise-005.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-005.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-034.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-034.json"
+      "from": "ledger_obligation_seed.noise-006.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-006.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-035.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-035.json"
+      "from": "ledger_obligation_seed.noise-007.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-007.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-036.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-036.json"
+      "from": "ledger_obligation_seed.noise-008.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-008.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-037.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-037.json"
+      "from": "ledger_obligation_seed.noise-009.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-009.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-038.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-038.json"
+      "from": "ledger_obligation_seed.noise-010.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-010.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-039.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-039.json"
+      "from": "ledger_obligation_seed.noise-011.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-011.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-040.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-040.json"
+      "from": "ledger_obligation_seed.noise-012.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-012.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-041.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-041.json"
+      "from": "ledger_obligation_seed.noise-013.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-013.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-042.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-042.json"
+      "from": "ledger_obligation_seed.noise-014.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-014.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-043.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-043.json"
+      "from": "ledger_obligation_seed.noise-015.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-015.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-044.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-044.json"
+      "from": "ledger_obligation_seed.noise-016.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-016.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-045.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-045.json"
+      "from": "ledger_obligation_seed.noise-017.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-017.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-046.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-046.json"
+      "from": "ledger_obligation_seed.noise-018.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-018.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-047.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-047.json"
+      "from": "ledger_obligation_seed.noise-019.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-019.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-048.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-048.json"
+      "from": "ledger_obligation_seed.noise-020.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-020.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-049.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-049.json"
+      "from": "ledger_obligation_seed.noise-021.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-021.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-050.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-050.json"
+      "from": "ledger_obligation_seed.noise-022.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-022.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-051.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-051.json"
+      "from": "ledger_obligation_seed.noise-023.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.noise-023.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-052.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-052.json"
+      "from": "ledger_obligation_seed.pass-001.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.pass-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-053.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-053.json"
+      "from": "ledger_obligation_seed.shard-0001.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-054.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-054.json"
+      "from": "ledger_obligation_seed.shard-0002.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0002.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-055.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-055.json"
+      "from": "ledger_obligation_seed.shard-0003.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0003.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-056.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-056.json"
+      "from": "ledger_obligation_seed.shard-0004.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0004.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-057.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-057.json"
+      "from": "ledger_obligation_seed.shard-0005.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0005.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-058.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-058.json"
+      "from": "ledger_obligation_seed.shard-0006.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0006.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-059.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-059.json"
+      "from": "ledger_obligation_seed.shard-0007.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0007.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-060.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-060.json"
+      "from": "ledger_obligation_seed.shard-0008.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0008.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-061.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-061.json"
+      "from": "ledger_obligation_seed.shard-0009.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0009.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-062.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-062.json"
+      "from": "ledger_obligation_seed.shard-0010.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0010.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-063.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-063.json"
+      "from": "ledger_obligation_seed.shard-0011.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0011.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-064.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-064.json"
+      "from": "ledger_obligation_seed.shard-0012.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0012.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-065.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-065.json"
+      "from": "ledger_obligation_seed.shard-0013.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0013.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-066.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-066.json"
+      "from": "ledger_obligation_seed.shard-0014.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0014.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-067.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-067.json"
+      "from": "ledger_obligation_seed.shard-0015.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0015.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-068.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-068.json"
+      "from": "ledger_obligation_seed.shard-0016.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0016.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-069.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-069.json"
+      "from": "ledger_obligation_seed.shard-0017.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0017.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-070.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-070.json"
+      "from": "ledger_obligation_seed.shard-0018.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0018.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-071.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-071.json"
+      "from": "ledger_obligation_seed.shard-0019.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0019.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-072.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-072.json"
+      "from": "ledger_obligation_seed.shard-0020.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0020.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-073.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-073.json"
+      "from": "ledger_obligation_seed.shard-0021.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0021.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-074.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-074.json"
+      "from": "ledger_obligation_seed.shard-0022.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0022.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-075.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-075.json"
+      "from": "ledger_obligation_seed.shard-0023.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0023.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-076.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-076.json"
+      "from": "ledger_obligation_seed.shard-0024.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0024.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-077.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-077.json"
+      "from": "ledger_obligation_seed.shard-0025.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0025.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-078.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-078.json"
+      "from": "ledger_obligation_seed.shard-0026.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0026.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-079.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-079.json"
+      "from": "ledger_obligation_seed.shard-0027.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0027.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-080.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-080.json"
+      "from": "ledger_obligation_seed.shard-0028.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0028.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-081.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-081.json"
+      "from": "ledger_obligation_seed.shard-0029.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0029.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-082.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-082.json"
+      "from": "ledger_obligation_seed.shard-0030.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0030.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-083.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-083.json"
+      "from": "ledger_obligation_seed.shard-0031.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0031.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-084.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-084.json"
+      "from": "ledger_obligation_seed.shard-0032.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0032.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-085.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-085.json"
+      "from": "ledger_obligation_seed.shard-0033.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0033.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-086.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-086.json"
+      "from": "ledger_obligation_seed.shard-0034.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0034.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-087.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-087.json"
+      "from": "ledger_obligation_seed.shard-0035.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0035.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-088.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-088.json"
+      "from": "ledger_obligation_seed.shard-0036.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0036.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-089.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-089.json"
+      "from": "ledger_obligation_seed.shard-0037.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0037.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-090.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-090.json"
+      "from": "ledger_obligation_seed.shard-0038.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0038.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-091.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-091.json"
+      "from": "ledger_obligation_seed.shard-0039.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0039.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-092.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-092.json"
+      "from": "ledger_obligation_seed.shard-0040.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0040.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-093.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-093.json"
+      "from": "ledger_obligation_seed.shard-0041.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0041.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-094.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-094.json"
+      "from": "ledger_obligation_seed.shard-0042.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0042.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-095.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-095.json"
+      "from": "ledger_obligation_seed.shard-0043.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0043.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-096.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-096.json"
+      "from": "ledger_obligation_seed.shard-0044.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0044.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-097.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-097.json"
+      "from": "ledger_obligation_seed.shard-0045.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0045.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-098.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-098.json"
+      "from": "ledger_obligation_seed.shard-0046.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0046.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-099.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-099.json"
+      "from": "ledger_obligation_seed.shard-0047.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0047.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-100.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-100.json"
+      "from": "ledger_obligation_seed.shard-0048.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0048.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-101.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-101.json"
+      "from": "ledger_obligation_seed.shard-0049.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0049.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-102.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-102.json"
+      "from": "ledger_obligation_seed.shard-0050.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0050.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-103.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-103.json"
+      "from": "ledger_obligation_seed.shard-0051.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0051.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-104.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-104.json"
+      "from": "ledger_obligation_seed.shard-0052.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0052.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-105.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-105.json"
+      "from": "ledger_obligation_seed.shard-0053.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0053.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-106.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-106.json"
+      "from": "ledger_obligation_seed.shard-0054.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0054.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-107.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-107.json"
+      "from": "ledger_obligation_seed.shard-0055.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0055.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-108.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-108.json"
+      "from": "ledger_obligation_seed.shard-0056.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0056.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-109.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-109.json"
+      "from": "ledger_obligation_seed.shard-0057.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0057.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-110.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-110.json"
+      "from": "ledger_obligation_seed.shard-0058.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0058.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-111.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-111.json"
+      "from": "ledger_obligation_seed.shard-0059.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0059.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-112.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-112.json"
+      "from": "ledger_obligation_seed.shard-0060.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0060.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-113.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-113.json"
+      "from": "ledger_obligation_seed.shard-0061.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0061.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-114.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-114.json"
+      "from": "ledger_obligation_seed.shard-0062.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0062.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-115.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-115.json"
+      "from": "ledger_obligation_seed.shard-0063.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0063.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-116.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-116.json"
+      "from": "ledger_obligation_seed.shard-0064.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0064.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-117.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-117.json"
+      "from": "ledger_obligation_seed.shard-0065.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0065.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-118.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-118.json"
+      "from": "ledger_obligation_seed.shard-0066.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0066.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-119.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-119.json"
+      "from": "ledger_obligation_seed.shard-0067.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0067.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-120.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-120.json"
+      "from": "ledger_obligation_seed.shard-0068.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0068.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.wave-121.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.wave-121.json"
+      "from": "ledger_obligation_seed.shard-0069.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0069.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.worklist.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations.worklist.json"
+      "from": "ledger_obligation_seed.shard-0070.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0070.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations_source_coverage_report.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/canonical_obligations_source_coverage_report.json.20260428T173017Z"
+      "from": "ledger_obligation_seed.shard-0071.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0071.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/current_state.md.20260428T173017Z"
+      "from": "ledger_obligation_seed.shard-0072.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0072.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.completeness-noise.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.completeness-noise.json.20260428T173017Z"
+      "from": "ledger_obligation_seed.shard-0073.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0073.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.finalizer-noise.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.finalizer-noise.json.20260428T173017Z"
+      "from": "ledger_obligation_seed.shard-0074.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0074.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.json.20260428T173017Z"
+      "from": "ledger_obligation_seed.shard-0075.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0075.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.noise-001.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.noise-001.json.20260428T173017Z"
+      "from": "ledger_obligation_seed.shard-0076.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0076.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.pass-001.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.pass-001.json.20260428T173017Z"
+      "from": "ledger_obligation_seed.shard-0077.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0077.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0001.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0001.json"
+      "from": "ledger_obligation_seed.shard-0078.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0078.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0002.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0002.json"
+      "from": "ledger_obligation_seed.shard-0079.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0079.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0003.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0003.json"
+      "from": "ledger_obligation_seed.shard-0080.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0080.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0004.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0004.json"
+      "from": "ledger_obligation_seed.shard-0081.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0081.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0005.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0005.json"
+      "from": "ledger_obligation_seed.shard-0082.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0082.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0006.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0006.json"
+      "from": "ledger_obligation_seed.shard-0083.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0083.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0007.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0007.json"
+      "from": "ledger_obligation_seed.shard-0084.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0084.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0008.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0008.json"
+      "from": "ledger_obligation_seed.shard-0085.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0085.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0009.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0009.json"
+      "from": "ledger_obligation_seed.shard-0086.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0086.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0010.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0010.json"
+      "from": "ledger_obligation_seed.shard-0087.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0087.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0011.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0011.json"
+      "from": "ledger_obligation_seed.shard-0088.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0088.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0012.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0012.json"
+      "from": "ledger_obligation_seed.shard-0089.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0089.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0013.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0013.json"
+      "from": "ledger_obligation_seed.shard-0090.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0090.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0014.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0014.json"
+      "from": "ledger_obligation_seed.shard-0091.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0091.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0015.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0015.json"
+      "from": "ledger_obligation_seed.shard-0092.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.shard-0092.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0016.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0016.json"
+      "from": "ledger_obligation_seed.wave-001.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0017.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0017.json"
+      "from": "ledger_obligation_seed.wave-002.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-002.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0018.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0018.json"
+      "from": "ledger_obligation_seed.wave-003.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-003.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0019.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0019.json"
+      "from": "ledger_obligation_seed.wave-004.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-004.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0020.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0020.json"
+      "from": "ledger_obligation_seed.wave-005.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-005.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0021.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0021.json"
+      "from": "ledger_obligation_seed.wave-006.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-006.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0022.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0022.json"
+      "from": "ledger_obligation_seed.wave-007.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-007.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0023.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0023.json"
+      "from": "ledger_obligation_seed.wave-008.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-008.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0024.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0024.json"
+      "from": "ledger_obligation_seed.wave-009.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-009.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0025.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0025.json"
+      "from": "ledger_obligation_seed.wave-010.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-010.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0026.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0026.json"
+      "from": "ledger_obligation_seed.wave-011.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-011.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0027.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0027.json"
+      "from": "ledger_obligation_seed.wave-012.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-012.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0028.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0028.json"
+      "from": "ledger_obligation_seed.wave-013.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-013.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0029.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0029.json"
+      "from": "ledger_obligation_seed.wave-014.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-014.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0030.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0030.json"
+      "from": "ledger_obligation_seed.wave-015.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-015.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0031.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0031.json"
+      "from": "ledger_obligation_seed.wave-016.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-016.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0032.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0032.json"
+      "from": "ledger_obligation_seed.wave-017.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-017.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0033.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0033.json"
+      "from": "ledger_obligation_seed.wave-018.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-018.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0034.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0034.json"
+      "from": "ledger_obligation_seed.wave-019.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-019.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0035.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0035.json"
+      "from": "ledger_obligation_seed.wave-020.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-020.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0036.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0036.json"
+      "from": "ledger_obligation_seed.wave-021.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-021.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0037.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0037.json"
+      "from": "ledger_obligation_seed.wave-022.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-022.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0038.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0038.json"
+      "from": "ledger_obligation_seed.wave-023.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.wave-023.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0039.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0039.json"
+      "from": "ledger_obligation_seed.worklist.json",
+      "to": "legacy_quarantine/ledger_obligation_seed.worklist.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0040.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0040.json"
+      "from": "ledger_seed_completeness_report.json",
+      "to": "legacy_quarantine/ledger_seed_completeness_report.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0041.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0041.json"
+      "from": "open_gaps.json",
+      "to": "legacy_quarantine/open_gaps.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0042.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0042.json"
+      "from": "open_gaps.noise-001.json",
+      "to": "legacy_quarantine/open_gaps.noise-001.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0043.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0043.json"
+      "from": "open_gaps.noise-002.json",
+      "to": "legacy_quarantine/open_gaps.noise-002.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0044.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0044.json"
+      "from": "open_gaps.noise-003.json",
+      "to": "legacy_quarantine/open_gaps.noise-003.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0045.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0045.json"
+      "from": "open_gaps.pass-001.json",
+      "to": "legacy_quarantine/open_gaps.pass-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0046.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0046.json"
+      "from": "open_gaps.pass-002.json",
+      "to": "legacy_quarantine/open_gaps.pass-002.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0047.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0047.json"
+      "from": "open_gaps.pass-003.json",
+      "to": "legacy_quarantine/open_gaps.pass-003.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0048.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0048.json"
+      "from": "open_gaps.wave-001.json",
+      "to": "legacy_quarantine/open_gaps.wave-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0049.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0049.json"
+      "from": "open_gaps.worklist.json",
+      "to": "legacy_quarantine/open_gaps.worklist.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0050.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0050.json"
+      "from": "packet_builder.noise-001.json",
+      "to": "legacy_quarantine/packet_builder.noise-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0051.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0051.json"
+      "from": "packet_builder.noise-002.json",
+      "to": "legacy_quarantine/packet_builder.noise-002.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0052.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0052.json"
+      "from": "packet_builder.noise-003.json",
+      "to": "legacy_quarantine/packet_builder.noise-003.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0053.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0053.json"
+      "from": "packet_builder.pass-001.json",
+      "to": "legacy_quarantine/packet_builder.pass-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0054.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0054.json"
+      "from": "packet_builder.pass-002.json",
+      "to": "legacy_quarantine/packet_builder.pass-002.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0055.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0055.json"
+      "from": "packet_builder.pass-003.json",
+      "to": "legacy_quarantine/packet_builder.pass-003.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0056.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0056.json"
+      "from": "packet_builder.wave-001.json",
+      "to": "legacy_quarantine/packet_builder.wave-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0057.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0057.json"
+      "from": "packet_builder.worklist.json",
+      "to": "legacy_quarantine/packet_builder.worklist.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0058.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0058.json"
+      "from": "packet_span_conflict_report.json",
+      "to": "legacy_quarantine/packet_span_conflict_report.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0059.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0059.json"
+      "from": "reconciliation_plan.json",
+      "to": "legacy_quarantine/reconciliation_plan.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0060.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0060.json"
+      "from": "reconciliation_plan.noise-001.json",
+      "to": "legacy_quarantine/reconciliation_plan.noise-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0061.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0061.json"
+      "from": "reconciliation_plan.noise-002.json",
+      "to": "legacy_quarantine/reconciliation_plan.noise-002.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0062.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0062.json"
+      "from": "reconciliation_plan.noise-003.json",
+      "to": "legacy_quarantine/reconciliation_plan.noise-003.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0063.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0063.json"
+      "from": "reconciliation_plan.pass-001.json",
+      "to": "legacy_quarantine/reconciliation_plan.pass-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0064.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0064.json"
+      "from": "reconciliation_plan.pass-002.json",
+      "to": "legacy_quarantine/reconciliation_plan.pass-002.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0065.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0065.json"
+      "from": "reconciliation_plan.pass-003.json",
+      "to": "legacy_quarantine/reconciliation_plan.pass-003.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0066.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0066.json"
+      "from": "reconciliation_plan.wave-001.json",
+      "to": "legacy_quarantine/reconciliation_plan.wave-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0067.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0067.json"
+      "from": "reconciliation_plan.worklist.json",
+      "to": "legacy_quarantine/reconciliation_plan.worklist.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0068.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0068.json"
+      "from": "scribe_apply_report.json",
+      "to": "legacy_quarantine/scribe_apply_report.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0069.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0069.json"
+      "from": "transfer_coverage.json",
+      "to": "legacy_quarantine/transfer_coverage.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0070.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0070.json"
+      "from": "transfer_coverage.noise-001.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0071.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0071.json"
+      "from": "transfer_coverage.noise-002.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-002.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0072.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0072.json"
+      "from": "transfer_coverage.noise-003.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-003.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0073.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0073.json"
+      "from": "transfer_coverage.noise-004.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-004.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0074.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0074.json"
+      "from": "transfer_coverage.noise-005.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-005.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0075.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0075.json"
+      "from": "transfer_coverage.noise-006.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-006.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0076.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0076.json"
+      "from": "transfer_coverage.noise-007.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-007.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0077.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0077.json"
+      "from": "transfer_coverage.noise-008.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-008.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0078.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0078.json"
+      "from": "transfer_coverage.noise-009.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-009.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0079.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0079.json"
+      "from": "transfer_coverage.noise-010.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-010.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0080.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0080.json"
+      "from": "transfer_coverage.noise-011.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-011.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0081.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0081.json"
+      "from": "transfer_coverage.noise-012.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-012.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0082.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0082.json"
+      "from": "transfer_coverage.noise-013.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-013.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0083.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0083.json"
+      "from": "transfer_coverage.noise-014.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-014.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0084.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0084.json"
+      "from": "transfer_coverage.noise-015.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-015.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0085.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0085.json"
+      "from": "transfer_coverage.noise-016.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-016.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0086.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0086.json"
+      "from": "transfer_coverage.noise-017.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-017.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0087.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0087.json"
+      "from": "transfer_coverage.noise-018.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-018.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0088.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0088.json"
+      "from": "transfer_coverage.noise-019.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-019.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0089.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0089.json"
+      "from": "transfer_coverage.noise-020.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-020.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0090.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0090.json"
+      "from": "transfer_coverage.noise-021.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-021.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0091.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0091.json"
+      "from": "transfer_coverage.noise-022.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-022.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0092.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.shard-0092.json"
+      "from": "transfer_coverage.noise-023.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-023.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-001.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-001.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-024.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-024.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-002.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-002.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-025.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-025.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-003.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-003.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-026.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-026.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-004.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-004.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-027.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-027.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-005.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-005.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-028.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-028.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-006.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-006.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-029.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-029.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-007.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-007.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-030.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-030.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-008.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-008.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-031.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-031.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-009.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-009.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-032.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-032.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-010.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-010.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-033.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-033.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-011.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-011.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-034.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-034.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-012.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-012.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-035.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-035.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-013.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-013.json"
+      "from": "transfer_coverage.noise-036.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-036.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-014.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-014.json"
+      "from": "transfer_coverage.noise-037.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-037.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-015.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-015.json"
+      "from": "transfer_coverage.noise-038.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-038.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-016.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-016.json"
+      "from": "transfer_coverage.noise-039.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-039.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-017.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-017.json"
+      "from": "transfer_coverage.noise-040.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-040.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-018.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-018.json"
+      "from": "transfer_coverage.noise-041.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-041.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-019.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-019.json"
+      "from": "transfer_coverage.noise-042.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-042.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-020.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-020.json"
+      "from": "transfer_coverage.noise-043.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-043.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-021.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-021.json"
+      "from": "transfer_coverage.noise-044.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-044.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-022.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-022.json"
+      "from": "transfer_coverage.noise-045.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-045.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.wave-023.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.wave-023.json"
+      "from": "transfer_coverage.noise-046.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-046.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.worklist.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_obligation_seed.worklist.json"
+      "from": "transfer_coverage.noise-047.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-047.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_seed_completeness_report.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-048.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-048.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.deferred.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.deferred.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-049.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-049.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-050.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-050.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.noise-001.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.noise-001.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-051.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-051.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.pass-001.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.pass-001.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-052.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-052.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.row_inventory.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.row_inventory.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-053.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-053.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-001.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-001.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-054.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-054.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-002.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-002.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-055.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-055.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-003.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-003.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-056.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-056.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-004.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-004.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-057.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-057.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-005.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-005.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-058.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-058.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-006.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-006.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-059.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-059.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-007.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-007.json.20260428T173017Z"
+      "from": "transfer_coverage.noise-060.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-060.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-008.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-008.json"
+      "from": "transfer_coverage.noise-061.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-061.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-009.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-009.json"
+      "from": "transfer_coverage.noise-062.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-062.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-010.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-010.json"
+      "from": "transfer_coverage.noise-063.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-063.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-011.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-011.json"
+      "from": "transfer_coverage.noise-064.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-064.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-012.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-012.json"
+      "from": "transfer_coverage.noise-065.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-065.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-013.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-013.json"
+      "from": "transfer_coverage.noise-066.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-066.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-014.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-014.json"
+      "from": "transfer_coverage.noise-067.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-067.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-015.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-015.json"
+      "from": "transfer_coverage.noise-068.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-068.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-016.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-016.json"
+      "from": "transfer_coverage.noise-069.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-069.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-017.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-017.json"
+      "from": "transfer_coverage.noise-070.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-070.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-018.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-018.json"
+      "from": "transfer_coverage.noise-071.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-071.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-019.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-019.json"
+      "from": "transfer_coverage.noise-072.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-072.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-020.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-020.json"
+      "from": "transfer_coverage.noise-073.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-073.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-021.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-021.json"
+      "from": "transfer_coverage.noise-074.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-074.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-022.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-022.json"
+      "from": "transfer_coverage.noise-075.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-075.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-023.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-023.json"
+      "from": "transfer_coverage.noise-076.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-076.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-024.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-024.json"
+      "from": "transfer_coverage.noise-077.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-077.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-025.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-025.json"
+      "from": "transfer_coverage.noise-078.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-078.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-026.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-026.json"
+      "from": "transfer_coverage.noise-079.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-079.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-027.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-027.json"
+      "from": "transfer_coverage.noise-080.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-080.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-028.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-028.json"
+      "from": "transfer_coverage.noise-081.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-081.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-029.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-029.json"
+      "from": "transfer_coverage.noise-082.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-082.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-030.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-030.json"
+      "from": "transfer_coverage.noise-083.json",
+      "to": "legacy_quarantine/transfer_coverage.noise-083.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-031.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-031.json"
+      "from": "transfer_coverage.pass-001.json",
+      "to": "legacy_quarantine/transfer_coverage.pass-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-032.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-032.json"
+      "from": "transfer_coverage.pass-002.json",
+      "to": "legacy_quarantine/transfer_coverage.pass-002.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-033.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-033.json"
+      "from": "transfer_coverage.pass-003.json",
+      "to": "legacy_quarantine/transfer_coverage.pass-003.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-034.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-034.json"
+      "from": "transfer_coverage.row_inventory.json",
+      "to": "legacy_quarantine/transfer_coverage.row_inventory.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-035.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-035.json"
+      "from": "transfer_coverage.wave-001.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-001.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-036.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-036.json"
+      "from": "transfer_coverage.wave-002.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-002.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-037.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-037.json"
+      "from": "transfer_coverage.wave-003.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-003.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-038.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-038.json"
+      "from": "transfer_coverage.wave-004.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-004.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-039.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-039.json"
+      "from": "transfer_coverage.wave-005.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-005.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-040.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-040.json"
+      "from": "transfer_coverage.wave-006.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-006.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-041.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-041.json"
+      "from": "transfer_coverage.wave-007.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-007.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-042.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-042.json"
+      "from": "transfer_coverage.wave-008.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-008.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-043.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-043.json"
+      "from": "transfer_coverage.wave-009.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-009.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-044.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-044.json"
+      "from": "transfer_coverage.wave-010.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-010.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-045.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-045.json"
+      "from": "transfer_coverage.wave-011.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-011.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-046.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-046.json"
+      "from": "transfer_coverage.wave-012.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-012.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-047.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-047.json"
+      "from": "transfer_coverage.wave-013.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-013.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-048.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-048.json"
+      "from": "transfer_coverage.wave-014.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-014.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-049.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-049.json"
+      "from": "transfer_coverage.wave-015.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-015.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-050.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-050.json"
+      "from": "transfer_coverage.wave-016.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-016.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-051.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-051.json"
+      "from": "transfer_coverage.wave-017.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-017.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-052.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-052.json"
+      "from": "transfer_coverage.wave-018.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-018.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-053.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-053.json"
+      "from": "transfer_coverage.wave-019.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-019.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-054.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-054.json"
+      "from": "transfer_coverage.wave-020.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-020.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-055.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-055.json"
+      "from": "transfer_coverage.wave-021.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-021.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-056.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-056.json"
+      "from": "transfer_coverage.wave-022.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-022.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-057.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-057.json"
+      "from": "transfer_coverage.wave-023.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-023.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-058.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-058.json"
+      "from": "transfer_coverage.wave-024.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-024.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-059.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-059.json"
+      "from": "transfer_coverage.wave-025.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-025.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-060.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-060.json"
+      "from": "transfer_coverage.wave-026.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-026.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-061.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-061.json"
+      "from": "transfer_coverage.wave-027.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-027.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-062.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-062.json"
+      "from": "transfer_coverage.wave-028.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-028.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-063.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-063.json"
+      "from": "transfer_coverage.wave-029.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-029.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-064.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-064.json"
+      "from": "transfer_coverage.wave-030.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-030.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-065.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-065.json"
+      "from": "transfer_coverage.wave-031.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-031.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-066.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-066.json"
+      "from": "transfer_coverage.wave-032.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-032.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-067.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-067.json"
+      "from": "transfer_coverage.wave-033.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-033.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-068.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-068.json"
+      "from": "transfer_coverage.wave-034.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-034.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-069.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-069.json"
+      "from": "transfer_coverage.wave-035.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-035.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-070.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-070.json"
+      "from": "transfer_coverage.wave-036.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-036.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-071.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-071.json"
+      "from": "transfer_coverage.wave-037.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-037.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-072.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-072.json"
+      "from": "transfer_coverage.wave-038.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-038.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-073.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-073.json"
+      "from": "transfer_coverage.wave-039.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-039.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-074.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-074.json"
+      "from": "transfer_coverage.wave-040.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-040.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-075.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-075.json"
+      "from": "transfer_coverage.wave-041.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-041.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-076.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-076.json"
+      "from": "transfer_coverage.wave-042.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-042.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-077.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-077.json"
+      "from": "transfer_coverage.wave-043.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-043.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-078.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-078.json"
+      "from": "transfer_coverage.wave-044.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-044.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-079.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-079.json"
+      "from": "transfer_coverage.wave-045.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-045.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-080.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-080.json"
+      "from": "transfer_coverage.wave-046.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-046.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-081.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-081.json"
+      "from": "transfer_coverage.wave-047.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-047.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-082.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-082.json"
+      "from": "transfer_coverage.wave-048.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-048.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-083.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-083.json"
+      "from": "transfer_coverage.wave-049.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-049.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-084.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-084.json"
+      "from": "transfer_coverage.wave-050.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-050.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-085.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-085.json"
+      "from": "transfer_coverage.wave-051.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-051.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-086.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-086.json"
+      "from": "transfer_coverage.wave-052.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-052.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-087.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-087.json"
+      "from": "transfer_coverage.wave-053.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-053.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-088.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-088.json"
+      "from": "transfer_coverage.wave-054.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-054.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-089.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-089.json"
+      "from": "transfer_coverage.wave-055.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-055.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-090.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-090.json"
+      "from": "transfer_coverage.wave-056.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-056.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-091.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-091.json"
+      "from": "transfer_coverage.wave-057.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-057.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-092.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-092.json"
+      "from": "transfer_coverage.wave-058.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-058.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-093.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-093.json"
+      "from": "transfer_coverage.wave-059.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-059.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-094.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-094.json"
+      "from": "transfer_coverage.wave-060.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-060.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-095.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-095.json"
+      "from": "transfer_coverage.wave-061.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-061.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-096.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-096.json"
+      "from": "transfer_coverage.wave-062.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-062.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-097.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-097.json"
+      "from": "transfer_coverage.wave-063.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-063.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-098.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-098.json"
+      "from": "transfer_coverage.wave-064.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-064.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-099.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-099.json"
+      "from": "transfer_coverage.wave-065.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-065.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-100.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-100.json"
+      "from": "transfer_coverage.wave-066.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-066.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-101.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-101.json"
+      "from": "transfer_coverage.wave-067.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-067.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-102.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-102.json"
+      "from": "transfer_coverage.wave-068.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-068.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-103.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-103.json"
+      "from": "transfer_coverage.wave-069.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-069.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-104.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-104.json"
+      "from": "transfer_coverage.wave-070.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-070.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-105.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-105.json"
+      "from": "transfer_coverage.wave-071.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-071.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-106.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-106.json"
+      "from": "transfer_coverage.wave-072.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-072.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-107.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-107.json"
+      "from": "transfer_coverage.wave-073.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-073.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-108.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-108.json"
+      "from": "transfer_coverage.wave-074.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-074.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-109.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-109.json"
+      "from": "transfer_coverage.wave-075.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-075.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-110.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-110.json"
+      "from": "transfer_coverage.wave-076.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-076.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-111.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-111.json"
+      "from": "transfer_coverage.wave-077.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-077.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-112.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-112.json"
+      "from": "transfer_coverage.wave-078.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-078.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-113.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-113.json"
+      "from": "transfer_coverage.wave-079.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-079.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-114.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-114.json"
+      "from": "transfer_coverage.wave-080.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-080.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-115.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-115.json"
+      "from": "transfer_coverage.wave-081.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-081.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-116.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-116.json"
+      "from": "transfer_coverage.wave-082.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-082.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-117.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-117.json"
+      "from": "transfer_coverage.wave-083.json",
+      "to": "legacy_quarantine/transfer_coverage.wave-083.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-118.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-118.json"
+      "from": "transfer_coverage.worklist.json",
+      "to": "legacy_quarantine/transfer_coverage.worklist.quarantine-20260429T155429Z.json"
     },
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-119.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-119.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-120.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-120.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-121.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-121.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-122.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-122.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-123.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-123.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-124.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-124.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-125.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-125.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-126.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-126.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-127.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-127.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-128.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-128.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-129.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-129.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-130.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-130.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-131.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-131.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-132.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-132.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-133.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-133.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-134.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-134.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-135.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-135.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-136.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-136.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-137.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-137.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-138.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-138.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-139.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-139.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-140.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-140.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-141.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-141.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-142.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-142.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-143.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-143.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-144.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-144.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-145.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-145.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-146.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-146.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-147.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-147.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-148.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-148.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-149.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-149.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-150.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-150.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-151.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-151.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-152.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-152.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-153.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-153.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-154.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-154.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-155.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-155.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-156.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-156.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-157.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-157.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-158.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-158.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-159.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-159.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-160.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-160.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-161.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-161.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-162.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-162.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.wave-163.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.wave-163.json"
-    },
-    {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.worklist.json",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/transfer_coverage.worklist.json"
+      "from": "transfer_coverage_source_coverage_report.json",
+      "to": "legacy_quarantine/transfer_coverage_source_coverage_report.quarantine-20260429T155429Z.json"
     }
   ],
   "directories_moved": [
     {
-      "from": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards",
-      "to": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/ledger_shards"
+      "from": "ledger_shards",
+      "to": "legacy_quarantine/ledger_shards.quarantine-20260429T155429Z"
     }
   ],
   "files_already_quarantined": [
@@ -1693,15 +1513,18 @@
     "canonical_obligations.20260422T214829Z.wave-001.json",
     "canonical_obligations.20260423T183434Z.json",
     "canonical_obligations.json",
+    "canonical_obligations.json.20260428T173017Z",
     "canonical_obligations.noise-001.001.json",
     "canonical_obligations.noise-001.20260423T183434Z.json",
     "canonical_obligations.noise-001.json",
+    "canonical_obligations.noise-001.json.20260428T173017Z",
     "canonical_obligations.noise-002.json",
     "canonical_obligations.noise-003.json",
     "canonical_obligations.pass-001.001.json",
     "canonical_obligations.pass-001.20260421T210130Z.json",
     "canonical_obligations.pass-001.20260423T183434Z.json",
     "canonical_obligations.pass-001.json",
+    "canonical_obligations.pass-001.json.20260428T173017Z",
     "canonical_obligations.pass-002.001.json",
     "canonical_obligations.pass-002.json",
     "canonical_obligations.pass-003.001.json",
@@ -1718,14 +1541,137 @@
     "canonical_obligations.wave-001.20260421T210130Z.json",
     "canonical_obligations.wave-001.20260423T183434Z.json",
     "canonical_obligations.wave-001.json",
+    "canonical_obligations.wave-001.json.20260428T173017Z",
     "canonical_obligations.wave-002.20260421T210130Z.json",
     "canonical_obligations.wave-002.json",
+    "canonical_obligations.wave-002.json.20260428T173017Z",
     "canonical_obligations.wave-003.20260421T210130Z.json",
     "canonical_obligations.wave-003.json",
+    "canonical_obligations.wave-003.json.20260428T173017Z",
     "canonical_obligations.wave-004.json",
+    "canonical_obligations.wave-004.json.20260428T173017Z",
+    "canonical_obligations.wave-005.json",
+    "canonical_obligations.wave-006.json",
+    "canonical_obligations.wave-007.json",
+    "canonical_obligations.wave-008.json",
+    "canonical_obligations.wave-009.json",
+    "canonical_obligations.wave-010.json",
+    "canonical_obligations.wave-011.json",
+    "canonical_obligations.wave-012.json",
+    "canonical_obligations.wave-013.json",
+    "canonical_obligations.wave-014.json",
+    "canonical_obligations.wave-015.json",
+    "canonical_obligations.wave-016.json",
+    "canonical_obligations.wave-017.json",
+    "canonical_obligations.wave-018.json",
+    "canonical_obligations.wave-019.json",
+    "canonical_obligations.wave-020.json",
+    "canonical_obligations.wave-021.json",
+    "canonical_obligations.wave-022.json",
+    "canonical_obligations.wave-023.json",
+    "canonical_obligations.wave-024.json",
+    "canonical_obligations.wave-025.json",
+    "canonical_obligations.wave-026.json",
+    "canonical_obligations.wave-027.json",
+    "canonical_obligations.wave-028.json",
+    "canonical_obligations.wave-029.json",
+    "canonical_obligations.wave-030.json",
+    "canonical_obligations.wave-031.json",
+    "canonical_obligations.wave-032.json",
+    "canonical_obligations.wave-033.json",
+    "canonical_obligations.wave-034.json",
+    "canonical_obligations.wave-035.json",
+    "canonical_obligations.wave-036.json",
+    "canonical_obligations.wave-037.json",
+    "canonical_obligations.wave-038.json",
+    "canonical_obligations.wave-039.json",
+    "canonical_obligations.wave-040.json",
+    "canonical_obligations.wave-041.json",
+    "canonical_obligations.wave-042.json",
+    "canonical_obligations.wave-043.json",
+    "canonical_obligations.wave-044.json",
+    "canonical_obligations.wave-045.json",
+    "canonical_obligations.wave-046.json",
+    "canonical_obligations.wave-047.json",
+    "canonical_obligations.wave-048.json",
+    "canonical_obligations.wave-049.json",
+    "canonical_obligations.wave-050.json",
+    "canonical_obligations.wave-051.json",
+    "canonical_obligations.wave-052.json",
+    "canonical_obligations.wave-053.json",
+    "canonical_obligations.wave-054.json",
+    "canonical_obligations.wave-055.json",
+    "canonical_obligations.wave-056.json",
+    "canonical_obligations.wave-057.json",
+    "canonical_obligations.wave-058.json",
+    "canonical_obligations.wave-059.json",
+    "canonical_obligations.wave-060.json",
+    "canonical_obligations.wave-061.json",
+    "canonical_obligations.wave-062.json",
+    "canonical_obligations.wave-063.json",
+    "canonical_obligations.wave-064.json",
+    "canonical_obligations.wave-065.json",
+    "canonical_obligations.wave-066.json",
+    "canonical_obligations.wave-067.json",
+    "canonical_obligations.wave-068.json",
+    "canonical_obligations.wave-069.json",
+    "canonical_obligations.wave-070.json",
+    "canonical_obligations.wave-071.json",
+    "canonical_obligations.wave-072.json",
+    "canonical_obligations.wave-073.json",
+    "canonical_obligations.wave-074.json",
+    "canonical_obligations.wave-075.json",
+    "canonical_obligations.wave-076.json",
+    "canonical_obligations.wave-077.json",
+    "canonical_obligations.wave-078.json",
+    "canonical_obligations.wave-079.json",
+    "canonical_obligations.wave-080.json",
+    "canonical_obligations.wave-081.json",
+    "canonical_obligations.wave-082.json",
+    "canonical_obligations.wave-083.json",
+    "canonical_obligations.wave-084.json",
+    "canonical_obligations.wave-085.json",
+    "canonical_obligations.wave-086.json",
+    "canonical_obligations.wave-087.json",
+    "canonical_obligations.wave-088.json",
+    "canonical_obligations.wave-089.json",
+    "canonical_obligations.wave-090.json",
+    "canonical_obligations.wave-091.json",
+    "canonical_obligations.wave-092.json",
+    "canonical_obligations.wave-093.json",
+    "canonical_obligations.wave-094.json",
+    "canonical_obligations.wave-095.json",
+    "canonical_obligations.wave-096.json",
+    "canonical_obligations.wave-097.json",
+    "canonical_obligations.wave-098.json",
+    "canonical_obligations.wave-099.json",
+    "canonical_obligations.wave-100.json",
+    "canonical_obligations.wave-101.json",
+    "canonical_obligations.wave-102.json",
+    "canonical_obligations.wave-103.json",
+    "canonical_obligations.wave-104.json",
+    "canonical_obligations.wave-105.json",
+    "canonical_obligations.wave-106.json",
+    "canonical_obligations.wave-107.json",
+    "canonical_obligations.wave-108.json",
+    "canonical_obligations.wave-109.json",
+    "canonical_obligations.wave-110.json",
+    "canonical_obligations.wave-111.json",
+    "canonical_obligations.wave-112.json",
+    "canonical_obligations.wave-113.json",
+    "canonical_obligations.wave-114.json",
+    "canonical_obligations.wave-115.json",
+    "canonical_obligations.wave-116.json",
+    "canonical_obligations.wave-117.json",
+    "canonical_obligations.wave-118.json",
+    "canonical_obligations.wave-119.json",
+    "canonical_obligations.wave-120.json",
+    "canonical_obligations.wave-121.json",
+    "canonical_obligations.worklist.json",
     "canonical_obligations_source_coverage_report.001.json",
     "canonical_obligations_source_coverage_report.20260423T183434Z.json",
     "canonical_obligations_source_coverage_report.json",
+    "canonical_obligations_source_coverage_report.json.20260428T173017Z",
     "contractref_repair_report.json",
     "coverage_collection.json",
     "current_state.001.md",
@@ -1738,6 +1684,7 @@
     "current_state.20260422T214829Z.md",
     "current_state.20260423T183434Z.md",
     "current_state.md",
+    "current_state.md.20260428T173017Z",
     "doc_discovery_resolution.json",
     "doc_discovery_resolution.noise-001.json",
     "doc_discovery_resolution.pass-001.json",
@@ -1782,6 +1729,7 @@
     "ledger_obligation_seed.completeness-noise.20260421T210130Z.json",
     "ledger_obligation_seed.completeness-noise.20260423T183434Z.json",
     "ledger_obligation_seed.completeness-noise.json",
+    "ledger_obligation_seed.completeness-noise.json.20260428T173017Z",
     "ledger_obligation_seed.deferred-noise-001.001.json",
     "ledger_obligation_seed.deferred-noise-001.20260421T210130Z.json",
     "ledger_obligation_seed.deferred-noise-001.20260423T183434Z.json",
@@ -1812,11 +1760,14 @@
     "ledger_obligation_seed.finalizer-noise.20260421T210130Z.json",
     "ledger_obligation_seed.finalizer-noise.20260423T183434Z.json",
     "ledger_obligation_seed.finalizer-noise.json",
+    "ledger_obligation_seed.finalizer-noise.json.20260428T173017Z",
     "ledger_obligation_seed.json",
+    "ledger_obligation_seed.json.20260428T173017Z",
     "ledger_obligation_seed.noise-001.001.json",
     "ledger_obligation_seed.noise-001.20260421T210130Z.json",
     "ledger_obligation_seed.noise-001.20260423T183434Z.json",
     "ledger_obligation_seed.noise-001.json",
+    "ledger_obligation_seed.noise-001.json.20260428T173017Z",
     "ledger_obligation_seed.noise-002.001.json",
     "ledger_obligation_seed.noise-002.20260421T210130Z.json",
     "ledger_obligation_seed.noise-002.20260423T183434Z.json",
@@ -1830,6 +1781,7 @@
     "ledger_obligation_seed.pass-001.20260421T210130Z.json",
     "ledger_obligation_seed.pass-001.20260423T183434Z.json",
     "ledger_obligation_seed.pass-001.json",
+    "ledger_obligation_seed.pass-001.json.20260428T173017Z",
     "ledger_obligation_seed.pass-002.001.json",
     "ledger_obligation_seed.pass-002.20260421T162956.json",
     "ledger_obligation_seed.pass-002.20260421T210130Z.json",
@@ -1874,52 +1826,170 @@
     "ledger_obligation_seed.pass-035.json",
     "ledger_obligation_seed.pass-036.json",
     "ledger_obligation_seed.pass-037.json",
+    "ledger_obligation_seed.shard-0001.json",
+    "ledger_obligation_seed.shard-0002.json",
+    "ledger_obligation_seed.shard-0003.json",
+    "ledger_obligation_seed.shard-0004.json",
+    "ledger_obligation_seed.shard-0005.json",
+    "ledger_obligation_seed.shard-0006.json",
+    "ledger_obligation_seed.shard-0007.json",
+    "ledger_obligation_seed.shard-0008.json",
+    "ledger_obligation_seed.shard-0009.json",
+    "ledger_obligation_seed.shard-0010.json",
+    "ledger_obligation_seed.shard-0011.json",
+    "ledger_obligation_seed.shard-0012.json",
+    "ledger_obligation_seed.shard-0013.json",
+    "ledger_obligation_seed.shard-0014.json",
+    "ledger_obligation_seed.shard-0015.json",
+    "ledger_obligation_seed.shard-0016.json",
+    "ledger_obligation_seed.shard-0017.json",
+    "ledger_obligation_seed.shard-0018.json",
+    "ledger_obligation_seed.shard-0019.json",
+    "ledger_obligation_seed.shard-0020.json",
+    "ledger_obligation_seed.shard-0021.json",
+    "ledger_obligation_seed.shard-0022.json",
+    "ledger_obligation_seed.shard-0023.json",
+    "ledger_obligation_seed.shard-0024.json",
+    "ledger_obligation_seed.shard-0025.json",
+    "ledger_obligation_seed.shard-0026.json",
+    "ledger_obligation_seed.shard-0027.json",
+    "ledger_obligation_seed.shard-0028.json",
+    "ledger_obligation_seed.shard-0029.json",
+    "ledger_obligation_seed.shard-0030.json",
+    "ledger_obligation_seed.shard-0031.json",
+    "ledger_obligation_seed.shard-0032.json",
+    "ledger_obligation_seed.shard-0033.json",
+    "ledger_obligation_seed.shard-0034.json",
+    "ledger_obligation_seed.shard-0035.json",
+    "ledger_obligation_seed.shard-0036.json",
+    "ledger_obligation_seed.shard-0037.json",
+    "ledger_obligation_seed.shard-0038.json",
+    "ledger_obligation_seed.shard-0039.json",
+    "ledger_obligation_seed.shard-0040.json",
+    "ledger_obligation_seed.shard-0041.json",
+    "ledger_obligation_seed.shard-0042.json",
+    "ledger_obligation_seed.shard-0043.json",
+    "ledger_obligation_seed.shard-0044.json",
+    "ledger_obligation_seed.shard-0045.json",
+    "ledger_obligation_seed.shard-0046.json",
+    "ledger_obligation_seed.shard-0047.json",
+    "ledger_obligation_seed.shard-0048.json",
+    "ledger_obligation_seed.shard-0049.json",
+    "ledger_obligation_seed.shard-0050.json",
+    "ledger_obligation_seed.shard-0051.json",
+    "ledger_obligation_seed.shard-0052.json",
+    "ledger_obligation_seed.shard-0053.json",
+    "ledger_obligation_seed.shard-0054.json",
+    "ledger_obligation_seed.shard-0055.json",
+    "ledger_obligation_seed.shard-0056.json",
+    "ledger_obligation_seed.shard-0057.json",
+    "ledger_obligation_seed.shard-0058.json",
+    "ledger_obligation_seed.shard-0059.json",
+    "ledger_obligation_seed.shard-0060.json",
+    "ledger_obligation_seed.shard-0061.json",
+    "ledger_obligation_seed.shard-0062.json",
+    "ledger_obligation_seed.shard-0063.json",
+    "ledger_obligation_seed.shard-0064.json",
+    "ledger_obligation_seed.shard-0065.json",
+    "ledger_obligation_seed.shard-0066.json",
+    "ledger_obligation_seed.shard-0067.json",
+    "ledger_obligation_seed.shard-0068.json",
+    "ledger_obligation_seed.shard-0069.json",
+    "ledger_obligation_seed.shard-0070.json",
+    "ledger_obligation_seed.shard-0071.json",
+    "ledger_obligation_seed.shard-0072.json",
+    "ledger_obligation_seed.shard-0073.json",
+    "ledger_obligation_seed.shard-0074.json",
+    "ledger_obligation_seed.shard-0075.json",
+    "ledger_obligation_seed.shard-0076.json",
+    "ledger_obligation_seed.shard-0077.json",
+    "ledger_obligation_seed.shard-0078.json",
+    "ledger_obligation_seed.shard-0079.json",
+    "ledger_obligation_seed.shard-0080.json",
+    "ledger_obligation_seed.shard-0081.json",
+    "ledger_obligation_seed.shard-0082.json",
+    "ledger_obligation_seed.shard-0083.json",
+    "ledger_obligation_seed.shard-0084.json",
+    "ledger_obligation_seed.shard-0085.json",
+    "ledger_obligation_seed.shard-0086.json",
+    "ledger_obligation_seed.shard-0087.json",
+    "ledger_obligation_seed.shard-0088.json",
+    "ledger_obligation_seed.shard-0089.json",
+    "ledger_obligation_seed.shard-0090.json",
+    "ledger_obligation_seed.shard-0091.json",
+    "ledger_obligation_seed.shard-0092.json",
     "ledger_obligation_seed.wave-001.001.json",
     "ledger_obligation_seed.wave-001.20260421T162956.json",
     "ledger_obligation_seed.wave-001.20260421T210130Z.json",
     "ledger_obligation_seed.wave-001.20260423T183434Z.json",
     "ledger_obligation_seed.wave-001.json",
+    "ledger_obligation_seed.wave-001.json.20260428T173017Z",
     "ledger_obligation_seed.wave-002.001.json",
     "ledger_obligation_seed.wave-002.20260421T162956.json",
     "ledger_obligation_seed.wave-002.20260421T210130Z.json",
     "ledger_obligation_seed.wave-002.20260423T183434Z.json",
     "ledger_obligation_seed.wave-002.json",
+    "ledger_obligation_seed.wave-002.json.20260428T173017Z",
     "ledger_obligation_seed.wave-003.001.json",
     "ledger_obligation_seed.wave-003.20260421T162956.json",
     "ledger_obligation_seed.wave-003.20260421T210130Z.json",
     "ledger_obligation_seed.wave-003.20260423T183434Z.json",
     "ledger_obligation_seed.wave-003.json",
+    "ledger_obligation_seed.wave-003.json.20260428T173017Z",
     "ledger_obligation_seed.wave-004.001.json",
     "ledger_obligation_seed.wave-004.20260421T162956.json",
     "ledger_obligation_seed.wave-004.20260421T210130Z.json",
     "ledger_obligation_seed.wave-004.20260423T183434Z.json",
     "ledger_obligation_seed.wave-004.json",
+    "ledger_obligation_seed.wave-004.json.20260428T173017Z",
     "ledger_obligation_seed.wave-005.001.json",
     "ledger_obligation_seed.wave-005.20260421T162956.json",
     "ledger_obligation_seed.wave-005.20260421T210130Z.json",
     "ledger_obligation_seed.wave-005.20260423T183434Z.json",
     "ledger_obligation_seed.wave-005.json",
+    "ledger_obligation_seed.wave-005.json.20260428T173017Z",
     "ledger_obligation_seed.wave-006.20260421T162956.json",
     "ledger_obligation_seed.wave-006.20260421T210130Z.json",
     "ledger_obligation_seed.wave-006.20260423T183434Z.json",
     "ledger_obligation_seed.wave-006.json",
+    "ledger_obligation_seed.wave-006.json.20260428T173017Z",
     "ledger_obligation_seed.wave-007.20260421T162956.json",
     "ledger_obligation_seed.wave-007.json",
+    "ledger_obligation_seed.wave-007.json.20260428T173017Z",
     "ledger_obligation_seed.wave-008.20260421T162956.json",
     "ledger_obligation_seed.wave-008.json",
+    "ledger_obligation_seed.wave-008.json.20260428T173017Z",
     "ledger_obligation_seed.wave-009.20260421T162956.json",
     "ledger_obligation_seed.wave-009.json",
+    "ledger_obligation_seed.wave-009.json.20260428T173017Z",
     "ledger_obligation_seed.wave-010.20260421T162956.json",
     "ledger_obligation_seed.wave-010.json",
+    "ledger_obligation_seed.wave-010.json.20260428T173017Z",
     "ledger_obligation_seed.wave-011.20260421T162956.json",
     "ledger_obligation_seed.wave-011.json",
+    "ledger_obligation_seed.wave-011.json.20260428T173017Z",
     "ledger_obligation_seed.wave-012.20260421T162956.json",
     "ledger_obligation_seed.wave-012.json",
+    "ledger_obligation_seed.wave-012.json.20260428T173017Z",
+    "ledger_obligation_seed.wave-013.json",
+    "ledger_obligation_seed.wave-014.json",
+    "ledger_obligation_seed.wave-015.json",
+    "ledger_obligation_seed.wave-016.json",
+    "ledger_obligation_seed.wave-017.json",
+    "ledger_obligation_seed.wave-018.json",
+    "ledger_obligation_seed.wave-019.json",
+    "ledger_obligation_seed.wave-020.json",
+    "ledger_obligation_seed.wave-021.json",
+    "ledger_obligation_seed.wave-022.json",
+    "ledger_obligation_seed.wave-023.json",
+    "ledger_obligation_seed.worklist.json",
     "ledger_seed_completeness_report.001.json",
     "ledger_seed_completeness_report.20260421T210130Z.json",
     "ledger_seed_completeness_report.20260422T214829Z.json",
     "ledger_seed_completeness_report.20260423T183434Z.json",
     "ledger_seed_completeness_report.json",
+    "ledger_seed_completeness_report.json.20260428T173017Z",
+    "ledger_shards",
     "migration_report.md",
     "missing_transfer_report.md",
     "mode_rules.md",
@@ -1976,10 +2046,13 @@
     "transfer_coverage.001.json",
     "transfer_coverage.20260423T183434Z.json",
     "transfer_coverage.deferred.json",
+    "transfer_coverage.deferred.json.20260428T173017Z",
     "transfer_coverage.json",
+    "transfer_coverage.json.20260428T173017Z",
     "transfer_coverage.noise-001.001.json",
     "transfer_coverage.noise-001.20260423T183434Z.json",
     "transfer_coverage.noise-001.json",
+    "transfer_coverage.noise-001.json.20260428T173017Z",
     "transfer_coverage.noise-002.001.json",
     "transfer_coverage.noise-002.json",
     "transfer_coverage.noise-003.001.json",
@@ -1987,22 +2060,188 @@
     "transfer_coverage.pass-001.001.json",
     "transfer_coverage.pass-001.20260423T183434Z.json",
     "transfer_coverage.pass-001.json",
+    "transfer_coverage.pass-001.json.20260428T173017Z",
     "transfer_coverage.pass-002.001.json",
     "transfer_coverage.pass-002.json",
     "transfer_coverage.pass-003.001.json",
     "transfer_coverage.pass-003.json",
     "transfer_coverage.row_inventory.001.json",
     "transfer_coverage.row_inventory.json",
+    "transfer_coverage.row_inventory.json.20260428T173017Z",
     "transfer_coverage.wave-001.001.json",
     "transfer_coverage.wave-001.20260423T183434Z.json",
     "transfer_coverage.wave-001.json",
+    "transfer_coverage.wave-001.json.20260428T173017Z",
     "transfer_coverage.wave-002.001.json",
     "transfer_coverage.wave-002.json",
+    "transfer_coverage.wave-002.json.20260428T173017Z",
     "transfer_coverage.wave-003.json",
+    "transfer_coverage.wave-003.json.20260428T173017Z",
     "transfer_coverage.wave-004.json",
+    "transfer_coverage.wave-004.json.20260428T173017Z",
     "transfer_coverage.wave-005.json",
+    "transfer_coverage.wave-005.json.20260428T173017Z",
     "transfer_coverage.wave-006.json",
+    "transfer_coverage.wave-006.json.20260428T173017Z",
     "transfer_coverage.wave-007.json",
+    "transfer_coverage.wave-007.json.20260428T173017Z",
+    "transfer_coverage.wave-008.json",
+    "transfer_coverage.wave-009.json",
+    "transfer_coverage.wave-010.json",
+    "transfer_coverage.wave-011.json",
+    "transfer_coverage.wave-012.json",
+    "transfer_coverage.wave-013.json",
+    "transfer_coverage.wave-014.json",
+    "transfer_coverage.wave-015.json",
+    "transfer_coverage.wave-016.json",
+    "transfer_coverage.wave-017.json",
+    "transfer_coverage.wave-018.json",
+    "transfer_coverage.wave-019.json",
+    "transfer_coverage.wave-020.json",
+    "transfer_coverage.wave-021.json",
+    "transfer_coverage.wave-022.json",
+    "transfer_coverage.wave-023.json",
+    "transfer_coverage.wave-024.json",
+    "transfer_coverage.wave-025.json",
+    "transfer_coverage.wave-026.json",
+    "transfer_coverage.wave-027.json",
+    "transfer_coverage.wave-028.json",
+    "transfer_coverage.wave-029.json",
+    "transfer_coverage.wave-030.json",
+    "transfer_coverage.wave-031.json",
+    "transfer_coverage.wave-032.json",
+    "transfer_coverage.wave-033.json",
+    "transfer_coverage.wave-034.json",
+    "transfer_coverage.wave-035.json",
+    "transfer_coverage.wave-036.json",
+    "transfer_coverage.wave-037.json",
+    "transfer_coverage.wave-038.json",
+    "transfer_coverage.wave-039.json",
+    "transfer_coverage.wave-040.json",
+    "transfer_coverage.wave-041.json",
+    "transfer_coverage.wave-042.json",
+    "transfer_coverage.wave-043.json",
+    "transfer_coverage.wave-044.json",
+    "transfer_coverage.wave-045.json",
+    "transfer_coverage.wave-046.json",
+    "transfer_coverage.wave-047.json",
+    "transfer_coverage.wave-048.json",
+    "transfer_coverage.wave-049.json",
+    "transfer_coverage.wave-050.json",
+    "transfer_coverage.wave-051.json",
+    "transfer_coverage.wave-052.json",
+    "transfer_coverage.wave-053.json",
+    "transfer_coverage.wave-054.json",
+    "transfer_coverage.wave-055.json",
+    "transfer_coverage.wave-056.json",
+    "transfer_coverage.wave-057.json",
+    "transfer_coverage.wave-058.json",
+    "transfer_coverage.wave-059.json",
+    "transfer_coverage.wave-060.json",
+    "transfer_coverage.wave-061.json",
+    "transfer_coverage.wave-062.json",
+    "transfer_coverage.wave-063.json",
+    "transfer_coverage.wave-064.json",
+    "transfer_coverage.wave-065.json",
+    "transfer_coverage.wave-066.json",
+    "transfer_coverage.wave-067.json",
+    "transfer_coverage.wave-068.json",
+    "transfer_coverage.wave-069.json",
+    "transfer_coverage.wave-070.json",
+    "transfer_coverage.wave-071.json",
+    "transfer_coverage.wave-072.json",
+    "transfer_coverage.wave-073.json",
+    "transfer_coverage.wave-074.json",
+    "transfer_coverage.wave-075.json",
+    "transfer_coverage.wave-076.json",
+    "transfer_coverage.wave-077.json",
+    "transfer_coverage.wave-078.json",
+    "transfer_coverage.wave-079.json",
+    "transfer_coverage.wave-080.json",
+    "transfer_coverage.wave-081.json",
+    "transfer_coverage.wave-082.json",
+    "transfer_coverage.wave-083.json",
+    "transfer_coverage.wave-084.json",
+    "transfer_coverage.wave-085.json",
+    "transfer_coverage.wave-086.json",
+    "transfer_coverage.wave-087.json",
+    "transfer_coverage.wave-088.json",
+    "transfer_coverage.wave-089.json",
+    "transfer_coverage.wave-090.json",
+    "transfer_coverage.wave-091.json",
+    "transfer_coverage.wave-092.json",
+    "transfer_coverage.wave-093.json",
+    "transfer_coverage.wave-094.json",
+    "transfer_coverage.wave-095.json",
+    "transfer_coverage.wave-096.json",
+    "transfer_coverage.wave-097.json",
+    "transfer_coverage.wave-098.json",
+    "transfer_coverage.wave-099.json",
+    "transfer_coverage.wave-100.json",
+    "transfer_coverage.wave-101.json",
+    "transfer_coverage.wave-102.json",
+    "transfer_coverage.wave-103.json",
+    "transfer_coverage.wave-104.json",
+    "transfer_coverage.wave-105.json",
+    "transfer_coverage.wave-106.json",
+    "transfer_coverage.wave-107.json",
+    "transfer_coverage.wave-108.json",
+    "transfer_coverage.wave-109.json",
+    "transfer_coverage.wave-110.json",
+    "transfer_coverage.wave-111.json",
+    "transfer_coverage.wave-112.json",
+    "transfer_coverage.wave-113.json",
+    "transfer_coverage.wave-114.json",
+    "transfer_coverage.wave-115.json",
+    "transfer_coverage.wave-116.json",
+    "transfer_coverage.wave-117.json",
+    "transfer_coverage.wave-118.json",
+    "transfer_coverage.wave-119.json",
+    "transfer_coverage.wave-120.json",
+    "transfer_coverage.wave-121.json",
+    "transfer_coverage.wave-122.json",
+    "transfer_coverage.wave-123.json",
+    "transfer_coverage.wave-124.json",
+    "transfer_coverage.wave-125.json",
+    "transfer_coverage.wave-126.json",
+    "transfer_coverage.wave-127.json",
+    "transfer_coverage.wave-128.json",
+    "transfer_coverage.wave-129.json",
+    "transfer_coverage.wave-130.json",
+    "transfer_coverage.wave-131.json",
+    "transfer_coverage.wave-132.json",
+    "transfer_coverage.wave-133.json",
+    "transfer_coverage.wave-134.json",
+    "transfer_coverage.wave-135.json",
+    "transfer_coverage.wave-136.json",
+    "transfer_coverage.wave-137.json",
+    "transfer_coverage.wave-138.json",
+    "transfer_coverage.wave-139.json",
+    "transfer_coverage.wave-140.json",
+    "transfer_coverage.wave-141.json",
+    "transfer_coverage.wave-142.json",
+    "transfer_coverage.wave-143.json",
+    "transfer_coverage.wave-144.json",
+    "transfer_coverage.wave-145.json",
+    "transfer_coverage.wave-146.json",
+    "transfer_coverage.wave-147.json",
+    "transfer_coverage.wave-148.json",
+    "transfer_coverage.wave-149.json",
+    "transfer_coverage.wave-150.json",
+    "transfer_coverage.wave-151.json",
+    "transfer_coverage.wave-152.json",
+    "transfer_coverage.wave-153.json",
+    "transfer_coverage.wave-154.json",
+    "transfer_coverage.wave-155.json",
+    "transfer_coverage.wave-156.json",
+    "transfer_coverage.wave-157.json",
+    "transfer_coverage.wave-158.json",
+    "transfer_coverage.wave-159.json",
+    "transfer_coverage.wave-160.json",
+    "transfer_coverage.wave-161.json",
+    "transfer_coverage.wave-162.json",
+    "transfer_coverage.wave-163.json",
+    "transfer_coverage.worklist.json",
     "transfer_coverage_source_coverage_report.001.json",
     "transfer_coverage_source_coverage_report.json"
   ],
@@ -2012,30 +2251,5 @@
     "legacy_quarantine_manifest.json",
     "meta.json",
     "working_ledger.md"
-  ],
-  "classification_waves": {
-    "subagent_tasks": [
-      "legacy-batch-1",
-      "legacy-canonical-rest",
-      "legacy-seed-pattern",
-      "legacy-transfer-pattern",
-      "legacy-control-names"
-    ],
-    "assigned_input_boundaries": [
-      "36 explicit canonical_obligations names",
-      "canonical_obligations*.json remainder pattern group",
-      "ledger_obligation_seed*.json plus ledger_seed_completeness_report.json pattern group",
-      "transfer_coverage*.json pattern group",
-      "current_state.md, ledger_shards, legacy_quarantine, legacy_quarantine_manifest.json, meta.json, working_ledger.md"
-    ],
-    "subagent_result_status": {
-      "legacy-batch-1": "completed",
-      "legacy-canonical-rest": "completed",
-      "legacy-seed-pattern": "completed",
-      "legacy-transfer-pattern": "completed",
-      "legacy-control-names": "completed"
-    },
-    "completed_task_count": 5,
-    "failed_task_count": 0
-  }
+  ]
 }

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-439",
+  "group_ids": [
+    "discgrp-1753",
+    "discgrp-1754",
+    "discgrp-1755",
+    "discgrp-1756"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02010",
+      "source_obligation_ids": [
+        "obl-1867"
+      ],
+      "source_seed_ids": [
+        "seed-2406"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02011",
+      "source_obligation_ids": [
+        "obl-1868"
+      ],
+      "source_seed_ids": [
+        "seed-2407"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L43"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02012",
+      "source_obligation_ids": [
+        "obl-1869"
+      ],
+      "source_seed_ids": [
+        "seed-2408"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02013",
+      "source_obligation_ids": [
+        "obl-1870"
+      ],
+      "source_seed_ids": [
+        "seed-2409"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "## 1. Definitions",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Commands_System.md:L28"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

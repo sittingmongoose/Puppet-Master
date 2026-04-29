@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1147",
+  "group_ids": [
+    "discgrp-4585",
+    "discgrp-4586",
+    "discgrp-4587",
+    "discgrp-4588"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04983",
+      "source_obligation_ids": [
+        "obl-4759"
+      ],
+      "source_seed_ids": [
+        "seed-6856"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04984",
+      "source_obligation_ids": [
+        "obl-4760"
+      ],
+      "source_seed_ids": [
+        "seed-6857"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 2.3 redb: schema, migrations, key patterns",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L455"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04985",
+      "source_obligation_ids": [
+        "obl-4761"
+      ],
+      "source_seed_ids": [
+        "seed-6858"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "## 2. Canonical command IDs",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L64"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04986",
+      "source_obligation_ids": [
+        "obl-4762"
+      ],
+      "source_seed_ids": [
+        "seed-6859",
+        "seed-6888",
+        "seed-8103"
+      ],
+      "source_shard_ids": [
+        "shard-0066",
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

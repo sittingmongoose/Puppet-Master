@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1018",
+  "group_ids": [
+    "discgrp-4069",
+    "discgrp-4070",
+    "discgrp-4071",
+    "discgrp-4072"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04382",
+      "source_obligation_ids": [
+        "obl-4222"
+      ],
+      "source_seed_ids": [
+        "seed-5865"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/rewrite-tie-in-memo.md",
+      "new_heading_hint": "# Puppet Master Rewrite Tie-In Contract (Active)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04383",
+      "source_obligation_ids": [
+        "obl-4223"
+      ],
+      "source_seed_ids": [
+        "seed-5866"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-018: Export taxonomy and manifest contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/storage-plan.md:L31"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04384",
+      "source_obligation_ids": [
+        "obl-4224"
+      ],
+      "source_seed_ids": [
+        "seed-5867"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-039: Focused run and historical routing contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/storage-plan.md:L67"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04385",
+      "source_obligation_ids": [
+        "obl-4225"
+      ],
+      "source_seed_ids": [
+        "seed-5876"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## 4. Navigation Architecture",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L452"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

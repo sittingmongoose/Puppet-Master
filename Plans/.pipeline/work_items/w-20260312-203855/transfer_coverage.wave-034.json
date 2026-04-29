@@ -1,197 +1,1152 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-034",
-  "timestamp_utc": "2026-04-28T20:45:59Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-133",
-    "coverage-rowgrp-134",
-    "coverage-rowgrp-135",
-    "coverage-rowgrp-136"
+  "row_group_ids": [
+    "rowgrp-0133",
+    "rowgrp-0134",
+    "rowgrp-0135",
+    "rowgrp-0136"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-133 cov-197,cov-434,cov-478,cov-584 Plans/Permissions_System.md",
-    "rowgrp-134 cov-591 Plans/Permissions_System.md",
-    "rowgrp-135 cov-069 Plans/Permissions_System.md",
-    "rowgrp-136 cov-520 Plans/Permissions_System.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-133": "completed_reduced_conservatively_with_schema_normalization",
-    "coverage-rowgrp-134": "completed_reduced_conservatively_with_schema_normalization",
-    "coverage-rowgrp-135": "completed_reduced_conservatively_with_schema_normalization",
-    "coverage-rowgrp-136": "completed_reduced_conservatively_with_schema_normalization"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-197",
-    "cov-434",
-    "cov-478",
-    "cov-584",
-    "cov-591",
-    "cov-069",
-    "cov-520"
-  ],
-  "coverage_ids_completed": [
-    "cov-197",
-    "cov-434",
-    "cov-478",
-    "cov-584",
-    "cov-591",
-    "cov-069",
-    "cov-520"
-  ],
-  "path_groups_assigned": [
-    "Plans/Permissions_System.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-197",
-      "status": "present",
-      "evidence": [
-        "Plans/Permissions_System.md:187-203 defines execution_entity_id, account_id, permission_scope, approval_carryover_scope, and multi-lane/account-aware permission resolution and approval carryover",
-        "Plans/Permissions_System.md:480-506 requires approval_scope_key, blocked_sequence, execution_entity_id, lane_id, package_id, account_id, lane/package/account scope, and ordered allowed_action_ids[]",
-        "Plans/Permissions_System.md:849 binds Always approval reuse to exact approval_scope_key or durable rule creation and forbids blind session-wide allow",
-        "Plans/Permissions_System.md:1007 reuses approval only while approval_scope_key, approval_target_ref, and runtime identity context match"
-      ],
-      "required_action": "none",
-      "unresolved_reason": "",
+      "coverage_id": "cov-00839",
       "source_obligation_ids": [
-        "obl-052"
+        "obl-696"
       ],
       "source_seed_ids": [
-        "seed-052"
+        "seed-796"
       ],
       "source_shard_ids": [
-        "shard-0006"
+        "shard-0016"
       ],
-      "path_field_status": "match"
+      "canon_label": "evidence/source refs:",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "evidence/source refs:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L52",
+        "Plans/Contracts_V0.md:L56",
+        "Plans/Contracts_V0.md:L296"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-434",
-      "status": "partial",
-      "evidence": [
-        "Plans/Permissions_System.md:51-60 adds requested/effective account identity carry-through and approval_scope_key across actor/lane/run/account context",
-        "Plans/Permissions_System.md:175-203 defines lane/package/account permission scopes and multi-lane/account-aware approval carryover"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Requested/effective identity and lane/account scope are present, but concern/corroboration/promotion authority rules and scheduler-lane invariants are not direct in Permissions_System.",
+      "coverage_id": "cov-00840",
       "source_obligation_ids": [
-        "obl-126"
+        "obl-697"
       ],
       "source_seed_ids": [
-        "seed-126"
+        "seed-797",
+        "seed-977",
+        "seed-1604",
+        "seed-2180"
       ],
       "source_shard_ids": [
+        "shard-0016",
+        "shard-0018",
+        "shard-0025",
+        "shard-0030"
+      ],
+      "canon_label": "`source_refs[]`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`source_refs[]`",
+        "source_refs[]"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L52",
+        "Plans/Contracts_V0.md:L56",
+        "Plans/Contracts_V0.md:L296"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00841",
+      "source_obligation_ids": [
+        "obl-698"
+      ],
+      "source_seed_ids": [
+        "seed-798",
+        "seed-979",
+        "seed-2181"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0018",
+        "shard-0030"
+      ],
+      "canon_label": "`evidence_refs[]`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`evidence_refs[]`",
+        "evidence_refs[]"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L39",
+        "Plans/Contracts_V0.md:L43",
+        "Plans/Contracts_V0.md:L261"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00842",
+      "source_obligation_ids": [
+        "obl-699"
+      ],
+      "source_seed_ids": [
+        "seed-799",
+        "seed-978",
+        "seed-1605"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0018",
+        "shard-0025"
+      ],
+      "canon_label": "`artifact_refs[]`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`artifact_refs[]`",
+        "artifact_refs[]"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L560"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00844",
+      "source_obligation_ids": [
+        "obl-701"
+      ],
+      "source_seed_ids": [
+        "seed-801"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "`corroboration_refs[]`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`corroboration_refs[]`",
+        "corroboration_refs[]"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L87",
+        "Plans/Contracts_V0.md:L91",
+        "Plans/Contracts_V0.md:L301"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00845",
+      "source_obligation_ids": [
+        "obl-702"
+      ],
+      "source_seed_ids": [
+        "seed-802"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "`graph_patch_refs[]`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`graph_patch_refs[]`",
+        "graph_patch_refs[]"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L87",
+        "Plans/Contracts_V0.md:L91",
+        "Plans/Contracts_V0.md:L301"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00846",
+      "source_obligation_ids": [
+        "obl-703"
+      ],
+      "source_seed_ids": [
+        "seed-803"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "`recovery_refs[]`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`recovery_refs[]`",
+        "recovery_refs[]"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L87",
+        "Plans/Contracts_V0.md:L91",
+        "Plans/Contracts_V0.md:L301"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00847",
+      "source_obligation_ids": [
+        "obl-704"
+      ],
+      "source_seed_ids": [
+        "seed-804"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "`parent_concern_id?`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`parent_concern_id?`",
+        "parent_concern_id?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00848",
+      "source_obligation_ids": [
+        "obl-705"
+      ],
+      "source_seed_ids": [
+        "seed-805"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "`superseded_by_concern_id?`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`superseded_by_concern_id?`",
+        "superseded_by_concern_id?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00849",
+      "source_obligation_ids": [
+        "obl-706"
+      ],
+      "source_seed_ids": [
+        "seed-806"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "`merged_into_concern_id?`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`merged_into_concern_id?`",
+        "merged_into_concern_id?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00850",
+      "source_obligation_ids": [
+        "obl-707"
+      ],
+      "source_seed_ids": [
+        "seed-807"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "`split_from_concern_id?`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`split_from_concern_id?`",
+        "split_from_concern_id?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00852",
+      "source_obligation_ids": [
+        "obl-709"
+      ],
+      "source_seed_ids": [
+        "seed-809"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "`visibility_level`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`visibility_level`",
+        "visibility_level"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L203",
+        "Plans/Contracts_V0.md:L207",
+        "Plans/Contracts_V0.md:L309"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00853",
+      "source_obligation_ids": [
+        "obl-710"
+      ],
+      "source_seed_ids": [
+        "seed-810"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "`attention_level`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`attention_level`",
+        "attention_level"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L203",
+        "Plans/Contracts_V0.md:L207",
+        "Plans/Contracts_V0.md:L309"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00854",
+      "source_obligation_ids": [
+        "obl-711"
+      ],
+      "source_seed_ids": [
+        "seed-811"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "`chatworthy`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`chatworthy`",
+        "chatworthy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L203",
+        "Plans/Contracts_V0.md:L207",
+        "Plans/Contracts_V0.md:L309"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00855",
+      "source_obligation_ids": [
+        "obl-712"
+      ],
+      "source_seed_ids": [
+        "seed-812"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "`blocking_effect?`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`blocking_effect?`",
+        "blocking_effect?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L203",
+        "Plans/Contracts_V0.md:L207",
+        "Plans/Contracts_V0.md:L309"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00856",
+      "source_obligation_ids": [
+        "obl-713"
+      ],
+      "source_seed_ids": [
+        "seed-813"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "Good category set likely needs to align with weak-integration groupings plus runtime/gover",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-036: Promotion classes and gate evidence",
+      "status": "partial",
+      "exact_items": [
+        "Good category set likely needs to align with weak-integration groupings plus runtime/governance classes:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L95",
+        "Plans/Contracts_V0.md:L102"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00859",
+      "source_obligation_ids": [
+        "obl-716"
+      ],
+      "source_seed_ids": [
+        "seed-816"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "`state_contract`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`state_contract`",
+        "state_contract"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00861",
+      "source_obligation_ids": [
+        "obl-718"
+      ],
+      "source_seed_ids": [
+        "seed-818"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "`design_architecture`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`design_architecture`",
+        "design_architecture"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00863",
+      "source_obligation_ids": [
+        "obl-720"
+      ],
+      "source_seed_ids": [
+        "seed-820"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "`evidence_gap`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`evidence_gap`",
+        "evidence_gap"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00865",
+      "source_obligation_ids": [
+        "obl-722"
+      ],
+      "source_seed_ids": [
+        "seed-822"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "`recovery`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## Fidelity recovery addendum",
+      "status": "present",
+      "exact_items": [
+        "`recovery`",
+        "recovery"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L3",
+        "Plans/Contracts_V0.md:L5",
+        "Plans/Contracts_V0.md:L7",
+        "Plans/Contracts_V0.md:L14",
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00866",
+      "source_obligation_ids": [
+        "obl-723"
+      ],
+      "source_seed_ids": [
+        "seed-823"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "`account_usage_pressure`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`account_usage_pressure`",
+        "account_usage_pressure"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00868",
+      "source_obligation_ids": [
+        "obl-725"
+      ],
+      "source_seed_ids": [
+        "seed-825"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "Severity should probably stay independent from blocking semantics:",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Blocking payload rule",
+      "status": "partial",
+      "exact_items": [
+        "Severity should probably stay independent from blocking semantics:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1459"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00869",
+      "source_obligation_ids": [
+        "obl-726"
+      ],
+      "source_seed_ids": [
+        "seed-827",
+        "seed-830",
+        "seed-2189"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0030"
+      ],
+      "canon_label": "`acknowledged`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`acknowledged`",
+        "acknowledged"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L63",
+        "Plans/Contracts_V0.md:L67",
+        "Plans/Contracts_V0.md:L76",
+        "Plans/Contracts_V0.md:L80",
+        "Plans/Contracts_V0.md:L123"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00870",
+      "source_obligation_ids": [
+        "obl-727"
+      ],
+      "source_seed_ids": [
+        "seed-828",
+        "seed-833",
+        "seed-2190"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0030"
+      ],
+      "canon_label": "`resolved`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "#### `remediation.resolved`",
+      "status": "present",
+      "exact_items": [
+        "`resolved`",
+        "resolved"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L63",
+        "Plans/Contracts_V0.md:L67",
+        "Plans/Contracts_V0.md:L76",
+        "Plans/Contracts_V0.md:L80",
+        "Plans/Contracts_V0.md:L112"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00873",
+      "source_obligation_ids": [
+        "obl-730"
+      ],
+      "source_seed_ids": [
+        "seed-834"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "should record `resolution_kind`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "status": "present",
+      "exact_items": [
+        "should record `resolution_kind`",
+        "resolution_kind"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L59",
+        "Plans/Contracts_V0.md:L64",
+        "Plans/Contracts_V0.md:L66",
+        "Plans/Contracts_V0.md:L68",
+        "Plans/Contracts_V0.md:L124"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00876",
+      "source_obligation_ids": [
+        "obl-733"
+      ],
+      "source_seed_ids": [
+        "seed-837",
+        "seed-2198"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
         "shard-0031"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-478",
-      "status": "partial",
-      "evidence": [
-        "Plans/Permissions_System.md:53-60 carries requested/effective account identity through bridged-provider and permission envelopes, moves OpenCode session IDs to provider-native correlation, and defines approval_scope_key across actor/lane/run/account context",
-        "Plans/Permissions_System.md:203 requires permission resolution and approval carryover to be multi-lane and account-aware rather than session-only",
-        "Plans/Permissions_System.md:849 forbids blind session-wide Always allows",
-        "Plans/Permissions_System.md:1007 invalidates approval reuse when scope, target, or runtime identity context drifts"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Bridged-provider/session-scope gaps are partly covered, but shared-runtime snapshot language, multi-account capability declarations, and durable switch notification/history semantics are not direct.",
-      "source_obligation_ids": [
-        "obl-139"
-      ],
-      "source_seed_ids": [
-        "seed-139"
-      ],
-      "source_shard_ids": [
-        "shard-0035"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-584",
+      "canon_label": "`accepted_risk`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
       "status": "present",
+      "exact_items": [
+        "`accepted_risk`",
+        "accepted_risk"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/Permissions_System.md:55-60 defines approval_scope_key across actor/lane/run/account context reused across permissions, HITL, doom-loop, and session approval caching",
-        "Plans/Permissions_System.md:203 requires permission resolution and approval carryover to be multi-lane and account-aware rather than session-only",
-        "Plans/Permissions_System.md:499 states approval scope must not silently become same-session if lanes are parallel",
-        "Plans/Permissions_System.md:821 ties deny cascade to exact approval_scope_key matches",
-        "Plans/Permissions_System.md:849 binds Always reuse to approval_scope_key or durable rules and forbids blind session-wide allow",
-        "Plans/Permissions_System.md:1007 requires approval_scope_key, approval_target_ref, and runtime identity context to still match for reuse"
+        "Plans/Contracts_V0.md:L64",
+        "Plans/Contracts_V0.md:L68",
+        "Plans/Contracts_V0.md:L124",
+        "Plans/Contracts_V0.md:L128",
+        "Plans/Contracts_V0.md:L298"
       ],
-      "required_action": "none",
-      "unresolved_reason": "",
-      "source_obligation_ids": [
-        "obl-164"
-      ],
-      "source_seed_ids": [
-        "seed-164"
-      ],
-      "source_shard_ids": [
-        "shard-0041"
-      ],
-      "path_field_status": "match"
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-591",
+      "coverage_id": "cov-00877",
+      "source_obligation_ids": [
+        "obl-734"
+      ],
+      "source_seed_ids": [
+        "seed-839",
+        "seed-2200"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0031"
+      ],
+      "canon_label": "`merged`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`merged`",
+        "merged"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L64",
+        "Plans/Contracts_V0.md:L68",
+        "Plans/Contracts_V0.md:L298"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00878",
+      "source_obligation_ids": [
+        "obl-735"
+      ],
+      "source_seed_ids": [
+        "seed-840",
+        "seed-2201",
+        "seed-2209"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0031"
+      ],
+      "canon_label": "`split`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-175: Concern source-event vs record vs projection split",
+      "status": "present",
+      "exact_items": [
+        "`split`",
+        "split"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L64",
+        "Plans/Contracts_V0.md:L68",
+        "Plans/Contracts_V0.md:L143",
+        "Plans/Contracts_V0.md:L149",
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00879",
+      "source_obligation_ids": [
+        "obl-736"
+      ],
+      "source_seed_ids": [
+        "seed-841",
+        "seed-2202"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0031"
+      ],
+      "canon_label": "`invalidated`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`invalidated`",
+        "invalidated"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L64",
+        "Plans/Contracts_V0.md:L68",
+        "Plans/Contracts_V0.md:L298"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00880",
+      "source_obligation_ids": [
+        "obl-737"
+      ],
+      "source_seed_ids": [
+        "seed-842",
+        "seed-2203"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0031"
+      ],
+      "canon_label": "`obsoleted_by_patch`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`obsoleted_by_patch`",
+        "obsoleted_by_patch"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L64",
+        "Plans/Contracts_V0.md:L68",
+        "Plans/Contracts_V0.md:L298"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00881",
+      "source_obligation_ids": [
+        "obl-738"
+      ],
+      "source_seed_ids": [
+        "seed-843",
+        "seed-2204"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0031"
+      ],
+      "canon_label": "`obsoleted_by_recovery`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`obsoleted_by_recovery`",
+        "obsoleted_by_recovery"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L64",
+        "Plans/Contracts_V0.md:L68",
+        "Plans/Contracts_V0.md:L298"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00884",
+      "source_obligation_ids": [
+        "obl-741"
+      ],
+      "source_seed_ids": [
+        "seed-846"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "append sources/evidence",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "# Contracts V0 (Canonical)",
       "status": "partial",
+      "exact_items": [
+        "append sources/evidence"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/Permissions_System.md:53 carries requested/effective account identity through runtime, bridged-provider, and permission envelopes",
-        "Plans/Permissions_System.md:375-385 defines a non-bypassable remote-side-effect approval guard",
-        "Plans/Permissions_System.md:480-506 requires approval_scope_key, blocked_sequence, execution_entity_id, lane_id, package_id, account_id, and lane/package/account scope",
-        "Plans/Permissions_System.md:798 requires operational permission outcomes to be written to seglog",
-        "Plans/Permissions_System.md:835 requires deterministic permission resolution"
+        "Plans/Contracts_V0.md:L1"
       ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Correlation/account/scope metadata and remote side-effect controls are present, but A2A category growth and rich requested/effective permission snapshots are incomplete.",
-      "source_obligation_ids": [
-        "obl-166"
-      ],
-      "source_seed_ids": [
-        "seed-166"
-      ],
-      "source_shard_ids": [
-        "shard-0041"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-069",
-      "status": "missing",
-      "evidence": [],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Plans/Permissions_System.md does not contain TierContext, TierType, active-agents.json, Phase/Task/Subtask/Iteration, or Tiers tab supersession hotspot text.",
+      "coverage_id": "cov-00885",
       "source_obligation_ids": [
-        "obl-029"
+        "obl-742"
       ],
       "source_seed_ids": [
-        "seed-029"
+        "seed-847"
       ],
       "source_shard_ids": [
-        "shard-0006"
+        "shard-0016"
       ],
-      "path_field_status": "match"
+      "canon_label": "mark older concern as `resolved` with `resolution_kind = superseded` or use explicit super",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-033: Concern linkage to adjacent families",
+      "status": "present",
+      "exact_items": [
+        "mark older concern as `resolved` with `resolution_kind = superseded` or use explicit supersession linkage",
+        "resolved",
+        "resolution_kind = superseded"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L63",
+        "Plans/Contracts_V0.md:L67",
+        "Plans/Contracts_V0.md:L76",
+        "Plans/Contracts_V0.md:L80",
+        "Plans/Contracts_V0.md:L112"
+      ],
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-520",
+      "coverage_id": "cov-00886",
+      "source_obligation_ids": [
+        "obl-743"
+      ],
+      "source_seed_ids": [
+        "seed-848"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "may nominate a concern or attach evidence to an existing concern",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
       "status": "partial",
-      "evidence": [
-        "Plans/Permissions_System.md:51-60 defines requested account fields, bridged-provider permission envelopes, provider-native OpenCode correlation, and approval_scope_key across actor/lane/run/account context",
-        "Plans/Permissions_System.md:203 requires permission resolution and approval carryover to be multi-lane and account-aware rather than session-only"
+      "exact_items": [
+        "may nominate a concern or attach evidence to an existing concern"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Bridged-provider identity/correlation coverage is partial; direct-provider comparison and CLI_Bridged_Providers normalized correlation inconsistency are not direct here.",
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L47",
+        "Plans/Contracts_V0.md:L54"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00887",
       "source_obligation_ids": [
-        "obl-149"
+        "obl-744"
       ],
       "source_seed_ids": [
-        "seed-149"
+        "seed-849"
       ],
       "source_shard_ids": [
-        "shard-0037"
+        "shard-0016"
       ],
-      "path_field_status": "match"
+      "canon_label": "should be able to turn a nominated concern into an accepted canonical concern",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "status": "partial",
+      "exact_items": [
+        "should be able to turn a nominated concern into an accepted canonical concern"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L47",
+        "Plans/Contracts_V0.md:L54"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00889",
+      "source_obligation_ids": [
+        "obl-746"
+      ],
+      "source_seed_ids": [
+        "seed-851"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "concern owner for follow-up",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "status": "partial",
+      "exact_items": [
+        "concern owner for follow-up"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L47",
+        "Plans/Contracts_V0.md:L54"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00890",
+      "source_obligation_ids": [
+        "obl-747"
+      ],
+      "source_seed_ids": [
+        "seed-852"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "Good owner kinds still look like:",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-023: Concern lifecycle and resolution kinds",
+      "status": "partial",
+      "exact_items": [
+        "Good owner kinds still look like:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L59",
+        "Plans/Contracts_V0.md:L66"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00891",
+      "source_obligation_ids": [
+        "obl-748"
+      ],
+      "source_seed_ids": [
+        "seed-853",
+        "seed-1323"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0022"
+      ],
+      "canon_label": "`Runtime`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "status": "present",
+      "exact_items": [
+        "`Runtime`",
+        "Runtime"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L25",
+        "Plans/Contracts_V0.md:L31",
+        "Plans/Contracts_V0.md:L35",
+        "Plans/Contracts_V0.md:L42",
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00896",
+      "source_obligation_ids": [
+        "obl-753"
+      ],
+      "source_seed_ids": [
+        "seed-858",
+        "seed-1328"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0022"
+      ],
+      "canon_label": "`Recovery`",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## Fidelity recovery addendum",
+      "status": "present",
+      "exact_items": [
+        "`Recovery`",
+        "Recovery"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L3",
+        "Plans/Contracts_V0.md:L5",
+        "Plans/Contracts_V0.md:L7",
+        "Plans/Contracts_V0.md:L14",
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00899",
+      "source_obligation_ids": [
+        "obl-756"
+      ],
+      "source_seed_ids": [
+        "seed-861"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "A concern should be allowed to change owner over time without changing identity.",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "status": "partial",
+      "exact_items": [
+        "A concern should be allowed to change owner over time without changing identity."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L47",
+        "Plans/Contracts_V0.md:L54"
+      ],
+      "required_action": "owner_create_or_rewrite"
     }
   ]
 }

@@ -1,5 +1,46 @@
 ## 2. Required artifact set (SSOT) — Project Plan Package
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0448
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - artifact previews should be demand-loaded, not pre-rendered for long lists
+  - Source Control and artifact navigation surfaces are showing a broader object-identity problem:
+  - The missing `attempt_id` in artifact surfaces is now a cross-surface correctness bug, not merely a future enhancement.
+  - attempt_id
+  - artifact identity still cannot satisfy adjacent attempt-native receipt/evidence pivots because the common ID set still omits `attempt_id`.
+  - Treat `[retired-token-1]` in artifact docs as legacy/decomposition wording unless a migration alias is explicitly needed.
+  - [retired-token-1]
+  - The docs clearly state that the post-pass artifact tree is the canonical final set, but they do not define a strong receipt/reference object that binds that finality to the sweep reports and later execution handoff.
+  - “not ready” no longer means “large conceptual uncertainty”; it now means “a small set of structural owner gaps plus some hard SSOT integrity failures”
+  - project artifact events are under-keyed relative to the canonical EventRecord envelope and still lack project/run/thread/wizard/account lineage.
+  - `preview_subject_id = doc:<document_id> | artifact:<artifact_id>`
+  - preview_subject_id = doc:<document_id> | artifact:<artifact_id>
+  - transient `generated://<artifact_id>` buffer / artifact viewer
+  - generated://<artifact_id>
+  - `preview_subject_id = doc:<document_id>` or `artifact:<artifact_id>`
+  - preview_subject_id = doc:<document_id>
+  - artifact:<artifact_id>
+  - subject-first preview identity is already present through `doc:<document_id>` and `artifact:<artifact_id>`
+  - doc:<document_id>
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 These are the **required artifacts** (staging paths in the user workspace) and **must be persisted canonically in seglog**:
 
 1) `.puppet-master/project/requirements.md`  

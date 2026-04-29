@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1378",
+  "group_ids": [
+    "discgrp-5509",
+    "discgrp-5510",
+    "discgrp-5511",
+    "discgrp-5512"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05967",
+      "source_obligation_ids": [
+        "obl-5739"
+      ],
+      "source_seed_ids": [
+        "seed-8527"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "### Canonical HITL request contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L81"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05968",
+      "source_obligation_ids": [
+        "obl-5740"
+      ],
+      "source_seed_ids": [
+        "seed-8536"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 4. Remediation lineage events",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1243"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05969",
+      "source_obligation_ids": [
+        "obl-5741"
+      ],
+      "source_seed_ids": [
+        "seed-8537",
+        "seed-8690"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0079"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05970",
+      "source_obligation_ids": [
+        "obl-5742"
+      ],
+      "source_seed_ids": [
+        "seed-8539",
+        "seed-9233"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/LSPSupport.md",
+      "new_heading_hint": "## Appendix: Implementation plan checklist (single ordered list for implementers)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/LSPSupport.md:L743"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

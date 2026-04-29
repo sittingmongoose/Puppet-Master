@@ -1,5 +1,51 @@
 # Wiring Matrix (Canonical)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0537
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Plans/UI_Command_Catalog.md`, `Plans/Wiring_Matrix.md`
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Wiring Matrix example/evidence strings also contain `cmd.*.json` filename fragments that can poison naive ID extraction separately from real command rows.
+  - cmd.*.json
+  - wildcard command-family requirements in Wiring Matrix still cannot be represented by `Wiring_Matrix.schema.json` as written.
+  - Wiring_Matrix.schema.json
+  - Research Progress - 2026-03-16 - Wiring matrix route/subject contract limits
+  - Decide whether the matrix remains strictly UI-element wiring plus a separate producer/consumer matrix, or whether the schema is intentionally widened to cover both.
+  - `GATE-010` claims the wiring matrix is “complete, valid, and testable,” but completeness is currently defined too narrowly for route/subject-aware navigation.
+  - GATE-010
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - wiring matrix owns UI element to command/handler binding only
+  - Research Progress - 2026-03-17 - Wiring, matrix, and evidence normalization limits
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Crosswalk.md
+  - Plans/Progression_Gates.md
+  - Plans/FileManager.md
+  - Plans/Project_Output_Artifacts.md
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 ## Fidelity recovery addendum
 
 This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.

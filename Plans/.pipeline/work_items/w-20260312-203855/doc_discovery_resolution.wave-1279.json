@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1279",
+  "group_ids": [
+    "discgrp-5113",
+    "discgrp-5114",
+    "discgrp-5115",
+    "discgrp-5116"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05522",
+      "source_obligation_ids": [
+        "obl-5294"
+      ],
+      "source_seed_ids": [
+        "seed-7870"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "### 3. Event ledger (existing concept, under Usage umbrella)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/usage-feature.md:L187"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05523",
+      "source_obligation_ids": [
+        "obl-5295"
+      ],
+      "source_seed_ids": [
+        "seed-7871"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-003 -- UI SSOT (no bespoke UI behavior)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L45"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05524",
+      "source_obligation_ids": [
+        "obl-5296"
+      ],
+      "source_seed_ids": [
+        "seed-7872"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Cross-surface runtime, concern, and route/open contracts",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L251"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05525",
+      "source_obligation_ids": [
+        "obl-5297"
+      ],
+      "source_seed_ids": [
+        "seed-7873"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/00-plans-index.md",
+      "new_heading_hint": "# Plans Index (authoritative map)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/00-plans-index.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

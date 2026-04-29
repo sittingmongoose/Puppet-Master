@@ -57,6 +57,32 @@ Rules:
 - disabled (requires API key or self-hosted URL)
 ### 11.2 Support-tier vocabulary
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0507
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - What should stay out of coarse destination vocabulary
+  - The canonical vocabulary is:
+  - `inspector_target` needs a controlled vocabulary.
+  - inspector_target
+  - The current high-value canonical vocabulary is:
+  - closed `tab_id` vocabulary
+  - tab_id
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 Support tiers are:
 - `native` - provider exposes the operation as a first-class path that PM can map directly.
 - `native (model)` - the selected model/provider already exposes the capability and PM reuses the same account/auth surface.

@@ -1,0 +1,123 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-048",
+  "timestamp_utc": "2026-04-28T21:13:08Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-189",
+    "coverage-rowgrp-190",
+    "coverage-rowgrp-191",
+    "coverage-rowgrp-192"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-189 cov-495 Plans/Runtime_Artifacts_Panel.md",
+    "rowgrp-190 cov-793 Plans/STATE_FILES.md",
+    "rowgrp-191 cov-1111 Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "rowgrp-192 cov-1184 Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-189": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-190": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-191": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-192": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-495",
+    "cov-793",
+    "cov-1111",
+    "cov-1184"
+  ],
+  "coverage_ids_completed": [
+    "cov-495",
+    "cov-793",
+    "cov-1111",
+    "cov-1184"
+  ],
+  "path_groups_assigned": [
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/STATE_FILES.md",
+    "Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-495",
+      "status": "partial",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:63-64 defines Runtime Artifacts persistence through seglog runtime_artifact.* and redb artifacts_index:v1:{project_id}",
+        "Plans/Runtime_Artifacts_Panel.md:71-73 lists run_id, attempt_id, and projection_freshness as required artifact fields",
+        "Plans/Runtime_Artifacts_Panel.md:124-127 uses attempt_id, provider_attempt_ref, usage_event_ref, and receipt refs as bridge fields and requires receipt linkage for runtime artifacts summarizing external operations",
+        "Plans/Runtime_Artifacts_Panel.md:168 requires export manifests with export_id, export_kind, project scope, included ids, and trust-state disclosure"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Direct coverage exists for run_id, project scope, attempt_id, thread_id, usage_event_ref, receipt linkage, and trust-state disclosure, but the file does not retire the full stale-token set including provider account snapshots, actor_kind, wizard/interview ids, usage_event_id, HITL commands, request_id, allowed_action_ids, or projection-trust wording.",
+      "source_obligation_ids": [
+        "obl-142"
+      ],
+      "source_seed_ids": [
+        "seed-142"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-793",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/STATE_FILES.md contains only general state-file and memory guidance; it does not cover CustomHeadlessTool stable identity, registry timing, permission semantics, or config-file ownership.",
+      "source_obligation_ids": [
+        "obl-220"
+      ],
+      "source_seed_ids": [
+        "seed-220"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1111",
+      "status": "partial",
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:37-43 lists project/session browser, assistant/chat, thread navigation, bottom-panel runtime surfaces, and attention center/action-needed surfaces",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:95-99 states chat thread navigation, thread/session browser boundaries, background blocked/running badges, attention surfaces, and restore-and-branch lineage rules"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "The file covers browser and attention surfaces at a high level, but does not directly resolve missing command rows, shell-surface ownership details, feature-list/newfeatures stale model conflicts, or Formatters_System central mutation/policy attribution under DAE.",
+      "source_obligation_ids": [
+        "obl-322"
+      ],
+      "source_seed_ids": [
+        "seed-322"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1184",
+      "status": "partial",
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:7-16 defines Section 15 as canonical owner for promoted feature requirements while storage, command, permission, and widget SSOTs remain owned by their canonical subsystem plans and reconciled to these requirements"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "The file states ownership boundaries and defers non-owned subsystem contracts to their SSOTs, but does not directly say the affected docs are mirrors/summaries or that mirrors update only after owner docs are reconciled.",
+      "source_obligation_ids": [
+        "obl-340"
+      ],
+      "source_seed_ids": [
+        "seed-340"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

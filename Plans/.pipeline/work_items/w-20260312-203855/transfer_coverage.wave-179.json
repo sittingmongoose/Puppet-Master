@@ -1,0 +1,1036 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-179",
+  "row_group_ids": [
+    "rowgrp-0713",
+    "rowgrp-0714",
+    "rowgrp-0715",
+    "rowgrp-0716"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-04912",
+      "source_obligation_ids": [
+        "obl-4688"
+      ],
+      "source_seed_ids": [
+        "seed-6746"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "`cmd.panel.switch` is the clearest pure shell command in the current catalog. It selects a",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`cmd.panel.switch` is the clearest pure shell command in the current catalog. It selects a side-panel destination. Its current optional `context` payload is the main drift risk because it makes a shell command look like an object-targeting navigation command.",
+        "cmd.panel.switch",
+        "context"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L85",
+        "Plans/UI_Command_Catalog.md:L100",
+        "Plans/UI_Command_Catalog.md:L103",
+        "Plans/UI_Command_Catalog.md:L113",
+        "Plans/UI_Command_Catalog.md:L125"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04932",
+      "source_obligation_ids": [
+        "obl-4708"
+      ],
+      "source_seed_ids": [
+        "seed-6780"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "The command/wiring system is biased toward stable user-facing command IDs with explicit su",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "## 2. Canonical command IDs",
+      "status": "partial",
+      "exact_items": [
+        "The command/wiring system is biased toward stable user-facing command IDs with explicit surface meaning."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L64"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04938",
+      "source_obligation_ids": [
+        "obl-4714"
+      ],
+      "source_seed_ids": [
+        "seed-6788"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "`UI_Wiring_Rules.md` and `Wiring_Matrix.md` reinforce the cost of over-expanding the publi",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "#### GitHub Actions command family",
+      "status": "present",
+      "exact_items": [
+        "`UI_Wiring_Rules.md` and `Wiring_Matrix.md` reinforce the cost of over-expanding the public command family: every stable command ID becomes part of handler coverage, dead-command detection, and gate expectations.",
+        "UI_Wiring_Rules.md",
+        "Wiring_Matrix.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L147",
+        "Plans/UI_Command_Catalog.md:L156",
+        "Plans/UI_Command_Catalog.md:L320",
+        "Plans/UI_Command_Catalog.md:L334",
+        "Plans/UI_Command_Catalog.md:L351"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04939",
+      "source_obligation_ids": [
+        "obl-4715"
+      ],
+      "source_seed_ids": [
+        "seed-6789"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "The catalog already contains a number of wrapper-style open/focus commands. Replacing them",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "#### Catalog lifecycle commands",
+      "status": "partial",
+      "exact_items": [
+        "The catalog already contains a number of wrapper-style open/focus commands. Replacing them quickly with public `cmd.nav.*` IDs would create churn without much user-facing clarity benefit.",
+        "cmd.nav.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L526"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04948",
+      "source_obligation_ids": [
+        "obl-4724"
+      ],
+      "source_seed_ids": [
+        "seed-6804"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "Add explicit wrapper/alias guidance so the wiring system can understand \u201cdifferent command",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Add explicit wrapper/alias guidance so the wiring system can understand \u201cdifferent command ID, same canonical route primitive\u201d without treating that as drift."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04958",
+      "source_obligation_ids": [
+        "obl-4734"
+      ],
+      "source_seed_ids": [
+        "seed-6820"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "stable command ID",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "stable command ID"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L436",
+        "Plans/UI_Command_Catalog.md:L580",
+        "Plans/UI_Command_Catalog.md:L586"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04967",
+      "source_obligation_ids": [
+        "obl-4743"
+      ],
+      "source_seed_ids": [
+        "seed-6836"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "stable wrapper command",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "stable wrapper command"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04998",
+      "source_obligation_ids": [
+        "obl-4774"
+      ],
+      "source_seed_ids": [
+        "seed-6874"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "It should NOT inline route payload shape, object kinds, or argument mapping rules into the",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "### Canonical route payload and route/open tail rules",
+      "status": "partial",
+      "exact_items": [
+        "It should NOT inline route payload shape, object kinds, or argument mapping rules into the command metadata. That would duplicate the route contract and turn the catalog into a second routing schema."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L95"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05002",
+      "source_obligation_ids": [
+        "obl-4778"
+      ],
+      "source_seed_ids": [
+        "seed-6884"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "`UI_Command_Catalog.md` currently carries command meaning in prose/tables only; it has no",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "`UI_Command_Catalog.md` currently carries command meaning in prose/tables only; it has no precise slot for wrapper-vs-alias classification.",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L15",
+        "Plans/UI_Command_Catalog.md:L34",
+        "Plans/UI_Command_Catalog.md:L36"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05030",
+      "source_obligation_ids": [
+        "obl-4806"
+      ],
+      "source_seed_ids": [
+        "seed-6920"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "keeps `OpenFile` as the path-based file-open contract reference point for UI command work",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "### 2.0 Command entry contract (doc-level)",
+      "status": "partial",
+      "exact_items": [
+        "keeps `OpenFile` as the path-based file-open contract reference point for UI command work",
+        "OpenFile"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L68"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05289",
+      "source_obligation_ids": [
+        "obl-5065"
+      ],
+      "source_seed_ids": [
+        "seed-7413"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "Tooling / command / UI owner gaps are still strong enough to justify later-model continuat",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Tooling / command / UI owner gaps are still strong enough to justify later-model continuation:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05290",
+      "source_obligation_ids": [
+        "obl-5066"
+      ],
+      "source_seed_ids": [
+        "seed-7414"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`GUI_Rebuild_Requirements_Checklist.md` still claims phantom command IDs, keeps superseded",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "### 2.6 Chat context usage commands",
+      "status": "present",
+      "exact_items": [
+        "`GUI_Rebuild_Requirements_Checklist.md` still claims phantom command IDs, keeps superseded chat usage commands, omits the `cmd.runtime.*` family entirely, and does not track degraded/projection-trust runtime surfaces.",
+        "GUI_Rebuild_Requirements_Checklist.md",
+        "cmd.runtime.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L690",
+        "Plans/UI_Command_Catalog.md:L694",
+        "Plans/UI_Command_Catalog.md:L695",
+        "Plans/UI_Command_Catalog.md:L696",
+        "Plans/UI_Command_Catalog.md:L697"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05297",
+      "source_obligation_ids": [
+        "obl-5073"
+      ],
+      "source_seed_ids": [
+        "seed-7421"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`Containers_Registry_and_Unraid.md` still has uncataloged command IDs, unresolved publish-",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "## 2. Canonical command IDs",
+      "status": "partial",
+      "exact_items": [
+        "`Containers_Registry_and_Unraid.md` still has uncataloged command IDs, unresolved publish-authority split, broken blocked-payload consistency, and unanchored publish-result lineage.",
+        "Containers_Registry_and_Unraid.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L64"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05488",
+      "source_obligation_ids": [
+        "obl-5260"
+      ],
+      "source_seed_ids": [
+        "seed-7812"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "`Plans/UI_Command_Catalog.md` is internally split:",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md` is internally split:",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L15",
+        "Plans/UI_Command_Catalog.md:L34",
+        "Plans/UI_Command_Catalog.md:L36"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05636",
+      "source_obligation_ids": [
+        "obl-5408"
+      ],
+      "source_seed_ids": [
+        "seed-8033"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "update `UICommand` boundary text so command IDs stay stable while route/open semantics liv",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "## 2. Canonical command IDs",
+      "status": "present",
+      "exact_items": [
+        "update `UICommand` boundary text so command IDs stay stable while route/open semantics live in Contracts",
+        "UICommand"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L52",
+        "Plans/UI_Command_Catalog.md:L60",
+        "Plans/UI_Command_Catalog.md:L169",
+        "Plans/UI_Command_Catalog.md:L180",
+        "Plans/UI_Command_Catalog.md:L182"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05640",
+      "source_obligation_ids": [
+        "obl-5412"
+      ],
+      "source_seed_ids": [
+        "seed-8037"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "Research Progress - 2026-03-17 - Command catalog and GUI-shell adoption points",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-17 - Command catalog and GUI-shell adoption points"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05641",
+      "source_obligation_ids": [
+        "obl-5413"
+      ],
+      "source_seed_ids": [
+        "seed-8040"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "`Plans/UI_Command_Catalog.md` is structurally ready for route/open adoption but still clas",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md` is structurally ready for route/open adoption but still classifies several routed object actions as pure layout state:",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L15",
+        "Plans/UI_Command_Catalog.md:L34",
+        "Plans/UI_Command_Catalog.md:L36"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05644",
+      "source_obligation_ids": [
+        "obl-5416"
+      ],
+      "source_seed_ids": [
+        "seed-8045"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "The catalog already has a stable command-entry contract and wiring hooks, so the missing p",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "### 2.0.1 Acceptance hooks contract (wiring verification)",
+      "status": "partial",
+      "exact_items": [
+        "The catalog already has a stable command-entry contract and wiring hooks, so the missing piece is command classification and normalization metadata, not a new catalog structure."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L146"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05651",
+      "source_obligation_ids": [
+        "obl-5423"
+      ],
+      "source_seed_ids": [
+        "seed-8054"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "The command catalog still uses `layout/UI state only` for actions that now have canonical",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "# UI Command Catalog (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "The command catalog still uses `layout/UI state only` for actions that now have canonical object routing meaning.",
+        "layout/UI state only"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L431",
+        "Plans/UI_Command_Catalog.md:L432",
+        "Plans/UI_Command_Catalog.md:L433",
+        "Plans/UI_Command_Catalog.md:L450",
+        "Plans/UI_Command_Catalog.md:L452"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05657",
+      "source_obligation_ids": [
+        "obl-5429"
+      ],
+      "source_seed_ids": [
+        "seed-8060"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "In `Plans/UI_Command_Catalog.md`:",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "In `Plans/UI_Command_Catalog.md`:",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L15",
+        "Plans/UI_Command_Catalog.md:L34",
+        "Plans/UI_Command_Catalog.md:L36"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06004",
+      "source_obligation_ids": [
+        "obl-5776"
+      ],
+      "source_seed_ids": [
+        "seed-8596"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "`Plans/UI_Command_Catalog.md` already says:",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md` already says:",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L15",
+        "Plans/UI_Command_Catalog.md:L34",
+        "Plans/UI_Command_Catalog.md:L36"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06046",
+      "source_obligation_ids": [
+        "obl-5818"
+      ],
+      "source_seed_ids": [
+        "seed-8649"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "`Plans/UI_Command_Catalog.md` says:",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md` says:",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L15",
+        "Plans/UI_Command_Catalog.md:L34",
+        "Plans/UI_Command_Catalog.md:L36"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06749",
+      "source_obligation_ids": [
+        "obl-6386"
+      ],
+      "source_seed_ids": [
+        "seed-9750"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Comma",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L15",
+        "Plans/UI_Command_Catalog.md:L34",
+        "Plans/UI_Command_Catalog.md:L36",
+        "Plans/UI_Command_Catalog.md:L38",
+        "Plans/UI_Command_Catalog.md:L93"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06828",
+      "source_obligation_ids": [
+        "obl-6442"
+      ],
+      "source_seed_ids": [
+        "seed-9821"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Cr",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Crosswalk.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md",
+        "Plans/FileManager.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L15",
+        "Plans/UI_Command_Catalog.md:L34",
+        "Plans/UI_Command_Catalog.md:L36",
+        "Plans/UI_Command_Catalog.md:L38",
+        "Plans/UI_Command_Catalog.md:L93"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06867",
+      "source_obligation_ids": [
+        "obl-6470"
+      ],
+      "source_seed_ids": [
+        "seed-9849"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "6. `Plans/UI_Command_Catalog.md`",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "6. `Plans/UI_Command_Catalog.md`",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L15",
+        "Plans/UI_Command_Catalog.md:L34",
+        "Plans/UI_Command_Catalog.md:L36"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06899",
+      "source_obligation_ids": [
+        "obl-6501"
+      ],
+      "source_seed_ids": [
+        "seed-9884"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/UI_Command_Catalog.md` already has a real command-normalization owner block, but `c",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md` already has a real command-normalization owner block, but `cmd.search.open_result` and `cmd.search.replace_selected` still preserve `result_id`.",
+        "Plans/UI_Command_Catalog.md",
+        "cmd.search.open_result",
+        "cmd.search.replace_selected",
+        "result_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L15",
+        "Plans/UI_Command_Catalog.md:L34",
+        "Plans/UI_Command_Catalog.md:L36",
+        "Plans/UI_Command_Catalog.md:L671",
+        "Plans/UI_Command_Catalog.md:L672"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06909",
+      "source_obligation_ids": [
+        "obl-6509"
+      ],
+      "source_seed_ids": [
+        "seed-9900"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/UI_Command_Catalog.md:67-91`",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:67-91`",
+        "Plans/UI_Command_Catalog.md:67-91"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06910",
+      "source_obligation_ids": [
+        "obl-6510"
+      ],
+      "source_seed_ids": [
+        "seed-9901"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/UI_Command_Catalog.md:224-246`",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:224-246`",
+        "Plans/UI_Command_Catalog.md:224-246"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06911",
+      "source_obligation_ids": [
+        "obl-6511"
+      ],
+      "source_seed_ids": [
+        "seed-9902",
+        "seed-9963",
+        "seed-9987",
+        "seed-10027",
+        "seed-10149"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089",
+        "shard-0090"
+      ],
+      "canon_label": "`Plans/UI_Command_Catalog.md:617-622`",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:617-622`",
+        "Plans/UI_Command_Catalog.md:617-622"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06974",
+      "source_obligation_ids": [
+        "obl-6574"
+      ],
+      "source_seed_ids": [
+        "seed-10004"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/UI_Command_Catalog.md` still lacks the exact `### 2.0 Command entry contract (doc-l",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md` still lacks the exact `### 2.0 Command entry contract (doc-level)`, `Search-command routing`, and `Canonical runtime recovery command ownership` anchors even though real normalization content exists under `### 2.0A Promoted Section 15 command families`.",
+        "Plans/UI_Command_Catalog.md",
+        "### 2.0 Command entry contract (doc-level)",
+        "Search-command routing",
+        "Canonical runtime recovery command ownership",
+        "### 2.0A Promoted Section 15 command families"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L15",
+        "Plans/UI_Command_Catalog.md:L34",
+        "Plans/UI_Command_Catalog.md:L36",
+        "Plans/UI_Command_Catalog.md:L65",
+        "Plans/UI_Command_Catalog.md:L68"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06985",
+      "source_obligation_ids": [
+        "obl-6581"
+      ],
+      "source_seed_ids": [
+        "seed-10026"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/UI_Command_Catalog.md:29-90`",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:29-90`",
+        "Plans/UI_Command_Catalog.md:29-90"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07055",
+      "source_obligation_ids": [
+        "obl-6642"
+      ],
+      "source_seed_ids": [
+        "seed-10134"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007`",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.md`, `Plans/FinalGUISpec.md`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `restore points`, and the broken `#11. Source Control boundary` reference.",
+        "gap-002",
+        "gap-006",
+        "gap-007",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L15",
+        "Plans/UI_Command_Catalog.md:L34",
+        "Plans/UI_Command_Catalog.md:L36",
+        "Plans/UI_Command_Catalog.md:L187",
+        "Plans/UI_Command_Catalog.md:L197"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07085",
+      "source_obligation_ids": [
+        "obl-6665"
+      ],
+      "source_seed_ids": [
+        "seed-10204"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "`Plans/UI_Command_Catalog.md:29-92`",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:29-92`",
+        "Plans/UI_Command_Catalog.md:29-92"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07086",
+      "source_obligation_ids": [
+        "obl-6666"
+      ],
+      "source_seed_ids": [
+        "seed-10205",
+        "seed-10244",
+        "seed-10272",
+        "seed-10313",
+        "seed-10343",
+        "seed-10381"
+      ],
+      "source_shard_ids": [
+        "shard-0090",
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/UI_Command_Catalog.md:617-623`",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:617-623`",
+        "Plans/UI_Command_Catalog.md:617-623"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07097",
+      "source_obligation_ids": [
+        "obl-6677"
+      ],
+      "source_seed_ids": [
+        "seed-10243"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/UI_Command_Catalog.md:29-95`",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:29-95`",
+        "Plans/UI_Command_Catalog.md:29-95"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07115",
+      "source_obligation_ids": [
+        "obl-6690"
+      ],
+      "source_seed_ids": [
+        "seed-10271"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/UI_Command_Catalog.md:214-223`",
+      "row_type": "layout_blocker",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:214-223`",
+        "Plans/UI_Command_Catalog.md:214-223"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    }
+  ]
+}

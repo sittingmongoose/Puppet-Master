@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-350",
+  "group_ids": [
+    "discgrp-1397",
+    "discgrp-1398",
+    "discgrp-1399",
+    "discgrp-1400"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01648",
+      "source_obligation_ids": [
+        "obl-1505"
+      ],
+      "source_seed_ids": [
+        "seed-1859"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "# Assistant & Chat UI -- Design Plan",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01650",
+      "source_obligation_ids": [
+        "obl-1507"
+      ],
+      "source_seed_ids": [
+        "seed-1866"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "### 5.2 Config File Toggle",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L899"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01651",
+      "source_obligation_ids": [
+        "obl-1508"
+      ],
+      "source_seed_ids": [
+        "seed-1867"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 15.6 Mermaid and inline visualizer widgets",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2830"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01652",
+      "source_obligation_ids": [
+        "obl-1509"
+      ],
+      "source_seed_ids": [
+        "seed-1868"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "## 7. Plan graph requirements (**sharded-only canonical** + optional derived export)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L256"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

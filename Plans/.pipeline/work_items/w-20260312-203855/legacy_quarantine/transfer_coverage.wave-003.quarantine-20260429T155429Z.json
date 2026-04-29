@@ -1,0 +1,244 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-003",
+  "timestamp_utc": "2026-04-28T19:19:06Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-009",
+    "coverage-rowgrp-010",
+    "coverage-rowgrp-011",
+    "coverage-rowgrp-012"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-009 cov-517 Plans/CLI_Bridged_Providers.md",
+    "rowgrp-010 cov-485 Plans/CLI_Bridged_Providers.md",
+    "rowgrp-011 cov-689,cov-718 Plans/Commands_System.md",
+    "rowgrp-012 cov-802 Plans/Commands_System.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-009": "completed",
+    "coverage-rowgrp-010": "completed",
+    "coverage-rowgrp-011": "completed",
+    "coverage-rowgrp-012": "completed"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-517",
+    "cov-485",
+    "cov-689",
+    "cov-718",
+    "cov-802"
+  ],
+  "coverage_ids_completed": [
+    "cov-517",
+    "cov-485",
+    "cov-689",
+    "cov-718",
+    "cov-802"
+  ],
+  "path_groups_assigned": [
+    "Plans/CLI_Bridged_Providers.md",
+    "Plans/Commands_System.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-485",
+      "source_obligation_ids": [
+        "obl-141"
+      ],
+      "source_seed_ids": [
+        "seed-141"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "stream-schema ownership and actor-envelope completeness",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "Research Progress",
+      "status": "missing",
+      "exact_items": [
+        "tier_boundary is not just stale prose here; it is a reserved diagnostic category with hard detail keys (from_tier / to_tier).",
+        "The Overseer audit protocol is structurally incompatible with the rewrite: singular Overseer, audit_kind = start_of_tier | end_of_tier, hard exactly 2 reviewer subagents, no minority-advisory outcome for the now-required 2-of-3 corroboration pattern",
+        "2026-03-09 addenda say normalized streams MUST preserve attempt_id but none of the reserved diagnostic category schemas actually expose attempt_id",
+        "usage events carry no account attribution",
+        "auth_state carries no pool-member / account context for failover rotation",
+        "input_required / input_provided cannot distinguish node HITL, corroboration pause, or conversational user-input pause",
+        "no actor_kind",
+        "handoff uses bare agent names with no package/seam/lane context",
+        "SelectSpeakerEvent is demoted to raw_observation, which hides governance-relevant speaker/overseer transitions from downstream projections"
+      ],
+      "stale_tokens": [
+        "tier_boundary",
+        "Overseer",
+        "audit_kind",
+        "exactly 2 reviewer subagents",
+        "minority-advisory",
+        "attempt_id",
+        "usage",
+        "auth_state",
+        "input_required",
+        "input_provided",
+        "actor_kind",
+        "handoff",
+        "SelectSpeakerEvent",
+        "raw_observation"
+      ],
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:45-73 defines canonical data shape; required stale diagnostic tokens are absent",
+        "Plans/CLI_Bridged_Providers.md:49-70 lists BRIDGE_INVOKE_OPTIONS fields, with no tier_boundary, Overseer, audit_kind, attempt_id, usage, auth_state, input_required, input_provided, actor_kind, handoff, SelectSpeakerEvent, or raw_observation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "unknown_pending_doc_discovery",
+      "unresolved_reason": "No direct evidence for required stale-token diagnostics or their hard detail keys; file only covers bridge invoke options and provider facade purpose."
+    },
+    {
+      "coverage_id": "cov-517",
+      "source_obligation_ids": [
+        "obl-149"
+      ],
+      "source_seed_ids": [
+        "seed-149"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "bridged-provider correlation and identity contracts",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Bridged-provider contracts are now visibly weaker than direct-provider contracts",
+        "CLI_Bridged_Providers.md is internally inconsistent on normalized correlation shape",
+        "Permissions are still effectively session-centric and under-bound to identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:26 Purpose section reviewed",
+        "Plans/CLI_Bridged_Providers.md:45 Canonical data-shape reconciliation section reviewed",
+        "Plans/CLI_Bridged_Providers.md:49 BRIDGE_INVOKE_OPTIONS field list begins",
+        "Plans/CLI_Bridged_Providers.md:59 account_id optional requested GitHub account context",
+        "Plans/CLI_Bridged_Providers.md:61 execution_role for permission/quota/logs"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Related identity/permission contract fields exist, but the exact requirements about bridged-provider weakness, normalized correlation inconsistency, and session-centric permission under-binding are absent."
+    },
+    {
+      "coverage_id": "cov-689",
+      "source_obligation_ids": [
+        "obl-190"
+      ],
+      "source_seed_ids": [
+        "seed-190"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "catalog/page integrity and missing section blockers",
+      "row_type": "layout_blocker",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "FinalGUISpec.md shows a second internal navigation contradiction beyond Orchestrator-page drift and Orchestrator_Page.md is structurally incomplete because its TOC advertises a missing UICommand IDs section.",
+        "Wiring_Matrix.md still references cmd.orchestrator.switch_tab, but UI_Command_Catalog.md does not define it.",
+        "Commands_System.md and assistant-chat-design.md still disagree on whether reserved slash commands may be overridden, while UI_Command_Catalog.md still lacks cmd.chat.run_user_command owner row.",
+        "catalog/promoted-family gaps remain explicit: account, concern, promotion, and several promised tab/window/catalog/dev command families still do not exist as concrete catalog entries.",
+        "Runtime_Artifacts_Panel.md still sits in a three-way ownership contradiction with Contracts_V0.md and storage-plan.md over payload schema authority; it still points at missing schema files and still lacks a concrete artifact-projection key family in storage-plan.md."
+      ],
+      "stale_tokens": [
+        "UICommand IDs",
+        "cmd.orchestrator.switch_tab",
+        "cmd.chat.run_user_command"
+      ],
+      "evidence": [
+        "Plans/Commands_System.md:424-430 contains cmd.chat.run_user_command dispatch row",
+        "Plans/Commands_System.md:475-517 contains reserved-slash override policy",
+        "Plans/Commands_System.md:420-430 contains UICommand reference section"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "unknown_pending_doc_discovery",
+      "unresolved_reason": "The file shows related command-system content, but does not evidence all catalog/page integrity contradictions or cmd.orchestrator.switch_tab claims."
+    },
+    {
+      "coverage_id": "cov-718",
+      "source_obligation_ids": [
+        "obl-197"
+      ],
+      "source_seed_ids": [
+        "seed-197"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "ghost commands and schema/section integrity",
+      "row_type": "layout_blocker",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "ghost command IDs; missing catalog rows for referenced commands; missing runtime-artifact schema family / storage registration; duplicated executor canon; missing advertised sections and dead glossary references",
+        "command/catalog ghost IDs and missing owner rows; payload/schema-owner triangle for runtime artifacts; duplicated / contradictory executor and HITL canon; glossary/crosswalk/TOC dead references and missing advertised sections",
+        "internal acceptance-criteria contradiction on reserved slash-command overrides; canonical catalog does not register cmd.chat.run_user_command; ghost chat/orchestrator command IDs; UI_Wiring_Rules.md still cannot express dispatcher preconditions; Project_Output_Artifacts.md is now clearly under-keyed; FileManager.md still cannot satisfy its own addendum"
+      ],
+      "stale_tokens": [
+        "cmd.chat.run_user_command"
+      ],
+      "evidence": [
+        "Plans/Commands_System.md:424-430 contains cmd.chat.run_user_command row",
+        "Plans/Commands_System.md:475-517 contains reserved slash-command non-overridable rule",
+        "Plans/Commands_System.md:117-186 and 287-356 contain command-schema / GUI command sections"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "layout_target_in_notes",
+      "unresolved_reason": "Related command content exists, but missing catalog rows, missing schema-family registration, duplicated executor canon, and dead references are not all evidenced in this file."
+    },
+    {
+      "coverage_id": "cov-802",
+      "source_obligation_ids": [
+        "obl-223"
+      ],
+      "source_seed_ids": [
+        "seed-223"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "superseded command IDs and wildcard command-family verification",
+      "row_type": "stale_retirement",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "superseded command IDs still remain visible as plain cmd.* tokens inside the catalog; wildcard command-family requirements cannot be represented by Wiring_Matrix.schema.json as written.",
+        "docs are still vulnerable to mechanical false positives/false negatives because their verification guidance assumes structured extraction while their prose/examples leak stale or filename-shaped cmd.* tokens."
+      ],
+      "stale_tokens": [
+        "cmd.*",
+        "Wiring_Matrix.schema.json"
+      ],
+      "evidence": [
+        "Plans/Commands_System.md:38 shows example cmd.chat.model and cmd.lsp.goto_definition UICommand tokens",
+        "Plans/Commands_System.md:44 references cmd.chat.run_user_command",
+        "Plans/Commands_System.md:100 references reserved /web command-family namespace",
+        "Plans/Commands_System.md:203 references cmd.chat.* command family"
+      ],
+      "required_action": "stale_retirement",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "cmd.*-family tokens are live, but Wiring_Matrix.schema.json is absent, so stale-token retirement is not fully satisfied."
+    }
+  ]
+}

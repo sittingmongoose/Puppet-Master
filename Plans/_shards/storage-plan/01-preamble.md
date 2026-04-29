@@ -1,2 +1,296 @@
 # Storage plan (seglog, redb, Tantivy, projectors)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+  - Storage/delivery clarification pressure from user
+  - Emerging execution-settings direction
+  - [retired-token-5] settings
+  - Highest-Impact Docs
+  - Runtime / Storage / Contract Impacts
+  - Cleanup Priorities
+  - Suggested Research Follow-Ups
+
+#### Source target target-0647
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+  - Storage/delivery clarification pressure from user
+  - Emerging execution-settings direction
+  - [retired-token-5] settings
+  - Highest-Impact Docs
+  - Runtime / Storage / Contract Impacts
+  - Cleanup Priorities
+  - Suggested Research Follow-Ups
+- Exact required items represented:
+  - pin down whether handoff/retry artifacts are literally JSON/JSONL/[retired-token-23]-backed records/projections
+  - specify the concrete project-scoped paths or storage domains that own them
+  - specify how a worker receives the handoff packet: inline prompt block, referenced artifact, fetched context, or mixed model
+  - Define distinct defaults/overrides for provider/model at run/global, feature seam, work package, node, work package overseer, feature seam overseer, and overseer-delegated node worker levels.
+  - Make requested vs effective provider/model visible at all levels where [retired-token-4] can occur.
+  - Specify node persona selection as dynamic-by-default from node scope/type; node-worker persona override is policy-owned, not per-node [retired-token-2].
+  - Specify whether overseers may use subagents for node work and what provider/model policy applies to delegated node workers.
+  - [retired-token-5] settings structure across project settings, run snapshot, attempt record
+  - precedence between provider/account/execution-role rules
+  - user-configurable threshold that determines when automatic account switching occurs
+  - [retired-token-5] [retired-token-6] should be on by default for every [retired-token-7] that uses a provider
+  - thresholding/policy granularity by provider, account, [retired-token-7]
+  - Replace tier-rooted execution with package/seam/lane model
+  - Define package overseer + seam overseer roles
+  - Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage
+  - Redefine gates to package-complete / seam-complete
+  - Rename or retire Tiers UI/tab and tier_tree/progress bars
+  - Add node_id
+  - Add package_id
+  - Add seam_id
+  - Add lane_id
+  - Add attempt_id
+  - Add effective_identity
+  - Normalize requested/effective account identity shapes
+  - Normalize blocked_[retired-token-24]/allowed_action_ids and [retired-token-26]/[retired-token-27]/[retired-token-28] terminology
+  - Remove legacy `[retired-token-24]` / `[retired-token-25]` drift and [retired-token-30].
+  - Normalize [retired-token-26] / [retired-token-27] / [retired-token-28] / [retired-token-29] terminology into one authoritative mapping and event taxonomy.
+  - Decide which objects are persisted canonically (`package`, `seam`, `lane`, `promotion`, `review`, `resolution_thread`) and which are projections only.
+  - Unify requested vs effective execution identity to include account, lane/worktree, and overseer class.
+  - Specify package-based worktree lane pools, including lane ownership, pool sizing, [retired-token-29] detection, [retired-token-26] restore behavior, and Source Control visibility.
+  - Storage direction is already close to what the rewrite needs:
+  - The `provider_account_id` problem is now cross-doc, not local to usage: identity, storage, and provider docs all risk normalizing it differently.
+  - provider_account_id
+  - [retired-token-22] is canonical
+  - `[retired-token-23]`, Tantivy, JSONL mirrors, rollups, and UI-facing keys are projections or derived state
+  - [retired-token-23]
+  - Research Progress - 2026-03-16 - Gemini broader second-sweep delta cluster (identity, storage, UI ownership)
+  - `selected_repo_id` already exists in storage planning; the gap is now in UI contract adoption, not in basic storage vocabulary.
+  - selected_repo_id
+  - `Plans/UI_Command_Catalog.md` + `[retired-token-35]`
+  - Plans/UI_Command_Catalog.md
+  - [retired-token-35]
+  - canonical events stay in [retired-token-22]
+  - Reconcile `base_branch` storage ownership before more Source Control/UI work lands on conflicting keys.
+  - base_branch
+  - approval identity and field-name drift (`allowed_actions` vs `allowed_action_ids`) still cut across recovery, replay, and storage.
+  - allowed_actions
+  - allowed_action_ids
+  - `.puppet-master/state/active-git-operations.json` cannot become canonical audit if storage-plan keeps [retired-token-22]/receipts as the source of truth.
+  - .puppet-master/state/active-git-operations.json
+  - schema-family authority, missing storage key owner, and missing attempt/project identity remain unresolved.
+  - stored in [retired-token-22] as `artifact_type: validation_pass_report`
+  - artifact_type: validation_pass_report
+  - Research Progress - 2026-03-16 - Storage owner gaps for missing record/projection families
+  - The broader lesson is that storage ownership is lagging behind the rewrite’s stronger UI/runtime object model. Some downstream docs are not merely “too detailed”; they are revealing object families the storage plan now genuinely needs.
+  - The current storage families are still more attempt/block/usage-centric than lane/worktree/concern/project-attention-centric, even though the rewrite now relies on those object families elsewhere.
+  - the storage gap is now about concrete missing object families, not just incomplete wording
+  - it must be rebuildable from [retired-token-22]
+  - Recommended worktree/lane storage family
+  - Research Progress - 2026-03-16 - Revised readiness posture after owner-doc and storage passes
+  - missing runtime-artifact schema family / storage registration
+  - spot-checks against `[retired-token-35]`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/usage-feature.md`
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/usage-feature.md
+  - This seam is one of the cleaner ones: storage already contains most of the right model; the lag is mainly in the universal-open/file-centric docs.
+  - Surface docs and storage docs are converging on identity-native navigation, but they are doing it without a stable shared contract owner.
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - storage owns persisted refs
+  - `workspace_tab_id` and `browser_tab_id` exist in storage and command docs, but they are not `target_kind` values.
+  - workspace_tab_id
+  - browser_tab_id
+  - target_kind
+  - declare that storage and surface docs consume, not own, navigation identity
+  - persist refs like `resume_url`
+  - resume_url
+  - `open_source` for non-persisted Deep Plan and non-file artifact classes already resolves to transient `generated://<artifact_id>` buffers
+  - open_source
+  - generated://<artifact_id>
+  - storage owns persisted subject identity and restore joins
+  - `[retired-token-35]` continues that ambiguity:
+  - Research Progress - 2026-03-17 - Blocked/thread/wizard storage families still straddle two execution eras
+  - The runtime/blocking model now wants node/attempt/blocked-sequence identity, but storage still keeps several core families on `[retired-token-11]`.
+  - [retired-token-11]
+  - `[retired-token-35]` is the strongest carrier of stale canonical scope:
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - No planning-doc edits were made outside the required work-item ledger/meta files; session-local `plan.md` was updated for execution tracking only.
+  - plan.md
+  - `Decision_Log.md` is presented as the place for final plan decisions, but it does not record the rewrite decisions that now govern multiple owner docs
+  - Decision_Log.md
+  - [retired-token-23] persistence text keyed to `request_id`, `[retired-token-11]`, `tier_type`, `request_kind`, and `allowed_actions`
+  - request_id
+  - tier_type
+  - request_kind
+  - The persistence section still instructs storage to persist request-era fields that later sections explicitly demote.
+  - Storage family ownership still needs explicit additions for:
+  - state / storage / command / audit-trail behavior
+  - Cluster B - Storage / governance / record-schema transfer misses
+  - `[retired-token-46]`, `[retired-token-35]`, `[retired-token-39]`, `Plans/UI_Command_Catalog.md`
+  - [retired-token-46]
+  - [retired-token-39]
+  - `[retired-token-46]`, `[retired-token-35]`, `Plans/Decision_Policy.md`, `[retired-token-39]`
+  - Plans/Decision_Policy.md
+  - `[retired-token-47]`, `[retired-token-35]`, `[retired-token-39]`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`
+  - [retired-token-47]
+  - Plans/Models_System.md
+  - Plans/Multi-Account.md
+  - Plans/Personas.md
+  - Plans/Prompt_Pipeline.md
+  - `[retired-token-39]`, `Plans/Glossary.md`, `[retired-token-47]`, `[retired-token-35]`, `Plans/usage-feature.md`
+  - Plans/Glossary.md
+  - `[retired-token-46]`, `[retired-token-35]`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`
+  - Plans/Crosswalk.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Progression_Gates.md
+  - Plans/FileManager.md
+  - Plans/Project_Output_Artifacts.md
+  - `**Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (§23.4). No remaining gaps; **accessibility** is explicitly not MVP.`
+  - **Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (§23.4). No remaining gaps; **accessibility** is explicitly not MVP.
+  - `[retired-token-35]:879-910` confirms partial transfer for bridge/activity payload canon:
+  - [retired-token-35]:879-910
+  - result: storage receipt/activity gaps should continue to be treated as under-transfer / anchor failures, not as total missing-content claims
+  - `[retired-token-35]:325`
+  - [retired-token-35]:325
+  - `[retired-token-35]:894-897`
+  - [retired-token-35]:894-897
+  - `[retired-token-35]:1335-1383`
+  - [retired-token-35]:1335-1383
+  - `[retired-token-35]:330-337`
+  - [retired-token-35]:330-337
+  - `[retired-token-35]:468-590`
+  - [retired-token-35]:468-590
+  - `[retired-token-35]:788-817`
+  - [retired-token-35]:788-817
+  - `[retired-token-35]:1330-1391`
+  - [retired-token-35]:1330-1391
+  - summary: Re-audited the condensed blocker bundle against live plan sections in bounded chunks and confirmed all eight blocker families remain, but one storage item was overstated and several blocker reasons needed sharper exact wording.
+  - `[retired-token-38]` still is not present in `[retired-token-35]`, and the required owner headings `### Required [retired-token-23] keys` and `[retired-token-37]` still are not discoverable.
+  - [retired-token-38]
+  - ### Required [retired-token-23] keys
+  - [retired-token-37]
+  - `[retired-token-35]` still omits `run_id` from the receipt minimum-fields list and still does not carry `pass_verdict`, `phase_plan_ref`, or `requirements_quality_report_ref`.
+  - run_id
+  - pass_verdict
+  - phase_plan_ref
+  - requirements_quality_report_ref
+  - `[retired-token-35]:1548-1568`
+  - [retired-token-35]:1548-1568
+  - `[retired-token-35]:322-337`
+  - [retired-token-35]:322-337
+  - `[retired-token-35]:941-956`
+  - [retired-token-35]:941-956
+  - Wave 2 targeted the storage/receipt/blocked subset around `[retired-token-50]`, `gap-004`, and `gap-005` (`[retired-token-35]`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.
+  - [retired-token-50]
+  - gap-004
+  - gap-005
+  - Plans/interview-subagent-integration.md
+  - `[retired-token-35]:1289-1300`
+  - [retired-token-35]:1289-1300
+  - summary: Re-audited the condensed blocker bundle against live plan sections in delegated chunks and found one material overstatement in receipt lineage plus several exact owner/consumer refinements that leave all eight blocker families unresolved but sharper.
+  - `[retired-token-35]:324-337`
+  - [retired-token-35]:324-337
+  - `[retired-token-35]:541-590`
+  - [retired-token-35]:541-590
+  - `[retired-token-35]:1289-1391`
+  - [retired-token-35]:1289-1391
+  - `[retired-token-35]:1322-1391`
+  - [retired-token-35]:1322-1391
+  - `[retired-token-43]` sharpened: the broken `[retired-token-41]` reference survives not only in `[retired-token-40]` but also in `[retired-token-35]` and `[retired-token-42]`, while `[retired-token-39]` still preserves the `[retired-token-44]` contradiction.
+  - [retired-token-43]
+  - [retired-token-41]
+  - [retired-token-40]
+  - [retired-token-42]
+  - [retired-token-44]
+  - `[retired-token-35]:1650-1654`
+  - [retired-token-35]:1650-1654
+  - summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and glossary blocker families with missing discoverable anchors and broken consumer references, and the follow-up sweeps produced zero new exact missing items beyond those refinements.
+  - `[retired-token-50]` sharpened: `[retired-token-35]` still lacks a discoverable `[retired-token-45]` heading even though it contains inline `[retired-token-45] for this feature set...` prose and a `canonical_record.v1:{project_id}:{record_id}` authoritative container, and `[retired-token-47]` still points at the missing `[retired-token-35]#[retired-token-45]` anchor from three different sections.
+  - [retired-token-45]
+  - [retired-token-45] for this feature set...
+  - canonical_record.v1:{project_id}:{record_id}
+  - [retired-token-35]#[retired-token-45]
+  - `[retired-token-35]:1389-1396`
+  - [retired-token-35]:1389-1396
+  - `[retired-token-50]` sharpened: `[retired-token-46]` still points at the missing `[retired-token-35]#[retired-token-45]` anchor, and both `[retired-token-47]` and `[retired-token-42]` still point at the missing `[retired-token-35]#Restart and stale history` anchor in addition to the already-carried missing `[retired-token-45]` heading.
+  - [retired-token-35]#Restart and stale history
+  - `gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missing `[retired-token-35]#Cross-surface receipt record` anchor, so the receipt blocker now includes a live broken consumer reference rather than only missing owner/consumer headings.
+  - [retired-token-35]#Cross-surface receipt record
+  - `[retired-token-43]` downgraded: the prior `[retired-token-44]` contradiction was overstated because `[retired-token-35]` now cleanly separates runtime safe points from project-scoped [retired-token-44] and `[retired-token-39]` explicitly forbids presenting safe points as [retired-token-44]; the remaining blocker is structural-heading and broken-reference drift.
+  - `[retired-token-35]:1616-1625`
+  - [retired-token-35]:1616-1625
+  - Wave 1 rechecked `[retired-token-50]`, `gap-004`, and `gap-008` against live storage, runtime-artifact, receipt, and usage docs and only reconfirmed the already-recorded missing storage/receipt headings, broken `[retired-token-35]` anchor consumers, missing `[retired-token-38]` naming, and missing usage-side account-history / degrade sections.
+  - gap-008
+  - `[retired-token-35]:323-337`
+  - [retired-token-35]:323-337
+  - `[retired-token-35]:941-954`
+  - [retired-token-35]:941-954
+  - `cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resolution_kind` coverage including `accepted_risk`, and a concern-action confirmation matrix, but the live docs only expose fragments: `[retired-token-47]:12-13` keeps concern and notification surfaces distinct from health/activity, `[retired-token-35]:294` lists `concern_record.v1`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31` calls for first-class concern lifecycle and lineage, and `[retired-token-46]:649` only names `concern` as a routable object. Exact ledger evidence remains at `working_ledger.md:L3070-L3092`, `working_ledger.md:L3170-L3182`, `working_ledger.md:L5990-L6015`, and `working_ledger.md:L6442-L6490`.
+  - cov-034
+  - obl-016
+  - active
+  - acknowledged
+  - resolved
+  - dismissed
+  - resolution_kind
+  - accepted_risk
+  - `[retired-token-35]:294`
+  - [retired-token-35]:294
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #14 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #15 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #16 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #17 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #18 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #19 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #20 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #21 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #22 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #23 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #24 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #25 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #26 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #27 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #28 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #29 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #30 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #31 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #32 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #33 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #34 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #35 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #36 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #37 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #38 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #39 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #40 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #41 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #42 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #43 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #44 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #45 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #46 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #47 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #48 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #49 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #50 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+

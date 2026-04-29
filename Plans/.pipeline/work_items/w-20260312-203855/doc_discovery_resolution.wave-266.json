@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-266",
+  "group_ids": [
+    "discgrp-1061",
+    "discgrp-1062",
+    "discgrp-1063",
+    "discgrp-1064"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01311",
+      "source_obligation_ids": [
+        "obl-1168"
+      ],
+      "source_seed_ids": [
+        "seed-1390"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01312",
+      "source_obligation_ids": [
+        "obl-1169"
+      ],
+      "source_seed_ids": [
+        "seed-1391"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01313",
+      "source_obligation_ids": [
+        "obl-1170"
+      ],
+      "source_seed_ids": [
+        "seed-1392"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01314",
+      "source_obligation_ids": [
+        "obl-1171"
+      ],
+      "source_seed_ids": [
+        "seed-1393"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

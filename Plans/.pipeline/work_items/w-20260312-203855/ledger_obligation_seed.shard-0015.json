@@ -1,160 +1,2079 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
   "work_id": "w-20260312-203855",
   "shard_id": "shard-0015",
   "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0015-L002801-L003000.md",
   "source_line_range": "L002801-L003000",
-  "covered_shard_id": "shard-0015",
   "seed_candidates": [
     {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "shared semantic vocabulary for historical/superseded/revoked/reopened/archived/removed",
+      "seed_type": "owner",
+      "canon_label_hint": "higher-level objects like promotions, concerns, graph patches, recovery records, and lane/",
       "exact_items": [
-        "historical",
-        "stale_historical",
-        "superseded",
-        "revoked",
-        "reopened",
-        "archived",
-        "removed"
+        "higher-level objects like promotions, concerns, graph patches, recovery records, and lane/worktree lifecycle states are not yet using one shared semantic vocabulary"
       ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md",
-        "Plans/storage-plan.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/Orchestrator_Page.md"
-      ],
-      "doc_resolution_status": "global_or_cross_cutting",
-      "heading_hints": [
-        "Recommended semantic split",
-        "Important distinction examples",
-        "Contradictions / gaps surfaced",
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [
-        "historical",
-        "stale_historical",
-        "superseded",
-        "revoked",
-        "reopened",
-        "archived",
-        "removed"
-      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
       "source_evidence": [
-        "working_ledger.md:L2802-L2905"
+        "working_ledger.md:L002801"
       ],
-      "notes": []
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
     },
     {
-      "seed_type": "consumer",
-      "canon_label_hint": "attempts need supersession visibility beyond stale_historical",
+      "seed_type": "owner",
+      "canon_label_hint": "`historical`",
       "exact_items": [
-        "attempts",
-        "stale_historical",
-        "superseded by later remediation/graph generation"
+        "`historical`",
+        "historical"
       ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md",
-        "Plans/storage-plan.md",
-        "Plans/FinalGUISpec.md"
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002803"
       ],
-      "doc_resolution_status": "global_or_cross_cutting",
-      "heading_hints": [
-        "Candidate application by object family",
-        "Do-not-forget details"
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "`stale_historical`",
+      "exact_items": [
+        "`stale_historical`",
+        "stale_historical"
       ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
       "stale_tokens": [
-        "stale_historical",
+        "stale_historical"
+      ],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002804"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`superseded`",
+      "exact_items": [
+        "`superseded`",
         "superseded"
       ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
       "source_evidence": [
-        "working_ledger.md:L2845-L2849"
+        "working_ledger.md:L002805"
       ],
-      "notes": []
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`revoked`",
+      "exact_items": [
+        "`revoked`",
+        "revoked"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002806"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`reopened`",
+      "exact_items": [
+        "`reopened`",
+        "reopened"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002807"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`archived`",
+      "exact_items": [
+        "`archived`",
+        "archived"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002808"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`deleted` / `removed`",
+      "exact_items": [
+        "`deleted` / `removed`",
+        "deleted",
+        "removed"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002809"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "These should not collapse into a generic \"old\" state.",
+      "exact_items": [
+        "These should not collapse into a generic \"old\" state."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002810"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "separate `time status`, `replacement status`, and `validity status`",
+      "exact_items": [
+        "separate `time status`, `replacement status`, and `validity status`",
+        "time status",
+        "replacement status",
+        "validity status"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002814"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`historical`",
+      "exact_items": [
+        "`historical`",
+        "historical"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002816"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "`stale_historical`",
+      "exact_items": [
+        "`stale_historical`",
+        "stale_historical"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [
+        "stale_historical"
+      ],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002818"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`superseded`",
+      "exact_items": [
+        "`superseded`",
+        "superseded"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002820"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "replaced by a newer canonical successor for the same semantic slot",
+      "exact_items": [
+        "replaced by a newer canonical successor for the same semantic slot"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002821"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`revoked`",
+      "exact_items": [
+        "`revoked`",
+        "revoked"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002822"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`reopened`",
+      "exact_items": [
+        "`reopened`",
+        "reopened"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002824"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`archived`",
+      "exact_items": [
+        "`archived`",
+        "archived"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002826"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`removed`",
+      "exact_items": [
+        "`removed`",
+        "removed"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002828"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`historical` vs `superseded`",
+      "exact_items": [
+        "`historical` vs `superseded`",
+        "historical",
+        "superseded"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002832"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`superseded` vs `revoked`",
+      "exact_items": [
+        "`superseded` vs `revoked`",
+        "superseded",
+        "revoked"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002835"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`superseded` = replaced by newer truth",
+      "exact_items": [
+        "`superseded` = replaced by newer truth",
+        "superseded"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002836"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`revoked` = prior acceptance/approval/promotion was invalidated or withdrawn",
+      "exact_items": [
+        "`revoked` = prior acceptance/approval/promotion was invalidated or withdrawn",
+        "revoked"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002837"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`archived` vs `historical`",
+      "exact_items": [
+        "`archived` vs `historical`",
+        "archived",
+        "historical"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002838"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`historical` is record/time truth",
+      "exact_items": [
+        "`historical` is record/time truth",
+        "historical"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002839"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
     },
     {
       "seed_type": "consumer",
-      "canon_label_hint": "run semantics must not imply lineage unless explicit",
+      "canon_label_hint": "`archived` is visibility/operational-surface policy",
       "exact_items": [
-        "historical run",
-        "related run",
-        "derived run",
-        "retry/recovery run",
-        "same project does not mean related",
-        "same repo does not mean related",
-        "temporal order does not mean related"
+        "`archived` is visibility/operational-surface policy",
+        "archived"
       ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/FinalGUISpec.md"
-      ],
-      "doc_resolution_status": "global_or_cross_cutting",
-      "heading_hints": [
-        "Confirmed clarification",
-        "Recommended run-semantics split",
-        "Search / routing implication",
-        "Historical semantics refinement"
-      ],
-      "stale_tokens": [
-        "historical run",
-        "related run",
-        "derived run"
-      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
       "source_evidence": [
-        "working_ledger.md:L2914-L2971"
+        "working_ledger.md:L002840"
       ],
-      "notes": []
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`removed` vs `revoked`",
+      "exact_items": [
+        "`removed` vs `revoked`",
+        "removed",
+        "revoked"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002841"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`removed` is backing-object or storage-presence state",
+      "exact_items": [
+        "`removed` is backing-object or storage-presence state",
+        "removed"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002842"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`revoked` is semantic validity state",
+      "exact_items": [
+        "`revoked` is semantic validity state",
+        "revoked"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002843"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "already have `stale_historical`",
+      "exact_items": [
+        "already have `stale_historical`",
+        "stale_historical"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [
+        "stale_historical"
+      ],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002847"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "should also expose when an attempt is superseded by later remediation/graph generation",
+      "exact_items": [
+        "should also expose when an attempt is superseded by later remediation/graph generation"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002848"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "need explicit distinction between:",
+      "exact_items": [
+        "need explicit distinction between:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002850"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "lifecycle already includes `active`, `acknowledged`, `resolved`, `dismissed`",
+      "exact_items": [
+        "lifecycle already includes `active`, `acknowledged`, `resolved`, `dismissed`",
+        "active",
+        "acknowledged",
+        "resolved",
+        "dismissed"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002856"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "still needs historical semantics:",
+      "exact_items": [
+        "still needs historical semantics:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002857"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "restore attempts and recovery episodes need current vs historical semantics",
+      "exact_items": [
+        "restore attempts and recovery episodes need current vs historical semantics"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002865"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "failed or abandoned recovery attempts should remain visible without masquerading as curren",
+      "exact_items": [
+        "failed or abandoned recovery attempts should remain visible without masquerading as current recovery truth"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002866"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "lane/worktree records",
+      "exact_items": [
+        "lane/worktree records"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002867"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "backing worktree may be removed",
+      "exact_items": [
+        "backing worktree may be removed"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002868"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "lane may still be historical",
+      "exact_items": [
+        "lane may still be historical"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002869"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "archival policy should be separate from semantic validity",
+      "exact_items": [
+        "archival policy should be separate from semantic validity"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002870"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
     },
     {
       "seed_type": "layout_blocker",
-      "canon_label_hint": "concern record split between record and source event/ref",
+      "canon_label_hint": "the UI should show these semantics explicitly and consistently, not infer them ad hoc by c",
       "exact_items": [
-        "concern record",
-        "concern source event/ref",
-        "merge/split/supersession semantics",
-        "relationship rules to reviews/corroboration/graph patches/recovery"
+        "the UI should show these semantics explicitly and consistently, not infer them ad hoc by color or disappearance"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002874"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Historical`",
+      "exact_items": [
+        "`Historical`",
+        "Historical"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002876"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Superseded by Generation 4`",
+      "exact_items": [
+        "`Superseded by Generation 4`",
+        "Superseded by Generation 4"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002877"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Promotion Revoked`",
+      "exact_items": [
+        "`Promotion Revoked`",
+        "Promotion Revoked"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002878"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Reopened by New Evidence`",
+      "exact_items": [
+        "`Reopened by New Evidence`",
+        "Reopened by New Evidence"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002879"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Worktree Removed`",
+      "exact_items": [
+        "`Worktree Removed`",
+        "Worktree Removed"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002880"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Archived`",
+      "exact_items": [
+        "`Archived`",
+        "Archived"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002881"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "lane/worktree cleanup lifecycle",
+      "exact_items": [
+        "lane/worktree cleanup lifecycle"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002887"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Attempts have a clearer historical contract than other major record families.",
+      "exact_items": [
+        "Attempts have a clearer historical contract than other major record families."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002890"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "There is not yet one shared semantic glossary for `historical` / `superseded` / `revoked` ",
+      "exact_items": [
+        "There is not yet one shared semantic glossary for `historical` / `superseded` / `revoked` / `reopened` / `archived` / `removed`.",
+        "historical",
+        "superseded",
+        "revoked",
+        "reopened",
+        "archived",
+        "removed"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002891"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "lane/worktree objects",
+      "exact_items": [
+        "lane/worktree objects"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002902"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Add explicit successor/predecessor links where `superseded` is possible.",
+      "exact_items": [
+        "Add explicit successor/predecessor links where `superseded` is possible.",
+        "superseded"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002903"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Keep visibility policy (`archived`, hidden from default lists) separate from semantic stat",
+      "exact_items": [
+        "Keep visibility policy (`archived`, hidden from default lists) separate from semantic state (`historical`, `revoked`, `superseded`).",
+        "archived",
+        "historical",
+        "revoked",
+        "superseded"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002904"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "`stale_historical` is specifically stronger than plain `historical`; it carries non-resuma",
+      "exact_items": [
+        "`stale_historical` is specifically stronger than plain `historical`; it carries non-resumable/non-live semantics.",
+        "stale_historical",
+        "historical"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [
+        "historical",
+        "stale_historical"
+      ],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002908"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "old graph paths should remain visible and clickable even when superseded.",
+      "exact_items": [
+        "old graph paths should remain visible and clickable even when superseded."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002909"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "neither should imply lineage or semantic succession relative to the other unless an explic",
+      "exact_items": [
+        "neither should imply lineage or semantic succession relative to the other unless an explicit relationship exists"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002920"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`historical run` must not imply:",
+      "exact_items": [
+        "`historical run` must not imply:",
+        "historical run"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002923"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "shared seam/package/node identity",
+      "exact_items": [
+        "shared seam/package/node identity"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002927"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`historical` at the run level should mean only:",
+      "exact_items": [
+        "`historical` at the run level should mean only:",
+        "historical"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002928"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Relationship must be explicit, not inferred from same-project membership.",
+      "exact_items": [
+        "Relationship must be explicit, not inferred from same-project membership."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002931"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`historical run`",
+      "exact_items": [
+        "`historical run`",
+        "historical run"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002935"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`related run`",
+      "exact_items": [
+        "`related run`",
+        "related run"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002936"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`derived run`",
+      "exact_items": [
+        "`derived run`",
+        "derived run"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002937"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`retry/recovery run` or continuation lineage if such a concept exists later",
+      "exact_items": [
+        "`retry/recovery run` or continuation lineage if such a concept exists later",
+        "retry/recovery run"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002938"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`historical run` = any non-active/non-focused run retained for the project",
+      "exact_items": [
+        "`historical run` = any non-active/non-focused run retained for the project",
+        "historical run"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002940"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`related run` = explicitly linked by user/system relationship metadata",
+      "exact_items": [
+        "`related run` = explicitly linked by user/system relationship metadata",
+        "related run"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002941"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`derived run` = intentionally spawned from or based on another run's outputs/graph/contrac",
+      "exact_items": [
+        "`derived run` = intentionally spawned from or based on another run's outputs/graph/contracts",
+        "derived run"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002942"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "History should default to chronological project run history, not lineage history.",
+      "exact_items": [
+        "History should default to chronological project run history, not lineage history."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002949"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "If there is no explicit relationship, runs should appear as separate entries only.",
+      "exact_items": [
+        "If there is no explicit relationship, runs should appear as separate entries only."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002950"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`derived from run ...`",
+      "exact_items": [
+        "`derived from run ...`",
+        "derived from run ..."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002952"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`retry of run ...`",
+      "exact_items": [
+        "`retry of run ...`",
+        "retry of run ..."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002953"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`continuation of run ...`",
+      "exact_items": [
+        "`continuation of run ...`",
+        "continuation of run ..."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002954"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`shares feature seam with run ...`",
+      "exact_items": [
+        "`shares feature seam with run ...`",
+        "shares feature seam with run ..."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002955"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "But those must be explicit metadata, not inferred by heuristics.",
+      "exact_items": [
+        "But those must be explicit metadata, not inferred by heuristics."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002956"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Search results should preserve run identity exactly and avoid collapsing similarly named s",
+      "exact_items": [
+        "Search results should preserve run identity exactly and avoid collapsing similarly named seams/packages/nodes across unrelated runs."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002959"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Cross-run navigation should switch focus to the selected run, not imply that the selected ",
+      "exact_items": [
+        "Cross-run navigation should switch focus to the selected run, not imply that the selected object is part of the currently focused run's lineage."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002960"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`historical` is mostly a focus/time classification",
+      "exact_items": [
+        "`historical` is mostly a focus/time classification",
+        "historical"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002964"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`superseded`, `revoked`, `reopened`, etc. should apply only where real object lineage/vali",
+      "exact_items": [
+        "`superseded`, `revoked`, `reopened`, etc. should apply only where real object lineage/validity relationships exist, not to arbitrary project runs.",
+        "superseded",
+        "revoked",
+        "reopened"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002966"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Avoid UI copy like `superseded by newer run` unless there is an explicit relationship prov",
+      "exact_items": [
+        "Avoid UI copy like `superseded by newer run` unless there is an explicit relationship proving that.",
+        "superseded by newer run"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002971"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/Orchestrator_Page.md`",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`",
+        "Plans/Orchestrator_Page.md"
       ],
       "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/Contracts_V0.md",
-        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002976"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/storage-plan.md`",
+      "exact_items": [
+        "`Plans/storage-plan.md`",
+        "Plans/storage-plan.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002977"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`Plans/Contracts_V0.md`",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`",
+        "Plans/Contracts_V0.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002978"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "`Plans/FinalGUISpec.md`",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`",
         "Plans/FinalGUISpec.md"
       ],
-      "doc_resolution_status": "layout_target_in_notes",
-      "heading_hints": [
-        "Research Progress - 2026-03-16 - Concern Record Lifecycle / Details",
-        "Recommended concern object split"
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
       ],
-      "stale_tokens": [
-        "concern record",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002979"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "`Plans/Run_Graph_View.md`",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md`",
+        "Plans/Run_Graph_View.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002980"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "lifecycle includes `active`, `acknowledged`, `resolved`, `dismissed`",
+      "exact_items": [
+        "lifecycle includes `active`, `acknowledged`, `resolved`, `dismissed`",
+        "active",
+        "acknowledged",
+        "resolved",
+        "dismissed"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002986"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "canonical concern creators are runtime / package overseer / seam overseer / corroboration ",
+      "exact_items": [
+        "canonical concern creators are runtime / package overseer / seam overseer / corroboration outcome / graph patch logic"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002987"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "workers may nominate but should not mint canonical concerns directly",
+      "exact_items": [
+        "workers may nominate but should not mint canonical concerns directly"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002988"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Compared with attempts/blocked/remediation, concerns currently lack:",
+      "exact_items": [
+        "Compared with attempts/blocked/remediation, concerns currently lack:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002990"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "explicit canonical record schema",
+      "exact_items": [
+        "explicit canonical record schema"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002991"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`concern record`",
+      "exact_items": [
+        "`concern record`",
+        "concern record"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L002999"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "`concern source event/ref`",
+      "exact_items": [
+        "`concern source event/ref`",
         "concern source event/ref"
       ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
       "source_evidence": [
-        "working_ledger.md:L2973-L3000"
+        "working_ledger.md:L003000"
       ],
-      "notes": []
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence."
+      ]
     }
   ],
   "noise_items": [
     {
-      "line_range": "L002801-L002810",
-      "reason": "Contextual list of concepts; only the exact state names are seed-worthy."
+      "source_evidence": [
+        "working_ledger.md:L002802"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
     },
     {
-      "line_range": "L002872-L002887",
-      "reason": "UI examples and list of affected surfaces; supportive but not separate obligations."
+      "source_evidence": [
+        "working_ledger.md:L002813"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
     },
     {
-      "line_range": "L002912-L002971",
-      "reason": "Run-history explanation is relevant only insofar as it states explicit relationship requirements; descriptive prose otherwise."
+      "source_evidence": [
+        "working_ledger.md:L002815"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002817"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002819"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002823"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002825"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002827"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002829"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002833"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002834"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002846"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002849"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002851"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002852"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002853"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002854"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002855"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002858"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002859"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002860"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002861"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002862"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002863"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002864"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002873"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002875"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002882"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002883"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002884"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002885"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002886"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002892"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002893"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002896"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002897"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002898"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002899"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002900"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002901"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002905"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002910"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002915"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002916"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002917"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002918"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002919"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002924"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002925"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002926"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002929"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002930"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002934"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002939"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002943"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002944"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002945"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002946"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002951"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002963"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002965"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002969"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002970"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002981"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002984"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002985"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002989"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002992"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002993"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002994"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002997"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L002998"
+      ],
+      "reason": "bullet without obligation-grade exact token or affected doc"
     }
   ],
-  "uncertain_items": [
-    {
-      "item": "Whether removed should be modeled as validity vs storage-presence in downstream docs",
-      "why": "Shard states the distinction but does not assign ownership to a specific doc family."
-    }
-  ]
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0015"
 }

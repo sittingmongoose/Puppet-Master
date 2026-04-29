@@ -1,0 +1,113 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0083",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0083-L016401-L016600.md",
+  "source_line_range": "L016401-L016600",
+  "seed_candidates": [
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Crosswalk numbering route OpenSubject primitive blocker",
+      "exact_items": [
+        "Crosswalk.md first",
+        "Crosswalk.md needs: corrected section numbering; removal of stale Tiers and widgetized-Orchestrator wording; explicit primitive ownership for route_target and OpenSubject",
+        "The duplicated Crosswalk.md numbering is not cosmetic. It undermines ContractRef stability and gateable traceability."
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "Tiers",
+        "route_target",
+        "OpenSubject",
+        "ContractRef"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16401-L16419"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Progression Gates ContractRef taxonomy violation",
+      "exact_items": [
+        "Plans/Progression_Gates.md contains a direct ContractRef syntax violation inside canonical gate text",
+        "ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invariants.md#INV-010, SchemaID:evidence.schema.json",
+        "This bypasses the ContractName: taxonomy that Plans/DRY_Rules.md says is canonical.",
+        "The gate doc enforces ContractRef rigor while violating the same ContractRef taxonomy in its own canonical text."
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md",
+        "Plans/DRY_Rules.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "ContractRef",
+        "SchemaID:evidence.schema.json",
+        "ContractName:"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16422-L16479"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Contracts route_target OpenSubject missing named contracts",
+      "exact_items": [
+        "Plans/Contracts_V0.md still lacks named canonical contracts for: route_target and OpenSubject",
+        "The owner doc is ahead in late addenda and behind in its main body, which makes it a direct source of downstream drift across Orchestrator, Graph, HITL, storage, and command docs.",
+        "insert route_target and OpenSubject into the UI-command/navigation section"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "route_target",
+        "OpenSubject"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16481-L16545"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "HITL request-centric opening contract retirement",
+      "exact_items": [
+        "Plans/human-in-the-loop.md still opens with a canonical request contract built on: request_id, tier_id, tier_type, request_kind = tier_boundary_approval, ordered allowed_action_ids[]",
+        "The same file later moves to the stronger runtime-native model",
+        "Reconciliation should retire the request-centric opening contract and rebuild the file around: blocked/runtime approval identity; canonical runtime action families; lineage-preserving persistence through blocked records"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "request_id",
+        "tier_id",
+        "tier_type",
+        "tier_boundary_approval",
+        "allowed_action_ids[]"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16547-L16598"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "research progress headings for owner traceability/contracts"
+  ],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0083"
+}

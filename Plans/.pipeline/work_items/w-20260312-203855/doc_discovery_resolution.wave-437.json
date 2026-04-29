@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-437",
+  "group_ids": [
+    "discgrp-1745",
+    "discgrp-1746",
+    "discgrp-1747",
+    "discgrp-1748"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02002",
+      "source_obligation_ids": [
+        "obl-1859"
+      ],
+      "source_seed_ids": [
+        "seed-2398"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "### 5.3 Human plan may repeat summary, but must point to canonical contracts",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L230"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02003",
+      "source_obligation_ids": [
+        "obl-1860"
+      ],
+      "source_seed_ids": [
+        "seed-2399"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02004",
+      "source_obligation_ids": [
+        "obl-1861"
+      ],
+      "source_seed_ids": [
+        "seed-2400"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "## 5. Gaps and how we address them",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1291"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02005",
+      "source_obligation_ids": [
+        "obl-1862"
+      ],
+      "source_seed_ids": [
+        "seed-2401"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1489",
+  "group_ids": [
+    "discgrp-5953",
+    "discgrp-5954",
+    "discgrp-5955",
+    "discgrp-5956"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06574",
+      "source_obligation_ids": [
+        "obl-6215"
+      ],
+      "source_seed_ids": [
+        "seed-9401"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "### 7.2 `plan_graph/nodes/<node_id>.json` (required; one node per file)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L314"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06576",
+      "source_obligation_ids": [
+        "obl-6217"
+      ],
+      "source_seed_ids": [
+        "seed-9403"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "# Overseer Protocol (Canonical)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06577",
+      "source_obligation_ids": [
+        "obl-6218"
+      ],
+      "source_seed_ids": [
+        "seed-9404"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06578",
+      "source_obligation_ids": [
+        "obl-6219"
+      ],
+      "source_seed_ids": [
+        "seed-9405"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

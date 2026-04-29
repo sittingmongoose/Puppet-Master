@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1201",
+  "group_ids": [
+    "discgrp-4801",
+    "discgrp-4802",
+    "discgrp-4803",
+    "discgrp-4804"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05200",
+      "source_obligation_ids": [
+        "obl-4976"
+      ],
+      "source_seed_ids": [
+        "seed-7221"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Prompt_Pipeline.md",
+      "new_heading_hint": "## 0. Scope and SSOT status",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L25"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05201",
+      "source_obligation_ids": [
+        "obl-4977"
+      ],
+      "source_seed_ids": [
+        "seed-7222"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05202",
+      "source_obligation_ids": [
+        "obl-4978"
+      ],
+      "source_seed_ids": [
+        "seed-7223"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05203",
+      "source_obligation_ids": [
+        "obl-4979"
+      ],
+      "source_seed_ids": [
+        "seed-7229"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

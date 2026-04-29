@@ -1,0 +1,2231 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-090",
+  "group_ids": [
+    "gapgrp-0357",
+    "gapgrp-0358",
+    "gapgrp-0359",
+    "gapgrp-0360"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-00225",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00252 is partial for impacted surface: Source Control and GitHub worktree views.",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-040: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00252"
+      ],
+      "source_obligation_ids": [
+        "obl-135"
+      ],
+      "source_seed_ids": [
+        "seed-141"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "impacted surface: Source Control and GitHub worktree views."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01209",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01537 is partial for Source Control owns concrete worktree actions and compact inventory display",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-040: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01537"
+      ],
+      "source_obligation_ids": [
+        "obl-1394"
+      ],
+      "source_seed_ids": [
+        "seed-1711"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "exact_missing_items": [
+        "Source Control owns concrete worktree actions and compact inventory display"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01755",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02260 is partial for still lack the concrete receipt/usage identity and projection-trust hooks their cross-surf",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02260"
+      ],
+      "source_obligation_ids": [
+        "obl-2113"
+      ],
+      "source_seed_ids": [
+        "seed-2745"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "still lack the concrete receipt/usage identity and projection-trust hooks their cross-surface actions now depend on"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03580",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04558 is partial for Treat CtA card actions and blocked-notice actions as first-class consumers of the canonica",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04558"
+      ],
+      "source_obligation_ids": [
+        "obl-4336"
+      ],
+      "source_seed_ids": [
+        "seed-6107"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "Treat CtA card actions and blocked-notice actions as first-class consumers of the canonical route-target model."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03584",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04563 is partial for This is one of the highest-value consumers of the route-target work because attention/CtA",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04563"
+      ],
+      "source_obligation_ids": [
+        "obl-4341"
+      ],
+      "source_seed_ids": [
+        "seed-6116"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "This is one of the highest-value consumers of the route-target work because attention/CtA actions are exactly where users most need precise restoration."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03792",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04848 is partial for GitHub Actions: `active_subview`, current branch, pinned workflows, last opened run/job",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04848"
+      ],
+      "source_obligation_ids": [
+        "obl-4625"
+      ],
+      "source_seed_ids": [
+        "seed-6617"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "GitHub Actions: `active_subview`, current branch, pinned workflows, last opened run/job",
+        "active_subview"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04330",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05556 is partial for Source Control is the primary operational surface for worktree inventory and actions",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-040: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05556"
+      ],
+      "source_obligation_ids": [
+        "obl-5328"
+      ],
+      "source_seed_ids": [
+        "seed-7916"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "Source Control is the primary operational surface for worktree inventory and actions"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04904",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06325 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06325"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00357",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00457 is present for Replace GitHub `login` as a stable key with internal `account_id`, while keeping `login` a",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-098: GitHub stable account identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00457"
+      ],
+      "source_obligation_ids": [
+        "obl-314"
+      ],
+      "source_seed_ids": [
+        "seed-363"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "Replace GitHub `login` as a stable key with internal `account_id`, while keeping `login` as provider-native disclosure metadata.",
+        "login",
+        "account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00470",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00603 is present for `degraded`: restrict to safe inspection and canonical recovery paths; do not allow ambiguo",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "## Fidelity recovery addendum"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00603"
+      ],
+      "source_obligation_ids": [
+        "obl-460"
+      ],
+      "source_seed_ids": [
+        "seed-530"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "`degraded`: restrict to safe inspection and canonical recovery paths; do not allow ambiguous live actions",
+        "degraded"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00479",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00617 is partial for `Seams`: allow browsing, but gate actions that depend on current promotion/blocker truth",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00617"
+      ],
+      "source_obligation_ids": [
+        "obl-474"
+      ],
+      "source_seed_ids": [
+        "seed-544"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "`Seams`: allow browsing, but gate actions that depend on current promotion/blocker truth",
+        "Seams"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00710",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00935 is partial for example class: reversible local presentation/layout actions, some editor-level reverts",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00935"
+      ],
+      "source_obligation_ids": [
+        "obl-792"
+      ],
+      "source_seed_ids": [
+        "seed-910"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "exact_missing_items": [
+        "example class: reversible local presentation/layout actions, some editor-level reverts"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01581",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02028 is partial for Replace mutable display identities like GitHub `login` as storage keys with stable interna",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-098: GitHub stable account identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02028"
+      ],
+      "source_obligation_ids": [
+        "obl-1885"
+      ],
+      "source_seed_ids": [
+        "seed-2432"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "Replace mutable display identities like GitHub `login` as storage keys with stable internal account ids while keeping display identities audit-only.",
+        "login"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01585",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02032 is partial for the GitHub realm split is still correct; the fix is stable account identity inside each re",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-098: GitHub stable account identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02032"
+      ],
+      "source_obligation_ids": [
+        "obl-1889"
+      ],
+      "source_seed_ids": [
+        "seed-2436"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "the GitHub realm split is still correct; the fix is stable account identity inside each realm, not realm collapse"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01847",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02375 is partial for GitHub durable identity is still keyed by `login`, conflicting with the stable internal ac",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-098: GitHub stable account identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02375"
+      ],
+      "source_obligation_ids": [
+        "obl-2225"
+      ],
+      "source_seed_ids": [
+        "seed-2892"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "GitHub durable identity is still keyed by `login`, conflicting with the stable internal account model.",
+        "login"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01851",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02380 is present for Replace login-keyed durable GitHub identity with stable `account_id` / `credential_ref`, k",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-098: GitHub stable account identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02380"
+      ],
+      "source_obligation_ids": [
+        "obl-2230"
+      ],
+      "source_seed_ids": [
+        "seed-2897"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Replace login-keyed durable GitHub identity with stable `account_id` / `credential_ref`, keeping `login` and provider identity display-only.",
+        "account_id",
+        "credential_ref",
+        "login"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02583",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03302 is partial for Add the missing schema/record families that docs already require in practice: runtime-arti",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-040: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03302"
+      ],
+      "source_obligation_ids": [
+        "obl-3148"
+      ],
+      "source_seed_ids": [
+        "seed-4190"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Add the missing schema/record families that docs already require in practice: runtime-artifact schemas, durable worktree records/projections, and command families for account/concern/promotion actions."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02926",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03745 is partial for `Prompt_Pipeline.md` already has a strong effective-resolution schema, but the integration",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03745"
+      ],
+      "source_obligation_ids": [
+        "obl-3590"
+      ],
+      "source_seed_ids": [
+        "seed-4856"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "`Prompt_Pipeline.md` already has a strong effective-resolution schema, but the integration doc duplicates a thinner subset of those fields directly on `TierContext`.",
+        "Prompt_Pipeline.md",
+        "TierContext"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03280",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04208 is partial for Owner docs still describe runtime-era actions and records that require stricter registrati",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04208"
+      ],
+      "source_obligation_ids": [
+        "obl-4048"
+      ],
+      "source_seed_ids": [
+        "seed-5587"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "Owner docs still describe runtime-era actions and records that require stricter registration/verification/routing machinery than the current catalog/matrix/gate stack can express."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05414",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06980 is present for `Plans/GitHub_Integration.md` still points to a non-existent `Plans/Orchestrator_Page.md#1",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06980"
+      ],
+      "source_obligation_ids": [
+        "obl-6577"
+      ],
+      "source_seed_ids": [
+        "seed-10007"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/GitHub_Integration.md` still points to a non-existent `Plans/Orchestrator_Page.md#11. Source Control boundary`, which sharpens `gap-007`'s owner-heading defect.",
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "gap-007"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05467",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07052 is present for Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007`",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07052"
+      ],
+      "source_obligation_ids": [
+        "obl-6642"
+      ],
+      "source_seed_ids": [
+        "seed-10134"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.md`, `Plans/FinalGUISpec.md`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `restore points`, and the broken `#11. Source Control boundary` reference.",
+        "gap-002",
+        "gap-006",
+        "gap-007",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05515",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07108 is present for `gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` r",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07108"
+      ],
+      "source_obligation_ids": [
+        "obl-6686"
+      ],
+      "source_seed_ids": [
+        "seed-10258"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference survives not only in `Plans/GitHub_Integration.md` but also in `Plans/storage-plan.md` and `Plans/WorktreeGitImprovement.md`, while `Plans/FinalGUISpec.md` still preserves the `restore points` contradiction.",
+        "gap-007",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "Plans/GitHub_Integration.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FinalGUISpec.md",
+        "restore points"
+      ],
+      "stale_tokens": [
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md",
+        "gap-007",
+        "restore points"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00376",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00481 is partial for clearly separates Source Control from GitHub Actions and places worktree management in Hea",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-040: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00481"
+      ],
+      "source_obligation_ids": [
+        "obl-338"
+      ],
+      "source_seed_ids": [
+        "seed-391"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "clearly separates Source Control from GitHub Actions and places worktree management in Health/Settings, but does not yet express the stronger Orchestrator-vs-Source-Control lane/worktree boundary."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00468",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00599 is partial for live mutating / decision-bearing actions must tighten on trust state",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00599"
+      ],
+      "source_obligation_ids": [
+        "obl-456"
+      ],
+      "source_seed_ids": [
+        "seed-526"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "live mutating / decision-bearing actions must tighten on trust state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00469",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00600 is partial for `current`: all normal actions allowed",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00600"
+      ],
+      "source_obligation_ids": [
+        "obl-457"
+      ],
+      "source_seed_ids": [
+        "seed-527"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "`current`: all normal actions allowed",
+        "current"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00576",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00729 is partial for `Show in ...` actions",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00729"
+      ],
+      "source_obligation_ids": [
+        "obl-586"
+      ],
+      "source_seed_ids": [
+        "seed-667"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "`Show in ...` actions",
+        "Show in ..."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00730",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00961 is partial for worktree prune/remove and cleanup actions should disclose:",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-040: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00961"
+      ],
+      "source_obligation_ids": [
+        "obl-818"
+      ],
+      "source_seed_ids": [
+        "seed-942"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "exact_missing_items": [
+        "worktree prune/remove and cleanup actions should disclose:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00905",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01161 is partial for integration/governance persona biased toward cross-package integration truth",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01161"
+      ],
+      "source_obligation_ids": [
+        "obl-1018"
+      ],
+      "source_seed_ids": [
+        "seed-1194"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "integration/governance persona biased toward cross-package integration truth"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00945",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01210 is partial for `Weak Integration`",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01210"
+      ],
+      "source_obligation_ids": [
+        "obl-1067"
+      ],
+      "source_seed_ids": [
+        "seed-1258",
+        "seed-1745",
+        "seed-1777",
+        "seed-2505",
+        "seed-2533"
+      ],
+      "source_shard_ids": [
+        "shard-0021",
+        "shard-0026",
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "`Weak Integration`",
+        "Weak Integration"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01077",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01372 is partial for recover / retry / approve / decline / replan / restore / cleanup actions that already have",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01372"
+      ],
+      "source_obligation_ids": [
+        "obl-1229"
+      ],
+      "source_seed_ids": [
+        "seed-1470"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "exact_missing_items": [
+        "recover / retry / approve / decline / replan / restore / cleanup actions that already have canonical runtime semantics and confirmation rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01103",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01399 is partial for bulk actions should be far narrower than bulk navigation",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01399"
+      ],
+      "source_obligation_ids": [
+        "obl-1256"
+      ],
+      "source_seed_ids": [
+        "seed-1501"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "exact_missing_items": [
+        "bulk actions should be far narrower than bulk navigation"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01108",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01407 is partial for when actions must be gated",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01407"
+      ],
+      "source_obligation_ids": [
+        "obl-1264"
+      ],
+      "source_seed_ids": [
+        "seed-1515"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "exact_missing_items": [
+        "when actions must be gated"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00252",
+    "cov-01537",
+    "cov-02260",
+    "cov-04558",
+    "cov-04563",
+    "cov-04848",
+    "cov-05556",
+    "cov-06325",
+    "cov-00457",
+    "cov-00603",
+    "cov-00617",
+    "cov-00935",
+    "cov-02028",
+    "cov-02032",
+    "cov-02375",
+    "cov-02380",
+    "cov-03302",
+    "cov-03745",
+    "cov-04208",
+    "cov-06980",
+    "cov-07052",
+    "cov-07108",
+    "cov-00481",
+    "cov-00599",
+    "cov-00600",
+    "cov-00729",
+    "cov-00961",
+    "cov-01161",
+    "cov-01210",
+    "cov-01372",
+    "cov-01399",
+    "cov-01407"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1018",
+    "obl-1067",
+    "obl-1229",
+    "obl-1256",
+    "obl-1264",
+    "obl-135",
+    "obl-1394",
+    "obl-1885",
+    "obl-1889",
+    "obl-2113",
+    "obl-2225",
+    "obl-2230",
+    "obl-314",
+    "obl-3148",
+    "obl-338",
+    "obl-3590",
+    "obl-4048",
+    "obl-4336",
+    "obl-4341",
+    "obl-456",
+    "obl-457",
+    "obl-460",
+    "obl-4625",
+    "obl-474",
+    "obl-5328",
+    "obl-586",
+    "obl-6009",
+    "obl-6577",
+    "obl-6642",
+    "obl-6686",
+    "obl-792",
+    "obl-818"
+  ],
+  "source_seed_ids_represented": [
+    "seed-10007",
+    "seed-10134",
+    "seed-10258",
+    "seed-1194",
+    "seed-1258",
+    "seed-141",
+    "seed-1470",
+    "seed-1501",
+    "seed-1515",
+    "seed-1711",
+    "seed-1745",
+    "seed-1777",
+    "seed-2432",
+    "seed-2436",
+    "seed-2505",
+    "seed-2533",
+    "seed-2745",
+    "seed-2892",
+    "seed-2897",
+    "seed-363",
+    "seed-391",
+    "seed-4190",
+    "seed-4856",
+    "seed-526",
+    "seed-527",
+    "seed-530",
+    "seed-544",
+    "seed-5587",
+    "seed-6107",
+    "seed-6116",
+    "seed-6617",
+    "seed-667",
+    "seed-7916",
+    "seed-9092",
+    "seed-910",
+    "seed-942"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0009",
+    "shard-0011",
+    "shard-0013",
+    "shard-0014",
+    "shard-0017",
+    "shard-0020",
+    "shard-0021",
+    "shard-0023",
+    "shard-0024",
+    "shard-0026",
+    "shard-0032",
+    "shard-0033",
+    "shard-0035",
+    "shard-0036",
+    "shard-0045",
+    "shard-0050",
+    "shard-0056",
+    "shard-0059",
+    "shard-0064",
+    "shard-0074",
+    "shard-0082",
+    "shard-0089",
+    "shard-0090",
+    "shard-0091"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-00225",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00252 is partial for impacted surface: Source Control and GitHub worktree views.",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-040: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00252"
+      ],
+      "source_obligation_ids": [
+        "obl-135"
+      ],
+      "source_seed_ids": [
+        "seed-141"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "impacted surface: Source Control and GitHub worktree views."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01209",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-01537 is partial for Source Control owns concrete worktree actions and compact inventory display",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-040: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01537"
+      ],
+      "source_obligation_ids": [
+        "obl-1394"
+      ],
+      "source_seed_ids": [
+        "seed-1711"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "exact_missing_items": [
+        "Source Control owns concrete worktree actions and compact inventory display"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01755",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02260 is partial for still lack the concrete receipt/usage identity and projection-trust hooks their cross-surf",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02260"
+      ],
+      "source_obligation_ids": [
+        "obl-2113"
+      ],
+      "source_seed_ids": [
+        "seed-2745"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "still lack the concrete receipt/usage identity and projection-trust hooks their cross-surface actions now depend on"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03580",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04558 is partial for Treat CtA card actions and blocked-notice actions as first-class consumers of the canonica",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04558"
+      ],
+      "source_obligation_ids": [
+        "obl-4336"
+      ],
+      "source_seed_ids": [
+        "seed-6107"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "Treat CtA card actions and blocked-notice actions as first-class consumers of the canonical route-target model."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03584",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04563 is partial for This is one of the highest-value consumers of the route-target work because attention/CtA",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04563"
+      ],
+      "source_obligation_ids": [
+        "obl-4341"
+      ],
+      "source_seed_ids": [
+        "seed-6116"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "This is one of the highest-value consumers of the route-target work because attention/CtA actions are exactly where users most need precise restoration."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03792",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-04848 is partial for GitHub Actions: `active_subview`, current branch, pinned workflows, last opened run/job",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04848"
+      ],
+      "source_obligation_ids": [
+        "obl-4625"
+      ],
+      "source_seed_ids": [
+        "seed-6617"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "exact_missing_items": [
+        "GitHub Actions: `active_subview`, current branch, pinned workflows, last opened run/job",
+        "active_subview"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04330",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05556 is partial for Source Control is the primary operational surface for worktree inventory and actions",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-040: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05556"
+      ],
+      "source_obligation_ids": [
+        "obl-5328"
+      ],
+      "source_seed_ids": [
+        "seed-7916"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "Source Control is the primary operational surface for worktree inventory and actions"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04904",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06325 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06325"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00357",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00457 is present for Replace GitHub `login` as a stable key with internal `account_id`, while keeping `login` a",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-098: GitHub stable account identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00457"
+      ],
+      "source_obligation_ids": [
+        "obl-314"
+      ],
+      "source_seed_ids": [
+        "seed-363"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "Replace GitHub `login` as a stable key with internal `account_id`, while keeping `login` as provider-native disclosure metadata.",
+        "login",
+        "account_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00470",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00603 is present for `degraded`: restrict to safe inspection and canonical recovery paths; do not allow ambiguo",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "## Fidelity recovery addendum"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00603"
+      ],
+      "source_obligation_ids": [
+        "obl-460"
+      ],
+      "source_seed_ids": [
+        "seed-530"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "`degraded`: restrict to safe inspection and canonical recovery paths; do not allow ambiguous live actions",
+        "degraded"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00479",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00617 is partial for `Seams`: allow browsing, but gate actions that depend on current promotion/blocker truth",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00617"
+      ],
+      "source_obligation_ids": [
+        "obl-474"
+      ],
+      "source_seed_ids": [
+        "seed-544"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "`Seams`: allow browsing, but gate actions that depend on current promotion/blocker truth",
+        "Seams"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00710",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00935 is partial for example class: reversible local presentation/layout actions, some editor-level reverts",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00935"
+      ],
+      "source_obligation_ids": [
+        "obl-792"
+      ],
+      "source_seed_ids": [
+        "seed-910"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "exact_missing_items": [
+        "example class: reversible local presentation/layout actions, some editor-level reverts"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01581",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02028 is partial for Replace mutable display identities like GitHub `login` as storage keys with stable interna",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-098: GitHub stable account identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02028"
+      ],
+      "source_obligation_ids": [
+        "obl-1885"
+      ],
+      "source_seed_ids": [
+        "seed-2432"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "Replace mutable display identities like GitHub `login` as storage keys with stable internal account ids while keeping display identities audit-only.",
+        "login"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01585",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02032 is partial for the GitHub realm split is still correct; the fix is stable account identity inside each re",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-098: GitHub stable account identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02032"
+      ],
+      "source_obligation_ids": [
+        "obl-1889"
+      ],
+      "source_seed_ids": [
+        "seed-2436"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "the GitHub realm split is still correct; the fix is stable account identity inside each realm, not realm collapse"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01847",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02375 is partial for GitHub durable identity is still keyed by `login`, conflicting with the stable internal ac",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-098: GitHub stable account identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02375"
+      ],
+      "source_obligation_ids": [
+        "obl-2225"
+      ],
+      "source_seed_ids": [
+        "seed-2892"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "GitHub durable identity is still keyed by `login`, conflicting with the stable internal account model.",
+        "login"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01851",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02380 is present for Replace login-keyed durable GitHub identity with stable `account_id` / `credential_ref`, k",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-098: GitHub stable account identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02380"
+      ],
+      "source_obligation_ids": [
+        "obl-2230"
+      ],
+      "source_seed_ids": [
+        "seed-2897"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Replace login-keyed durable GitHub identity with stable `account_id` / `credential_ref`, keeping `login` and provider identity display-only.",
+        "account_id",
+        "credential_ref",
+        "login"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02583",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03302 is partial for Add the missing schema/record families that docs already require in practice: runtime-arti",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-040: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03302"
+      ],
+      "source_obligation_ids": [
+        "obl-3148"
+      ],
+      "source_seed_ids": [
+        "seed-4190"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Add the missing schema/record families that docs already require in practice: runtime-artifact schemas, durable worktree records/projections, and command families for account/concern/promotion actions."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02926",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03745 is partial for `Prompt_Pipeline.md` already has a strong effective-resolution schema, but the integration",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03745"
+      ],
+      "source_obligation_ids": [
+        "obl-3590"
+      ],
+      "source_seed_ids": [
+        "seed-4856"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "`Prompt_Pipeline.md` already has a strong effective-resolution schema, but the integration doc duplicates a thinner subset of those fields directly on `TierContext`.",
+        "Prompt_Pipeline.md",
+        "TierContext"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03280",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04208 is partial for Owner docs still describe runtime-era actions and records that require stricter registrati",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04208"
+      ],
+      "source_obligation_ids": [
+        "obl-4048"
+      ],
+      "source_seed_ids": [
+        "seed-5587"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "Owner docs still describe runtime-era actions and records that require stricter registration/verification/routing machinery than the current catalog/matrix/gate stack can express."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05414",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06980 is present for `Plans/GitHub_Integration.md` still points to a non-existent `Plans/Orchestrator_Page.md#1",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06980"
+      ],
+      "source_obligation_ids": [
+        "obl-6577"
+      ],
+      "source_seed_ids": [
+        "seed-10007"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/GitHub_Integration.md` still points to a non-existent `Plans/Orchestrator_Page.md#11. Source Control boundary`, which sharpens `gap-007`'s owner-heading defect.",
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "gap-007"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05467",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07052 is present for Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007`",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07052"
+      ],
+      "source_obligation_ids": [
+        "obl-6642"
+      ],
+      "source_seed_ids": [
+        "seed-10134"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.md`, `Plans/FinalGUISpec.md`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `restore points`, and the broken `#11. Source Control boundary` reference.",
+        "gap-002",
+        "gap-006",
+        "gap-007",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05515",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07108 is present for `gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` r",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07108"
+      ],
+      "source_obligation_ids": [
+        "obl-6686"
+      ],
+      "source_seed_ids": [
+        "seed-10258"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference survives not only in `Plans/GitHub_Integration.md` but also in `Plans/storage-plan.md` and `Plans/WorktreeGitImprovement.md`, while `Plans/FinalGUISpec.md` still preserves the `restore points` contradiction.",
+        "gap-007",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "Plans/GitHub_Integration.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FinalGUISpec.md",
+        "restore points"
+      ],
+      "stale_tokens": [
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md",
+        "gap-007",
+        "restore points"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00376",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00481 is partial for clearly separates Source Control from GitHub Actions and places worktree management in Hea",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-040: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00481"
+      ],
+      "source_obligation_ids": [
+        "obl-338"
+      ],
+      "source_seed_ids": [
+        "seed-391"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "clearly separates Source Control from GitHub Actions and places worktree management in Health/Settings, but does not yet express the stronger Orchestrator-vs-Source-Control lane/worktree boundary."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00468",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00599 is partial for live mutating / decision-bearing actions must tighten on trust state",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00599"
+      ],
+      "source_obligation_ids": [
+        "obl-456"
+      ],
+      "source_seed_ids": [
+        "seed-526"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "live mutating / decision-bearing actions must tighten on trust state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00469",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00600 is partial for `current`: all normal actions allowed",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00600"
+      ],
+      "source_obligation_ids": [
+        "obl-457"
+      ],
+      "source_seed_ids": [
+        "seed-527"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "`current`: all normal actions allowed",
+        "current"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00576",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00729 is partial for `Show in ...` actions",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00729"
+      ],
+      "source_obligation_ids": [
+        "obl-586"
+      ],
+      "source_seed_ids": [
+        "seed-667"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "`Show in ...` actions",
+        "Show in ..."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00730",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00961 is partial for worktree prune/remove and cleanup actions should disclose:",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Fidelity recovery cov-040: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00961"
+      ],
+      "source_obligation_ids": [
+        "obl-818"
+      ],
+      "source_seed_ids": [
+        "seed-942"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "exact_missing_items": [
+        "worktree prune/remove and cleanup actions should disclose:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00905",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01161 is partial for integration/governance persona biased toward cross-package integration truth",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01161"
+      ],
+      "source_obligation_ids": [
+        "obl-1018"
+      ],
+      "source_seed_ids": [
+        "seed-1194"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "integration/governance persona biased toward cross-package integration truth"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00945",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01210 is partial for `Weak Integration`",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01210"
+      ],
+      "source_obligation_ids": [
+        "obl-1067"
+      ],
+      "source_seed_ids": [
+        "seed-1258",
+        "seed-1745",
+        "seed-1777",
+        "seed-2505",
+        "seed-2533"
+      ],
+      "source_shard_ids": [
+        "shard-0021",
+        "shard-0026",
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "`Weak Integration`",
+        "Weak Integration"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01077",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01372 is partial for recover / retry / approve / decline / replan / restore / cleanup actions that already have",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01372"
+      ],
+      "source_obligation_ids": [
+        "obl-1229"
+      ],
+      "source_seed_ids": [
+        "seed-1470"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "exact_missing_items": [
+        "recover / retry / approve / decline / replan / restore / cleanup actions that already have canonical runtime semantics and confirmation rules"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01103",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01399 is partial for bulk actions should be far narrower than bulk navigation",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01399"
+      ],
+      "source_obligation_ids": [
+        "obl-1256"
+      ],
+      "source_seed_ids": [
+        "seed-1501"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "exact_missing_items": [
+        "bulk actions should be far narrower than bulk navigation"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01108",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01407 is partial for when actions must be gated",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "# GitHub Integration -- Spec"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01407"
+      ],
+      "source_obligation_ids": [
+        "obl-1264"
+      ],
+      "source_seed_ids": [
+        "seed-1515"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "exact_missing_items": [
+        "when actions must be gated"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

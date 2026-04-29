@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-678",
+  "group_ids": [
+    "discgrp-2709",
+    "discgrp-2710",
+    "discgrp-2711",
+    "discgrp-2712"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02989",
+      "source_obligation_ids": [
+        "obl-2835"
+      ],
+      "source_seed_ids": [
+        "seed-3740"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02990",
+      "source_obligation_ids": [
+        "obl-2836"
+      ],
+      "source_seed_ids": [
+        "seed-3741"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02991",
+      "source_obligation_ids": [
+        "obl-2837"
+      ],
+      "source_seed_ids": [
+        "seed-3742"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Permissions_System.md",
+      "new_heading_hint": "# Permissions System (Canonical SSOT)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Permissions_System.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02992",
+      "source_obligation_ids": [
+        "obl-2838"
+      ],
+      "source_seed_ids": [
+        "seed-3743"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "# Human-in-the-Loop (HITL) Mode -- Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

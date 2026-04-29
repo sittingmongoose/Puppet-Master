@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-626",
+  "group_ids": [
+    "discgrp-2501",
+    "discgrp-2502",
+    "discgrp-2503",
+    "discgrp-2504"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02779",
+      "source_obligation_ids": [
+        "obl-2626"
+      ],
+      "source_seed_ids": [
+        "seed-3446"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02780",
+      "source_obligation_ids": [
+        "obl-2627"
+      ],
+      "source_seed_ids": [
+        "seed-3447"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "### 3.5 Assistant thread worktree binding ownership",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L108"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02781",
+      "source_obligation_ids": [
+        "obl-2628"
+      ],
+      "source_seed_ids": [
+        "seed-3448"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02782",
+      "source_obligation_ids": [
+        "obl-2629"
+      ],
+      "source_seed_ids": [
+        "seed-3449"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "### Selection reason and audit trail",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Models_System.md:L954"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

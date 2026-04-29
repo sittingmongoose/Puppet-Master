@@ -1,0 +1,340 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-164",
+  "group_ids": [
+    "pktgrp-0653",
+    "pktgrp-0654",
+    "pktgrp-0655",
+    "pktgrp-0656"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0098",
+      "source_reconciliation_target_id": "target-0489",
+      "source_reconciliation_target_ids": [
+        "target-0489"
+      ],
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "operation": "observe_only",
+      "live_anchor": "## 7. JSON schemas (all required) (Plans/Runtime_Artifacts_Panel.md:L188)",
+      "coverage_row_ids": [
+        "cov-06369",
+        "cov-06895",
+        "cov-06957",
+        "cov-06993",
+        "cov-07088"
+      ],
+      "source_obligation_ids": [
+        "obl-6010",
+        "obl-6497",
+        "obl-6557",
+        "obl-6589",
+        "obl-6668"
+      ],
+      "source_seed_ids": [
+        "seed-9093",
+        "seed-9880",
+        "seed-9967",
+        "seed-10044",
+        "seed-10209"
+      ],
+      "source_shard_ids": [
+        "shard-0082",
+        "shard-0088",
+        "shard-0089",
+        "shard-0090"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-6010",
+          "obl-6497",
+          "obl-6557",
+          "obl-6589",
+          "obl-6668"
+        ],
+        "source_seed_ids": [
+          "seed-9093",
+          "seed-9880",
+          "seed-9967",
+          "seed-10044",
+          "seed-10209"
+        ],
+        "source_shard_ids": [
+          "shard-0082",
+          "shard-0088",
+          "shard-0089",
+          "shard-0090"
+        ]
+      },
+      "gap_ids": [
+        "gap-04946",
+        "gap-05341",
+        "gap-05396",
+        "gap-05427",
+        "gap-05498"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`meta.json` remains `status: \"active\"` exactly as required; this pass closes the research sweep but does not itself mark the work item ready for reconciliation.",
+        "meta.json",
+        "status: \"active\"",
+        "The v2 `canon_inventory.json` keeps only the eight surviving canon clusters needed for the remaining blockers.",
+        "canon_inventory.json",
+        "`open_gaps.json.next_required_stage` is returned to `Audit Mode`; this pass updated the compact blocker bundle directly rather than handing off to Ready Check.",
+        "open_gaps.json.next_required_stage",
+        "Audit Mode",
+        "`open_gaps.json.next_required_stage` returns to `Audit Mode` because the bundle still needs targeted owner-anchor and consumer-propagation repair rather than another readiness check.",
+        "`canon_inventory.json` now lags the refined blocker wording again, so the next useful stage is `Ledger Condenser`.",
+        "Ledger Condenser"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-6f2c449767b3",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0099",
+      "source_reconciliation_target_id": "target-0492",
+      "source_reconciliation_target_ids": [
+        "target-0492"
+      ],
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "operation": "observe_only",
+      "live_anchor": "### Fidelity recovery cov-183: Bridge-field precedence for attempt/provider/usage/receipt joins (Plans/Runtime_Artifacts_Panel.md:L19)",
+      "coverage_row_ids": [
+        "cov-01092"
+      ],
+      "source_obligation_ids": [
+        "obl-949"
+      ],
+      "source_seed_ids": [
+        "seed-1116"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-949"
+        ],
+        "source_seed_ids": [
+          "seed-1116"
+        ],
+        "source_shard_ids": [
+          "shard-0019"
+        ]
+      },
+      "gap_ids": [
+        "gap-00848"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "UI should show the winning source, not force the user to reconstruct precedence from docs"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-b8331efcee20",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0100",
+      "source_reconciliation_target_id": "target-0493",
+      "source_reconciliation_target_ids": [
+        "target-0493"
+      ],
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "operation": "observe_only",
+      "live_anchor": "### Fidelity recovery cov-191: Artifacts index exact indexed fields (Plans/Runtime_Artifacts_Panel.md:L31)",
+      "coverage_row_ids": [
+        "cov-03577"
+      ],
+      "source_obligation_ids": [
+        "obl-3423"
+      ],
+      "source_seed_ids": [
+        "seed-4610"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3423"
+        ],
+        "source_seed_ids": [
+          "seed-4610"
+        ],
+        "source_shard_ids": [
+          "shard-0048"
+        ]
+      },
+      "gap_ids": [
+        "gap-02801"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Align artifact ID guidance so `attempt_id?` and `node_id?` are first-class indexed refs where relevant.",
+        "attempt_id?",
+        "node_id?"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-39fad5249823",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0101",
+      "source_reconciliation_target_id": "target-0500",
+      "source_reconciliation_target_ids": [
+        "target-0500"
+      ],
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "operation": "observe_only",
+      "live_anchor": "#### Persistence and recovery guarantees (Plans/Section15_MVP_Promoted_Features_Spec.md:L408)",
+      "coverage_row_ids": [
+        "cov-06179"
+      ],
+      "source_obligation_ids": [
+        "obl-5951"
+      ],
+      "source_seed_ids": [
+        "seed-8850"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-5951"
+        ],
+        "source_seed_ids": [
+          "seed-8850"
+        ],
+        "source_shard_ids": [
+          "shard-0081"
+        ]
+      },
+      "gap_ids": [
+        "gap-04776"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`feature-list.md` / `newfeatures.md` still mix promoted shell/runtime language with pre-promotion page/title-bar/recovery models, and now also show internal contradictions around persistence identity and recovery anchors.",
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-e68e88a56253",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-06369",
+    "cov-06895",
+    "cov-06957",
+    "cov-06993",
+    "cov-07088",
+    "cov-01092",
+    "cov-03577",
+    "cov-06179"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-6010",
+    "obl-6497",
+    "obl-6557",
+    "obl-6589",
+    "obl-6668",
+    "obl-949",
+    "obl-3423",
+    "obl-5951"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-9093",
+    "seed-9880",
+    "seed-9967",
+    "seed-10044",
+    "seed-10209",
+    "seed-1116",
+    "seed-4610",
+    "seed-8850"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0082",
+    "shard-0088",
+    "shard-0089",
+    "shard-0090",
+    "shard-0019",
+    "shard-0048",
+    "shard-0081"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "preserved_exact_required_items": [
+    "`meta.json` remains `status: \"active\"` exactly as required; this pass closes the research sweep but does not itself mark the work item ready for reconciliation.",
+    "meta.json",
+    "status: \"active\"",
+    "The v2 `canon_inventory.json` keeps only the eight surviving canon clusters needed for the remaining blockers.",
+    "canon_inventory.json",
+    "`open_gaps.json.next_required_stage` is returned to `Audit Mode`; this pass updated the compact blocker bundle directly rather than handing off to Ready Check.",
+    "open_gaps.json.next_required_stage",
+    "Audit Mode",
+    "`open_gaps.json.next_required_stage` returns to `Audit Mode` because the bundle still needs targeted owner-anchor and consumer-propagation repair rather than another readiness check.",
+    "`canon_inventory.json` now lags the refined blocker wording again, so the next useful stage is `Ledger Condenser`.",
+    "Ledger Condenser",
+    "UI should show the winning source, not force the user to reconstruct precedence from docs",
+    "Align artifact ID guidance so `attempt_id?` and `node_id?` are first-class indexed refs where relevant.",
+    "attempt_id?",
+    "node_id?",
+    "`feature-list.md` / `newfeatures.md` still mix promoted shell/runtime language with pre-promotion page/title-bar/recovery models, and now also show internal contradictions around persistence identity and recovery anchors.",
+    "feature-list.md",
+    "newfeatures.md"
+  ],
+  "blocked_targets": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1435",
+  "group_ids": [
+    "discgrp-5737",
+    "discgrp-5738",
+    "discgrp-5739",
+    "discgrp-5740"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06212",
+      "source_obligation_ids": [
+        "obl-5981"
+      ],
+      "source_seed_ids": [
+        "seed-8989"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "## 2. Canonical command IDs",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L64"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06213",
+      "source_obligation_ids": [
+        "obl-5982"
+      ],
+      "source_seed_ids": [
+        "seed-8990"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06214",
+      "source_obligation_ids": [
+        "obl-5983"
+      ],
+      "source_seed_ids": [
+        "seed-8991"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Document_Packaging_Policy.md",
+      "new_heading_hint": "## 5. Three independent audits (full coverage, no sampling)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L121"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06220",
+      "source_obligation_ids": [
+        "obl-5985"
+      ],
+      "source_seed_ids": [
+        "seed-9005"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "### 4.4 Two Gemini providers",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Models_System.md:L274"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

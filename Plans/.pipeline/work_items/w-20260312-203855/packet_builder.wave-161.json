@@ -1,0 +1,281 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-161",
+  "group_ids": [
+    "pktgrp-0641",
+    "pktgrp-0642",
+    "pktgrp-0643",
+    "pktgrp-0644"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0086",
+      "source_reconciliation_target_id": "target-0423",
+      "source_reconciliation_target_ids": [
+        "target-0423"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "operation": "observe_only",
+      "live_anchor": "#### Orchestrator-wide scale contract (Plans/Orchestrator_Page.md:L427)",
+      "coverage_row_ids": [
+        "cov-01357"
+      ],
+      "source_obligation_ids": [
+        "obl-1214"
+      ],
+      "source_seed_ids": [
+        "seed-1450"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1214"
+        ],
+        "source_seed_ids": [
+          "seed-1450"
+        ],
+        "source_shard_ids": [
+          "shard-0023"
+        ]
+      },
+      "gap_ids": [
+        "gap-01063"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Add an Orchestrator-wide scale contract that sits above individual tab docs."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-fc6635ee2e86",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0087",
+      "source_reconciliation_target_id": "target-0424",
+      "source_reconciliation_target_ids": [
+        "target-0424"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "operation": "observe_only",
+      "live_anchor": "#### Progress widget catalog and drill mappings (Plans/Orchestrator_Page.md:L373)",
+      "coverage_row_ids": [
+        "cov-02119",
+        "cov-06115"
+      ],
+      "source_obligation_ids": [
+        "obl-1976",
+        "obl-5887"
+      ],
+      "source_seed_ids": [
+        "seed-2569",
+        "seed-8745"
+      ],
+      "source_shard_ids": [
+        "shard-0034",
+        "shard-0080"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1976",
+          "obl-5887"
+        ],
+        "source_seed_ids": [
+          "seed-2569",
+          "seed-8745"
+        ],
+        "source_shard_ids": [
+          "shard-0034",
+          "shard-0080"
+        ]
+      },
+      "gap_ids": [
+        "gap-01647",
+        "gap-04728"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "widget layout keys are page-global (`widget_layout:v1:orchestrator:progress`)",
+        "widget_layout:v1:orchestrator:progress",
+        "The `Progress` tab is already correctly identified as widget-composed, but its default widget contract is still strongly tier-era.",
+        "Progress"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-9980f4d8ab99",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0088",
+      "source_reconciliation_target_id": "target-0429",
+      "source_reconciliation_target_ids": [
+        "target-0429"
+      ],
+      "path": "Plans/Permissions_System.md",
+      "operation": "observe_only",
+      "live_anchor": "### 1.2 Tool registry/policy vs Permission rules (Plans/Permissions_System.md:L81)",
+      "coverage_row_ids": [
+        "cov-02714"
+      ],
+      "source_obligation_ids": [
+        "obl-2561"
+      ],
+      "source_seed_ids": [
+        "seed-3359"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-2561"
+        ],
+        "source_seed_ids": [
+          "seed-3359"
+        ],
+        "source_shard_ids": [
+          "shard-0039"
+        ]
+      },
+      "gap_ids": [
+        "gap-02133"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Permission approval state must not leak across lanes or accounts just because actors share a UI session."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-b166c61c185d",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0089",
+      "source_reconciliation_target_id": "target-0432",
+      "source_reconciliation_target_ids": [
+        "target-0432"
+      ],
+      "path": "Plans/Plugins_System.md",
+      "operation": "observe_only",
+      "live_anchor": "### 4.1 Tool execution hooks (Plans/Plugins_System.md:L168)",
+      "coverage_row_ids": [
+        "cov-04897"
+      ],
+      "source_obligation_ids": [
+        "obl-4674"
+      ],
+      "source_seed_ids": [
+        "seed-6693"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4674"
+        ],
+        "source_seed_ids": [
+          "seed-6693"
+        ],
+        "source_shard_ids": [
+          "shard-0064"
+        ]
+      },
+      "gap_ids": [
+        "gap-03830"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Plugins_System.md` still has a severe hook/schema split, missing `mutation_capable` on plugin tools, in-process execution ambiguity vs subprocess-sandbox expectations, and prompt/param hooks that can bypass run-mode safety assumptions.",
+        "Plugins_System.md",
+        "mutation_capable"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-06fcb31f2a91",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-01357",
+    "cov-02119",
+    "cov-06115",
+    "cov-02714",
+    "cov-04897"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-1214",
+    "obl-1976",
+    "obl-5887",
+    "obl-2561",
+    "obl-4674"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-1450",
+    "seed-2569",
+    "seed-8745",
+    "seed-3359",
+    "seed-6693"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0023",
+    "shard-0034",
+    "shard-0080",
+    "shard-0039",
+    "shard-0064"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "Add an Orchestrator-wide scale contract that sits above individual tab docs.",
+    "widget layout keys are page-global (`widget_layout:v1:orchestrator:progress`)",
+    "widget_layout:v1:orchestrator:progress",
+    "The `Progress` tab is already correctly identified as widget-composed, but its default widget contract is still strongly tier-era.",
+    "Progress",
+    "Permission approval state must not leak across lanes or accounts just because actors share a UI session.",
+    "`Plugins_System.md` still has a severe hook/schema split, missing `mutation_capable` on plugin tools, in-process execution ambiguity vs subprocess-sandbox expectations, and prompt/param hooks that can bypass run-mode safety assumptions.",
+    "Plugins_System.md",
+    "mutation_capable"
+  ],
+  "blocked_targets": []
+}

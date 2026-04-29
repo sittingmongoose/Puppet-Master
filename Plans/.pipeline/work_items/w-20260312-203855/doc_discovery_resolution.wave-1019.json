@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1019",
+  "group_ids": [
+    "discgrp-4073",
+    "discgrp-4074",
+    "discgrp-4075",
+    "discgrp-4076"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04386",
+      "source_obligation_ids": [
+        "obl-4226"
+      ],
+      "source_seed_ids": [
+        "seed-5877"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Canonical Runtime Event, Outcome, and Action Contract Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1473"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04387",
+      "source_obligation_ids": [
+        "obl-4227"
+      ],
+      "source_seed_ids": [
+        "seed-5878"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04389",
+      "source_obligation_ids": [
+        "obl-4229"
+      ],
+      "source_seed_ids": [
+        "seed-5880"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "### 1.2 UICommand (internal dispatch) \u2014 distinction",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Commands_System.md:L36"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04390",
+      "source_obligation_ids": [
+        "obl-4230"
+      ],
+      "source_seed_ids": [
+        "seed-5881"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L91"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

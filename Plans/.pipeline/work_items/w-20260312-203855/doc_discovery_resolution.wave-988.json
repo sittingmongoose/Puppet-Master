@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-988",
+  "group_ids": [
+    "discgrp-3949",
+    "discgrp-3950",
+    "discgrp-3951",
+    "discgrp-3952"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04256",
+      "source_obligation_ids": [
+        "obl-4096"
+      ],
+      "source_seed_ids": [
+        "seed-5670"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-04257",
+      "source_obligation_ids": [
+        "obl-4097"
+      ],
+      "source_seed_ids": [
+        "seed-5682"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/OpenCode_Deep_Extraction.md",
+      "new_heading_hint": "# OpenCode Deep Extraction (for Puppet Master)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04258",
+      "source_obligation_ids": [
+        "obl-4098"
+      ],
+      "source_seed_ids": [
+        "seed-5683"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Cross-surface runtime, concern, and route/open contracts",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L251"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04259",
+      "source_obligation_ids": [
+        "obl-4099"
+      ],
+      "source_seed_ids": [
+        "seed-5684"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-071: Canonical route payload",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L113"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

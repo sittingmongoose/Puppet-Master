@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-852",
+  "group_ids": [
+    "discgrp-3405",
+    "discgrp-3406",
+    "discgrp-3407",
+    "discgrp-3408"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03693",
+      "source_obligation_ids": [
+        "obl-3538"
+      ],
+      "source_seed_ids": [
+        "seed-4761"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "#### Open subject navigation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03694",
+      "source_obligation_ids": [
+        "obl-3539"
+      ],
+      "source_seed_ids": [
+        "seed-4762"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Orchestrator rewrite terms",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L56"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03695",
+      "source_obligation_ids": [
+        "obl-3540"
+      ],
+      "source_seed_ids": [
+        "seed-4763"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-memory-subsystem.md",
+      "new_heading_hint": "# Assistant-Only Memory Subsystem (Canonical SSOT)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03696",
+      "source_obligation_ids": [
+        "obl-3541"
+      ],
+      "source_seed_ids": [
+        "seed-4764"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "# Assistant & Chat UI -- Design Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

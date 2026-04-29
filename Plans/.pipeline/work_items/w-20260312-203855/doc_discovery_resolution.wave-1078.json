@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1078",
+  "group_ids": [
+    "discgrp-4309",
+    "discgrp-4310",
+    "discgrp-4311",
+    "discgrp-4312"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04686",
+      "source_obligation_ids": [
+        "obl-4464"
+      ],
+      "source_seed_ids": [
+        "seed-6348"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-033: Concern linkage to adjacent families",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L83"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04687",
+      "source_obligation_ids": [
+        "obl-4465"
+      ],
+      "source_seed_ids": [
+        "seed-6349"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04688",
+      "source_obligation_ids": [
+        "obl-4466"
+      ],
+      "source_seed_ids": [
+        "seed-6350"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "# Adding Tool Support -- Research & Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Tools.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04689",
+      "source_obligation_ids": [
+        "obl-4467"
+      ],
+      "source_seed_ids": [
+        "seed-6351"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "### 17.6 Context Lens (Mute / Focus / Subcompact) \u2014 user-directed context shaping (thread-local)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L1582"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

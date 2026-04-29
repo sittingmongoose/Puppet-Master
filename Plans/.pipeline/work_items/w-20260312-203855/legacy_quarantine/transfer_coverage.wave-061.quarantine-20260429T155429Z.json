@@ -1,0 +1,446 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-061",
+  "timestamp_utc": "2026-04-28T21:34:56Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-241",
+    "coverage-rowgrp-242",
+    "coverage-rowgrp-243",
+    "coverage-rowgrp-244"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-241 cov-066,cov-099,cov-363,cov-385,cov-533,cov-690 Plans/assistant-chat-design.md",
+    "rowgrp-242 cov-834,cov-836 Plans/assistant-chat-design.md",
+    "rowgrp-243 cov-162,cov-367,cov-510,cov-661,cov-669,cov-942,cov-967,cov-970,cov-976,cov-989 Plans/assistant-chat-design.md",
+    "rowgrp-244 cov-1057,cov-1061 Plans/assistant-chat-design.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-241": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-242": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-243": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-244": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-066",
+    "cov-099",
+    "cov-363",
+    "cov-385",
+    "cov-533",
+    "cov-690",
+    "cov-834",
+    "cov-836",
+    "cov-162",
+    "cov-367",
+    "cov-510",
+    "cov-661",
+    "cov-669",
+    "cov-942",
+    "cov-967",
+    "cov-970",
+    "cov-976",
+    "cov-989",
+    "cov-1057",
+    "cov-1061"
+  ],
+  "coverage_ids_completed": [
+    "cov-066",
+    "cov-099",
+    "cov-363",
+    "cov-385",
+    "cov-533",
+    "cov-690",
+    "cov-834",
+    "cov-836",
+    "cov-162",
+    "cov-367",
+    "cov-510",
+    "cov-661",
+    "cov-669",
+    "cov-942",
+    "cov-967",
+    "cov-970",
+    "cov-976",
+    "cov-989",
+    "cov-1057",
+    "cov-1061"
+  ],
+  "path_groups_assigned": [
+    "Plans/assistant-chat-design.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-066",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md:7-17 repairs the shared conversational/runtime boundary and states assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator while remaining distinct actor/run kinds"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Shared runtime repair exists, but the supersession hotspot stale-token set is not directly present.",
+      "source_obligation_ids": [
+        "obl-029"
+      ],
+      "source_seed_ids": [
+        "seed-029"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-099",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/assistant-chat-design.md has no graph-schema constant replacement, package/seam/lane/worktree/account identity field coverage, or contamination/safe-point linkage.",
+      "source_obligation_ids": [
+        "obl-034"
+      ],
+      "source_seed_ids": [
+        "seed-034"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-363",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md:15-16 states assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator and remain distinct actor/run kinds rather than package/seam/node execution objects",
+        "Plans/assistant-chat-design.md:56 states requested/effective runtime identity, account binding, and auth state are imported from shared runtime contracts",
+        "Plans/assistant-chat-design.md:1277 states Assistant Chat may display requested/effective runtime identity but must consume the owner-doc shared runtime model rather than invent assistant-local fields"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Shared runtime identity semantics are present, but the full upstream conversational/document-production actor framing is incomplete.",
+      "source_obligation_ids": [
+        "obl-108"
+      ],
+      "source_seed_ids": [
+        "seed-108"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-385",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/assistant-chat-design.md has generic blocked_reason_code references but no notification routing by severity/execution impact/blocked owner/persistence/projection trust or stale/degraded notification policy.",
+      "source_obligation_ids": [
+        "obl-115"
+      ],
+      "source_seed_ids": [
+        "seed-115"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-533",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/assistant-chat-design.md has no canonical internal route_payload schema or navigation-command inconsistency coverage.",
+      "source_obligation_ids": [
+        "obl-153"
+      ],
+      "source_seed_ids": [
+        "seed-153"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-690",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/assistant-chat-design.md has no direct FinalGUISpec navigation contradiction, Orchestrator_Page UICommand IDs issue, cmd.orchestrator.switch_tab reference, reserved slash override disagreement, or cmd.chat.run_user_command coverage.",
+      "source_obligation_ids": [
+        "obl-190"
+      ],
+      "source_seed_ids": [
+        "seed-190"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-834",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md:1775 defines Export conversation to Markdown or JSON",
+        "Plans/assistant-chat-design.md:1782 defines Session share as a shareable bundle of messages and metadata without secrets"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Export/share bundles exist, but identity-preserving export manifests for non-trivial bundle exports are absent.",
+      "source_obligation_ids": [
+        "obl-233"
+      ],
+      "source_seed_ids": [
+        "seed-233"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-836",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md:1667-1670 defines dashboard warnings and Calls to Action requiring or benefiting from user attention",
+        "Plans/assistant-chat-design.md:1672-1679 defines chat Assistant handling for addressable HITL prompts and CtAs",
+        "Plans/assistant-chat-design.md:2768-2776 defines canonical route payload route args and structured blocked_notice emission"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "CtAs and blocked_notice handling exist, but canonical route-target consumer status is not directly defined.",
+      "source_obligation_ids": [
+        "obl-234"
+      ],
+      "source_seed_ids": [
+        "seed-234"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-162",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md:56 states identity disclosure imports requested/effective runtime identity, account binding, and auth state from shared runtime contracts"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Requested/effective account identity is present, but fallback reason and account switching are absent.",
+      "source_obligation_ids": [
+        "obl-043"
+      ],
+      "source_seed_ids": [
+        "seed-043"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-367",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/assistant-chat-design.md does not preserve distinct actor/run kinds in record/search/routing contracts or define shared blocked/remediation taxonomy across thread_id/wizard_id/run_id/attempt ids.",
+      "source_obligation_ids": [
+        "obl-109"
+      ],
+      "source_seed_ids": [
+        "seed-109"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-510",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md:933 states resume_url is serialized transport only and must not outgrow the canonical route contract"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "resume_url precedent exists, but shared project_attention_item contract or normalized row model is absent.",
+      "source_obligation_ids": [
+        "obl-147"
+      ],
+      "source_seed_ids": [
+        "seed-147"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-661",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/assistant-chat-design.md has no wizard/interview handoff payload lineage or canonical runtime/history/ledger/search/audit identity subset.",
+      "source_obligation_ids": [
+        "obl-187"
+      ],
+      "source_seed_ids": [
+        "seed-187"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-669",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md:1922 mirrors each pass resolved provider/model selection into validation_pass_report payload fields in seglog"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "validation_pass_report is present, but workflow_run_id grouping and required fields wizard_id/project_id/thread_id/phase_plan_ref/staged_bundle are absent.",
+      "source_obligation_ids": [
+        "obl-188"
+      ],
+      "source_seed_ids": [
+        "seed-188"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-942",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md:931 states source opens resolve through OpenSubject or OpenFile"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "OpenSubject is referenced, but subject_id/open_intent contract definition is absent.",
+      "source_obligation_ids": [
+        "obl-264"
+      ],
+      "source_seed_ids": [
+        "seed-264"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-967",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md:933 states resume_url is serialized transport only and must not outgrow the canonical route contract"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "resume_url transport is present, but not explicitly serialized route_target nor framed against a second routing ontology.",
+      "source_obligation_ids": [
+        "obl-270"
+      ],
+      "source_seed_ids": [
+        "seed-270"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-970",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md:930-933 states routed opens resolve through route_target, source opens through OpenSubject/OpenFile, and resume_url is serialized transport only within the canonical route contract"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "route_target/resume_url/OpenSubject are present, but Contracts_V0 definition and allowed serialized data classes are absent.",
+      "source_obligation_ids": [
+        "obl-271"
+      ],
+      "source_seed_ids": [
+        "seed-271"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-976",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/assistant-chat-design.md has no canonical object_kind enum or blocked_episode/project_id/focused_run_id/object_id/blocked_sequence/node_id scope definition.",
+      "source_obligation_ids": [
+        "obl-272"
+      ],
+      "source_seed_ids": [
+        "seed-272"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-989",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md:944 states restore-and-branch creates a new thread_id and branch_id linked to source restore point and source thread"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "thread_id restoration exists, but object_kind=wizard and object_id=<wizard_id> mapping is absent.",
+      "source_obligation_ids": [
+        "obl-276"
+      ],
+      "source_seed_ids": [
+        "seed-276"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1057",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md:929-933 states routed opens resolve through route_target, source opens through OpenSubject/OpenFile, shared internal route model covers thread usage/artifact usage/ledger pivots/wizard resume/object-focused opens, and resume_url is serialized transport only"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "resume_url and route model exist, but node-native blocked/runtime storage reconciliation, tier_runtime_record replacement, and tier_id cross-surface key removal are absent.",
+      "source_obligation_ids": [
+        "obl-300"
+      ],
+      "source_seed_ids": [
+        "seed-300"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1061",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md:2232-2245 defines unified thread blocked-state lifecycle, shared blocked packet reuse, required fields blocked_notice, blocked_sequence, approval_scope_key, allowed_action_ids[], multi-episode display, validation/remediation taxonomy membership, ordered action buttons, and sibling episode behavior"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Thread blocked-state fields are present, but cross-family minimums, preserved-work/local-state disclosure, stable identity/report refs, and node/wizard family additions are incomplete.",
+      "source_obligation_ids": [
+        "obl-301"
+      ],
+      "source_seed_ids": [
+        "seed-301"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-928",
+  "group_ids": [
+    "discgrp-3709",
+    "discgrp-3710",
+    "discgrp-3711",
+    "discgrp-3712"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04009",
+      "source_obligation_ids": [
+        "obl-3852"
+      ],
+      "source_seed_ids": [
+        "seed-5279"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "# FileSafe -- Implementation Plan",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FileSafe.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04010",
+      "source_obligation_ids": [
+        "obl-3853"
+      ],
+      "source_seed_ids": [
+        "seed-5280"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "### 8.2 Wrapper and config wiring (required)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L864"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04011",
+      "source_obligation_ids": [
+        "obl-3854"
+      ],
+      "source_seed_ids": [
+        "seed-5281"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "# Puppet Master \u2014 User-Project Project Plan Package Outputs (SSOT)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04012",
+      "source_obligation_ids": [
+        "obl-3855"
+      ],
+      "source_seed_ids": [
+        "seed-5282"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-003 -- UI SSOT (no bespoke UI behavior)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L45"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

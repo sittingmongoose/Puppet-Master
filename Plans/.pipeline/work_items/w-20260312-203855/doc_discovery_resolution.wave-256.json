@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-256",
+  "group_ids": [
+    "discgrp-1021",
+    "discgrp-1022",
+    "discgrp-1023",
+    "discgrp-1024"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01271",
+      "source_obligation_ids": [
+        "obl-1128"
+      ],
+      "source_seed_ids": [
+        "seed-1340"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "### Enhancement 5: Usage in header (compact)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/usage-feature.md:L599"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01272",
+      "source_obligation_ids": [
+        "obl-1129"
+      ],
+      "source_seed_ids": [
+        "seed-1341"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Account pressure, history, and runtime attribution baseline",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L491"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01273",
+      "source_obligation_ids": [
+        "obl-1130"
+      ],
+      "source_seed_ids": [
+        "seed-1342"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Account pressure, history, and runtime attribution baseline",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L491"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01274",
+      "source_obligation_ids": [
+        "obl-1131"
+      ],
+      "source_seed_ids": [
+        "seed-1343"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

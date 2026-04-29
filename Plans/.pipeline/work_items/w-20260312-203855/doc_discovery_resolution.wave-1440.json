@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1440",
+  "group_ids": [
+    "discgrp-5757",
+    "discgrp-5758",
+    "discgrp-5759",
+    "discgrp-5760"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06300",
+      "source_obligation_ids": [
+        "obl-6003"
+      ],
+      "source_seed_ids": [
+        "seed-9086"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_OpenCode.md",
+      "new_heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06301",
+      "source_obligation_ids": [
+        "obl-6004"
+      ],
+      "source_seed_ids": [
+        "seed-9087"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1409"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06302",
+      "source_obligation_ids": [
+        "obl-6005"
+      ],
+      "source_seed_ids": [
+        "seed-9088"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1409"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06303",
+      "source_obligation_ids": [
+        "obl-6006"
+      ],
+      "source_seed_ids": [
+        "seed-9089"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

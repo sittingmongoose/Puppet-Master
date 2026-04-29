@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1408",
+  "group_ids": [
+    "discgrp-5629",
+    "discgrp-5630",
+    "discgrp-5631",
+    "discgrp-5632"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06096",
+      "source_obligation_ids": [
+        "obl-5868"
+      ],
+      "source_seed_ids": [
+        "seed-8712"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "## GUI and Backend Scope (All In-Scope Now)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L795"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06097",
+      "source_obligation_ids": [
+        "obl-5869"
+      ],
+      "source_seed_ids": [
+        "seed-8713"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "## 3. Assessment: what we have and gaps (filled)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L104"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06098",
+      "source_obligation_ids": [
+        "obl-5870"
+      ],
+      "source_seed_ids": [
+        "seed-8714"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# omitted = inherit from base",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L870"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06100",
+      "source_obligation_ids": [
+        "obl-5872"
+      ],
+      "source_seed_ids": [
+        "seed-8717"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "## 2. Core terms",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Glossary.md:L54"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

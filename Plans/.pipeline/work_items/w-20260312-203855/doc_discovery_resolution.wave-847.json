@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-847",
+  "group_ids": [
+    "discgrp-3385",
+    "discgrp-3386",
+    "discgrp-3387",
+    "discgrp-3388"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03671",
+      "source_obligation_ids": [
+        "obl-3517"
+      ],
+      "source_seed_ids": [
+        "seed-4733"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03672",
+      "source_obligation_ids": [
+        "obl-3518"
+      ],
+      "source_seed_ids": [
+        "seed-4734"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03673",
+      "source_obligation_ids": [
+        "obl-3519"
+      ],
+      "source_seed_ids": [
+        "seed-4735"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "# Glossary (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Glossary.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03674",
+      "source_obligation_ids": [
+        "obl-3520"
+      ],
+      "source_seed_ids": [
+        "seed-4736"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "## Runtime Scheduler / Recovery Ownership and Precedence",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L300"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

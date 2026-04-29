@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1072",
+  "group_ids": [
+    "discgrp-4285",
+    "discgrp-4286",
+    "discgrp-4287",
+    "discgrp-4288"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04662",
+      "source_obligation_ids": [
+        "obl-4440"
+      ],
+      "source_seed_ids": [
+        "seed-6291"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-033: Concern linkage to adjacent families",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L83"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04663",
+      "source_obligation_ids": [
+        "obl-4441"
+      ],
+      "source_seed_ids": [
+        "seed-6292"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Additional shell/runtime identities required by the promoted Section 15 feature set",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L251"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04664",
+      "source_obligation_ids": [
+        "obl-4442"
+      ],
+      "source_seed_ids": [
+        "seed-6295"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "### Invariant C -- Cross-surface investigation identity",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L218"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04665",
+      "source_obligation_ids": [
+        "obl-4443"
+      ],
+      "source_seed_ids": [
+        "seed-6296"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "### 13.5 \"Run Chain Wizard Later\" Affordance",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L1518"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

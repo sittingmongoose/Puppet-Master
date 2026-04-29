@@ -1,0 +1,175 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-026",
+  "timestamp_utc": "2026-04-28T20:23:38Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-101",
+    "coverage-rowgrp-102",
+    "coverage-rowgrp-103",
+    "coverage-rowgrp-104"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-101 cov-082,cov-103 Plans/MiscPlan.md",
+    "rowgrp-102 cov-1103 Plans/MiscPlan.md",
+    "rowgrp-103 cov-1206 Plans/Models_System.md",
+    "rowgrp-104 cov-297,cov-513 Plans/Models_System.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-101": "completed_reduced_conservatively",
+    "coverage-rowgrp-102": "completed_reduced_conservatively",
+    "coverage-rowgrp-103": "completed_reduced_conservatively",
+    "coverage-rowgrp-104": "completed_reduced_conservatively"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-082",
+    "cov-103",
+    "cov-1103",
+    "cov-1206",
+    "cov-297",
+    "cov-513"
+  ],
+  "coverage_ids_completed": [
+    "cov-082",
+    "cov-103",
+    "cov-1103",
+    "cov-1206",
+    "cov-297",
+    "cov-513"
+  ],
+  "path_groups_assigned": [
+    "Plans/MiscPlan.md",
+    "Plans/Models_System.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-082",
+      "status": "partial",
+      "evidence": [
+        "Plans/MiscPlan.md:127-129 cleanup runs in workspace/worktree paths and still references tier worktree cleanup",
+        "Plans/MiscPlan.md:431-466 cleanup UI can clean current workspace and active worktrees with shared config and confirmation",
+        "Plans/MiscPlan.md:169-170 worktree cleanup behavior is delegated to WorktreeGitImprovement and assistant-chat-design"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "MiscPlan has direct worktree cleanup and tier-scoped residue, but it does not fully resolve the cross-doc no-worktree/per-subtask/singular-active-worktree contradictions or Source Control/Orchestrator visibility gaps.",
+      "source_obligation_ids": [
+        "obl-032"
+      ],
+      "source_seed_ids": [
+        "seed-032"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-103",
+      "status": "partial",
+      "evidence": [
+        "Plans/MiscPlan.md:427 cleanup config shares the existing run config path",
+        "Plans/MiscPlan.md:443-466 cleanup/evidence config use one schema and existing UI widgets for workspace cleanup"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Shared config and cleanup UI are present, but graph-schema constants, package/seam/lane/worktree/account identity fields, contamination/safe-point linkage, ownership boundaries, and duplicated addenda cleanup are not directly covered.",
+      "source_obligation_ids": [
+        "obl-034"
+      ],
+      "source_seed_ids": [
+        "seed-034"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1103",
+      "status": "partial",
+      "evidence": [
+        "Plans/MiscPlan.md:118 force-remove via Doctor applies only to orphan cleanup with no matching binding and no owner_thread_id",
+        "Plans/MiscPlan.md:1251-1260 prepare/cleanup must respect runtime safe points, retry_from_safe_point baselines, and remediation lineage",
+        "Plans/MiscPlan.md:1266-1268 safe-point and remediation lineage metadata must survive until terminal lineage resolution"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Safe-point/remediation lineage and orphan cleanup are covered, but requested/effective execution identity, provider-pool concurrency, projection trust vs scheduler authority, and Decision_Log rewrite owner gaps are not fully represented.",
+      "source_obligation_ids": [
+        "obl-319"
+      ],
+      "source_seed_ids": [
+        "seed-319"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1206",
+      "status": "partial",
+      "evidence": [
+        "Plans/Models_System.md:51-58 defines source/request/execution axes and display grammar preserving requested/effective values",
+        "Plans/Models_System.md:77-100 resolver inputs and shared emit shape include requested/effective platform/model/auth/account, execution_role, selection_reason, resolver_matrix_entry, worker_policy_display, and skipped controls",
+        "Plans/Models_System.md:603-624 cross-system effective selection fields include requested/effective runtime/account fields, account_switch_reason, execution_role, and selection_reason",
+        "Plans/Models_System.md:819-833 run surfaces display Persona, selection reason, effective platform/model/variant, and skipped controls"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Models_System covers resolver axes, emit shape, and display requirements, but not the three-way export taxonomy, Orchestrator export manifest contract, or exact named display grammar required by the row.",
+      "source_obligation_ids": [
+        "obl-344"
+      ],
+      "source_seed_ids": [
+        "seed-344"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-297",
+      "status": "partial",
+      "evidence": [
+        "Plans/Models_System.md:62-75 defines the canonical precedence chain and deterministic resolver rules",
+        "Plans/Models_System.md:88-100 resolver emits requested/effective fields, selection_reason, resolver_matrix_entry, worker_policy_display, and skipped controls",
+        "Plans/Models_System.md:524-526 resolver fallbacks must disclose the fallback reason"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Deterministic precedence and visible fallback are present, but reviewer/reviewer-pass and seam-overseer persona collapse constraints are not directly represented.",
+      "source_obligation_ids": [
+        "obl-085"
+      ],
+      "source_seed_ids": [
+        "seed-085"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-513",
+      "status": "partial",
+      "evidence": [
+        "Plans/Models_System.md:58 display grammar preserves requested/effective account identity",
+        "Plans/Models_System.md:88-100 resolver emit shape includes requested_account_id, effective_account_id, and execution_role",
+        "Plans/Models_System.md:121-124 requested/effective runtime/account identity fields disclose concrete runtime and provider/account identity",
+        "Plans/Models_System.md:483-497 model selection surfaces distinguish human labels, runtime surface, and canonical stored ids"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Requested/effective account and execution_role are present, but actor_kind, actor-scoped refs, and downstream Orchestrator/Run Graph consumer identity requirements are not fully stated.",
+      "source_obligation_ids": [
+        "obl-148"
+      ],
+      "source_seed_ids": [
+        "seed-148"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

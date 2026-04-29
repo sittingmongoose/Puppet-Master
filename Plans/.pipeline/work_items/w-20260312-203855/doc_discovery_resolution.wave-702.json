@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-702",
+  "group_ids": [
+    "discgrp-2805",
+    "discgrp-2806",
+    "discgrp-2807",
+    "discgrp-2808"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03085",
+      "source_obligation_ids": [
+        "obl-2931"
+      ],
+      "source_seed_ids": [
+        "seed-3875"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L774"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03086",
+      "source_obligation_ids": [
+        "obl-2932"
+      ],
+      "source_seed_ids": [
+        "seed-3876",
+        "seed-9294"
+      ],
+      "source_shard_ids": [
+        "shard-0043",
+        "shard-0084"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03087",
+      "source_obligation_ids": [
+        "obl-2933"
+      ],
+      "source_seed_ids": [
+        "seed-3877"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "#### Stable subagent and crew event families",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1512"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03088",
+      "source_obligation_ids": [
+        "obl-2934"
+      ],
+      "source_seed_ids": [
+        "seed-3878"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

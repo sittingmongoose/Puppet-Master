@@ -1,0 +1,181 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0026",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0026-L005001-L005200.md",
+  "source_line_range": "L005001-L005200",
+  "covered_shard_id": "shard-0026",
+  "seed_candidates": [
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "worktree cleanup lifecycle / historical lineage preservation",
+      "exact_items": [
+        "archive",
+        "prune",
+        "remove",
+        "cleanup_eligible",
+        "retained",
+        "suspect",
+        "restoring"
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Eligibility / gating direction",
+        "Trigger direction",
+        "Historical-lineage rule",
+        "Confirmation / undo implication",
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [
+        "historical",
+        "archived",
+        "removed",
+        "retained",
+        "cleanup_eligible"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L5010-L5020",
+        "working_ledger.md:L5023-L5031",
+        "working_ledger.md:L5045-L5057",
+        "working_ledger.md:L5060-L5070"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "canonical glossary ownership for rewrite-critical Orchestrator terms",
+      "exact_items": [
+        "Feature Seam",
+        "Work Package",
+        "Node",
+        "Package Overseer",
+        "Seam Overseer",
+        "Weak Integration",
+        "Promotion",
+        "Corroboration",
+        "Graph Patch",
+        "Graph Generation",
+        "Concern",
+        "Lane",
+        "Lane Pool",
+        "Worktree",
+        "Historical Run",
+        "Reopened",
+        "Revoked",
+        "Superseded",
+        "stale_historical",
+        "current",
+        "refreshing",
+        "stale",
+        "degraded",
+        "unavailable"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Personas.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Terms that now need canonical glossary ownership",
+        "Terms that need explicit distinction rules",
+        "Help-system implication",
+        "GUI copy implication"
+      ],
+      "stale_tokens": [
+        "requested",
+        "effective",
+        "historical",
+        "superseded",
+        "revoked"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L5100-L5127",
+        "working_ledger.md:L5128-L5140",
+        "working_ledger.md:L5142-L5158",
+        "working_ledger.md:L5170-L5178"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "help-system entries for distinction-heavy concepts",
+      "exact_items": [
+        "Weak Integration",
+        "Corroboration",
+        "Graph Patch",
+        "Promotion",
+        "Concern lifecycle",
+        "Lane vs Worktree",
+        "requested vs effective",
+        "safe point vs restore point",
+        "historical vs superseded vs revoked"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Help-system implication",
+        "Shared provider-runtime impact",
+        "GUI copy implication"
+      ],
+      "stale_tokens": [
+        "retry",
+        "old",
+        "completed",
+        "degraded",
+        "history"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L5142-L5157",
+        "working_ledger.md:L5170-L5179",
+        "working_ledger.md:L5180-L5193"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "cross-surface copy discipline / UI terminology drift",
+      "exact_items": [
+        "Orchestrator tabs",
+        "Source Control / lane/worktree language",
+        "blocked/recovery actions",
+        "concerns/promotions/patches/history/ledger labels"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md"
+      ],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [
+        "GUI copy implication",
+        "Contradictions / gaps surfaced",
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "retry",
+        "old",
+        "completed",
+        "degraded",
+        "history"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L5170-L5187",
+        "working_ledger.md:L5189-L5193"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "working_ledger.md:L5001-L5009",
+    "working_ledger.md:L5077-L5099",
+    "working_ledger.md:L5159-L5168",
+    "working_ledger.md:L5195-L5200"
+  ],
+  "uncertain_items": []
+}

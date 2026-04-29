@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1501",
+  "group_ids": [
+    "discgrp-6001",
+    "discgrp-6002",
+    "discgrp-6003",
+    "discgrp-6004"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06627",
+      "source_obligation_ids": [
+        "obl-6268"
+      ],
+      "source_seed_ids": [
+        "seed-9484"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/usage-feature.md:L328"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06629",
+      "source_obligation_ids": [
+        "obl-6270"
+      ],
+      "source_seed_ids": [
+        "seed-9486"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "## Unified Thread Blocked-State Lifecycle",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L2232"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06630",
+      "source_obligation_ids": [
+        "obl-6271"
+      ],
+      "source_seed_ids": [
+        "seed-9487"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "### 5. Per-thread usage in Chat (OpenCode-style)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/usage-feature.md:L198"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06631",
+      "source_obligation_ids": [
+        "obl-6272"
+      ],
+      "source_seed_ids": [
+        "seed-9488"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-186: Approval scope key and approver identity",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L165"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

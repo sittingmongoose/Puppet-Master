@@ -1,0 +1,406 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-004",
+  "group_ids": [
+    "gapgrp-0013",
+    "gapgrp-0014",
+    "gapgrp-0015",
+    "gapgrp-0016"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-00007",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00007 is missing for cross-tab consumer carry-through / deep-link contract",
+      "affected_targets": [
+        {
+          "path": "Plans/.../graph detail inspector docs",
+          "heading": "Key Facts and Findings"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00007"
+      ],
+      "source_obligation_ids": [
+        "obl-003"
+      ],
+      "source_seed_ids": [
+        "seed-003"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "exact_missing_items": [
+        "object/event focus should deep-link across Progress / Seams / Node Graph / Evidence / History / Ledger",
+        "deep links should carry selection/filter/focus context, not merely switch tabs",
+        "`Seams` and `Node Graph` should share focus context without hyperactive live-sync",
+        "clicking evidence/artifact links in graph detail should deep-link into the Evidence tab with target selection/filter applied",
+        "evidence and artifacts should remain linked bidirectionally"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00034",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "consumer coverage row cov-00034 is missing for shared concern projection across surfaces",
+      "affected_targets": [
+        {
+          "path": "Plans/.../history*",
+          "heading": "Shared concern projection rule now clarified"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00034"
+      ],
+      "source_obligation_ids": [
+        "obl-011"
+      ],
+      "source_seed_ids": [
+        "seed-011"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "All major surfaces should project the same concern model rather than inventing local versions",
+        "`Progress` = operational attention projection",
+        "`Seams` = integration/governance projection",
+        "`Evidence` = proof-backed concern projection",
+        "`History` = concern lifecycle timeline projection",
+        "`Ledger` = exact structured concern-record projection"
+      ],
+      "stale_tokens": [
+        "local versions"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00010",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-00010 is missing for legacy tab/object label retirement",
+      "affected_targets": [
+        {
+          "path": "Plans/.../label glossary docs",
+          "heading": "Key Facts and Findings"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00010"
+      ],
+      "source_obligation_ids": [
+        "obl-004"
+      ],
+      "source_seed_ids": [
+        "seed-004"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "exact_missing_items": [
+        "replace `Tiers` with a seam/package-oriented tab (name still open; likely `Seams` or equivalent)",
+        "prefer precise canonical terms in docs/runtime model",
+        "likely canonical tab/object labels: `Seams`, `Feature Seam`, `Work Package`, `Package Overseer`, `Seam Overseer`"
+      ],
+      "stale_tokens": [
+        "`Tiers`"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00022",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "consumer coverage row cov-00022 is missing for record-backed trust anchor under stale projections",
+      "affected_targets": [
+        {
+          "path": "Plans/.../ledger*",
+          "heading": "Fallback path under stale projections is now clearer"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00022"
+      ],
+      "source_obligation_ids": [
+        "obl-008"
+      ],
+      "source_seed_ids": [
+        "seed-008"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "Degrade from summary/projection surfaces to direct record-backed inspection",
+        "Ledger and direct record views become the trust anchor under degraded projection health",
+        "Only certain current/generation-matched direct records should support action",
+        "Direct record views that allow action should explicitly show currentness, generation match, superseded yes/no, actionable yes/no"
+      ],
+      "stale_tokens": [
+        "summary/projection surfaces",
+        "direct record views"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00035",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "consumer coverage row cov-00035 is missing for shared concern projection across surfaces",
+      "affected_targets": [
+        {
+          "path": "Plans/.../ledger*",
+          "heading": "Shared concern projection rule now clarified"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00035"
+      ],
+      "source_obligation_ids": [
+        "obl-011"
+      ],
+      "source_seed_ids": [
+        "seed-011"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "All major surfaces should project the same concern model rather than inventing local versions",
+        "`Progress` = operational attention projection",
+        "`Seams` = integration/governance projection",
+        "`Evidence` = proof-backed concern projection",
+        "`History` = concern lifecycle timeline projection",
+        "`Ledger` = exact structured concern-record projection"
+      ],
+      "stale_tokens": [
+        "local versions"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00007",
+    "cov-00034",
+    "cov-00010",
+    "cov-00022",
+    "cov-00035"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-003",
+    "obl-004",
+    "obl-008",
+    "obl-011"
+  ],
+  "source_seed_ids_represented": [
+    "seed-003",
+    "seed-004",
+    "seed-008",
+    "seed-011"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0001",
+    "shard-0002"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-00007",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-00007 is missing for cross-tab consumer carry-through / deep-link contract",
+      "affected_targets": [
+        {
+          "path": "Plans/.../graph detail inspector docs",
+          "heading": "Key Facts and Findings"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00007"
+      ],
+      "source_obligation_ids": [
+        "obl-003"
+      ],
+      "source_seed_ids": [
+        "seed-003"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "exact_missing_items": [
+        "object/event focus should deep-link across Progress / Seams / Node Graph / Evidence / History / Ledger",
+        "deep links should carry selection/filter/focus context, not merely switch tabs",
+        "`Seams` and `Node Graph` should share focus context without hyperactive live-sync",
+        "clicking evidence/artifact links in graph detail should deep-link into the Evidence tab with target selection/filter applied",
+        "evidence and artifacts should remain linked bidirectionally"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00034",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "consumer coverage row cov-00034 is missing for shared concern projection across surfaces",
+      "affected_targets": [
+        {
+          "path": "Plans/.../history*",
+          "heading": "Shared concern projection rule now clarified"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00034"
+      ],
+      "source_obligation_ids": [
+        "obl-011"
+      ],
+      "source_seed_ids": [
+        "seed-011"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "All major surfaces should project the same concern model rather than inventing local versions",
+        "`Progress` = operational attention projection",
+        "`Seams` = integration/governance projection",
+        "`Evidence` = proof-backed concern projection",
+        "`History` = concern lifecycle timeline projection",
+        "`Ledger` = exact structured concern-record projection"
+      ],
+      "stale_tokens": [
+        "local versions"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00010",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "stale_retirement coverage row cov-00010 is missing for legacy tab/object label retirement",
+      "affected_targets": [
+        {
+          "path": "Plans/.../label glossary docs",
+          "heading": "Key Facts and Findings"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00010"
+      ],
+      "source_obligation_ids": [
+        "obl-004"
+      ],
+      "source_seed_ids": [
+        "seed-004"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "exact_missing_items": [
+        "replace `Tiers` with a seam/package-oriented tab (name still open; likely `Seams` or equivalent)",
+        "prefer precise canonical terms in docs/runtime model",
+        "likely canonical tab/object labels: `Seams`, `Feature Seam`, `Work Package`, `Package Overseer`, `Seam Overseer`"
+      ],
+      "stale_tokens": [
+        "`Tiers`"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00022",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "consumer coverage row cov-00022 is missing for record-backed trust anchor under stale projections",
+      "affected_targets": [
+        {
+          "path": "Plans/.../ledger*",
+          "heading": "Fallback path under stale projections is now clearer"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00022"
+      ],
+      "source_obligation_ids": [
+        "obl-008"
+      ],
+      "source_seed_ids": [
+        "seed-008"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "Degrade from summary/projection surfaces to direct record-backed inspection",
+        "Ledger and direct record views become the trust anchor under degraded projection health",
+        "Only certain current/generation-matched direct records should support action",
+        "Direct record views that allow action should explicitly show currentness, generation match, superseded yes/no, actionable yes/no"
+      ],
+      "stale_tokens": [
+        "summary/projection surfaces",
+        "direct record views"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00035",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "consumer coverage row cov-00035 is missing for shared concern projection across surfaces",
+      "affected_targets": [
+        {
+          "path": "Plans/.../ledger*",
+          "heading": "Shared concern projection rule now clarified"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00035"
+      ],
+      "source_obligation_ids": [
+        "obl-011"
+      ],
+      "source_seed_ids": [
+        "seed-011"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "All major surfaces should project the same concern model rather than inventing local versions",
+        "`Progress` = operational attention projection",
+        "`Seams` = integration/governance projection",
+        "`Evidence` = proof-backed concern projection",
+        "`History` = concern lifecycle timeline projection",
+        "`Ledger` = exact structured concern-record projection"
+      ],
+      "stale_tokens": [
+        "local versions"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

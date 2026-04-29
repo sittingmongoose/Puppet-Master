@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-393",
+  "group_ids": [
+    "discgrp-1569",
+    "discgrp-1570",
+    "discgrp-1571",
+    "discgrp-1572"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01821",
+      "source_obligation_ids": [
+        "obl-1678"
+      ],
+      "source_seed_ids": [
+        "seed-2107"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01822",
+      "source_obligation_ids": [
+        "obl-1679"
+      ],
+      "source_seed_ids": [
+        "seed-2108"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-075: Historical semantic consistency",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L107"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01824",
+      "source_obligation_ids": [
+        "obl-1681"
+      ],
+      "source_seed_ids": [
+        "seed-2112"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01825",
+      "source_obligation_ids": [
+        "obl-1682"
+      ],
+      "source_seed_ids": [
+        "seed-2113"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

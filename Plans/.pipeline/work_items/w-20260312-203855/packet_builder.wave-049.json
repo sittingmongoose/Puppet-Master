@@ -1,0 +1,404 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-049",
+  "group_ids": [
+    "pktgrp-0193",
+    "pktgrp-0194",
+    "pktgrp-0195",
+    "pktgrp-0196"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "packet-target-0193",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "# omitted = inherit from base (Plans/FinalGUISpec.md:L870)",
+      "path": "Plans/FinalGUISpec.md",
+      "coverage_row_ids": [
+        "cov-04711",
+        "cov-04856",
+        "cov-06106"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-04711",
+          "cov-04856",
+          "cov-06106"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-4489",
+        "obl-4633",
+        "obl-5878"
+      ],
+      "source_seed_ids": [
+        "seed-6380",
+        "seed-6632",
+        "seed-8735"
+      ],
+      "source_shard_ids": [
+        "shard-0062",
+        "shard-0064",
+        "shard-0080"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4489",
+          "obl-4633",
+          "obl-5878"
+        ],
+        "source_seed_ids": [
+          "seed-6380",
+          "seed-6632",
+          "seed-8735"
+        ],
+        "source_shard_ids": [
+          "shard-0062",
+          "shard-0064",
+          "shard-0080"
+        ]
+      },
+      "gap_ids": [
+        "gap-03678",
+        "gap-03799",
+        "gap-04720"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "step/clarification focus is a domain-local anchor or serialized deep-link detail, not base identity",
+        "Let routes optionally name a destination-local subview only when that is necessary for the task, but treat it as destination refinement, not base identity.",
+        "the base structs and callbacks still teach tier/request-era identity"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-2b2e3f990726",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0249",
+      "source_reconciliation_target_ids": [
+        "target-0249"
+      ],
+      "source_target_ids": [
+        "target-0249"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0249\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - step/clarification focus is a domain-local anchor or serialized deep-link detail, not base identity\n  - Let routes optionally name a destination-local subview only when that is necessary for the task, but treat it as destination refinement, not base identity.\n  - the base structs and callbacks still teach tier/request-era identity\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0194",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## 16. Migration Mapping (Plans/FinalGUISpec.md:L1739)",
+      "path": "Plans/FinalGUISpec.md",
+      "coverage_row_ids": [
+        "cov-02104",
+        "cov-02140",
+        "cov-05852"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-02104",
+          "cov-02140",
+          "cov-05852"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-1961",
+        "obl-1997",
+        "obl-5624"
+      ],
+      "source_seed_ids": [
+        "seed-2550",
+        "seed-2594",
+        "seed-8345"
+      ],
+      "source_shard_ids": [
+        "shard-0033",
+        "shard-0034",
+        "shard-0077"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1961",
+          "obl-1997",
+          "obl-5624"
+        ],
+        "source_seed_ids": [
+          "seed-2550",
+          "seed-2594",
+          "seed-8345"
+        ],
+        "source_shard_ids": [
+          "shard-0033",
+          "shard-0034",
+          "shard-0077"
+        ]
+      },
+      "gap_ids": [
+        "gap-01635",
+        "gap-01664",
+        "gap-04534"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "legacy `tier` wording still present in docs is now both a data-model risk and a user-copy/help migration risk",
+        "tier",
+        "Resolve the `dashboard_layout:v1` migration contradiction in one place and cross-reference it from `FinalGUISpec.md`",
+        "dashboard_layout:v1",
+        "FinalGUISpec.md",
+        "That makes the doc hard to reconcile mechanically because early tables, migration addenda, and canonical-record sections are not all pointing in the same direction."
+      ],
+      "exact_stale_tokens_to_retire": [
+        "tier",
+        "FinalGUISpec.md",
+        "dashboard_layout:v1"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "tier",
+        "FinalGUISpec.md",
+        "dashboard_layout:v1"
+      ],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-7167dd7e4843",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0250",
+      "source_reconciliation_target_ids": [
+        "target-0250"
+      ],
+      "source_target_ids": [
+        "target-0250"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0250\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - legacy `[retired-token-1]` wording still present in docs is now both a data-model risk and a user-copy/help migration risk\n  - [retired-token-1]\n  - Resolve the `[retired-token-3]` migration contradiction in one place and cross-reference it from `[retired-token-2]`\n  - [retired-token-3]\n  - [retired-token-2]\n  - That makes the doc hard to reconcile mechanically because early tables, migration addenda, and canonical-record sections are not all pointing in the same direction.\n- Legacy token retirement handling:\n  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0195",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## 17. Risks and Mitigations (Plans/FinalGUISpec.md:L1816)",
+      "path": "Plans/FinalGUISpec.md",
+      "coverage_row_ids": [
+        "cov-02773"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-02773"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-2620"
+      ],
+      "source_seed_ids": [
+        "seed-3436"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-2620"
+        ],
+        "source_seed_ids": [
+          "seed-3436"
+        ],
+        "source_shard_ids": [
+          "shard-0040"
+        ]
+      },
+      "gap_ids": [
+        "gap-02182"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`manual_preferred_account_id` currently risks being misused as both:",
+        "manual_preferred_account_id"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-956bf2e1836a",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0251",
+      "source_reconciliation_target_ids": [
+        "target-0251"
+      ],
+      "source_target_ids": [
+        "target-0251"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0251\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `manual_preferred_account_id` currently risks being misused as both:\n  - manual_preferred_account_id\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0196",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## 18. Promoted Features (Formerly Future Considerations) (Plans/FinalGUISpec.md:L1851)",
+      "path": "Plans/FinalGUISpec.md",
+      "coverage_row_ids": [
+        "cov-02457",
+        "cov-02888"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-02457",
+          "cov-02888"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-2307",
+        "obl-2735"
+      ],
+      "source_seed_ids": [
+        "seed-2993",
+        "seed-3589"
+      ],
+      "source_shard_ids": [
+        "shard-0037",
+        "shard-0041"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-2307",
+          "obl-2735"
+        ],
+        "source_seed_ids": [
+          "seed-2993",
+          "seed-3589"
+        ],
+        "source_shard_ids": [
+          "shard-0037",
+          "shard-0041"
+        ]
+      },
+      "gap_ids": [
+        "gap-01920",
+        "gap-02276"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "future Projects/attention-center docs and command/deep-link docs",
+        "future provider/surface-specific kinds as needed"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-d6c62cef738e",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0252",
+      "source_reconciliation_target_ids": [
+        "target-0252"
+      ],
+      "source_target_ids": [
+        "target-0252"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0252\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - future Projects/attention-center docs and command/deep-link docs\n  - future provider/surface-specific kinds as needed\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-04711",
+    "cov-04856",
+    "cov-06106",
+    "cov-02104",
+    "cov-02140",
+    "cov-05852",
+    "cov-02773",
+    "cov-02457",
+    "cov-02888"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-4489",
+    "obl-4633",
+    "obl-5878",
+    "obl-1961",
+    "obl-1997",
+    "obl-5624",
+    "obl-2620",
+    "obl-2307",
+    "obl-2735"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-6380",
+    "seed-6632",
+    "seed-8735",
+    "seed-2550",
+    "seed-2594",
+    "seed-8345",
+    "seed-3436",
+    "seed-2993",
+    "seed-3589"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0062",
+    "shard-0064",
+    "shard-0080",
+    "shard-0033",
+    "shard-0034",
+    "shard-0077",
+    "shard-0040",
+    "shard-0037",
+    "shard-0041"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "preserved_exact_required_items": [
+    "step/clarification focus is a domain-local anchor or serialized deep-link detail, not base identity",
+    "Let routes optionally name a destination-local subview only when that is necessary for the task, but treat it as destination refinement, not base identity.",
+    "the base structs and callbacks still teach tier/request-era identity",
+    "legacy `tier` wording still present in docs is now both a data-model risk and a user-copy/help migration risk",
+    "tier",
+    "Resolve the `dashboard_layout:v1` migration contradiction in one place and cross-reference it from `FinalGUISpec.md`",
+    "dashboard_layout:v1",
+    "FinalGUISpec.md",
+    "That makes the doc hard to reconcile mechanically because early tables, migration addenda, and canonical-record sections are not all pointing in the same direction.",
+    "`manual_preferred_account_id` currently risks being misused as both:",
+    "manual_preferred_account_id",
+    "future Projects/attention-center docs and command/deep-link docs",
+    "future provider/surface-specific kinds as needed"
+  ],
+  "blocked_targets": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-563",
+  "group_ids": [
+    "discgrp-2249",
+    "discgrp-2250",
+    "discgrp-2251",
+    "discgrp-2252"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02522",
+      "source_obligation_ids": [
+        "obl-2371"
+      ],
+      "source_seed_ids": [
+        "seed-3084"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02523",
+      "source_obligation_ids": [
+        "obl-2372"
+      ],
+      "source_seed_ids": [
+        "seed-3085"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "#### Canonical DockerHub effective capability enum",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L188"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02524",
+      "source_obligation_ids": [
+        "obl-2373"
+      ],
+      "source_seed_ids": [
+        "seed-3086"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02525",
+      "source_obligation_ids": [
+        "obl-2374"
+      ],
+      "source_seed_ids": [
+        "seed-3087"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

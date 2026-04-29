@@ -1,0 +1,114 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1074",
+  "group_ids": [
+    "discgrp-4293",
+    "discgrp-4294",
+    "discgrp-4295",
+    "discgrp-4296"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04670",
+      "source_obligation_ids": [
+        "obl-4448"
+      ],
+      "source_seed_ids": [
+        "seed-6305",
+        "seed-7254",
+        "seed-7718",
+        "seed-7841"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0069",
+        "shard-0072",
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-04671",
+      "source_obligation_ids": [
+        "obl-4449"
+      ],
+      "source_seed_ids": [
+        "seed-6307",
+        "seed-7256",
+        "seed-7721",
+        "seed-7842"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0069",
+        "shard-0072",
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "#### `safe_point.created`",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1210"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04672",
+      "source_obligation_ids": [
+        "obl-4450"
+      ],
+      "source_seed_ids": [
+        "seed-6308",
+        "seed-7257",
+        "seed-7724",
+        "seed-7843"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0069",
+        "shard-0072",
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1110"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04673",
+      "source_obligation_ids": [
+        "obl-4451"
+      ],
+      "source_seed_ids": [
+        "seed-6316",
+        "seed-7265"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

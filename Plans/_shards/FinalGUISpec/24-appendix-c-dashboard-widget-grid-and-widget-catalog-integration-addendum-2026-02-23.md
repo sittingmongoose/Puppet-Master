@@ -4,6 +4,27 @@ This appendix extends the Dashboard (section 7.2) from a rearrangeable card grid
 
 ### C.1 Dashboard Upgrade: Card Grid to Widget Grid
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0290
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Upgrade `Project_Output_Artifacts.md` and adjacent artifact/event owners to carry canonical project/thread/run/attempt/account lineage, and align pass-report enums/fields with wizard/interview producers.
+  - Project_Output_Artifacts.md
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 The Dashboard (section 7.2) is upgraded from a simple rearrangeable card grid (drag-to-swap, fixed card sizes) to a full **widget grid** with grid-based resizing:
 
 **What changes from section 7.2:**
@@ -68,6 +89,32 @@ Two distinct catalogs now exist. To avoid confusion:
 The relationship: page widgets (Widget_System.md) are composed of atomic components (FinalGUISpec section 8).
 
 ### C.5 redb Key Migration
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0291
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `login` still acts like a stable key in `GitHub_API_Auth_and_Flows.md`
+  - login
+  - GitHub_API_Auth_and_Flows.md
+  - `effective_account_id` remains the stable internal key; provider-facing identities stay disclosure-only.
+  - effective_account_id
+  - Treat any remaining `tier_id` use as derived compatibility metadata or view grouping, not as the primary cross-surface key.
+  - tier_id
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 The existing `dashboard_layout:v1` redb key (section 15.1) stores a simple card-order list. The new widget layout system uses a richer schema. Migration strategy:
 

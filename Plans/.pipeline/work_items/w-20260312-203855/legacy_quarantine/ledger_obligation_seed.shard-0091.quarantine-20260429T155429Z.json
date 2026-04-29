@@ -1,0 +1,137 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0091",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0091-L018001-L018200.md",
+  "source_line_range": "L018001-L018200",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "persona runtime snapshot anchor and execution_unit_context fields",
+      "exact_items": [
+        "the exact owner anchor ### 5.1B Persona/Runtime Snapshot Payload Contract is still absent",
+        "the explicit execution_unit_context required-field list in Plans/Contracts_V0.md still omits requested_account_binding, requested_account_policy, and operational_identity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### 5.1B Persona/Runtime Snapshot Payload Contract"
+      ],
+      "stale_tokens": [
+        "execution_unit_context",
+        "requested_account_binding",
+        "requested_account_policy",
+        "operational_identity"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L18029-L18029"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "missing anchors and live result_id consumers",
+      "exact_items": [
+        "Plans/UI_Command_Catalog.md still points at the non-existent Plans/Orchestrator_Page.md#10. Search, routing, and action policy",
+        "result_id remains live in cmd.search.open_result / cmd.search.replace_selected args rather than appearing only as stale residue",
+        "Plans/Orchestrator_Page.md still points at the missing Plans/storage-plan.md#Canonical records anchor from three different sections"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "result_id",
+        "cmd.search.open_result",
+        "cmd.search.replace_selected"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L18030-L18030",
+        "working_ledger.md:L18074-L18075"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "blocked_notice stale survivor fields",
+      "exact_items": [
+        "the remaining live defect is the skeletal blocked_notice payload, missing usage observability carry-through for escalation_level, missing action_available ownership, and the stale tuple / stale verdict survivors",
+        "Wave 1 rechecked gap-001, gap-002, and gap-005 and only reconfirmed the already-recorded live detached_window / result_id survivors, skeletal blocked_notice payload, and stale closure verdict",
+        "the prior restore points contradiction was overstated"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/usage-feature.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "blocked_notice",
+        "escalation_level",
+        "action_available",
+        "detached_window",
+        "result_id",
+        "restore points"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L18031-L18031",
+        "working_ledger.md:L18155-L18159",
+        "working_ledger.md:L18116-L18116"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Glossary and storage anchor/help-entry gaps",
+      "exact_items": [
+        "Plans/Glossary.md still lacks ### Orchestrator rewrite terms / ### Runtime and routing terms",
+        "the live glossary still instantiates terms as two-column Term | Definition tables or inline bullets instead of the full help-entry field set (canonical_name, short_definition, why_it_matters, what_it_is_not, common_related_states, related_concepts, surface_examples)",
+        "Plans/storage-plan.md still lacks a discoverable Canonical records heading",
+        "Plans/Runtime_Artifacts_Panel.md still points directly at the missing Plans/storage-plan.md#Cross-surface receipt record anchor"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Orchestrator rewrite terms",
+        "### Runtime and routing terms",
+        "Canonical records"
+      ],
+      "stale_tokens": [
+        "canonical_name",
+        "short_definition",
+        "why_it_matters",
+        "what_it_is_not",
+        "common_related_states",
+        "related_concepts",
+        "surface_examples"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L18032-L18032",
+        "working_ledger.md:L18074-L18075",
+        "working_ledger.md:L18114-L18116"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "zero-finding wave process notes",
+    "blocker-family count/status notes",
+    "planning_blockers/fix_backlog_items/total_gaps/docs_affected metric lines"
+  ],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0091"
+}

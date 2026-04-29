@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-803",
+  "group_ids": [
+    "discgrp-3209",
+    "discgrp-3210",
+    "discgrp-3211",
+    "discgrp-3212"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03489",
+      "source_obligation_ids": [
+        "obl-3335"
+      ],
+      "source_seed_ids": [
+        "seed-4483"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "# Runtime Artifacts Panel \u2014 SSOT",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03490",
+      "source_obligation_ids": [
+        "obl-3336"
+      ],
+      "source_seed_ids": [
+        "seed-4484"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "new_heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03491",
+      "source_obligation_ids": [
+        "obl-3337"
+      ],
+      "source_seed_ids": [
+        "seed-4485"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03492",
+      "source_obligation_ids": [
+        "obl-3338"
+      ],
+      "source_seed_ids": [
+        "seed-4492"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Canonical records baseline",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L457"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

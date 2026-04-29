@@ -1,0 +1,477 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-029",
+  "group_ids": [
+    "recgrp-0113",
+    "recgrp-0114",
+    "recgrp-0115",
+    "recgrp-0116"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0113",
+      "path": "Plans/Contracts_V0.md",
+      "mapped_owner_heading": "## Fidelity recovery addendum",
+      "live_anchor": "## Fidelity recovery addendum (Plans/Contracts_V0.md:L3)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00477",
+        "cov-00692",
+        "cov-00964",
+        "cov-01178"
+      ],
+      "source_obligation_ids": [
+        "obl-334",
+        "obl-549",
+        "obl-821",
+        "obl-1035"
+      ],
+      "source_seed_ids": [
+        "seed-383",
+        "seed-630",
+        "seed-945",
+        "seed-1213"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0014",
+        "shard-0017",
+        "shard-0020"
+      ],
+      "gap_ids": [
+        "gap-00374",
+        "gap-00541",
+        "gap-00733",
+        "gap-00922"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "safe-point / recovery history",
+        "recovery / safe-point object where applicable",
+        "canonical recovery path",
+        "`Recovery actor default`",
+        "Recovery actor default"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-224e211ee010",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0114",
+      "path": "Plans/Contracts_V0.md",
+      "mapped_owner_heading": "## Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)",
+      "live_anchor": "## Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09) (Plans/Contracts_V0.md:L1323)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00211",
+        "cov-01241",
+        "cov-02509",
+        "cov-03124",
+        "cov-03147",
+        "cov-03291",
+        "cov-03404",
+        "cov-03670",
+        "cov-03793",
+        "cov-03836",
+        "cov-03839",
+        "cov-03887",
+        "cov-04042",
+        "cov-04091",
+        "cov-05358",
+        "cov-05520"
+      ],
+      "source_obligation_ids": [
+        "obl-107",
+        "obl-1098",
+        "obl-2358",
+        "obl-2970",
+        "obl-2993",
+        "obl-3137",
+        "obl-3250",
+        "obl-3516",
+        "obl-3638",
+        "obl-3681",
+        "obl-3684",
+        "obl-3732",
+        "obl-3885",
+        "obl-3933",
+        "obl-5130",
+        "obl-5292"
+      ],
+      "source_seed_ids": [
+        "seed-110",
+        "seed-1294",
+        "seed-3063",
+        "seed-3918",
+        "seed-3950",
+        "seed-4172",
+        "seed-4336",
+        "seed-4732",
+        "seed-4921",
+        "seed-4998",
+        "seed-5001",
+        "seed-5079",
+        "seed-5331",
+        "seed-5392",
+        "seed-7588",
+        "seed-7867"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0021",
+        "shard-0037",
+        "shard-0044",
+        "shard-0045",
+        "shard-0047",
+        "shard-0049",
+        "shard-0051",
+        "shard-0052",
+        "shard-0054",
+        "shard-0071",
+        "shard-0073"
+      ],
+      "gap_ids": [
+        "gap-00192",
+        "gap-00960",
+        "gap-01960",
+        "gap-02453",
+        "gap-02472",
+        "gap-02575",
+        "gap-02658",
+        "gap-02868",
+        "gap-02958",
+        "gap-02993",
+        "gap-02995",
+        "gap-03031",
+        "gap-03140",
+        "gap-03177",
+        "gap-04162",
+        "gap-04297"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "why impacted: core runtime contract already shows drift against UI/runtime consumers.",
+        "simple help must not mutate runtime truth or contract semantics",
+        "`Models_System.md` calls its runtime contract cross-system while omitting already-canonical auth/account fields.",
+        "Models_System.md",
+        "result: the doc is effectively trying to consume a node/lane scheduler while still operationalizing execution via tier-native runtime structs",
+        "runtime scheduler remains canonical readiness/transition authority",
+        "schema family absent, attempt identity incomplete, receipt/artifact drill contract still unimplementable.",
+        "but their handoff payloads still need to carry enough canonical identity and lineage so downstream runtime, history, ledger, search, and audit can explain how execution began",
+        "`FileManager.md` still cannot satisfy its own addendum requiring open-by-runtime-identity because its core open contract is path-only; `generated://` only covers preview restore, and `evidence_record` is still tier-keyed where attempt-native pivots are now required.",
+        "FileManager.md",
+        "generated://",
+        "evidence_record",
+        "`Prompt_Pipeline.md` already owns the immutable runtime handoff bundle captured at attempt start.",
+        "Prompt_Pipeline.md",
+        "Push tier/group surfaces to consume pointers into this contract instead of reconstructing runtime identity from `tier_id` plus ambient state.",
+        "tier_id",
+        "`attempt.started` is the canonical runtime start packet",
+        "attempt.started",
+        "`FileManager.md`'s addendum requires open-by-identity and generated non-repo drafts, but `OpenFile { path: PathBuf }` plus root-path validation cannot satisfy it; no `OpenArtifact`-style contract, no `evidence_by_attempt` projection, and no artifact-index freshness/degraded fallback exist.",
+        "OpenFile { path: PathBuf }",
+        "OpenArtifact",
+        "evidence_by_attempt",
+        "related runtime attempt/evidence lineage",
+        "`FileManager.md` still describes one internal open-file contract while its own runtime-artifact addendum already requires identity-native opens that cannot be expressed as safe path opens.",
+        "Add these lineage examples to the route contract owner docs.",
+        "`tier_id` is still treated as a required usage identity/correlation key even though the broader runtime and routing direction is object-first and node/attempt/block lineage aware."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-cffe41e2ca4c",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0115",
+      "path": "Plans/Contracts_V0.md",
+      "mapped_owner_heading": "## Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)",
+      "live_anchor": "## Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08) (Plans/Contracts_V0.md:L1110)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-01322",
+        "cov-03801",
+        "cov-04079",
+        "cov-05265",
+        "cov-05348",
+        "cov-05357",
+        "cov-06573"
+      ],
+      "source_obligation_ids": [
+        "obl-1179",
+        "obl-3646",
+        "obl-3921",
+        "obl-5041",
+        "obl-5120",
+        "obl-5129",
+        "obl-6214"
+      ],
+      "source_seed_ids": [
+        "seed-1401",
+        "seed-4929",
+        "seed-5375",
+        "seed-7354",
+        "seed-7562",
+        "seed-7587",
+        "seed-9400"
+      ],
+      "source_shard_ids": [
+        "shard-0023",
+        "shard-0051",
+        "shard-0054",
+        "shard-0069",
+        "shard-0071",
+        "shard-0085"
+      ],
+      "gap_ids": [
+        "gap-01033",
+        "gap-02964",
+        "gap-03165",
+        "gap-04082",
+        "gap-04152",
+        "gap-04161",
+        "gap-05101"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "resurfacing should respond to meaningful change, not spam the user on every scheduler tick",
+        "safe-point creation/restore",
+        "`remediation:<remediation_root_id>`",
+        "remediation:<remediation_root_id>",
+        "scheduler / blocked / safe point / remediation",
+        "`object_kind = remediation`",
+        "object_kind = remediation",
+        "Older docs still assume history pivots can be attempt-only, which is insufficient for scheduler, blocked, and remediation lineage.",
+        "safe-point, remediation, worktree-conflict, and blocked/runtime state are already present"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-c56ea4a2e09c",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0116",
+      "path": "Plans/Contracts_V0.md",
+      "mapped_owner_heading": "## Usage and Billing Contracts Addendum",
+      "live_anchor": "## Usage and Billing Contracts Addendum (Plans/Contracts_V0.md:L1052)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-02189",
+        "cov-05484"
+      ],
+      "source_obligation_ids": [
+        "obl-2044",
+        "obl-5256"
+      ],
+      "source_seed_ids": [
+        "seed-2653",
+        "seed-7808"
+      ],
+      "source_shard_ids": [
+        "shard-0034",
+        "shard-0073"
+      ],
+      "gap_ids": [
+        "gap-01706",
+        "gap-04268"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Bind Usage and Widget contracts to canonical `provider_accounts.*` sourcing and a shared projection-health/trust-state contract rather than page-local heuristics",
+        "provider_accounts.*",
+        "older sections still drive detail panes, worker activity, verification streams, Usage links, and event correlation by `tier_id` / `tier_type`",
+        "tier_id",
+        "tier_type"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-b2dfe431579b",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00477",
+    "cov-00692",
+    "cov-00964",
+    "cov-01178",
+    "cov-00211",
+    "cov-01241",
+    "cov-02509",
+    "cov-03124",
+    "cov-03147",
+    "cov-03291",
+    "cov-03404",
+    "cov-03670",
+    "cov-03793",
+    "cov-03836",
+    "cov-03839",
+    "cov-03887",
+    "cov-04042",
+    "cov-04091",
+    "cov-05358",
+    "cov-05520",
+    "cov-01322",
+    "cov-03801",
+    "cov-04079",
+    "cov-05265",
+    "cov-05348",
+    "cov-05357",
+    "cov-06573",
+    "cov-02189",
+    "cov-05484"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-334",
+    "obl-549",
+    "obl-821",
+    "obl-1035",
+    "obl-107",
+    "obl-1098",
+    "obl-2358",
+    "obl-2970",
+    "obl-2993",
+    "obl-3137",
+    "obl-3250",
+    "obl-3516",
+    "obl-3638",
+    "obl-3681",
+    "obl-3684",
+    "obl-3732",
+    "obl-3885",
+    "obl-3933",
+    "obl-5130",
+    "obl-5292",
+    "obl-1179",
+    "obl-3646",
+    "obl-3921",
+    "obl-5041",
+    "obl-5120",
+    "obl-5129",
+    "obl-6214",
+    "obl-2044",
+    "obl-5256"
+  ],
+  "source_seed_ids_represented": [
+    "seed-383",
+    "seed-630",
+    "seed-945",
+    "seed-1213",
+    "seed-110",
+    "seed-1294",
+    "seed-3063",
+    "seed-3918",
+    "seed-3950",
+    "seed-4172",
+    "seed-4336",
+    "seed-4732",
+    "seed-4921",
+    "seed-4998",
+    "seed-5001",
+    "seed-5079",
+    "seed-5331",
+    "seed-5392",
+    "seed-7588",
+    "seed-7867",
+    "seed-1401",
+    "seed-4929",
+    "seed-5375",
+    "seed-7354",
+    "seed-7562",
+    "seed-7587",
+    "seed-9400",
+    "seed-2653",
+    "seed-7808"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0011",
+    "shard-0014",
+    "shard-0017",
+    "shard-0020",
+    "shard-0009",
+    "shard-0021",
+    "shard-0037",
+    "shard-0044",
+    "shard-0045",
+    "shard-0047",
+    "shard-0049",
+    "shard-0051",
+    "shard-0052",
+    "shard-0054",
+    "shard-0071",
+    "shard-0073",
+    "shard-0023",
+    "shard-0069",
+    "shard-0085",
+    "shard-0034"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": []
+}

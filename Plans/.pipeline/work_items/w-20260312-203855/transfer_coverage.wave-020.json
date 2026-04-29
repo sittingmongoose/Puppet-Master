@@ -1,704 +1,728 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-020",
-  "timestamp_utc": "2026-04-28T20:10:43Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-077",
-    "coverage-rowgrp-078",
-    "coverage-rowgrp-079",
-    "coverage-rowgrp-080"
+  "row_group_ids": [
+    "rowgrp-0077",
+    "rowgrp-0078",
+    "rowgrp-0079",
+    "rowgrp-0080"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-077 cov-369,cov-411,cov-508,cov-563,cov-883,cov-940,cov-946,cov-951,cov-957,cov-961 Plans/FinalGUISpec.md",
-    "rowgrp-078 cov-965,cov-981,cov-988,cov-990,cov-997,cov-1012,cov-1019,cov-1124,cov-1175 Plans/FinalGUISpec.md",
-    "rowgrp-079 cov-840,cov-903 Plans/FinalGUISpec.md",
-    "rowgrp-080 cov-020,cov-037,cov-053,cov-206,cov-227,cov-244,cov-351,cov-399,cov-459,cov-473 Plans/FinalGUISpec.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-077": "completed_reduced_conservatively",
-    "coverage-rowgrp-078": "completed_reduced_conservatively",
-    "coverage-rowgrp-079": "completed_reduced_conservatively",
-    "coverage-rowgrp-080": "completed_reduced_conservatively"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-369",
-    "cov-411",
-    "cov-508",
-    "cov-563",
-    "cov-883",
-    "cov-940",
-    "cov-946",
-    "cov-951",
-    "cov-957",
-    "cov-961",
-    "cov-965",
-    "cov-981",
-    "cov-988",
-    "cov-990",
-    "cov-997",
-    "cov-1012",
-    "cov-1019",
-    "cov-1124",
-    "cov-1175",
-    "cov-840",
-    "cov-903",
-    "cov-020",
-    "cov-037",
-    "cov-053",
-    "cov-206",
-    "cov-227",
-    "cov-244",
-    "cov-351",
-    "cov-399",
-    "cov-459",
-    "cov-473"
-  ],
-  "coverage_ids_completed": [
-    "cov-369",
-    "cov-411",
-    "cov-508",
-    "cov-563",
-    "cov-883",
-    "cov-940",
-    "cov-946",
-    "cov-951",
-    "cov-957",
-    "cov-961",
-    "cov-965",
-    "cov-981",
-    "cov-988",
-    "cov-990",
-    "cov-997",
-    "cov-1012",
-    "cov-1019",
-    "cov-1124",
-    "cov-1175",
-    "cov-840",
-    "cov-903",
-    "cov-020",
-    "cov-037",
-    "cov-053",
-    "cov-206",
-    "cov-227",
-    "cov-244",
-    "cov-351",
-    "cov-399",
-    "cov-459",
-    "cov-473"
-  ],
-  "path_groups_assigned": [
-    "Plans/FinalGUISpec.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-369",
+      "coverage_id": "cov-03727",
+      "source_obligation_ids": [
+        "obl-3572"
+      ],
+      "source_seed_ids": [
+        "seed-4819"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "requested/effective persona refs or embedded snapshot refs",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "### Fidelity recovery cov-010: Requested/effective account identity contract",
       "status": "partial",
+      "exact_items": [
+        "requested/effective persona refs or embedded snapshot refs"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:937 concern search results route with object_kind, object_id, focused_run_id, and target_tab",
-        "Plans/FinalGUISpec.md:2472-2477 wizard_blocked cards preserve wizard_id, wizard_step, resume_url, and optional thread_id"
+        "Plans/CLI_Bridged_Providers.md:L7",
+        "Plans/CLI_Bridged_Providers.md:L16"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Distinct route/run/wizard fields exist, but actor/run-kind lifecycle contracts and shared blocked/remediation taxonomy are not fully specified.",
-      "source_obligation_ids": [
-        "obl-109"
-      ],
-      "source_seed_ids": [
-        "seed-109"
-      ],
-      "source_shard_ids": [
-        "shard-0027"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-411",
+      "coverage_id": "cov-03811",
+      "source_obligation_ids": [
+        "obl-3656"
+      ],
+      "source_seed_ids": [
+        "seed-4950"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "requested/effective persona snapshot ref",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "### Fidelity recovery cov-010: Requested/effective account identity contract",
       "status": "partial",
+      "exact_items": [
+        "requested/effective persona snapshot ref"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:965 concern is a first-class durable record carrying concern_id, project_id, run refs, scope refs, evidence/source/lineage refs, severity, category, status, and governance metadata",
-        "Plans/FinalGUISpec.md:967 concern actions distinguish acknowledged, dismissed, resolved, and structural lineage edits",
-        "Plans/FinalGUISpec.md:981-987 recommended concern shape includes concern_id, project_id, run_ref, scope_ref, evidence_refs, artifact_refs, lineage_refs, severity, category, status, owner refs, and governance policies"
+        "Plans/CLI_Bridged_Providers.md:L7",
+        "Plans/CLI_Bridged_Providers.md:L16"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Concern record shape and lifecycle actions are covered, but exact scope_type/scope_id, summary, active, and full lifecycle vocabulary are not all present.",
-      "source_obligation_ids": [
-        "obl-122"
-      ],
-      "source_seed_ids": [
-        "seed-122"
-      ],
-      "source_shard_ids": [
-        "shard-0030"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-508",
+      "coverage_id": "cov-03813",
+      "source_obligation_ids": [
+        "obl-3658"
+      ],
+      "source_seed_ids": [
+        "seed-4952"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "requested/effective permission snapshot ref",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "### Fidelity recovery cov-010: Requested/effective account identity contract",
       "status": "partial",
+      "exact_items": [
+        "requested/effective permission snapshot ref"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:924 Progress catalog includes project_attention_item.primary_route_payload list",
-        "Plans/FinalGUISpec.md:961 project_attention_item is a reusable attention-row object with primary route payload, projection-trust disclosure, blocked-owner kind, escalation level, and summary text"
+        "Plans/CLI_Bridged_Providers.md:L7",
+        "Plans/CLI_Bridged_Providers.md:L16"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Project attention rows are defined, but the shared project-attention item contract and archival/normalized-row model are not fully specified.",
-      "source_obligation_ids": [
-        "obl-147"
-      ],
-      "source_seed_ids": [
-        "seed-147"
-      ],
-      "source_shard_ids": [
-        "shard-0037"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-563",
+      "coverage_id": "cov-03856",
+      "source_obligation_ids": [
+        "obl-3701"
+      ],
+      "source_seed_ids": [
+        "seed-5024"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "Those should not be collapsed into provider account identity because the same provider acc",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "# CLI-Bridged Providers (Provider Facade)",
       "status": "partial",
+      "exact_items": [
+        "Those should not be collapsed into provider account identity because the same provider account may drive multiple operational targets, and the same operational target may be accessed by different provider accounts over time."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:145-155 requested_account_id and requested_account_binding are modeled and displayed",
-        "Plans/FinalGUISpec.md:946-955 settings model separates requested/effective account and resolver axes"
+        "Plans/CLI_Bridged_Providers.md:L1"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Requested account fields are represented, but owner criteria for projection vocabulary, route-payload schema ownership, and project-summary/project-attention owners are incomplete.",
-      "source_obligation_ids": [
-        "obl-159"
-      ],
-      "source_seed_ids": [
-        "seed-159"
-      ],
-      "source_shard_ids": [
-        "shard-0040"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-883",
+      "coverage_id": "cov-03865",
+      "source_obligation_ids": [
+        "obl-3710"
+      ],
+      "source_seed_ids": [
+        "seed-5044"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "`Orchestrator_Page.md` still uses a weak worker identity row (`requested_persona_id`, `eff",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "# CLI-Bridged Providers (Provider Facade)",
       "status": "partial",
+      "exact_items": [
+        "`Orchestrator_Page.md` still uses a weak worker identity row (`requested_persona_id`, `effective_persona_id`, provider, model, attempt_id, session_id?`) that does not expose `execution_role` or operational target context.",
+        "Orchestrator_Page.md",
+        "requested_persona_id",
+        "effective_persona_id",
+        ") that does not expose"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:935 resume_url is serialized transport of the shared route/deep-link payload, not a second routing model",
-        "Plans/FinalGUISpec.md:939 route_target is small and uses subject_id or object_kind/object_id identity"
+        "Plans/CLI_Bridged_Providers.md:L1"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Serialized transport and route_target are covered, but the internal-vs-external route_target boundary is not fully defined.",
-      "source_obligation_ids": [
-        "obl-248"
-      ],
-      "source_seed_ids": [
-        "seed-248"
-      ],
-      "source_shard_ids": [
-        "shard-0063"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-940",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no OpenSubject contract definition with subject_id/open_intent found"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "OpenSubject is not directly defined in the assigned path.",
+      "coverage_id": "cov-03955",
       "source_obligation_ids": [
-        "obl-264"
+        "obl-3799"
       ],
       "source_seed_ids": [
-        "seed-264"
+        "seed-5199"
       ],
       "source_shard_ids": [
-        "shard-0067"
+        "shard-0053"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-946",
+      "canon_label": "which provider attempt and effective account/runtime identity it used",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "# CLI-Bridged Providers (Provider Facade)",
       "status": "partial",
+      "exact_items": [
+        "which provider attempt and effective account/runtime identity it used"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:937 concern routes use object_kind, object_id, focused_run_id, and target_tab",
-        "Plans/FinalGUISpec.md:939 route_target stays small as subject_id or object_kind/object_id identity"
+        "Plans/CLI_Bridged_Providers.md:L1"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Route selector fields are partly represented, but target_kind, project_id, exact selector exclusivity, and scope-restorer rules are not fully defined.",
-      "source_obligation_ids": [
-        "obl-265"
-      ],
-      "source_seed_ids": [
-        "seed-265"
-      ],
-      "source_shard_ids": [
-        "shard-0067"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-951",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no OpenFile path-editor-only contract found"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "OpenFile route separation is absent from the assigned path.",
+      "coverage_id": "cov-03971",
       "source_obligation_ids": [
-        "obl-266"
+        "obl-3815"
       ],
       "source_seed_ids": [
-        "seed-266"
+        "seed-5231"
       ],
       "source_shard_ids": [
-        "shard-0067"
+        "shard-0053"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-957",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no target_kind vocabulary definition found"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "target_kind vocabulary is absent from the assigned path.",
-      "source_obligation_ids": [
-        "obl-268"
-      ],
-      "source_seed_ids": [
-        "seed-268"
-      ],
-      "source_shard_ids": [
-        "shard-0068"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-961",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no route selector precedence or multi-selector rejection rule found"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Route selector precedence rules are absent from the assigned path.",
-      "source_obligation_ids": [
-        "obl-269"
-      ],
-      "source_seed_ids": [
-        "seed-269"
-      ],
-      "source_shard_ids": [
-        "shard-0068"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-965",
+      "canon_label": "`provider_attempt_ref` appears on `attempt_record` and is the closest thing to a provider/",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "# CLI-Bridged Providers (Provider Facade)",
       "status": "partial",
+      "exact_items": [
+        "`provider_attempt_ref` appears on `attempt_record` and is the closest thing to a provider/runtime execution trace handle.",
+        "provider_attempt_ref",
+        "attempt_record"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:935 resume_url is serialized transport of the shared route/deep-link payload, not a second routing model",
-        "Plans/FinalGUISpec.md:939 route_target stays small as subject_id or object_kind/object_id identity"
+        "Plans/CLI_Bridged_Providers.md:L1"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "resume_url transport behavior is present, but the narrower-than-internal-route-contract boundary is not fully stated.",
-      "source_obligation_ids": [
-        "obl-270"
-      ],
-      "source_seed_ids": [
-        "seed-270"
-      ],
-      "source_shard_ids": [
-        "shard-0068"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-981",
+      "coverage_id": "cov-04196",
+      "source_obligation_ids": [
+        "obl-4036"
+      ],
+      "source_seed_ids": [
+        "seed-5555"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "Contribute(PR) vs DAE isolation is now a three-way collision between PR branch ownership,",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "# CLI-Bridged Providers (Provider Facade)",
       "status": "partial",
+      "exact_items": [
+        "Contribute(PR) vs DAE isolation is now a three-way collision between PR branch ownership, worktree/jail isolation, and provider execution context."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:941 inspector_target is secondary metadata, not primary identity"
+        "Plans/CLI_Bridged_Providers.md:L1"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "inspector_target is bounded as secondary metadata, but no closed enum or anchor-exclusion rule is defined.",
-      "source_obligation_ids": [
-        "obl-273"
-      ],
-      "source_seed_ids": [
-        "seed-273"
-      ],
-      "source_shard_ids": [
-        "shard-0069"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-988",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md:939 generic object_kind/object_id routing exists, but no usage_event route example with tab_id=ledger found"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "The usage_event route example is absent from the assigned path.",
+      "coverage_id": "cov-04455",
       "source_obligation_ids": [
-        "obl-275"
+        "obl-4292"
       ],
       "source_seed_ids": [
-        "seed-275"
-      ],
-      "source_shard_ids": [
-        "shard-0070"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-990",
-      "status": "partial",
-      "evidence": [
-        "Plans/FinalGUISpec.md:2471-2477 wizard_blocked fields include wizard_id, wizard_step, resume_url, and optional thread_id",
-        "Plans/FinalGUISpec.md:2511 canonical blocked cards use wizard_id, wizard_step, report_ref, resume_url, and optional thread_id"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Wizard route fields are present, but no canonical object_kind=wizard/object_id route example or serialized step-anchor boundary is defined.",
-      "source_obligation_ids": [
-        "obl-276"
-      ],
-      "source_seed_ids": [
-        "seed-276"
-      ],
-      "source_shard_ids": [
-        "shard-0070"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-997",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no usage_event_ref route normalization found"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "usage_event_ref route normalization is absent from the assigned path.",
-      "source_obligation_ids": [
-        "obl-279"
-      ],
-      "source_seed_ids": [
-        "seed-279"
-      ],
-      "source_shard_ids": [
-        "shard-0071"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1012",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no tab_id stable page-tab focus rule found"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "tab_id route-focus semantics are absent from the assigned path.",
-      "source_obligation_ids": [
-        "obl-284"
-      ],
-      "source_seed_ids": [
-        "seed-284"
-      ],
-      "source_shard_ids": [
-        "shard-0072"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1019",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no owner adoption split for route validation primitives or command taxonomy found"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Owner adoption split is absent from the assigned path.",
-      "source_obligation_ids": [
-        "obl-286"
-      ],
-      "source_seed_ids": [
-        "seed-286"
-      ],
-      "source_shard_ids": [
-        "shard-0072"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1124",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no Crosswalk primitive-ownership or duplicate-numbering defect text found"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Crosswalk primitive ownership and numbering defects are absent from the assigned path.",
-      "source_obligation_ids": [
-        "obl-325"
-      ],
-      "source_seed_ids": [
-        "seed-325"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1175",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no MUST CHANGE / MUST RECONCILE / MUST VERIFY packet category text found"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Packet inclusion categories are absent from the assigned path.",
-      "source_obligation_ids": [
-        "obl-339"
-      ],
-      "source_seed_ids": [
-        "seed-339"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-840",
-      "status": "partial",
-      "evidence": [
-        "Plans/FinalGUISpec.md:1657 Search and LSP rows resolve back to owner-doc contracts in storage-plan, FileManager, and LSPSupport"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Owner-doc resolution is mentioned, but fragmented owner-doc conventions defeating machine verification and route/governance ownership are not explicitly retired.",
-      "source_obligation_ids": [
-        "obl-235"
-      ],
-      "source_seed_ids": [
-        "seed-235"
+        "seed-6001"
       ],
       "source_shard_ids": [
         "shard-0059"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-903",
-      "status": "partial",
-      "evidence": [
-        "Plans/FinalGUISpec.md:935 all search results, palette actions, widgets, recovery links, and cross-surface pivots emit one shared route/deep-link payload",
-        "Plans/FinalGUISpec.md:939-942 route_target stays small and destination/context overrides are allowed only when needed to restore the target surface",
-        "Plans/FinalGUISpec.md:961 project_attention_item carries primary route payload and projection-trust disclosure"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Route destination boundaries are partly represented, but panel-local filter/subview noise is not explicitly retired from route payloads.",
-      "source_obligation_ids": [
-        "obl-254"
-      ],
-      "source_seed_ids": [
-        "seed-254"
-      ],
-      "source_shard_ids": [
-        "shard-0064"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-020",
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "",
       "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no optional JSON canonical-storage wording found"
+        "Plans/CLI_Bridged_Providers.md:content_absent_after_scan"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "No optional JSON storage wording appears to retire in the assigned path.",
-      "source_obligation_ids": [
-        "obl-017"
-      ],
-      "source_seed_ids": [
-        "seed-017"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-037",
-      "status": "missing",
-      "evidence": [
-        "Plans/FinalGUISpec.md: assigned file reviewed; no direct retirement evidence for Overseer, PuppetMasterEvent::*, Phase/Task/Subtask/Iteration, TierContext, tier_id, approve_continue, or github_api identity tokens found"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Legacy heading/runtime token retirement is not directly represented in the assigned path.",
+      "coverage_id": "cov-04694",
       "source_obligation_ids": [
-        "obl-024"
+        "obl-4472"
       ],
       "source_seed_ids": [
-        "seed-024"
+        "seed-6361"
       ],
       "source_shard_ids": [
-        "shard-0004"
+        "shard-0061"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-053",
+      "canon_label": "But these are not all the same kind of data, and they should not all become first-class ta",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "### Required data shape",
       "status": "partial",
+      "exact_items": [
+        "But these are not all the same kind of data, and they should not all become first-class target identity."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:963-979 concern, escalation, blocked-owner, and help taxonomy use canonical Orchestrator/runtime terms"
+        "Plans/CLI_Bridged_Providers.md:L47"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Canonical help and blocked-owner vocabulary exists, but Overseer collapse and Source Control Orchestrator Owned partitioning are not explicitly covered.",
-      "source_obligation_ids": [
-        "obl-027"
-      ],
-      "source_seed_ids": [
-        "seed-027"
-      ],
-      "source_shard_ids": [
-        "shard-0006"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-206",
+      "coverage_id": "cov-05195",
+      "source_obligation_ids": [
+        "obl-4971"
+      ],
+      "source_seed_ids": [
+        "seed-7211"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "provider/account disclosure data",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "### Required data shape",
       "status": "partial",
+      "exact_items": [
+        "provider/account disclosure data"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:906 Only Progress is widget-composed inside Orchestrator",
-        "Plans/FinalGUISpec.md:959-961 project_summary and project_attention_item use projection and route-payload objects"
+        "Plans/CLI_Bridged_Providers.md:L47"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Progress-only and projection objects exist, but legacy tier-centric widget model/event bindings are not directly retired here.",
-      "source_obligation_ids": [
-        "obl-056"
-      ],
-      "source_seed_ids": [
-        "seed-056"
-      ],
-      "source_shard_ids": [
-        "shard-0012"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-227",
-      "status": "partial",
-      "evidence": [
-        "Plans/FinalGUISpec.md:904 degraded Orchestrator surfaces fall back to record-backed views and suppress live mutation affordances",
-        "Plans/FinalGUISpec.md:1693-1696 restore waits for verification before live-state badges"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Projection trust and verification safeguards exist, but exact no-silent-stale-truth retirement is incomplete.",
+      "coverage_id": "cov-05904",
       "source_obligation_ids": [
-        "obl-063"
+        "obl-5676"
       ],
       "source_seed_ids": [
-        "seed-063"
+        "seed-8438",
+        "seed-9417"
       ],
       "source_shard_ids": [
-        "shard-0013"
+        "shard-0078",
+        "shard-0085"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-244",
-      "status": "partial",
-      "evidence": [
-        "Plans/FinalGUISpec.md:2305 plan state transitions include superseded, completed, and blocked as visible/restorable states",
-        "Plans/FinalGUISpec.md:1713-1716 restored historical terminals show explicit banners and recovery controls"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Some historical/superseded semantics are present, but stale_historical, revoked, reopened, archived, and removed vocabulary is incomplete.",
-      "source_obligation_ids": [
-        "obl-068"
-      ],
-      "source_seed_ids": [
-        "seed-068"
-      ],
-      "source_shard_ids": [
-        "shard-0015"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-351",
-      "status": "partial",
-      "evidence": [
-        "Plans/FinalGUISpec.md:1693-1696 terminal restore preserves identity and waits for live-state verification",
-        "Plans/FinalGUISpec.md:2305 plan state transitions remain visible and restorable"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Recovery/restorable state language exists, but lane/worktree lifecycle split and cleanup/archive/prune/remove vocabulary are not represented.",
-      "source_obligation_ids": [
-        "obl-103"
-      ],
-      "source_seed_ids": [
-        "seed-103"
-      ],
-      "source_shard_ids": [
-        "shard-0025"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-399",
-      "status": "partial",
-      "evidence": [
-        "Plans/FinalGUISpec.md:1713-1716 terminal sessions restore as verified-live or historical records with explicit banners and recovery controls",
-        "Plans/FinalGUISpec.md:2305 plan state transitions including superseded remain visible and restorable"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Historical continuity is partially represented, but stale_historical attempts, blocked-projection survivorship, and worktree prune/retire reference rules are absent.",
-      "source_obligation_ids": [
-        "obl-118"
-      ],
-      "source_seed_ids": [
-        "seed-118"
-      ],
-      "source_shard_ids": [
-        "shard-0029"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-459",
-      "status": "partial",
-      "evidence": [
-        "Plans/FinalGUISpec.md:971-975 help uses canonical term names and related-concept links instead of local aliases",
-        "Plans/FinalGUISpec.md:977 project-facing help uses activity_state, attention_state, blocked-owner taxonomy, escalation ladder, and aging rules"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Help/copy governance exists, but specific legacy execution-ontology labels in Orchestrator_Page and Run_Graph_View are not retired here.",
-      "source_obligation_ids": [
-        "obl-133"
-      ],
-      "source_seed_ids": [
-        "seed-133"
-      ],
-      "source_shard_ids": [
-        "shard-0033"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-473",
+      "canon_label": "`provider`",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "# CLI-Bridged Providers (Provider Facade)",
       "status": "present",
-      "evidence": [
-        "Plans/FinalGUISpec.md:1659 dashboard_layout:v1 is a deprecated migration-read alias only; widget_layout:v1:dashboard is canonical after migration",
-        "Plans/FinalGUISpec.md:1681 startup restore reads deprecated dashboard_layout:v1 only when the canonical key is absent, then writes back to widget_layout:v1:dashboard"
+      "exact_items": [
+        "`provider`",
+        "provider"
       ],
-      "required_action": "none",
-      "unresolved_reason": "",
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1",
+        "Plans/CLI_Bridged_Providers.md:L13",
+        "Plans/CLI_Bridged_Providers.md:L16",
+        "Plans/CLI_Bridged_Providers.md:L19",
+        "Plans/CLI_Bridged_Providers.md:L21"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05907",
       "source_obligation_ids": [
-        "obl-138"
+        "obl-5679"
       ],
       "source_seed_ids": [
-        "seed-138"
+        "seed-8441"
       ],
       "source_shard_ids": [
-        "shard-0034"
+        "shard-0078"
       ],
-      "path_field_status": "match"
+      "canon_label": "`Provider / Model`",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "status": "partial",
+      "exact_items": [
+        "`Provider / Model`",
+        "Provider / Model"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06011",
+      "source_obligation_ids": [
+        "obl-5783"
+      ],
+      "source_seed_ids": [
+        "seed-8603"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "data model still carries `hitl_request_id`",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "### Required data shape",
+      "status": "partial",
+      "exact_items": [
+        "data model still carries `hitl_request_id`",
+        "hitl_request_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L47"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06180",
+      "source_obligation_ids": [
+        "obl-5952"
+      ],
+      "source_seed_ids": [
+        "seed-8851"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`00-plans-index.md` still under-routes rewrite-critical owner docs, especially around Mult",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "status": "partial",
+      "exact_items": [
+        "`00-plans-index.md` still under-routes rewrite-critical owner docs, especially around Multi-Account, Provider, and Orchestrator packet ownership.",
+        "00-plans-index.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06206",
+      "source_obligation_ids": [
+        "obl-5975"
+      ],
+      "source_seed_ids": [
+        "seed-8943"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`OpenCode_Coverage_Matrix.md` and `OpenCode_Deep_Extraction.md` now pin more exact OpenCod",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "status": "partial",
+      "exact_items": [
+        "`OpenCode_Coverage_Matrix.md` and `OpenCode_Deep_Extraction.md` now pin more exact OpenCode limits: session identity must stay provider-native, SSE correlation fields remain under-specified, and requested/effective identity parity is still weaker for server-bridged providers than for direct providers.",
+        "OpenCode_Coverage_Matrix.md",
+        "OpenCode_Deep_Extraction.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06224",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06535",
+      "source_obligation_ids": [
+        "obl-6176"
+      ],
+      "source_seed_ids": [
+        "seed-9341"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "Slint rewrite, seglog/redb/Tantivy, and Provider terminology are already locked",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "status": "partial",
+      "exact_items": [
+        "Slint rewrite, seglog/redb/Tantivy, and Provider terminology are already locked"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06707",
+      "source_obligation_ids": [
+        "obl-6348"
+      ],
+      "source_seed_ids": [
+        "seed-9695"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "tools / permissions / provider / identity integration",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "status": "partial",
+      "exact_items": [
+        "tools / permissions / provider / identity integration"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06832",
+      "source_obligation_ids": [
+        "obl-6444"
+      ],
+      "source_seed_ids": [
+        "seed-9823"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "storage-plan still lacks the practical join model from attempt \u2192 provider \u2192 usage \u2192 receip",
+      "row_type": "owner",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "status": "partial",
+      "exact_items": [
+        "storage-plan still lacks the practical join model from attempt \u2192 provider \u2192 usage \u2192 receipt"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02360",
+      "source_obligation_ids": [
+        "obl-2211"
+      ],
+      "source_seed_ids": [
+        "seed-2874"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "cross-surface pivot commands still need `project_id` or an equally strong derivation rule",
+      "row_type": "consumer",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "cross-surface pivot commands still need `project_id` or an equally strong derivation rule for multi-project correctness",
+        "project_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02422",
+      "source_obligation_ids": [
+        "obl-2272"
+      ],
+      "source_seed_ids": [
+        "seed-2948"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "surface where the user should go next",
+      "row_type": "consumer",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "### 1.1 User Command (preset)",
+      "status": "partial",
+      "exact_items": [
+        "surface where the user should go next"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L31"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03047",
+      "source_obligation_ids": [
+        "obl-2893"
+      ],
+      "source_seed_ids": [
+        "seed-3818"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "Reserve `trust_tier` for preview/browser semantics only unless those docs are later explic",
+      "row_type": "consumer",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "## 4. Execution semantics",
+      "status": "partial",
+      "exact_items": [
+        "Reserve `trust_tier` for preview/browser semantics only unless those docs are later explicitly renamed too.",
+        "trust_tier"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L190"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04338",
+      "source_obligation_ids": [
+        "obl-4178"
+      ],
+      "source_seed_ids": [
+        "seed-5804"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "If the route/subject model stays on track, introduce a small canonical family such as `cmd",
+      "row_type": "consumer",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "If the route/subject model stays on track, introduce a small canonical family such as `cmd.nav.*` and let surface-specific commands either wrap it or be declared as typed specializations.",
+        "cmd.nav.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05456",
+      "source_obligation_ids": [
+        "obl-5228"
+      ],
+      "source_seed_ids": [
+        "seed-7754",
+        "seed-8061"
+      ],
+      "source_shard_ids": [
+        "shard-0072",
+        "shard-0075"
+      ],
+      "canon_label": "classify commands as `shell_view`, `navigation_wrapper`, or `domain_action`",
+      "row_type": "consumer",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "# Commands System (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "classify commands as `shell_view`, `navigation_wrapper`, or `domain_action`",
+        "shell_view",
+        "navigation_wrapper",
+        "domain_action"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06310",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Commands_System.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05505",
+      "source_obligation_ids": [
+        "obl-5277"
+      ],
+      "source_seed_ids": [
+        "seed-7847"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "`Run_Graph_View.md` is one of the strongest internal contradiction sites in the repo becau",
+      "row_type": "consumer",
+      "path": "Plans/Commands_System.md",
+      "heading_hint": "### 1.2 UICommand (internal dispatch) \u2014 distinction",
+      "status": "partial",
+      "exact_items": [
+        "`Run_Graph_View.md` is one of the strongest internal contradiction sites in the repo because its later addenda already prove the old `tier_id` model is no longer enough.",
+        "Run_Graph_View.md",
+        "tier_id"
+      ],
+      "stale_tokens": [
+        "Run_Graph_View.md",
+        "tier_id"
+      ],
+      "evidence": [
+        "Plans/Commands_System.md:L36"
+      ],
+      "required_action": "consumer_propagation"
     }
   ]
 }

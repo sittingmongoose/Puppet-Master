@@ -1,0 +1,765 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-002",
+  "group_ids": [
+    "pktgrp-0005",
+    "pktgrp-0006",
+    "pktgrp-0007",
+    "pktgrp-0008"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "packet-target-0005",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### Instant Grep (sparse n-gram index) canon reconciliation note (Plans/00-plans-index.md:L145)",
+      "path": "Plans/00-plans-index.md",
+      "coverage_row_ids": [
+        "cov-04690"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-04690"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-4468"
+      ],
+      "source_seed_ids": [
+        "seed-6352"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4468"
+        ],
+        "source_seed_ids": [
+          "seed-6352"
+        ],
+        "source_shard_ids": [
+          "shard-0061"
+        ]
+      },
+      "gap_ids": [
+        "gap-03664"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`subject_id` should stay sparse; `object_kind` should do most of the cross-surface identity work.",
+        "subject_id",
+        "object_kind"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-0a225b715002",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0034",
+      "source_reconciliation_target_ids": [
+        "target-0034"
+      ],
+      "source_target_ids": [
+        "target-0034"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0034\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `subject_id` should stay sparse; `object_kind` should do most of the cross-surface identity work.\n  - subject_id\n  - object_kind\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0006",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### Instant Grep canon reconciliation note (2026-03-30) (Plans/00-plans-index.md:L57)",
+      "path": "Plans/00-plans-index.md",
+      "coverage_row_ids": [
+        "cov-05521",
+        "cov-05708"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-05521",
+          "cov-05708"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-5293",
+        "obl-5480"
+      ],
+      "source_seed_ids": [
+        "seed-7868",
+        "seed-8132"
+      ],
+      "source_shard_ids": [
+        "shard-0073",
+        "shard-0075"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-5293",
+          "obl-5480"
+        ],
+        "source_seed_ids": [
+          "seed-7868",
+          "seed-8132"
+        ],
+        "source_shard_ids": [
+          "shard-0073",
+          "shard-0075"
+        ]
+      },
+      "gap_ids": [
+        "gap-04298",
+        "gap-04446"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "The duplicated `cost_usage` section raises reconciliation risk because one copy can be updated while the other stays stale.",
+        "cost_usage",
+        "Remove stale `Tiers` page/tab structures from `FinalGUISpec.md` and `Orchestrator_Page.md` in the same reconciliation tranche so they do not keep cross-referencing each other.",
+        "Tiers",
+        "FinalGUISpec.md",
+        "Orchestrator_Page.md"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "cost_usage",
+        "FinalGUISpec.md",
+        "Orchestrator_Page.md",
+        "Tiers"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "cost_usage",
+        "FinalGUISpec.md",
+        "Orchestrator_Page.md",
+        "Tiers"
+      ],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-62c34f092312",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0035",
+      "source_reconciliation_target_ids": [
+        "target-0035"
+      ],
+      "source_target_ids": [
+        "target-0035"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n#### Source target target-0035\n- Reconciliation action: stale_retirement\n- Replace scope: exact_section\n- Exact required items represented:\n  - The duplicated `[retired-token-1]` section raises reconciliation risk because one copy can be updated while the other stays stale.\n  - [retired-token-1]\n  - Remove stale `[retired-token-4]` page/tab structures from `[retired-token-2]` and `[retired-token-3]` in the same reconciliation tranche so they do not keep cross-referencing each other.\n  - [retired-token-4]\n  - [retired-token-2]\n  - [retired-token-3]\n- Legacy token retirement handling:\n  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0007",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "# Architecture Invariants (Canonical) (Plans/Architecture_Invariants.md:L1)",
+      "path": "Plans/Architecture_Invariants.md",
+      "coverage_row_ids": [
+        "cov-01936",
+        "cov-01940",
+        "cov-01946",
+        "cov-02303",
+        "cov-04453",
+        "cov-04766",
+        "cov-06171",
+        "cov-06200",
+        "cov-06222",
+        "cov-06289",
+        "cov-06307",
+        "cov-06415"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-01936",
+          "cov-01940",
+          "cov-01946",
+          "cov-02303",
+          "cov-04453",
+          "cov-04766",
+          "cov-06171",
+          "cov-06200",
+          "cov-06222",
+          "cov-06289",
+          "cov-06307",
+          "cov-06415"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-1793",
+        "obl-1797",
+        "obl-1803",
+        "obl-2155",
+        "obl-4292",
+        "obl-4544",
+        "obl-5943",
+        "obl-5969",
+        "obl-5986",
+        "obl-5992",
+        "obl-6009",
+        "obl-6056"
+      ],
+      "source_seed_ids": [
+        "seed-2298",
+        "seed-2315",
+        "seed-2766",
+        "seed-6443",
+        "seed-6480",
+        "seed-6506",
+        "seed-7380",
+        "seed-7425",
+        "seed-7462",
+        "seed-8408",
+        "seed-8816",
+        "seed-8857",
+        "seed-8895",
+        "seed-8911",
+        "seed-8949",
+        "seed-8992",
+        "seed-9009",
+        "seed-9043",
+        "seed-2305",
+        "seed-2311",
+        "seed-2799",
+        "seed-6001",
+        "seed-6461",
+        "seed-8842",
+        "seed-8937",
+        "seed-9006",
+        "seed-9035",
+        "seed-9092",
+        "seed-9154"
+      ],
+      "source_shard_ids": [
+        "shard-0031",
+        "shard-0032",
+        "shard-0035",
+        "shard-0062",
+        "shard-0070",
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0059",
+        "shard-0083"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1793",
+          "obl-1797",
+          "obl-1803",
+          "obl-2155",
+          "obl-4292",
+          "obl-4544",
+          "obl-5943",
+          "obl-5969",
+          "obl-5986",
+          "obl-5992",
+          "obl-6009",
+          "obl-6056"
+        ],
+        "source_seed_ids": [
+          "seed-2298",
+          "seed-2315",
+          "seed-2766",
+          "seed-6443",
+          "seed-6480",
+          "seed-6506",
+          "seed-7380",
+          "seed-7425",
+          "seed-7462",
+          "seed-8408",
+          "seed-8816",
+          "seed-8857",
+          "seed-8895",
+          "seed-8911",
+          "seed-8949",
+          "seed-8992",
+          "seed-9009",
+          "seed-9043",
+          "seed-2305",
+          "seed-2311",
+          "seed-2799",
+          "seed-6001",
+          "seed-6461",
+          "seed-8842",
+          "seed-8937",
+          "seed-9006",
+          "seed-9035",
+          "seed-9092",
+          "seed-9154"
+        ],
+        "source_shard_ids": [
+          "shard-0031",
+          "shard-0032",
+          "shard-0035",
+          "shard-0062",
+          "shard-0070",
+          "shard-0077",
+          "shard-0081",
+          "shard-0082",
+          "shard-0059",
+          "shard-0083"
+        ]
+      },
+      "gap_ids": [
+        "gap-01512",
+        "gap-01513",
+        "gap-01519",
+        "gap-01790",
+        "gap-03485",
+        "gap-03721",
+        "gap-04771",
+        "gap-04795",
+        "gap-04811",
+        "gap-04873",
+        "gap-04886",
+        "gap-04981"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Plans/Architecture_Invariants.md`",
+        "Plans/Architecture_Invariants.md",
+        "`Architecture_Invariants.md` needs to reflect newer runtime invariants like scheduler lane ordering and mutation-safe-point requirements",
+        "Architecture_Invariants.md",
+        "Canonical invariants are increasingly runtime-object-first:",
+        "Add `attempt_id` to the reserved diagnostic schemas that represent execution, audit, handoff, and HITL events, and back it with a new architecture invariant for attempt continuity.",
+        "attempt_id",
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md",
+        "`Architecture_Invariants.md` lacks invariants for requested/effective identity completeness, graph-lock degradation boundaries, projection trust/generation staleness, blocked/failure classification, concurrent actors sharing provider pools, and safe-point vs restore-point separation.",
+        "`Architecture_Invariants.md` needs explicit invariants for frozen requested/effective execution identity bundles, provider-pool concurrency scope, projection trust vs scheduler authority, and safe-point lineage exactness.",
+        "`Architecture_Invariants.md` is now missing invariants that adjacent owner docs already state normatively: safe-point vs restore-point boundaries, graph-lock non-degradation, classification-before-policy, checkpoint-derived projection freshness, and attempt-boundary identity freeze.",
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "22",
+        "`Architecture_Invariants.md` remains missing owner-level invariants for attempt immutability, failure-vs-blocked family separation, restore identity, projection authority, and shared provider-pool concurrency.",
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "61",
+        "`ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invariants.md#INV-010, SchemaID:evidence.schema.json`",
+        "ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invariants.md#INV-010, SchemaID:evidence.schema.json"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "Architecture_Invariants.md"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "Architecture_Invariants.md"
+      ],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-83a3ab50380e",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0036",
+      "source_reconciliation_target_ids": [
+        "target-0036"
+      ],
+      "source_target_ids": [
+        "target-0036"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0036\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `Plans/[retired-token-1]`\n  - Plans/[retired-token-1]\n  - `[retired-token-1]` needs to reflect newer runtime invariants like scheduler lane ordering and mutation-safe-point requirements\n  - [retired-token-1]\n  - Canonical invariants are increasingly runtime-object-first:\n  - Add `attempt_id` to the reserved diagnostic schemas that represent execution, audit, handoff, and HITL events, and back it with a new architecture invariant for attempt continuity.\n  - attempt_id\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - `[retired-token-1]` lacks invariants for requested/effective identity completeness, graph-lock degradation boundaries, projection trust/generation staleness, blocked/failure classification, concurrent actors sharing provider pools, and safe-point vs restore-point separation.\n  - `[retired-token-1]` needs explicit invariants for frozen requested/effective execution identity bundles, provider-pool concurrency scope, projection trust vs scheduler authority, and safe-point lineage exactness.\n  - `[retired-token-1]` is now missing invariants that adjacent owner docs already state normatively: safe-point vs restore-point boundaries, graph-lock non-degradation, classification-before-policy, checkpoint-derived projection freshness, and attempt-boundary identity freeze.\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - `[retired-token-1]` remains missing owner-level invariants for attempt immutability, failure-vs-blocked family separation, restore identity, projection authority, and shared provider-pool concurrency.\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.\n  - 61\n  - `ContractRef: Plans/[retired-token-1]#INV-002, Plans/[retired-token-1]#INV-010, SchemaID:evidence.schema.json`\n  - ContractRef: Plans/[retired-token-1]#INV-002, Plans/[retired-token-1]#INV-010, SchemaID:evidence.schema.json\n- Legacy token retirement handling:\n  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0008",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## 0. Scope (Plans/Architecture_Invariants.md:L14)",
+      "path": "Plans/Architecture_Invariants.md",
+      "coverage_row_ids": [
+        "cov-00933",
+        "cov-03260",
+        "cov-04626",
+        "cov-04833",
+        "cov-05102",
+        "cov-05132",
+        "cov-05152",
+        "cov-05188",
+        "cov-05215",
+        "cov-05943",
+        "cov-06205",
+        "cov-06522",
+        "cov-06524"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-00933",
+          "cov-03260",
+          "cov-04626",
+          "cov-04833",
+          "cov-05102",
+          "cov-05132",
+          "cov-05152",
+          "cov-05188",
+          "cov-05215",
+          "cov-05943",
+          "cov-06205",
+          "cov-06522",
+          "cov-06524"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-790",
+        "obl-3106",
+        "obl-4404",
+        "obl-4610",
+        "obl-4878",
+        "obl-4908",
+        "obl-4928",
+        "obl-4964",
+        "obl-4991",
+        "obl-5715",
+        "obl-5974",
+        "obl-6163",
+        "obl-6165"
+      ],
+      "source_seed_ids": [
+        "seed-906",
+        "seed-4129",
+        "seed-6226",
+        "seed-6591",
+        "seed-7029",
+        "seed-7089",
+        "seed-7130",
+        "seed-7200",
+        "seed-7273",
+        "seed-8494",
+        "seed-8942",
+        "seed-9318",
+        "seed-9327"
+      ],
+      "source_shard_ids": [
+        "shard-0017",
+        "shard-0045",
+        "shard-0060",
+        "shard-0063",
+        "shard-0067",
+        "shard-0068",
+        "shard-0069",
+        "shard-0078",
+        "shard-0081",
+        "shard-0084"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-790",
+          "obl-3106",
+          "obl-4404",
+          "obl-4610",
+          "obl-4878",
+          "obl-4908",
+          "obl-4928",
+          "obl-4964",
+          "obl-4991",
+          "obl-5715",
+          "obl-5974",
+          "obl-6163",
+          "obl-6165"
+        ],
+        "source_seed_ids": [
+          "seed-906",
+          "seed-4129",
+          "seed-6226",
+          "seed-6591",
+          "seed-7029",
+          "seed-7089",
+          "seed-7130",
+          "seed-7200",
+          "seed-7273",
+          "seed-8494",
+          "seed-8942",
+          "seed-9318",
+          "seed-9327"
+        ],
+        "source_shard_ids": [
+          "shard-0017",
+          "shard-0045",
+          "shard-0060",
+          "shard-0063",
+          "shard-0067",
+          "shard-0068",
+          "shard-0069",
+          "shard-0078",
+          "shard-0081",
+          "shard-0084"
+        ]
+      },
+      "gap_ids": [
+        "gap-00708",
+        "gap-02549",
+        "gap-03626",
+        "gap-03777",
+        "gap-03974",
+        "gap-03994",
+        "gap-04007",
+        "gap-04033",
+        "gap-04053",
+        "gap-04601",
+        "gap-04799",
+        "gap-05057",
+        "gap-05059"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "should show scope and consequence clearly",
+        "Conversational/HITL/tooling docs still overload \u201csession\u201d with incompatible scope meanings, which becomes a correctness bug under multi-lane and multi-actor execution.",
+        "Common scope fields:",
+        "object identity and scope stay separate from destination",
+        "shell and scope belong to `route_target`",
+        "route_target",
+        "`focused_run_id` and `thread_id` remain route fields because they are scope restorers, not just object metadata.",
+        "focused_run_id",
+        "thread_id",
+        "It carries navigation identity, scope restoration, and narrow focus refinement.",
+        "Scope and focus fields are not selector identity.",
+        "`blocked_sequence` in `{ run_id, node_id }` scope",
+        "blocked_sequence",
+        "{ run_id, node_id }",
+        "The system now has canonical field-name modernization without canonical scope modernization.",
+        "`Media_Generation_and_Capabilities.md`, `agent-rules-context.md`, and `Skills_System.md` all still under-specify caller scope, execution-role capture, identity disclosure, or currently-usable-vs-instance-enabled capability semantics.",
+        "Media_Generation_and_Capabilities.md",
+        "agent-rules-context.md",
+        "Skills_System.md",
+        "That means the main owner gap is no longer field names first. It is scope and owner identity.",
+        "The handoff addenda already assume attempt-native execution identity, but the core narrative still teaches tier-centric scope resolution."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-2ef10f5b77e1",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0037",
+      "source_reconciliation_target_ids": [
+        "target-0037"
+      ],
+      "source_target_ids": [
+        "target-0037"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0037\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - should show scope and consequence clearly\n  - Conversational/HITL/tooling docs still overload \u201csession\u201d with incompatible scope meanings, which becomes a correctness bug under multi-lane and multi-actor execution.\n  - Common scope fields:\n  - object identity and scope stay separate from destination\n  - shell and scope belong to `route_target`\n  - route_target\n  - `focused_run_id` and `thread_id` remain route fields because they are scope restorers, not just object metadata.\n  - focused_run_id\n  - thread_id\n  - It carries navigation identity, scope restoration, and narrow focus refinement.\n  - Scope and focus fields are not selector identity.\n  - `blocked_sequence` in `{ run_id, node_id }` scope\n  - blocked_sequence\n  - { run_id, node_id }\n  - The system now has canonical field-name modernization without canonical scope modernization.\n  - `Media_Generation_and_Capabilities.md`, `agent-rules-context.md`, and `Skills_System.md` all still under-specify caller scope, execution-role capture, identity disclosure, or currently-usable-vs-instance-enabled capability semantics.\n  - Media_Generation_and_Capabilities.md\n  - agent-rules-context.md\n  - Skills_System.md\n  - That means the main owner gap is no longer field names first. It is scope and owner identity.\n  - The handoff addenda already assume attempt-native execution identity, but the core narrative still teaches tier-centric scope resolution.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-04690",
+    "cov-05521",
+    "cov-05708",
+    "cov-01936",
+    "cov-01940",
+    "cov-01946",
+    "cov-02303",
+    "cov-04453",
+    "cov-04766",
+    "cov-06171",
+    "cov-06200",
+    "cov-06222",
+    "cov-06289",
+    "cov-06307",
+    "cov-06415",
+    "cov-00933",
+    "cov-03260",
+    "cov-04626",
+    "cov-04833",
+    "cov-05102",
+    "cov-05132",
+    "cov-05152",
+    "cov-05188",
+    "cov-05215",
+    "cov-05943",
+    "cov-06205",
+    "cov-06522",
+    "cov-06524"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-4468",
+    "obl-5293",
+    "obl-5480",
+    "obl-1793",
+    "obl-1797",
+    "obl-1803",
+    "obl-2155",
+    "obl-4292",
+    "obl-4544",
+    "obl-5943",
+    "obl-5969",
+    "obl-5986",
+    "obl-5992",
+    "obl-6009",
+    "obl-6056",
+    "obl-790",
+    "obl-3106",
+    "obl-4404",
+    "obl-4610",
+    "obl-4878",
+    "obl-4908",
+    "obl-4928",
+    "obl-4964",
+    "obl-4991",
+    "obl-5715",
+    "obl-5974",
+    "obl-6163",
+    "obl-6165"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-6352",
+    "seed-7868",
+    "seed-8132",
+    "seed-2298",
+    "seed-2315",
+    "seed-2766",
+    "seed-6443",
+    "seed-6480",
+    "seed-6506",
+    "seed-7380",
+    "seed-7425",
+    "seed-7462",
+    "seed-8408",
+    "seed-8816",
+    "seed-8857",
+    "seed-8895",
+    "seed-8911",
+    "seed-8949",
+    "seed-8992",
+    "seed-9009",
+    "seed-9043",
+    "seed-2305",
+    "seed-2311",
+    "seed-2799",
+    "seed-6001",
+    "seed-6461",
+    "seed-8842",
+    "seed-8937",
+    "seed-9006",
+    "seed-9035",
+    "seed-9092",
+    "seed-9154",
+    "seed-906",
+    "seed-4129",
+    "seed-6226",
+    "seed-6591",
+    "seed-7029",
+    "seed-7089",
+    "seed-7130",
+    "seed-7200",
+    "seed-7273",
+    "seed-8494",
+    "seed-8942",
+    "seed-9318",
+    "seed-9327"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0061",
+    "shard-0073",
+    "shard-0075",
+    "shard-0031",
+    "shard-0032",
+    "shard-0035",
+    "shard-0062",
+    "shard-0070",
+    "shard-0077",
+    "shard-0081",
+    "shard-0082",
+    "shard-0059",
+    "shard-0083",
+    "shard-0017",
+    "shard-0045",
+    "shard-0060",
+    "shard-0063",
+    "shard-0067",
+    "shard-0068",
+    "shard-0069",
+    "shard-0078",
+    "shard-0084"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "preserved_exact_required_items": [
+    "`subject_id` should stay sparse; `object_kind` should do most of the cross-surface identity work.",
+    "subject_id",
+    "object_kind",
+    "The duplicated `cost_usage` section raises reconciliation risk because one copy can be updated while the other stays stale.",
+    "cost_usage",
+    "Remove stale `Tiers` page/tab structures from `FinalGUISpec.md` and `Orchestrator_Page.md` in the same reconciliation tranche so they do not keep cross-referencing each other.",
+    "Tiers",
+    "FinalGUISpec.md",
+    "Orchestrator_Page.md",
+    "`Plans/Architecture_Invariants.md`",
+    "Plans/Architecture_Invariants.md",
+    "`Architecture_Invariants.md` needs to reflect newer runtime invariants like scheduler lane ordering and mutation-safe-point requirements",
+    "Architecture_Invariants.md",
+    "Canonical invariants are increasingly runtime-object-first:",
+    "Add `attempt_id` to the reserved diagnostic schemas that represent execution, audit, handoff, and HITL events, and back it with a new architecture invariant for attempt continuity.",
+    "attempt_id",
+    "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+    "Plans/*.md",
+    "`Architecture_Invariants.md` lacks invariants for requested/effective identity completeness, graph-lock degradation boundaries, projection trust/generation staleness, blocked/failure classification, concurrent actors sharing provider pools, and safe-point vs restore-point separation.",
+    "`Architecture_Invariants.md` needs explicit invariants for frozen requested/effective execution identity bundles, provider-pool concurrency scope, projection trust vs scheduler authority, and safe-point lineage exactness.",
+    "`Architecture_Invariants.md` is now missing invariants that adjacent owner docs already state normatively: safe-point vs restore-point boundaries, graph-lock non-degradation, classification-before-policy, checkpoint-derived projection freshness, and attempt-boundary identity freeze.",
+    "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+    "39",
+    "22",
+    "`Architecture_Invariants.md` remains missing owner-level invariants for attempt immutability, failure-vs-blocked family separation, restore identity, projection authority, and shared provider-pool concurrency.",
+    "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+    "61",
+    "`ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invariants.md#INV-010, SchemaID:evidence.schema.json`",
+    "ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invariants.md#INV-010, SchemaID:evidence.schema.json",
+    "should show scope and consequence clearly",
+    "Conversational/HITL/tooling docs still overload \u201csession\u201d with incompatible scope meanings, which becomes a correctness bug under multi-lane and multi-actor execution.",
+    "Common scope fields:",
+    "object identity and scope stay separate from destination",
+    "shell and scope belong to `route_target`",
+    "route_target",
+    "`focused_run_id` and `thread_id` remain route fields because they are scope restorers, not just object metadata.",
+    "focused_run_id",
+    "thread_id",
+    "It carries navigation identity, scope restoration, and narrow focus refinement.",
+    "Scope and focus fields are not selector identity.",
+    "`blocked_sequence` in `{ run_id, node_id }` scope",
+    "blocked_sequence",
+    "{ run_id, node_id }",
+    "The system now has canonical field-name modernization without canonical scope modernization.",
+    "`Media_Generation_and_Capabilities.md`, `agent-rules-context.md`, and `Skills_System.md` all still under-specify caller scope, execution-role capture, identity disclosure, or currently-usable-vs-instance-enabled capability semantics.",
+    "Media_Generation_and_Capabilities.md",
+    "agent-rules-context.md",
+    "Skills_System.md",
+    "That means the main owner gap is no longer field names first. It is scope and owner identity.",
+    "The handoff addenda already assume attempt-native execution identity, but the core narrative still teaches tier-centric scope resolution."
+  ],
+  "blocked_targets": []
+}

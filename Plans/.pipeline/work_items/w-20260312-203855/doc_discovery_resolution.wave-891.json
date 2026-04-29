@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-891",
+  "group_ids": [
+    "discgrp-3561",
+    "discgrp-3562",
+    "discgrp-3563",
+    "discgrp-3564"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03856",
+      "source_obligation_ids": [
+        "obl-3701"
+      ],
+      "source_seed_ids": [
+        "seed-5024"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03857",
+      "source_obligation_ids": [
+        "obl-3702"
+      ],
+      "source_seed_ids": [
+        "seed-5025"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Recommended minimum concern record shape",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L199"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03858",
+      "source_obligation_ids": [
+        "obl-3703"
+      ],
+      "source_seed_ids": [
+        "seed-5026"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "## 6. Ways to add tools (implementation angles)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Tools.md:L829"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03859",
+      "source_obligation_ids": [
+        "obl-3704"
+      ],
+      "source_seed_ids": [
+        "seed-5029"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "### 1.1 Builder / node worker",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L82"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

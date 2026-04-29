@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1313",
+  "group_ids": [
+    "discgrp-5249",
+    "discgrp-5250",
+    "discgrp-5251",
+    "discgrp-5252"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05680",
+      "source_obligation_ids": [
+        "obl-5452"
+      ],
+      "source_seed_ids": [
+        "seed-8089"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Frequency table, path compatibility, and validation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L361"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05681",
+      "source_obligation_ids": [
+        "obl-5453"
+      ],
+      "source_seed_ids": [
+        "seed-8090"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/OpenCode_Coverage_Matrix.md",
+      "new_heading_hint": "# OpenCode Coverage Matrix (Audit)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05682",
+      "source_obligation_ids": [
+        "obl-5454"
+      ],
+      "source_seed_ids": [
+        "seed-8091"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05683",
+      "source_obligation_ids": [
+        "obl-5455"
+      ],
+      "source_seed_ids": [
+        "seed-8097"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-031: Concern linkage to adjacent families",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L79"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

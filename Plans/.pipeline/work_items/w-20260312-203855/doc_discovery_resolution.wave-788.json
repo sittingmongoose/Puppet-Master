@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-788",
+  "group_ids": [
+    "discgrp-3149",
+    "discgrp-3150",
+    "discgrp-3151",
+    "discgrp-3152"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03429",
+      "source_obligation_ids": [
+        "obl-3275"
+      ],
+      "source_seed_ids": [
+        "seed-4389"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "### 3.5A `skill` tool runtime contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Tools.md:L465"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03430",
+      "source_obligation_ids": [
+        "obl-3276"
+      ],
+      "source_seed_ids": [
+        "seed-4390"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "## Runtime Scheduler / Recovery Ownership and Precedence",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L300"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03431",
+      "source_obligation_ids": [
+        "obl-3277"
+      ],
+      "source_seed_ids": [
+        "seed-4391"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/rewrite-tie-in-memo.md",
+      "new_heading_hint": "### Future mobile/web clients (impacts architecture now)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L61"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03432",
+      "source_obligation_ids": [
+        "obl-3278"
+      ],
+      "source_seed_ids": [
+        "seed-4392"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

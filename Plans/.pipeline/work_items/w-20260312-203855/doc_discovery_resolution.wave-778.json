@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-778",
+  "group_ids": [
+    "discgrp-3109",
+    "discgrp-3110",
+    "discgrp-3111",
+    "discgrp-3112"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03389",
+      "source_obligation_ids": [
+        "obl-3235"
+      ],
+      "source_seed_ids": [
+        "seed-4321"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "## 10. Phase 2 (native auth) -- when available",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L537"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03390",
+      "source_obligation_ids": [
+        "obl-3236"
+      ],
+      "source_seed_ids": [
+        "seed-4322"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.1 Unsaved editor recovery is required, not optional",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1295"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03391",
+      "source_obligation_ids": [
+        "obl-3237"
+      ],
+      "source_seed_ids": [
+        "seed-4323"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03392",
+      "source_obligation_ids": [
+        "obl-3238"
+      ],
+      "source_seed_ids": [
+        "seed-4324"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

@@ -5,6 +5,39 @@ Create `puppet-master-rs/config/destructive-commands.txt`:
 ```
 # Puppet Master Destructive Command Blocklist
 # One regex pattern per line. Case-insensitive matching.
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0221
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - one compact primary line: current state + owner + reason
+  - `OpenFile { path: PathBuf, line?, range?, target_group? }`
+  - OpenFile { path: PathBuf, line?, range?, target_group? }
+  - uses `OpenFile { path, line?, range?, target_group? }`
+  - OpenFile { path, line?, range?, target_group? }
+  - `line?` / `range?` when path-based
+  - line?
+  - range?
+  - `line?` / `range?` for file-backed opens
+  - `line?`
+  - `OpenFile { path, line, range }`
+  - OpenFile { path, line, range }
+  - `OpenFile { path, line?, range?, target_group? }`
+  - one owner-doc structural gap
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 # Lines starting with # are comments. Empty lines ignored.
 
 # === PHP / Laravel ===
@@ -52,6 +85,31 @@ mix\s+ecto\.(drop|reset)
 mix\s+ecto\.rollback\s+--all
 
 # === Raw SQL via CLI clients ===
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0219
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - role-scoped pools already exist in policy/storage via `allowed_roles?` and `disallowed_roles?`
+  - allowed_roles?
+  - disallowed_roles?
+  - raw provider/account disclosure fields
+  - raw `resume_url`
+  - resume_url
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 (mysql|psql|sqlite3)\s+.*DROP\s+(DATABASE|TABLE)
 (mysql|psql|sqlite3)\s+.*TRUNCATE
 mongosh?\s+.*DROP\s+(DATABASE|TABLE)

@@ -1,0 +1,307 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-140",
+  "group_ids": [
+    "pktgrp-0557",
+    "pktgrp-0558",
+    "pktgrp-0559",
+    "pktgrp-0560"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0002",
+      "source_reconciliation_target_id": "target-0002",
+      "source_reconciliation_target_ids": [
+        "target-0002"
+      ],
+      "path": "Plans/.../Evidence tab docs",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../Evidence tab docs:L1",
+      "coverage_row_ids": [
+        "cov-00002"
+      ],
+      "source_obligation_ids": [
+        "obl-001"
+      ],
+      "source_seed_ids": [
+        "seed-001"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-001"
+        ],
+        "source_seed_ids": [
+          "seed-001"
+        ],
+        "source_shard_ids": [
+          "shard-0001"
+        ]
+      },
+      "gap_ids": [
+        "gap-00002"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Orchestrator must remain tab-first, not widget-first",
+        "`Progress` remains the first tab and contains orchestrator widgets",
+        "`Tiers` should be replaced by a seam/package-oriented tab",
+        "`Evidence` tab needs major redesign",
+        "`History` and `Ledger` both remain candidates, but merging them is on the table",
+        "Evidence tab should use separate panes: evidence records pane; artifact pane",
+        "right-side inspectors should stay summary/action oriented; dense objects should open full-record views"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "`Tiers`"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "`Tiers`"
+      ],
+      "required_structural_headings": [
+        "Topic / Scope"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-57b0f585ccb6",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0003",
+      "source_reconciliation_target_id": "target-0003",
+      "source_reconciliation_target_ids": [
+        "target-0003"
+      ],
+      "path": "Plans/.../Ledger/History docs",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../Ledger/History docs:L1",
+      "coverage_row_ids": [
+        "cov-00003"
+      ],
+      "source_obligation_ids": [
+        "obl-001"
+      ],
+      "source_seed_ids": [
+        "seed-001"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-001"
+        ],
+        "source_seed_ids": [
+          "seed-001"
+        ],
+        "source_shard_ids": [
+          "shard-0001"
+        ]
+      },
+      "gap_ids": [
+        "gap-00003"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Orchestrator must remain tab-first, not widget-first",
+        "`Progress` remains the first tab and contains orchestrator widgets",
+        "`Tiers` should be replaced by a seam/package-oriented tab",
+        "`Evidence` tab needs major redesign",
+        "`History` and `Ledger` both remain candidates, but merging them is on the table",
+        "Evidence tab should use separate panes: evidence records pane; artifact pane",
+        "right-side inspectors should stay summary/action oriented; dense objects should open full-record views"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "`Tiers`"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "`Tiers`"
+      ],
+      "required_structural_headings": [
+        "Topic / Scope"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-8f79e35bcb14",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0004",
+      "source_reconciliation_target_id": "target-0004",
+      "source_reconciliation_target_ids": [
+        "target-0004"
+      ],
+      "path": "Plans/.../Orchestrator page shell docs",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../Orchestrator page shell docs:L1",
+      "coverage_row_ids": [
+        "cov-00001"
+      ],
+      "source_obligation_ids": [
+        "obl-001"
+      ],
+      "source_seed_ids": [
+        "seed-001"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-001"
+        ],
+        "source_seed_ids": [
+          "seed-001"
+        ],
+        "source_shard_ids": [
+          "shard-0001"
+        ]
+      },
+      "gap_ids": [
+        "gap-00001"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Orchestrator must remain tab-first, not widget-first",
+        "`Progress` remains the first tab and contains orchestrator widgets",
+        "`Tiers` should be replaced by a seam/package-oriented tab",
+        "`Evidence` tab needs major redesign",
+        "`History` and `Ledger` both remain candidates, but merging them is on the table",
+        "Evidence tab should use separate panes: evidence records pane; artifact pane",
+        "right-side inspectors should stay summary/action oriented; dense objects should open full-record views"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "`Tiers`"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "`Tiers`"
+      ],
+      "required_structural_headings": [
+        "Topic / Scope"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-ce9dbc421d6d",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0005",
+      "source_reconciliation_target_id": "target-0005",
+      "source_reconciliation_target_ids": [
+        "target-0005"
+      ],
+      "path": "Plans/.../Orchestrator shell docs",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.../Orchestrator shell docs:L1",
+      "coverage_row_ids": [
+        "cov-00009"
+      ],
+      "source_obligation_ids": [
+        "obl-004"
+      ],
+      "source_seed_ids": [
+        "seed-004"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-004"
+        ],
+        "source_seed_ids": [
+          "seed-004"
+        ],
+        "source_shard_ids": [
+          "shard-0001"
+        ]
+      },
+      "gap_ids": [
+        "gap-00009"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "replace `Tiers` with a seam/package-oriented tab (name still open; likely `Seams` or equivalent)",
+        "prefer precise canonical terms in docs/runtime model",
+        "likely canonical tab/object labels: `Seams`, `Feature Seam`, `Work Package`, `Package Overseer`, `Seam Overseer`"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "`Tiers`"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "`Tiers`"
+      ],
+      "required_structural_headings": [
+        "Key Facts and Findings"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-6499b985ba84",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-00002",
+    "cov-00003",
+    "cov-00001",
+    "cov-00009"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-001",
+    "obl-004"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-001",
+    "seed-004"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0001"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "preserved_exact_required_items": [
+    "Orchestrator must remain tab-first, not widget-first",
+    "`Progress` remains the first tab and contains orchestrator widgets",
+    "`Tiers` should be replaced by a seam/package-oriented tab",
+    "`Evidence` tab needs major redesign",
+    "`History` and `Ledger` both remain candidates, but merging them is on the table",
+    "Evidence tab should use separate panes: evidence records pane; artifact pane",
+    "right-side inspectors should stay summary/action oriented; dense objects should open full-record views",
+    "replace `Tiers` with a seam/package-oriented tab (name still open; likely `Seams` or equivalent)",
+    "prefer precise canonical terms in docs/runtime model",
+    "likely canonical tab/object labels: `Seams`, `Feature Seam`, `Work Package`, `Package Overseer`, `Seam Overseer`"
+  ],
+  "blocked_targets": []
+}

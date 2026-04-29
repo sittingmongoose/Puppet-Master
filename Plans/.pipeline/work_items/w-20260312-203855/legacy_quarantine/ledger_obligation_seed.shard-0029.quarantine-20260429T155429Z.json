@@ -1,0 +1,125 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0029",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0029-L005601-L005800.md",
+  "source_line_range": "L005601-L005800",
+  "covered_shard_id": "shard-0029",
+  "seed_candidates": [
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "shared routing payload contract",
+      "exact_items": [
+        "define one shared routing payload contract rather than separate ad hoc payloads per surface",
+        "all \u201cOpen in \u2026\u201d / \u201cShow in \u2026\u201d actions should become thin wrappers over the shared routing payload"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/usage-feature.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Main normalization direction",
+        "Cross-surface pivot direction",
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "resume_url",
+        "focused_run_id",
+        "object_kind",
+        "object_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L5638-L5645"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "object-kind vocabulary for deep-link/search routing",
+      "exact_items": [
+        "Search and deep-link routing now need object-kind vocabulary to avoid ambiguity.",
+        "Candidate object kinds: run, feature_seam, work_package, node, lane, worktree, concern, promotion, review, corroboration, graph_patch, recovery_record, blocked_episode, usage_record, artifact, thread, wizard, bundle."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Object-kind direction",
+        "Candidate shared payload fields"
+      ],
+      "stale_tokens": [
+        "resume_url",
+        "actor_run_kind",
+        "destination_surface",
+        "destination_tab"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L5672-L5693"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "historical semantic core",
+      "exact_items": [
+        "blocked projections remain historical after resolution and are not overwritten",
+        "attempts from older generations become stale_historical and are never resumable",
+        "historical worktree references must survive live prune/retire operations",
+        "The most reusable cross-family historical terms still look like: historical, stale_historical, superseded, revoked, reopened, archived, removed"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Key findings",
+        "Cross-family semantic core"
+      ],
+      "stale_tokens": [
+        "stale_historical",
+        "historical",
+        "superseded",
+        "revoked",
+        "removed"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L5772-L5797"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "L005601",
+    "L005603",
+    "L005604",
+    "L005613",
+    "L005637",
+    "L005649",
+    "L005672",
+    "L005695",
+    "L005702",
+    "L005718",
+    "L005726",
+    "L005734",
+    "L005741",
+    "L005760",
+    "L005771",
+    "L005789"
+  ],
+  "uncertain_items": []
+}

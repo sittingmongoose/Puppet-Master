@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-886",
+  "group_ids": [
+    "discgrp-3541",
+    "discgrp-3542",
+    "discgrp-3543",
+    "discgrp-3544"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03835",
+      "source_obligation_ids": [
+        "obl-3680"
+      ],
+      "source_seed_ids": [
+        "seed-4997"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Prompt_Pipeline.md",
+      "new_heading_hint": "### Runtime Attempt Snapshot and Handoff Bundle",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L552"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03836",
+      "source_obligation_ids": [
+        "obl-3681"
+      ],
+      "source_seed_ids": [
+        "seed-4998"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1323"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03837",
+      "source_obligation_ids": [
+        "obl-3682"
+      ],
+      "source_seed_ids": [
+        "seed-4999"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03838",
+      "source_obligation_ids": [
+        "obl-3683"
+      ],
+      "source_seed_ids": [
+        "seed-5000"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-180: Runtime attribution ownership split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L153"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

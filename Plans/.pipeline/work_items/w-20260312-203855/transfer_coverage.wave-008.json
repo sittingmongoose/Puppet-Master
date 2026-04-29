@@ -1,228 +1,161 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-008",
-  "timestamp_utc": "2026-04-28T19:32:38Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-029",
-    "coverage-rowgrp-030",
-    "coverage-rowgrp-031",
-    "coverage-rowgrp-032"
+  "row_group_ids": [
+    "rowgrp-0029",
+    "rowgrp-0030",
+    "rowgrp-0031",
+    "rowgrp-0032"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-029 cov-1235 Plans/Contracts_V0.md",
-    "rowgrp-030 cov-900,cov-1146 Plans/Crosswalk.md",
-    "rowgrp-031 cov-129,cov-408,cov-870,cov-1037,cov-1213 Plans/Crosswalk.md",
-    "rowgrp-032 cov-911 Plans/Crosswalk.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-029": "completed",
-    "coverage-rowgrp-030": "completed",
-    "coverage-rowgrp-031": "completed_after_correction",
-    "coverage-rowgrp-032": "completed"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-1235",
-    "cov-900",
-    "cov-1146",
-    "cov-129",
-    "cov-408",
-    "cov-870",
-    "cov-1037",
-    "cov-1213",
-    "cov-911"
-  ],
-  "coverage_ids_completed": [
-    "cov-1235",
-    "cov-900",
-    "cov-1146",
-    "cov-129",
-    "cov-408",
-    "cov-870",
-    "cov-1037",
-    "cov-1213",
-    "cov-911"
-  ],
-  "path_groups_assigned": [
-    "Plans/Contracts_V0.md",
-    "Plans/Crosswalk.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-1235",
-      "status": "missing",
-      "evidence": [
-        "Plans/Contracts_V0.md:111-115 stale_historical vocabulary appears, but not the assigned stale-token retirement target",
-        "Plans/Contracts_V0.md:263 stale_historical appears in historical status vocabulary",
-        "Plans/Contracts_V0.md:1410 stale transitional enum lists appear without matching cov-1235 retirement coverage",
-        "Plans/Contracts_V0.md:1574 stale effective-context blocks appear without matching cov-1235 retirement coverage"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "Assigned path has no matching stale-token retirement evidence for cov-1235; only unrelated stale-related wording appears in Contracts_V0.md.",
+      "coverage_id": "cov-00024",
       "source_obligation_ids": [
-        "obl-349"
+        "obl-009"
       ],
       "source_seed_ids": [
-        "seed-349"
+        "seed-009"
       ],
       "source_shard_ids": [
-        "shard-0089"
+        "shard-0002"
       ],
-      "path_field_status": "match"
+      "canon_label": "stale projection gating / trust degradation",
+      "row_type": "layout_blocker",
+      "path": "Plans/.../working_ledger.md",
+      "heading_hint": "Action-gating direction under degraded projections now clarified",
+      "status": "missing",
+      "exact_items": [
+        "Actions that change execution/promotion/recovery/approval truth require fresh-enough projection state",
+        "UI should explain gating inline: what is stale, why it matters, what the user can do next",
+        "Projection health becoming an operational concern must mint a real concern rather than stay a silent widget problem"
+      ],
+      "stale_tokens": [
+        "silent widget problem"
+      ],
+      "evidence": [
+        "Plans/.../working_ledger.md:target_doc_not_found"
+      ],
+      "required_action": "packetizable_layout_repair"
     },
     {
-      "coverage_id": "cov-900",
-      "status": "missing",
-      "evidence": [
-        "Plans/Crosswalk.md: assigned file reviewed; no matching evidence found for route activation override boundaries"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "No matching evidence found in Plans/Crosswalk.md for the assigned route activation override boundaries item.",
+      "coverage_id": "cov-00014",
       "source_obligation_ids": [
-        "obl-253"
+        "obl-006"
       ],
       "source_seed_ids": [
-        "seed-253"
+        "seed-006"
       ],
       "source_shard_ids": [
-        "shard-0064"
+        "shard-0002"
       ],
-      "path_field_status": "match"
+      "canon_label": "project/seam/package/node override ownership",
+      "row_type": "owner",
+      "path": "Plans/.../working_ledger.md",
+      "heading_hint": "Settings scope hierarchy direction now clarified",
+      "status": "missing",
+      "exact_items": [
+        "`App / Global` = broad product defaults/catalogs/capabilities",
+        "`Project` = main execution policy owner",
+        "`Seam` = meaningful feature-level overrides only",
+        "`Package` = useful local execution/recovery overrides",
+        "`Node` = rare targeted override only",
+        "`Actor / Role` = cross-cutting provider/account/persona/worker policy"
+      ],
+      "stale_tokens": [
+        "isolated orchestrator-only settings area"
+      ],
+      "evidence": [
+        "Plans/.../working_ledger.md:target_doc_not_found"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1146",
-      "status": "missing",
-      "evidence": [
-        "Plans/Crosswalk.md: assigned file reviewed; no matching evidence found for rewrite tie-in memo routing gaps"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "No matching evidence found in Plans/Crosswalk.md for the assigned rewrite tie-in memo routing gaps item.",
+      "coverage_id": "cov-00027",
       "source_obligation_ids": [
-        "obl-333"
+        "obl-010"
       ],
       "source_seed_ids": [
-        "seed-333"
+        "seed-010"
       ],
       "source_shard_ids": [
-        "shard-0084"
+        "shard-0002"
       ],
-      "path_field_status": "match"
+      "canon_label": "concern record as first-class owned entity",
+      "row_type": "owner",
+      "path": "Plans/.../working_ledger.md",
+      "heading_hint": "Concern-model direction now clarified",
+      "status": "missing",
+      "exact_items": [
+        "`concern` should be a first-class record, not just a field buried in review/alert logic",
+        "Concern records should carry identity, scope, severity, category, owner, lifecycle state, meaning/summary, linkage to evidence/artifacts/history/source records, visibility/attention flags",
+        "Canonical concerns should be created by runtime, package overseer, seam overseer, corroboration outcome, graph patch/state-transition logic"
+      ],
+      "stale_tokens": [
+        "review/alert logic"
+      ],
+      "evidence": [
+        "Plans/.../working_ledger.md:target_doc_not_found"
+      ],
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-129",
-      "status": "missing",
-      "evidence": [
-        "Plans/Crosswalk.md:131-137 projection-state ownership exists, but no matching stale-token consumer coverage for cov-129 was found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned stale-token consumer item is not covered by the projection-state ownership passage in Plans/Crosswalk.md.",
+      "coverage_id": "cov-00011",
       "source_obligation_ids": [
-        "obl-036"
+        "obl-005"
       ],
       "source_seed_ids": [
-        "seed-036"
+        "seed-005"
       ],
       "source_shard_ids": [
-        "shard-0008"
+        "shard-0002"
       ],
-      "path_field_status": "match"
+      "canon_label": "override-display / settings hierarchy tokens to retire",
+      "row_type": "stale_retirement",
+      "path": "Plans/.../working_ledger.md",
+      "heading_hint": "Override-display direction now clarified",
+      "status": "missing",
+      "exact_items": [
+        "Retire/replace legacy locality tokens with explicit scope labels: `Inherited`, `Explicit`, `Computed`",
+        "Treat `Runtime only` as computed truth, not user configuration"
+      ],
+      "stale_tokens": [
+        "Runtime only",
+        "Inherited",
+        "Explicit",
+        "Computed"
+      ],
+      "evidence": [
+        "Plans/.../working_ledger.md:target_doc_not_found"
+      ],
+      "required_action": "stale_retirement"
     },
     {
-      "coverage_id": "cov-408",
-      "status": "missing",
-      "evidence": [
-        "Plans/Crosswalk.md:131-137 projection-state ownership exists, but no matching ledger/search inspector stale-token coverage for cov-408 was found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned ledger/search inspector distinction item is not covered by the projection-state ownership passage in Plans/Crosswalk.md.",
+      "coverage_id": "cov-06893",
       "source_obligation_ids": [
-        "obl-121"
+        "obl-6495"
       ],
       "source_seed_ids": [
-        "seed-121"
-      ],
-      "source_shard_ids": [
-        "shard-0030"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-870",
-      "status": "missing",
-      "evidence": [
-        "Plans/Crosswalk.md:131-137 projection-state ownership exists, but no matching route_target/OpenSubject wrapper normalization coverage for cov-870 was found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned wrapper-command route_target/OpenSubject normalization item is not covered by the projection-state ownership passage in Plans/Crosswalk.md.",
-      "source_obligation_ids": [
-        "obl-244"
-      ],
-      "source_seed_ids": [
-        "seed-244"
-      ],
-      "source_shard_ids": [
-        "shard-0062"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1037",
-      "status": "missing",
-      "evidence": [
-        "Plans/Crosswalk.md:131-137 projection-state ownership exists, but no matching primitive ownership consumption split for cov-1037 was found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned primitive ownership consumption split item is not covered by the projection-state ownership passage in Plans/Crosswalk.md.",
-      "source_obligation_ids": [
-        "obl-291"
-      ],
-      "source_seed_ids": [
-        "seed-291"
-      ],
-      "source_shard_ids": [
-        "shard-0074"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-1213",
-      "status": "missing",
-      "evidence": [
-        "Plans/Crosswalk.md:131-137 projection-state ownership exists, but no Primitive:RouteTarget / Primitive:OpenSubject or route storage wiring refinement coverage for cov-1213 was found"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "Assigned route storage wiring refinement item is not covered by the projection-state ownership passage in Plans/Crosswalk.md.",
-      "source_obligation_ids": [
-        "obl-345"
-      ],
-      "source_seed_ids": [
-        "seed-345"
+        "seed-9874",
+        "seed-9877"
       ],
       "source_shard_ids": [
         "shard-0088"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-911",
+      "canon_label": "`Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json`",
+      "row_type": "owner",
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json",
+      "heading_hint": "",
       "status": "missing",
+      "exact_items": [
+        "`Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json`",
+        "Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/Crosswalk.md: assigned file reviewed; no matching shared override rule layout-blocker text found"
+        "Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json:target_doc_not_found"
       ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Assigned evidence is absent from Plans/Crosswalk.md.",
-      "source_obligation_ids": [
-        "obl-255"
-      ],
-      "source_seed_ids": [
-        "seed-255"
-      ],
-      "source_shard_ids": [
-        "shard-0064"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     }
   ]
 }

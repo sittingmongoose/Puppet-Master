@@ -1,0 +1,876 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-085",
+  "row_group_ids": [
+    "rowgrp-0337",
+    "rowgrp-0338",
+    "rowgrp-0339",
+    "rowgrp-0340"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-00431",
+      "source_obligation_ids": [
+        "obl-289"
+      ],
+      "source_seed_ids": [
+        "seed-334"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "downstream usage/storage/UI docs still weaken or rename the canonical field set",
+      "row_type": "layout_blocker",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "## 1. Document Set contract",
+      "status": "partial",
+      "exact_items": [
+        "downstream usage/storage/UI docs still weaken or rename the canonical field set"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L16"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04396",
+      "source_obligation_ids": [
+        "obl-4236"
+      ],
+      "source_seed_ids": [
+        "seed-5899"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "`chain-wizard-flexibility.md`, `interview-subagent-integration.md`, and `FinalGUISpec.md`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "# Document Packaging Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "`chain-wizard-flexibility.md`, `interview-subagent-integration.md`, and `FinalGUISpec.md` all assume staged or non-persisted document bundles that may be opened before they have stable workspace paths.",
+        "chain-wizard-flexibility.md",
+        "interview-subagent-integration.md",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L167"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05649",
+      "source_obligation_ids": [
+        "obl-5421"
+      ],
+      "source_seed_ids": [
+        "seed-8050"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "`Tiers` as a primary page/tab concept",
+      "row_type": "layout_blocker",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 2.1 Primary split rule",
+      "status": "partial",
+      "exact_items": [
+        "`Tiers` as a primary page/tab concept",
+        "Tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06390",
+      "source_obligation_ids": [
+        "obl-6031"
+      ],
+      "source_seed_ids": [
+        "seed-9118"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "the duplicated headings appear after the `## References` block, which breaks the document\u2019",
+      "row_type": "layout_blocker",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "# Document Packaging Policy (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "the duplicated headings appear after the `## References` block, which breaks the document\u2019s own structure and weakens deterministic anchor targeting",
+        "## References"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L3",
+        "Plans/Document_Packaging_Policy.md:L290"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00262",
+      "source_obligation_ids": [
+        "obl-143"
+      ],
+      "source_seed_ids": [
+        "seed-149"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "likely issue: `allowed_actions[]` and `allowed_action_ids[]` both appear as canonical depe",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "# Document Packaging Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "likely issue: `allowed_actions[]` and `allowed_action_ids[]` both appear as canonical depending on document, which will break blocked-action parity.",
+        "allowed_actions[]",
+        "allowed_action_ids[]"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00515",
+      "source_obligation_ids": [
+        "obl-372"
+      ],
+      "source_seed_ids": [
+        "seed-429"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "make package/lane state primary",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 2.1 Primary split rule",
+      "status": "partial",
+      "exact_items": [
+        "make package/lane state primary"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00747",
+      "source_obligation_ids": [
+        "obl-604"
+      ],
+      "source_seed_ids": [
+        "seed-699"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "canon_label": "`superseded` = replaced by newer truth",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 7.4 Canonical truth rules",
+      "status": "partial",
+      "exact_items": [
+        "`superseded` = replaced by newer truth",
+        "superseded"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L99"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01255",
+      "source_obligation_ids": [
+        "obl-1112"
+      ],
+      "source_seed_ids": [
+        "seed-1316"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "primary blocked/attention reason",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 2.1 Primary split rule",
+      "status": "partial",
+      "exact_items": [
+        "primary blocked/attention reason"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01288",
+      "source_obligation_ids": [
+        "obl-1145"
+      ],
+      "source_seed_ids": [
+        "seed-1357"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "primary blocked/attention owner",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 2.1 Primary split rule",
+      "status": "partial",
+      "exact_items": [
+        "primary blocked/attention owner"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02319",
+      "source_obligation_ids": [
+        "obl-2171"
+      ],
+      "source_seed_ids": [
+        "seed-2822"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "`usage-feature.md` sharpened that the canonical pointer should be `usage_event_ref`, not a",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "## 7. On-disk path convention and pointer stub contract",
+      "status": "partial",
+      "exact_items": [
+        "`usage-feature.md` sharpened that the canonical pointer should be `usage_event_ref`, not a new opaque `usage_event_id`",
+        "usage-feature.md",
+        "usage_event_ref",
+        "usage_event_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L171"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02583",
+      "source_obligation_ids": [
+        "obl-2431"
+      ],
+      "source_seed_ids": [
+        "seed-3155"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "no canonical blocked/attention truth",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 7.4 Canonical truth rules",
+      "status": "partial",
+      "exact_items": [
+        "no canonical blocked/attention truth"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L229"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03464",
+      "source_obligation_ids": [
+        "obl-3310"
+      ],
+      "source_seed_ids": [
+        "seed-4437"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "it links the three passes together with `workflow_run_id`",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "## 5. Three independent audits (full coverage, no sampling)",
+      "status": "partial",
+      "exact_items": [
+        "it links the three passes together with `workflow_run_id`",
+        "workflow_run_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L121"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03536",
+      "source_obligation_ids": [
+        "obl-3382"
+      ],
+      "source_seed_ids": [
+        "seed-4558"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "canon_label": "primary refs (`linked_artifact_id?`, `usage_event_ref?`, receipt/open refs)",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 2.1 Primary split rule",
+      "status": "partial",
+      "exact_items": [
+        "primary refs (`linked_artifact_id?`, `usage_event_ref?`, receipt/open refs)",
+        "linked_artifact_id?",
+        "usage_event_ref?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03755",
+      "source_obligation_ids": [
+        "obl-3600"
+      ],
+      "source_seed_ids": [
+        "seed-4866"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "canonical execution-unit refs for truth",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 7.4 Canonical truth rules",
+      "status": "partial",
+      "exact_items": [
+        "canonical execution-unit refs for truth"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L229"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04085",
+      "source_obligation_ids": [
+        "obl-3927"
+      ],
+      "source_seed_ids": [
+        "seed-5381"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "if file-backed canonical document exists:",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "# Document Packaging Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "if file-backed canonical document exists:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04346",
+      "source_obligation_ids": [
+        "obl-4186"
+      ],
+      "source_seed_ids": [
+        "seed-5816"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "artifact-backed reopen into transient `generated://<artifact_id>` buffers when there is no",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "# Document Packaging Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "artifact-backed reopen into transient `generated://<artifact_id>` buffers when there is no backing document yet",
+        "generated://<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04463",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04704",
+      "source_obligation_ids": [
+        "obl-4482"
+      ],
+      "source_seed_ids": [
+        "seed-6371"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "`wizard_step` as the primary object identity",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 2.1 Primary split rule",
+      "status": "partial",
+      "exact_items": [
+        "`wizard_step` as the primary object identity",
+        "wizard_step"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04718",
+      "source_obligation_ids": [
+        "obl-4496"
+      ],
+      "source_seed_ids": [
+        "seed-6395"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "`wizard_step` is a strong example of a field that matters operationally but should not for",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 7.6 Example",
+      "status": "partial",
+      "exact_items": [
+        "`wizard_step` is a strong example of a field that matters operationally but should not force the base target object to become wizard-shaped.",
+        "wizard_step"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L252"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04752",
+      "source_obligation_ids": [
+        "obl-4530"
+      ],
+      "source_seed_ids": [
+        "seed-6445",
+        "seed-6482",
+        "seed-7385",
+        "seed-7430",
+        "seed-8821",
+        "seed-8862",
+        "seed-8916",
+        "seed-8954",
+        "seed-9014",
+        "seed-9048"
+      ],
+      "source_shard_ids": [
+        "shard-0062",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "canon_label": "`Plans/Document_Packaging_Policy.md`",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Document_Packaging_Policy.md`",
+        "Plans/Document_Packaging_Policy.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L25",
+        "Plans/Document_Packaging_Policy.md:L37",
+        "Plans/Document_Packaging_Policy.md:L42",
+        "Plans/Document_Packaging_Policy.md:L56",
+        "Plans/Document_Packaging_Policy.md:L80"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04777",
+      "source_obligation_ids": [
+        "obl-4555"
+      ],
+      "source_seed_ids": [
+        "seed-6472"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "Packaging / evidence / artifact lineage gaps are broader than just Project_Output_Artifact",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "# Document Packaging Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Packaging / evidence / artifact lineage gaps are broader than just Project_Output_Artifacts:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04779",
+      "source_obligation_ids": [
+        "obl-4557"
+      ],
+      "source_seed_ids": [
+        "seed-6474"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "packaging evidence and execution evidence still share confusing `evidence/` naming without",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "# Document Packaging Policy (Canonical)",
+      "status": "present",
+      "exact_items": [
+        "packaging evidence and execution evidence still share confusing `evidence/` naming without a canonical discriminator.",
+        "evidence/"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L23",
+        "Plans/Document_Packaging_Policy.md:L131",
+        "Plans/Document_Packaging_Policy.md:L136",
+        "Plans/Document_Packaging_Policy.md:L137",
+        "Plans/Document_Packaging_Policy.md:L138"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04970",
+      "source_obligation_ids": [
+        "obl-4746"
+      ],
+      "source_seed_ids": [
+        "seed-6839"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "The evidence model is currently too generic to express route/wrapper/alias verification fa",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 7.5 Verification discovery rules",
+      "status": "partial",
+      "exact_items": [
+        "The evidence model is currently too generic to express route/wrapper/alias verification failures in a structured, machine-readable way."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L236"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05269",
+      "source_obligation_ids": [
+        "obl-5045"
+      ],
+      "source_seed_ids": [
+        "seed-7362"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "evidence source document:",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "# Document Packaging Policy (Canonical)",
+      "status": "partial",
+      "exact_items": [
+        "evidence source document:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05397",
+      "source_obligation_ids": [
+        "obl-5169"
+      ],
+      "source_seed_ids": [
+        "seed-7661"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "reject when both `subject_id` and `object_kind/object_id` are supplied as competing primar",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 2.1 Primary split rule",
+      "status": "partial",
+      "exact_items": [
+        "reject when both `subject_id` and `object_kind/object_id` are supplied as competing primary selectors",
+        "subject_id",
+        "object_kind/object_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05581",
+      "source_obligation_ids": [
+        "obl-5353"
+      ],
+      "source_seed_ids": [
+        "seed-7953",
+        "seed-8153",
+        "seed-8306"
+      ],
+      "source_shard_ids": [
+        "shard-0074",
+        "shard-0075",
+        "shard-0077"
+      ],
+      "canon_label": "Primary owner-gap docs:",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 2.1 Primary split rule",
+      "status": "partial",
+      "exact_items": [
+        "Primary owner-gap docs:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05624",
+      "source_obligation_ids": [
+        "obl-5396"
+      ],
+      "source_seed_ids": [
+        "seed-8019",
+        "seed-8092",
+        "seed-8189",
+        "seed-8267",
+        "seed-8488",
+        "seed-8528",
+        "seed-8573"
+      ],
+      "source_shard_ids": [
+        "shard-0074",
+        "shard-0075",
+        "shard-0076",
+        "shard-0078"
+      ],
+      "canon_label": "Primary owner docs:",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 2.1 Primary split rule",
+      "status": "partial",
+      "exact_items": [
+        "Primary owner docs:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05729",
+      "source_obligation_ids": [
+        "obl-5501"
+      ],
+      "source_seed_ids": [
+        "seed-8165"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "Make canonical route/object identity primary in owner docs.",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 2.1 Primary split rule",
+      "status": "partial",
+      "exact_items": [
+        "Make canonical route/object identity primary in owner docs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05776",
+      "source_obligation_ids": [
+        "obl-5548"
+      ],
+      "source_seed_ids": [
+        "seed-8232"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "Primary owner-gap doc:",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 2.1 Primary split rule",
+      "status": "partial",
+      "exact_items": [
+        "Primary owner-gap doc:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05850",
+      "source_obligation_ids": [
+        "obl-5622"
+      ],
+      "source_seed_ids": [
+        "seed-8342",
+        "seed-8637"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0079"
+      ],
+      "canon_label": "Primary owner doc:",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "### 2.1 Primary split rule",
+      "status": "partial",
+      "exact_items": [
+        "Primary owner doc:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06214",
+      "source_obligation_ids": [
+        "obl-5983"
+      ],
+      "source_seed_ids": [
+        "seed-8991"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Continue the ordered sequence on this same 22-doc tranche into `GPT-5.3-Codex`; `GPT-5.2`",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "## 5. Three independent audits (full coverage, no sampling)",
+      "status": "partial",
+      "exact_items": [
+        "Continue the ordered sequence on this same 22-doc tranche into `GPT-5.3-Codex`; `GPT-5.2` still produced enough novel signal to justify finishing the full tranche intact.",
+        "GPT-5.3-Codex",
+        "GPT-5.2"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L121"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06232",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/Document_Packaging_Policy.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

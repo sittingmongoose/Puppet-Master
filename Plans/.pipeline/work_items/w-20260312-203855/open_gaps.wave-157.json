@@ -1,0 +1,573 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-157",
+  "group_ids": [
+    "gapgrp-0625",
+    "gapgrp-0626",
+    "gapgrp-0627",
+    "gapgrp-0628"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-04452",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05718 is partial for concrete `puppet-master://wizard/...` format",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05718"
+      ],
+      "source_obligation_ids": [
+        "obl-5490"
+      ],
+      "source_seed_ids": [
+        "seed-8147"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "concrete `puppet-master://wizard/...` format",
+        "puppet-master://wizard/..."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05005",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "owner coverage row cov-06451 is partial for both are presented as canonical in different sections",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 15.3 UI Surfaces (Mandatory \u2014 Both Required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06451"
+      ],
+      "source_obligation_ids": [
+        "obl-6092"
+      ],
+      "source_seed_ids": [
+        "seed-9202"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "both are presented as canonical in different sections"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04937",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06359 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06359"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02603",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03326 is partial for `chain-wizard-flexibility.md` still leaves wizard normalized payloads too thin to satisfy",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard.md",
+          "heading": "## Wizard and launched-run lineage reconciliation"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03326"
+      ],
+      "source_obligation_ids": [
+        "obl-3172"
+      ],
+      "source_seed_ids": [
+        "seed-4225"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "`chain-wizard-flexibility.md` still leaves wizard normalized payloads too thin to satisfy adjacent contracts that already require `thread_id`, `project_id`, and validation lineage for reproducible pre-run quality governance.",
+        "chain-wizard-flexibility.md",
+        "thread_id",
+        "project_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02590",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03309 is partial for `project_id` and validation/report lineage are still missing from the wizard\u2019s normalized",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard.md",
+          "heading": "## Wizard and launched-run lineage reconciliation"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03309"
+      ],
+      "source_obligation_ids": [
+        "obl-3155"
+      ],
+      "source_seed_ids": [
+        "seed-4197"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "`project_id` and validation/report lineage are still missing from the wizard\u2019s normalized handoff payload.",
+        "project_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02720",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03479 is partial for The pass reports are canonical enough to gate wizard transitions and downstream artifact p",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard.md",
+          "heading": "## Wizard and launched-run lineage reconciliation"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03479"
+      ],
+      "source_obligation_ids": [
+        "obl-3325"
+      ],
+      "source_seed_ids": [
+        "seed-4466"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "The pass reports are canonical enough to gate wizard transitions and downstream artifact promotion, but not canonical enough to explain their own upstream/downstream lineage without consulting multiple other records."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03537",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04505 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04505"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04860",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06274 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06274"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-05718",
+    "cov-06451",
+    "cov-06359",
+    "cov-03326",
+    "cov-03309",
+    "cov-03479",
+    "cov-04505",
+    "cov-06274"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-3155",
+    "obl-3172",
+    "obl-3325",
+    "obl-4292",
+    "obl-5490",
+    "obl-5986",
+    "obl-6009",
+    "obl-6092"
+  ],
+  "source_seed_ids_represented": [
+    "seed-4197",
+    "seed-4225",
+    "seed-4466",
+    "seed-6001",
+    "seed-8147",
+    "seed-9006",
+    "seed-9092",
+    "seed-9202"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0046",
+    "shard-0047",
+    "shard-0059",
+    "shard-0075",
+    "shard-0082",
+    "shard-0083"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-04452",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05718 is partial for concrete `puppet-master://wizard/...` format",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05718"
+      ],
+      "source_obligation_ids": [
+        "obl-5490"
+      ],
+      "source_seed_ids": [
+        "seed-8147"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "concrete `puppet-master://wizard/...` format",
+        "puppet-master://wizard/..."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05005",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "owner coverage row cov-06451 is partial for both are presented as canonical in different sections",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 15.3 UI Surfaces (Mandatory \u2014 Both Required)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06451"
+      ],
+      "source_obligation_ids": [
+        "obl-6092"
+      ],
+      "source_seed_ids": [
+        "seed-9202"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "both are presented as canonical in different sections"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04937",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06359 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06359"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02603",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03326 is partial for `chain-wizard-flexibility.md` still leaves wizard normalized payloads too thin to satisfy",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard.md",
+          "heading": "## Wizard and launched-run lineage reconciliation"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03326"
+      ],
+      "source_obligation_ids": [
+        "obl-3172"
+      ],
+      "source_seed_ids": [
+        "seed-4225"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "`chain-wizard-flexibility.md` still leaves wizard normalized payloads too thin to satisfy adjacent contracts that already require `thread_id`, `project_id`, and validation lineage for reproducible pre-run quality governance.",
+        "chain-wizard-flexibility.md",
+        "thread_id",
+        "project_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02590",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03309 is partial for `project_id` and validation/report lineage are still missing from the wizard\u2019s normalized",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard.md",
+          "heading": "## Wizard and launched-run lineage reconciliation"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03309"
+      ],
+      "source_obligation_ids": [
+        "obl-3155"
+      ],
+      "source_seed_ids": [
+        "seed-4197"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "`project_id` and validation/report lineage are still missing from the wizard\u2019s normalized handoff payload.",
+        "project_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02720",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03479 is partial for The pass reports are canonical enough to gate wizard transitions and downstream artifact p",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard.md",
+          "heading": "## Wizard and launched-run lineage reconciliation"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03479"
+      ],
+      "source_obligation_ids": [
+        "obl-3325"
+      ],
+      "source_seed_ids": [
+        "seed-4466"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "The pass reports are canonical enough to gate wizard transitions and downstream artifact promotion, but not canonical enough to explain their own upstream/downstream lineage without consulting multiple other records."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03537",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04505 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04505"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04860",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06274 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06274"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

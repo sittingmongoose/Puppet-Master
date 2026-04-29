@@ -1,5 +1,29 @@
 ## 19. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0253
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Provider_OpenCode.md` and `Provider_Stream_Mapping_External_Reference_A2A.md` both assume runtime/account disclosure obligations that their current event/API mappings cannot actually satisfy.
+  - Provider_OpenCode.md
+  - Provider_Stream_Mapping_External_Reference_A2A.md
+  - must use progressive disclosure rather than fully expanded seam/package/node trees
+  - provider/runtime disclosure fields:
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 This addendum expands the GUI contract for Persona authoring and runtime visibility.
 
 ### 19.1 Persona editor compatibility matrix (required)
@@ -49,6 +73,32 @@ In addition to existing Persona fields, the editor must support:
 
 ### 19.3 Compatibility panel copy examples
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0272
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `request_id` still competes with `blocked_sequence` in HITL/storage examples
+  - request_id
+  - blocked_sequence
+  - its examples still include `tier_id` / `tier_type`
+  - tier_id
+  - tier_type
+  - Reconcile event-family names and examples that still teach `tier_id` / `tier_type` as canonical scope anchors.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 The editor should be able to communicate states like:
 - `Claude Code: supports model preference and effort; temperature/top_p not exposed in official CLI settings.`
 - `Cursor CLI: supports prompt/rules steering and some model selection; low-level runtime controls are limited or undocumented.`
@@ -93,6 +143,26 @@ If the user summons a Persona via natural language, the UI must reflect it expli
 If the override is turn-scoped, the UI should clear back to the previous/auto state on the next eligible turn.
 
 ### 19.7 Provider-gap disclosure rule
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0274
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - There is still no shared rule for when an export is just a convenience view versus when it becomes a structured bundle with manifest, canonical refs, trust disclosure, and reproducibility expectations.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 The GUI must never imply that a provider honored a Persona control when it did not.
 

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1320",
+  "group_ids": [
+    "discgrp-5277",
+    "discgrp-5278",
+    "discgrp-5279",
+    "discgrp-5280"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05713",
+      "source_obligation_ids": [
+        "obl-5485"
+      ],
+      "source_seed_ids": [
+        "seed-8142"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "## Canonical Wizard Blocked Lifecycle",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L2175"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05714",
+      "source_obligation_ids": [
+        "obl-5486"
+      ],
+      "source_seed_ids": [
+        "seed-8143"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "### 13.5 \"Run Chain Wizard Later\" Affordance",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L1518"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05716",
+      "source_obligation_ids": [
+        "obl-5488"
+      ],
+      "source_seed_ids": [
+        "seed-8145"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05718",
+      "source_obligation_ids": [
+        "obl-5490"
+      ],
+      "source_seed_ids": [
+        "seed-8147"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

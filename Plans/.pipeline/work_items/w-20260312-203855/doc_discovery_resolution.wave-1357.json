@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1357",
+  "group_ids": [
+    "discgrp-5425",
+    "discgrp-5426",
+    "discgrp-5427",
+    "discgrp-5428"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05872",
+      "source_obligation_ids": [
+        "obl-5644"
+      ],
+      "source_seed_ids": [
+        "seed-8376"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "# Glossary (Canonical)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Glossary.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05873",
+      "source_obligation_ids": [
+        "obl-5645"
+      ],
+      "source_seed_ids": [
+        "seed-8377"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05874",
+      "source_obligation_ids": [
+        "obl-5646"
+      ],
+      "source_seed_ids": [
+        "seed-8378"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "### 3.3 Cleanup Scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L108"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05875",
+      "source_obligation_ids": [
+        "obl-5647"
+      ],
+      "source_seed_ids": [
+        "seed-8379"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "new_heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

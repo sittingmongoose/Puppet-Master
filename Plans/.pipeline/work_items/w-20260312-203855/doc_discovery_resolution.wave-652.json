@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-652",
+  "group_ids": [
+    "discgrp-2605",
+    "discgrp-2606",
+    "discgrp-2607",
+    "discgrp-2608"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02883",
+      "source_obligation_ids": [
+        "obl-2730"
+      ],
+      "source_seed_ids": [
+        "seed-3584"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-02884",
+      "source_obligation_ids": [
+        "obl-2731"
+      ],
+      "source_seed_ids": [
+        "seed-3585"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-023: Concern lifecycle and resolution kinds",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L59"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02885",
+      "source_obligation_ids": [
+        "obl-2732"
+      ],
+      "source_seed_ids": [
+        "seed-3586"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-02886",
+      "source_obligation_ids": [
+        "obl-2733"
+      ],
+      "source_seed_ids": [
+        "seed-3587"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

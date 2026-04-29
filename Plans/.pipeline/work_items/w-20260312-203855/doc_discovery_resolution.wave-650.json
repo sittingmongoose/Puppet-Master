@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-650",
+  "group_ids": [
+    "discgrp-2597",
+    "discgrp-2598",
+    "discgrp-2599",
+    "discgrp-2600"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02875",
+      "source_obligation_ids": [
+        "obl-2722"
+      ],
+      "source_seed_ids": [
+        "seed-3576"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "### 1.2 Verifier / reviewer / corroborator",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L85"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02876",
+      "source_obligation_ids": [
+        "obl-2723"
+      ],
+      "source_seed_ids": [
+        "seed-3577"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "### 1.2 Verifier / reviewer / corroborator",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L85"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02877",
+      "source_obligation_ids": [
+        "obl-2724"
+      ],
+      "source_seed_ids": [
+        "seed-3578"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-02878",
+      "source_obligation_ids": [
+        "obl-2725"
+      ],
+      "source_seed_ids": [
+        "seed-3579"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Recommended minimum concern record shape",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L199"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-543",
+  "group_ids": [
+    "discgrp-2169",
+    "discgrp-2170",
+    "discgrp-2171",
+    "discgrp-2172"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02440",
+      "source_obligation_ids": [
+        "obl-2290"
+      ],
+      "source_seed_ids": [
+        "seed-2967"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "### 2. attention_required vs blocked",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L2053"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02441",
+      "source_obligation_ids": [
+        "obl-2291"
+      ],
+      "source_seed_ids": [
+        "seed-2968"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L43"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02442",
+      "source_obligation_ids": [
+        "obl-2292"
+      ],
+      "source_seed_ids": [
+        "seed-2969"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileSafe.md",
+      "new_heading_hint": "# One regex pattern per line. Case-insensitive matching.",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FileSafe.md:L815"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02443",
+      "source_obligation_ids": [
+        "obl-2293"
+      ],
+      "source_seed_ids": [
+        "seed-2970"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Degraded draft warning",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2500"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

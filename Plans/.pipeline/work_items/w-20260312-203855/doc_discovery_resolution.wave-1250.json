@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1250",
+  "group_ids": [
+    "discgrp-4997",
+    "discgrp-4998",
+    "discgrp-4999",
+    "discgrp-5000"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05401",
+      "source_obligation_ids": [
+        "obl-5173"
+      ],
+      "source_seed_ids": [
+        "seed-7665"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/LSPSupport.md",
+      "new_heading_hint": "### 3.6 Extension conflicts (multiple servers per extension)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/LSPSupport.md:L179"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05402",
+      "source_obligation_ids": [
+        "obl-5174"
+      ],
+      "source_seed_ids": [
+        "seed-7666"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### route_target, OpenSubject, and command normalization",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L315"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05403",
+      "source_obligation_ids": [
+        "obl-5175"
+      ],
+      "source_seed_ids": [
+        "seed-7667"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### route_target, OpenSubject, and command normalization",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L315"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05404",
+      "source_obligation_ids": [
+        "obl-5176"
+      ],
+      "source_seed_ids": [
+        "seed-7668"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "### 6.1 Ambiguity (multiple valid choices)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L155"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

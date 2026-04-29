@@ -1,0 +1,99 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1366",
+  "group_ids": [
+    "discgrp-5461",
+    "discgrp-5462",
+    "discgrp-5463",
+    "discgrp-5464"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05911",
+      "source_obligation_ids": [
+        "obl-5683"
+      ],
+      "source_seed_ids": [
+        "seed-8445",
+        "seed-8722",
+        "seed-9460"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0080",
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05912",
+      "source_obligation_ids": [
+        "obl-5684"
+      ],
+      "source_seed_ids": [
+        "seed-8446"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05914",
+      "source_obligation_ids": [
+        "obl-5686"
+      ],
+      "source_seed_ids": [
+        "seed-8448",
+        "seed-8475"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05915",
+      "source_obligation_ids": [
+        "obl-5687"
+      ],
+      "source_seed_ids": [
+        "seed-8453"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "## 0. Scope",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L46"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

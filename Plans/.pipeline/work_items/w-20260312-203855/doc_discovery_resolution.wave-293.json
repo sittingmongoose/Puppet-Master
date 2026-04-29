@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-293",
+  "group_ids": [
+    "discgrp-1169",
+    "discgrp-1170",
+    "discgrp-1171",
+    "discgrp-1172"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01419",
+      "source_obligation_ids": [
+        "obl-1276"
+      ],
+      "source_seed_ids": [
+        "seed-1540"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Media_Generation_and_Capabilities.md",
+      "new_heading_hint": "# Media Generation and Capabilities (Canonical SSOT)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Media_Generation_and_Capabilities.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01420",
+      "source_obligation_ids": [
+        "obl-1277"
+      ],
+      "source_seed_ids": [
+        "seed-1542"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 15.2 seglog Projections (for Usage)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1664"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01421",
+      "source_obligation_ids": [
+        "obl-1278"
+      ],
+      "source_seed_ids": [
+        "seed-1544"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L35"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01422",
+      "source_obligation_ids": [
+        "obl-1279"
+      ],
+      "source_seed_ids": [
+        "seed-1546"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L35"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1105",
+  "group_ids": [
+    "discgrp-4417",
+    "discgrp-4418",
+    "discgrp-4419",
+    "discgrp-4420"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04805",
+      "source_obligation_ids": [
+        "obl-4582"
+      ],
+      "source_seed_ids": [
+        "seed-6546"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04806",
+      "source_obligation_ids": [
+        "obl-4583"
+      ],
+      "source_seed_ids": [
+        "seed-6547"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/chain-wizard-flexibility.md",
+      "new_heading_hint": "### 2.1 Wizard State Shape",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:L154"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04807",
+      "source_obligation_ids": [
+        "obl-4584"
+      ],
+      "source_seed_ids": [
+        "seed-6548"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04808",
+      "source_obligation_ids": [
+        "obl-4585"
+      ],
+      "source_seed_ids": [
+        "seed-6549"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "## 3. Node detail inspector",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L54"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

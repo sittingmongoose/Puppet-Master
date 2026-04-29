@@ -1,0 +1,956 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-141",
+  "row_group_ids": [
+    "rowgrp-0561",
+    "rowgrp-0562",
+    "rowgrp-0563",
+    "rowgrp-0564"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-06604",
+      "source_obligation_ids": [
+        "obl-6245"
+      ],
+      "source_seed_ids": [
+        "seed-9443"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Evidence`, `History`, and `Ledger` treated as native tabs",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-093: Account switch and pressure history",
+      "status": "present",
+      "exact_items": [
+        "`Evidence`, `History`, and `Ledger` treated as native tabs",
+        "Evidence",
+        "History",
+        "Ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L23",
+        "Plans/Orchestrator_Page.md:L27",
+        "Plans/Orchestrator_Page.md:L36",
+        "Plans/Orchestrator_Page.md:L40",
+        "Plans/Orchestrator_Page.md:L91"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06614",
+      "source_obligation_ids": [
+        "obl-6255"
+      ],
+      "source_seed_ids": [
+        "seed-9462"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Open that tier in the Tiers tab`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`Open that tier in the Tiers tab`",
+        "Open that tier in the Tiers tab"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06649",
+      "source_obligation_ids": [
+        "obl-6290"
+      ],
+      "source_seed_ids": [
+        "seed-9517"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "Orchestrator hostability narrowed to `Progress`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "present",
+      "exact_items": [
+        "Orchestrator hostability narrowed to `Progress`",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L139",
+        "Plans/Orchestrator_Page.md:L143",
+        "Plans/Orchestrator_Page.md:L144",
+        "Plans/Orchestrator_Page.md:L146",
+        "Plans/Orchestrator_Page.md:L147"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06661",
+      "source_obligation_ids": [
+        "obl-6302"
+      ],
+      "source_seed_ids": [
+        "seed-9533"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "still lists `Orchestrator single-page with 6 tabs` including `Tiers`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "still lists `Orchestrator single-page with 6 tabs` including `Tiers`",
+        "Orchestrator single-page with 6 tabs",
+        "Tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06672",
+      "source_obligation_ids": [
+        "obl-6313"
+      ],
+      "source_seed_ids": [
+        "seed-9544"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Orchestrator single page with 6 tabs including `Tiers`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator single page with 6 tabs including `Tiers`",
+        "Tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06782",
+      "source_obligation_ids": [
+        "obl-6415"
+      ],
+      "source_seed_ids": [
+        "seed-9794"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md` / `Plans/Glossary.md`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md` / `Plans/Glossary.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06784",
+      "source_obligation_ids": [
+        "obl-6416"
+      ],
+      "source_seed_ids": [
+        "seed-9795"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06801",
+      "source_obligation_ids": [
+        "obl-6427"
+      ],
+      "source_seed_ids": [
+        "seed-9806"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Mod",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06814",
+      "source_obligation_ids": [
+        "obl-6435"
+      ],
+      "source_seed_ids": [
+        "seed-9814"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06907",
+      "source_obligation_ids": [
+        "obl-6507"
+      ],
+      "source_seed_ids": [
+        "seed-9890"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Glossary.md` and `Plans/Orchestrator_Page.md` already carry real token/label/behavi",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Glossary.md` and `Plans/Orchestrator_Page.md` already carry real token/label/behavior blocks, but still lack the required discoverable owner headings in the audited canon clusters.",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06981",
+      "source_obligation_ids": [
+        "obl-6577"
+      ],
+      "source_seed_ids": [
+        "seed-10007"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/GitHub_Integration.md` still points to a non-existent `Plans/Orchestrator_Page.md#1",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/GitHub_Integration.md` still points to a non-existent `Plans/Orchestrator_Page.md#11. Source Control boundary`, which sharpens `gap-007`'s owner-heading defect.",
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "gap-007"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07001",
+      "source_obligation_ids": [
+        "obl-6597"
+      ],
+      "source_seed_ids": [
+        "seed-10060"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "This pass only refined heading precision and did not change blocker counts, top-pressure d",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-165: Coverage blocker concern lifecycle owner section",
+      "status": "partial",
+      "exact_items": [
+        "This pass only refined heading precision and did not change blocker counts, top-pressure docs, or next stage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L233",
+        "Plans/Orchestrator_Page.md:L240"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07031",
+      "source_obligation_ids": [
+        "obl-6622"
+      ],
+      "source_seed_ids": [
+        "seed-10101"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Material blocker counts and next stage remain unchanged.",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-165: Coverage blocker concern lifecycle owner section",
+      "status": "partial",
+      "exact_items": [
+        "Material blocker counts and next stage remain unchanged."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L233",
+        "Plans/Orchestrator_Page.md:L240"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07040",
+      "source_obligation_ids": [
+        "obl-6631"
+      ],
+      "source_seed_ids": [
+        "seed-10115"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Material blocker counts, pressure docs, and next stage remain unchanged.",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-093: Account switch and pressure history",
+      "status": "partial",
+      "exact_items": [
+        "Material blocker counts, pressure docs, and next stage remain unchanged."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L221",
+        "Plans/Orchestrator_Page.md:L228"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07049",
+      "source_obligation_ids": [
+        "obl-6640"
+      ],
+      "source_seed_ids": [
+        "seed-10131"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "This pass changed target precision only; blocker counts, exact missing terms, and next sta",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-165: Coverage blocker concern lifecycle owner section",
+      "status": "partial",
+      "exact_items": [
+        "This pass changed target precision only; blocker counts, exact missing terms, and next stage remain unchanged."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L233",
+        "Plans/Orchestrator_Page.md:L240"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07054",
+      "source_obligation_ids": [
+        "obl-6642"
+      ],
+      "source_seed_ids": [
+        "seed-10134"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.md`, `Plans/FinalGUISpec.md`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `restore points`, and the broken `#11. Source Control boundary` reference.",
+        "gap-002",
+        "gap-006",
+        "gap-007",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07101",
+      "source_obligation_ids": [
+        "obl-6681"
+      ],
+      "source_seed_ids": [
+        "seed-10253"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "summary: Ran a new bounded audit pass after the blocked Ready Check; the first wave produc",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "summary: Ran a new bounded audit pass after the blocked Ready Check; the first wave produced exact refinements in the runtime-identity, route-target, glossary/help, and orchestrator cross-reference blocker families, and two bounded follow-up sweeps then produced zero new exact missing items."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07125",
+      "source_obligation_ids": [
+        "obl-6700"
+      ],
+      "source_seed_ids": [
+        "seed-10289"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`gap-003` sharpened: `Plans/storage-plan.md` still lacks a discoverable `Canonical records",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`gap-003` sharpened: `Plans/storage-plan.md` still lacks a discoverable `Canonical records` heading even though it contains inline `Canonical records for this feature set...` prose and a `canonical_record.v1:{project_id}:{record_id}` authoritative container, and `Plans/Orchestrator_Page.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor from three different sections.",
+        "gap-003",
+        "Plans/storage-plan.md",
+        "Canonical records",
+        "Canonical records for this feature set...",
+        "canonical_record.v1:{project_id}:{record_id}",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md#Canonical records"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07128",
+      "source_obligation_ids": [
+        "obl-6701"
+      ],
+      "source_seed_ids": [
+        "seed-10290"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`gap-006` sharpened: `Plans/Orchestrator_Page.md` history and concern sections still point",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`gap-006` sharpened: `Plans/Orchestrator_Page.md` history and concern sections still point at the missing `Plans/Glossary.md#Orchestrator rewrite terms` anchor, so the glossary/help blocker now includes live broken consumer references in addition to the missing owner headings and incomplete help-entry structure.",
+        "gap-006",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Glossary.md#Orchestrator rewrite terms"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07168",
+      "source_obligation_ids": [
+        "obl-6735"
+      ],
+      "source_seed_ids": [
+        "seed-10352"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Wave 1 rechecked `gap-006` and `gap-007` against live glossary and orchestrator docs and o",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Wave 1 rechecked `gap-006` and `gap-007` against live glossary and orchestrator docs and only reconfirmed the already-recorded missing glossary/orchestrator owner headings plus the broken `Plans/Glossary.md#Orchestrator rewrite terms` and `Plans/Orchestrator_Page.md#11. Source Control boundary` references.",
+        "gap-006",
+        "gap-007",
+        "Plans/Glossary.md#Orchestrator rewrite terms",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07186",
+      "source_obligation_ids": [
+        "obl-6751"
+      ],
+      "source_seed_ids": [
+        "seed-10390"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "`cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-l",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resolution_kind` coverage including `accepted_risk`, and a concern-action confirmation matrix, but the live docs only expose fragments: `Plans/Orchestrator_Page.md:12-13` keeps concern and notification surfaces distinct from health/activity, `Plans/storage-plan.md:294` lists `concern_record.v1`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31` calls for first-class concern lifecycle and lineage, and `Plans/Contracts_V0.md:649` only names `concern` as a routable object. Exact ledger evidence remains at `working_ledger.md:L3070-L3092`, `working_ledger.md:L3170-L3182`, `working_ledger.md:L5990-L6015`, and `working_ledger.md:L6442-L6490`.",
+        "cov-034",
+        "obl-016",
+        "active",
+        "acknowledged",
+        "resolved",
+        "dismissed",
+        "resolution_kind",
+        "accepted_risk"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L43",
+        "Plans/Orchestrator_Page.md:L47",
+        "Plans/Orchestrator_Page.md:L48",
+        "Plans/Orchestrator_Page.md:L50",
+        "Plans/Orchestrator_Page.md:L51"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00038",
+      "source_obligation_ids": [
+        "obl-012"
+      ],
+      "source_seed_ids": [
+        "seed-012"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "handoff storage/delivery mapping",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "Storage/delivery clarification pressure from user",
+      "status": "missing",
+      "exact_items": [
+        "pin down whether handoff/retry artifacts are literally JSON/JSONL/redb-backed records/projections",
+        "specify the concrete project-scoped paths or storage domains that own them",
+        "specify how a worker receives the handoff packet: inline prompt block, referenced artifact, fetched context, or mixed model"
+      ],
+      "stale_tokens": [
+        "optional JSON"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00044",
+      "source_obligation_ids": [
+        "obl-015"
+      ],
+      "source_seed_ids": [
+        "seed-015"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "graph-canonical control loop",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "Design discussion now has a concrete recommendation direction",
+      "status": "missing",
+      "exact_items": [
+        "define the governing intelligence/control loop in a graph-canonical system",
+        "resolve whether tiers remain only a derived human-facing lens or retain execution authority"
+      ],
+      "stale_tokens": [
+        "hybrid"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00060",
+      "source_obligation_ids": [
+        "obl-025"
+      ],
+      "source_seed_ids": [
+        "seed-025"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "work_package / feature_seam GUI surfaces missing",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "GUI gap is now explicit",
+      "status": "missing",
+      "exact_items": [
+        "no documented GUI surface yet for `work package`",
+        "no documented GUI surface yet for `feature seam`",
+        "no documented seam-level acceptance / weak-integration / corroboration review affordance yet"
+      ],
+      "stale_tokens": [
+        "PuppetMasterEvent::*",
+        "Overseer",
+        "Phase",
+        "Task",
+        "Subtask",
+        "Iteration"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00113",
+      "source_obligation_ids": [
+        "obl-038"
+      ],
+      "source_seed_ids": [
+        "seed-038"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "orchestrator attention routing and lane-aware widgets",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "GUI / UX Impacts",
+      "status": "missing",
+      "exact_items": [
+        "Replace Tiers-first navigation",
+        "Define Dashboard\u2192Orchestrator\u2192thread routing contract",
+        "Add package/seam/lane visualization widgets",
+        "Define which overseer's thread opens on click",
+        "Make worktree/lane state visible and navigable"
+      ],
+      "stale_tokens": [
+        "Tiers tab",
+        "widget.tier_tree",
+        "3-bar layout",
+        "grouped-by-phase",
+        "single-threaded",
+        "current_task"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00135",
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "source_seed_ids": [
+        "seed-042"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "graph-native attention routing",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "Cleanup Priorities",
+      "status": "missing",
+      "exact_items": [
+        "Replace or demote tiers-first widgets and layouts.",
+        "Add package/seam/lane-aware identity, worktree, and attention surfaces.",
+        "Define Dashboard \u2192 Orchestrator \u2192 chat-thread routing using canonical runtime objects rather than prose-only references."
+      ],
+      "stale_tokens": [
+        "tiers-first",
+        "phase-grouped layouts",
+        "single current task",
+        "single worktree",
+        "prose-only references"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03315",
+      "source_obligation_ids": [
+        "obl-3161"
+      ],
+      "source_seed_ids": [
+        "seed-4214"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`UI_Command_Catalog.md` now has a concrete template-level contradiction: `Wiring_Matrix.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`UI_Command_Catalog.md` now has a concrete template-level contradiction: `Wiring_Matrix.md` references `cmd.orchestrator.switch_tab`, but the canonical command catalog does not define it.",
+        "UI_Command_Catalog.md",
+        "Wiring_Matrix.md",
+        "cmd.orchestrator.switch_tab"
+      ],
+      "stale_tokens": [
+        "UI_Command_Catalog.md",
+        "Wiring_Matrix.md",
+        "cmd.orchestrator.switch_tab"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03420",
+      "source_obligation_ids": [
+        "obl-3266"
+      ],
+      "source_seed_ids": [
+        "seed-4380"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "adjacent owner docs pulled for contradiction checks (`Orchestrator_Page.md`, `Run_Graph_Vi",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-031: Concern linkage to adjacent families",
+      "status": "present",
+      "exact_items": [
+        "adjacent owner docs pulled for contradiction checks (`Orchestrator_Page.md`, `Run_Graph_View.md`, `Wiring_Matrix.md`, `UI_Wiring_Rules.md`, `Commands_System.md`, `Project_Output_Artifacts.md`, `GitHub_Integration.md`, `Contracts_V0.md`, `storage-plan.md`, `Permissions_System.md`)",
+        "Orchestrator_Page.md",
+        "Run_Graph_View.md",
+        "Wiring_Matrix.md",
+        "UI_Wiring_Rules.md",
+        "Commands_System.md",
+        "Project_Output_Artifacts.md",
+        "GitHub_Integration.md",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [
+        "Commands_System.md",
+        "Contracts_V0.md",
+        "GitHub_Integration.md",
+        "Orchestrator_Page.md",
+        "Permissions_System.md",
+        "Project_Output_Artifacts.md",
+        "Run_Graph_View.md",
+        "UI_Wiring_Rules.md",
+        "Wiring_Matrix.md",
+        "storage-plan.md"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07091",
+      "source_obligation_ids": [
+        "obl-6671"
+      ],
+      "source_seed_ids": [
+        "seed-10213"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Wave 2 rechecked the runtime-identity / route-target / glossary / orchestrator cluster and",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Wave 2 rechecked the runtime-identity / route-target / glossary / orchestrator cluster and only reconfirmed the already-recorded missing owner anchors, incomplete consumer carry-through, broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference, and live `restore points` contradiction without adding any new exact missing item or blocker family.",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "restore points"
+      ],
+      "stale_tokens": [
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "restore points"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07109",
+      "source_obligation_ids": [
+        "obl-6686"
+      ],
+      "source_seed_ids": [
+        "seed-10258"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` r",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference survives not only in `Plans/GitHub_Integration.md` but also in `Plans/storage-plan.md` and `Plans/WorktreeGitImprovement.md`, while `Plans/FinalGUISpec.md` still preserves the `restore points` contradiction.",
+        "gap-007",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "Plans/GitHub_Integration.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FinalGUISpec.md",
+        "restore points"
+      ],
+      "stale_tokens": [
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md",
+        "gap-007",
+        "restore points"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    }
+  ]
+}

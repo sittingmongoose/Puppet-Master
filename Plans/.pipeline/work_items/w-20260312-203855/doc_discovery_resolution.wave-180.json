@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-180",
+  "group_ids": [
+    "discgrp-0717",
+    "discgrp-0718",
+    "discgrp-0719",
+    "discgrp-0720"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00964",
+      "source_obligation_ids": [
+        "obl-821"
+      ],
+      "source_seed_ids": [
+        "seed-945"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Fidelity recovery addendum",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00965",
+      "source_obligation_ids": [
+        "obl-822"
+      ],
+      "source_seed_ids": [
+        "seed-946"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 10.2 Undo",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1227"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00966",
+      "source_obligation_ids": [
+        "obl-823"
+      ],
+      "source_seed_ids": [
+        "seed-947"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "## Safe Point / Worktree Recovery Alignment Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L706"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00967",
+      "source_obligation_ids": [
+        "obl-824"
+      ],
+      "source_seed_ids": [
+        "seed-948"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Cross-surface runtime, concern, and route/open contracts",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L251"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

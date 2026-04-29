@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-452",
+  "group_ids": [
+    "discgrp-1805",
+    "discgrp-1806",
+    "discgrp-1807",
+    "discgrp-1808"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02062",
+      "source_obligation_ids": [
+        "obl-1919"
+      ],
+      "source_seed_ids": [
+        "seed-2477"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-179: Dismissed vs resolved rationale enforcement",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L181"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02063",
+      "source_obligation_ids": [
+        "obl-1920"
+      ],
+      "source_seed_ids": [
+        "seed-2478"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-179: Dismissed vs resolved rationale enforcement",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L181"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02064",
+      "source_obligation_ids": [
+        "obl-1921"
+      ],
+      "source_seed_ids": [
+        "seed-2479"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Recommended minimum concern record shape",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L199"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02065",
+      "source_obligation_ids": [
+        "obl-1922"
+      ],
+      "source_seed_ids": [
+        "seed-2480"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

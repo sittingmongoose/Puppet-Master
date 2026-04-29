@@ -1,0 +1,1140 @@
+{
+  "schema_id": "pm.canonical_obligations_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-115",
+  "seed_group_ids": [
+    "seedgrp-457",
+    "seedgrp-458",
+    "seedgrp-459",
+    "seedgrp-460"
+  ],
+  "obligation_candidates": [
+    {
+      "source_seed_id": "seed-6841",
+      "canon_label": "public command ID",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "public command ID"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012986"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6842",
+      "canon_label": "canonical primitive or normalized target contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "canonical primitive or normalized target contract"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012987"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6843",
+      "canon_label": "`alias_of_command_id` or equivalent should be for migration/deprecation only",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`alias_of_command_id` or equivalent should be for migration/deprecation only",
+        "alias_of_command_id"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012990"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6844",
+      "canon_label": "wrapper commands should instead declare something like `normalizes_to` / `canonical_target",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "wrapper commands should instead declare something like `normalizes_to` / `canonical_target_contract` / `canonical_route_kind`",
+        "normalizes_to",
+        "canonical_target_contract",
+        "canonical_route_kind"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012991"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6845",
+      "canon_label": "Extend `GATE-010` evidence/reporting to capture:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Extend `GATE-010` evidence/reporting to capture:",
+        "GATE-010"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012993"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6846",
+      "canon_label": "Keep the command catalog readable for UX and command-palette use; do not force users to th",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Keep the command catalog readable for UX and command-palette use; do not force users to think in canonical primitive names."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0065",
+      "source_evidence": [
+        "working_ledger.md:L012997"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6847",
+      "canon_label": "Deprecated aliases and stable wrappers need different lifecycle rules.",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Deprecated aliases and stable wrappers need different lifecycle rules."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013001"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6848",
+      "canon_label": "The wiring/gate layer now needs to understand normalization, not just uniqueness.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The wiring/gate layer now needs to understand normalization, not just uniqueness."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013002"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6849",
+      "canon_label": "Research Progress - 2026-03-17 - Exact shape of the command-normalization contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Research Progress - 2026-03-17 - Exact shape of the command-normalization contract"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013005"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6850",
+      "canon_label": "`Plans/UI_Command_Catalog.md`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Plans/UI_Command_Catalog.md`",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013008"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6851",
+      "canon_label": "`Plans/Contracts_V0.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Contracts_V0.md`",
+        "Plans/Contracts_V0.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013009"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6852",
+      "canon_label": "`Plans/Wiring_Matrix.schema.json`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Wiring_Matrix.schema.json`",
+        "Plans/Wiring_Matrix.schema.json"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.schema.json"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013010"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6853",
+      "canon_label": "`Plans/Progression_Gates.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Progression_Gates.md`",
+        "Plans/Progression_Gates.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013011"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6854",
+      "canon_label": "The normalization contract needs to stay deliberately small.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The normalization contract needs to stay deliberately small."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013014"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6855",
+      "canon_label": "The right owner boundary is:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The right owner boundary is:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013015"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6856",
+      "canon_label": "command-definition metadata belongs in the command catalog / command contract layer",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "command-definition metadata belongs in the command catalog / command contract layer"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013016"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6857",
+      "canon_label": "the route schema remains the owner of actual route-target structure",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "the route schema remains the owner of actual route-target structure"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013017"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6858",
+      "canon_label": "wiring rows should reference command IDs and handlers, not restate the normalization model",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "wiring rows should reference command IDs and handlers, not restate the normalization model in full"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013018"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6859",
+      "canon_label": "`command_kind`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`command_kind`",
+        "command_kind"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013020"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6860",
+      "canon_label": "`shell_view`",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`shell_view`",
+        "shell_view"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013021"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6861",
+      "canon_label": "`navigation_wrapper`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`navigation_wrapper`",
+        "navigation_wrapper"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013022"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6862",
+      "canon_label": "`domain_action`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`domain_action`",
+        "domain_action"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013023"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6863",
+      "canon_label": "optional `normalization`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "optional `normalization`",
+        "normalization"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013024"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6864",
+      "canon_label": "`kind`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`kind`",
+        "kind"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013025"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6865",
+      "canon_label": "`wrapper`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`wrapper`",
+        "wrapper"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013026"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6866",
+      "canon_label": "`deprecated_alias`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`deprecated_alias`",
+        "deprecated_alias"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013027"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6867",
+      "canon_label": "exactly one target field depending on kind:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "exactly one target field depending on kind:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013028"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6868",
+      "canon_label": "`normalizes_to_contract` for wrappers",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`normalizes_to_contract` for wrappers",
+        "normalizes_to_contract"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013029"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6869",
+      "canon_label": "`alias_of_command_id` for deprecated aliases",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`alias_of_command_id` for deprecated aliases",
+        "alias_of_command_id"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013030"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6870",
+      "canon_label": "For wrapper commands, `normalizes_to_contract` should stay narrow and contract-level, for",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "For wrapper commands, `normalizes_to_contract` should stay narrow and contract-level, for example:",
+        "normalizes_to_contract"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013031"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6871",
+      "canon_label": "`route_target`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`route_target`",
+        "route_target"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013032"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6872",
+      "canon_label": "`open_subject`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`open_subject`",
+        "open_subject"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013033"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6873",
+      "canon_label": "potentially another future canonical primitive family",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "potentially another future canonical primitive family"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013034"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6874",
+      "canon_label": "It should NOT inline route payload shape, object kinds, or argument mapping rules into the",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "It should NOT inline route payload shape, object kinds, or argument mapping rules into the command metadata. That would duplicate the route contract and turn the catalog into a second routing schema."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013035"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6875",
+      "canon_label": "Deprecated alias metadata should remain explicit and separate because it implies lifecycle",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Deprecated alias metadata should remain explicit and separate because it implies lifecycle/removal expectations that wrapper commands do not have."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013036"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6876",
+      "canon_label": "The wiring layer should stay mostly unchanged. It already keys off `ui_command_id` and han",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "The wiring layer should stay mostly unchanged. It already keys off `ui_command_id` and handler location. The important addition is gate logic that can understand the normalization metadata, not a large wiring-schema expansion.",
+        "ui_command_id"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013037"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6877",
+      "canon_label": "`Plans/UI_Command_Catalog.md`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Plans/UI_Command_Catalog.md`",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013041"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6878",
+      "canon_label": "`Plans/Contracts_V0.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Contracts_V0.md`",
+        "Plans/Contracts_V0.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013042"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6879",
+      "canon_label": "`Plans/Wiring_Matrix.schema.json`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Wiring_Matrix.schema.json`",
+        "Plans/Wiring_Matrix.schema.json"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.schema.json"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013044"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6880",
+      "canon_label": "`Plans/UI_Wiring_Rules.md`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Plans/UI_Wiring_Rules.md`",
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013045"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6881",
+      "canon_label": "`Plans/Progression_Gates.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Progression_Gates.md`",
+        "Plans/Progression_Gates.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013046"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6882",
+      "canon_label": "`Plans/Crosswalk.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Crosswalk.md`",
+        "Plans/Crosswalk.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013047"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6883",
+      "canon_label": "`Contracts_V0.md` still defines only a very thin `UICommand` envelope and has nowhere to e",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Contracts_V0.md` still defines only a very thin `UICommand` envelope and has nowhere to express command-normalization metadata.",
+        "Contracts_V0.md",
+        "UICommand"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013050"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6884",
+      "canon_label": "`UI_Command_Catalog.md` currently carries command meaning in prose/tables only; it has no",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`UI_Command_Catalog.md` currently carries command meaning in prose/tables only; it has no precise slot for wrapper-vs-alias classification.",
+        "UI_Command_Catalog.md"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013051"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6885",
+      "canon_label": "`Wiring_Matrix.schema.json` is intentionally lean, which is good, but it means verificatio",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Wiring_Matrix.schema.json` is intentionally lean, which is good, but it means verification must mostly derive normalization expectations from the catalog rather than from repeated row-local metadata.",
+        "Wiring_Matrix.schema.json"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013052"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6886",
+      "canon_label": "`GATE-010` does not yet name any normalization consistency checks, so even after the metad",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`GATE-010` does not yet name any normalization consistency checks, so even after the metadata exists there would still be a verification gap unless the gate is expanded.",
+        "GATE-010"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013053"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6887",
+      "canon_label": "Add a minimal command-classification / normalization contract to the command-definition la",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add a minimal command-classification / normalization contract to the command-definition layer:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013056"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6888",
+      "canon_label": "`command_kind`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`command_kind`",
+        "command_kind"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013057"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6889",
+      "canon_label": "optional `normalization { kind, normalizes_to_contract? | alias_of_command_id? }`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "optional `normalization { kind, normalizes_to_contract? | alias_of_command_id? }`",
+        "normalization { kind, normalizes_to_contract? | alias_of_command_id? }"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013058"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6890",
+      "canon_label": "Keep wrapper metadata contract-level and narrow:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Keep wrapper metadata contract-level and narrow:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013059"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6891",
+      "canon_label": "point to the canonical primitive family",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "point to the canonical primitive family"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013060"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6892",
+      "canon_label": "Keep wiring schema expansion minimal or zero if possible.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Keep wiring schema expansion minimal or zero if possible."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013062"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6893",
+      "canon_label": "Extend `GATE-010` to verify:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Extend `GATE-010` to verify:",
+        "GATE-010"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013063"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6894",
+      "canon_label": "deprecated aliases resolve to real canonical command IDs",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "deprecated aliases resolve to real canonical command IDs"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013065"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6895",
+      "canon_label": "normalization metadata is internally consistent with the command kind",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "normalization metadata is internally consistent with the command kind"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013066"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6896",
+      "canon_label": "Use `Crosswalk.md` to make the owner split explicit:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Use `Crosswalk.md` to make the owner split explicit:",
+        "Crosswalk.md"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013067"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6897",
+      "canon_label": "command catalog / command contract owns normalization metadata",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "command catalog / command contract owns normalization metadata"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013068"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6898",
+      "canon_label": "route contract owns route-target structure",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "route contract owns route-target structure"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013069"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6899",
+      "canon_label": "wiring matrix owns UI element to command/handler binding only",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "wiring matrix owns UI element to command/handler binding only"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013070"
+      ]
+    },
+    {
+      "source_seed_id": "seed-6900",
+      "canon_label": "The catalog should describe what class of command this is, not become the full route schem",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The catalog should describe what class of command this is, not become the full route schema."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_shard_id": "shard-0066",
+      "source_evidence": [
+        "working_ledger.md:L013073"
+      ]
+    }
+  ],
+  "represented_seed_ids": [
+    "seed-6841",
+    "seed-6842",
+    "seed-6843",
+    "seed-6844",
+    "seed-6845",
+    "seed-6846",
+    "seed-6847",
+    "seed-6848",
+    "seed-6849",
+    "seed-6850",
+    "seed-6851",
+    "seed-6852",
+    "seed-6853",
+    "seed-6854",
+    "seed-6855",
+    "seed-6856",
+    "seed-6857",
+    "seed-6858",
+    "seed-6859",
+    "seed-6860",
+    "seed-6861",
+    "seed-6862",
+    "seed-6863",
+    "seed-6864",
+    "seed-6865",
+    "seed-6866",
+    "seed-6867",
+    "seed-6868",
+    "seed-6869",
+    "seed-6870",
+    "seed-6871",
+    "seed-6872",
+    "seed-6873",
+    "seed-6874",
+    "seed-6875",
+    "seed-6876",
+    "seed-6877",
+    "seed-6878",
+    "seed-6879",
+    "seed-6880",
+    "seed-6881",
+    "seed-6882",
+    "seed-6883",
+    "seed-6884",
+    "seed-6885",
+    "seed-6886",
+    "seed-6887",
+    "seed-6888",
+    "seed-6889",
+    "seed-6890",
+    "seed-6891",
+    "seed-6892",
+    "seed-6893",
+    "seed-6894",
+    "seed-6895",
+    "seed-6896",
+    "seed-6897",
+    "seed-6898",
+    "seed-6899",
+    "seed-6900"
+  ],
+  "represented_source_shard_ids": [
+    "shard-0065",
+    "shard-0066"
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "affected_doc_discovery_notes": []
+}

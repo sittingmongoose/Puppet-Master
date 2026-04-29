@@ -1,0 +1,112 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-031",
+  "group_ids": [
+    "discgrp-0121",
+    "discgrp-0122",
+    "discgrp-0123",
+    "discgrp-0124"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00356",
+      "source_obligation_ids": [
+        "obl-214"
+      ],
+      "source_seed_ids": [
+        "seed-246"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00357",
+      "source_obligation_ids": [
+        "obl-215"
+      ],
+      "source_seed_ids": [
+        "seed-247",
+        "seed-1254",
+        "seed-1740",
+        "seed-2503",
+        "seed-2529"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0021",
+        "shard-0026",
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "# Usage Feature -- App/GUI Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/usage-feature.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00358",
+      "source_obligation_ids": [
+        "obl-216"
+      ],
+      "source_seed_ids": [
+        "seed-248",
+        "seed-1255",
+        "seed-1741",
+        "seed-2504",
+        "seed-2530"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0021",
+        "shard-0026",
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "# Puppet Master \u2014 User-Project Project Plan Package Outputs (SSOT)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00359",
+      "source_obligation_ids": [
+        "obl-217"
+      ],
+      "source_seed_ids": [
+        "seed-249",
+        "seed-1751",
+        "seed-2539"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0026",
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

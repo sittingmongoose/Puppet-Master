@@ -1,0 +1,423 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-157",
+  "group_ids": [
+    "pktgrp-0625",
+    "pktgrp-0626",
+    "pktgrp-0627",
+    "pktgrp-0628"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0070",
+      "source_reconciliation_target_id": "target-0288",
+      "source_reconciliation_target_ids": [
+        "target-0288"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "operation": "observe_only",
+      "live_anchor": "### 9.5 Persistence boundaries (Plans/FinalGUISpec.md:L1204)",
+      "coverage_row_ids": [
+        "cov-03752",
+        "cov-06196"
+      ],
+      "source_obligation_ids": [
+        "obl-3597",
+        "obl-5965"
+      ],
+      "source_seed_ids": [
+        "seed-4863",
+        "seed-8933"
+      ],
+      "source_shard_ids": [
+        "shard-0050",
+        "shard-0081"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3597",
+          "obl-5965"
+        ],
+        "source_seed_ids": [
+          "seed-4863",
+          "seed-8933"
+        ],
+        "source_shard_ids": [
+          "shard-0050",
+          "shard-0081"
+        ]
+      },
+      "gap_ids": [
+        "gap-02929",
+        "gap-04792"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "executor docs define required presence at dispatch/runtime boundaries",
+        "The strongest `GPT-5.2` pattern is that multiple specs now fail at exact field, anchor, or command-registration boundaries rather than only at conceptual alignment:",
+        "GPT-5.2"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-2ffd8ca7f90f",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0071",
+      "source_reconciliation_target_id": "target-0298",
+      "source_reconciliation_target_ids": [
+        "target-0298"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "operation": "observe_only",
+      "live_anchor": "### Fidelity recovery cov-050: Progress-only widget hostability (Plans/FinalGUISpec.md:L55)",
+      "coverage_row_ids": [
+        "cov-00449"
+      ],
+      "source_obligation_ids": [
+        "obl-306"
+      ],
+      "source_seed_ids": [
+        "seed-355"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-306"
+        ],
+        "source_seed_ids": [
+          "seed-355"
+        ],
+        "source_shard_ids": [
+          "shard-0011"
+        ]
+      },
+      "gap_ids": [
+        "gap-00351"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Orchestrator_Page.md` says Progress widgets are Dashboard-portable while `Widget_System.md` still excludes some of those widgets from Dashboard hostability.",
+        "Orchestrator_Page.md",
+        "Widget_System.md"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-e3f2069595b8",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0072",
+      "source_reconciliation_target_id": "target-0307",
+      "source_reconciliation_target_ids": [
+        "target-0307"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "operation": "observe_only",
+      "live_anchor": "### Fidelity recovery cov-179: Dismissed vs resolved rationale enforcement (Plans/FinalGUISpec.md:L181)",
+      "coverage_row_ids": [
+        "cov-00872",
+        "cov-01306",
+        "cov-02037",
+        "cov-02046",
+        "cov-02047",
+        "cov-02062",
+        "cov-02063",
+        "cov-07181"
+      ],
+      "source_obligation_ids": [
+        "obl-729",
+        "obl-1163",
+        "obl-1894",
+        "obl-1903",
+        "obl-1904",
+        "obl-1919",
+        "obl-1920",
+        "obl-6748"
+      ],
+      "source_seed_ids": [
+        "seed-832",
+        "seed-1385",
+        "seed-2447",
+        "seed-2461",
+        "seed-2462",
+        "seed-2477",
+        "seed-2478",
+        "seed-10386"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0022",
+        "shard-0033",
+        "shard-0091"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-729",
+          "obl-1163",
+          "obl-1894",
+          "obl-1903",
+          "obl-1904",
+          "obl-1919",
+          "obl-1920",
+          "obl-6748"
+        ],
+        "source_seed_ids": [
+          "seed-832",
+          "seed-1385",
+          "seed-2447",
+          "seed-2461",
+          "seed-2462",
+          "seed-2477",
+          "seed-2478",
+          "seed-10386"
+        ],
+        "source_shard_ids": [
+          "shard-0016",
+          "shard-0022",
+          "shard-0033",
+          "shard-0091"
+        ]
+      },
+      "gap_ids": [
+        "gap-00667",
+        "gap-01018",
+        "gap-01589",
+        "gap-01593",
+        "gap-01594",
+        "gap-01602",
+        "gap-01603",
+        "gap-05579"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "should require rationale when it disagrees with corroborated/high-severity evidence",
+        "Persistent blockers should not become invisible just because the user dismissed a nearby warning once.",
+        "annotation flow distinguishes runtime-progressed state (`addressed`) from user-controlled semantic closure (`resolved`)",
+        "addressed",
+        "resolved",
+        "`dismissed` without required rationale will look too much like a convenience close",
+        "dismissed",
+        "`resolved` without required `resolution_kind` will collapse meaningful semantic differences",
+        "resolution_kind",
+        "`resolve` without linked canonical evidence, including `accepted_risk`: confirmation `strong`; rationale required; reversibility `compensating_action_only`",
+        "resolve",
+        "accepted_risk",
+        "strong",
+        "compensating_action_only",
+        "`dismiss`: confirmation `strong`; rationale required; reversibility `compensating_action_only` via explicit `reopened`",
+        "dismiss",
+        "reopened",
+        "The repaired blocker split held: no gap needed reclassification back to `planning`, and no resolved gap could be removed from the backlog.",
+        "planning"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-f2fd13589f2b",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0073",
+      "source_reconciliation_target_id": "target-0309",
+      "source_reconciliation_target_ids": [
+        "target-0309"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "operation": "observe_only",
+      "live_anchor": "### GUI behavior rules (Plans/FinalGUISpec.md:L2169)",
+      "coverage_row_ids": [
+        "cov-00586",
+        "cov-04358",
+        "cov-05512"
+      ],
+      "source_obligation_ids": [
+        "obl-443",
+        "obl-4198",
+        "obl-5284"
+      ],
+      "source_seed_ids": [
+        "seed-513",
+        "seed-5837",
+        "seed-7855"
+      ],
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0057",
+        "shard-0073"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-443",
+          "obl-4198",
+          "obl-5284"
+        ],
+        "source_seed_ids": [
+          "seed-513",
+          "seed-5837",
+          "seed-7855"
+        ],
+        "source_shard_ids": [
+          "shard-0013",
+          "shard-0057",
+          "shard-0073"
+        ]
+      },
+      "gap_ids": [
+        "gap-00461",
+        "gap-03402",
+        "gap-04290"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "the GUI must not imply hidden fallback or hidden retry behavior",
+        "Artifact-backed open/restore behavior exists in storage and GUI prose, but there is no single owner doc that clearly says the resolution order is `subject_id -> backing document or transient generated buffer -> routed surface`.",
+        "subject_id -> backing document or transient generated buffer -> routed surface",
+        "the doc still describes GUI deep-links as filters and scroll behavior driven by `usage_event_seq`, `usage_event_ref`, or broad `run_id/thread_id/timestamp`",
+        "usage_event_seq",
+        "usage_event_ref",
+        "run_id/thread_id/timestamp"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-c79ad4038b6a",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-03752",
+    "cov-06196",
+    "cov-00449",
+    "cov-00872",
+    "cov-01306",
+    "cov-02037",
+    "cov-02046",
+    "cov-02047",
+    "cov-02062",
+    "cov-02063",
+    "cov-07181",
+    "cov-00586",
+    "cov-04358",
+    "cov-05512"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-3597",
+    "obl-5965",
+    "obl-306",
+    "obl-729",
+    "obl-1163",
+    "obl-1894",
+    "obl-1903",
+    "obl-1904",
+    "obl-1919",
+    "obl-1920",
+    "obl-6748",
+    "obl-443",
+    "obl-4198",
+    "obl-5284"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-4863",
+    "seed-8933",
+    "seed-355",
+    "seed-832",
+    "seed-1385",
+    "seed-2447",
+    "seed-2461",
+    "seed-2462",
+    "seed-2477",
+    "seed-2478",
+    "seed-10386",
+    "seed-513",
+    "seed-5837",
+    "seed-7855"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0050",
+    "shard-0081",
+    "shard-0011",
+    "shard-0016",
+    "shard-0022",
+    "shard-0033",
+    "shard-0091",
+    "shard-0013",
+    "shard-0057",
+    "shard-0073"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "executor docs define required presence at dispatch/runtime boundaries",
+    "The strongest `GPT-5.2` pattern is that multiple specs now fail at exact field, anchor, or command-registration boundaries rather than only at conceptual alignment:",
+    "GPT-5.2",
+    "`Orchestrator_Page.md` says Progress widgets are Dashboard-portable while `Widget_System.md` still excludes some of those widgets from Dashboard hostability.",
+    "Orchestrator_Page.md",
+    "Widget_System.md",
+    "should require rationale when it disagrees with corroborated/high-severity evidence",
+    "Persistent blockers should not become invisible just because the user dismissed a nearby warning once.",
+    "annotation flow distinguishes runtime-progressed state (`addressed`) from user-controlled semantic closure (`resolved`)",
+    "addressed",
+    "resolved",
+    "`dismissed` without required rationale will look too much like a convenience close",
+    "dismissed",
+    "`resolved` without required `resolution_kind` will collapse meaningful semantic differences",
+    "resolution_kind",
+    "`resolve` without linked canonical evidence, including `accepted_risk`: confirmation `strong`; rationale required; reversibility `compensating_action_only`",
+    "resolve",
+    "accepted_risk",
+    "strong",
+    "compensating_action_only",
+    "`dismiss`: confirmation `strong`; rationale required; reversibility `compensating_action_only` via explicit `reopened`",
+    "dismiss",
+    "reopened",
+    "The repaired blocker split held: no gap needed reclassification back to `planning`, and no resolved gap could be removed from the backlog.",
+    "planning",
+    "the GUI must not imply hidden fallback or hidden retry behavior",
+    "Artifact-backed open/restore behavior exists in storage and GUI prose, but there is no single owner doc that clearly says the resolution order is `subject_id -> backing document or transient generated buffer -> routed surface`.",
+    "subject_id -> backing document or transient generated buffer -> routed surface",
+    "the doc still describes GUI deep-links as filters and scroll behavior driven by `usage_event_seq`, `usage_event_ref`, or broad `run_id/thread_id/timestamp`",
+    "usage_event_seq",
+    "usage_event_ref",
+    "run_id/thread_id/timestamp"
+  ],
+  "blocked_targets": []
+}

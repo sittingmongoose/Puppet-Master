@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/newfeatures.md",
-  "source_sha256": "a759bd3c17cf3d4dd9eac682a700f3696e8bca5f5e56a5044289936048fd2c42",
+  "source_sha256": "789bf665afff93ce530d44c835d781b65d3a4160b7d9beb4ea829108a965a5ad",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -10,49 +10,49 @@
     {
       "dest_path": "Plans/_shards/newfeatures/01-preamble.md",
       "start_line": 1,
-      "end_line": 2,
-      "segment_sha256": "200b7583185b931835b63d67341b4501c8d61ad7c11e533be1ecaa2b57738fc9",
+      "end_line": 52,
+      "segment_sha256": "92b1a7902469f469ac2c8eec05860b09e57a5759ce20ee26c7516c970451d602",
       "heading": null
     },
     {
       "dest_path": "Plans/_shards/newfeatures/02-plan-document-status.md",
-      "start_line": 3,
-      "end_line": 5,
+      "start_line": 53,
+      "end_line": 55,
       "segment_sha256": "f9c98c7aedfa0ceb6edb22abd3187c132828e4b8951788bb1121425e942fac78",
       "heading": "## Plan Document Status"
     },
     {
       "dest_path": "Plans/_shards/newfeatures/03-rewrite-alignment-2026-03-17.md",
-      "start_line": 6,
-      "end_line": 16,
+      "start_line": 56,
+      "end_line": 66,
       "segment_sha256": "90d805b2f86f2dc638777a91cc4d9fbeb151ddfe2537322621ca52c1b9a987f5",
       "heading": "## Rewrite alignment (2026-03-17)"
     },
     {
       "dest_path": "Plans/_shards/newfeatures/04-executive-summary.md",
-      "start_line": 17,
-      "end_line": 19,
+      "start_line": 67,
+      "end_line": 69,
       "segment_sha256": "b4f28163f13390dd0863b1a509fd420f37c2dc4c56ceefb35000ea4a6ed42570",
       "heading": "## Executive Summary"
     },
     {
       "dest_path": "Plans/_shards/newfeatures/05-high-level-feature-themes.md",
-      "start_line": 20,
-      "end_line": 41,
+      "start_line": 70,
+      "end_line": 91,
       "segment_sha256": "48a5e83863c623cea95e6ec12bf0e6636cb257ee890b37018727e085b3cb4ac7",
       "heading": "## High-level feature themes"
     },
     {
       "dest_path": "Plans/_shards/newfeatures/06-24-browser-preview-and-code-context-integration.md",
-      "start_line": 42,
-      "end_line": 56,
+      "start_line": 92,
+      "end_line": 106,
       "segment_sha256": "d0fd597b41d4bc48f912cf2772b9630967a206d830ad0f4633c1b22ba8527df6",
       "heading": "## 24. Browser preview and code-context integration"
     },
     {
       "dest_path": "Plans/_shards/newfeatures/07-web-tools-provider-routing-and-shared-ui-alignment-addendum-2026-04-04.md",
-      "start_line": 57,
-      "end_line": 68,
+      "start_line": 107,
+      "end_line": 118,
       "segment_sha256": "4d532b4a325d91cf1b77c1d20c0153c9071f82baf82e47182e0d3bad88872d51",
       "heading": "## Web tools, provider routing, and shared UI alignment addendum (2026-04-04)"
     }

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1335",
+  "group_ids": [
+    "discgrp-5337",
+    "discgrp-5338",
+    "discgrp-5339",
+    "discgrp-5340"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05778",
+      "source_obligation_ids": [
+        "obl-5550"
+      ],
+      "source_seed_ids": [
+        "seed-8239"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "### 8.4 Redb keys for tool rollups (Usage widget)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Tools.md:L967"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05779",
+      "source_obligation_ids": [
+        "obl-5551"
+      ],
+      "source_seed_ids": [
+        "seed-8240"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-175: Concern source-event vs record vs projection split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L143"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05780",
+      "source_obligation_ids": [
+        "obl-5552"
+      ],
+      "source_seed_ids": [
+        "seed-8241"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05781",
+      "source_obligation_ids": [
+        "obl-5553"
+      ],
+      "source_seed_ids": [
+        "seed-8242"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,107 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-861",
+  "group_ids": [
+    "discgrp-3441",
+    "discgrp-3442",
+    "discgrp-3443",
+    "discgrp-3444"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03733",
+      "source_obligation_ids": [
+        "obl-3578"
+      ],
+      "source_seed_ids": [
+        "seed-4836",
+        "seed-8520",
+        "seed-8567",
+        "seed-8718",
+        "seed-9231"
+      ],
+      "source_shard_ids": [
+        "shard-0050",
+        "shard-0078",
+        "shard-0080",
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03734",
+      "source_obligation_ids": [
+        "obl-3579"
+      ],
+      "source_seed_ids": [
+        "seed-4837",
+        "seed-4878",
+        "seed-8519",
+        "seed-8566",
+        "seed-9230"
+      ],
+      "source_shard_ids": [
+        "shard-0050",
+        "shard-0078",
+        "shard-0083"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03735",
+      "source_obligation_ids": [
+        "obl-3580"
+      ],
+      "source_seed_ids": [
+        "seed-4838"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03736",
+      "source_obligation_ids": [
+        "obl-3581"
+      ],
+      "source_seed_ids": [
+        "seed-4839"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/newtools.md",
+      "new_heading_hint": "# GUI Testing Tools & Framework Options -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/newtools.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

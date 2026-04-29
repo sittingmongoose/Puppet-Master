@@ -1,0 +1,118 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0075",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0075-L014801-L015000.md",
+  "source_line_range": "L014801-L015000",
+  "seed_candidates": [
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "resume_url standalone navigation overclaim",
+      "exact_items": [
+        "The GUI spec still treats resume_url as a strong standalone deep-link mechanism.",
+        "FinalGUISpec.md still gives resume_url more concrete ownership than generic navigation.",
+        "resume_url is still being used as if it were canonical navigation identity instead of serialized transport."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "resume_url"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L14804-L14804",
+        "working_ledger.md:L14816-L14816",
+        "working_ledger.md:L14974-L14976"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Tiers page tab retirement",
+      "exact_items": [
+        "Tiers as a primary page/tab concept",
+        "FinalGUISpec.md still preserves Tiers as both a page concept and a settings grouping label",
+        "Remove stale Tiers page/tab structures from FinalGUISpec.md and Orchestrator_Page.md in the same reconciliation tranche"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "Tiers"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L14805-L14805",
+        "working_ledger.md:L14817-L14817",
+        "working_ledger.md:L14929-L14933"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Orchestrator widget composition boundary",
+      "exact_items": [
+        "Orchestrator widget tabs broadly enough to conflict with the newer Progress-only widget composition rule.",
+        "the rewrite direction is: Progress widget-composed; Seams, Node Graph, Evidence, History, and Ledger native",
+        "narrow widget-composition language so only Progress is widget-composed inside Orchestrator"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "Progress",
+        "Seams",
+        "Node Graph",
+        "Evidence",
+        "History",
+        "Ledger"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L14806-L14806",
+        "working_ledger.md:L14818-L14820",
+        "working_ledger.md:L14827-L14830"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "command catalog route command classification",
+      "exact_items": [
+        "The command catalog still uses layout/UI state only for actions that now have canonical object routing meaning.",
+        "cmd.panel.switch is currently overloaded: it mixes pure shell-state switching with contextual object targeting in one args shape.",
+        "classify commands as shell_view, navigation_wrapper, or domain_action"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "cmd.panel.switch",
+        "shell_view",
+        "navigation_wrapper",
+        "domain_action"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L14814-L14815",
+        "working_ledger.md:L14823-L14826"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "Targeted docs/read lists",
+    "Impact/contradictions/gaps headings without concrete obligation text",
+    "Process/count/status-only lines"
+  ],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0075"
+}

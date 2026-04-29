@@ -1,0 +1,2738 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-111",
+  "group_ids": [
+    "gapgrp-0441",
+    "gapgrp-0442",
+    "gapgrp-0443",
+    "gapgrp-0444"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-01408",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01801 is partial for explicit search navigation to a historical run likely should update persisted Orchestrator",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "### Fidelity recovery cov-037: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01801"
+      ],
+      "source_obligation_ids": [
+        "obl-1658"
+      ],
+      "source_seed_ids": [
+        "seed-2065"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "explicit search navigation to a historical run likely should update persisted Orchestrator focused-run state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01412",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01805 is partial for `resume_url` is currently stronger than some Orchestrator pivots in terms of specificity,",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01805"
+      ],
+      "source_obligation_ids": [
+        "obl-1662"
+      ],
+      "source_seed_ids": [
+        "seed-2070"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "`resume_url` is currently stronger than some Orchestrator pivots in terms of specificity, which suggests the more generic routing layer is still underdefined.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01632",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02101 is partial for Orchestrator emphasizes lane as operational object",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02101"
+      ],
+      "source_obligation_ids": [
+        "obl-1958"
+      ],
+      "source_seed_ids": [
+        "seed-2547"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "Orchestrator emphasizes lane as operational object"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01683",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02161 is partial for Orchestrator deep links already prefer attempt/receipt/worktree/workflow refs",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02161"
+      ],
+      "source_obligation_ids": [
+        "obl-2018"
+      ],
+      "source_seed_ids": [
+        "seed-2624"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "Orchestrator deep links already prefer attempt/receipt/worktree/workflow refs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01721",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02213 is partial for no lane/package/worktree identity enters the bridged envelope where Source Control / Orche",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "### Fidelity recovery cov-042: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02213"
+      ],
+      "source_obligation_ids": [
+        "obl-2068"
+      ],
+      "source_seed_ids": [
+        "seed-2684"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "no lane/package/worktree identity enters the bridged envelope where Source Control / Orchestrator handshake now needs it"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01830",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02357 is partial for Orchestrator page contracts still lag the canonical identity model in concrete ways:",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02357"
+      ],
+      "source_obligation_ids": [
+        "obl-2208"
+      ],
+      "source_seed_ids": [
+        "seed-2871"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Orchestrator page contracts still lag the canonical identity model in concrete ways:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01849",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "owner coverage row cov-02377 is partial for Orchestrator still uses forbidden `requested_persona_id` / `effective_persona_id` names.",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02377"
+      ],
+      "source_obligation_ids": [
+        "obl-2227"
+      ],
+      "source_seed_ids": [
+        "seed-2894"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Orchestrator still uses forbidden `requested_persona_id` / `effective_persona_id` names.",
+        "requested_persona_id",
+        "effective_persona_id"
+      ],
+      "stale_tokens": [
+        "effective_persona_id",
+        "requested_persona_id"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01857",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02387 is partial for Orchestrator already has a strong \u201crequested vs effective must remain visible on fallback\u201d",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02387"
+      ],
+      "source_obligation_ids": [
+        "obl-2237"
+      ],
+      "source_seed_ids": [
+        "seed-2904"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Orchestrator already has a strong \u201crequested vs effective must remain visible on fallback\u201d rule; the gap is now the missing account/auth/trust fields and canonical naming alignment."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01924",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02461 is partial for for example, a blocked project card might imply \u201copen Orchestrator\u201d",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02461"
+      ],
+      "source_obligation_ids": [
+        "obl-2311"
+      ],
+      "source_seed_ids": [
+        "seed-2997"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "for example, a blocked project card might imply \u201copen Orchestrator\u201d"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02052",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02614 is partial for \u201cShow in Usage/Ledger\u201d and Orchestrator pivots still encode object routing as command-spec",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02614"
+      ],
+      "source_obligation_ids": [
+        "obl-2462"
+      ],
+      "source_seed_ids": [
+        "seed-3214"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "\u201cShow in Usage/Ledger\u201d and Orchestrator pivots still encode object routing as command-specific payloads rather than one shared route structure"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02377",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03010 is partial for Research Progress - 2026-03-16 - Opus Orchestrator / Wizard / Worktree Drift Deepening",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03010"
+      ],
+      "source_obligation_ids": [
+        "obl-2856"
+      ],
+      "source_seed_ids": [
+        "seed-3766"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - Opus Orchestrator / Wizard / Worktree Drift Deepening"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02386",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03023 is partial for no single authority is declared between Source Control worktree state and Orchestrator rec",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "### Fidelity recovery cov-042: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03023"
+      ],
+      "source_obligation_ids": [
+        "obl-2869"
+      ],
+      "source_seed_ids": [
+        "seed-3786"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "no single authority is declared between Source Control worktree state and Orchestrator receipt lineage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02394",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03032 is partial for Introduce node/actor/lane-aware execution context into orchestrator runtime structs and ac",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03032"
+      ],
+      "source_obligation_ids": [
+        "obl-2878"
+      ],
+      "source_seed_ids": [
+        "seed-3799"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "Introduce node/actor/lane-aware execution context into orchestrator runtime structs and active-agent tracking."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02585",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03304 is partial for Rebase orchestrator live-context structs around node/attempt/worktree/permission-aware exe",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03304"
+      ],
+      "source_obligation_ids": [
+        "obl-3150"
+      ],
+      "source_seed_ids": [
+        "seed-4192"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Rebase orchestrator live-context structs around node/attempt/worktree/permission-aware execution envelopes instead of tier-keyed adapters."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02627",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03360 is partial for `orchestrator.receipt.{run_id}.{attempt_id}` already exists",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03360"
+      ],
+      "source_obligation_ids": [
+        "obl-3206"
+      ],
+      "source_seed_ids": [
+        "seed-4271"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "`orchestrator.receipt.{run_id}.{attempt_id}` already exists",
+        "orchestrator.receipt.{run_id}.{attempt_id}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02872",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03676 is partial for `Run_Modes.md` now sharpens the execution-model seams further: DAE jail vs orchestrator wo",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03676"
+      ],
+      "source_obligation_ids": [
+        "obl-3522"
+      ],
+      "source_seed_ids": [
+        "seed-4738"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "`Run_Modes.md` now sharpens the execution-model seams further: DAE jail vs orchestrator worktree vs Contribute(PR) single-branch isolation are still three incompatible models, and mode resolution remains identity-blind to account/role differences.",
+        "Run_Modes.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03066",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03935 is partial for `orchestrator.receipt.{run_id}.{attempt_id}` already bridges Source Control / GitHub Actio",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03935"
+      ],
+      "source_obligation_ids": [
+        "obl-3779"
+      ],
+      "source_seed_ids": [
+        "seed-5166"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "`orchestrator.receipt.{run_id}.{attempt_id}` already bridges Source Control / GitHub Actions / Docker / Kubernetes / Usage",
+        "orchestrator.receipt.{run_id}.{attempt_id}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03469",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04436 is partial for the remaining missing orchestrator command gap set is now tight and explicit.",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04436"
+      ],
+      "source_obligation_ids": [
+        "obl-4276"
+      ],
+      "source_seed_ids": [
+        "seed-5960"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "the remaining missing orchestrator command gap set is now tight and explicit."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03513",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04481 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04481"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03730",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04775 is partial for `cmd.docker.image.push` and `cmd.orchestrator.push_image` still both claim publish authori",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04775"
+      ],
+      "source_obligation_ids": [
+        "obl-4553"
+      ],
+      "source_seed_ids": [
+        "seed-6470"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "`cmd.docker.image.push` and `cmd.orchestrator.push_image` still both claim publish authority with the same event family.",
+        "cmd.docker.image.push",
+        "cmd.orchestrator.push_image"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04331",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05557 is partial for Orchestrator consumes worktree identity, blocked state, and lineage",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05557"
+      ],
+      "source_obligation_ids": [
+        "obl-5329"
+      ],
+      "source_seed_ids": [
+        "seed-7917"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "Orchestrator consumes worktree identity, blocked state, and lineage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04442",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05702 is partial for `orchestrator:tiers`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05702"
+      ],
+      "source_obligation_ids": [
+        "obl-5474"
+      ],
+      "source_seed_ids": [
+        "seed-8122"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "`orchestrator:tiers`",
+        "orchestrator:tiers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04692",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06065 is partial for older `PuppetMasterEvent::*` streams from the tier-era orchestrator model",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06065"
+      ],
+      "source_obligation_ids": [
+        "obl-5837"
+      ],
+      "source_seed_ids": [
+        "seed-8674"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "exact_missing_items": [
+        "older `PuppetMasterEvent::*` streams from the tier-era orchestrator model",
+        "PuppetMasterEvent::*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04838",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06250 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06250"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05034",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06494 is partial for `orchestrator.receipt.{run_id}.{attempt_id}` is attempt-native",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06494"
+      ],
+      "source_obligation_ids": [
+        "obl-6135"
+      ],
+      "source_seed_ids": [
+        "seed-9274"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`orchestrator.receipt.{run_id}.{attempt_id}` is attempt-native",
+        "orchestrator.receipt.{run_id}.{attempt_id}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05037",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06497 is partial for no first-class `worktree_record` / `lane_record` family even though Orchestrator and Sourc",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06497"
+      ],
+      "source_obligation_ids": [
+        "obl-6138"
+      ],
+      "source_seed_ids": [
+        "seed-9277"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "no first-class `worktree_record` / `lane_record` family even though Orchestrator and Source Control now depend on durable lane/worktree lifecycle",
+        "worktree_record",
+        "lane_record"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05051",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06515 is partial for `Orchestrator tier override`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06515"
+      ],
+      "source_obligation_ids": [
+        "obl-6156"
+      ],
+      "source_seed_ids": [
+        "seed-9308"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator tier override`",
+        "Orchestrator tier override"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05077",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06544 is partial for dashboard/current-task language still uses current tier / phase-task-subtask progress bars",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06544"
+      ],
+      "source_obligation_ids": [
+        "obl-6185"
+      ],
+      "source_seed_ids": [
+        "seed-9360"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "dashboard/current-task language still uses current tier / phase-task-subtask progress bars as if that were the canonical Orchestrator model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05089",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06557 is partial for Orchestrator graph/seam/package governance model",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06557"
+      ],
+      "source_obligation_ids": [
+        "obl-6198"
+      ],
+      "source_seed_ids": [
+        "seed-9382"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "Orchestrator graph/seam/package governance model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05262",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06786 is partial for `orchestrator.project_state.{project_id}` persistence record",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06786"
+      ],
+      "source_obligation_ids": [
+        "obl-6418"
+      ],
+      "source_seed_ids": [
+        "seed-9797"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "`orchestrator.project_state.{project_id}` persistence record",
+        "orchestrator.project_state.{project_id}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05365",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06923 is missing for `Plans/Orchestrator_Page.md:16-43`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06923"
+      ],
+      "source_obligation_ids": [
+        "obl-6523"
+      ],
+      "source_seed_ids": [
+        "seed-9914"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:16-43`",
+        "Plans/Orchestrator_Page.md:16-43"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05366",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06924 is missing for `Plans/Orchestrator_Page.md:451-474`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06924"
+      ],
+      "source_obligation_ids": [
+        "obl-6524"
+      ],
+      "source_seed_ids": [
+        "seed-9915"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:451-474`",
+        "Plans/Orchestrator_Page.md:451-474"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05391",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06952 is missing for `Plans/Orchestrator_Page.md:258-266`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06952"
+      ],
+      "source_obligation_ids": [
+        "obl-6552"
+      ],
+      "source_seed_ids": [
+        "seed-9960"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:258-266`",
+        "Plans/Orchestrator_Page.md:258-266"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05392",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06953 is missing for `Plans/Orchestrator_Page.md:358-377`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06953"
+      ],
+      "source_obligation_ids": [
+        "obl-6553"
+      ],
+      "source_seed_ids": [
+        "seed-9961"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:358-377`",
+        "Plans/Orchestrator_Page.md:358-377"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05393",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06954 is missing for `Plans/Orchestrator_Page.md:428-475`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06954"
+      ],
+      "source_obligation_ids": [
+        "obl-6554"
+      ],
+      "source_seed_ids": [
+        "seed-9962",
+        "seed-10037",
+        "seed-10153"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:428-475`",
+        "Plans/Orchestrator_Page.md:428-475"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05423",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06989 is missing for `Plans/Orchestrator_Page.md:1-44`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06989"
+      ],
+      "source_obligation_ids": [
+        "obl-6585"
+      ],
+      "source_seed_ids": [
+        "seed-10036",
+        "seed-10152",
+        "seed-10201",
+        "seed-10246"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:1-44`",
+        "Plans/Orchestrator_Page.md:1-44"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05451",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07029 is missing for `Plans/Orchestrator_Page.md:439-446`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07029"
+      ],
+      "source_obligation_ids": [
+        "obl-6620"
+      ],
+      "source_seed_ids": [
+        "seed-10096"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:439-446`",
+        "Plans/Orchestrator_Page.md:439-446"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05494",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07084 is missing for `Plans/Orchestrator_Page.md:200-209`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07084"
+      ],
+      "source_obligation_ids": [
+        "obl-6664"
+      ],
+      "source_seed_ids": [
+        "seed-10202"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:200-209`",
+        "Plans/Orchestrator_Page.md:200-209"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05526",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07121 is missing for `Plans/Orchestrator_Page.md:1-150`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07121"
+      ],
+      "source_obligation_ids": [
+        "obl-6696"
+      ],
+      "source_seed_ids": [
+        "seed-10284"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:1-150`",
+        "Plans/Orchestrator_Page.md:1-150"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05535",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07133 is missing for `Plans/Orchestrator_Page.md:171-171`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07133"
+      ],
+      "source_obligation_ids": [
+        "obl-6706"
+      ],
+      "source_seed_ids": [
+        "seed-10302",
+        "seed-10335"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:171-171`",
+        "Plans/Orchestrator_Page.md:171-171"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-01801",
+    "cov-01805",
+    "cov-02101",
+    "cov-02161",
+    "cov-02213",
+    "cov-02357",
+    "cov-02377",
+    "cov-02387",
+    "cov-02461",
+    "cov-02614",
+    "cov-03010",
+    "cov-03023",
+    "cov-03032",
+    "cov-03304",
+    "cov-03360",
+    "cov-03676",
+    "cov-03935",
+    "cov-04436",
+    "cov-04481",
+    "cov-04775",
+    "cov-05557",
+    "cov-05702",
+    "cov-06065",
+    "cov-06250",
+    "cov-06494",
+    "cov-06497",
+    "cov-06515",
+    "cov-06544",
+    "cov-06557",
+    "cov-06786",
+    "cov-06923",
+    "cov-06924",
+    "cov-06952",
+    "cov-06953",
+    "cov-06954",
+    "cov-06989",
+    "cov-07029",
+    "cov-07084",
+    "cov-07121",
+    "cov-07133"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1658",
+    "obl-1662",
+    "obl-1958",
+    "obl-2018",
+    "obl-2068",
+    "obl-2208",
+    "obl-2227",
+    "obl-2237",
+    "obl-2311",
+    "obl-2462",
+    "obl-2856",
+    "obl-2869",
+    "obl-2878",
+    "obl-3150",
+    "obl-3206",
+    "obl-3522",
+    "obl-3779",
+    "obl-4276",
+    "obl-4292",
+    "obl-4553",
+    "obl-5329",
+    "obl-5474",
+    "obl-5837",
+    "obl-5986",
+    "obl-6135",
+    "obl-6138",
+    "obl-6156",
+    "obl-6185",
+    "obl-6198",
+    "obl-6418",
+    "obl-6523",
+    "obl-6524",
+    "obl-6552",
+    "obl-6553",
+    "obl-6554",
+    "obl-6585",
+    "obl-6620",
+    "obl-6664",
+    "obl-6696",
+    "obl-6706"
+  ],
+  "source_seed_ids_represented": [
+    "seed-10036",
+    "seed-10037",
+    "seed-10096",
+    "seed-10152",
+    "seed-10153",
+    "seed-10201",
+    "seed-10202",
+    "seed-10246",
+    "seed-10284",
+    "seed-10302",
+    "seed-10335",
+    "seed-2065",
+    "seed-2070",
+    "seed-2547",
+    "seed-2624",
+    "seed-2684",
+    "seed-2871",
+    "seed-2894",
+    "seed-2904",
+    "seed-2997",
+    "seed-3214",
+    "seed-3766",
+    "seed-3786",
+    "seed-3799",
+    "seed-4192",
+    "seed-4271",
+    "seed-4738",
+    "seed-5166",
+    "seed-5960",
+    "seed-6001",
+    "seed-6470",
+    "seed-7917",
+    "seed-8122",
+    "seed-8674",
+    "seed-9006",
+    "seed-9274",
+    "seed-9277",
+    "seed-9308",
+    "seed-9360",
+    "seed-9382",
+    "seed-9797",
+    "seed-9914",
+    "seed-9915",
+    "seed-9960",
+    "seed-9961",
+    "seed-9962"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0029",
+    "shard-0033",
+    "shard-0034",
+    "shard-0036",
+    "shard-0037",
+    "shard-0038",
+    "shard-0042",
+    "shard-0043",
+    "shard-0045",
+    "shard-0046",
+    "shard-0049",
+    "shard-0052",
+    "shard-0058",
+    "shard-0059",
+    "shard-0062",
+    "shard-0074",
+    "shard-0075",
+    "shard-0079",
+    "shard-0082",
+    "shard-0084",
+    "shard-0087",
+    "shard-0088",
+    "shard-0089",
+    "shard-0090",
+    "shard-0091"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-01408",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01801 is partial for explicit search navigation to a historical run likely should update persisted Orchestrator",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "### Fidelity recovery cov-037: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01801"
+      ],
+      "source_obligation_ids": [
+        "obl-1658"
+      ],
+      "source_seed_ids": [
+        "seed-2065"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "explicit search navigation to a historical run likely should update persisted Orchestrator focused-run state"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01412",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01805 is partial for `resume_url` is currently stronger than some Orchestrator pivots in terms of specificity,",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01805"
+      ],
+      "source_obligation_ids": [
+        "obl-1662"
+      ],
+      "source_seed_ids": [
+        "seed-2070"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "`resume_url` is currently stronger than some Orchestrator pivots in terms of specificity, which suggests the more generic routing layer is still underdefined.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01632",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02101 is partial for Orchestrator emphasizes lane as operational object",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02101"
+      ],
+      "source_obligation_ids": [
+        "obl-1958"
+      ],
+      "source_seed_ids": [
+        "seed-2547"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "Orchestrator emphasizes lane as operational object"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01683",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02161 is partial for Orchestrator deep links already prefer attempt/receipt/worktree/workflow refs",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02161"
+      ],
+      "source_obligation_ids": [
+        "obl-2018"
+      ],
+      "source_seed_ids": [
+        "seed-2624"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "Orchestrator deep links already prefer attempt/receipt/worktree/workflow refs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01721",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02213 is partial for no lane/package/worktree identity enters the bridged envelope where Source Control / Orche",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "### Fidelity recovery cov-042: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02213"
+      ],
+      "source_obligation_ids": [
+        "obl-2068"
+      ],
+      "source_seed_ids": [
+        "seed-2684"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "no lane/package/worktree identity enters the bridged envelope where Source Control / Orchestrator handshake now needs it"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01830",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02357 is partial for Orchestrator page contracts still lag the canonical identity model in concrete ways:",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02357"
+      ],
+      "source_obligation_ids": [
+        "obl-2208"
+      ],
+      "source_seed_ids": [
+        "seed-2871"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Orchestrator page contracts still lag the canonical identity model in concrete ways:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01849",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "owner coverage row cov-02377 is partial for Orchestrator still uses forbidden `requested_persona_id` / `effective_persona_id` names.",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02377"
+      ],
+      "source_obligation_ids": [
+        "obl-2227"
+      ],
+      "source_seed_ids": [
+        "seed-2894"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Orchestrator still uses forbidden `requested_persona_id` / `effective_persona_id` names.",
+        "requested_persona_id",
+        "effective_persona_id"
+      ],
+      "stale_tokens": [
+        "effective_persona_id",
+        "requested_persona_id"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01857",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02387 is partial for Orchestrator already has a strong \u201crequested vs effective must remain visible on fallback\u201d",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02387"
+      ],
+      "source_obligation_ids": [
+        "obl-2237"
+      ],
+      "source_seed_ids": [
+        "seed-2904"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Orchestrator already has a strong \u201crequested vs effective must remain visible on fallback\u201d rule; the gap is now the missing account/auth/trust fields and canonical naming alignment."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01924",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02461 is partial for for example, a blocked project card might imply \u201copen Orchestrator\u201d",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02461"
+      ],
+      "source_obligation_ids": [
+        "obl-2311"
+      ],
+      "source_seed_ids": [
+        "seed-2997"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "for example, a blocked project card might imply \u201copen Orchestrator\u201d"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02052",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02614 is partial for \u201cShow in Usage/Ledger\u201d and Orchestrator pivots still encode object routing as command-spec",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02614"
+      ],
+      "source_obligation_ids": [
+        "obl-2462"
+      ],
+      "source_seed_ids": [
+        "seed-3214"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "\u201cShow in Usage/Ledger\u201d and Orchestrator pivots still encode object routing as command-specific payloads rather than one shared route structure"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02377",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03010 is partial for Research Progress - 2026-03-16 - Opus Orchestrator / Wizard / Worktree Drift Deepening",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03010"
+      ],
+      "source_obligation_ids": [
+        "obl-2856"
+      ],
+      "source_seed_ids": [
+        "seed-3766"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - Opus Orchestrator / Wizard / Worktree Drift Deepening"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02386",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03023 is partial for no single authority is declared between Source Control worktree state and Orchestrator rec",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "### Fidelity recovery cov-042: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03023"
+      ],
+      "source_obligation_ids": [
+        "obl-2869"
+      ],
+      "source_seed_ids": [
+        "seed-3786"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "no single authority is declared between Source Control worktree state and Orchestrator receipt lineage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02394",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03032 is partial for Introduce node/actor/lane-aware execution context into orchestrator runtime structs and ac",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03032"
+      ],
+      "source_obligation_ids": [
+        "obl-2878"
+      ],
+      "source_seed_ids": [
+        "seed-3799"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "Introduce node/actor/lane-aware execution context into orchestrator runtime structs and active-agent tracking."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02585",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03304 is partial for Rebase orchestrator live-context structs around node/attempt/worktree/permission-aware exe",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03304"
+      ],
+      "source_obligation_ids": [
+        "obl-3150"
+      ],
+      "source_seed_ids": [
+        "seed-4192"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Rebase orchestrator live-context structs around node/attempt/worktree/permission-aware execution envelopes instead of tier-keyed adapters."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02627",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03360 is partial for `orchestrator.receipt.{run_id}.{attempt_id}` already exists",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03360"
+      ],
+      "source_obligation_ids": [
+        "obl-3206"
+      ],
+      "source_seed_ids": [
+        "seed-4271"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "`orchestrator.receipt.{run_id}.{attempt_id}` already exists",
+        "orchestrator.receipt.{run_id}.{attempt_id}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02872",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03676 is partial for `Run_Modes.md` now sharpens the execution-model seams further: DAE jail vs orchestrator wo",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03676"
+      ],
+      "source_obligation_ids": [
+        "obl-3522"
+      ],
+      "source_seed_ids": [
+        "seed-4738"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "`Run_Modes.md` now sharpens the execution-model seams further: DAE jail vs orchestrator worktree vs Contribute(PR) single-branch isolation are still three incompatible models, and mode resolution remains identity-blind to account/role differences.",
+        "Run_Modes.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03066",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03935 is partial for `orchestrator.receipt.{run_id}.{attempt_id}` already bridges Source Control / GitHub Actio",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03935"
+      ],
+      "source_obligation_ids": [
+        "obl-3779"
+      ],
+      "source_seed_ids": [
+        "seed-5166"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "`orchestrator.receipt.{run_id}.{attempt_id}` already bridges Source Control / GitHub Actions / Docker / Kubernetes / Usage",
+        "orchestrator.receipt.{run_id}.{attempt_id}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03469",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04436 is partial for the remaining missing orchestrator command gap set is now tight and explicit.",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04436"
+      ],
+      "source_obligation_ids": [
+        "obl-4276"
+      ],
+      "source_seed_ids": [
+        "seed-5960"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "the remaining missing orchestrator command gap set is now tight and explicit."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03513",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04481 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04481"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03730",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04775 is partial for `cmd.docker.image.push` and `cmd.orchestrator.push_image` still both claim publish authori",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04775"
+      ],
+      "source_obligation_ids": [
+        "obl-4553"
+      ],
+      "source_seed_ids": [
+        "seed-6470"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "`cmd.docker.image.push` and `cmd.orchestrator.push_image` still both claim publish authority with the same event family.",
+        "cmd.docker.image.push",
+        "cmd.orchestrator.push_image"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04331",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05557 is partial for Orchestrator consumes worktree identity, blocked state, and lineage",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05557"
+      ],
+      "source_obligation_ids": [
+        "obl-5329"
+      ],
+      "source_seed_ids": [
+        "seed-7917"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "Orchestrator consumes worktree identity, blocked state, and lineage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04442",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05702 is partial for `orchestrator:tiers`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05702"
+      ],
+      "source_obligation_ids": [
+        "obl-5474"
+      ],
+      "source_seed_ids": [
+        "seed-8122"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "`orchestrator:tiers`",
+        "orchestrator:tiers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04692",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06065 is partial for older `PuppetMasterEvent::*` streams from the tier-era orchestrator model",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06065"
+      ],
+      "source_obligation_ids": [
+        "obl-5837"
+      ],
+      "source_seed_ids": [
+        "seed-8674"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "exact_missing_items": [
+        "older `PuppetMasterEvent::*` streams from the tier-era orchestrator model",
+        "PuppetMasterEvent::*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04838",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06250 is missing for Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06250"
+      ],
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05034",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06494 is partial for `orchestrator.receipt.{run_id}.{attempt_id}` is attempt-native",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06494"
+      ],
+      "source_obligation_ids": [
+        "obl-6135"
+      ],
+      "source_seed_ids": [
+        "seed-9274"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`orchestrator.receipt.{run_id}.{attempt_id}` is attempt-native",
+        "orchestrator.receipt.{run_id}.{attempt_id}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05037",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06497 is partial for no first-class `worktree_record` / `lane_record` family even though Orchestrator and Sourc",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06497"
+      ],
+      "source_obligation_ids": [
+        "obl-6138"
+      ],
+      "source_seed_ids": [
+        "seed-9277"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "no first-class `worktree_record` / `lane_record` family even though Orchestrator and Source Control now depend on durable lane/worktree lifecycle",
+        "worktree_record",
+        "lane_record"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05051",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06515 is partial for `Orchestrator tier override`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06515"
+      ],
+      "source_obligation_ids": [
+        "obl-6156"
+      ],
+      "source_seed_ids": [
+        "seed-9308"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator tier override`",
+        "Orchestrator tier override"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05077",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06544 is partial for dashboard/current-task language still uses current tier / phase-task-subtask progress bars",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06544"
+      ],
+      "source_obligation_ids": [
+        "obl-6185"
+      ],
+      "source_seed_ids": [
+        "seed-9360"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "dashboard/current-task language still uses current tier / phase-task-subtask progress bars as if that were the canonical Orchestrator model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05089",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06557 is partial for Orchestrator graph/seam/package governance model",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06557"
+      ],
+      "source_obligation_ids": [
+        "obl-6198"
+      ],
+      "source_seed_ids": [
+        "seed-9382"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "Orchestrator graph/seam/package governance model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05262",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-06786 is partial for `orchestrator.project_state.{project_id}` persistence record",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06786"
+      ],
+      "source_obligation_ids": [
+        "obl-6418"
+      ],
+      "source_seed_ids": [
+        "seed-9797"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "`orchestrator.project_state.{project_id}` persistence record",
+        "orchestrator.project_state.{project_id}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05365",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06923 is missing for `Plans/Orchestrator_Page.md:16-43`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06923"
+      ],
+      "source_obligation_ids": [
+        "obl-6523"
+      ],
+      "source_seed_ids": [
+        "seed-9914"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:16-43`",
+        "Plans/Orchestrator_Page.md:16-43"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05366",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06924 is missing for `Plans/Orchestrator_Page.md:451-474`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06924"
+      ],
+      "source_obligation_ids": [
+        "obl-6524"
+      ],
+      "source_seed_ids": [
+        "seed-9915"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:451-474`",
+        "Plans/Orchestrator_Page.md:451-474"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05391",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06952 is missing for `Plans/Orchestrator_Page.md:258-266`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06952"
+      ],
+      "source_obligation_ids": [
+        "obl-6552"
+      ],
+      "source_seed_ids": [
+        "seed-9960"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:258-266`",
+        "Plans/Orchestrator_Page.md:258-266"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05392",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06953 is missing for `Plans/Orchestrator_Page.md:358-377`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06953"
+      ],
+      "source_obligation_ids": [
+        "obl-6553"
+      ],
+      "source_seed_ids": [
+        "seed-9961"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:358-377`",
+        "Plans/Orchestrator_Page.md:358-377"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05393",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06954 is missing for `Plans/Orchestrator_Page.md:428-475`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06954"
+      ],
+      "source_obligation_ids": [
+        "obl-6554"
+      ],
+      "source_seed_ids": [
+        "seed-9962",
+        "seed-10037",
+        "seed-10153"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:428-475`",
+        "Plans/Orchestrator_Page.md:428-475"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05423",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-06989 is missing for `Plans/Orchestrator_Page.md:1-44`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06989"
+      ],
+      "source_obligation_ids": [
+        "obl-6585"
+      ],
+      "source_seed_ids": [
+        "seed-10036",
+        "seed-10152",
+        "seed-10201",
+        "seed-10246"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:1-44`",
+        "Plans/Orchestrator_Page.md:1-44"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05451",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07029 is missing for `Plans/Orchestrator_Page.md:439-446`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07029"
+      ],
+      "source_obligation_ids": [
+        "obl-6620"
+      ],
+      "source_seed_ids": [
+        "seed-10096"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:439-446`",
+        "Plans/Orchestrator_Page.md:439-446"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05494",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07084 is missing for `Plans/Orchestrator_Page.md:200-209`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07084"
+      ],
+      "source_obligation_ids": [
+        "obl-6664"
+      ],
+      "source_seed_ids": [
+        "seed-10202"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:200-209`",
+        "Plans/Orchestrator_Page.md:200-209"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05526",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07121 is missing for `Plans/Orchestrator_Page.md:1-150`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07121"
+      ],
+      "source_obligation_ids": [
+        "obl-6696"
+      ],
+      "source_seed_ids": [
+        "seed-10284"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:1-150`",
+        "Plans/Orchestrator_Page.md:1-150"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05535",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-07133 is missing for `Plans/Orchestrator_Page.md:171-171`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07133"
+      ],
+      "source_obligation_ids": [
+        "obl-6706"
+      ],
+      "source_seed_ids": [
+        "seed-10302",
+        "seed-10335"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:171-171`",
+        "Plans/Orchestrator_Page.md:171-171"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

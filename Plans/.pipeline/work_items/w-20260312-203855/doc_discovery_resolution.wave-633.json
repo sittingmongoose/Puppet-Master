@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-633",
+  "group_ids": [
+    "discgrp-2529",
+    "discgrp-2530",
+    "discgrp-2531",
+    "discgrp-2532"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02807",
+      "source_obligation_ids": [
+        "obl-2654"
+      ],
+      "source_seed_ids": [
+        "seed-3488"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "##### Usage and receipt lineage routing",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/usage-feature.md:L436"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02808",
+      "source_obligation_ids": [
+        "obl-2655"
+      ],
+      "source_seed_ids": [
+        "seed-3489"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Prompt_Pipeline.md",
+      "new_heading_hint": "# Prompt Pipeline (Canonical SSOT)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02809",
+      "source_obligation_ids": [
+        "obl-2656"
+      ],
+      "source_seed_ids": [
+        "seed-3490"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02810",
+      "source_obligation_ids": [
+        "obl-2657"
+      ],
+      "source_seed_ids": [
+        "seed-3491"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1323"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

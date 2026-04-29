@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-772",
+  "group_ids": [
+    "discgrp-3085",
+    "discgrp-3086",
+    "discgrp-3087",
+    "discgrp-3088"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03365",
+      "source_obligation_ids": [
+        "obl-3211"
+      ],
+      "source_seed_ids": [
+        "seed-4282"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "## Requested / Effective Model Snapshot Alignment",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Models_System.md:L891"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03366",
+      "source_obligation_ids": [
+        "obl-3212"
+      ],
+      "source_seed_ids": [
+        "seed-4283"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-007 -- No stringly-typed IDs outside SSOT",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L75"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03367",
+      "source_obligation_ids": [
+        "obl-3213"
+      ],
+      "source_seed_ids": [
+        "seed-4286"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03368",
+      "source_obligation_ids": [
+        "obl-3214"
+      ],
+      "source_seed_ids": [
+        "seed-4287"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/BinaryLocator_Spec.md",
+      "new_heading_hint": "### Legacy-code anchor note (read-only)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/BinaryLocator_Spec.md:L31"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

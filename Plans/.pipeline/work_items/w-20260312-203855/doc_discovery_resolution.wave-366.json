@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-366",
+  "group_ids": [
+    "discgrp-1461",
+    "discgrp-1462",
+    "discgrp-1463",
+    "discgrp-1464"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01713",
+      "source_obligation_ids": [
+        "obl-1570"
+      ],
+      "source_seed_ids": [
+        "seed-1960"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "### After widget or catalog changes",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L1014"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01714",
+      "source_obligation_ids": [
+        "obl-1571"
+      ],
+      "source_seed_ids": [
+        "seed-1961"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 15.2 seglog Projections (for Usage)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1664"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01715",
+      "source_obligation_ids": [
+        "obl-1572"
+      ],
+      "source_seed_ids": [
+        "seed-1962"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/00-plans-index.md",
+      "new_heading_hint": "## Change Summary",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/00-plans-index.md:L6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01716",
+      "source_obligation_ids": [
+        "obl-1573"
+      ],
+      "source_seed_ids": [
+        "seed-1963"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "### 5.3 Human plan may repeat summary, but must point to canonical contracts",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L230"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

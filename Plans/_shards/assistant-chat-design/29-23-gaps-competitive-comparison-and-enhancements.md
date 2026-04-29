@@ -83,6 +83,33 @@ All of the following are **MVP requirements** and are already reflected in the m
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
 ### 23.5 Previously open gaps (now closed)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0572
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Several docs now fail because they promise canonical sections/IDs that do not exist at all.
+  - The remaining partial surface is now fully confirmed as meaningful; none of these docs should be treated as low-signal leftovers.
+  - Consumer docs now simultaneously claim:
+  - fields present now include `provider_attempt_ref`, `usage_event_ref`, `detail_ref`, and `report_ref`
+  - provider_attempt_ref
+  - usage_event_ref
+  - detail_ref
+  - report_ref
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 This traceability table now records what moved into the main body without claiming blanket closure.
 
 The competitive-comparison traceability stays intact.

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-209",
+  "group_ids": [
+    "discgrp-0833",
+    "discgrp-0834",
+    "discgrp-0835",
+    "discgrp-0836"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01080",
+      "source_obligation_ids": [
+        "obl-937"
+      ],
+      "source_seed_ids": [
+        "seed-1104"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1310"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01081",
+      "source_obligation_ids": [
+        "obl-938"
+      ],
+      "source_seed_ids": [
+        "seed-1105"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1310"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01082",
+      "source_obligation_ids": [
+        "obl-939"
+      ],
+      "source_seed_ids": [
+        "seed-1106"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "### Selection reason and audit trail",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Models_System.md:L954"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01083",
+      "source_obligation_ids": [
+        "obl-940"
+      ],
+      "source_seed_ids": [
+        "seed-1107"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/LSPSupport.md",
+      "new_heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/LSPSupport.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

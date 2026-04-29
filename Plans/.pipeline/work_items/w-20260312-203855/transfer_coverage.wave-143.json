@@ -1,0 +1,1084 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-143",
+  "row_group_ids": [
+    "rowgrp-0569",
+    "rowgrp-0570",
+    "rowgrp-0571",
+    "rowgrp-0572"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-01287",
+      "source_obligation_ids": [
+        "obl-1144"
+      ],
+      "source_seed_ids": [
+        "seed-1356"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Existing `orchestrator status` (`idle/running/paused`) is too weak on its own to explain w",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-081: Project attention projection",
+      "status": "partial",
+      "exact_items": [
+        "Existing `orchestrator status` (`idle/running/paused`) is too weak on its own to explain why a project needs attention.",
+        "orchestrator status",
+        "idle/running/paused"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L209",
+        "Plans/Orchestrator_Page.md:L216"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01393",
+      "source_obligation_ids": [
+        "obl-1250"
+      ],
+      "source_seed_ids": [
+        "seed-1495"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "Orchestrator can expose deep links into those actions, but should not become the main plac",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator can expose deep links into those actions, but should not become the main place where raw Git/worktree batch cleanup is fired blindly."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01536",
+      "source_obligation_ids": [
+        "obl-1393"
+      ],
+      "source_seed_ids": [
+        "seed-1710"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Orchestrator owns lane-pool truth and cleanup posture in execution context",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator owns lane-pool truth and cleanup posture in execution context"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01540",
+      "source_obligation_ids": [
+        "obl-1397"
+      ],
+      "source_seed_ids": [
+        "seed-1714"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Orchestrator still shows the historical lane/worktree identity",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator still shows the historical lane/worktree identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01602",
+      "source_obligation_ids": [
+        "obl-1459"
+      ],
+      "source_seed_ids": [
+        "seed-1811"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "The shared provider-runtime contract is already broader than Orchestrator:",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "The shared provider-runtime contract is already broader than Orchestrator:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01637",
+      "source_obligation_ids": [
+        "obl-1494"
+      ],
+      "source_seed_ids": [
+        "seed-1848"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "But it also means reconciliation later must avoid accidentally renaming all blocked semant",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "But it also means reconciliation later must avoid accidentally renaming all blocked semantics as \u201cOrchestrator\u201d semantics."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01653",
+      "source_obligation_ids": [
+        "obl-1510"
+      ],
+      "source_seed_ids": [
+        "seed-1869"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "These families are conceptually different, but the docs still do not give Orchestrator a u",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "These families are conceptually different, but the docs still do not give Orchestrator a unified export contract that ties them together."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01666",
+      "source_obligation_ids": [
+        "obl-1523"
+      ],
+      "source_seed_ids": [
+        "seed-1891"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "any non-trivial Orchestrator bundle export should carry a manifest",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "any non-trivial Orchestrator bundle export should carry a manifest"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01690",
+      "source_obligation_ids": [
+        "obl-1547"
+      ],
+      "source_seed_ids": [
+        "seed-1924"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "canon_label": "Orchestrator still lacks one explicit export contract tying together:",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator still lacks one explicit export contract tying together:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01748",
+      "source_obligation_ids": [
+        "obl-1605"
+      ],
+      "source_seed_ids": [
+        "seed-2004",
+        "seed-5471",
+        "seed-5779",
+        "seed-6659",
+        "seed-6785",
+        "seed-9356"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0055",
+        "shard-0057",
+        "shard-0064",
+        "shard-0065",
+        "shard-0084"
+      ],
+      "canon_label": "`cmd.orchestrator.open_in_source_control`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`cmd.orchestrator.open_in_source_control`",
+        "cmd.orchestrator.open_in_source_control"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01749",
+      "source_obligation_ids": [
+        "obl-1606"
+      ],
+      "source_seed_ids": [
+        "seed-2005",
+        "seed-5472",
+        "seed-5780"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0055",
+        "shard-0057"
+      ],
+      "canon_label": "`cmd.orchestrator.open_in_github_actions`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`cmd.orchestrator.open_in_github_actions`",
+        "cmd.orchestrator.open_in_github_actions"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01750",
+      "source_obligation_ids": [
+        "obl-1607"
+      ],
+      "source_seed_ids": [
+        "seed-2006",
+        "seed-5473",
+        "seed-5781"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0055",
+        "shard-0057"
+      ],
+      "canon_label": "`cmd.orchestrator.open_in_docker_manager`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`cmd.orchestrator.open_in_docker_manager`",
+        "cmd.orchestrator.open_in_docker_manager"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01801",
+      "source_obligation_ids": [
+        "obl-1658"
+      ],
+      "source_seed_ids": [
+        "seed-2065"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "explicit search navigation to a historical run likely should update persisted Orchestrator",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-037: Focused run and historical routing contract",
+      "status": "partial",
+      "exact_items": [
+        "explicit search navigation to a historical run likely should update persisted Orchestrator focused-run state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L103",
+        "Plans/Orchestrator_Page.md:L110"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01805",
+      "source_obligation_ids": [
+        "obl-1662"
+      ],
+      "source_seed_ids": [
+        "seed-2070"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "`resume_url` is currently stronger than some Orchestrator pivots in terms of specificity,",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`resume_url` is currently stronger than some Orchestrator pivots in terms of specificity, which suggests the more generic routing layer is still underdefined.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02101",
+      "source_obligation_ids": [
+        "obl-1958"
+      ],
+      "source_seed_ids": [
+        "seed-2547"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "Orchestrator emphasizes lane as operational object",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator emphasizes lane as operational object"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02138",
+      "source_obligation_ids": [
+        "obl-1995"
+      ],
+      "source_seed_ids": [
+        "seed-2592"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "`orchestrator:progress` likely needs project-scoped persistence, or a layered model of app",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "present",
+      "exact_items": [
+        "`orchestrator:progress` likely needs project-scoped persistence, or a layered model of app-default plus project override",
+        "orchestrator:progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L144",
+        "Plans/Orchestrator_Page.md:L148",
+        "Plans/Orchestrator_Page.md:L367"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02161",
+      "source_obligation_ids": [
+        "obl-2018"
+      ],
+      "source_seed_ids": [
+        "seed-2624"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "Orchestrator deep links already prefer attempt/receipt/worktree/workflow refs",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator deep links already prefer attempt/receipt/worktree/workflow refs"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02213",
+      "source_obligation_ids": [
+        "obl-2068"
+      ],
+      "source_seed_ids": [
+        "seed-2684"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "no lane/package/worktree identity enters the bridged envelope where Source Control / Orche",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-042: Source Control and worktree handshake",
+      "status": "partial",
+      "exact_items": [
+        "no lane/package/worktree identity enters the bridged envelope where Source Control / Orchestrator handshake now needs it"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L115",
+        "Plans/Orchestrator_Page.md:L122"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02357",
+      "source_obligation_ids": [
+        "obl-2208"
+      ],
+      "source_seed_ids": [
+        "seed-2871"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Orchestrator page contracts still lag the canonical identity model in concrete ways:",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator page contracts still lag the canonical identity model in concrete ways:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02387",
+      "source_obligation_ids": [
+        "obl-2237"
+      ],
+      "source_seed_ids": [
+        "seed-2904"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Orchestrator already has a strong \u201crequested vs effective must remain visible on fallback\u201d",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator already has a strong \u201crequested vs effective must remain visible on fallback\u201d rule; the gap is now the missing account/auth/trust fields and canonical naming alignment."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02461",
+      "source_obligation_ids": [
+        "obl-2311"
+      ],
+      "source_seed_ids": [
+        "seed-2997"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "for example, a blocked project card might imply \u201copen Orchestrator\u201d",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "for example, a blocked project card might imply \u201copen Orchestrator\u201d"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02614",
+      "source_obligation_ids": [
+        "obl-2462"
+      ],
+      "source_seed_ids": [
+        "seed-3214"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "\u201cShow in Usage/Ledger\u201d and Orchestrator pivots still encode object routing as command-spec",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "\u201cShow in Usage/Ledger\u201d and Orchestrator pivots still encode object routing as command-specific payloads rather than one shared route structure"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03010",
+      "source_obligation_ids": [
+        "obl-2856"
+      ],
+      "source_seed_ids": [
+        "seed-3766"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "Research Progress - 2026-03-16 - Opus Orchestrator / Wizard / Worktree Drift Deepening",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-16 - Opus Orchestrator / Wizard / Worktree Drift Deepening"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03023",
+      "source_obligation_ids": [
+        "obl-2869"
+      ],
+      "source_seed_ids": [
+        "seed-3786"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "no single authority is declared between Source Control worktree state and Orchestrator rec",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-042: Source Control and worktree handshake",
+      "status": "partial",
+      "exact_items": [
+        "no single authority is declared between Source Control worktree state and Orchestrator receipt lineage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L115",
+        "Plans/Orchestrator_Page.md:L122"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03032",
+      "source_obligation_ids": [
+        "obl-2878"
+      ],
+      "source_seed_ids": [
+        "seed-3799"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "Introduce node/actor/lane-aware execution context into orchestrator runtime structs and ac",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Introduce node/actor/lane-aware execution context into orchestrator runtime structs and active-agent tracking."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03304",
+      "source_obligation_ids": [
+        "obl-3150"
+      ],
+      "source_seed_ids": [
+        "seed-4192"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "Rebase orchestrator live-context structs around node/attempt/worktree/permission-aware exe",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Rebase orchestrator live-context structs around node/attempt/worktree/permission-aware execution envelopes instead of tier-keyed adapters."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03360",
+      "source_obligation_ids": [
+        "obl-3206"
+      ],
+      "source_seed_ids": [
+        "seed-4271"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`orchestrator.receipt.{run_id}.{attempt_id}` already exists",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`orchestrator.receipt.{run_id}.{attempt_id}` already exists",
+        "orchestrator.receipt.{run_id}.{attempt_id}"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03676",
+      "source_obligation_ids": [
+        "obl-3522"
+      ],
+      "source_seed_ids": [
+        "seed-4738"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "`Run_Modes.md` now sharpens the execution-model seams further: DAE jail vs orchestrator wo",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`Run_Modes.md` now sharpens the execution-model seams further: DAE jail vs orchestrator worktree vs Contribute(PR) single-branch isolation are still three incompatible models, and mode resolution remains identity-blind to account/role differences.",
+        "Run_Modes.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03841",
+      "source_obligation_ids": [
+        "obl-3686"
+      ],
+      "source_seed_ids": [
+        "seed-5008",
+        "seed-5151"
+      ],
+      "source_shard_ids": [
+        "shard-0051",
+        "shard-0052"
+      ],
+      "canon_label": "spot-checks against `Plans/Orchestrator_Page.md`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "spot-checks against `Plans/Orchestrator_Page.md`",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03935",
+      "source_obligation_ids": [
+        "obl-3779"
+      ],
+      "source_seed_ids": [
+        "seed-5166"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "`orchestrator.receipt.{run_id}.{attempt_id}` already bridges Source Control / GitHub Actio",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`orchestrator.receipt.{run_id}.{attempt_id}` already bridges Source Control / GitHub Actions / Docker / Kubernetes / Usage",
+        "orchestrator.receipt.{run_id}.{attempt_id}"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04055",
+      "source_obligation_ids": [
+        "obl-3898"
+      ],
+      "source_seed_ids": [
+        "seed-5352"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "spot-checks against `Plans/Orchestrator_Page.md` and `Plans/usage-feature.md`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "spot-checks against `Plans/Orchestrator_Page.md` and `Plans/usage-feature.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04436",
+      "source_obligation_ids": [
+        "obl-4276"
+      ],
+      "source_seed_ids": [
+        "seed-5960"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "the remaining missing orchestrator command gap set is now tight and explicit.",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "the remaining missing orchestrator command gap set is now tight and explicit."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04481",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04775",
+      "source_obligation_ids": [
+        "obl-4553"
+      ],
+      "source_seed_ids": [
+        "seed-6470"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "`cmd.docker.image.push` and `cmd.orchestrator.push_image` still both claim publish authori",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`cmd.docker.image.push` and `cmd.orchestrator.push_image` still both claim publish authority with the same event family.",
+        "cmd.docker.image.push",
+        "cmd.orchestrator.push_image"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05478",
+      "source_obligation_ids": [
+        "obl-5250"
+      ],
+      "source_seed_ids": [
+        "seed-7802"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md` is still structurally tier-era:",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` is still structurally tier-era:",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05557",
+      "source_obligation_ids": [
+        "obl-5329"
+      ],
+      "source_seed_ids": [
+        "seed-7917"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "Orchestrator consumes worktree identity, blocked state, and lineage",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator consumes worktree identity, blocked state, and lineage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05700",
+      "source_obligation_ids": [
+        "obl-5472"
+      ],
+      "source_seed_ids": [
+        "seed-8120"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md` still hardcodes:",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` still hardcodes:",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05702",
+      "source_obligation_ids": [
+        "obl-5474"
+      ],
+      "source_seed_ids": [
+        "seed-8122"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "`orchestrator:tiers`",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`orchestrator:tiers`",
+        "orchestrator:tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05818",
+      "source_obligation_ids": [
+        "obl-5590"
+      ],
+      "source_seed_ids": [
+        "seed-8300"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md` still uses:",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` still uses:",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06013",
+      "source_obligation_ids": [
+        "obl-5785"
+      ],
+      "source_seed_ids": [
+        "seed-8605"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md` shows the same mixed model:",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` shows the same mixed model:",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

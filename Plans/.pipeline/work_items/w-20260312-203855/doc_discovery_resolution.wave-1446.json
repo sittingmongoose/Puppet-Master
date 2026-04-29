@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1446",
+  "group_ids": [
+    "discgrp-5781",
+    "discgrp-5782",
+    "discgrp-5783",
+    "discgrp-5784"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06391",
+      "source_obligation_ids": [
+        "obl-6032"
+      ],
+      "source_seed_ids": [
+        "seed-9122"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "### Fidelity recovery cov-032: Concern linkage to adjacent families",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06392",
+      "source_obligation_ids": [
+        "obl-6033"
+      ],
+      "source_seed_ids": [
+        "seed-9128"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## 2. Tech Stack and Renderer",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L275"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06393",
+      "source_obligation_ids": [
+        "obl-6034"
+      ],
+      "source_seed_ids": [
+        "seed-9129"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "# Crosswalk (Canonical)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06394",
+      "source_obligation_ids": [
+        "obl-6035"
+      ],
+      "source_seed_ids": [
+        "seed-9130"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 2.2 seglog: format, writer, rotation",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L382"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

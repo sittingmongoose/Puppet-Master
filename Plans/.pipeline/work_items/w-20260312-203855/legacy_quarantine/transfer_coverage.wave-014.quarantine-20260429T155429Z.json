@@ -1,0 +1,295 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-014",
+  "timestamp_utc": "2026-04-28T19:49:20Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-053",
+    "coverage-rowgrp-054",
+    "coverage-rowgrp-055",
+    "coverage-rowgrp-056"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-053 cov-1245,cov-1269 Plans/Executor_Protocol.md",
+    "rowgrp-054 cov-038,cov-111,cov-132,cov-610,cov-637 Plans/Executor_Protocol.md",
+    "rowgrp-055 cov-928 Plans/FileManager.md",
+    "rowgrp-056 cov-774,cov-784,cov-1039,cov-1216 Plans/FileManager.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-053": "completed",
+    "coverage-rowgrp-054": "completed_reduced_conservatively",
+    "coverage-rowgrp-055": "completed",
+    "coverage-rowgrp-056": "completed"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-1245",
+    "cov-1269",
+    "cov-038",
+    "cov-111",
+    "cov-132",
+    "cov-610",
+    "cov-637",
+    "cov-928",
+    "cov-774",
+    "cov-784",
+    "cov-1039",
+    "cov-1216"
+  ],
+  "coverage_ids_completed": [
+    "cov-1245",
+    "cov-1269",
+    "cov-038",
+    "cov-111",
+    "cov-132",
+    "cov-610",
+    "cov-637",
+    "cov-928",
+    "cov-774",
+    "cov-784",
+    "cov-1039",
+    "cov-1216"
+  ],
+  "path_groups_assigned": [
+    "Plans/Executor_Protocol.md",
+    "Plans/FileManager.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-1245",
+      "status": "missing",
+      "evidence": [
+        "Plans/Executor_Protocol.md:171-191 execution_unit_context packet fields are present, but report_ref, startup_recovered, and escalation_level are absent"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Exact required items are absent from Plans/Executor_Protocol.md; only adjacent packet-field canon exists.",
+      "source_obligation_ids": [
+        "obl-351"
+      ],
+      "source_seed_ids": [
+        "seed-351"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1269",
+      "status": "present",
+      "evidence": [
+        "Plans/Executor_Protocol.md:616-618 Provider/model acceptance carry-through defines one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels and ties it to parallel-node worktree assignment and ownership transitions"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-358"
+      ],
+      "source_seed_ids": [
+        "seed-358"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-038",
+      "status": "partial",
+      "evidence": [
+        "Plans/Executor_Protocol.md:1 Overseer Protocol heading remains live",
+        "Plans/Executor_Protocol.md:88-95 Package Overseer, Seam Overseer, and Runtime scheduler roles are live"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Overseer vocabulary remains live, while other assigned legacy runtime tokens are not found in the assigned path.",
+      "source_obligation_ids": [
+        "obl-024"
+      ],
+      "source_seed_ids": [
+        "seed-024"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-111",
+      "status": "partial",
+      "evidence": [
+        "Plans/Executor_Protocol.md:117 If multiple nodes are ready simultaneously, Overseer chooses the lexicographically smallest node_id"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Lexicographic selection remains live, but the other assigned contract-drift tokens are not found in the assigned path.",
+      "source_obligation_ids": [
+        "obl-035"
+      ],
+      "source_seed_ids": [
+        "seed-035"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-132",
+      "status": "missing",
+      "evidence": [
+        "Plans/Executor_Protocol.md: assigned file reviewed; no plan shards, JSON sidecars, or event/projection docs runtime-truth relocation coverage found"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "No live evidence for cov-132 runtime-truth relocation wording in the assigned path.",
+      "source_obligation_ids": [
+        "obl-037"
+      ],
+      "source_seed_ids": [
+        "seed-037"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-610",
+      "status": "partial",
+      "evidence": [
+        "Plans/Executor_Protocol.md:171-220 node-native execution_unit_context and DispatchContext are present",
+        "Plans/Executor_Protocol.md:587-599 tier-era vocabulary is deprecated and execution_unit_context is canonical"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Executor_Protocol.md partially addresses node-native execution and tier-era retirement, but does not fully cover concern model, corroboration lifecycle, or wake reasons.",
+      "source_obligation_ids": [
+        "obl-170"
+      ],
+      "source_seed_ids": [
+        "seed-170"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-637",
+      "status": "partial",
+      "evidence": [
+        "Plans/Executor_Protocol.md:587-599 tier-era vocabulary is deprecated; execution_unit_context is canonical runtime-facing context and retired tier-era context/identifier are not canonical runtime fields"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Tier-era migration/retirement is present, but the row's broader legacy tier language/key migration coverage is not fully closed.",
+      "source_obligation_ids": [
+        "obl-178"
+      ],
+      "source_seed_ids": [
+        "seed-178"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-928",
+      "status": "partial",
+      "evidence": [
+        "Plans/FileManager.md:311-312 Contracts_V0 owns route_target/OpenSubject and Crosswalk is limited to primitive boundary ownership while FileManager OpenFile remains narrow and path-based"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Route contract and primitive boundary references are present, but the full consumer-propagation wording for route contract / wiring matrix boundaries is not verified.",
+      "source_obligation_ids": [
+        "obl-261"
+      ],
+      "source_seed_ids": [
+        "seed-261"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-774",
+      "status": "partial",
+      "evidence": [
+        "Plans/FileManager.md:303 route_target scheme resolves through shared route/open semantics",
+        "Plans/FileManager.md:305 artifacts are stored by content hash and indexed by concern_id, route_target, artifact_type, and timestamp",
+        "Plans/FileManager.md:311-312 OpenSubject and OpenFile route/open split is present"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "OpenFile/OpenSubject and artifact identity are present, but OpenArtifact-style flow and full identity-native object-open coverage are incomplete.",
+      "source_obligation_ids": [
+        "obl-214"
+      ],
+      "source_seed_ids": [
+        "seed-214"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-784",
+      "status": "partial",
+      "evidence": [
+        "Plans/FileManager.md:301-306 FileManager open-file and artifact-storage contract is defined",
+        "Plans/FileManager.md:311-312 OpenSubject/OpenFile split is present"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "OpenFile/OpenSubject distinction is present, but the broader GUI contract update is not fully verified in FileManager.md.",
+      "source_obligation_ids": [
+        "obl-217"
+      ],
+      "source_seed_ids": [
+        "seed-217"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1039",
+      "status": "partial",
+      "evidence": [
+        "Plans/FileManager.md:301 FileManager is canonical owner of file-open and artifact-storage contract",
+        "Plans/FileManager.md:311-312 Contracts_V0 owns route/OpenSubject contracts, Crosswalk owns primitive boundary, and FileManager OpenFile remains narrow and path-based"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Primitive ownership split is partially represented, but preview_subject_id and resume_url persisted-ref ownership are not covered in FileManager.md.",
+      "source_obligation_ids": [
+        "obl-291"
+      ],
+      "source_seed_ids": [
+        "seed-291"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1216",
+      "status": "partial",
+      "evidence": [
+        "Plans/FileManager.md:303 route_target scheme resolves through shared route/open semantics",
+        "Plans/FileManager.md:311-314 route_target/OpenSubject ownership and subject_id/object_kind/object_id route identity are present"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Route/open semantics are present, but Primitive:RouteTarget/Primitive:OpenSubject, tab_id, resume_url, bridge-field precedence, and route storage wiring refinement omissions are not fully covered.",
+      "source_obligation_ids": [
+        "obl-345"
+      ],
+      "source_seed_ids": [
+        "seed-345"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

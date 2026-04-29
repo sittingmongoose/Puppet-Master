@@ -1,0 +1,124 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0024",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0024-L004601-L004800.md",
+  "source_line_range": "L004601-L004800",
+  "covered_shard_id": "shard-0024",
+  "seed_candidates": [
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "orchestrator object context-menu action policy",
+      "exact_items": [
+        "Context menus are the right home for object-specific operational actions.",
+        "object context menus should show only actions valid for that object's current state, with canonical labels from runtime semantics"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/usage-feature.md"
+      ],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [
+        "Context-menu direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L4608-L4612"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "shared destination payload model for orchestrator navigation",
+      "exact_items": [
+        "command palette results, keyboard shortcuts, context menus, and widgets should route through the same destination payload model",
+        "Good shared payload fields: project_id, focused_run_id, destination tab/surface, selected object id and type, optional inspector target, optional filter payload"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/usage-feature.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Routing contract implication"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L4620-L4630"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "command discoverability must not weaken confirmation gates",
+      "exact_items": [
+        "command discoverability does not weaken confirmation requirements",
+        "If an action is: strong confirmation, hard_gate, non_reversible, or only compensating_action_only, then command palette and shortcut surfaces must still honor the same gating and preview requirements"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Confirmation / safety implication"
+      ],
+      "stale_tokens": [
+        "strong",
+        "hard_gate",
+        "non_reversible",
+        "compensating_action_only"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L4632-L4641"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "projection freshness gating and record-backed fallback",
+      "exact_items": [
+        "keep the earlier projection states and make them operational: current, refreshing, stale, degraded, unavailable",
+        "if a write action is attempted from a stale/degraded surface, the runtime should either refuse with a clear reason or perform an authoritative revalidation against canonical/current runtime state before executing",
+        "when trust drops, degrade toward exact record-backed inspection, not toward empty ambiguity"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Recommended trust model",
+        "Action-gating direction",
+        "Fallback direction"
+      ],
+      "stale_tokens": [
+        "current",
+        "refreshing",
+        "stale",
+        "degraded",
+        "unavailable",
+        "allowed_action_ids[]",
+        "Ledger",
+        "History",
+        "detail_ref"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L4698-L4785"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "Targeted docs read list (L004676-L004681; L004795-L004800)",
+    "Research Progress / Key findings / Recommended trust model section scaffolding",
+    "Contradictions / gaps surfaced and Candidate fixes to carry forward lines not phrased as obligations"
+  ],
+  "uncertain_items": []
+}

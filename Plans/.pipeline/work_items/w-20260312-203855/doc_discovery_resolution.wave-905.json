@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-905",
+  "group_ids": [
+    "discgrp-3617",
+    "discgrp-3618",
+    "discgrp-3619",
+    "discgrp-3620"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03913",
+      "source_obligation_ids": [
+        "obl-3758"
+      ],
+      "source_seed_ids": [
+        "seed-5125"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Runtime artifact and projection storage scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03914",
+      "source_obligation_ids": [
+        "obl-3759"
+      ],
+      "source_seed_ids": [
+        "seed-5126"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03915",
+      "source_obligation_ids": [
+        "obl-3760"
+      ],
+      "source_seed_ids": [
+        "seed-5127"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-memory-subsystem.md",
+      "new_heading_hint": "# Assistant-Only Memory Subsystem (Canonical SSOT)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03916",
+      "source_obligation_ids": [
+        "obl-3761"
+      ],
+      "source_seed_ids": [
+        "seed-5128"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1409"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

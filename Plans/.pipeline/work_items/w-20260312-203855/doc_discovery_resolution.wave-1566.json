@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1566",
+  "group_ids": [
+    "discgrp-6261",
+    "discgrp-6262",
+    "discgrp-6263",
+    "discgrp-6264"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-07165",
+      "source_obligation_ids": [
+        "obl-6733"
+      ],
+      "source_seed_ids": [
+        "seed-10350"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "## Shared actor-boundary, route payload, and blocked_notice packet",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L2761"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-07169",
+      "source_obligation_ids": [
+        "obl-6736"
+      ],
+      "source_seed_ids": [
+        "seed-10353"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 10.7 Event-driven refresh rule",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1251"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-07170",
+      "source_obligation_ids": [
+        "obl-6737"
+      ],
+      "source_seed_ids": [
+        "seed-10354"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "### Fidelity recovery cov-170: Coverage blocker worktree allocation strategy",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-07180",
+      "source_obligation_ids": [
+        "obl-6747"
+      ],
+      "source_seed_ids": [
+        "seed-10385"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 19.6 Natural-language invocation feedback",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2106"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

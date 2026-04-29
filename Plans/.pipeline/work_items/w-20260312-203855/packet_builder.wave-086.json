@@ -1,0 +1,475 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-086",
+  "group_ids": [
+    "pktgrp-0341",
+    "pktgrp-0342",
+    "pktgrp-0343",
+    "pktgrp-0344"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "packet-target-0341",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "## Source Control, GitHub Actions, and Docker Manager Permission Addendum (2026-03-12) (Plans/Permissions_System.md:L1049)",
+      "path": "Plans/Permissions_System.md",
+      "coverage_row_ids": [
+        "cov-02826"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-02826"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-2673"
+      ],
+      "source_seed_ids": [
+        "seed-3515"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-2673"
+        ],
+        "source_seed_ids": [
+          "seed-3515"
+        ],
+        "source_shard_ids": [
+          "shard-0041"
+        ]
+      },
+      "gap_ids": [
+        "gap-02227"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Permission control is still unsafe for parallel actors unless it gets a canonical scope key:"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-978cf2358113",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0428",
+      "source_reconciliation_target_ids": [
+        "target-0428"
+      ],
+      "source_target_ids": [
+        "target-0428"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0428\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Permission control is still unsafe for parallel actors unless it gets a canonical scope key:\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0342",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "# Personas (Canonical SSOT) (Plans/Personas.md:L1)",
+      "path": "Plans/Personas.md",
+      "coverage_row_ids": [
+        "cov-01196",
+        "cov-02075",
+        "cov-04483",
+        "cov-06252",
+        "cov-06337",
+        "cov-06802"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-01196",
+          "cov-02075",
+          "cov-04483",
+          "cov-06252",
+          "cov-06337",
+          "cov-06802"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-1053",
+        "obl-1932",
+        "obl-4292",
+        "obl-5986",
+        "obl-6009",
+        "obl-6427"
+      ],
+      "source_seed_ids": [
+        "seed-1231",
+        "seed-2496",
+        "seed-6001",
+        "seed-9006",
+        "seed-9092",
+        "seed-9806"
+      ],
+      "source_shard_ids": [
+        "shard-0021",
+        "shard-0033",
+        "shard-0059",
+        "shard-0082",
+        "shard-0088"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1053",
+          "obl-1932",
+          "obl-4292",
+          "obl-5986",
+          "obl-6009",
+          "obl-6427"
+        ],
+        "source_seed_ids": [
+          "seed-1231",
+          "seed-2496",
+          "seed-6001",
+          "seed-9006",
+          "seed-9092",
+          "seed-9806"
+        ],
+        "source_shard_ids": [
+          "shard-0021",
+          "shard-0033",
+          "shard-0059",
+          "shard-0082",
+          "shard-0088"
+        ]
+      },
+      "gap_ids": [
+        "gap-00932",
+        "gap-01613",
+        "gap-03515",
+        "gap-04840",
+        "gap-04915",
+        "gap-05277"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "corroboration/review personas should remain distinct from the original implementation persona whenever possible.",
+        "`FinalGUISpec.md`, `Personas.md`, and `Models_System.md` consistently require dual copy variants for tooltips/help strings",
+        "FinalGUISpec.md",
+        "Personas.md",
+        "Models_System.md",
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md",
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "22",
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "61",
+        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-f17a07f31316",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0430",
+      "source_reconciliation_target_ids": [
+        "target-0430"
+      ],
+      "source_target_ids": [
+        "target-0430"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0430\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - corroboration/review personas should remain distinct from the original implementation persona whenever possible.\n  - `FinalGUISpec.md`, `Personas.md`, and `Models_System.md` consistently require dual copy variants for tooltips/help strings\n  - FinalGUISpec.md\n  - Personas.md\n  - Models_System.md\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.\n  - 61\n  - `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`\n  - Plans/Orchestrator_Page.md\n  - Plans/storage-plan.md\n  - Plans/FinalGUISpec.md\n  - Plans/Models_System.md\n  - Plans/Multi-Account.md\n  - Plans/Personas.md\n  - Plans/Prompt_Pipeline.md\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0343",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "# Plugins System (Canonical SSOT) (Plans/Plugins_System.md:L1)",
+      "path": "Plans/Plugins_System.md",
+      "coverage_row_ids": [
+        "cov-04484",
+        "cov-05305",
+        "cov-06190",
+        "cov-06253",
+        "cov-06338"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-04484",
+          "cov-05305",
+          "cov-06190",
+          "cov-06253",
+          "cov-06338"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-4292",
+        "obl-5078",
+        "obl-5960",
+        "obl-5986",
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-6001",
+        "seed-7472",
+        "seed-8906",
+        "seed-9006",
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0059",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4292",
+          "obl-5078",
+          "obl-5960",
+          "obl-5986",
+          "obl-6009"
+        ],
+        "source_seed_ids": [
+          "seed-6001",
+          "seed-7472",
+          "seed-8906",
+          "seed-9006",
+          "seed-9092"
+        ],
+        "source_shard_ids": [
+          "shard-0059",
+          "shard-0070",
+          "shard-0081",
+          "shard-0082"
+        ]
+      },
+      "gap_ids": [
+        "gap-03516",
+        "gap-04112",
+        "gap-04787",
+        "gap-04841",
+        "gap-04916"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md",
+        "with `Plans/00-plans-index.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/Formatters_System.md` also still clearly above the noise floor.",
+        "Plans/00-plans-index.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Plugins_System.md",
+        "Plans/Skills_System.md",
+        "Plans/Formatters_System.md",
+        "with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/LSPSupport.md` still clearly active.",
+        "Plans/LSPSupport.md",
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "22",
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "61"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-a079b3123ae5",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0431",
+      "source_reconciliation_target_ids": [
+        "target-0431"
+      ],
+      "source_target_ids": [
+        "target-0431"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0431\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - with `Plans/00-plans-index.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/Formatters_System.md` also still clearly above the noise floor.\n  - Plans/00-plans-index.md\n  - Plans/GUI_Rebuild_Requirements_Checklist.md\n  - Plans/Plugins_System.md\n  - Plans/Skills_System.md\n  - Plans/Formatters_System.md\n  - with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/LSPSupport.md` still clearly active.\n  - Plans/LSPSupport.md\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.\n  - 61\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0344",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "#### `tool.execute.after` (Plans/Plugins_System.md:L205)",
+      "path": "Plans/Plugins_System.md",
+      "coverage_row_ids": [
+        "cov-04201"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-04201"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-4041"
+      ],
+      "source_seed_ids": [
+        "seed-5560"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4041"
+        ],
+        "source_seed_ids": [
+          "seed-5560"
+        ],
+        "source_shard_ids": [
+          "shard-0056"
+        ]
+      },
+      "gap_ids": [
+        "gap-03274"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`newtools.md` and assistant-memory still add net-new owner failures even after Sonnet:",
+        "newtools.md"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-c17fb34a1812",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0433",
+      "source_reconciliation_target_ids": [
+        "target-0433"
+      ],
+      "source_target_ids": [
+        "target-0433"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0433\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `newtools.md` and assistant-memory still add net-new owner failures even after Sonnet:\n  - newtools.md\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-02826",
+    "cov-01196",
+    "cov-02075",
+    "cov-04483",
+    "cov-06252",
+    "cov-06337",
+    "cov-06802",
+    "cov-04484",
+    "cov-05305",
+    "cov-06190",
+    "cov-06253",
+    "cov-06338",
+    "cov-04201"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-2673",
+    "obl-1053",
+    "obl-1932",
+    "obl-4292",
+    "obl-5986",
+    "obl-6009",
+    "obl-6427",
+    "obl-5078",
+    "obl-5960",
+    "obl-4041"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-3515",
+    "seed-1231",
+    "seed-2496",
+    "seed-6001",
+    "seed-9006",
+    "seed-9092",
+    "seed-9806",
+    "seed-7472",
+    "seed-8906",
+    "seed-5560"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0041",
+    "shard-0021",
+    "shard-0033",
+    "shard-0059",
+    "shard-0082",
+    "shard-0088",
+    "shard-0070",
+    "shard-0081",
+    "shard-0056"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "Permission control is still unsafe for parallel actors unless it gets a canonical scope key:",
+    "corroboration/review personas should remain distinct from the original implementation persona whenever possible.",
+    "`FinalGUISpec.md`, `Personas.md`, and `Models_System.md` consistently require dual copy variants for tooltips/help strings",
+    "FinalGUISpec.md",
+    "Personas.md",
+    "Models_System.md",
+    "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+    "Plans/*.md",
+    "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+    "39",
+    "22",
+    "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+    "61",
+    "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`",
+    "Plans/Orchestrator_Page.md",
+    "Plans/storage-plan.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Models_System.md",
+    "Plans/Multi-Account.md",
+    "Plans/Personas.md",
+    "Plans/Prompt_Pipeline.md",
+    "with `Plans/00-plans-index.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/Formatters_System.md` also still clearly above the noise floor.",
+    "Plans/00-plans-index.md",
+    "Plans/GUI_Rebuild_Requirements_Checklist.md",
+    "Plans/Plugins_System.md",
+    "Plans/Skills_System.md",
+    "Plans/Formatters_System.md",
+    "with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/LSPSupport.md` still clearly active.",
+    "Plans/LSPSupport.md",
+    "`newtools.md` and assistant-memory still add net-new owner failures even after Sonnet:",
+    "newtools.md"
+  ],
+  "blocked_targets": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1144",
+  "group_ids": [
+    "discgrp-4573",
+    "discgrp-4574",
+    "discgrp-4575",
+    "discgrp-4576"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04971",
+      "source_obligation_ids": [
+        "obl-4747"
+      ],
+      "source_seed_ids": [
+        "seed-6840"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "#### Explicit editability contract for all fields",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L435"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04972",
+      "source_obligation_ids": [
+        "obl-4748"
+      ],
+      "source_seed_ids": [
+        "seed-6841"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04973",
+      "source_obligation_ids": [
+        "obl-4749"
+      ],
+      "source_seed_ids": [
+        "seed-6842"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## 2. Provider normalized stream (non-persisted contract)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L368"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04974",
+      "source_obligation_ids": [
+        "obl-4750"
+      ],
+      "source_seed_ids": [
+        "seed-6843"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

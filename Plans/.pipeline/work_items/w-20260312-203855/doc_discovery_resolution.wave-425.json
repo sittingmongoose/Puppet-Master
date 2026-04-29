@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-425",
+  "group_ids": [
+    "discgrp-1697",
+    "discgrp-1698",
+    "discgrp-1699",
+    "discgrp-1700"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01954",
+      "source_obligation_ids": [
+        "obl-1811"
+      ],
+      "source_seed_ids": [
+        "seed-2326"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1409"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01955",
+      "source_obligation_ids": [
+        "obl-1812"
+      ],
+      "source_seed_ids": [
+        "seed-2327"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-033: Concern linkage to adjacent families",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L83"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01956",
+      "source_obligation_ids": [
+        "obl-1813"
+      ],
+      "source_seed_ids": [
+        "seed-2328"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Progression_Gates.md",
+      "new_heading_hint": "## GATE-002 -- Spec Lock integrity",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Progression_Gates.md:L172"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01957",
+      "source_obligation_ids": [
+        "obl-1814"
+      ],
+      "source_seed_ids": [
+        "seed-2329"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L767"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

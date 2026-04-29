@@ -1,0 +1,104 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-814",
+  "group_ids": [
+    "discgrp-3253",
+    "discgrp-3254",
+    "discgrp-3255",
+    "discgrp-3256"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03533",
+      "source_obligation_ids": [
+        "obl-3379"
+      ],
+      "source_seed_ids": [
+        "seed-4548"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Recommended minimum concern record shape",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L199"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03534",
+      "source_obligation_ids": [
+        "obl-3380"
+      ],
+      "source_seed_ids": [
+        "seed-4549",
+        "seed-5158",
+        "seed-5289",
+        "seed-6012",
+        "seed-6236",
+        "seed-7097"
+      ],
+      "source_shard_ids": [
+        "shard-0048",
+        "shard-0052",
+        "shard-0053",
+        "shard-0059",
+        "shard-0060",
+        "shard-0067"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-03535",
+      "source_obligation_ids": [
+        "obl-3381"
+      ],
+      "source_seed_ids": [
+        "seed-4550"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "### 8.2 Canonical `artifact_type` values (Project Plan Package)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L405"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03536",
+      "source_obligation_ids": [
+        "obl-3382"
+      ],
+      "source_seed_ids": [
+        "seed-4558"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Document_Packaging_Policy.md",
+      "new_heading_hint": "### 2.1 Primary split rule",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Document_Packaging_Policy.md:L74"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,5 +1,70 @@
 # OpenCode Coverage Matrix (Audit)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0397
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Plans/OpenCode_Coverage_Matrix.md`
+  - Plans/OpenCode_Coverage_Matrix.md
+  - what old assumption is present: `Phase/Task/Subtask/Iteration`, tier-boundary audit flow, single Overseer plus fixed reviewer pattern.
+  - Phase/Task/Subtask/Iteration
+  - exact audit trail of requested/effective + reason + source snapshot refs
+  - There is still no canonical concern action matrix spanning:
+  - the audit trail should preserve who acknowledged/dismissed/resolved/reopened and why, even when the visible current state looks simple
+  - Promote governance-relevant speaker/handoff selections out of `raw_observation` when they affect orchestration projections or audit reconstruction.
+  - raw_observation
+  - Extend `validation_pass_report` identity so it carries the planning/governance lineage needed for audit and routing:
+  - validation_pass_report
+  - Audit `storage-plan.md` for other downstream-assumed families already discussed in research:
+  - storage-plan.md
+  - `FinalGUISpec.md` still overstates path-open coverage via `OpenFile`, while also separately documenting:
+  - FinalGUISpec.md
+  - OpenFile
+  - As written, GATE-010 can reasonably verify handler coverage and event emission for one-off command dispatch, but it cannot strongly verify a generalized route/subject navigation system.
+  - The wiring prose is drifting toward producer/consumer/runtime-trace coverage, while the machine-readable schema still only understands interactive-element dispatch rows.
+  - Use the next coverage audit to decide whether the remaining uncovered authored docs still need the same six-model treatment or whether this broader second sweep has reached sufficient high-signal closure.
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - command coverage
+  - The matrix schema cannot represent “this command is a wrapper over canonical route/open semantics” without smuggling that meaning into prose.
+  - The matrix schema limitation and the evidence schema limitation are different problems.
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - `GATE-010` still validates flat wiring coverage only. It does not validate:
+  - GATE-010
+  - extend `GATE-010` coverage so routing/wrapper normalization can be verified through command-definition metadata plus wiring evidence
+  - This rerun was requested specifically to re-check the transfer audit with **smaller chunked subauditors**, because several owner/consumer docs are too large for one subauditor to read cleanly end-to-end.
+  - deterministic resolver matrix and actor→persona defaults
+  - `next_required_stage` remains `Audit Mode`.
+  - next_required_stage
+  - Audit Mode
+  - The current unresolved set is sharp enough that another broad audit pass would mostly reconfirm existing evidence.
+  - summary: Ran two bounded internal audit waves against the remaining unresolved blocker set and hit the stop condition: both waves produced zero new exact missing items, zero new blocker families, and zero newly confirmed contradictory survivors.
+  - summary: Ran two bounded audit waves against the condensed blocker bundle after the failed Ready Check and both waves produced zero new findings, so the work item stops on the iterative-audit zero-finding condition and hands back to Ledger Condenser.
+  - The next useful stage is `Ledger Condenser`, not another immediate audit wave.
+  - Ledger Condenser
+  - This invocation closes the bounded audit on the three deferred coverage blockers left after doc-discovery resolution (`17` resolved, `3` unresolved).
+  - 17
+  - 3
+  - The remaining blockers are exact owner-definition gaps, not unresolved search or verification gaps; further audit waves would restate the same missing sections unless the docs change.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 ---
@@ -91,6 +156,33 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 | `Plans/Run_Modes.md` §8 | Restates extraction baseline for run modes | Acceptable: baseline section explicitly cites `Plans/OpenCode_Deep_Extraction.md` §7A. Not a DRY violation — it documents the delta context. |
 
 ### 3.2 SSOT docs missing stable anchors
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-039[retired-token-1]
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `CustomHeadlessTool` still has no stable registry/permission/config owner and now also conflicts with `STATE_FILES.md` over config-file naming and missing GUI-automation state paths.
+  - CustomHeadlessTool
+  - STATE_FILES.md
+  - This pass keeps all `[retired-token-1]` blocker families open, but it sharpens the unresolved set so follow-on audit work can target exact missing anchors and stale survivors instead of re-auditing already transferred fields.
+  - [retired-token-1]
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 | SSOT Document | Missing Anchors |
 |---|---|

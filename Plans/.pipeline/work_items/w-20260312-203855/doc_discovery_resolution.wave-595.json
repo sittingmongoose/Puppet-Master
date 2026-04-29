@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-595",
+  "group_ids": [
+    "discgrp-2377",
+    "discgrp-2378",
+    "discgrp-2379",
+    "discgrp-2380"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02652",
+      "source_obligation_ids": [
+        "obl-2500"
+      ],
+      "source_seed_ids": [
+        "seed-3283"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Prompt_Pipeline.md",
+      "new_heading_hint": "# Prompt Pipeline (Canonical SSOT)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02653",
+      "source_obligation_ids": [
+        "obl-2501"
+      ],
+      "source_seed_ids": [
+        "seed-3284"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### 2.5 Branch already exists when recreating worktree",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L205"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02654",
+      "source_obligation_ids": [
+        "obl-2502"
+      ],
+      "source_seed_ids": [
+        "seed-3285"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### 2.5 Branch already exists when recreating worktree",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L205"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02655",
+      "source_obligation_ids": [
+        "obl-2503"
+      ],
+      "source_seed_ids": [
+        "seed-3286"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

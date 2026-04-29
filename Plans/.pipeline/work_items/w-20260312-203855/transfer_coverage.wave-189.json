@@ -1,0 +1,825 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-189",
+  "row_group_ids": [
+    "rowgrp-0753",
+    "rowgrp-0754",
+    "rowgrp-0755",
+    "rowgrp-0756"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-06994",
+      "source_obligation_ids": [
+        "obl-6590"
+      ],
+      "source_seed_ids": [
+        "seed-10046"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "summary: Re-audited the already-condensed blocker bundle in smaller target passes and foun",
+      "row_type": "layout_blocker",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "status": "partial",
+      "exact_items": [
+        "summary: Re-audited the already-condensed blocker bundle in smaller target passes and found one more precision improvement: assistant-chat blocked-state headings are real, so that blocker is now more clearly a skeletal consumer-payload problem rather than a missing-section problem."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07122",
+      "source_obligation_ids": [
+        "obl-6697"
+      ],
+      "source_seed_ids": [
+        "seed-10285"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "This invocation kept the blocker-family count at eight, raised the affected-doc count to t",
+      "row_type": "layout_blocker",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "This invocation kept the blocker-family count at eight, raised the affected-doc count to twenty by pulling `Plans/WorktreeGitImprovement.md` into the unresolved blocker set, and raised the underlying evidence count to fifty-four.",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L14",
+        "Plans/WorktreeGitImprovement.md:L25",
+        "Plans/WorktreeGitImprovement.md:L27",
+        "Plans/WorktreeGitImprovement.md:L35",
+        "Plans/WorktreeGitImprovement.md:L37"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07192",
+      "source_obligation_ids": [
+        "obl-6753"
+      ],
+      "source_seed_ids": [
+        "seed-10392"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "`cov-526` / `obl-222` remains unresolved because the ledger requires a concrete worktree a",
+      "row_type": "layout_blocker",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`cov-526` / `obl-222` remains unresolved because the ledger requires a concrete worktree allocation strategy (per node, per package, per seam, or remediation branch) plus contamination/reuse/cleanup rules, but the live docs still stop short of that owner section: `Plans/Crosswalk.md:88-94` assigns lane/worktree ownership boundaries, `Plans/WorktreeGitImprovement.md:62-66` and `Plans/WorktreeGitImprovement.md:78-80` retain the worktree plan without defining allocation strategy, and `Plans/orchestrator-subagent-integration.md:28-41` plus later authority wording require identity alignment without specifying how lanes/worktrees are allocated. Exact ledger evidence remains at `working_ledger.md:L806`, `working_ledger.md:L1036`, `working_ledger.md:L1289`, and `working_ledger.md:L1539`.",
+        "cov-526",
+        "obl-222",
+        "Plans/Crosswalk.md:88-94",
+        "Plans/WorktreeGitImprovement.md:62-66",
+        "Plans/WorktreeGitImprovement.md:78-80",
+        "Plans/orchestrator-subagent-integration.md:28-41",
+        "working_ledger.md:L806",
+        "working_ledger.md:L1036"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00115",
+      "source_obligation_ids": [
+        "obl-039"
+      ],
+      "source_seed_ids": [
+        "seed-039"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "lane/worktree pool and contamination policy",
+      "row_type": "layout_blocker",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "Worktree / SCM / Parallelism Impacts",
+      "status": "missing",
+      "exact_items": [
+        "Define lane\u2194worktree mapping",
+        "Specify contamination detection and cross-lane reuse rules",
+        "Define safe-point restore for lane/package context",
+        "Resolve no-worktrees vs per-subtask worktrees contradiction",
+        "Register PM-managed worktrees in source control visibility"
+      ],
+      "stale_tokens": [
+        "per-subtask worktrees",
+        "no-worktrees",
+        "safe points",
+        "cleanup policy",
+        "one active worktree",
+        "project-root artifact paths"
+      ],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06027",
+      "source_obligation_ids": [
+        "obl-5799"
+      ],
+      "source_seed_ids": [
+        "seed-8624"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "`UI_Command_Catalog.md` currently contradicts itself within the same approval/recovery are",
+      "row_type": "layout_blocker",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "### Dependency order (implement in this order within phases)",
+      "status": "partial",
+      "exact_items": [
+        "`UI_Command_Catalog.md` currently contradicts itself within the same approval/recovery area.",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [
+        "UI_Command_Catalog.md"
+      ],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L431"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-07110",
+      "source_obligation_ids": [
+        "obl-6686"
+      ],
+      "source_seed_ids": [
+        "seed-10258"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "`gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` r",
+      "row_type": "layout_blocker",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference survives not only in `Plans/GitHub_Integration.md` but also in `Plans/storage-plan.md` and `Plans/WorktreeGitImprovement.md`, while `Plans/FinalGUISpec.md` still preserves the `restore points` contradiction.",
+        "gap-007",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "Plans/GitHub_Integration.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FinalGUISpec.md",
+        "restore points"
+      ],
+      "stale_tokens": [
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md",
+        "gap-007",
+        "restore points"
+      ],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L14",
+        "Plans/WorktreeGitImprovement.md:L25",
+        "Plans/WorktreeGitImprovement.md:L27",
+        "Plans/WorktreeGitImprovement.md:L35",
+        "Plans/WorktreeGitImprovement.md:L37"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00157",
+      "source_obligation_ids": [
+        "obl-054"
+      ],
+      "source_seed_ids": [
+        "seed-054",
+        "seed-168"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "canon_label": "Worktree / SCM / Parallelism Impacts",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "status": "partial",
+      "exact_items": [
+        "Worktree / SCM / Parallelism Impacts"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00159",
+      "source_obligation_ids": [
+        "obl-056"
+      ],
+      "source_seed_ids": [
+        "seed-056"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Worktree visibility is only partially wired between Source Control and Orchestrator.** Sev",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "### Fidelity recovery cov-041: Source Control and worktree handshake",
+      "status": "partial",
+      "exact_items": [
+        "Worktree visibility is only partially wired between Source Control and Orchestrator.** Several docs acknowledge shared visibility, yet status models still stop at repo/worktree/branch/tier rather than package/lane ownership, contamination, restore eligibility, or promotion posture."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L7",
+        "Plans/WorktreeGitImprovement.md:L14"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00173",
+      "source_obligation_ids": [
+        "obl-069"
+      ],
+      "source_seed_ids": [
+        "seed-069",
+        "seed-117",
+        "seed-169",
+        "seed-181",
+        "seed-217",
+        "seed-384",
+        "seed-887",
+        "seed-1235",
+        "seed-1458",
+        "seed-1632",
+        "seed-2080",
+        "seed-2920",
+        "seed-3770",
+        "seed-3790",
+        "seed-3910",
+        "seed-3931",
+        "seed-4095",
+        "seed-4125",
+        "seed-4152",
+        "seed-4184",
+        "seed-4209",
+        "seed-4239",
+        "seed-4379",
+        "seed-4410",
+        "seed-4488",
+        "seed-4514",
+        "seed-4538",
+        "seed-4604",
+        "seed-5113",
+        "seed-5583",
+        "seed-5677",
+        "seed-5983",
+        "seed-6500",
+        "seed-7647",
+        "seed-7772",
+        "seed-7784",
+        "seed-7909",
+        "seed-7922",
+        "seed-7991",
+        "seed-9285",
+        "seed-9554",
+        "seed-9622",
+        "seed-9658",
+        "seed-9741",
+        "seed-9770",
+        "seed-10269",
+        "seed-10328",
+        "seed-10369",
+        "seed-10399"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010",
+        "shard-0011",
+        "shard-0016",
+        "shard-0021",
+        "shard-0023",
+        "shard-0025",
+        "shard-0029",
+        "shard-0036",
+        "shard-0042",
+        "shard-0043",
+        "shard-0044",
+        "shard-0045",
+        "shard-0046",
+        "shard-0047",
+        "shard-0048",
+        "shard-0052",
+        "shard-0056",
+        "shard-0058",
+        "shard-0062",
+        "shard-0071",
+        "shard-0072",
+        "shard-0073",
+        "shard-0074",
+        "shard-0084",
+        "shard-0086",
+        "shard-0087",
+        "shard-0091",
+        "shard-0092"
+      ],
+      "canon_label": "`Plans/WorktreeGitImprovement.md`",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/WorktreeGitImprovement.md`",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L14",
+        "Plans/WorktreeGitImprovement.md:L25",
+        "Plans/WorktreeGitImprovement.md:L27",
+        "Plans/WorktreeGitImprovement.md:L35",
+        "Plans/WorktreeGitImprovement.md:L37"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00196",
+      "source_obligation_ids": [
+        "obl-092"
+      ],
+      "source_seed_ids": [
+        "seed-092"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Why it matters: worktree lifecycle, visibility, and conflict recovery cannot be coherent i",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "### Fidelity recovery cov-059: Lane vs worktree lifecycle split",
+      "status": "partial",
+      "exact_items": [
+        "Why it matters: worktree lifecycle, visibility, and conflict recovery cannot be coherent if both models remain canonical."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L19",
+        "Plans/WorktreeGitImprovement.md:L25"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00204",
+      "source_obligation_ids": [
+        "obl-100"
+      ],
+      "source_seed_ids": [
+        "seed-100"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "5. **Specify package-based worktree lane pools end-to-end.**",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "### Fidelity recovery cov-059: Lane vs worktree lifecycle split",
+      "status": "partial",
+      "exact_items": [
+        "5. **Specify package-based worktree lane pools end-to-end.**"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L19",
+        "Plans/WorktreeGitImprovement.md:L25"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00210",
+      "source_obligation_ids": [
+        "obl-106"
+      ],
+      "source_seed_ids": [
+        "seed-108"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "what likely new model pressure is: scored ready-set scheduling, lane pools, package/seam g",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "### Fidelity recovery cov-059: Lane vs worktree lifecycle split",
+      "status": "partial",
+      "exact_items": [
+        "what likely new model pressure is: scored ready-set scheduling, lane pools, package/seam governance split, contamination and safe-point-aware recovery."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L19",
+        "Plans/WorktreeGitImprovement.md:L25"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00220",
+      "source_obligation_ids": [
+        "obl-115"
+      ],
+      "source_seed_ids": [
+        "seed-119"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "what old assumption is present: `tier_id` / subtask worktree ownership, branch-per-tier fl",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "### 2.3 Merge conflicts: worktree kept but re-run can destroy it",
+      "status": "partial",
+      "exact_items": [
+        "what old assumption is present: `tier_id` / subtask worktree ownership, branch-per-tier flow, merge fallback posture, parallel subtasks as primary parallelism model.",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L191"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00292",
+      "source_obligation_ids": [
+        "obl-161"
+      ],
+      "source_seed_ids": [
+        "seed-170"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "likely issue: worktree ownership is still tier/subtask-native and does not support package",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "### Fidelity recovery cov-059: Lane vs worktree lifecycle split",
+      "status": "partial",
+      "exact_items": [
+        "likely issue: worktree ownership is still tier/subtask-native and does not support package-based lane pools or contamination quarantine."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L19",
+        "Plans/WorktreeGitImprovement.md:L25"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00319",
+      "source_obligation_ids": [
+        "obl-179"
+      ],
+      "source_seed_ids": [
+        "seed-205"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "docs involved: `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/fe",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "docs involved: `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/feature-list.md`",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/feature-list.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L14",
+        "Plans/WorktreeGitImprovement.md:L25",
+        "Plans/WorktreeGitImprovement.md:L27",
+        "Plans/WorktreeGitImprovement.md:L35",
+        "Plans/WorktreeGitImprovement.md:L37"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00321",
+      "source_obligation_ids": [
+        "obl-180"
+      ],
+      "source_seed_ids": [
+        "seed-206"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "why it matters: current SCM ownership is tier- and branch-based, which collides with packa",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "status": "partial",
+      "exact_items": [
+        "why it matters: current SCM ownership is tier- and branch-based, which collides with package-lane worktree pools."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00331",
+      "source_obligation_ids": [
+        "obl-189"
+      ],
+      "source_seed_ids": [
+        "seed-215"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "Research Progress - 2026-03-16 - Source Control / Worktree Handshake",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "### Fidelity recovery cov-041: Source Control and worktree handshake",
+      "status": "partial",
+      "exact_items": [
+        "Research Progress - 2026-03-16 - Source Control / Worktree Handshake"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L7",
+        "Plans/WorktreeGitImprovement.md:L14"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00337",
+      "source_obligation_ids": [
+        "obl-195"
+      ],
+      "source_seed_ids": [
+        "seed-227"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "ownership is still described as run/tier/subtask worktree ownership",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "status": "partial",
+      "exact_items": [
+        "ownership is still described as run/tier/subtask worktree ownership"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00343",
+      "source_obligation_ids": [
+        "obl-201"
+      ],
+      "source_seed_ids": [
+        "seed-233"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "`source_control.project_state.{project_id}` already has `selected_worktree_id?`",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "### 2.5 Branch already exists when recreating worktree",
+      "status": "partial",
+      "exact_items": [
+        "`source_control.project_state.{project_id}` already has `selected_worktree_id?`",
+        "source_control.project_state.{project_id}",
+        "selected_worktree_id?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L205"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00345",
+      "source_obligation_ids": [
+        "obl-203"
+      ],
+      "source_seed_ids": [
+        "seed-235"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "Worktree plan cleanup = removing worktree directories after merge/completion",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "status": "partial",
+      "exact_items": [
+        "Worktree plan cleanup = removing worktree directories after merge/completion"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00356",
+      "source_obligation_ids": [
+        "obl-214"
+      ],
+      "source_seed_ids": [
+        "seed-246"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "Existing doc wording implies `worktree` is the primary user-visible object.",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "status": "present",
+      "exact_items": [
+        "Existing doc wording implies `worktree` is the primary user-visible object.",
+        "worktree"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1",
+        "Plans/WorktreeGitImprovement.md:L7",
+        "Plans/WorktreeGitImprovement.md:L11",
+        "Plans/WorktreeGitImprovement.md:L12",
+        "Plans/WorktreeGitImprovement.md:L14"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00360",
+      "source_obligation_ids": [
+        "obl-218"
+      ],
+      "source_seed_ids": [
+        "seed-250"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "`Worktree`",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "status": "present",
+      "exact_items": [
+        "`Worktree`",
+        "Worktree"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1",
+        "Plans/WorktreeGitImprovement.md:L7",
+        "Plans/WorktreeGitImprovement.md:L11",
+        "Plans/WorktreeGitImprovement.md:L12",
+        "Plans/WorktreeGitImprovement.md:L14"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00362",
+      "source_obligation_ids": [
+        "obl-220"
+      ],
+      "source_seed_ids": [
+        "seed-252"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "`Worktree` remains the concrete filesystem/Git backing for a lane instance.",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "### Fidelity recovery cov-059: Lane vs worktree lifecycle split",
+      "status": "present",
+      "exact_items": [
+        "`Worktree` remains the concrete filesystem/Git backing for a lane instance.",
+        "Worktree"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1",
+        "Plans/WorktreeGitImprovement.md:L7",
+        "Plans/WorktreeGitImprovement.md:L11",
+        "Plans/WorktreeGitImprovement.md:L12",
+        "Plans/WorktreeGitImprovement.md:L14"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00363",
+      "source_obligation_ids": [
+        "obl-221"
+      ],
+      "source_seed_ids": [
+        "seed-253"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "a lane may preserve historical identity after the live worktree has been cleaned up, archi",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "### Fidelity recovery cov-059: Lane vs worktree lifecycle split",
+      "status": "partial",
+      "exact_items": [
+        "a lane may preserve historical identity after the live worktree has been cleaned up, archived, or removed."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L19",
+        "Plans/WorktreeGitImprovement.md:L25"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00366",
+      "source_obligation_ids": [
+        "obl-224"
+      ],
+      "source_seed_ids": [
+        "seed-256"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "Recommended lane/worktree lifecycle vocabulary:",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "### 2.8 Lane/worktree lifecycle, storage families, and historical vocabulary",
+      "status": "partial",
+      "exact_items": [
+        "Recommended lane/worktree lifecycle vocabulary:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L216"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00378",
+      "source_obligation_ids": [
+        "obl-236"
+      ],
+      "source_seed_ids": [
+        "seed-268"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "`removed` means the live worktree directory is gone",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "status": "partial",
+      "exact_items": [
+        "`removed` means the live worktree directory is gone",
+        "removed"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L193"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1134",
+  "group_ids": [
+    "discgrp-4533",
+    "discgrp-4534",
+    "discgrp-4535",
+    "discgrp-4536"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04931",
+      "source_obligation_ids": [
+        "obl-4707"
+      ],
+      "source_seed_ids": [
+        "seed-6773"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-022: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04932",
+      "source_obligation_ids": [
+        "obl-4708"
+      ],
+      "source_seed_ids": [
+        "seed-6780"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "## 2. Canonical command IDs",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L64"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04933",
+      "source_obligation_ids": [
+        "obl-4709"
+      ],
+      "source_seed_ids": [
+        "seed-6781"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04934",
+      "source_obligation_ids": [
+        "obl-4710"
+      ],
+      "source_seed_ids": [
+        "seed-6782"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### route_target, OpenSubject, and command normalization",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L315"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

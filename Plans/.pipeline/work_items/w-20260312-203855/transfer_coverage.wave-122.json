@@ -1,0 +1,934 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-122",
+  "row_group_ids": [
+    "rowgrp-0485",
+    "rowgrp-0486",
+    "rowgrp-0487",
+    "rowgrp-0488"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-01410",
+      "source_obligation_ids": [
+        "obl-1267"
+      ],
+      "source_seed_ids": [
+        "seed-1528"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "projection cannot currently support that surface; UI must fall back or disable",
+      "row_type": "layout_blocker",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "projection cannot currently support that surface; UI must fall back or disable"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02600",
+      "source_obligation_ids": [
+        "obl-2448"
+      ],
+      "source_seed_ids": [
+        "seed-3194"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "`project_attention_item` rows should retain enough historical semantics to support active",
+      "row_type": "layout_blocker",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "`project_attention_item` rows should retain enough historical semantics to support active vs resolved/dismissed/quieted behavior without erasing audit lineage",
+        "project_attention_item"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04000",
+      "source_obligation_ids": [
+        "obl-3844"
+      ],
+      "source_seed_ids": [
+        "seed-5268"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "Require runtime-artifact envelope support for `attempt_id` plus bridge refs where applicab",
+      "row_type": "layout_blocker",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "Require runtime-artifact envelope support for `attempt_id` plus bridge refs where applicable.",
+        "attempt_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05242",
+      "source_obligation_ids": [
+        "obl-5018"
+      ],
+      "source_seed_ids": [
+        "seed-7319"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "`inspector_target` does not replace `tab_id`.",
+      "row_type": "layout_blocker",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "## 3. How OpenCode Does It (Reference for Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "`inspector_target` does not replace `tab_id`.",
+        "inspector_target",
+        "tab_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L83"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05401",
+      "source_obligation_ids": [
+        "obl-5173"
+      ],
+      "source_seed_ids": [
+        "seed-7665"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "reject when `tab_id` conflicts with `target_kind`",
+      "row_type": "layout_blocker",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "### 3.6 Extension conflicts (multiple servers per extension)",
+      "status": "partial",
+      "exact_items": [
+        "reject when `tab_id` conflicts with `target_kind`",
+        "tab_id",
+        "target_kind"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L179"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05421",
+      "source_obligation_ids": [
+        "obl-5193"
+      ],
+      "source_seed_ids": [
+        "seed-7694"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "`tab_id` does not replace `target_kind`.",
+      "row_type": "layout_blocker",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "## 3. How OpenCode Does It (Reference for Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "`tab_id` does not replace `target_kind`.",
+        "tab_id",
+        "target_kind"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L83"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05422",
+      "source_obligation_ids": [
+        "obl-5194"
+      ],
+      "source_seed_ids": [
+        "seed-7695"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "`tab_id` does not replace `inspector_target`.",
+      "row_type": "layout_blocker",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "## 3. How OpenCode Does It (Reference for Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "`tab_id` does not replace `inspector_target`.",
+        "tab_id",
+        "inspector_target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L83"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06189",
+      "source_obligation_ids": [
+        "obl-5960"
+      ],
+      "source_seed_ids": [
+        "seed-8906"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skil",
+      "row_type": "layout_blocker",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/LSPSupport.md` still clearly active.",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Plugins_System.md",
+        "Plans/Skills_System.md",
+        "Plans/LSPSupport.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L58",
+        "Plans/LSPSupport.md:L59",
+        "Plans/LSPSupport.md:L60",
+        "Plans/LSPSupport.md:L346",
+        "Plans/LSPSupport.md:L611"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00635",
+      "source_obligation_ids": [
+        "obl-492"
+      ],
+      "source_seed_ids": [
+        "seed-567"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Storage/project-state support appears incomplete for this seam:",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "Storage/project-state support appears incomplete for this seam:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01083",
+      "source_obligation_ids": [
+        "obl-940"
+      ],
+      "source_seed_ids": [
+        "seed-1107"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "canon_label": "`Support`",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "status": "present",
+      "exact_items": [
+        "`Support`",
+        "Support"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L1",
+        "Plans/LSPSupport.md:L21",
+        "Plans/LSPSupport.md:L28",
+        "Plans/LSPSupport.md:L49",
+        "Plans/LSPSupport.md:L58"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01223",
+      "source_obligation_ids": [
+        "obl-1080"
+      ],
+      "source_seed_ids": [
+        "seed-1274"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "The help system should explicitly support related links.",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "The help system should explicitly support related links."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01342",
+      "source_obligation_ids": [
+        "obl-1199"
+      ],
+      "source_seed_ids": [
+        "seed-1434"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "must be exact, but exact does not mean fully materialized at once",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "## 3. How OpenCode Does It (Reference for Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "must be exact, but exact does not mean fully materialized at once"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L83"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01584",
+      "source_obligation_ids": [
+        "obl-1441"
+      ],
+      "source_seed_ids": [
+        "seed-1787"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "The shared provider/runtime docs already support the newer requested/effective language we",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "The shared provider/runtime docs already support the newer requested/effective language well."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01719",
+      "source_obligation_ids": [
+        "obl-1576"
+      ],
+      "source_seed_ids": [
+        "seed-1966"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "canon_label": "a degraded concern rollup should not emit a fresh \u201c3 new concerns\u201d system notification unl",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "a degraded concern rollup should not emit a fresh \u201c3 new concerns\u201d system notification unless canonical records support it"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01884",
+      "source_obligation_ids": [
+        "obl-1741"
+      ],
+      "source_seed_ids": [
+        "seed-2223"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "Search should support:",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "Search should support:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01922",
+      "source_obligation_ids": [
+        "obl-1779"
+      ],
+      "source_seed_ids": [
+        "seed-2283"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "`FileManager.md` is moving toward identity-based opens",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "## 5. Integration with Our Editor (FileManager / Rewrite)",
+      "status": "present",
+      "exact_items": [
+        "`FileManager.md` is moving toward identity-based opens",
+        "FileManager.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L8",
+        "Plans/LSPSupport.md:L63",
+        "Plans/LSPSupport.md:L151",
+        "Plans/LSPSupport.md:L209",
+        "Plans/LSPSupport.md:L265"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02206",
+      "source_obligation_ids": [
+        "obl-2061"
+      ],
+      "source_seed_ids": [
+        "seed-2677"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "no canonical role enum or `actor_kind` / `execution_role` field exists to support role-by-",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "no canonical role enum or `actor_kind` / `execution_role` field exists to support role-by-provider and role-by-account overrides consistently across docs",
+        "actor_kind",
+        "execution_role"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02607",
+      "source_obligation_ids": [
+        "obl-2455"
+      ],
+      "source_seed_ids": [
+        "seed-3201"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "counts on `project_summary` should support compact badges, while `project_attention_item`",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "counts on `project_summary` should support compact badges, while `project_attention_item` supports precise lists and routing",
+        "project_summary",
+        "project_attention_item"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02944",
+      "source_obligation_ids": [
+        "obl-2791"
+      ],
+      "source_seed_ids": [
+        "seed-3679"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "`account_switch_reason` currently does too much work as a single field.",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "## 3. How OpenCode Does It (Reference for Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "`account_switch_reason` currently does too much work as a single field.",
+        "account_switch_reason"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L83"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03705",
+      "source_obligation_ids": [
+        "obl-3550"
+      ],
+      "source_seed_ids": [
+        "seed-4781"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "`orchestrator-subagent-integration.md` is still embedding a single `TierContext` object th",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "## Appendix: Implementation plan checklist (single ordered list for implementers)",
+      "status": "present",
+      "exact_items": [
+        "`orchestrator-subagent-integration.md` is still embedding a single `TierContext` object that mixes four different concerns:",
+        "orchestrator-subagent-integration.md",
+        "TierContext"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L801",
+        "Plans/LSPSupport.md:L937",
+        "Plans/LSPSupport.md:L939",
+        "Plans/LSPSupport.md:L948"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03984",
+      "source_obligation_ids": [
+        "obl-3828"
+      ],
+      "source_seed_ids": [
+        "seed-5244"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "`provider_attempt_ref` does not replace `attempt_id`",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "## 3. How OpenCode Does It (Reference for Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "`provider_attempt_ref` does not replace `attempt_id`",
+        "provider_attempt_ref",
+        "attempt_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L83"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04348",
+      "source_obligation_ids": [
+        "obl-4188"
+      ],
+      "source_seed_ids": [
+        "seed-5818"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "workspace-backed documents use `doc:<document_id>`",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "### 14.8 Virtual documents (Chat code blocks)",
+      "status": "partial",
+      "exact_items": [
+        "workspace-backed documents use `doc:<document_id>`",
+        "doc:<document_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L631"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04441",
+      "source_obligation_ids": [
+        "obl-4281"
+      ],
+      "source_seed_ids": [
+        "seed-5990"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Several owner docs are still broken in ways that directly defeat the machine-verification/",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "Several owner docs are still broken in ways that directly defeat the machine-verification/gate story they claim to support."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04473",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04573",
+      "source_obligation_ids": [
+        "obl-4351"
+      ],
+      "source_seed_ids": [
+        "seed-6130"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "`FileManager.md` over-claims with `OpenFile { path... }`",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "## 5. Integration with Our Editor (FileManager / Rewrite)",
+      "status": "present",
+      "exact_items": [
+        "`FileManager.md` over-claims with `OpenFile { path... }`",
+        "FileManager.md",
+        "OpenFile { path... }"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L8",
+        "Plans/LSPSupport.md:L63",
+        "Plans/LSPSupport.md:L151",
+        "Plans/LSPSupport.md:L209",
+        "Plans/LSPSupport.md:L265"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04758",
+      "source_obligation_ids": [
+        "obl-4536"
+      ],
+      "source_seed_ids": [
+        "seed-6453",
+        "seed-6490",
+        "seed-6513",
+        "seed-7389",
+        "seed-7434",
+        "seed-8825",
+        "seed-8866",
+        "seed-8920",
+        "seed-8958",
+        "seed-9018",
+        "seed-9052"
+      ],
+      "source_shard_ids": [
+        "shard-0062",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "canon_label": "`Plans/LSPSupport.md`",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/LSPSupport.md`",
+        "Plans/LSPSupport.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L58",
+        "Plans/LSPSupport.md:L59",
+        "Plans/LSPSupport.md:L60",
+        "Plans/LSPSupport.md:L346",
+        "Plans/LSPSupport.md:L611"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04896",
+      "source_obligation_ids": [
+        "obl-4673"
+      ],
+      "source_seed_ids": [
+        "seed-6692"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "`Formatters_System.md` has unresolved ownership splits with LSP formatting, under-specifie",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "status": "present",
+      "exact_items": [
+        "`Formatters_System.md` has unresolved ownership splits with LSP formatting, under-specified DAE behavior, custom formatter subprocess/FileSafe bypass risk, and unregistered `format.*` events.",
+        "Formatters_System.md",
+        "format.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L7",
+        "Plans/LSPSupport.md:L13",
+        "Plans/LSPSupport.md:L24",
+        "Plans/LSPSupport.md:L216",
+        "Plans/LSPSupport.md:L260"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05249",
+      "source_obligation_ids": [
+        "obl-5025"
+      ],
+      "source_seed_ids": [
+        "seed-7331"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "Without a closed vocabulary, `inspector_target` will become a second untyped extension bag",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "### 3.6 Extension conflicts (multiple servers per extension)",
+      "status": "partial",
+      "exact_items": [
+        "Without a closed vocabulary, `inspector_target` will become a second untyped extension bag.",
+        "inspector_target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L179"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05622",
+      "source_obligation_ids": [
+        "obl-5394"
+      ],
+      "source_seed_ids": [
+        "seed-8017"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "`FileManager.md` owns `OpenFile`",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "## 5. Integration with Our Editor (FileManager / Rewrite)",
+      "status": "present",
+      "exact_items": [
+        "`FileManager.md` owns `OpenFile`",
+        "FileManager.md",
+        "OpenFile"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L8",
+        "Plans/LSPSupport.md:L63",
+        "Plans/LSPSupport.md:L151",
+        "Plans/LSPSupport.md:L209",
+        "Plans/LSPSupport.md:L265"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05970",
+      "source_obligation_ids": [
+        "obl-5742"
+      ],
+      "source_seed_ids": [
+        "seed-8539",
+        "seed-9233"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0083"
+      ],
+      "canon_label": "ordered `allowed_action_ids[]`",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "## Appendix: Implementation plan checklist (single ordered list for implementers)",
+      "status": "partial",
+      "exact_items": [
+        "ordered `allowed_action_ids[]`",
+        "allowed_action_ids[]"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L743"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06042",
+      "source_obligation_ids": [
+        "obl-5814"
+      ],
+      "source_seed_ids": [
+        "seed-8643"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Keep any surviving `request_id` text explicitly labeled as compatibility lineage or histor",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "# LSP Support -- Plan (Rewrite)",
+      "status": "partial",
+      "exact_items": [
+        "Keep any surviving `request_id` text explicitly labeled as compatibility lineage or historical replay support only.",
+        "request_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L609"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06215",
+      "source_obligation_ids": [
+        "obl-5984"
+      ],
+      "source_seed_ids": [
+        "seed-9004"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "with `Plans/Plugins_System.md`, `Plans/Skills_System.md`, `Plans/LSPSupport.md`, `Plans/Me",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "with `Plans/Plugins_System.md`, `Plans/Skills_System.md`, `Plans/LSPSupport.md`, `Plans/Media_Generation_and_Capabilities.md`, and `Plans/agent-rules-context.md` still clearly active.",
+        "Plans/Plugins_System.md",
+        "Plans/Skills_System.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/agent-rules-context.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L58",
+        "Plans/LSPSupport.md:L59",
+        "Plans/LSPSupport.md:L60",
+        "Plans/LSPSupport.md:L346",
+        "Plans/LSPSupport.md:L611"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06242",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/LSPSupport.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/LSPSupport.md:L5",
+        "Plans/LSPSupport.md:L206"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

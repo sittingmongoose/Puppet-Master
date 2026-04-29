@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/Project_Output_Artifacts.md",
-  "source_sha256": "b93193cdde061f4dce95a628e1cc0abc7ad11950e6f11d9f0fceedae57e98a70",
+  "source_sha256": "a9ebd83824c5883b372d28ad6172df77fa116fcd02e728a8f5ad2880ce56160e",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -10,105 +10,105 @@
     {
       "dest_path": "Plans/_shards/Project_Output_Artifacts/01-preamble.md",
       "start_line": 1,
-      "end_line": 15,
-      "segment_sha256": "795233054dcee9a84d9a92885a1d4e9f780216beb66fb236ffe2e52d77aa77da",
+      "end_line": 122,
+      "segment_sha256": "526ff1420e2492314103f688e7e38edd12805ae35f02c4fee30f0d657e078c54",
       "heading": null
     },
     {
       "dest_path": "Plans/_shards/Project_Output_Artifacts/02-0-scope-normative.md",
-      "start_line": 16,
-      "end_line": 27,
+      "start_line": 123,
+      "end_line": 134,
       "segment_sha256": "79ca386e9bcc598c0b8d2974233d679aca7c89a6c112e6938fad7728740196ad",
       "heading": "## 0. Scope (normative)"
     },
     {
       "dest_path": "Plans/_shards/Project_Output_Artifacts/03-1-canonical-persistence-vs-filesystem-staging.md",
-      "start_line": 28,
-      "end_line": 36,
+      "start_line": 135,
+      "end_line": 143,
       "segment_sha256": "628e3adb8bd958d5738a2d52194e73a60d05cd8df806c88c7e0d1c0ac9808505",
       "heading": "## 1. Canonical persistence vs filesystem staging"
     },
     {
       "dest_path": "Plans/_shards/Project_Output_Artifacts/04-2-required-artifact-set-ssot-project-plan-package.md",
-      "start_line": 37,
-      "end_line": 160,
-      "segment_sha256": "6c025b165224c42e9692a697fec1c7e6bc312ea8a485157c9e1a93cb4cf95ae2",
+      "start_line": 144,
+      "end_line": 308,
+      "segment_sha256": "67ab7e3745ec55ab228aa7377f0e4b24f400a1a816619e397f6ef16590063d0b",
       "heading": "## 2. Required artifact set (SSOT) \u2014 Project Plan Package"
     },
     {
       "dest_path": "Plans/_shards/Project_Output_Artifacts/05-3-schema-alignment-critical-do-not-rename-fields.md",
-      "start_line": 161,
-      "end_line": 180,
+      "start_line": 309,
+      "end_line": 328,
       "segment_sha256": "39bb0caae8b202051d08f9651dea99b3457851cde747345cfd64ca9df9fbe2e4",
       "heading": "## 3. Schema alignment (critical; do not rename fields)"
     },
     {
       "dest_path": "Plans/_shards/Project_Output_Artifacts/06-4-contract-layers-two-layer-model.md",
-      "start_line": 181,
-      "end_line": 209,
-      "segment_sha256": "0aa622290336532603e02daee4538f840e76f05d61515e31d1f334f2f3f8980b",
+      "start_line": 329,
+      "end_line": 443,
+      "segment_sha256": "50ead183cbb944ea7ac9a10b554072c59628b3e19a6031ae5a72b0d232b3a616",
       "heading": "## 4. Contract layers (two-layer model)"
     },
     {
       "dest_path": "Plans/_shards/Project_Output_Artifacts/07-5-dry-enforcement-contract-referenced-graph.md",
-      "start_line": 210,
-      "end_line": 239,
-      "segment_sha256": "2a7eb594d0a2f2e349561a8dbe413c2f229122c8c38c874d36047abfe13b3f71",
+      "start_line": 444,
+      "end_line": 500,
+      "segment_sha256": "e01ec2a5ee9ca8f2ce1922dd3fd56ac74b4bde304a4c1ab249071fa283b5a45a",
       "heading": "## 5. DRY enforcement (contract-referenced graph)"
     },
     {
       "dest_path": "Plans/_shards/Project_Output_Artifacts/08-6-autonomy-decision-logging-no-human-required-decisions.md",
-      "start_line": 240,
-      "end_line": 255,
+      "start_line": 501,
+      "end_line": 516,
       "segment_sha256": "3cc93af9869ce16dc343b279c481869bc8fb72814160c2992bec47052c7366b4",
       "heading": "## 6. Autonomy + decision logging (no human-required decisions)"
     },
     {
       "dest_path": "Plans/_shards/Project_Output_Artifacts/09-7-plan-graph-requirements-sharded-only-canonical-optional-derived-export.md",
-      "start_line": 256,
-      "end_line": 374,
-      "segment_sha256": "c7dc03b784acbf5cc7a390596d07d15d6c5c1be229912daa0bbe1896fea90957",
+      "start_line": 517,
+      "end_line": 708,
+      "segment_sha256": "8ef623dd1d0022c7cb9d2d688d24db681dc56d4499ef767db33c17c1cd8750ba",
       "heading": "## 7. Plan graph requirements (**sharded-only canonical** + optional derived export)"
     },
     {
       "dest_path": "Plans/_shards/Project_Output_Artifacts/10-8-seglog-canonical-persistence-contract-artifact-events.md",
-      "start_line": 375,
-      "end_line": 423,
-      "segment_sha256": "8a5e26ea92082a73933d2d4a55fbfd8fb8d0e7a2bbb745a6657fd55c444db590",
+      "start_line": 709,
+      "end_line": 777,
+      "segment_sha256": "6b9e9038f119a75b4fa24a973c509649e2618756f4481107495c2f860155ae17",
       "heading": "## 8. Seglog canonical persistence contract (artifact events)"
     },
     {
       "dest_path": "Plans/_shards/Project_Output_Artifacts/11-9-acceptance-criteria-validator-requirements.md",
-      "start_line": 424,
-      "end_line": 533,
+      "start_line": 778,
+      "end_line": 887,
       "segment_sha256": "e190ab066c8f90efea8645077ce4d1361e4ce662f6671b5526c07af248d7db76",
       "heading": "## 9. Acceptance criteria (validator requirements)"
     },
     {
       "dest_path": "Plans/_shards/Project_Output_Artifacts/12-11-traceability-outputs.md",
-      "start_line": 534,
-      "end_line": 671,
+      "start_line": 888,
+      "end_line": 1025,
       "segment_sha256": "7eb80eed1ea2267826294830e0648dca6facfccaaff1a18522cf371929553d05",
       "heading": "## 11. Traceability outputs"
     },
     {
       "dest_path": "Plans/_shards/Project_Output_Artifacts/13-12-optional-derived-quickstartmd-contract-human-convenience-only.md",
-      "start_line": 672,
-      "end_line": 705,
+      "start_line": 1026,
+      "end_line": 1059,
       "segment_sha256": "f1e07e3eb6bc451f5782b683f0c0fef3323eae2c998171669116dec89f89bdbe",
       "heading": "## 12. Optional derived `quickstart.md` contract (human convenience only)"
     },
     {
       "dest_path": "Plans/_shards/Project_Output_Artifacts/14-change-summary.md",
-      "start_line": 706,
-      "end_line": 719,
+      "start_line": 1060,
+      "end_line": 1073,
       "segment_sha256": "fc792e4049a430f479b9732f12574f8805651f811eb19e2f470436327b5e800d",
       "heading": "## Change Summary"
     },
     {
       "dest_path": "Plans/_shards/Project_Output_Artifacts/15-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md",
-      "start_line": 720,
-      "end_line": 733,
+      "start_line": 1074,
+      "end_line": 1087,
       "segment_sha256": "0a74c4df16416fbdefffa73ac1fa140e450626d4980a2c04bac0a400d604f1b7",
       "heading": "## Runtime Evidence and Degradation Artifact Addendum (2026-03-08)"
     }

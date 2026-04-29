@@ -1,0 +1,787 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-150",
+  "row_group_ids": [
+    "rowgrp-0597",
+    "rowgrp-0598",
+    "rowgrp-0599",
+    "rowgrp-0600"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-02722",
+      "source_obligation_ids": [
+        "obl-2569"
+      ],
+      "source_seed_ids": [
+        "seed-3371"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "whenever a seam mainly depends on updating stale consumers to match an already-set directi",
+      "row_type": "stale_retirement",
+      "path": "Plans/Progression_Gates.md",
+      "heading_hint": "## Runtime Scheduler Packet Verification Reconciliation Addendum (2026-03-09)",
+      "status": "present",
+      "exact_items": [
+        "whenever a seam mainly depends on updating stale consumers to match an already-set direction, it is approaching reconciliation territory"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Progression_Gates.md:L1-L559 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04894",
+      "source_obligation_ids": [
+        "obl-4671"
+      ],
+      "source_seed_ids": [
+        "seed-6690"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "`rewrite-tie-in-memo.md` is itself now stale as a rewrite-alignment owner because it preda",
+      "row_type": "stale_retirement",
+      "path": "Plans/Progression_Gates.md",
+      "heading_hint": "## GATE-003 -- Architecture invariants",
+      "status": "present",
+      "exact_items": [
+        "`rewrite-tie-in-memo.md` is itself now stale as a rewrite-alignment owner because it predates seams/packages/lanes/overseers, scopes requested/effective identity too narrowly, and does not surface projection-trust or lane scheduling as rewrite invariants.",
+        "rewrite-tie-in-memo.md"
+      ],
+      "stale_tokens": [
+        "rewrite-tie-in-memo.md"
+      ],
+      "evidence": [
+        "Plans/Progression_Gates.md:L1-L559 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01019",
+      "source_obligation_ids": [
+        "obl-876"
+      ],
+      "source_seed_ids": [
+        "seed-1026",
+        "seed-1030",
+        "seed-1879",
+        "seed-1884",
+        "seed-1890",
+        "seed-6073"
+      ],
+      "source_shard_ids": [
+        "shard-0018",
+        "shard-0027",
+        "shard-0059"
+      ],
+      "canon_label": "`view export`",
+      "row_type": "consumer",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "## 7. Plan graph requirements (**sharded-only canonical** + optional derived export)",
+      "status": "partial",
+      "exact_items": [
+        "`view export`",
+        "view export"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L256"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01338",
+      "source_obligation_ids": [
+        "obl-1195"
+      ],
+      "source_seed_ids": [
+        "seed-1428"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "artifact previews should be demand-loaded, not pre-rendered for long lists",
+      "row_type": "consumer",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "## 2. Required artifact set (SSOT) \u2014 Project Plan Package",
+      "status": "partial",
+      "exact_items": [
+        "artifact previews should be demand-loaded, not pre-rendered for long lists"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L37"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01908",
+      "source_obligation_ids": [
+        "obl-1765"
+      ],
+      "source_seed_ids": [
+        "seed-2259"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "Source Control and artifact navigation surfaces are showing a broader object-identity prob",
+      "row_type": "consumer",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "## 2. Required artifact set (SSOT) \u2014 Project Plan Package",
+      "status": "partial",
+      "exact_items": [
+        "Source Control and artifact navigation surfaces are showing a broader object-identity problem:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L37"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03271",
+      "source_obligation_ids": [
+        "obl-3117"
+      ],
+      "source_seed_ids": [
+        "seed-4140"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "The missing `attempt_id` in artifact surfaces is now a cross-surface correctness bug, not",
+      "row_type": "consumer",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "## 2. Required artifact set (SSOT) \u2014 Project Plan Package",
+      "status": "partial",
+      "exact_items": [
+        "The missing `attempt_id` in artifact surfaces is now a cross-surface correctness bug, not merely a future enhancement.",
+        "attempt_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L21"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03669",
+      "source_obligation_ids": [
+        "obl-3515"
+      ],
+      "source_seed_ids": [
+        "seed-4731"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "`Project_Output_Artifacts.md` is now clearly under-keyed relative to the canonical EventRe",
+      "row_type": "consumer",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "## 2. Required artifact set (SSOT) \u2014 Project Plan Package",
+      "status": "present",
+      "exact_items": [
+        "`Project_Output_Artifacts.md` is now clearly under-keyed relative to the canonical EventRecord/runtime model: artifact events and validation pass reports still omit project/thread/run/attempt/account identity details, `pass_verdict` mismatches the wizard producer doc, and interview-emitted artifact types (`glossary`, `evidence/<node_id>.json`) still do not line up with the package SSOT.",
+        "Project_Output_Artifacts.md",
+        "pass_verdict",
+        "glossary",
+        "evidence/<node_id>.json"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L35",
+        "Plans/Project_Output_Artifacts.md:L67",
+        "Plans/Project_Output_Artifacts.md:L116",
+        "Plans/Project_Output_Artifacts.md:L228",
+        "Plans/Project_Output_Artifacts.md:L260"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04065",
+      "source_obligation_ids": [
+        "obl-3907"
+      ],
+      "source_seed_ids": [
+        "seed-5361",
+        "seed-6973",
+        "seed-9264"
+      ],
+      "source_shard_ids": [
+        "shard-0054",
+        "shard-0066",
+        "shard-0084"
+      ],
+      "canon_label": "`preview_subject_id = doc:<document_id> | artifact:<artifact_id>`",
+      "row_type": "consumer",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "## 2. Required artifact set (SSOT) \u2014 Project Plan Package",
+      "status": "partial",
+      "exact_items": [
+        "`preview_subject_id = doc:<document_id> | artifact:<artifact_id>`",
+        "preview_subject_id = doc:<document_id> | artifact:<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L37"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04076",
+      "source_obligation_ids": [
+        "obl-3918"
+      ],
+      "source_seed_ids": [
+        "seed-5372"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "transient `generated://<artifact_id>` buffer / artifact viewer",
+      "row_type": "consumer",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "## 2. Required artifact set (SSOT) \u2014 Project Plan Package",
+      "status": "partial",
+      "exact_items": [
+        "transient `generated://<artifact_id>` buffer / artifact viewer",
+        "generated://<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L37"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04097",
+      "source_obligation_ids": [
+        "obl-3939"
+      ],
+      "source_seed_ids": [
+        "seed-5398"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "Reuse the preview subject identity pattern (`doc:` / `artifact:`) as the base instead of i",
+      "row_type": "consumer",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "## 2. Required artifact set (SSOT) \u2014 Project Plan Package",
+      "status": "present",
+      "exact_items": [
+        "Reuse the preview subject identity pattern (`doc:` / `artifact:`) as the base instead of inventing a separate parallel scheme.",
+        "doc:",
+        "artifact:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L3",
+        "Plans/Project_Output_Artifacts.md:L6",
+        "Plans/Project_Output_Artifacts.md:L11",
+        "Plans/Project_Output_Artifacts.md:L14",
+        "Plans/Project_Output_Artifacts.md:L17"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04344",
+      "source_obligation_ids": [
+        "obl-4184"
+      ],
+      "source_seed_ids": [
+        "seed-5814",
+        "seed-7944"
+      ],
+      "source_shard_ids": [
+        "shard-0057",
+        "shard-0074"
+      ],
+      "canon_label": "`preview_subject_id = doc:<document_id>` or `artifact:<artifact_id>`",
+      "row_type": "consumer",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "## 2. Required artifact set (SSOT) \u2014 Project Plan Package",
+      "status": "partial",
+      "exact_items": [
+        "`preview_subject_id = doc:<document_id>` or `artifact:<artifact_id>`",
+        "preview_subject_id = doc:<document_id>",
+        "artifact:<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L37"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04813",
+      "source_obligation_ids": [
+        "obl-4590"
+      ],
+      "source_seed_ids": [
+        "seed-6558"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "canon_label": "per-surface project state like `source_control.project_state.{project_id}`",
+      "row_type": "consumer",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "# Puppet Master \u2014 User-Project Project Plan Package Outputs (SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "per-surface project state like `source_control.project_state.{project_id}`",
+        "source_control.project_state.{project_id}"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05589",
+      "source_obligation_ids": [
+        "obl-5361"
+      ],
+      "source_seed_ids": [
+        "seed-7965"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "Keep `preview_subject_id` and `generated://<artifact_id>` where they belong:",
+      "row_type": "consumer",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "### B) Project Contracts (generated per user project)",
+      "status": "partial",
+      "exact_items": [
+        "Keep `preview_subject_id` and `generated://<artifact_id>` where they belong:",
+        "preview_subject_id",
+        "generated://<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L188"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05761",
+      "source_obligation_ids": [
+        "obl-5533"
+      ],
+      "source_seed_ids": [
+        "seed-8217"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "`blocked_projection` keyed by `run_id`, `node_id`, `blocked_sequence`",
+      "row_type": "consumer",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "### 7.2 `plan_graph/nodes/<node_id>.json` (required; one node per file)",
+      "status": "present",
+      "exact_items": [
+        "`blocked_projection` keyed by `run_id`, `node_id`, `blocked_sequence`",
+        "blocked_projection",
+        "run_id",
+        "node_id",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L46",
+        "Plans/Project_Output_Artifacts.md:L81",
+        "Plans/Project_Output_Artifacts.md:L157",
+        "Plans/Project_Output_Artifacts.md:L214",
+        "Plans/Project_Output_Artifacts.md:L223"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06340",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L27"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06488",
+      "source_obligation_ids": [
+        "obl-6129"
+      ],
+      "source_seed_ids": [
+        "seed-9261"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "`blocked_projection.{run_id}.{node_id}.{blocked_sequence}`",
+      "row_type": "consumer",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "### 7.2 `plan_graph/nodes/<node_id>.json` (required; one node per file)",
+      "status": "partial",
+      "exact_items": [
+        "`blocked_projection.{run_id}.{node_id}.{blocked_sequence}`",
+        "blocked_projection.{run_id}.{node_id}.{blocked_sequence}"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L314"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06536",
+      "source_obligation_ids": [
+        "obl-6177"
+      ],
+      "source_seed_ids": [
+        "seed-9342"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "subject-first preview identity is already present through `doc:<document_id>` and `artifac",
+      "row_type": "consumer",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "## 2. Required artifact set (SSOT) \u2014 Project Plan Package",
+      "status": "partial",
+      "exact_items": [
+        "subject-first preview identity is already present through `doc:<document_id>` and `artifact:<artifact_id>`",
+        "doc:<document_id>",
+        "artifact:<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L37"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06713",
+      "source_obligation_ids": [
+        "obl-6354"
+      ],
+      "source_seed_ids": [
+        "seed-9701"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Owner docs were updated, but **consumer docs were not canon-collapsed**.",
+      "row_type": "consumer",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "### 5.3 Human plan may repeat summary, but must point to canonical contracts",
+      "status": "partial",
+      "exact_items": [
+        "Owner docs were updated, but **consumer docs were not canon-collapsed**."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L230"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02396",
+      "source_obligation_ids": [
+        "obl-2246"
+      ],
+      "source_seed_ids": [
+        "seed-2913"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "the UI should make it clear when a project is using the inherited app-default layout versu",
+      "row_type": "layout_blocker",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "# Puppet Master \u2014 User-Project Project Plan Package Outputs (SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "the UI should make it clear when a project is using the inherited app-default layout versus a project-specific override"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02571",
+      "source_obligation_ids": [
+        "obl-2419"
+      ],
+      "source_seed_ids": [
+        "seed-3140"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "`project_state:v1:{project_id}` as UI-only convenience flags",
+      "row_type": "layout_blocker",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "## 12. Optional derived `quickstart.md` contract (human convenience only)",
+      "status": "partial",
+      "exact_items": [
+        "`project_state:v1:{project_id}` as UI-only convenience flags",
+        "project_state:v1:{project_id}"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L672"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03905",
+      "source_obligation_ids": [
+        "obl-3750"
+      ],
+      "source_seed_ids": [
+        "seed-5117"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "Artifact lineage now clearly requires project/run/thread/wizard/attempt/account anchors, b",
+      "row_type": "layout_blocker",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "### validation artifact lineage",
+      "status": "partial",
+      "exact_items": [
+        "Artifact lineage now clearly requires project/run/thread/wizard/attempt/account anchors, but the project-artifact and memory/handoff surfaces still underspecify those joins."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L723"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04405",
+      "source_obligation_ids": [
+        "obl-4245"
+      ],
+      "source_seed_ids": [
+        "seed-5917"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "Make explicit that staged/generated planning outputs enter the UI as `artifact:<artifact_i",
+      "row_type": "layout_blocker",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "# Puppet Master \u2014 User-Project Project Plan Package Outputs (SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "Make explicit that staged/generated planning outputs enter the UI as `artifact:<artifact_id>` subjects before any backing path exists.",
+        "artifact:<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06611",
+      "source_obligation_ids": [
+        "obl-6252"
+      ],
+      "source_seed_ids": [
+        "seed-9454"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "worker activity requires `PuppetMasterEvent::Output` filtered by `tier_id`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "# Puppet Master \u2014 User-Project Project Plan Package Outputs (SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "worker activity requires `PuppetMasterEvent::Output` filtered by `tier_id`",
+        "PuppetMasterEvent::Output",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06827",
+      "source_obligation_ids": [
+        "obl-6442"
+      ],
+      "source_seed_ids": [
+        "seed-9821"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Cr",
+      "row_type": "layout_blocker",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Crosswalk.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md",
+        "Plans/FileManager.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L3",
+        "Plans/Project_Output_Artifacts.md:L23",
+        "Plans/Project_Output_Artifacts.md:L35",
+        "Plans/Project_Output_Artifacts.md:L67",
+        "Plans/Project_Output_Artifacts.md:L109"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07007",
+      "source_obligation_ids": [
+        "obl-6603"
+      ],
+      "source_seed_ids": [
+        "seed-10067"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interv",
+      "row_type": "layout_blocker",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings.",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "validation artifact lineage",
+        "bridge-field viewer",
+        "validation/report section"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L19",
+        "Plans/Project_Output_Artifacts.md:L23",
+        "Plans/Project_Output_Artifacts.md:L35",
+        "Plans/Project_Output_Artifacts.md:L67",
+        "Plans/Project_Output_Artifacts.md:L116"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07056",
+      "source_obligation_ids": [
+        "obl-6643"
+      ],
+      "source_seed_ids": [
+        "seed-10135"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-0",
+      "row_type": "layout_blocker",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.",
+        "gap-003",
+        "gap-004",
+        "gap-005",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L19",
+        "Plans/Project_Output_Artifacts.md:L23",
+        "Plans/Project_Output_Artifacts.md:L35",
+        "Plans/Project_Output_Artifacts.md:L67",
+        "Plans/Project_Output_Artifacts.md:L112"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07069",
+      "source_obligation_ids": [
+        "obl-6650"
+      ],
+      "source_seed_ids": [
+        "seed-10170"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "`Plans/Project_Output_Artifacts.md` already carries `phase_plan_ref`, `requirements_qualit",
+      "row_type": "layout_blocker",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Project_Output_Artifacts.md` already carries `phase_plan_ref`, `requirements_quality_report_ref`, and `pass_verdict` in the validation-pass-report lineage, so `gap-004`'s unresolved work is now the missing receipt owner heading plus missing consumer anchors rather than those fields wholesale.",
+        "Plans/Project_Output_Artifacts.md",
+        "phase_plan_ref",
+        "requirements_quality_report_ref",
+        "pass_verdict",
+        "gap-004"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L35",
+        "Plans/Project_Output_Artifacts.md:L67",
+        "Plans/Project_Output_Artifacts.md:L116",
+        "Plans/Project_Output_Artifacts.md:L228",
+        "Plans/Project_Output_Artifacts.md:L260"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

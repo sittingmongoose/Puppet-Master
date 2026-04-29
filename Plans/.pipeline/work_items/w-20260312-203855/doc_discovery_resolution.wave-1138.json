@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1138",
+  "group_ids": [
+    "discgrp-4549",
+    "discgrp-4550",
+    "discgrp-4551",
+    "discgrp-4552"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04947",
+      "source_obligation_ids": [
+        "obl-4723"
+      ],
+      "source_seed_ids": [
+        "seed-6803"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "## 2. Primitive index (definitions are DRY)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L66"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04948",
+      "source_obligation_ids": [
+        "obl-4724"
+      ],
+      "source_seed_ids": [
+        "seed-6804"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04949",
+      "source_obligation_ids": [
+        "obl-4725"
+      ],
+      "source_seed_ids": [
+        "seed-6805"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 5.6 Discoverability",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L695"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04950",
+      "source_obligation_ids": [
+        "obl-4726"
+      ],
+      "source_seed_ids": [
+        "seed-6806"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

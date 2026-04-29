@@ -1,956 +1,1784 @@
 {
   "schema_id": "pm.ledger_obligation_seed_completeness_noise.v1",
   "work_id": "w-20260312-203855",
-  "timestamp_utc": "2026-04-28T18:42:39Z",
-  "subagent_tasks": [
-    "completeness-group-001",
-    "completeness-group-002",
-    "completeness-group-003",
-    "completeness-group-004",
-    "completeness-group-005",
-    "completeness-group-006",
-    "completeness-group-007",
-    "completeness-group-008",
-    "completeness-group-009",
-    "completeness-group-010",
-    "completeness-group-011",
-    "completeness-group-012",
-    "completeness-group-013",
-    "completeness-group-014",
-    "completeness-group-015"
-  ],
-  "assigned_input_boundaries": [
-    "seed-001..seed-025",
-    "seed-026..seed-050",
-    "seed-051..seed-075",
-    "seed-076..seed-100",
-    "seed-101..seed-125",
-    "seed-126..seed-150",
-    "seed-151..seed-175",
-    "seed-176..seed-200",
-    "seed-201..seed-225",
-    "seed-226..seed-250",
-    "seed-251..seed-275",
-    "seed-276..seed-300",
-    "seed-301..seed-325",
-    "seed-326..seed-350",
-    "seed-351..seed-363"
-  ],
-  "subagent_result_status": {
-    "completeness-group-001": "completed",
-    "completeness-group-002": "completed",
-    "completeness-group-003": "completed",
-    "completeness-group-004": "completed",
-    "completeness-group-005": "completed",
-    "completeness-group-006": "completed",
-    "completeness-group-007": "completed",
-    "completeness-group-008": "completed",
-    "completeness-group-009": "completed",
-    "completeness-group-010": "completed",
-    "completeness-group-011": "completed",
-    "completeness-group-012": "completed",
-    "completeness-group-013": "completed",
-    "completeness-group-014": "completed",
-    "completeness-group-015": "completed"
-  },
-  "completed_task_count": 15,
-  "failed_task_count": 0,
-  "seed_ids_assigned": [
-    "seed-001",
-    "seed-002",
-    "seed-003",
-    "seed-004",
-    "seed-005",
-    "seed-006",
-    "seed-007",
-    "seed-008",
-    "seed-009",
-    "seed-010",
-    "seed-011",
-    "seed-012",
-    "seed-013",
-    "seed-014",
-    "seed-015",
-    "seed-016",
-    "seed-017",
-    "seed-018",
-    "seed-019",
-    "seed-020",
-    "seed-021",
-    "seed-022",
-    "seed-023",
-    "seed-024",
-    "seed-025",
-    "seed-026",
-    "seed-027",
-    "seed-028",
-    "seed-029",
-    "seed-030",
-    "seed-031",
-    "seed-032",
-    "seed-033",
-    "seed-034",
-    "seed-035",
-    "seed-036",
-    "seed-037",
-    "seed-038",
-    "seed-039",
-    "seed-040",
-    "seed-041",
-    "seed-042",
-    "seed-043",
-    "seed-044",
-    "seed-045",
-    "seed-046",
-    "seed-047",
-    "seed-048",
-    "seed-049",
-    "seed-050",
-    "seed-051",
-    "seed-052",
-    "seed-053",
-    "seed-054",
-    "seed-055",
-    "seed-056",
-    "seed-057",
-    "seed-058",
-    "seed-059",
-    "seed-060",
-    "seed-061",
-    "seed-062",
-    "seed-063",
-    "seed-064",
-    "seed-065",
-    "seed-066",
-    "seed-067",
-    "seed-068",
-    "seed-069",
-    "seed-070",
-    "seed-071",
-    "seed-072",
-    "seed-073",
-    "seed-074",
-    "seed-075",
-    "seed-076",
-    "seed-077",
-    "seed-078",
-    "seed-079",
-    "seed-080",
-    "seed-081",
-    "seed-082",
-    "seed-083",
-    "seed-084",
-    "seed-085",
-    "seed-086",
-    "seed-087",
-    "seed-088",
-    "seed-089",
-    "seed-090",
-    "seed-091",
-    "seed-092",
-    "seed-093",
-    "seed-094",
-    "seed-095",
-    "seed-096",
-    "seed-097",
-    "seed-098",
-    "seed-099",
-    "seed-100",
-    "seed-101",
-    "seed-102",
-    "seed-103",
-    "seed-104",
-    "seed-105",
-    "seed-106",
-    "seed-107",
-    "seed-108",
-    "seed-109",
-    "seed-110",
-    "seed-111",
-    "seed-112",
-    "seed-113",
-    "seed-114",
-    "seed-115",
-    "seed-116",
-    "seed-117",
-    "seed-118",
-    "seed-119",
-    "seed-120",
-    "seed-121",
-    "seed-122",
-    "seed-123",
-    "seed-124",
-    "seed-125",
-    "seed-126",
-    "seed-127",
-    "seed-128",
-    "seed-129",
-    "seed-130",
-    "seed-131",
-    "seed-132",
-    "seed-133",
-    "seed-134",
-    "seed-135",
-    "seed-136",
-    "seed-137",
-    "seed-138",
-    "seed-139",
-    "seed-140",
-    "seed-141",
-    "seed-142",
-    "seed-143",
-    "seed-144",
-    "seed-145",
-    "seed-146",
-    "seed-147",
-    "seed-148",
-    "seed-149",
-    "seed-150",
-    "seed-151",
-    "seed-152",
-    "seed-153",
-    "seed-154",
-    "seed-155",
-    "seed-156",
-    "seed-157",
-    "seed-158",
-    "seed-159",
-    "seed-160",
-    "seed-161",
-    "seed-162",
-    "seed-163",
-    "seed-164",
-    "seed-165",
-    "seed-166",
-    "seed-167",
-    "seed-168",
-    "seed-169",
-    "seed-170",
-    "seed-171",
-    "seed-172",
-    "seed-173",
-    "seed-174",
-    "seed-175",
-    "seed-176",
-    "seed-177",
-    "seed-178",
-    "seed-179",
-    "seed-180",
-    "seed-181",
-    "seed-182",
-    "seed-183",
-    "seed-184",
-    "seed-185",
-    "seed-186",
-    "seed-187",
-    "seed-188",
-    "seed-189",
-    "seed-190",
-    "seed-191",
-    "seed-192",
-    "seed-193",
-    "seed-194",
-    "seed-195",
-    "seed-196",
-    "seed-197",
-    "seed-198",
-    "seed-199",
-    "seed-200",
-    "seed-201",
-    "seed-202",
-    "seed-203",
-    "seed-204",
-    "seed-205",
-    "seed-206",
-    "seed-207",
-    "seed-208",
-    "seed-209",
-    "seed-210",
-    "seed-211",
-    "seed-212",
-    "seed-213",
-    "seed-214",
-    "seed-215",
-    "seed-216",
-    "seed-217",
-    "seed-218",
-    "seed-219",
-    "seed-220",
-    "seed-221",
-    "seed-222",
-    "seed-223",
-    "seed-224",
-    "seed-225",
-    "seed-226",
-    "seed-227",
-    "seed-228",
-    "seed-229",
-    "seed-230",
-    "seed-231",
-    "seed-232",
-    "seed-233",
-    "seed-234",
-    "seed-235",
-    "seed-236",
-    "seed-237",
-    "seed-238",
-    "seed-239",
-    "seed-240",
-    "seed-241",
-    "seed-242",
-    "seed-243",
-    "seed-244",
-    "seed-245",
-    "seed-246",
-    "seed-247",
-    "seed-248",
-    "seed-249",
-    "seed-250",
-    "seed-251",
-    "seed-252",
-    "seed-253",
-    "seed-254",
-    "seed-255",
-    "seed-256",
-    "seed-257",
-    "seed-258",
-    "seed-259",
-    "seed-260",
-    "seed-261",
-    "seed-262",
-    "seed-263",
-    "seed-264",
-    "seed-265",
-    "seed-266",
-    "seed-267",
-    "seed-268",
-    "seed-269",
-    "seed-270",
-    "seed-271",
-    "seed-272",
-    "seed-273",
-    "seed-274",
-    "seed-275",
-    "seed-276",
-    "seed-277",
-    "seed-278",
-    "seed-279",
-    "seed-280",
-    "seed-281",
-    "seed-282",
-    "seed-283",
-    "seed-284",
-    "seed-285",
-    "seed-286",
-    "seed-287",
-    "seed-288",
-    "seed-289",
-    "seed-290",
-    "seed-291",
-    "seed-292",
-    "seed-293",
-    "seed-294",
-    "seed-295",
-    "seed-296",
-    "seed-297",
-    "seed-298",
-    "seed-299",
-    "seed-300",
-    "seed-301",
-    "seed-302",
-    "seed-303",
-    "seed-304",
-    "seed-305",
-    "seed-306",
-    "seed-307",
-    "seed-308",
-    "seed-309",
-    "seed-310",
-    "seed-311",
-    "seed-312",
-    "seed-313",
-    "seed-314",
-    "seed-315",
-    "seed-316",
-    "seed-317",
-    "seed-318",
-    "seed-319",
-    "seed-320",
-    "seed-321",
-    "seed-322",
-    "seed-323",
-    "seed-324",
-    "seed-325",
-    "seed-326",
-    "seed-327",
-    "seed-328",
-    "seed-329",
-    "seed-330",
-    "seed-331",
-    "seed-332",
-    "seed-333",
-    "seed-334",
-    "seed-335",
-    "seed-336",
-    "seed-337",
-    "seed-338",
-    "seed-339",
-    "seed-340",
-    "seed-341",
-    "seed-342",
-    "seed-343",
-    "seed-344",
-    "seed-345",
-    "seed-346",
-    "seed-347",
-    "seed-348",
-    "seed-349",
-    "seed-350",
-    "seed-351",
-    "seed-352",
-    "seed-353",
-    "seed-354",
-    "seed-355",
-    "seed-356",
-    "seed-357",
-    "seed-358",
-    "seed-359",
-    "seed-360",
-    "seed-361",
-    "seed-362",
-    "seed-363"
-  ],
-  "seed_ids_completed": [
-    "seed-001",
-    "seed-002",
-    "seed-003",
-    "seed-004",
-    "seed-005",
-    "seed-006",
-    "seed-007",
-    "seed-008",
-    "seed-009",
-    "seed-010",
-    "seed-011",
-    "seed-012",
-    "seed-013",
-    "seed-014",
-    "seed-015",
-    "seed-016",
-    "seed-017",
-    "seed-018",
-    "seed-019",
-    "seed-020",
-    "seed-021",
-    "seed-022",
-    "seed-023",
-    "seed-024",
-    "seed-025",
-    "seed-026",
-    "seed-027",
-    "seed-028",
-    "seed-029",
-    "seed-030",
-    "seed-031",
-    "seed-032",
-    "seed-033",
-    "seed-034",
-    "seed-035",
-    "seed-036",
-    "seed-037",
-    "seed-038",
-    "seed-039",
-    "seed-040",
-    "seed-041",
-    "seed-042",
-    "seed-043",
-    "seed-044",
-    "seed-045",
-    "seed-046",
-    "seed-047",
-    "seed-048",
-    "seed-049",
-    "seed-050",
-    "seed-051",
-    "seed-052",
-    "seed-053",
-    "seed-054",
-    "seed-055",
-    "seed-056",
-    "seed-057",
-    "seed-058",
-    "seed-059",
-    "seed-060",
-    "seed-061",
-    "seed-062",
-    "seed-063",
-    "seed-064",
-    "seed-065",
-    "seed-066",
-    "seed-067",
-    "seed-068",
-    "seed-069",
-    "seed-070",
-    "seed-071",
-    "seed-072",
-    "seed-073",
-    "seed-074",
-    "seed-075",
-    "seed-076",
-    "seed-077",
-    "seed-078",
-    "seed-079",
-    "seed-080",
-    "seed-081",
-    "seed-082",
-    "seed-083",
-    "seed-084",
-    "seed-085",
-    "seed-086",
-    "seed-087",
-    "seed-088",
-    "seed-089",
-    "seed-090",
-    "seed-091",
-    "seed-092",
-    "seed-093",
-    "seed-094",
-    "seed-095",
-    "seed-096",
-    "seed-097",
-    "seed-098",
-    "seed-099",
-    "seed-100",
-    "seed-101",
-    "seed-102",
-    "seed-103",
-    "seed-104",
-    "seed-105",
-    "seed-106",
-    "seed-107",
-    "seed-108",
-    "seed-109",
-    "seed-110",
-    "seed-111",
-    "seed-112",
-    "seed-113",
-    "seed-114",
-    "seed-115",
-    "seed-116",
-    "seed-117",
-    "seed-118",
-    "seed-119",
-    "seed-120",
-    "seed-121",
-    "seed-122",
-    "seed-123",
-    "seed-124",
-    "seed-125",
-    "seed-126",
-    "seed-127",
-    "seed-128",
-    "seed-129",
-    "seed-130",
-    "seed-131",
-    "seed-132",
-    "seed-133",
-    "seed-134",
-    "seed-135",
-    "seed-136",
-    "seed-137",
-    "seed-138",
-    "seed-139",
-    "seed-140",
-    "seed-141",
-    "seed-142",
-    "seed-143",
-    "seed-144",
-    "seed-145",
-    "seed-146",
-    "seed-147",
-    "seed-148",
-    "seed-149",
-    "seed-150",
-    "seed-151",
-    "seed-152",
-    "seed-153",
-    "seed-154",
-    "seed-155",
-    "seed-156",
-    "seed-157",
-    "seed-158",
-    "seed-159",
-    "seed-160",
-    "seed-161",
-    "seed-162",
-    "seed-163",
-    "seed-164",
-    "seed-165",
-    "seed-166",
-    "seed-167",
-    "seed-168",
-    "seed-169",
-    "seed-170",
-    "seed-171",
-    "seed-172",
-    "seed-173",
-    "seed-174",
-    "seed-175",
-    "seed-176",
-    "seed-177",
-    "seed-178",
-    "seed-179",
-    "seed-180",
-    "seed-181",
-    "seed-182",
-    "seed-183",
-    "seed-184",
-    "seed-185",
-    "seed-186",
-    "seed-187",
-    "seed-188",
-    "seed-189",
-    "seed-190",
-    "seed-191",
-    "seed-192",
-    "seed-193",
-    "seed-194",
-    "seed-195",
-    "seed-196",
-    "seed-197",
-    "seed-198",
-    "seed-199",
-    "seed-200",
-    "seed-201",
-    "seed-202",
-    "seed-203",
-    "seed-204",
-    "seed-205",
-    "seed-206",
-    "seed-207",
-    "seed-208",
-    "seed-209",
-    "seed-210",
-    "seed-211",
-    "seed-212",
-    "seed-213",
-    "seed-214",
-    "seed-215",
-    "seed-216",
-    "seed-217",
-    "seed-218",
-    "seed-219",
-    "seed-220",
-    "seed-221",
-    "seed-222",
-    "seed-223",
-    "seed-224",
-    "seed-225",
-    "seed-226",
-    "seed-227",
-    "seed-228",
-    "seed-229",
-    "seed-230",
-    "seed-231",
-    "seed-232",
-    "seed-233",
-    "seed-234",
-    "seed-235",
-    "seed-236",
-    "seed-237",
-    "seed-238",
-    "seed-239",
-    "seed-240",
-    "seed-241",
-    "seed-242",
-    "seed-243",
-    "seed-244",
-    "seed-245",
-    "seed-246",
-    "seed-247",
-    "seed-248",
-    "seed-249",
-    "seed-250",
-    "seed-251",
-    "seed-252",
-    "seed-253",
-    "seed-254",
-    "seed-255",
-    "seed-256",
-    "seed-257",
-    "seed-258",
-    "seed-259",
-    "seed-260",
-    "seed-261",
-    "seed-262",
-    "seed-263",
-    "seed-264",
-    "seed-265",
-    "seed-266",
-    "seed-267",
-    "seed-268",
-    "seed-269",
-    "seed-270",
-    "seed-271",
-    "seed-272",
-    "seed-273",
-    "seed-274",
-    "seed-275",
-    "seed-276",
-    "seed-277",
-    "seed-278",
-    "seed-279",
-    "seed-280",
-    "seed-281",
-    "seed-282",
-    "seed-283",
-    "seed-284",
-    "seed-285",
-    "seed-286",
-    "seed-287",
-    "seed-288",
-    "seed-289",
-    "seed-290",
-    "seed-291",
-    "seed-292",
-    "seed-293",
-    "seed-294",
-    "seed-295",
-    "seed-296",
-    "seed-297",
-    "seed-298",
-    "seed-299",
-    "seed-300",
-    "seed-301",
-    "seed-302",
-    "seed-303",
-    "seed-304",
-    "seed-305",
-    "seed-306",
-    "seed-307",
-    "seed-308",
-    "seed-309",
-    "seed-310",
-    "seed-311",
-    "seed-312",
-    "seed-313",
-    "seed-314",
-    "seed-315",
-    "seed-316",
-    "seed-317",
-    "seed-318",
-    "seed-319",
-    "seed-320",
-    "seed-321",
-    "seed-322",
-    "seed-323",
-    "seed-324",
-    "seed-325",
-    "seed-326",
-    "seed-327",
-    "seed-328",
-    "seed-329",
-    "seed-330",
-    "seed-331",
-    "seed-332",
-    "seed-333",
-    "seed-334",
-    "seed-335",
-    "seed-336",
-    "seed-337",
-    "seed-338",
-    "seed-339",
-    "seed-340",
-    "seed-341",
-    "seed-342",
-    "seed-343",
-    "seed-344",
-    "seed-345",
-    "seed-346",
-    "seed-347",
-    "seed-348",
-    "seed-349",
-    "seed-350",
-    "seed-351",
-    "seed-352",
-    "seed-353",
-    "seed-354",
-    "seed-355",
-    "seed-356",
-    "seed-357",
-    "seed-358",
-    "seed-359",
-    "seed-360",
-    "seed-361",
-    "seed-362",
-    "seed-363"
-  ],
-  "summary_poison_items_moved": [
-    {
-      "seed_id": "seed-340",
-      "reason": "summary_or_process_poison_identified_by_bounded_validation"
-    },
-    {
-      "seed_id": "seed-343",
-      "reason": "summary_or_process_poison_identified_by_bounded_validation"
-    },
-    {
-      "seed_id": "seed-344",
-      "reason": "summary_or_process_poison_identified_by_bounded_validation"
-    },
-    {
-      "seed_id": "seed-348",
-      "reason": "summary_or_process_poison_identified_by_bounded_validation"
-    }
-  ],
-  "process_poison_items_moved": [],
-  "empty_exact_items_moved": [],
+  "created_at_utc": "2026-04-29T16:22:59.220408Z",
+  "noise_items_moved": 74,
   "noise_items": [
     {
-      "seed_id": "seed-340",
-      "reason": "summary_or_process_poison_identified_by_bounded_validation",
+      "source_seed_id": "seed-419",
+      "reason": "summary_poison",
       "item": {
-        "seed_id": "seed-340",
-        "seed_type": "consumer",
-        "canon_label_hint": "mirror docs reconciliation order",
+        "seed_type": "owner",
+        "canon_label_hint": "blocked/recovery state when relevant",
         "exact_items": [
-          "Plans/GUI_Rebuild_Requirements_Checklist.md is now clearly a reconciliation follower, not a source.",
-          "Plans/feature-list.md and Plans/newfeatures.md are broad drift amplifiers because they condense many features into short summaries that users and implementers often read first.",
-          "Reconciliation order for this tranche should be: upstream owner docs first; GUI_Rebuild_Requirements_Checklist.md second as status repair; feature-list.md and newfeatures.md third as summary cleanup; Section15_MVP_Promoted_Features_Spec.md last as a verification pass."
+          "blocked/recovery state when relevant"
         ],
         "affected_doc_hints": [
-          "Plans/GUI_Rebuild_Requirements_Checklist.md",
-          "Plans/feature-list.md",
-          "Plans/newfeatures.md",
-          "Plans/Section15_MVP_Promoted_Features_Spec.md"
+          "ownership_target_unknown_pending_audit"
         ],
-        "doc_resolution_status": "global_or_cross_cutting",
         "heading_hints": [],
         "stale_tokens": [],
+        "source_shard_id": "shard-0012",
         "source_evidence": [
-          "working_ledger.md:L17002-L17036"
+          "working_ledger.md:L002223"
         ],
-        "notes": [],
-        "source_shard_id": "shard-0086"
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-419"
       }
     },
     {
-      "seed_id": "seed-343",
-      "reason": "summary_or_process_poison_identified_by_bounded_validation",
+      "source_seed_id": "seed-515",
+      "reason": "summary_poison",
       "item": {
-        "seed_id": "seed-343",
-        "seed_type": "owner",
-        "canon_label_hint": "Progress widget and attention behavior missing transfer",
+        "seed_type": "consumer",
+        "canon_label_hint": "blocked/recovery actions bind to canonical projections/records",
         "exact_items": [
-          "Progress-only scope landed, but the named Progress widget catalog and deterministic drill-target mapping from the ledger did not.",
-          "Missing the fuller blocked-owner taxonomy, resurfacing/aging rules, concern action policy details, projection fallback ladder, saved-view / sort-default behavior, historical-mode behavior, search scope/switch disclosure, and dense-tab scale rules.",
-          "Missing shared escalation ladder semantics, system-notification narrowing rules, project-card blocked-owner / primary-reason / pressure-summary details, settings display grammar, help-system structure, and action-surface / shortcut / context-menu policy."
+          "blocked/recovery actions bind to canonical projections/records"
         ],
         "affected_doc_hints": [
-          "Plans/Widget_System.md",
-          "Plans/Orchestrator_Page.md",
-          "Plans/FinalGUISpec.md"
+          "needs_doc_discovery_in_canonical_obligations_builder"
         ],
-        "doc_resolution_status": "global_or_cross_cutting",
         "heading_hints": [],
         "stale_tokens": [],
+        "source_shard_id": "shard-0013",
         "source_evidence": [
-          "working_ledger.md:L17245-L17251",
-          "working_ledger.md:L17373-L17378",
-          "working_ledger.md:L17391-L17399"
+          "working_ledger.md:L002411"
         ],
-        "notes": [],
-        "source_shard_id": "shard-0087"
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-515"
       }
     },
     {
-      "seed_id": "seed-344",
-      "reason": "summary_or_process_poison_identified_by_bounded_validation",
+      "source_seed_id": "seed-679",
+      "reason": "summary_poison",
       "item": {
-        "seed_id": "seed-344",
-        "seed_type": "owner",
-        "canon_label_hint": "governance runtime record envelope families missing transfer",
-        "exact_items": [
-          "Still missing field schemas for project_summary.v1, project_attention_item.v1, account_pressure_episode.v1, account_switch_event.v1, and broader governance/runtime record-envelope families.",
-          "Bridge fields exist, but precedence/join semantics and compatibility fallback rules remain under-specified.",
-          "The concern/action/governance tranche is missing concrete families: concern record canonical field set, non-weak-integration concern categories, resolution_kind, concern owner-kind enum, review / corroboration / graph-patch / promotion / recovery record shapes, state transition report family, 4-level confirmation taxonomy."
-        ],
-        "affected_doc_hints": [
-          "Plans/storage-plan.md",
-          "Plans/Decision_Policy.md",
-          "Plans/FinalGUISpec.md"
-        ],
-        "doc_resolution_status": "global_or_cross_cutting",
-        "heading_hints": [],
-        "stale_tokens": [
-          "project_summary.v1",
-          "project_attention_item.v1",
-          "account_pressure_episode.v1",
-          "account_switch_event.v1",
-          "resolution_kind"
-        ],
-        "source_evidence": [
-          "working_ledger.md:L17253-L17258",
-          "working_ledger.md:L17391-L17400"
-        ],
-        "notes": [],
-        "source_shard_id": "shard-0087"
-      }
-    },
-    {
-      "seed_id": "seed-348",
-      "reason": "summary_or_process_poison_identified_by_bounded_validation",
-      "item": {
-        "seed_id": "seed-348",
         "seed_type": "consumer",
-        "canon_label_hint": "help project attention escalation missing transfer",
+        "canon_label_hint": "blocked projections remain historical after resolution",
         "exact_items": [
-          "three-part help-system architecture",
-          "dedicated help-entry template",
-          "related-concept linking clusters",
-          "project activity_state enum",
-          "project attention_state enum",
-          "blocked-owner 8-kind taxonomy",
-          "primary attention reason field",
-          "pressure-summary field",
-          "explicit 5-level escalation ladder",
-          "surface ladder mapping",
-          "resurfacing / aging rules",
-          "persistent-blocker semantics at the UI layer"
+          "blocked projections remain historical after resolution"
         ],
         "affected_doc_hints": [
-          "Plans/FinalGUISpec.md",
-          "Plans/Glossary.md",
-          "Plans/Orchestrator_Page.md",
-          "Plans/storage-plan.md",
-          "Plans/usage-feature.md"
+          "needs_doc_discovery_in_canonical_obligations_builder"
         ],
-        "doc_resolution_status": "global_or_cross_cutting",
         "heading_hints": [],
-        "stale_tokens": [
-          "activity_state",
-          "attention_state"
-        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0014",
         "source_evidence": [
-          "working_ledger.md:L17419-L17433"
+          "working_ledger.md:L002796"
         ],
-        "notes": [],
-        "source_shard_id": "shard-0088"
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-679"
       }
-    }
-  ],
-  "subagent_false_positive_notes": [
-    {
-      "group_id": "completeness-group-005",
-      "note": "Reported working_ledger.md evidence refs as unverifiable; reducer validated by line range against manifest as required by source evidence rule."
     },
     {
-      "group_id": "completeness-group-013",
-      "note": "Reported working_ledger.md evidence refs as unverifiable; reducer validated by line range against manifest as required by source evidence rule."
+      "source_seed_id": "seed-1012",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "blocked prerequisite resolution",
+        "exact_items": [
+          "blocked prerequisite resolution"
+        ],
+        "affected_doc_hints": [
+          "layout_blocker_target_known_from_notes"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0018",
+        "source_evidence": [
+          "working_ledger.md:L003481"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1012"
+      }
     },
     {
-      "group_id": "completeness-group-003",
-      "note": "Reported seed-072 doc_resolution_status=unknown_pending_doc_discovery; reducer accepted because empty affected_doc_hints are allowed with explanatory non-concrete status."
+      "source_seed_id": "seed-1309",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked ownership",
+        "exact_items": [
+          "blocked ownership"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0021",
+        "source_evidence": [
+          "working_ledger.md:L004174"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1309"
+      }
+    },
+    {
+      "source_seed_id": "seed-1322",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked owner / attention owner when relevant",
+        "exact_items": [
+          "blocked owner / attention owner when relevant"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0022",
+        "source_evidence": [
+          "working_ledger.md:L004202"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1322"
+      }
+    },
+    {
+      "source_seed_id": "seed-1326",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "Blocked-owner direction",
+        "exact_items": [
+          "Blocked-owner direction"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0022",
+        "source_evidence": [
+          "working_ledger.md:L004210"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1326"
+      }
+    },
+    {
+      "source_seed_id": "seed-1365",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked ownership should describe the dominant current issue, not every issue in the proje",
+        "exact_items": [
+          "blocked ownership should describe the dominant current issue, not every issue in the project"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0022",
+        "source_evidence": [
+          "working_ledger.md:L004295"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1365"
+      }
+    },
+    {
+      "source_seed_id": "seed-1374",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "blocked and attention-required visual distinction",
+        "exact_items": [
+          "blocked and attention-required visual distinction"
+        ],
+        "affected_doc_hints": [
+          "layout_blocker_target_known_from_notes"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0022",
+        "source_evidence": [
+          "working_ledger.md:L004315"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1374"
+      }
+    },
+    {
+      "source_seed_id": "seed-1393",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked duration crosses threshold",
+        "exact_items": [
+          "blocked duration crosses threshold"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0022",
+        "source_evidence": [
+          "working_ledger.md:L004362"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1393"
+      }
+    },
+    {
+      "source_seed_id": "seed-1625",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked episode ref, action id, preconditions, result, safe-point refs",
+        "exact_items": [
+          "blocked episode ref, action id, preconditions, result, safe-point refs"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0025",
+        "source_evidence": [
+          "working_ledger.md:L004878"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1625"
+      }
+    },
+    {
+      "source_seed_id": "seed-1808",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked/recovery actions",
+        "exact_items": [
+          "blocked/recovery actions"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0026",
+        "source_evidence": [
+          "working_ledger.md:L005186"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1808"
+      }
+    },
+    {
+      "source_seed_id": "seed-1835",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked/retry/remediation/degradation taxonomy where applicable",
+        "exact_items": [
+          "blocked/retry/remediation/degradation taxonomy where applicable"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0027",
+        "source_evidence": [
+          "working_ledger.md:L005232"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1835"
+      }
+    },
+    {
+      "source_seed_id": "seed-1855",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "Blocked-state implication",
+        "exact_items": [
+          "Blocked-state implication"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0027",
+        "source_evidence": [
+          "working_ledger.md:L005266"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1855"
+      }
+    },
+    {
+      "source_seed_id": "seed-1856",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked state is not Orchestrator-exclusive",
+        "exact_items": [
+          "blocked state is not Orchestrator-exclusive"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0027",
+        "source_evidence": [
+          "working_ledger.md:L005268"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1856"
+      }
+    },
+    {
+      "source_seed_id": "seed-1957",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "blocked and attention-required stay distinct",
+        "exact_items": [
+          "blocked and attention-required stay distinct"
+        ],
+        "affected_doc_hints": [
+          "layout_blocker_target_known_from_notes"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L005483"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1957"
+      }
+    },
+    {
+      "source_seed_id": "seed-1971",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "Blocked-owner interaction direction",
+        "exact_items": [
+          "Blocked-owner interaction direction"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L005506"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1971"
+      }
+    },
+    {
+      "source_seed_id": "seed-1972",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "Blocked owner now looks like one of the most important routing dimensions.",
+        "exact_items": [
+          "Blocked owner now looks like one of the most important routing dimensions."
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L005507"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1972"
+      }
+    },
+    {
+      "source_seed_id": "seed-1973",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "consumer",
+        "canon_label_hint": "blocked owner influences both destination surface and notification style",
+        "exact_items": [
+          "blocked owner influences both destination surface and notification style"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L005509"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1973"
+      }
+    },
+    {
+      "source_seed_id": "seed-1995",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked persistence crosses threshold",
+        "exact_items": [
+          "blocked persistence crosses threshold"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L005546"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1995"
+      }
+    },
+    {
+      "source_seed_id": "seed-1997",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked owner change",
+        "exact_items": [
+          "blocked owner change"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L005553"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1997"
+      }
+    },
+    {
+      "source_seed_id": "seed-1998",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked duration threshold crossed",
+        "exact_items": [
+          "blocked duration threshold crossed"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L005555"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-1998"
+      }
+    },
+    {
+      "source_seed_id": "seed-2000",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "blocked states and canonical action-needed episodes may not quietly disappear behind the s",
+        "exact_items": [
+          "blocked states and canonical action-needed episodes may not quietly disappear behind the same suppression rule"
+        ],
+        "affected_doc_hints": [
+          "layout_blocker_target_known_from_notes"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L005565"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-2000"
+      }
+    },
+    {
+      "source_seed_id": "seed-2009",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked owner",
+        "exact_items": [
+          "blocked owner"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L005590"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-2009"
+      }
+    },
+    {
+      "source_seed_id": "seed-2013",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked owner is not just descriptive; it should help decide where and how the user is not",
+        "exact_items": [
+          "blocked owner is not just descriptive; it should help decide where and how the user is notified"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L005598"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-2013"
+      }
+    },
+    {
+      "source_seed_id": "seed-2108",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "consumer",
+        "canon_label_hint": "blocked projections remain historical after resolution and are not overwritten",
+        "exact_items": [
+          "blocked projections remain historical after resolution and are not overwritten"
+        ],
+        "affected_doc_hints": [
+          "needs_doc_discovery_in_canonical_obligations_builder"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0029",
+        "source_evidence": [
+          "working_ledger.md:L005773"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-2108"
+      }
+    },
+    {
+      "source_seed_id": "seed-2112",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked/recovery records",
+        "exact_items": [
+          "blocked/recovery records"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0029",
+        "source_evidence": [
+          "working_ledger.md:L005779"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-2112"
+      }
+    },
+    {
+      "source_seed_id": "seed-2148",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "Blocked / resolved distinction",
+        "exact_items": [
+          "Blocked / resolved distinction"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0030",
+        "source_evidence": [
+          "working_ledger.md:L005848"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-2148"
+      }
+    },
+    {
+      "source_seed_id": "seed-2150",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked episode can become historical after resolution, but still matters for audit and li",
+        "exact_items": [
+          "blocked episode can become historical after resolution, but still matters for audit and lineage"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0030",
+        "source_evidence": [
+          "working_ledger.md:L005852"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-2150"
+      }
+    },
+    {
+      "source_seed_id": "seed-2182",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "consumer",
+        "canon_label_hint": "blocked projections",
+        "exact_items": [
+          "blocked projections"
+        ],
+        "affected_doc_hints": [
+          "needs_doc_discovery_in_canonical_obligations_builder"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0030",
+        "source_evidence": [
+          "working_ledger.md:L005926"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-2182"
+      }
+    },
+    {
+      "source_seed_id": "seed-2184",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked episodes preserve identity across resolution",
+        "exact_items": [
+          "blocked episodes preserve identity across resolution"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0030",
+        "source_evidence": [
+          "working_ledger.md:L005931"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-2184"
+      }
+    },
+    {
+      "source_seed_id": "seed-2187",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked episode",
+        "exact_items": [
+          "blocked episode"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0030",
+        "source_evidence": [
+          "working_ledger.md:L005943"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-2187"
+      }
+    },
+    {
+      "source_seed_id": "seed-2188",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked episode",
+        "exact_items": [
+          "blocked episode"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0030",
+        "source_evidence": [
+          "working_ledger.md:L005951"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-2188"
+      }
+    },
+    {
+      "source_seed_id": "seed-2248",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked episodes can:",
+        "exact_items": [
+          "blocked episodes can:"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0031",
+        "source_evidence": [
+          "working_ledger.md:L006054"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-2248"
+      }
+    },
+    {
+      "source_seed_id": "seed-2263",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "Blocked owner should remain separate from concern owner:",
+        "exact_items": [
+          "Blocked owner should remain separate from concern owner:"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0031",
+        "source_evidence": [
+          "working_ledger.md:L006081"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-2263"
+      }
+    },
+    {
+      "source_seed_id": "seed-2265",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked owner = who/what is currently blocking progress",
+        "exact_items": [
+          "blocked owner = who/what is currently blocking progress"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0031",
+        "source_evidence": [
+          "working_ledger.md:L006083"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-2265"
+      }
+    },
+    {
+      "source_seed_id": "seed-2275",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked owner and concern owner are related but distinct concepts",
+        "exact_items": [
+          "blocked owner and concern owner are related but distinct concepts"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0031",
+        "source_evidence": [
+          "working_ledger.md:L006100"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-2275"
+      }
+    },
+    {
+      "source_seed_id": "seed-2416",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked/recovery records",
+        "exact_items": [
+          "blocked/recovery records"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0032",
+        "source_evidence": [
+          "working_ledger.md:L006313"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-2416"
+      }
+    },
+    {
+      "source_seed_id": "seed-2984",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked owner",
+        "exact_items": [
+          "blocked owner"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0036",
+        "source_evidence": [
+          "working_ledger.md:L007160"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-2984"
+      }
+    },
+    {
+      "source_seed_id": "seed-3010",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "consumer",
+        "canon_label_hint": "blocked owner should help route the user to the right next surface, not merely decorate th",
+        "exact_items": [
+          "blocked owner should help route the user to the right next surface, not merely decorate the badge"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0036",
+        "source_evidence": [
+          "working_ledger.md:L007196"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-3010"
+      }
+    },
+    {
+      "source_seed_id": "seed-3036",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked run items",
+        "exact_items": [
+          "blocked run items"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0037",
+        "source_evidence": [
+          "working_ledger.md:L007243"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-3036"
+      }
+    },
+    {
+      "source_seed_id": "seed-3584",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "consumer",
+        "canon_label_hint": "Blocked/approval truth and account/pressure truth are now intertwined; fixing one without ",
+        "exact_items": [
+          "Blocked/approval truth and account/pressure truth are now intertwined; fixing one without the other will still leave misleading surfaces."
+        ],
+        "affected_doc_hints": [
+          "needs_doc_discovery_in_canonical_obligations_builder"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0041",
+        "source_evidence": [
+          "working_ledger.md:L008051"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-3584"
+      }
+    },
+    {
+      "source_seed_id": "seed-3789",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked overlays, approval prompts, and tool-health disclosures still do not share one run",
+        "exact_items": [
+          "blocked overlays, approval prompts, and tool-health disclosures still do not share one runtime-trust/concern bridge"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0042",
+        "source_evidence": [
+          "working_ledger.md:L008343"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-3789"
+      }
+    },
+    {
+      "source_seed_id": "seed-3830",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked worktree reason emitters and historical lineage preservation remain under-owned",
+        "exact_items": [
+          "blocked worktree reason emitters and historical lineage preservation remain under-owned"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0043",
+        "source_evidence": [
+          "working_ledger.md:L008403"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-3830"
+      }
+    },
+    {
+      "source_seed_id": "seed-4317",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked/runtime records already assume node/attempt identity",
+        "exact_items": [
+          "blocked/runtime records already assume node/attempt identity"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0046",
+        "source_evidence": [
+          "working_ledger.md:L009108"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-4317"
+      }
+    },
+    {
+      "source_seed_id": "seed-4746",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked-episode lifecycle",
+        "exact_items": [
+          "blocked-episode lifecycle"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0049",
+        "source_evidence": [
+          "working_ledger.md:L009742"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-4746"
+      }
+    },
+    {
+      "source_seed_id": "seed-5048",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked/recovery lineage is conditional but first-class, not inferred later",
+        "exact_items": [
+          "blocked/recovery lineage is conditional but first-class, not inferred later"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0051",
+        "source_evidence": [
+          "working_ledger.md:L010161"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-5048"
+      }
+    },
+    {
+      "source_seed_id": "seed-5813",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "consumer",
+        "canon_label_hint": "blocked-action admissibility and projection-trust preconditions where relevant",
+        "exact_items": [
+          "blocked-action admissibility and projection-trust preconditions where relevant"
+        ],
+        "affected_doc_hints": [
+          "needs_doc_discovery_in_canonical_obligations_builder"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0057",
+        "source_evidence": [
+          "working_ledger.md:L011292"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-5813"
+      }
+    },
+    {
+      "source_seed_id": "seed-6140",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked metadata",
+        "exact_items": [
+          "blocked metadata"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0059",
+        "source_evidence": [
+          "working_ledger.md:L011764"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-6140"
+      }
+    },
+    {
+      "source_seed_id": "seed-7586",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked episode:",
+        "exact_items": [
+          "blocked episode:"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0071",
+        "source_evidence": [
+          "working_ledger.md:L014045"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-7586"
+      }
+    },
+    {
+      "source_seed_id": "seed-8220",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked/runtime identity where applicable",
+        "exact_items": [
+          "blocked/runtime identity where applicable"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0075",
+        "source_evidence": [
+          "working_ledger.md:L014985"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-8220"
+      }
+    },
+    {
+      "source_seed_id": "seed-8290",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked episodes are node-native",
+        "exact_items": [
+          "blocked episodes are node-native"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0076",
+        "source_evidence": [
+          "working_ledger.md:L015094"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-8290"
+      }
+    },
+    {
+      "source_seed_id": "seed-8294",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked/runtime families stay node-native",
+        "exact_items": [
+          "blocked/runtime families stay node-native"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0076",
+        "source_evidence": [
+          "working_ledger.md:L015100"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-8294"
+      }
+    },
+    {
+      "source_seed_id": "seed-8315",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked reason",
+        "exact_items": [
+          "blocked reason"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0076",
+        "source_evidence": [
+          "working_ledger.md:L015129"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-8315"
+      }
+    },
+    {
+      "source_seed_id": "seed-8320",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "consumer",
+        "canon_label_hint": "blocked projections are fairly strong",
+        "exact_items": [
+          "blocked projections are fairly strong"
+        ],
+        "affected_doc_hints": [
+          "needs_doc_discovery_in_canonical_obligations_builder"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0076",
+        "source_evidence": [
+          "working_ledger.md:L015139"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-8320"
+      }
+    },
+    {
+      "source_seed_id": "seed-8331",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked reason",
+        "exact_items": [
+          "blocked reason"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0076",
+        "source_evidence": [
+          "working_ledger.md:L015156"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-8331"
+      }
+    },
+    {
+      "source_seed_id": "seed-8393",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "consumer",
+        "canon_label_hint": "blocked projections and runtime recovery lineage",
+        "exact_items": [
+          "blocked projections and runtime recovery lineage"
+        ],
+        "affected_doc_hints": [
+          "needs_doc_discovery_in_canonical_obligations_builder"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0077",
+        "source_evidence": [
+          "working_ledger.md:L015249"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-8393"
+      }
+    },
+    {
+      "source_seed_id": "seed-8599",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked-episode/runtime-native",
+        "exact_items": [
+          "blocked-episode/runtime-native"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0078",
+        "source_evidence": [
+          "working_ledger.md:L015548"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-8599"
+      }
+    },
+    {
+      "source_seed_id": "seed-8606",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked-family mismatch",
+        "exact_items": [
+          "blocked-family mismatch"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0078",
+        "source_evidence": [
+          "working_ledger.md:L015560"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-8606"
+      }
+    },
+    {
+      "source_seed_id": "seed-8701",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked/runtime approval overlay",
+        "exact_items": [
+          "blocked/runtime approval overlay"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0079",
+        "source_evidence": [
+          "working_ledger.md:L015710"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-8701"
+      }
+    },
+    {
+      "source_seed_id": "seed-8703",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked-episode persistence",
+        "exact_items": [
+          "blocked-episode persistence"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0079",
+        "source_evidence": [
+          "working_ledger.md:L015712"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-8703"
+      }
+    },
+    {
+      "source_seed_id": "seed-8813",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked/recovery state",
+        "exact_items": [
+          "blocked/recovery state"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0080",
+        "source_evidence": [
+          "working_ledger.md:L015884"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-8813"
+      }
+    },
+    {
+      "source_seed_id": "seed-8820",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked/attention items",
+        "exact_items": [
+          "blocked/attention items"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0080",
+        "source_evidence": [
+          "working_ledger.md:L015906"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-8820"
+      }
+    },
+    {
+      "source_seed_id": "seed-9167",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked-episode identity over HITL-request identity",
+        "exact_items": [
+          "blocked-episode identity over HITL-request identity"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0082",
+        "source_evidence": [
+          "working_ledger.md:L016361"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-9167"
+      }
+    },
+    {
+      "source_seed_id": "seed-9276",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked-episode runtime identity",
+        "exact_items": [
+          "blocked-episode runtime identity"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0083",
+        "source_evidence": [
+          "working_ledger.md:L016523"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-9276"
+      }
+    },
+    {
+      "source_seed_id": "seed-9281",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked identity over request-centric HITL identity",
+        "exact_items": [
+          "blocked identity over request-centric HITL identity"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0083",
+        "source_evidence": [
+          "working_ledger.md:L016531"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-9281"
+      }
+    },
+    {
+      "source_seed_id": "seed-9303",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "consumer",
+        "canon_label_hint": "blocked/runtime records, not generic paused state, are the persistence surface",
+        "exact_items": [
+          "blocked/runtime records, not generic paused state, are the persistence surface"
+        ],
+        "affected_doc_hints": [
+          "needs_doc_discovery_in_canonical_obligations_builder"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0083",
+        "source_evidence": [
+          "working_ledger.md:L016563"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-9303"
+      }
+    },
+    {
+      "source_seed_id": "seed-9319",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked/runtime approval identity",
+        "exact_items": [
+          "blocked/runtime approval identity"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0083",
+        "source_evidence": [
+          "working_ledger.md:L016590"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-9319"
+      }
+    },
+    {
+      "source_seed_id": "seed-9358",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "consumer",
+        "canon_label_hint": "blocked projections keyed by blocked episode identity",
+        "exact_items": [
+          "blocked projections keyed by blocked episode identity"
+        ],
+        "affected_doc_hints": [
+          "needs_doc_discovery_in_canonical_obligations_builder"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0084",
+        "source_evidence": [
+          "working_ledger.md:L016649"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-9358"
+      }
+    },
+    {
+      "source_seed_id": "seed-9416",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked-episode identity over request-centric HITL identity",
+        "exact_items": [
+          "blocked-episode identity over request-centric HITL identity"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0084",
+        "source_evidence": [
+          "working_ledger.md:L016738"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-9416"
+      }
+    },
+    {
+      "source_seed_id": "seed-9453",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked/runtime approval identity",
+        "exact_items": [
+          "blocked/runtime approval identity"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0084",
+        "source_evidence": [
+          "working_ledger.md:L016785"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-9453"
+      }
+    },
+    {
+      "source_seed_id": "seed-9593",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked-thread messages tied cleanly to the shared route/runtime action model",
+        "exact_items": [
+          "blocked-thread messages tied cleanly to the shared route/runtime action model"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0085",
+        "source_evidence": [
+          "working_ledger.md:L016969"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-9593"
+      }
+    },
+    {
+      "source_seed_id": "seed-9890",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked-owner 8-kind taxonomy",
+        "exact_items": [
+          "blocked-owner 8-kind taxonomy"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0088",
+        "source_evidence": [
+          "working_ledger.md:L017427"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-9890"
+      }
+    },
+    {
+      "source_seed_id": "seed-9914",
+      "reason": "summary_poison",
+      "item": {
+        "seed_type": "owner",
+        "canon_label_hint": "blocked-sequence / startup-recovery / DAE policy ownership",
+        "exact_items": [
+          "blocked-sequence / startup-recovery / DAE policy ownership"
+        ],
+        "affected_doc_hints": [
+          "ownership_target_unknown_pending_audit"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0088",
+        "source_evidence": [
+          "working_ledger.md:L017474"
+        ],
+        "notes": [
+          "Extracted from generated ledger shard line containing obligation-grade evidence."
+        ],
+        "seed_id": "seed-9914"
+      }
     }
   ]
 }

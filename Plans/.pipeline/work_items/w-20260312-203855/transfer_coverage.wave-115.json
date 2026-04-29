@@ -1,0 +1,663 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-115",
+  "row_group_ids": [
+    "rowgrp-0457",
+    "rowgrp-0458",
+    "rowgrp-0459",
+    "rowgrp-0460"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-02356",
+      "source_obligation_ids": [
+        "obl-2207"
+      ],
+      "source_seed_ids": [
+        "seed-2870"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Deferred GitHub recovery binding still needs `project_id`, `auth_realm`, actor context, an",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "#### Recovery context and mutation gating",
+      "status": "partial",
+      "exact_items": [
+        "Deferred GitHub recovery binding still needs `project_id`, `auth_realm`, actor context, and effective-account snapshot/ref to resume safely across projects and actors",
+        "project_id",
+        "auth_realm"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L62"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02381",
+      "source_obligation_ids": [
+        "obl-2231"
+      ],
+      "source_seed_ids": [
+        "seed-2898"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Add a canonical GitHub recovery context payload that can round-trip blocked episode, proje",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "Add a canonical GitHub recovery context payload that can round-trip blocked episode, project, actor kind, auth realm, and effective-account refs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02389",
+      "source_obligation_ids": [
+        "obl-2239"
+      ],
+      "source_seed_ids": [
+        "seed-2906"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "GitHub auth/scope/rate-limit failures likely need concern hooks without collapsing blocked",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "GitHub auth/scope/rate-limit failures likely need concern hooks without collapsing blocked-owner semantics into generic error banners."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02409",
+      "source_obligation_ids": [
+        "obl-2259"
+      ],
+      "source_seed_ids": [
+        "seed-2931"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "examples: `Run`, `Concern`, `Source Control`, `GitHub`, `Auth`, `Usage pressure`, `Wizard`",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "present",
+      "exact_items": [
+        "examples: `Run`, `Concern`, `Source Control`, `GitHub`, `Auth`, `Usage pressure`, `Wizard`, `Recovery`",
+        "Run",
+        "Concern",
+        "Source Control",
+        "GitHub",
+        "Auth",
+        "Usage pressure",
+        "Wizard",
+        "Recovery"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1",
+        "Plans/GitHub_API_Auth_and_Flows.md:L14",
+        "Plans/GitHub_API_Auth_and_Flows.md:L15",
+        "Plans/GitHub_API_Auth_and_Flows.md:L19",
+        "Plans/GitHub_API_Auth_and_Flows.md:L22"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02462",
+      "source_obligation_ids": [
+        "obl-2312"
+      ],
+      "source_seed_ids": [
+        "seed-2998"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "but the real owner might be `Auth`, `Source Control`, `GitHub`, or `Usage pressure`",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "present",
+      "exact_items": [
+        "but the real owner might be `Auth`, `Source Control`, `GitHub`, or `Usage pressure`",
+        "Auth",
+        "Source Control",
+        "GitHub",
+        "Usage pressure"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1",
+        "Plans/GitHub_API_Auth_and_Flows.md:L14",
+        "Plans/GitHub_API_Auth_and_Flows.md:L15",
+        "Plans/GitHub_API_Auth_and_Flows.md:L19",
+        "Plans/GitHub_API_Auth_and_Flows.md:L22"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02613",
+      "source_obligation_ids": [
+        "obl-2461"
+      ],
+      "source_seed_ids": [
+        "seed-3213"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "wizard flows use serialized `resume_url`",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "wizard flows use serialized `resume_url`",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02687",
+      "source_obligation_ids": [
+        "obl-2534"
+      ],
+      "source_seed_ids": [
+        "seed-3327"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "`CLI_Bridged_Providers.md` normalizes auth lifecycle only",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "`CLI_Bridged_Providers.md` normalizes auth lifecycle only",
+        "CLI_Bridged_Providers.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02852",
+      "source_obligation_ids": [
+        "obl-2699"
+      ],
+      "source_seed_ids": [
+        "seed-3552"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "the system also needs operational identity classes like GitHub API identity, registry/name",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "the system also needs operational identity classes like GitHub API identity, registry/namespace identity, and Kubernetes context/cluster identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02907",
+      "source_obligation_ids": [
+        "obl-2754"
+      ],
+      "source_seed_ids": [
+        "seed-3615"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "this seam affects Orchestrator, GitHub Actions, Docker Manager, Usage, History, and Ledger",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "this seam affects Orchestrator, GitHub Actions, Docker Manager, Usage, History, and Ledger at the same time"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03255",
+      "source_obligation_ids": [
+        "obl-3101"
+      ],
+      "source_seed_ids": [
+        "seed-4121"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "still lacks canonical mappings/families for HITL, account management, concern flows, promo",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "still lacks canonical mappings/families for HITL, account management, concern flows, promotion flows, and freshness-gated mutation commands."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03777",
+      "source_obligation_ids": [
+        "obl-3622"
+      ],
+      "source_seed_ids": [
+        "seed-4892"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "Canonical mutation and audit actions should route by:",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "#### Recovery context and mutation gating",
+      "status": "partial",
+      "exact_items": [
+        "Canonical mutation and audit actions should route by:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L62"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04470",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04771",
+      "source_obligation_ids": [
+        "obl-4549"
+      ],
+      "source_seed_ids": [
+        "seed-6466"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "`OpenCode_Deep_Extraction.md` source-verified that OpenCode\u2019s SSE bus and auth model are p",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "`OpenCode_Deep_Extraction.md` source-verified that OpenCode\u2019s SSE bus and auth model are process-global/server-global, making per-session/per-run identity and account binding impossible without explicit PM-side scoping logic.",
+        "OpenCode_Deep_Extraction.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04860",
+      "source_obligation_ids": [
+        "obl-4637"
+      ],
+      "source_seed_ids": [
+        "seed-6641"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "At the same time, several route actions clearly need to force a change in destination cont",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "## Change Summary",
+      "status": "partial",
+      "exact_items": [
+        "At the same time, several route actions clearly need to force a change in destination context:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L40"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05144",
+      "source_obligation_ids": [
+        "obl-4920"
+      ],
+      "source_seed_ids": [
+        "seed-7120"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "Several downstream docs still imply special-case top-level fields such as `usage_event_ref",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "Several downstream docs still imply special-case top-level fields such as `usage_event_ref`, `wizard_step`, or direct artifact/document IDs in navigation flows.",
+        "usage_event_ref",
+        "wizard_step"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05145",
+      "source_obligation_ids": [
+        "obl-4921"
+      ],
+      "source_seed_ids": [
+        "seed-7121"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "`resume_url` flows are still more concrete than the general route contract, which continue",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "`resume_url` flows are still more concrete than the general route contract, which continues to encourage one-off field choices downstream.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05183",
+      "source_obligation_ids": [
+        "obl-4959"
+      ],
+      "source_seed_ids": [
+        "seed-7195"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "`resume_url` flows still encode wizard-step detail more concretely than the general route",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "`resume_url` flows still encode wizard-step detail more concretely than the general route contract.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05184",
+      "source_obligation_ids": [
+        "obl-4960"
+      ],
+      "source_seed_ids": [
+        "seed-7196"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "Usage/artifact flows still read as if `usage_event_ref` can stay a first-class top-level r",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "Usage/artifact flows still read as if `usage_event_ref` can stay a first-class top-level route selector instead of normalizing into object identity.",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05533",
+      "source_obligation_ids": [
+        "obl-5305"
+      ],
+      "source_seed_ids": [
+        "seed-7883"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "restore/history/checkpoint flows are identity-backed and backend-driven",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "restore/history/checkpoint flows are identity-backed and backend-driven"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05548",
+      "source_obligation_ids": [
+        "obl-5320"
+      ],
+      "source_seed_ids": [
+        "seed-7905"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "Reconcile FileManager so it consumes `OpenSubject` for artifact/document/checkpoint/open-s",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "partial",
+      "exact_items": [
+        "Reconcile FileManager so it consumes `OpenSubject` for artifact/document/checkpoint/open-source flows instead of claiming all callers use `OpenFile`.",
+        "OpenSubject",
+        "OpenFile"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06239",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06842",
+      "source_obligation_ids": [
+        "obl-6451"
+      ],
+      "source_seed_ids": [
+        "seed-9830"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_A",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md`",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Tools.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Run_Modes.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L3",
+        "Plans/GitHub_API_Auth_and_Flows.md:L30",
+        "Plans/GitHub_API_Auth_and_Flows.md:L32",
+        "Plans/GitHub_API_Auth_and_Flows.md:L73"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02379",
+      "source_obligation_ids": [
+        "obl-2229"
+      ],
+      "source_seed_ids": [
+        "seed-2896"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Neither GitHub nor Orchestrator pages yet bind degraded-trust / stale-data states tightly",
+      "row_type": "stale_retirement",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "#### Recovery context and mutation gating",
+      "status": "present",
+      "exact_items": [
+        "Neither GitHub nor Orchestrator pages yet bind degraded-trust / stale-data states tightly enough to mutation gating and concern ownership."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1-L73 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05278",
+      "source_obligation_ids": [
+        "obl-5054"
+      ],
+      "source_seed_ids": [
+        "seed-7402"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`00-plans-index.md` still has missing SSOT rows, stranded addendum-to-plan-map updates, an",
+      "row_type": "stale_retirement",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "status": "present",
+      "exact_items": [
+        "`00-plans-index.md` still has missing SSOT rows, stranded addendum-to-plan-map updates, and stale routing around Crosswalk, Multi-Account, GitHub auth, and feature-list.",
+        "00-plans-index.md"
+      ],
+      "stale_tokens": [
+        "00-plans-index.md"
+      ],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1-L73 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

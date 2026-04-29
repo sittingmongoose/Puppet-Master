@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-013",
+  "group_ids": [
+    "discgrp-0049",
+    "discgrp-0050",
+    "discgrp-0051",
+    "discgrp-0052"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00217",
+      "source_obligation_ids": [
+        "obl-112"
+      ],
+      "source_seed_ids": [
+        "seed-115"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "## Tier Boundaries (DRY)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L136"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00218",
+      "source_obligation_ids": [
+        "obl-113"
+      ],
+      "source_seed_ids": [
+        "seed-116"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Progression_Gates.md",
+      "new_heading_hint": "### Fidelity recovery cov-034: Promotion classes and gate evidence",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Progression_Gates.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00219",
+      "source_obligation_ids": [
+        "obl-114"
+      ],
+      "source_seed_ids": [
+        "seed-118"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Requested/effective account and execution identity",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L270"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00220",
+      "source_obligation_ids": [
+        "obl-115"
+      ],
+      "source_seed_ids": [
+        "seed-119"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### 2.3 Merge conflicts: worktree kept but re-run can destroy it",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L191"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

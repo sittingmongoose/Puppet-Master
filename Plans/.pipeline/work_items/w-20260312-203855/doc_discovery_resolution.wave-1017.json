@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1017",
+  "group_ids": [
+    "discgrp-4065",
+    "discgrp-4066",
+    "discgrp-4067",
+    "discgrp-4068"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04378",
+      "source_obligation_ids": [
+        "obl-4218"
+      ],
+      "source_seed_ids": [
+        "seed-5861"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "### 2.0 Command entry contract (doc-level)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L68"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04379",
+      "source_obligation_ids": [
+        "obl-4219"
+      ],
+      "source_seed_ids": [
+        "seed-5862"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "#### Route target navigation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04380",
+      "source_obligation_ids": [
+        "obl-4220"
+      ],
+      "source_seed_ids": [
+        "seed-5863"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-04381",
+      "source_obligation_ids": [
+        "obl-4221"
+      ],
+      "source_seed_ids": [
+        "seed-5864"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Runtime and routing terms",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L70"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

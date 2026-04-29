@@ -1,0 +1,433 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-198",
+  "row_group_ids": [
+    "rowgrp-0789",
+    "rowgrp-0790",
+    "rowgrp-0791",
+    "rowgrp-0792"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-03695",
+      "source_obligation_ids": [
+        "obl-3540"
+      ],
+      "source_seed_ids": [
+        "seed-4763"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Register memory and live-preview/build event families, new doctor checks, and new ToolIDs",
+      "row_type": "layout_blocker",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "# Assistant-Only Memory Subsystem (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "Register memory and live-preview/build event families, new doctor checks, and new ToolIDs in the canonical storage/tool/command owners instead of leaving them stranded in supporting docs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04240",
+      "source_obligation_ids": [
+        "obl-4080"
+      ],
+      "source_seed_ids": [
+        "seed-5642"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "`handoff` and `promotion` are now visibly polysemous across stream, UI, memory, and eviden",
+      "row_type": "layout_blocker",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "# Assistant-Only Memory Subsystem (Canonical SSOT)",
+      "status": "present",
+      "exact_items": [
+        "`handoff` and `promotion` are now visibly polysemous across stream, UI, memory, and evidence docs.",
+        "handoff",
+        "promotion"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:L52",
+        "Plans/assistant-memory-subsystem.md:L256",
+        "Plans/assistant-memory-subsystem.md:L258",
+        "Plans/assistant-memory-subsystem.md:L267",
+        "Plans/assistant-memory-subsystem.md:L410"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04439",
+      "source_obligation_ids": [
+        "obl-4279"
+      ],
+      "source_seed_ids": [
+        "seed-5963"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "`memory.gist.*`, AutoRunBoundary/AutoMilestone, project-switch handoff, and `attention_req",
+      "row_type": "layout_blocker",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "# Assistant-Only Memory Subsystem (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "`memory.gist.*`, AutoRunBoundary/AutoMilestone, project-switch handoff, and `attention_required` durability still lack a consistent event/persistence/command ownership story.",
+        "memory.gist.*",
+        "attention_required"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:L242"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03660",
+      "source_obligation_ids": [
+        "obl-3506"
+      ],
+      "source_seed_ids": [
+        "seed-4722",
+        "seed-5068",
+        "seed-5105",
+        "seed-5144",
+        "seed-5533",
+        "seed-5575",
+        "seed-5609",
+        "seed-5623",
+        "seed-5669",
+        "seed-5934",
+        "seed-5975"
+      ],
+      "source_shard_ids": [
+        "shard-0049",
+        "shard-0052",
+        "shard-0055",
+        "shard-0056",
+        "shard-0058"
+      ],
+      "canon_label": "`Plans/assistant-memory-subsystem.md`",
+      "row_type": "owner",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/assistant-memory-subsystem.md`",
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:L47",
+        "Plans/assistant-memory-subsystem.md:L53",
+        "Plans/assistant-memory-subsystem.md:L79",
+        "Plans/assistant-memory-subsystem.md:L82",
+        "Plans/assistant-memory-subsystem.md:L125"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03684",
+      "source_obligation_ids": [
+        "obl-3530"
+      ],
+      "source_seed_ids": [
+        "seed-4753"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "`Plans/newtools.md` and `Plans/assistant-memory-subsystem.md`",
+      "row_type": "owner",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/newtools.md` and `Plans/assistant-memory-subsystem.md`",
+        "Plans/newtools.md",
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:L47",
+        "Plans/assistant-memory-subsystem.md:L53",
+        "Plans/assistant-memory-subsystem.md:L79",
+        "Plans/assistant-memory-subsystem.md:L82",
+        "Plans/assistant-memory-subsystem.md:L125"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03889",
+      "source_obligation_ids": [
+        "obl-3734"
+      ],
+      "source_seed_ids": [
+        "seed-5081"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "`assistant-memory-subsystem.md` still promises persisted `memory.gist.*` style behavior wi",
+      "row_type": "owner",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "# Assistant-Only Memory Subsystem (Canonical SSOT)",
+      "status": "present",
+      "exact_items": [
+        "`assistant-memory-subsystem.md` still promises persisted `memory.gist.*` style behavior without storage-plan registration, leaves AutoRunBoundary/AutoMilestone without observable lifecycle events, and specifies chat/Assistant handoff actions with no canonical `cmd.*` coverage.",
+        "assistant-memory-subsystem.md",
+        "memory.gist.*",
+        "cmd.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:L47",
+        "Plans/assistant-memory-subsystem.md:L53",
+        "Plans/assistant-memory-subsystem.md:L79",
+        "Plans/assistant-memory-subsystem.md:L82",
+        "Plans/assistant-memory-subsystem.md:L125"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03915",
+      "source_obligation_ids": [
+        "obl-3760"
+      ],
+      "source_seed_ids": [
+        "seed-5127"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "register `memory.*`, `live.*`, doctor/custom-headless, and handoff lifecycle events where",
+      "row_type": "owner",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "# Assistant-Only Memory Subsystem (Canonical SSOT)",
+      "status": "present",
+      "exact_items": [
+        "register `memory.*`, `live.*`, doctor/custom-headless, and handoff lifecycle events where they truly belong.",
+        "memory.*",
+        "live.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:L1",
+        "Plans/assistant-memory-subsystem.md:L6",
+        "Plans/assistant-memory-subsystem.md:L16",
+        "Plans/assistant-memory-subsystem.md:L17",
+        "Plans/assistant-memory-subsystem.md:L20"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04204",
+      "source_obligation_ids": [
+        "obl-4044"
+      ],
+      "source_seed_ids": [
+        "seed-5563"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "`live.*` and memory auto-trigger/handoff event families still have no canonical contracts/",
+      "row_type": "owner",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "# Assistant-Only Memory Subsystem (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "`live.*` and memory auto-trigger/handoff event families still have no canonical contracts/storage registration.",
+        "live.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04253",
+      "source_obligation_ids": [
+        "obl-4093"
+      ],
+      "source_seed_ids": [
+        "seed-5655"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "assistant-memory still has no clear owner for whether `memory.gist.*` is a seglog event fa",
+      "row_type": "owner",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "# Assistant-Only Memory Subsystem (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "assistant-memory still has no clear owner for whether `memory.gist.*` is a seglog event family or merely a redb-side mutation signal.",
+        "memory.gist.*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:L242"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04444",
+      "source_obligation_ids": [
+        "obl-4284"
+      ],
+      "source_seed_ids": [
+        "seed-5993"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Newtools and memory remain the strongest examples of plan-local obligations not yet absorb",
+      "row_type": "owner",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "# Assistant-Only Memory Subsystem (Canonical SSOT)",
+      "status": "partial",
+      "exact_items": [
+        "Newtools and memory remain the strongest examples of plan-local obligations not yet absorbed by canonical state/event/command owners."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04503",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06272",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00107",
+      "source_obligation_ids": [
+        "obl-037"
+      ],
+      "source_seed_ids": [
+        "seed-037"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "execution identity + lineage fields",
+      "row_type": "owner",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "Runtime / Storage / Contract Impacts",
+      "status": "missing",
+      "exact_items": [
+        "Add node_id",
+        "Add package_id",
+        "Add seam_id",
+        "Add lane_id",
+        "Add attempt_id",
+        "Add effective_identity",
+        "Normalize requested/effective account identity shapes",
+        "Normalize blocked_reason_code/allowed_action_ids and safe-point/restore-point/rollback terminology"
+      ],
+      "stale_tokens": [
+        "phase_id",
+        "task_id",
+        "tier-identity",
+        "requested_auth_mode",
+        "effective_capabilities[]",
+        "active-agents.json",
+        "seglog",
+        "redb"
+      ],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00324",
+      "source_obligation_ids": [
+        "obl-183"
+      ],
+      "source_seed_ids": [
+        "seed-209"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "docs involved: `Plans/sharding_config.json`, `Plans/auto_decisions.jsonl`",
+      "row_type": "owner",
+      "path": "Plans/auto_decisions.json",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "docs involved: `Plans/sharding_config.json`, `Plans/auto_decisions.jsonl`",
+        "Plans/sharding_config.json",
+        "Plans/auto_decisions.jsonl"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/auto_decisions.json:target_doc_not_found"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

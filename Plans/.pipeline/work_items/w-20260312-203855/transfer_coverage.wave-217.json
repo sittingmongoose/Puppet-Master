@@ -1,0 +1,398 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-217",
+  "row_group_ids": [
+    "rowgrp-0865",
+    "rowgrp-0866",
+    "rowgrp-0867",
+    "rowgrp-0868"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-03431",
+      "source_obligation_ids": [
+        "obl-3277"
+      ],
+      "source_seed_ids": [
+        "seed-4391"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "`orchestrator-subagent-integration.md` now shows an explicit same-file contradiction: `Tie",
+      "row_type": "owner",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Future mobile/web clients (impacts architecture now)",
+      "status": "partial",
+      "exact_items": [
+        "`orchestrator-subagent-integration.md` now shows an explicit same-file contradiction: `TierContext` declares fields that its own constructor does not populate, while file-based coordination is simultaneously described as canonical and as a derived/debug mirror.",
+        "orchestrator-subagent-integration.md",
+        "TierContext"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "orchestrator-subagent-integration.md"
+      ],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L61"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01518",
+      "source_obligation_ids": [
+        "obl-1375"
+      ],
+      "source_seed_ids": [
+        "seed-1692"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "retire from active use while preserving enough identity/metadata/lineage for historical br",
+      "row_type": "stale_retirement",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "# Puppet Master Rewrite Tie-In Contract (Active)",
+      "status": "present",
+      "exact_items": [
+        "retire from active use while preserving enough identity/metadata/lineage for historical browsing"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L1-L418 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04183",
+      "source_obligation_ids": [
+        "obl-4023"
+      ],
+      "source_seed_ids": [
+        "seed-5542"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "`UI_Wiring_Rules.md` still lacks dispatcher-level obligations for `allowed_action_ids[]`,",
+      "row_type": "stale_retirement",
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "status": "present",
+      "exact_items": [
+        "`UI_Wiring_Rules.md` still lacks dispatcher-level obligations for `allowed_action_ids[]`, stale-projection revalidation, and `correlation_id` trace-through.",
+        "UI_Wiring_Rules.md",
+        "allowed_action_ids[]",
+        "correlation_id"
+      ],
+      "stale_tokens": [
+        "UI_Wiring_Rules.md",
+        "allowed_action_ids[]",
+        "correlation_id"
+      ],
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L1-L418 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00325",
+      "source_obligation_ids": [
+        "obl-183"
+      ],
+      "source_seed_ids": [
+        "seed-209"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "docs involved: `Plans/sharding_config.json`, `Plans/auto_decisions.jsonl`",
+      "row_type": "owner",
+      "path": "Plans/sharding_config.json",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "docs involved: `Plans/sharding_config.json`, `Plans/auto_decisions.jsonl`",
+        "Plans/sharding_config.json",
+        "Plans/auto_decisions.jsonl"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/sharding_config.json:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00206",
+      "source_obligation_ids": [
+        "obl-102"
+      ],
+      "source_seed_ids": [
+        "seed-103"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "why impacted: still acts like a primary runtime owner for orchestration UX and identity pr",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Runtime artifact and projection storage scope",
+      "status": "partial",
+      "exact_items": [
+        "why impacted: still acts like a primary runtime owner for orchestration UX and identity projection."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00429",
+      "source_obligation_ids": [
+        "obl-287"
+      ],
+      "source_seed_ids": [
+        "seed-332"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "`Contracts_V0.md` is now the clearest canonical owner for requested/effective runtime iden",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "status": "present",
+      "exact_items": [
+        "`Contracts_V0.md` is now the clearest canonical owner for requested/effective runtime identity naming, but its downstream consumers remain materially weaker:",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L221",
+        "Plans/storage-plan.md:L253",
+        "Plans/storage-plan.md:L266",
+        "Plans/storage-plan.md:L284",
+        "Plans/storage-plan.md:L395"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00493",
+      "source_obligation_ids": [
+        "obl-350"
+      ],
+      "source_seed_ids": [
+        "seed-405"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "`dirty_worktree` and `worktree_conflict` are canonical blocked reasons and must remain vis",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "status": "partial",
+      "exact_items": [
+        "`dirty_worktree` and `worktree_conflict` are canonical blocked reasons and must remain visible in both surfaces without becoming generic SCM errors.",
+        "dirty_worktree",
+        "worktree_conflict"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1310"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01279",
+      "source_obligation_ids": [
+        "obl-1136"
+      ],
+      "source_seed_ids": [
+        "seed-1348"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "project card should surface background work independently from blocked attention",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Fidelity recovery cov-080: Project attention projection",
+      "status": "partial",
+      "exact_items": [
+        "project card should surface background work independently from blocked attention"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L133",
+        "Plans/storage-plan.md:L139"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01970",
+      "source_obligation_ids": [
+        "obl-1827"
+      ],
+      "source_seed_ids": [
+        "seed-2350"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "`attempt.started` / usage / storage / auth surfaces still lack one crisp contract for how",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## Runtime Attempt / Safe Point / Queue Analysis Storage Addendum (2026-03-09)",
+      "status": "partial",
+      "exact_items": [
+        "`attempt.started` / usage / storage / auth surfaces still lack one crisp contract for how requested/effective/provider/account identity propagates end to end",
+        "attempt.started"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1557"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02329",
+      "source_obligation_ids": [
+        "obl-2181"
+      ],
+      "source_seed_ids": [
+        "seed-2834"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "now owns the sharpest receipt/actor-snapshot contradictions and needs a project+actor-awar",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "#### Cross-surface receipt record baseline",
+      "status": "partial",
+      "exact_items": [
+        "now owns the sharpest receipt/actor-snapshot contradictions and needs a project+actor-aware canonical cross-surface receipt contract"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L481"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02983",
+      "source_obligation_ids": [
+        "obl-2829"
+      ],
+      "source_seed_ids": [
+        "seed-3727"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "Preview `trust_tier` and runtime projection trust must stay distinct.",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Fidelity recovery cov-044: Projection trust and action gating",
+      "status": "present",
+      "exact_items": [
+        "Preview `trust_tier` and runtime projection trust must stay distinct.",
+        "trust_tier"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L591",
+        "Plans/storage-plan.md:L598"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03071",
+      "source_obligation_ids": [
+        "obl-2917"
+      ],
+      "source_seed_ids": [
+        "seed-3858"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "`storage-plan.md` should own redb key patterns, projector shapes, current-state projection",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 2.3 redb: schema, migrations, key patterns",
+      "status": "present",
+      "exact_items": [
+        "`storage-plan.md` should own redb key patterns, projector shapes, current-state projections, and canonical record families",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L14",
+        "Plans/storage-plan.md:L17",
+        "Plans/storage-plan.md:L26",
+        "Plans/storage-plan.md:L29",
+        "Plans/storage-plan.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03317",
+      "source_obligation_ids": [
+        "obl-3163"
+      ],
+      "source_seed_ids": [
+        "seed-4216"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "Artifact / HITL / tool surfaces still have direct schema and key mismatches:",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### 2.3 redb: schema, migrations, key patterns",
+      "status": "partial",
+      "exact_items": [
+        "Artifact / HITL / tool surfaces still have direct schema and key mismatches:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L455"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03446",
+      "source_obligation_ids": [
+        "obl-3292"
+      ],
+      "source_seed_ids": [
+        "seed-4414"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "Storage-plan is now clearly missing several record/projection families that downstream doc",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "### Fidelity recovery cov-043: Source Control and worktree handshake",
+      "status": "present",
+      "exact_items": [
+        "Storage-plan is now clearly missing several record/projection families that downstream docs already treat as if they exist (`runtime_artifact` payload schemas, worktree records/projections, artifact index registration).",
+        "runtime_artifact"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L395",
+        "Plans/storage-plan.md:L543",
+        "Plans/storage-plan.md:L574",
+        "Plans/storage-plan.md:L610",
+        "Plans/storage-plan.md:L617"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

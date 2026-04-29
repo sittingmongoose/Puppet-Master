@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/Tools.md",
-  "source_sha256": "2b92e21d284b9f30d993b970e80c35f057e807a9751d6eaee0e9f82035541e0c",
+  "source_sha256": "adf58afe2e0549e6f5aaaefdd7508043a2a60783f16547c9fa74a2d3634e8ad6",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -10,175 +10,175 @@
     {
       "dest_path": "Plans/_shards/Tools/01-preamble.md",
       "start_line": 1,
-      "end_line": 6,
-      "segment_sha256": "19aa4ae5d0a3d109426ec59cde6fe36b5d0b262fb2336ca553fb996f102ea7df",
+      "end_line": 90,
+      "segment_sha256": "c3742131fbb1d8c1f03ad7dc8125607b40fad42bcc91051ace2a3c93e7de3f24",
       "heading": null
     },
     {
       "dest_path": "Plans/_shards/Tools/02-ssot-references-dry.md",
-      "start_line": 7,
-      "end_line": 17,
+      "start_line": 91,
+      "end_line": 101,
       "segment_sha256": "2b3fe9a3e836f33f4ae6b305cc70042cbede5c8df9b081d0fd42cffa61103189",
       "heading": "## SSOT references (DRY)"
     },
     {
       "dest_path": "Plans/_shards/Tools/03-1-purpose-and-scope.md",
-      "start_line": 18,
-      "end_line": 42,
+      "start_line": 102,
+      "end_line": 126,
       "segment_sha256": "fabcff036e086f75e0e50511dd9b4f1d6385aead99e916e3e3c4a75a0343812f",
       "heading": "## 1. Purpose and scope"
     },
     {
       "dest_path": "Plans/_shards/Tools/04-2-permission-model.md",
-      "start_line": 43,
-      "end_line": 149,
+      "start_line": 127,
+      "end_line": 233,
       "segment_sha256": "7f45f3501dd4ac1f5d4f2903412697790a200ae5ef71cb419342a6ae0d95a7f1",
       "heading": "## 2. Permission model"
     },
     {
       "dest_path": "Plans/_shards/Tools/05-3-built-in-tools-target-set.md",
-      "start_line": 150,
-      "end_line": 790,
-      "segment_sha256": "b12209917af72d93bb5eec0424b2bc4074c3fe8dbf5eb6820832d247927bc18d",
+      "start_line": 234,
+      "end_line": 922,
+      "segment_sha256": "c13bdd988c219a8b20026c92a5b4c4d13a142ae796d72bf928775b5f43ac3302",
       "heading": "## 3. Built-in tools (target set)"
     },
     {
       "dest_path": "Plans/_shards/Tools/06-4-custom-tools.md",
-      "start_line": 791,
-      "end_line": 817,
+      "start_line": 923,
+      "end_line": 949,
       "segment_sha256": "777860103ad5646d12aba158c9e41af7d1af4849e7420aefe197a35d185f36e8",
       "heading": "## 4. Custom tools"
     },
     {
       "dest_path": "Plans/_shards/Tools/07-5-mcp-integration-in-scope.md",
-      "start_line": 818,
-      "end_line": 828,
+      "start_line": 950,
+      "end_line": 960,
       "segment_sha256": "2dd6ef3a22b870edf534d5226ddd75d6af10ebd053c6e51573b7a31546a612bf",
       "heading": "## 5. MCP integration (in scope)"
     },
     {
       "dest_path": "Plans/_shards/Tools/08-6-ways-to-add-tools-implementation-angles.md",
-      "start_line": 829,
-      "end_line": 846,
-      "segment_sha256": "32ef57fda05b36881ce436ce8e77651c9a7dee23c899fa919ec5ec5fc75a97fb",
+      "start_line": 961,
+      "end_line": 1000,
+      "segment_sha256": "83d42cbeebbe75df6e2a900ae5754c0fefc13d1424dc57fa15c54be23fde31a2",
       "heading": "## 6. Ways to add tools (implementation angles)"
     },
     {
       "dest_path": "Plans/_shards/Tools/09-7-per-platform-mcp-and-tool-config-reference.md",
-      "start_line": 847,
-      "end_line": 863,
+      "start_line": 1001,
+      "end_line": 1017,
       "segment_sha256": "c0e4a360d4885344dc87cae373299860827dfe1cc555b63b81033969d301544a",
       "heading": "## 7. Per-platform MCP and tool config (reference)"
     },
     {
       "dest_path": "Plans/_shards/Tools/10-8-implementation-details-and-technical-notes.md",
-      "start_line": 864,
-      "end_line": 1045,
-      "segment_sha256": "85423a11512d05c6f26a40ee84b1cd4a291955d3b8b50c571091f508df9a75e2",
+      "start_line": 1018,
+      "end_line": 1219,
+      "segment_sha256": "72dd5a579dce262bdb217dac74484a0f1765806883bc61b5b2ae0c87a12ecea4",
       "heading": "## 8. Implementation details and technical notes"
     },
     {
       "dest_path": "Plans/_shards/Tools/11-10-implementation-plan-permissions-spec-for-implementers.md",
-      "start_line": 1046,
-      "end_line": 1139,
+      "start_line": 1220,
+      "end_line": 1313,
       "segment_sha256": "16fbd3010d6f64af084810824ddf47780de0dabd12b46446f4ed1d1aab6592e5",
       "heading": "## 10. Implementation plan: permissions (spec for implementers)"
     },
     {
       "dest_path": "Plans/_shards/Tools/12-11-relationship-to-other-plans.md",
-      "start_line": 1140,
-      "end_line": 1157,
+      "start_line": 1314,
+      "end_line": 1331,
       "segment_sha256": "67968dd0678fe1c6e2a89f32cb155b6652da8c6b8dd9dfb2a14aaf5b2333b628",
       "heading": "## 11. Relationship to other plans"
     },
     {
       "dest_path": "Plans/_shards/Tools/13-12-implementation-checklist-ordered-for-implementation-plan.md",
-      "start_line": 1158,
-      "end_line": 1179,
+      "start_line": 1332,
+      "end_line": 1353,
       "segment_sha256": "ac2a6035568703052efecc37a42aa242397afb0b0203be3dcb6b1bece8bc8a16",
       "heading": "## 12. Implementation checklist (ordered for implementation plan)"
     },
     {
       "dest_path": "Plans/_shards/Tools/14-13-references.md",
-      "start_line": 1180,
-      "end_line": 1196,
+      "start_line": 1354,
+      "end_line": 1370,
       "segment_sha256": "f42e238c3eded18418419a6a0453e9ad943a1f027689cb5f3e4ea956face3ac4",
       "heading": "## 13. References"
     },
     {
       "dest_path": "Plans/_shards/Tools/15-tool-policy-outcome-taxonomy-addendum-2026-03-08.md",
-      "start_line": 1197,
-      "end_line": 1226,
-      "segment_sha256": "aee87b965ebc8b4a1d83074b1e5334746baaa2154d0fd18c04c3aa67672de87f",
+      "start_line": 1371,
+      "end_line": 1420,
+      "segment_sha256": "2ad36333679d0ad9b9de55743f0d2474cb56d513b43e5fe9473e06cd88e8c43b",
       "heading": "## Tool Policy Outcome Taxonomy Addendum (2026-03-08)"
     },
     {
       "dest_path": "Plans/_shards/Tools/16-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md",
-      "start_line": 1227,
-      "end_line": 1241,
+      "start_line": 1421,
+      "end_line": 1435,
       "segment_sha256": "b7c58e1b876a47fab4b6ba183df9800ecb6a5b948f9007a1035ca8d2af6e103a",
       "heading": "## Tool Denial / Runtime Taxonomy Alignment Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/Tools/17-tool-denial-and-runtime-action-reconciliation-addendum-2026-03-09.md",
-      "start_line": 1242,
-      "end_line": 1253,
+      "start_line": 1436,
+      "end_line": 1447,
       "segment_sha256": "04096e19d57878f73361fefa6204bc3952d2e7cbebdc9f6048f258d28939b323",
       "heading": "## Tool Denial and Runtime Action Reconciliation Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/Tools/18-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-03-09.md",
-      "start_line": 1254,
-      "end_line": 1275,
-      "segment_sha256": "35215765c041c323b90458b12963d016d139296c2bced14d3241e634776204e9",
+      "start_line": 1448,
+      "end_line": 1490,
+      "segment_sha256": "8dc5a157278cccacb268d6826d20685f53d57ede4988819124221d642ad8ef41",
       "heading": "## Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/Tools/19-tool-field-name-and-taxonomy-alignment.md",
-      "start_line": 1276,
-      "end_line": 1295,
-      "segment_sha256": "00dd8ee6d9617c35f6672113b2e7cd98c5e0aac2edf6494d56a39557e0371760",
+      "start_line": 1491,
+      "end_line": 1531,
+      "segment_sha256": "bf8b445ee7fa594a7423dc755332daa91e0f7f2639973b6eb87af8ebccd29c23",
       "heading": "## Tool Field Name and Taxonomy Alignment"
     },
     {
       "dest_path": "Plans/_shards/Tools/20-10-firecrawl-provider-integration.md",
-      "start_line": 1296,
-      "end_line": 1582,
+      "start_line": 1532,
+      "end_line": 1818,
       "segment_sha256": "185c6033290eddb89bd4445c924ea1ec8c5375cd013bb45c59e04faf67ef1ae6",
       "heading": "## 10. Firecrawl provider integration"
     },
     {
       "dest_path": "Plans/_shards/Tools/21-11-provider-capability-matrix.md",
-      "start_line": 1583,
-      "end_line": 1676,
-      "segment_sha256": "ac46eaba188c329bf1a2009eedecc5b9967d55fc528d48cba69b16fa7a9d1f94",
+      "start_line": 1819,
+      "end_line": 1938,
+      "segment_sha256": "785a3ef1b04f513e69d806f869118aa8df84e9076fa9e7877932222014defba5",
       "heading": "## 11. Provider capability matrix"
     },
     {
       "dest_path": "Plans/_shards/Tools/22-12-web-tool-routing-algorithm.md",
-      "start_line": 1677,
-      "end_line": 1728,
+      "start_line": 1939,
+      "end_line": 1990,
       "segment_sha256": "8d1797935b72ae2cfaf3c122b7d244c8d2bfd59a07f09a19e282f30b4be38d89",
       "heading": "## 12. Web tool routing algorithm"
     },
     {
       "dest_path": "Plans/_shards/Tools/23-13-batch-operations.md",
-      "start_line": 1729,
-      "end_line": 1770,
+      "start_line": 1991,
+      "end_line": 2032,
       "segment_sha256": "b63468dbcf978aff3bb96a3d28e64e326de57490718db6d4fe908a4f79b2e27e",
       "heading": "## 13. Batch operations"
     },
     {
       "dest_path": "Plans/_shards/Tools/24-14-web-content-caching-layer.md",
-      "start_line": 1771,
-      "end_line": 1805,
+      "start_line": 2033,
+      "end_line": 2067,
       "segment_sha256": "88da1c5f653db93bcf93baf53d317fc2b8ba82e9d2dc176dbeee1241d72c8fc2",
       "heading": "## 14. Web content caching layer"
     },
     {
       "dest_path": "Plans/_shards/Tools/25-canonical-owner-and-consumer-reconciliation.md",
-      "start_line": 1806,
-      "end_line": 1829,
+      "start_line": 2068,
+      "end_line": 2091,
       "segment_sha256": "b2123799429ec2025e42b811a0f44eed8fde3d7528ca3214ddc0df5d92b96f7e",
       "heading": "## Canonical owner and consumer reconciliation"
     }

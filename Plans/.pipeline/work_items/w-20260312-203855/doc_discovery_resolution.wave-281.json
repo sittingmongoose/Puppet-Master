@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-281",
+  "group_ids": [
+    "discgrp-1121",
+    "discgrp-1122",
+    "discgrp-1123",
+    "discgrp-1124"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01371",
+      "source_obligation_ids": [
+        "obl-1228"
+      ],
+      "source_seed_ids": [
+        "seed-1469"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Prompt_Pipeline.md",
+      "new_heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01372",
+      "source_obligation_ids": [
+        "obl-1229"
+      ],
+      "source_seed_ids": [
+        "seed-1470"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_Integration.md",
+      "new_heading_hint": "# GitHub Integration -- Spec",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01373",
+      "source_obligation_ids": [
+        "obl-1230"
+      ],
+      "source_seed_ids": [
+        "seed-1471"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "### Default repository privacy",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L271"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01374",
+      "source_obligation_ids": [
+        "obl-1231"
+      ],
+      "source_seed_ids": [
+        "seed-1472"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "## Runtime Attempt / Safe Point / Queue Analysis Storage Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1557"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

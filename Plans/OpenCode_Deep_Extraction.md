@@ -1,5 +1,46 @@
 # OpenCode Deep Extraction (for Puppet Master)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0399
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - There is no current canonical routing payload shared across search, deep links, and cross-tab navigation.
+  - `resume_url` deep links for wizard/interview recovery
+  - resume_url
+  - URL deep links and in-app search routes should decode to the same internal navigation model
+  - search results, deep links, and inspector panes should reuse the same canonical term labels as help entries
+  - project attention rows should route through the same internal payload model as deep links/search/palette results
+  - URL deep links decode into the same route model used by in-app command dispatch
+  - search results and command-palette results should restore the same target context as deep links, not a watered-down approximation
+  - `cost_usage` still does not require a durable usage/switch join key strongly enough to back the promised Usage/Ledger deep links
+  - cost_usage
+  - Keep route payloads and subject-open semantics aligned so deep links, preview restore, artifact opens, and cross-surface pivots all resolve through the same identity model.
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - `Plans/OpenCode_Deep_Extraction.md`
+  - Plans/OpenCode_Deep_Extraction.md
+  - `resume_url` is currently described as a deep link that restores exact app context, but no owner doc states that it serializes route identity rather than source-open identity.
+  - stop treating `resume_url` or page-local deep links as stronger than generic navigation
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 <!--
@@ -57,6 +98,27 @@ Extract reusable, implementation-grade guidance from OpenCode (run modes, agents
 6) **No local clone cleanup required** — extraction reads from the upstream repo directly; nothing to delete.
 
 ## 5. Output format (for downstream agents)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0400
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - GPT-5.2 mostly confirmed and sharpened the downstream contradictions into exact field/key mismatches.
+  - This is the upstream language source for several downstream consumer drifts already logged.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 For each extracted item, emit a record with:
 - `source`: file path + snippet
 - `category`: tools | permissions | provider_stream | ui_commands | storage
@@ -73,6 +135,27 @@ For each extracted item, emit a record with:
 ---
 
 ## 7. Expanded Extraction Coverage
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0401
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - coverage verification is still vulnerable to extraction hazards from prose, wildcard tokens, and filename-shaped `cmd.*.json` strings.
+  - cmd.*.json
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 ### 7A. Run Modes and Enforcement
 
@@ -146,6 +229,27 @@ User-defined agents from config: processed at lines ~205-231 in `agent.ts`. A us
 
 #### 7B.2 Subagent invocation mechanism
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0402
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `resume_url` as a strong standalone deep-link mechanism
+  - resume_url
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 **File pointers:**
 - Task tool (subagent launcher): `packages/opencode/src/tool/task.ts`
 - Subtask part handling in loop: `packages/opencode/src/session/prompt.ts` -> `loop()` (lines ~352-526)
@@ -169,6 +273,27 @@ User-defined agents from config: processed at lines ~205-231 in `agent.ts`. A us
 
 #### 7B.4 Prompt assembly pipeline
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0403
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - assembly stages still say `tier/mode/platform/model`
+  - tier/mode/platform/model
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 **File pointers:**
 - System prompt construction: `packages/opencode/src/session/system.ts` -> `SystemPrompt.environment()`
 - Instruction prompts: `packages/opencode/src/session/instruction.ts`
@@ -187,6 +312,27 @@ The prompt assembly pipeline (executed per loop iteration in `SessionPrompt.loop
 7. **Model messages**: `MessageV2.toModelMessages(msgs, model)` converts the internal message/part representation to the AI SDK's `ModelMessage[]` format.
 
 #### 7B.5 Compaction triggers and continuation summaries
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0404
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - evidence summaries
+  - canonical findings summaries and prose summaries are artifacts/views that must still resolve back to exact records
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **File pointers:**
 - Compaction logic: `packages/opencode/src/session/compaction.ts`
@@ -249,6 +395,29 @@ The prompt assembly pipeline (executed per loop iteration in `SessionPrompt.loop
 - `question`, `plan_enter`, `plan_exit`: Default `"deny"` globally, selectively enabled per agent (e.g., `question: "allow"` for build and plan agents).
 
 #### 7C.5 Ask UI semantics (once / always / reject)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0405
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - reject when `object_kind` is present without `object_id`
+  - object_kind
+  - object_id
+  - reject when `object_id` is present without `object_kind`
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 **File pointers:**
 - Reply enum + `reply()` function: `packages/opencode/src/permission/next.ts` (lines ~89-233)

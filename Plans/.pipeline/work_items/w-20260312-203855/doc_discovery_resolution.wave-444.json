@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-444",
+  "group_ids": [
+    "discgrp-1773",
+    "discgrp-1774",
+    "discgrp-1775",
+    "discgrp-1776"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02030",
+      "source_obligation_ids": [
+        "obl-1887"
+      ],
+      "source_seed_ids": [
+        "seed-2434"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/rewrite-tie-in-memo.md",
+      "new_heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L116"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02031",
+      "source_obligation_ids": [
+        "obl-1888"
+      ],
+      "source_seed_ids": [
+        "seed-2435"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02032",
+      "source_obligation_ids": [
+        "obl-1889"
+      ],
+      "source_seed_ids": [
+        "seed-2436"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_Integration.md",
+      "new_heading_hint": "### Fidelity recovery cov-098: GitHub stable account identity",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/GitHub_Integration.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02033",
+      "source_obligation_ids": [
+        "obl-1890"
+      ],
+      "source_seed_ids": [
+        "seed-2437"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Additional shell/runtime identities required by the promoted Section 15 feature set",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L251"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

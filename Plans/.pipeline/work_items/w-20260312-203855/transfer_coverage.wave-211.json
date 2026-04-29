@@ -1,0 +1,986 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-211",
+  "row_group_ids": [
+    "rowgrp-0841",
+    "rowgrp-0842",
+    "rowgrp-0843",
+    "rowgrp-0844"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-00043",
+      "source_obligation_ids": [
+        "obl-015"
+      ],
+      "source_seed_ids": [
+        "seed-015"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "graph-canonical control loop",
+      "row_type": "layout_blocker",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Design discussion now has a concrete recommendation direction",
+      "status": "missing",
+      "exact_items": [
+        "define the governing intelligence/control loop in a graph-canonical system",
+        "resolve whether tiers remain only a derived human-facing lens or retain execution authority"
+      ],
+      "stale_tokens": [
+        "hybrid"
+      ],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00079",
+      "source_obligation_ids": [
+        "obl-031"
+      ],
+      "source_seed_ids": [
+        "seed-031"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "seam review loop behavior",
+      "row_type": "layout_blocker",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "seam review loop",
+      "status": "missing",
+      "exact_items": [
+        "define concrete seam review loop behavior",
+        "include trigger points, checks performed, corroboration thresholds, and emitted artifacts",
+        "candidate outputs: seam review verdict, failure classes with severity, evidence bundle/rationale, remediation-node recommendation or graph-patch recommendation, corroboration requirement and outcome when invoked"
+      ],
+      "stale_tokens": [
+        "HITL",
+        "package overseer",
+        "graph-patch"
+      ],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00094",
+      "source_obligation_ids": [
+        "obl-036"
+      ],
+      "source_seed_ids": [
+        "seed-036"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "package/seam overseer + lane-aware execution model",
+      "row_type": "layout_blocker",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "missing",
+      "exact_items": [
+        "Replace tier-rooted execution with package/seam/lane model",
+        "Define package overseer + seam overseer roles",
+        "Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage",
+        "Redefine gates to package-complete / seam-complete",
+        "Rename or retire Tiers UI/tab and tier_tree/progress bars"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars",
+        "phase/task/subtask"
+      ],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00291",
+      "source_obligation_ids": [
+        "obl-160"
+      ],
+      "source_seed_ids": [
+        "seed-167"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "likely issue: provider/model controls remain per-thread or per-run and do not expose reque",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "## Parallel Execution & Subagent Integration",
+      "status": "partial",
+      "exact_items": [
+        "likely issue: provider/model controls remain per-thread or per-run and do not expose requested/effective execution identity across package, seam, node, and delegated subagent layers."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L3333"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00348",
+      "source_obligation_ids": [
+        "obl-206"
+      ],
+      "source_seed_ids": [
+        "seed-238"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "`Orchestrator` owns package lane-pool operational truth for the active run:",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "# Orchestrator Subagent Integration -- Implementation Plan",
+      "status": "present",
+      "exact_items": [
+        "`Orchestrator` owns package lane-pool operational truth for the active run:",
+        "Orchestrator"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L1",
+        "Plans/orchestrator-subagent-integration.md:L15",
+        "Plans/orchestrator-subagent-integration.md:L35",
+        "Plans/orchestrator-subagent-integration.md:L38",
+        "Plans/orchestrator-subagent-integration.md:L70"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00365",
+      "source_obligation_ids": [
+        "obl-223"
+      ],
+      "source_seed_ids": [
+        "seed-255"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "Current docs have action verbs like `recover`, `prune`, `remove`, and `Clean all worktrees",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "## Avoiding \"Built but Not Wired\"",
+      "status": "present",
+      "exact_items": [
+        "Current docs have action verbs like `recover`, `prune`, `remove`, and `Clean all worktrees`, but not a strong shared lane lifecycle.",
+        "recover",
+        "prune",
+        "remove",
+        "Clean all worktrees"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L3",
+        "Plans/orchestrator-subagent-integration.md:L5",
+        "Plans/orchestrator-subagent-integration.md:L7",
+        "Plans/orchestrator-subagent-integration.md:L15",
+        "Plans/orchestrator-subagent-integration.md:L26"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00465",
+      "source_obligation_ids": [
+        "obl-322"
+      ],
+      "source_seed_ids": [
+        "seed-371"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "open lane in Source Control",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "### 3. Worktree-native conflict control",
+      "status": "partial",
+      "exact_items": [
+        "open lane in Source Control"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L6113"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00478",
+      "source_obligation_ids": [
+        "obl-335"
+      ],
+      "source_seed_ids": [
+        "seed-385"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "still frames ownership around `tier` / `subtask` rather than package lane pools.",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "### 3. Doctor Gemini plan-mode check: source of tier config",
+      "status": "present",
+      "exact_items": [
+        "still frames ownership around `tier` / `subtask` rather than package lane pools.",
+        "tier",
+        "subtask"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L7",
+        "Plans/orchestrator-subagent-integration.md:L15",
+        "Plans/orchestrator-subagent-integration.md:L47",
+        "Plans/orchestrator-subagent-integration.md:L67",
+        "Plans/orchestrator-subagent-integration.md:L71"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00484",
+      "source_obligation_ids": [
+        "obl-341"
+      ],
+      "source_seed_ids": [
+        "seed-396"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "`lane lifecycle state`",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "### 1. Hook-Based Lifecycle Middleware (BeforeUnit/AfterUnit)",
+      "status": "partial",
+      "exact_items": [
+        "`lane lifecycle state`",
+        "lane lifecycle state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L2012"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00875",
+      "source_obligation_ids": [
+        "obl-732"
+      ],
+      "source_seed_ids": [
+        "seed-836",
+        "seed-2110",
+        "seed-2197"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0030",
+        "shard-0031"
+      ],
+      "canon_label": "`fixed`",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "### DRY Violations Fixed in This Plan",
+      "status": "present",
+      "exact_items": [
+        "`fixed`",
+        "fixed"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L640",
+        "Plans/orchestrator-subagent-integration.md:L843",
+        "Plans/orchestrator-subagent-integration.md:L984",
+        "Plans/orchestrator-subagent-integration.md:L2018",
+        "Plans/orchestrator-subagent-integration.md:L2841"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00917",
+      "source_obligation_ids": [
+        "obl-774"
+      ],
+      "source_seed_ids": [
+        "seed-881"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "Define how nominated findings become canonical concerns.",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "### 3. Remediation Loop for Critical/Major Findings",
+      "status": "partial",
+      "exact_items": [
+        "Define how nominated findings become canonical concerns."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L2731"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01150",
+      "source_obligation_ids": [
+        "obl-1007"
+      ],
+      "source_seed_ids": [
+        "seed-1178",
+        "seed-2302",
+        "seed-2317",
+        "seed-3768",
+        "seed-3787",
+        "seed-3853",
+        "seed-3909",
+        "seed-3930",
+        "seed-3956",
+        "seed-4011",
+        "seed-4092",
+        "seed-4122",
+        "seed-4149",
+        "seed-4177",
+        "seed-4206",
+        "seed-4376",
+        "seed-4404",
+        "seed-4773",
+        "seed-4847",
+        "seed-4984",
+        "seed-9247",
+        "seed-9605",
+        "seed-9644",
+        "seed-9726",
+        "seed-9775",
+        "seed-9893",
+        "seed-10012",
+        "seed-10110",
+        "seed-10122",
+        "seed-10186",
+        "seed-10225",
+        "seed-10401"
+      ],
+      "source_shard_ids": [
+        "shard-0020",
+        "shard-0031",
+        "shard-0032",
+        "shard-0042",
+        "shard-0043",
+        "shard-0044",
+        "shard-0045",
+        "shard-0046",
+        "shard-0047",
+        "shard-0050",
+        "shard-0051",
+        "shard-0083",
+        "shard-0086",
+        "shard-0087",
+        "shard-0088",
+        "shard-0089",
+        "shard-0090",
+        "shard-0092"
+      ],
+      "canon_label": "`Plans/orchestrator-subagent-integration.md`",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L15",
+        "Plans/orchestrator-subagent-integration.md:L35",
+        "Plans/orchestrator-subagent-integration.md:L38",
+        "Plans/orchestrator-subagent-integration.md:L1949",
+        "Plans/orchestrator-subagent-integration.md:L1960"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01159",
+      "source_obligation_ids": [
+        "obl-1016"
+      ],
+      "source_seed_ids": [
+        "seed-1190"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "canon_label": "a seam overseer should not collapse into a narrow implementation persona just because a fr",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "# Orchestrator Subagent Integration -- Implementation Plan",
+      "status": "partial",
+      "exact_items": [
+        "a seam overseer should not collapse into a narrow implementation persona just because a framework is detected"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01175",
+      "source_obligation_ids": [
+        "obl-1032"
+      ],
+      "source_seed_ids": [
+        "seed-1210"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "canon_label": "`Seam integration default`",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "# Orchestrator Subagent Integration -- Implementation Plan",
+      "status": "partial",
+      "exact_items": [
+        "`Seam integration default`",
+        "Seam integration default"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01176",
+      "source_obligation_ids": [
+        "obl-1033"
+      ],
+      "source_seed_ids": [
+        "seed-1211"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "canon_label": "`Node implementation match: Rust + backend`",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "### 7. Implementation Checklist (GUI & Backend -- Add/Expand)",
+      "status": "partial",
+      "exact_items": [
+        "`Node implementation match: Rust + backend`",
+        "Node implementation match: Rust + backend"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L851"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01186",
+      "source_obligation_ids": [
+        "obl-1043"
+      ],
+      "source_seed_ids": [
+        "seed-1221"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "canon_label": "Orchestrator work likely needs careful treatment of `task` / `run` / `subagent` scopes so:",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "# Orchestrator Subagent Integration -- Implementation Plan",
+      "status": "present",
+      "exact_items": [
+        "Orchestrator work likely needs careful treatment of `task` / `run` / `subagent` scopes so:",
+        "task",
+        "run",
+        "subagent"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L1",
+        "Plans/orchestrator-subagent-integration.md:L15",
+        "Plans/orchestrator-subagent-integration.md:L35",
+        "Plans/orchestrator-subagent-integration.md:L38",
+        "Plans/orchestrator-subagent-integration.md:L41"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01188",
+      "source_obligation_ids": [
+        "obl-1045"
+      ],
+      "source_seed_ids": [
+        "seed-1223"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "canon_label": "subagent overrides do not accidentally become package defaults",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "### 11. Subagent Persona info: storage, overrides, and injection",
+      "status": "partial",
+      "exact_items": [
+        "subagent overrides do not accidentally become package defaults"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L944"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01266",
+      "source_obligation_ids": [
+        "obl-1123"
+      ],
+      "source_seed_ids": [
+        "seed-1335"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "`Seam integration blocked`",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "# Orchestrator Subagent Integration -- Implementation Plan",
+      "status": "partial",
+      "exact_items": [
+        "`Seam integration blocked`",
+        "Seam integration blocked"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01294",
+      "source_obligation_ids": [
+        "obl-1151"
+      ],
+      "source_seed_ids": [
+        "seed-1367",
+        "seed-1372",
+        "seed-1937"
+      ],
+      "source_shard_ids": [
+        "shard-0022",
+        "shard-0028"
+      ],
+      "canon_label": "`info`",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "### 11. Subagent Persona info: storage, overrides, and injection",
+      "status": "present",
+      "exact_items": [
+        "`info`",
+        "info"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L844",
+        "Plans/orchestrator-subagent-integration.md:L877",
+        "Plans/orchestrator-subagent-integration.md:L944",
+        "Plans/orchestrator-subagent-integration.md:L1405",
+        "Plans/orchestrator-subagent-integration.md:L1466"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01334",
+      "source_obligation_ids": [
+        "obl-1191"
+      ],
+      "source_seed_ids": [
+        "seed-1423"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "top-level seam rows should load compact rollups first",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "### 7. Lazy Lifecycle (State Created on First Write)",
+      "status": "partial",
+      "exact_items": [
+        "top-level seam rows should load compact rollups first"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L2995"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01497",
+      "source_obligation_ids": [
+        "obl-1354"
+      ],
+      "source_seed_ids": [
+        "seed-1650"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "lane = orchestration lineage object",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "## Debug-capable investigation orchestration",
+      "status": "partial",
+      "exact_items": [
+        "lane = orchestration lineage object"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L132"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02112",
+      "source_obligation_ids": [
+        "obl-1969"
+      ],
+      "source_seed_ids": [
+        "seed-2562"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "This seam is now tightly coupled to historical-run behavior:",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "## GUI and Backend Scope (All In-Scope Now)",
+      "status": "partial",
+      "exact_items": [
+        "This seam is now tightly coupled to historical-run behavior:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L795"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02201",
+      "source_obligation_ids": [
+        "obl-2056"
+      ],
+      "source_seed_ids": [
+        "seed-2672"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "`Prompt_Pipeline.md` still contains a normative MUST against creating execution layers bey",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "### Approach B: Tier-level config-wiring validation (Phase / Task / Subtask / Iteration)",
+      "status": "present",
+      "exact_items": [
+        "`Prompt_Pipeline.md` still contains a normative MUST against creating execution layers beyond `Phase / Task / Subtask / Iteration`",
+        "Prompt_Pipeline.md",
+        "Phase / Task / Subtask / Iteration"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L118",
+        "Plans/orchestrator-subagent-integration.md:L122",
+        "Plans/orchestrator-subagent-integration.md:L794",
+        "Plans/orchestrator-subagent-integration.md:L1210",
+        "Plans/orchestrator-subagent-integration.md:L2964"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02307",
+      "source_obligation_ids": [
+        "obl-2159"
+      ],
+      "source_seed_ids": [
+        "seed-2803"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "This seam now needs explicit contract-version governance; otherwise adapter-local shadow f",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "### Fidelity recovery cov-005: Retire tier-era canon and shadow fields",
+      "status": "partial",
+      "exact_items": [
+        "This seam now needs explicit contract-version governance; otherwise adapter-local shadow fields will proliferate."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L7",
+        "Plans/orchestrator-subagent-integration.md:L15"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02721",
+      "source_obligation_ids": [
+        "obl-2568"
+      ],
+      "source_seed_ids": [
+        "seed-3370"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "whenever a seam still depends on a missing canonical event/record family or a missing owne",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "### 6. Orchestrator and subagent code not yet present",
+      "status": "partial",
+      "exact_items": [
+        "whenever a seam still depends on a missing canonical event/record family or a missing owner doc, it is not yet reconciliation-ready"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L905"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03115",
+      "source_obligation_ids": [
+        "obl-2961"
+      ],
+      "source_seed_ids": [
+        "seed-3905"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "owner clarity matters as much as field choice now; otherwise the same seam will keep reope",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "## GUI and Backend Scope (All In-Scope Now)",
+      "status": "partial",
+      "exact_items": [
+        "owner clarity matters as much as field choice now; otherwise the same seam will keep reopening under different names"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L795"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03122",
+      "source_obligation_ids": [
+        "obl-2968"
+      ],
+      "source_seed_ids": [
+        "seed-3916"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "old model: dynamic subagent selection \u201cfor each tier level,\u201d start/end verification at tie",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "## Dynamic Subagent Selection Architecture",
+      "status": "present",
+      "exact_items": [
+        "old model: dynamic subagent selection \u201cfor each tier level,\u201d start/end verification at tier boundaries, `TierContext`, task/phase inspectors, tier-scoped crews, tier-keyed coordination",
+        "TierContext"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L510",
+        "Plans/orchestrator-subagent-integration.md:L512",
+        "Plans/orchestrator-subagent-integration.md:L522",
+        "Plans/orchestrator-subagent-integration.md:L524",
+        "Plans/orchestrator-subagent-integration.md:L2154"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03651",
+      "source_obligation_ids": [
+        "obl-3497"
+      ],
+      "source_seed_ids": [
+        "seed-4707"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "this seam now looks resolvable; the missing piece was ownership, not concept invention",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "## GUI and Backend Scope (All In-Scope Now)",
+      "status": "partial",
+      "exact_items": [
+        "this seam now looks resolvable; the missing piece was ownership, not concept invention"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L795"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03708",
+      "source_obligation_ids": [
+        "obl-3553"
+      ],
+      "source_seed_ids": [
+        "seed-4784"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "execution-state hints (`has_errors`, `needs_testing`, active subagent tracking)",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "### 5. Active Agent Tracking",
+      "status": "present",
+      "exact_items": [
+        "execution-state hints (`has_errors`, `needs_testing`, active subagent tracking)",
+        "has_errors",
+        "needs_testing"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L491",
+        "Plans/orchestrator-subagent-integration.md:L493",
+        "Plans/orchestrator-subagent-integration.md:L3295"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03718",
+      "source_obligation_ids": [
+        "obl-3563"
+      ],
+      "source_seed_ids": [
+        "seed-4794"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "`Plans/orchestrator-subagent-integration.md` should stop owning a canonical mixed runtime",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md` should stop owning a canonical mixed runtime object.",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L15",
+        "Plans/orchestrator-subagent-integration.md:L35",
+        "Plans/orchestrator-subagent-integration.md:L38",
+        "Plans/orchestrator-subagent-integration.md:L1949",
+        "Plans/orchestrator-subagent-integration.md:L1960"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03756",
+      "source_obligation_ids": [
+        "obl-3601"
+      ],
+      "source_seed_ids": [
+        "seed-4867"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "This seam is now mostly an ownership cleanup, not a concept invention problem.",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "## GUI and Backend Scope (All In-Scope Now)",
+      "status": "partial",
+      "exact_items": [
+        "This seam is now mostly an ownership cleanup, not a concept invention problem."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L795"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03790",
+      "source_obligation_ids": [
+        "obl-3635"
+      ],
+      "source_seed_ids": [
+        "seed-4918"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "spot-checks against `Plans/orchestrator-subagent-integration.md`",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "spot-checks against `Plans/orchestrator-subagent-integration.md`",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L15",
+        "Plans/orchestrator-subagent-integration.md:L35",
+        "Plans/orchestrator-subagent-integration.md:L38",
+        "Plans/orchestrator-subagent-integration.md:L1949",
+        "Plans/orchestrator-subagent-integration.md:L1960"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04192",
+      "source_obligation_ids": [
+        "obl-4032"
+      ],
+      "source_seed_ids": [
+        "seed-5551"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "the capability-gating seam now has a direct contradiction: one owner implies frozen capabi",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "## GUI and Backend Scope (All In-Scope Now)",
+      "status": "partial",
+      "exact_items": [
+        "the capability-gating seam now has a direct contradiction: one owner implies frozen capability state/events while the media/capability owner says capability is recomputed live and not carried as a separate persisted state stream."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L795"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

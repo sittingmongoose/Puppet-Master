@@ -68,6 +68,32 @@ With **LSP MVP** (Plans/LSPSupport.md), the following tools are **enhanced or ne
 
 #### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0513
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - add effective account/runtime attribution where tool execution depends on provider identity or permission state
+  - `CustomHeadlessTool` still lacks stable tool identity, registration timing, permission semantics, and consistent config-file ownership.
+  - CustomHeadlessTool
+  - `LSPSupport.md` still lacks a normalized split between UI-only, internal-service, read-only tool, and mutation-capable LSP actions, especially in multi-project-tab routing.
+  - LSPSupport.md
+  - `LSPSupport.md` still lacks a normalized split between run-scoped `tool.*` telemetry, UI-session LSP interactions, and mutation-capable apply-edit paths in multi-project/workspace-tab routing.
+  - tool.*
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -314,6 +340,28 @@ Provider-native `create` maps to the canonical registry tool `write`.
 - On timeout, the write must fail atomically and return `{ status: "timed_out", path, error: { code: "timeout" } }`.
 
 ### 3.5A `skill` tool runtime contract
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0509
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - the real problem is not only missing fields; it is that tool events are still described as analytics exhaust while other docs already want them to carry runtime truth
+  - `Skills_System.md` still assumes HTE-style tool reachability, does not explain DAE delivery/bundling behavior, and lacks a proper introspection/listing surface for runtime skills.
+  - Skills_System.md
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 This section consumes the linked owner contract and stays aligned with it.
 

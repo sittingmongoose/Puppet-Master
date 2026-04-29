@@ -1,0 +1,2513 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-144",
+  "group_ids": [
+    "gapgrp-0573",
+    "gapgrp-0574",
+    "gapgrp-0575",
+    "gapgrp-0576"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-01659",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02132 is partial for `widget config`: presentation settings and safe subfilters only",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02132"
+      ],
+      "source_obligation_ids": [
+        "obl-1989"
+      ],
+      "source_seed_ids": [
+        "seed-2586"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`widget config`: presentation settings and safe subfilters only",
+        "widget config"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01665",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02142 is partial for compact widget headers are not a good place to explain semantic scope; that needs page-lev",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02142"
+      ],
+      "source_obligation_ids": [
+        "obl-1999"
+      ],
+      "source_seed_ids": [
+        "seed-2596"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "compact widget headers are not a good place to explain semantic scope; that needs page-level context and deep-link clarity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01667",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02144 is partial for widget actions should route through the same command/deep-link payload model as search, in",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02144"
+      ],
+      "source_obligation_ids": [
+        "obl-2001"
+      ],
+      "source_seed_ids": [
+        "seed-2598"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "widget actions should route through the same command/deep-link payload model as search, inspectors, and palette actions"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01684",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02163 is partial for Usage and widget surfaces are still incomplete for requested-vs-effective and trust semant",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02163"
+      ],
+      "source_obligation_ids": [
+        "obl-2020"
+      ],
+      "source_seed_ids": [
+        "seed-2626"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "Usage and widget surfaces are still incomplete for requested-vs-effective and trust semantics:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01691",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02172 is partial for `Plans/usage-feature.md` + `Plans/Widget_System.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02172"
+      ],
+      "source_obligation_ids": [
+        "obl-2028"
+      ],
+      "source_seed_ids": [
+        "seed-2637"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`Plans/usage-feature.md` + `Plans/Widget_System.md`",
+        "Plans/usage-feature.md",
+        "Plans/Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01742",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02245 is partial for `Widget_System.md` still splits terminal widgets between `widget.terminal_output` and `wid",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02245"
+      ],
+      "source_obligation_ids": [
+        "obl-2099"
+      ],
+      "source_seed_ids": [
+        "seed-2727"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`Widget_System.md` still splits terminal widgets between `widget.terminal_output` and `widget.agent_terminal`",
+        "Widget_System.md",
+        "widget.terminal_output",
+        "widget.agent_terminal"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01746",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02251 is partial for Live widget and page contracts still need attempt-/lane-/session-aware attribution rather",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02251"
+      ],
+      "source_obligation_ids": [
+        "obl-2105"
+      ],
+      "source_seed_ids": [
+        "seed-2733"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "Live widget and page contracts still need attempt-/lane-/session-aware attribution rather than tier-only routing:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01837",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02365 is partial for `widget.multi_account` still binds to `settings/multi_account.*` instead of the canonical",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02365"
+      ],
+      "source_obligation_ids": [
+        "obl-2216"
+      ],
+      "source_seed_ids": [
+        "seed-2879"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "`widget.multi_account` still binds to `settings/multi_account.*` instead of the canonical `provider_accounts.*` storage family",
+        "widget.multi_account",
+        "settings/multi_account.*",
+        "provider_accounts.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01839",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02367 is partial for Orchestrator ledger widget semantics still center tier-era filters rather than attempt/acc",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02367"
+      ],
+      "source_obligation_ids": [
+        "obl-2218"
+      ],
+      "source_seed_ids": [
+        "seed-2881"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Orchestrator ledger widget semantics still center tier-era filters rather than attempt/account/receipt-aware routing"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01850",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02378 is partial for Widget multi-account data sourcing still points at pre-rewrite namespaces.",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02378"
+      ],
+      "source_obligation_ids": [
+        "obl-2228"
+      ],
+      "source_seed_ids": [
+        "seed-2895"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Widget multi-account data sourcing still points at pre-rewrite namespaces."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02002",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02560 is partial for Add one shared degraded-trust / projection-health / concern bridge that provider, permissi",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02560"
+      ],
+      "source_obligation_ids": [
+        "obl-2408"
+      ],
+      "source_seed_ids": [
+        "seed-3125"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "Add one shared degraded-trust / projection-health / concern bridge that provider, permissions, Orchestrator, Usage, and widget surfaces can all consume."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02058",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02622 is partial for `cmd.widget.*` still uses a generic `page: string`, which now conflicts with the move towa",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02622"
+      ],
+      "source_obligation_ids": [
+        "obl-2470"
+      ],
+      "source_seed_ids": [
+        "seed-3228"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "`cmd.widget.*` still uses a generic `page: string`, which now conflicts with the move toward stronger native-surface vocabulary and typed routing.",
+        "cmd.widget.*",
+        "page: string"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04256",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05469 is partial for If reconciliation starts from surface docs first instead of owner docs, drift will reappea",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05469"
+      ],
+      "source_obligation_ids": [
+        "obl-5241"
+      ],
+      "source_seed_ids": [
+        "seed-7786"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "If reconciliation starts from surface docs first instead of owner docs, drift will reappear immediately because the route vocabulary is now cross-cutting rather than page-local."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04729",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06116 is partial for `widget.current_task` = active tier title/objective/platform/model",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06116"
+      ],
+      "source_obligation_ids": [
+        "obl-5888"
+      ],
+      "source_seed_ids": [
+        "seed-8746"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.current_task` = active tier title/objective/platform/model",
+        "widget.current_task"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04730",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06117 is partial for `widget.progress_bars` = phase/task/subtask completion bars",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06117"
+      ],
+      "source_obligation_ids": [
+        "obl-5889"
+      ],
+      "source_seed_ids": [
+        "seed-8747",
+        "seed-8766"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.progress_bars` = phase/task/subtask completion bars",
+        "widget.progress_bars"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04731",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06118 is partial for `widget.agent_terminal` = current worker output",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06118"
+      ],
+      "source_obligation_ids": [
+        "obl-5890"
+      ],
+      "source_seed_ids": [
+        "seed-8748"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.agent_terminal` = current worker output",
+        "widget.agent_terminal"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04732",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06119 is partial for `widget.completed_prose` = completed tier summaries",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06119"
+      ],
+      "source_obligation_ids": [
+        "obl-5891"
+      ],
+      "source_seed_ids": [
+        "seed-8749"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.completed_prose` = completed tier summaries",
+        "widget.completed_prose"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04736",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06124 is partial for `widget.completed_prose` is also still described as completed tier summaries even though e",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06124"
+      ],
+      "source_obligation_ids": [
+        "obl-5896"
+      ],
+      "source_seed_ids": [
+        "seed-8756"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.completed_prose` is also still described as completed tier summaries even though evidence and summary records are moving toward stronger object-backed surfaces.",
+        "widget.completed_prose"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04737",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06125 is partial for Keep Progress widget composition, but bind widgets to canonical runtime and orchestration",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06125"
+      ],
+      "source_obligation_ids": [
+        "obl-5897"
+      ],
+      "source_seed_ids": [
+        "seed-8757"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "Keep Progress widget composition, but bind widgets to canonical runtime and orchestration objects:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04742",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06131 is partial for `Plans/Widget_System.md` is still carrying a broad pre-rewrite Orchestrator widget model.",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06131"
+      ],
+      "source_obligation_ids": [
+        "obl-5903"
+      ],
+      "source_seed_ids": [
+        "seed-8764"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`Plans/Widget_System.md` is still carrying a broad pre-rewrite Orchestrator widget model.",
+        "Plans/Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04743",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06132 is partial for `widget.current_task` = active tier title/objective/elapsed",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06132"
+      ],
+      "source_obligation_ids": [
+        "obl-5904"
+      ],
+      "source_seed_ids": [
+        "seed-8765"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.current_task` = active tier title/objective/elapsed",
+        "widget.current_task"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04745",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06134 is partial for `widget.agent_terminal` filtered by `tier_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06134"
+      ],
+      "source_obligation_ids": [
+        "obl-5906"
+      ],
+      "source_seed_ids": [
+        "seed-8768"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.agent_terminal` filtered by `tier_id`",
+        "widget.agent_terminal",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04746",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06135 is partial for `widget.completed_prose` = finished phases/tasks",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06135"
+      ],
+      "source_obligation_ids": [
+        "obl-5907"
+      ],
+      "source_seed_ids": [
+        "seed-8769"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.completed_prose` = finished phases/tasks",
+        "widget.completed_prose"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04747",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06136 is partial for `widget.tier_tree` hosted on `Orch/Tiers`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06136"
+      ],
+      "source_obligation_ids": [
+        "obl-5908"
+      ],
+      "source_seed_ids": [
+        "seed-8774"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.tier_tree` hosted on `Orch/Tiers`",
+        "widget.tier_tree",
+        "Orch/Tiers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04749",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06139 is partial for The widget data contract section is also still sourced from:",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06139"
+      ],
+      "source_obligation_ids": [
+        "obl-5911"
+      ],
+      "source_seed_ids": [
+        "seed-8777"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "The widget data contract section is also still sourced from:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04757",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06151 is partial for `Plans/Widget_System.md` says in section 7.3:",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06151"
+      ],
+      "source_obligation_ids": [
+        "obl-5923"
+      ],
+      "source_seed_ids": [
+        "seed-8795"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`Plans/Widget_System.md` says in section 7.3:",
+        "Plans/Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04767",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06165 is partial for It sits in a cross-cutting SSOT and should be cleaned up during the same widget reconcilia",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06165"
+      ],
+      "source_obligation_ids": [
+        "obl-5937"
+      ],
+      "source_seed_ids": [
+        "seed-8814"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "It sits in a cross-cutting SSOT and should be cleaned up during the same widget reconciliation tranche."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04930",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06352 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06352"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05110",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06584 is partial for `widget.current_task`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06584"
+      ],
+      "source_obligation_ids": [
+        "obl-6225"
+      ],
+      "source_seed_ids": [
+        "seed-9411"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`widget.current_task`",
+        "widget.current_task"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05111",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06585 is partial for `widget.progress_bars`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06585"
+      ],
+      "source_obligation_ids": [
+        "obl-6226"
+      ],
+      "source_seed_ids": [
+        "seed-9412"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`widget.progress_bars`",
+        "widget.progress_bars"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05137",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06619 is partial for still includes `widget.tier_tree` for `Orch/Tiers`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06619"
+      ],
+      "source_obligation_ids": [
+        "obl-6260"
+      ],
+      "source_seed_ids": [
+        "seed-9470"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "still includes `widget.tier_tree` for `Orch/Tiers`",
+        "widget.tier_tree",
+        "Orch/Tiers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05153",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06651 is partial for widget data-source language updated away from `TierChanged` / `tier_id` assumptions",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06651"
+      ],
+      "source_obligation_ids": [
+        "obl-6292"
+      ],
+      "source_seed_ids": [
+        "seed-9519"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "widget data-source language updated away from `TierChanged` / `tier_id` assumptions",
+        "TierChanged",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05157",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06657 is partial for it explicitly says it is not the storage, command, permission, or widget SSOT",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06657"
+      ],
+      "source_obligation_ids": [
+        "obl-6298"
+      ],
+      "source_seed_ids": [
+        "seed-9529"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "it explicitly says it is not the storage, command, permission, or widget SSOT"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05160",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06663 is partial for `widget.tier_tree`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06663"
+      ],
+      "source_obligation_ids": [
+        "obl-6304"
+      ],
+      "source_seed_ids": [
+        "seed-9535"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`widget.tier_tree`",
+        "widget.tier_tree"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05161",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06664 is partial for `widget.progress_bars` as phase/task/subtask bars",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06664"
+      ],
+      "source_obligation_ids": [
+        "obl-6305"
+      ],
+      "source_seed_ids": [
+        "seed-9536"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`widget.progress_bars` as phase/task/subtask bars",
+        "widget.progress_bars"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05162",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06665 is partial for `widget.current_task` as active tier",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06665"
+      ],
+      "source_obligation_ids": [
+        "obl-6306"
+      ],
+      "source_seed_ids": [
+        "seed-9537"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`widget.current_task` as active tier",
+        "widget.current_task"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05255",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06779 is partial for The **default widget drill-target mappings** are also absent.",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06779"
+      ],
+      "source_obligation_ids": [
+        "obl-6414"
+      ],
+      "source_seed_ids": [
+        "seed-9793"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "The **default widget drill-target mappings** are also absent."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-02132",
+    "cov-02142",
+    "cov-02144",
+    "cov-02163",
+    "cov-02172",
+    "cov-02245",
+    "cov-02251",
+    "cov-02365",
+    "cov-02367",
+    "cov-02378",
+    "cov-02560",
+    "cov-02622",
+    "cov-05469",
+    "cov-06116",
+    "cov-06117",
+    "cov-06118",
+    "cov-06119",
+    "cov-06124",
+    "cov-06125",
+    "cov-06131",
+    "cov-06132",
+    "cov-06134",
+    "cov-06135",
+    "cov-06136",
+    "cov-06139",
+    "cov-06151",
+    "cov-06165",
+    "cov-06352",
+    "cov-06584",
+    "cov-06585",
+    "cov-06619",
+    "cov-06651",
+    "cov-06657",
+    "cov-06663",
+    "cov-06664",
+    "cov-06665",
+    "cov-06779"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1989",
+    "obl-1999",
+    "obl-2001",
+    "obl-2020",
+    "obl-2028",
+    "obl-2099",
+    "obl-2105",
+    "obl-2216",
+    "obl-2218",
+    "obl-2228",
+    "obl-2408",
+    "obl-2470",
+    "obl-5241",
+    "obl-5888",
+    "obl-5889",
+    "obl-5890",
+    "obl-5891",
+    "obl-5896",
+    "obl-5897",
+    "obl-5903",
+    "obl-5904",
+    "obl-5906",
+    "obl-5907",
+    "obl-5908",
+    "obl-5911",
+    "obl-5923",
+    "obl-5937",
+    "obl-6009",
+    "obl-6225",
+    "obl-6226",
+    "obl-6260",
+    "obl-6292",
+    "obl-6298",
+    "obl-6304",
+    "obl-6305",
+    "obl-6306",
+    "obl-6414"
+  ],
+  "source_seed_ids_represented": [
+    "seed-2586",
+    "seed-2596",
+    "seed-2598",
+    "seed-2626",
+    "seed-2637",
+    "seed-2727",
+    "seed-2733",
+    "seed-2879",
+    "seed-2881",
+    "seed-2895",
+    "seed-3125",
+    "seed-3228",
+    "seed-7786",
+    "seed-8746",
+    "seed-8747",
+    "seed-8748",
+    "seed-8749",
+    "seed-8756",
+    "seed-8757",
+    "seed-8764",
+    "seed-8765",
+    "seed-8766",
+    "seed-8768",
+    "seed-8769",
+    "seed-8774",
+    "seed-8777",
+    "seed-8795",
+    "seed-8814",
+    "seed-9092",
+    "seed-9411",
+    "seed-9412",
+    "seed-9470",
+    "seed-9519",
+    "seed-9529",
+    "seed-9535",
+    "seed-9536",
+    "seed-9537",
+    "seed-9793"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0034",
+    "shard-0035",
+    "shard-0036",
+    "shard-0038",
+    "shard-0073",
+    "shard-0080",
+    "shard-0081",
+    "shard-0082",
+    "shard-0085",
+    "shard-0087"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-01659",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02132 is partial for `widget config`: presentation settings and safe subfilters only",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02132"
+      ],
+      "source_obligation_ids": [
+        "obl-1989"
+      ],
+      "source_seed_ids": [
+        "seed-2586"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`widget config`: presentation settings and safe subfilters only",
+        "widget config"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01665",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02142 is partial for compact widget headers are not a good place to explain semantic scope; that needs page-lev",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02142"
+      ],
+      "source_obligation_ids": [
+        "obl-1999"
+      ],
+      "source_seed_ids": [
+        "seed-2596"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "compact widget headers are not a good place to explain semantic scope; that needs page-level context and deep-link clarity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01667",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02144 is partial for widget actions should route through the same command/deep-link payload model as search, in",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02144"
+      ],
+      "source_obligation_ids": [
+        "obl-2001"
+      ],
+      "source_seed_ids": [
+        "seed-2598"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "widget actions should route through the same command/deep-link payload model as search, inspectors, and palette actions"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01684",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02163 is partial for Usage and widget surfaces are still incomplete for requested-vs-effective and trust semant",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02163"
+      ],
+      "source_obligation_ids": [
+        "obl-2020"
+      ],
+      "source_seed_ids": [
+        "seed-2626"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "Usage and widget surfaces are still incomplete for requested-vs-effective and trust semantics:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01691",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02172 is partial for `Plans/usage-feature.md` + `Plans/Widget_System.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02172"
+      ],
+      "source_obligation_ids": [
+        "obl-2028"
+      ],
+      "source_seed_ids": [
+        "seed-2637"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "`Plans/usage-feature.md` + `Plans/Widget_System.md`",
+        "Plans/usage-feature.md",
+        "Plans/Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01742",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02245 is partial for `Widget_System.md` still splits terminal widgets between `widget.terminal_output` and `wid",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02245"
+      ],
+      "source_obligation_ids": [
+        "obl-2099"
+      ],
+      "source_seed_ids": [
+        "seed-2727"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`Widget_System.md` still splits terminal widgets between `widget.terminal_output` and `widget.agent_terminal`",
+        "Widget_System.md",
+        "widget.terminal_output",
+        "widget.agent_terminal"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01746",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02251 is partial for Live widget and page contracts still need attempt-/lane-/session-aware attribution rather",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02251"
+      ],
+      "source_obligation_ids": [
+        "obl-2105"
+      ],
+      "source_seed_ids": [
+        "seed-2733"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "Live widget and page contracts still need attempt-/lane-/session-aware attribution rather than tier-only routing:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01837",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02365 is partial for `widget.multi_account` still binds to `settings/multi_account.*` instead of the canonical",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02365"
+      ],
+      "source_obligation_ids": [
+        "obl-2216"
+      ],
+      "source_seed_ids": [
+        "seed-2879"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "`widget.multi_account` still binds to `settings/multi_account.*` instead of the canonical `provider_accounts.*` storage family",
+        "widget.multi_account",
+        "settings/multi_account.*",
+        "provider_accounts.*"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01839",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02367 is partial for Orchestrator ledger widget semantics still center tier-era filters rather than attempt/acc",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02367"
+      ],
+      "source_obligation_ids": [
+        "obl-2218"
+      ],
+      "source_seed_ids": [
+        "seed-2881"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Orchestrator ledger widget semantics still center tier-era filters rather than attempt/account/receipt-aware routing"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01850",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02378 is partial for Widget multi-account data sourcing still points at pre-rewrite namespaces.",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02378"
+      ],
+      "source_obligation_ids": [
+        "obl-2228"
+      ],
+      "source_seed_ids": [
+        "seed-2895"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Widget multi-account data sourcing still points at pre-rewrite namespaces."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02002",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02560 is partial for Add one shared degraded-trust / projection-health / concern bridge that provider, permissi",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02560"
+      ],
+      "source_obligation_ids": [
+        "obl-2408"
+      ],
+      "source_seed_ids": [
+        "seed-3125"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "Add one shared degraded-trust / projection-health / concern bridge that provider, permissions, Orchestrator, Usage, and widget surfaces can all consume."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02058",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-02622 is partial for `cmd.widget.*` still uses a generic `page: string`, which now conflicts with the move towa",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02622"
+      ],
+      "source_obligation_ids": [
+        "obl-2470"
+      ],
+      "source_seed_ids": [
+        "seed-3228"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "`cmd.widget.*` still uses a generic `page: string`, which now conflicts with the move toward stronger native-surface vocabulary and typed routing.",
+        "cmd.widget.*",
+        "page: string"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04256",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-05469 is partial for If reconciliation starts from surface docs first instead of owner docs, drift will reappea",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05469"
+      ],
+      "source_obligation_ids": [
+        "obl-5241"
+      ],
+      "source_seed_ids": [
+        "seed-7786"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "If reconciliation starts from surface docs first instead of owner docs, drift will reappear immediately because the route vocabulary is now cross-cutting rather than page-local."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04729",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06116 is partial for `widget.current_task` = active tier title/objective/platform/model",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06116"
+      ],
+      "source_obligation_ids": [
+        "obl-5888"
+      ],
+      "source_seed_ids": [
+        "seed-8746"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.current_task` = active tier title/objective/platform/model",
+        "widget.current_task"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04730",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06117 is partial for `widget.progress_bars` = phase/task/subtask completion bars",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06117"
+      ],
+      "source_obligation_ids": [
+        "obl-5889"
+      ],
+      "source_seed_ids": [
+        "seed-8747",
+        "seed-8766"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.progress_bars` = phase/task/subtask completion bars",
+        "widget.progress_bars"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04731",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06118 is partial for `widget.agent_terminal` = current worker output",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06118"
+      ],
+      "source_obligation_ids": [
+        "obl-5890"
+      ],
+      "source_seed_ids": [
+        "seed-8748"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.agent_terminal` = current worker output",
+        "widget.agent_terminal"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04732",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06119 is partial for `widget.completed_prose` = completed tier summaries",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06119"
+      ],
+      "source_obligation_ids": [
+        "obl-5891"
+      ],
+      "source_seed_ids": [
+        "seed-8749"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.completed_prose` = completed tier summaries",
+        "widget.completed_prose"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04736",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06124 is partial for `widget.completed_prose` is also still described as completed tier summaries even though e",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06124"
+      ],
+      "source_obligation_ids": [
+        "obl-5896"
+      ],
+      "source_seed_ids": [
+        "seed-8756"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.completed_prose` is also still described as completed tier summaries even though evidence and summary records are moving toward stronger object-backed surfaces.",
+        "widget.completed_prose"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04737",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06125 is partial for Keep Progress widget composition, but bind widgets to canonical runtime and orchestration",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 4. Orchestrator Progress widget scope and catalog linkage"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06125"
+      ],
+      "source_obligation_ids": [
+        "obl-5897"
+      ],
+      "source_seed_ids": [
+        "seed-8757"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "Keep Progress widget composition, but bind widgets to canonical runtime and orchestration objects:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04742",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06131 is partial for `Plans/Widget_System.md` is still carrying a broad pre-rewrite Orchestrator widget model.",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06131"
+      ],
+      "source_obligation_ids": [
+        "obl-5903"
+      ],
+      "source_seed_ids": [
+        "seed-8764"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`Plans/Widget_System.md` is still carrying a broad pre-rewrite Orchestrator widget model.",
+        "Plans/Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04743",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06132 is partial for `widget.current_task` = active tier title/objective/elapsed",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06132"
+      ],
+      "source_obligation_ids": [
+        "obl-5904"
+      ],
+      "source_seed_ids": [
+        "seed-8765"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.current_task` = active tier title/objective/elapsed",
+        "widget.current_task"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04745",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06134 is partial for `widget.agent_terminal` filtered by `tier_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06134"
+      ],
+      "source_obligation_ids": [
+        "obl-5906"
+      ],
+      "source_seed_ids": [
+        "seed-8768"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.agent_terminal` filtered by `tier_id`",
+        "widget.agent_terminal",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04746",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06135 is partial for `widget.completed_prose` = finished phases/tasks",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06135"
+      ],
+      "source_obligation_ids": [
+        "obl-5907"
+      ],
+      "source_seed_ids": [
+        "seed-8769"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.completed_prose` = finished phases/tasks",
+        "widget.completed_prose"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04747",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06136 is partial for `widget.tier_tree` hosted on `Orch/Tiers`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06136"
+      ],
+      "source_obligation_ids": [
+        "obl-5908"
+      ],
+      "source_seed_ids": [
+        "seed-8774"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`widget.tier_tree` hosted on `Orch/Tiers`",
+        "widget.tier_tree",
+        "Orch/Tiers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04749",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06139 is partial for The widget data contract section is also still sourced from:",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06139"
+      ],
+      "source_obligation_ids": [
+        "obl-5911"
+      ],
+      "source_seed_ids": [
+        "seed-8777"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "The widget data contract section is also still sourced from:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04757",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06151 is partial for `Plans/Widget_System.md` says in section 7.3:",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06151"
+      ],
+      "source_obligation_ids": [
+        "obl-5923"
+      ],
+      "source_seed_ids": [
+        "seed-8795"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`Plans/Widget_System.md` says in section 7.3:",
+        "Plans/Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04767",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06165 is partial for It sits in a cross-cutting SSOT and should be cleaned up during the same widget reconcilia",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06165"
+      ],
+      "source_obligation_ids": [
+        "obl-5937"
+      ],
+      "source_seed_ids": [
+        "seed-8814"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "It sits in a cross-cutting SSOT and should be cleaned up during the same widget reconciliation tranche."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04930",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06352 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06352"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05110",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06584 is partial for `widget.current_task`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06584"
+      ],
+      "source_obligation_ids": [
+        "obl-6225"
+      ],
+      "source_seed_ids": [
+        "seed-9411"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`widget.current_task`",
+        "widget.current_task"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05111",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06585 is partial for `widget.progress_bars`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06585"
+      ],
+      "source_obligation_ids": [
+        "obl-6226"
+      ],
+      "source_seed_ids": [
+        "seed-9412"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`widget.progress_bars`",
+        "widget.progress_bars"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05137",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06619 is partial for still includes `widget.tier_tree` for `Orch/Tiers`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06619"
+      ],
+      "source_obligation_ids": [
+        "obl-6260"
+      ],
+      "source_seed_ids": [
+        "seed-9470"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "still includes `widget.tier_tree` for `Orch/Tiers`",
+        "widget.tier_tree",
+        "Orch/Tiers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05153",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06651 is partial for widget data-source language updated away from `TierChanged` / `tier_id` assumptions",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06651"
+      ],
+      "source_obligation_ids": [
+        "obl-6292"
+      ],
+      "source_seed_ids": [
+        "seed-9519"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "widget data-source language updated away from `TierChanged` / `tier_id` assumptions",
+        "TierChanged",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05157",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06657 is partial for it explicitly says it is not the storage, command, permission, or widget SSOT",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06657"
+      ],
+      "source_obligation_ids": [
+        "obl-6298"
+      ],
+      "source_seed_ids": [
+        "seed-9529"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "it explicitly says it is not the storage, command, permission, or widget SSOT"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05160",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06663 is partial for `widget.tier_tree`",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06663"
+      ],
+      "source_obligation_ids": [
+        "obl-6304"
+      ],
+      "source_seed_ids": [
+        "seed-9535"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`widget.tier_tree`",
+        "widget.tier_tree"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05161",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06664 is partial for `widget.progress_bars` as phase/task/subtask bars",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06664"
+      ],
+      "source_obligation_ids": [
+        "obl-6305"
+      ],
+      "source_seed_ids": [
+        "seed-9536"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`widget.progress_bars` as phase/task/subtask bars",
+        "widget.progress_bars"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05162",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06665 is partial for `widget.current_task` as active tier",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06665"
+      ],
+      "source_obligation_ids": [
+        "obl-6306"
+      ],
+      "source_seed_ids": [
+        "seed-9537"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`widget.current_task` as active tier",
+        "widget.current_task"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-05255",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06779 is partial for The **default widget drill-target mappings** are also absent.",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "# Widget System -- Cross-Cutting Specification"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06779"
+      ],
+      "source_obligation_ids": [
+        "obl-6414"
+      ],
+      "source_seed_ids": [
+        "seed-9793"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "The **default widget drill-target mappings** are also absent."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

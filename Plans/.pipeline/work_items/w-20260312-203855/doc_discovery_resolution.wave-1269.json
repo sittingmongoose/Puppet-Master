@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1269",
+  "group_ids": [
+    "discgrp-5073",
+    "discgrp-5074",
+    "discgrp-5075",
+    "discgrp-5076"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05477",
+      "source_obligation_ids": [
+        "obl-5249"
+      ],
+      "source_seed_ids": [
+        "seed-7801"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05479",
+      "source_obligation_ids": [
+        "obl-5251"
+      ],
+      "source_seed_ids": [
+        "seed-7803"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05480",
+      "source_obligation_ids": [
+        "obl-5252"
+      ],
+      "source_seed_ids": [
+        "seed-7804"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05481",
+      "source_obligation_ids": [
+        "obl-5253"
+      ],
+      "source_seed_ids": [
+        "seed-7805"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 4.1 Activity Bar",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L454"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

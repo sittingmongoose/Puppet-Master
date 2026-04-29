@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-203",
+  "group_ids": [
+    "discgrp-0809",
+    "discgrp-0810",
+    "discgrp-0811",
+    "discgrp-0812"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01056",
+      "source_obligation_ids": [
+        "obl-913"
+      ],
+      "source_seed_ids": [
+        "seed-1070"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01057",
+      "source_obligation_ids": [
+        "obl-914"
+      ],
+      "source_seed_ids": [
+        "seed-1071"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-015: Shared governance/runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01058",
+      "source_obligation_ids": [
+        "obl-915"
+      ],
+      "source_seed_ids": [
+        "seed-1072"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-018: Export taxonomy and manifest contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L31"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01059",
+      "source_obligation_ids": [
+        "obl-916"
+      ],
+      "source_seed_ids": [
+        "seed-1073"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "## 5A. Debug investigation grouping, manifests, and exports",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L129"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

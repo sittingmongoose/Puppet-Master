@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-412",
+  "group_ids": [
+    "discgrp-1645",
+    "discgrp-1646",
+    "discgrp-1647",
+    "discgrp-1648"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01899",
+      "source_obligation_ids": [
+        "obl-1756"
+      ],
+      "source_seed_ids": [
+        "seed-2250"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01900",
+      "source_obligation_ids": [
+        "obl-1757"
+      ],
+      "source_seed_ids": [
+        "seed-2251"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L35"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01901",
+      "source_obligation_ids": [
+        "obl-1758"
+      ],
+      "source_seed_ids": [
+        "seed-2252"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/rewrite-tie-in-memo.md",
+      "new_heading_hint": "### Plans that are still conceptually valid (but should be reworded)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/rewrite-tie-in-memo.md:L116"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01902",
+      "source_obligation_ids": [
+        "obl-1759"
+      ],
+      "source_seed_ids": [
+        "seed-2253"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 2. Plan vs Deep Plan visible behavior",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2281"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

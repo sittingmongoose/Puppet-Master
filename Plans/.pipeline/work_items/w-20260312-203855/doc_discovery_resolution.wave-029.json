@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-029",
+  "group_ids": [
+    "discgrp-0113",
+    "discgrp-0114",
+    "discgrp-0115",
+    "discgrp-0116"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00348",
+      "source_obligation_ids": [
+        "obl-206"
+      ],
+      "source_seed_ids": [
+        "seed-238"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "# Orchestrator Subagent Integration -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00349",
+      "source_obligation_ids": [
+        "obl-207"
+      ],
+      "source_seed_ids": [
+        "seed-239"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00350",
+      "source_obligation_ids": [
+        "obl-208"
+      ],
+      "source_seed_ids": [
+        "seed-240"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "### 5. Active Agent Tracking",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L2952"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00351",
+      "source_obligation_ids": [
+        "obl-209"
+      ],
+      "source_seed_ids": [
+        "seed-241"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-236",
+  "group_ids": [
+    "discgrp-0941",
+    "discgrp-0942",
+    "discgrp-0943",
+    "discgrp-0944"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01190",
+      "source_obligation_ids": [
+        "obl-1047"
+      ],
+      "source_seed_ids": [
+        "seed-1225"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01191",
+      "source_obligation_ids": [
+        "obl-1048"
+      ],
+      "source_seed_ids": [
+        "seed-1226"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L35"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01192",
+      "source_obligation_ids": [
+        "obl-1049"
+      ],
+      "source_seed_ids": [
+        "seed-1227"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "new_heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01193",
+      "source_obligation_ids": [
+        "obl-1050"
+      ],
+      "source_seed_ids": [
+        "seed-1228"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-199: Route/open compatibility-only fallback marking",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L187"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

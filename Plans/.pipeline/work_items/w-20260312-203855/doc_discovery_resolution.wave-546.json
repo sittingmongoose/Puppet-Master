@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-546",
+  "group_ids": [
+    "discgrp-2181",
+    "discgrp-2182",
+    "discgrp-2183",
+    "discgrp-2184"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02452",
+      "source_obligation_ids": [
+        "obl-2302"
+      ],
+      "source_seed_ids": [
+        "seed-2984"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "### Fidelity recovery cov-073: Canonical route payload",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02453",
+      "source_obligation_ids": [
+        "obl-2303"
+      ],
+      "source_seed_ids": [
+        "seed-2985"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/agent-rules-context.md",
+      "new_heading_hint": "# Application- and Project-Level Agent Rules -- Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/agent-rules-context.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02454",
+      "source_obligation_ids": [
+        "obl-2304"
+      ],
+      "source_seed_ids": [
+        "seed-2986"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-080: Project attention projection",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L133"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02455",
+      "source_obligation_ids": [
+        "obl-2305"
+      ],
+      "source_seed_ids": [
+        "seed-2987"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

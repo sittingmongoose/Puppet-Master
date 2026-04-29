@@ -15,6 +15,33 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-002` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-013: Shared governance/runtime record envelope
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0667
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - record and artifact must remain different objects
+  - JSON summary export is not equivalent to canonical record export unless it preserves the exact record envelope
+  - Preserve canonical ids/refs in artifact and record exports; do not invent export-local shadow identity.
+  - config bundles, render exports, artifact exports, and Orchestrator record exports are different families and should not be blurred together
+  - filtered JSON is not automatically a canonical record export
+  - `Runtime_Artifacts_Panel.md` now has a stronger failure: it mandates a concrete envelope + 19 per-type JSON schema files that do not exist, making its validation contract unimplementable as written.
+  - Runtime_Artifacts_Panel.md
+  - export-family distinctions (Evidence / Artifact / Ledger / Run / Record)
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-013
 - Fidelity gap refs: cov-013
 - Required fidelity items:
@@ -27,6 +54,63 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-013` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-018: Export taxonomy and manifest contract
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0668
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - what is the canonical manifest
+  - `Evidence export`
+  - Evidence export
+  - `Artifact export`
+  - Artifact export
+  - `Ledger export`
+  - Ledger export
+  - `Ledger export` should be record-shaped first, CSV/JSON second
+  - `Evidence export` should preserve evidence/artifact distinction
+  - Candidate manifest fields:
+  - Evidence / artifact export direction
+  - Evidence export should likely include:
+  - Artifact export should likely focus on:
+  - Add a shared Orchestrator export manifest contract.
+  - `Orchestrator_Page.md` still has relatively thin export language:
+  - Orchestrator_Page.md
+  - no strong run/evidence/history/record-bundle export contract yet
+  - Good manifest fields:
+  - export convenience must not redefine canonical source-of-truth
+  - This means artifact export should remain linked to the exact record/identity model, not become a detached blob dump with lost context.
+  - or re-query from canonical/current backing data before export
+  - `Runtime_Artifacts_Panel.md` depends on artifact identity opens without fully owning the resolver contract, so the open-by-identity behavior still risks being re-invented per surface.
+  - Runtime_Artifacts_Panel.md
+  - `storage-plan.md` and `FinalGUISpec.md` are already speaking in stronger identity terms (`preview_subject_id`, `doc:<document_id>`, `artifact:<artifact_id>`), but that identity model has not been lifted into the cross-cutting contract layer.
+  - storage-plan.md
+  - FinalGUISpec.md
+  - preview_subject_id
+  - doc:<document_id>
+  - artifact:<artifact_id>
+  - any non-trivial bundle export should preserve canonical IDs/refs and include a manifest
+  - Reuse `Project_Output_Artifacts.md` manifest discipline as the strongest model for general export bundles.
+  - Project_Output_Artifacts.md
+  - `FinalGUISpec.md` and adjacent docs already contain enough `doc:` / `artifact:` / `generated://` concepts to imply `OpenSubject`, but there is still no owner contract stating that split directly.
+  - doc:
+  - artifact:
+  - generated://
+  - OpenSubject
+  - shared Orchestrator export manifest contract
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-018
 - Fidelity gap refs: cov-018
 - Required fidelity items:
@@ -51,6 +135,28 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-020` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-025: Concern lifecycle and resolution kinds
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0670
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - subject kinds should at minimum include `doc:<document_id>` and `artifact:<artifact_id>`
+  - doc:<document_id>
+  - artifact:<artifact_id>
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-025
 - Fidelity gap refs: cov-025
 - Required fidelity items:
@@ -63,6 +169,45 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-025` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-039: Focused run and historical routing contract
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0671
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Routing contract direction
+  - Reuse the same routing contract for:
+  - Attempts have a clearer historical contract than other major record families.
+  - Routing contract implication
+  - live backing removed while historical identity may still persist
+  - Research Progress - 2026-03-16 - GPT-5.2 Contract / Routing Deepening
+  - `[retired-token-3]` still contradicts itself on persona field names, still truncates auth/account identity from its shared-runtime contract, still writes “blocked bundle” language against `[retired-token-1]`, and still contains a likely routing bug (`[retired-token-2]`) inside its pseudo-tier message keys.
+  - [retired-token-3]
+  - [retired-token-1]
+  - [retired-token-2]
+  - `UI_Command_Catalog.md` therefore has to carry routing meaning indirectly in per-command arg tables instead of relying on a shared contract family.
+  - UI_Command_Catalog.md
+  - That is useful, but it should be treated as one serialized transport form of the broader routing model, not as the hidden canonical navigation contract.
+  - The routing and command-normalization model now depends on checks that `GATE-010` cannot express, which means the gate layer is behind the owner contract layer.
+  - GATE-010
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-039
 - Fidelity gap refs: cov-039
 - Required fidelity items:
@@ -99,6 +244,26 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-044` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
 
 ### Fidelity recovery cov-060: Lane vs worktree lifecycle split
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0673
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - lane/worktree lifecycle split
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-060
 - Fidelity gap refs: cov-060
 - Required fidelity items:
@@ -119,6 +284,28 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-074` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-077: Project summary projection
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0674
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - parent-summary artifact vs evidence summary
+  - Research Progress - 2026-03-16 - project summary and attention storage contract cluster
+  - summary: Rewrote the work item bundle to the v2 artifact shapes and re-confirmed that mutation planning is still blocked because eight material blocker families remain.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-077
 - Fidelity gap refs: cov-077
 - Required fidelity items:
@@ -129,6 +316,31 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-077` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-080: Project attention projection
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0675
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - attention fields:
+  - project card should surface background work independently from blocked attention
+  - the attention center should still point to the canonical owning object and next action path, not just show copied banner text
+  - `resume_url` can remain one serialized route form, but project attention should ultimately align with the shared internal route payload model
+  - resume_url
+  - primary attention reason field
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-080
 - Fidelity gap refs: cov-080
 - Required fidelity items:
@@ -161,6 +373,30 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-176` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-181: Runtime attribution ownership split
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0676
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Runtime_Artifacts_Panel.md` still collides with `Contracts_V0.md` on what “envelope” means, still requires missing schema files, still omits `attempt_id` from the common identity set, and still does not pin whether artifact attribution comes from embedded runtime snapshots or mandatory attempt joins.
+  - Runtime_Artifacts_Panel.md
+  - Contracts_V0.md
+  - attempt_id
+  - Runtime artifact schema ownership is still split awkwardly:
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-181
 - Fidelity gap refs: cov-181
 - Required fidelity items:
@@ -173,6 +409,27 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-181` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-182: Bridge-field precedence for attempt/provider/usage/receipt joins
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0677
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Add a bridge-field precedence note to the canonical runtime/storage owner docs:
+  - evidence / artifact joins still lack the canonical fields needed to move from runtime/worktree receipts to concrete artifact/evidence subjects.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-182
 - Fidelity gap refs: cov-182
 - Required fidelity items:
@@ -185,6 +442,29 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-182` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-188: Projection fields for startup rehydration
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0678
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - startup recovery wakeups are named but not tied to a concrete blocked-episode restoration rule
+  - startup recovery should rehydrate unresolved blocked episodes, not create fresh ones opportunistically
+  - startup recovery still lacks a single owner, but GPT-5.2 also exposed that the governance UX wants a stable `blocked_owner` field that the canonical blocked projection schema still does not define.
+  - blocked_owner
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-188
 - Fidelity gap refs: cov-188
 - Required fidelity items:

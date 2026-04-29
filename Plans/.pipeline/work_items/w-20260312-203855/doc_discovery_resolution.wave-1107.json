@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1107",
+  "group_ids": [
+    "discgrp-4425",
+    "discgrp-4426",
+    "discgrp-4427",
+    "discgrp-4428"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04813",
+      "source_obligation_ids": [
+        "obl-4590"
+      ],
+      "source_seed_ids": [
+        "seed-6558"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "# Puppet Master \u2014 User-Project Project Plan Package Outputs (SSOT)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04814",
+      "source_obligation_ids": [
+        "obl-4591"
+      ],
+      "source_seed_ids": [
+        "seed-6559"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "#### Route target navigation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L87"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04815",
+      "source_obligation_ids": [
+        "obl-4592"
+      ],
+      "source_seed_ids": [
+        "seed-6560"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 3.1 IDE Shell Structure",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L335"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04816",
+      "source_obligation_ids": [
+        "obl-4593"
+      ],
+      "source_seed_ids": [
+        "seed-6561"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 2. Plan vs Deep Plan visible behavior",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2281"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-510",
+  "group_ids": [
+    "discgrp-2037",
+    "discgrp-2038",
+    "discgrp-2039",
+    "discgrp-2040"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02304",
+      "source_obligation_ids": [
+        "obl-2156"
+      ],
+      "source_seed_ids": [
+        "seed-2800"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02305",
+      "source_obligation_ids": [
+        "obl-2157"
+      ],
+      "source_seed_ids": [
+        "seed-2801"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "## Rewrite alignment (2026-02-21)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L73"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02306",
+      "source_obligation_ids": [
+        "obl-2158"
+      ],
+      "source_seed_ids": [
+        "seed-2802"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/OpenCode_Coverage_Matrix.md",
+      "new_heading_hint": "# OpenCode Coverage Matrix (Audit)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02307",
+      "source_obligation_ids": [
+        "obl-2159"
+      ],
+      "source_seed_ids": [
+        "seed-2803"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "### Fidelity recovery cov-005: Retire tier-era canon and shadow fields",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L7"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

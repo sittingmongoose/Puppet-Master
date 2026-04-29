@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-291",
+  "group_ids": [
+    "discgrp-1161",
+    "discgrp-1162",
+    "discgrp-1163",
+    "discgrp-1164"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01411",
+      "source_obligation_ids": [
+        "obl-1268"
+      ],
+      "source_seed_ids": [
+        "seed-1529"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L43"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01412",
+      "source_obligation_ids": [
+        "obl-1269"
+      ],
+      "source_seed_ids": [
+        "seed-1530"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "### 5.1 When Spec Lock updates are allowed",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L111"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01413",
+      "source_obligation_ids": [
+        "obl-1270"
+      ],
+      "source_seed_ids": [
+        "seed-1531"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "### 5.1 When Spec Lock updates are allowed",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L111"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01414",
+      "source_obligation_ids": [
+        "obl-1271"
+      ],
+      "source_seed_ids": [
+        "seed-1532"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-013 -- Pre-dispatch tool validation",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L119"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

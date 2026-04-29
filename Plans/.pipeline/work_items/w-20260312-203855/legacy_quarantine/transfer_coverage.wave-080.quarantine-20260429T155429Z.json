@@ -1,0 +1,532 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-080",
+  "timestamp_utc": "2026-04-28T22:11:25Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-317",
+    "coverage-rowgrp-318",
+    "coverage-rowgrp-319",
+    "coverage-rowgrp-320"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-317 cov-1249 Plans/usage-feature.md",
+    "rowgrp-318 cov-045,cov-059,cov-105,cov-346,cov-384,cov-756,cov-765,cov-1066,cov-1240 Plans/usage-feature.md",
+    "rowgrp-319 cov-026,cov-271,cov-826,cov-831 Plans/usage-feature.md",
+    "rowgrp-320 cov-188,cov-308,cov-416,cov-426,cov-564,cov-567,cov-949,cov-962,cov-977,cov-987 Plans/usage-feature.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-317": "completed_reduced_conservatively_with_action_and_path_normalization",
+    "coverage-rowgrp-318": "completed_reduced_conservatively_with_action_and_path_normalization",
+    "coverage-rowgrp-319": "completed_reduced_conservatively_with_action_and_path_normalization",
+    "coverage-rowgrp-320": "completed_reduced_conservatively_with_action_and_path_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-1249",
+    "cov-045",
+    "cov-059",
+    "cov-105",
+    "cov-346",
+    "cov-384",
+    "cov-756",
+    "cov-765",
+    "cov-1066",
+    "cov-1240",
+    "cov-026",
+    "cov-271",
+    "cov-826",
+    "cov-831",
+    "cov-188",
+    "cov-308",
+    "cov-416",
+    "cov-426",
+    "cov-564",
+    "cov-567",
+    "cov-949",
+    "cov-962",
+    "cov-977",
+    "cov-987"
+  ],
+  "coverage_ids_completed": [
+    "cov-1249",
+    "cov-045",
+    "cov-059",
+    "cov-105",
+    "cov-346",
+    "cov-384",
+    "cov-756",
+    "cov-765",
+    "cov-1066",
+    "cov-1240",
+    "cov-026",
+    "cov-271",
+    "cov-826",
+    "cov-831",
+    "cov-188",
+    "cov-308",
+    "cov-416",
+    "cov-426",
+    "cov-564",
+    "cov-567",
+    "cov-949",
+    "cov-962",
+    "cov-977",
+    "cov-987"
+  ],
+  "path_groups_assigned": [
+    "Plans/usage-feature.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-1249",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:473 carries escalation_level, action_available ownership, and usage observability through blocked surfaces",
+        "Plans/usage-feature.md:785 says blocked counters retain escalation_level and shared blocked-action disclosure action_available"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "escalation_level and action_available are covered, but report_ref and startup_recovered are absent from usage-feature.md consumer surfaces.",
+      "source_obligation_ids": [
+        "obl-352"
+      ],
+      "source_seed_ids": [
+        "seed-352"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-045",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "usage-feature.md covers projection trust under a same-number recovery section, but does not directly cover the assigned run/work package/feature seam/node/lane promotion model or Orchestrator ownership boundary scope.",
+      "source_obligation_ids": [
+        "obl-026"
+      ],
+      "source_seed_ids": [
+        "seed-026"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-059",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "No direct TierContext/TierType/active-agents.json/Phase-Task-Subtask-Iteration/Tiers tab supersession-hotspot coverage was found in usage-feature.md.",
+      "source_obligation_ids": [
+        "obl-029"
+      ],
+      "source_seed_ids": [
+        "seed-029"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-105",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "No direct selection_rule/tier breadcrumb, package/seam/lane identity, safe-point linkage, tiers-first widget, or reason_code/recovery_options cleanup coverage was found in usage-feature.md.",
+      "source_obligation_ids": [
+        "obl-034"
+      ],
+      "source_seed_ids": [
+        "seed-034"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-346",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Unified UsageRecord fields exist, but the assigned shared governance/runtime record-envelope fields are not represented.",
+      "source_obligation_ids": [
+        "obl-102"
+      ],
+      "source_seed_ids": [
+        "seed-102"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-384",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:443-448 routes notifications by severity, execution impact, blocked owner, persistence, and projection trust and allows quiet windows only for advisory warnings",
+        "Plans/usage-feature.md:451-458 defines current/refreshing/stale/degraded/unavailable projection states and gates sensitive actions on current or direct canonical revalidation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Notification routing and stale/degraded gating are covered, but concern acknowledgment as noise-control is not explicit.",
+      "source_obligation_ids": [
+        "obl-115"
+      ],
+      "source_seed_ids": [
+        "seed-115"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-756",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:396-402 shares one attribution family across tool events, runtime artifacts, receipts, and usage records with run/attempt/thread/node/artifact/provider/usage anchors",
+        "Plans/usage-feature.md:329 says cost_usage uses the same canonical usage pipeline and schema as usage.event"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Shared attribution coverage exists for core families and cost_usage, but evidence/trace view consumption is incomplete.",
+      "source_obligation_ids": [
+        "obl-208"
+      ],
+      "source_seed_ids": [
+        "seed-208"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-765",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:396-402 shares attribution across tool events, runtime artifacts, receipts, and usage records with execution/runtime identity fields",
+        "Plans/usage-feature.md:586 moves aggregation to usage_event_ref, run_id, node_id, attempt_id, and runtime attribution fields rather than tier_id"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Attribution and tier_id replacement signals are present, but tool.invoked versus tool.denied under-attribution and runtime artifact identity gaps are not fully closed.",
+      "source_obligation_ids": [
+        "obl-211"
+      ],
+      "source_seed_ids": [
+        "seed-211"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1066",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:586 says aggregation should use canonical usage identity usage_event_ref, run_id, node_id, attempt_id, and related runtime attribution fields rather than tier_id"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "The usage_event_ref versus tier_id correction is direct, but evidence-family and cross-surface node/attempt flow remain incomplete.",
+      "source_obligation_ids": [
+        "obl-303"
+      ],
+      "source_seed_ids": [
+        "seed-303"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1240",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:429 provides the exact artifact drill-through section heading",
+        "Plans/usage-feature.md:431-439 defines bridge-field precedence and usage/receipt lineage routing under artifact drill-through"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "usage-feature.md now has the artifact drill-through heading, but the validation artifact lineage, bridge-field viewer, and validation/report headings in sibling docs remain outside this assigned file.",
+      "source_obligation_ids": [
+        "obl-350"
+      ],
+      "source_seed_ids": [
+        "seed-350"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-026",
+      "status": "present",
+      "evidence": [
+        "Plans/usage-feature.md:141-149 defines Usage goals for 5h/7d usage, plan type, event-level usage, current tech stack, warnings, and future analytics",
+        "Plans/usage-feature.md:184-195 covers quota-hit messaging, event-ledger export/filtering, analytics, and cost tracking/attribution"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "usage-feature.md directly owns usage, quota, alerts, analytics, and product-shape coverage.",
+      "source_obligation_ids": [
+        "obl-021"
+      ],
+      "source_seed_ids": [
+        "seed-021"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-271",
+      "status": "present",
+      "evidence": [
+        "Plans/usage-feature.md:404-414 defines export taxonomy, record export, bundle export, view export, and export manifest requirements"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "Record, bundle, view export and manifest backbone requirements are directly represented.",
+      "source_obligation_ids": [
+        "obl-077"
+      ],
+      "source_seed_ids": [
+        "seed-077"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-826",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:329-333 routes cost_usage through canonical usage identity to Ledger and Usage surfaces",
+        "Plans/usage-feature.md:511-513 prefers one projector/reader path so Ledger, rollups, and UI projections do not fork into separate attribution models"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Usage/artifact pivots are normalized, but the shared route-target model for search and attention pivots is not explicit.",
+      "source_obligation_ids": [
+        "obl-232"
+      ],
+      "source_seed_ids": [
+        "seed-232"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-831",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:408-414 distinguishes bundle export and requires export manifests with ids, scope, and trust-state disclosure"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Manifest-backed export discipline exists, but identity-preserving bundle-export invariants are not stated explicitly.",
+      "source_obligation_ids": [
+        "obl-233"
+      ],
+      "source_seed_ids": [
+        "seed-233"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-188",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "No provider_account_id, effective_account_id, or effective_provider_identity governance rule was found in usage-feature.md.",
+      "source_obligation_ids": [
+        "obl-049"
+      ],
+      "source_seed_ids": [
+        "seed-049"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-308",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "No separate project health, project activity, and project attention state model was found in usage-feature.md.",
+      "source_obligation_ids": [
+        "obl-088"
+      ],
+      "source_seed_ids": [
+        "seed-088"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-416",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:390-394 carries execution_role plus requested/effective operational identity into effective-resolution, attempt, usage, and inspector surfaces",
+        "Plans/usage-feature.md:423-427 transfers requested_account_id, operational_identity, account-switch and pressure ownership, and execution-role follow-through into owner and consumer docs"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Requested/effective identity disclosure exists for usage/account-pressure surfaces, but graph detail, artifacts, and GitHub/auth reuse are incomplete in this assigned file.",
+      "source_obligation_ids": [
+        "obl-124"
+      ],
+      "source_seed_ids": [
+        "seed-124"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-426",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:586 says aggregation should use usage_event_ref, run_id, node_id, attempt_id, and runtime attribution fields rather than tier_id"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "tier_id is demoted for usage aggregation, but seam_id/package_id/lane_id and run.tier*/tier_tree/Tiers replacement are incomplete.",
+      "source_obligation_ids": [
+        "obl-125"
+      ],
+      "source_seed_ids": [
+        "seed-125"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-564",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:390-394 carries execution_role plus requested/effective operational identity into usage and inspector surfaces",
+        "Plans/usage-feature.md:423-427 transfers requested_account_id, operational_identity, account-switch and pressure ownership, and execution-role continuity into owner and consumer docs"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Operational identity and requested_account_id are covered, but requested_account_binding, projection-freshness ownership, route-payload owner, and project-summary/attention ownership are incomplete.",
+      "source_obligation_ids": [
+        "obl-159"
+      ],
+      "source_seed_ids": [
+        "seed-159"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-567",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:390-394 carries execution_role plus requested/effective operational identity into usage and inspector surfaces",
+        "Plans/usage-feature.md:416-421 adds append-only account_pressure_episode and account_switch_event families for Usage, History, Ledger, and Orchestrator"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "execution_role and switch/pressure history are covered, but actor_kind, account_switch_reason, and durable switch pointer specifics are incomplete.",
+      "source_obligation_ids": [
+        "obl-160"
+      ],
+      "source_seed_ids": [
+        "seed-160"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-949",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "No route_target contract with target_kind, project_id, selector precedence, focused_run_id, thread_id, and tab_id was found in usage-feature.md.",
+      "source_obligation_ids": [
+        "obl-265"
+      ],
+      "source_seed_ids": [
+        "seed-265"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-962",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "No route selector precedence, multi-selector rejection, or subject_id/object_kind normalization rule was found in usage-feature.md.",
+      "source_obligation_ids": [
+        "obl-269"
+      ],
+      "source_seed_ids": [
+        "seed-269"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-977",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "No canonical object_kind enum or blocked_episode identity contract was found in usage-feature.md.",
+      "source_obligation_ids": [
+        "obl-272"
+      ],
+      "source_seed_ids": [
+        "seed-272"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-987",
+      "status": "partial",
+      "evidence": [
+        "Plans/usage-feature.md:329-333 says cost_usage uses usage.event and Show in Ledger/Show in Usage preserve matching usage identity and filters",
+        "Plans/usage-feature.md:795 says receipts or artifacts with usage_event_ref open canonical Usage surfaces with that event in scope"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Usage-event identity and Ledger/Usage routing are covered, but object_kind=usage_event, object_id, and tab_id=ledger are not specified.",
+      "source_obligation_ids": [
+        "obl-275"
+      ],
+      "source_seed_ids": [
+        "seed-275"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

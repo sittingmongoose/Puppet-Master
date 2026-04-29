@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-744",
+  "group_ids": [
+    "discgrp-2973",
+    "discgrp-2974",
+    "discgrp-2975",
+    "discgrp-2976"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-03253",
+      "source_obligation_ids": [
+        "obl-3099"
+      ],
+      "source_seed_ids": [
+        "seed-4117"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "### Fidelity recovery cov-101: Provider-native correlation and approval scope",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L28"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03254",
+      "source_obligation_ids": [
+        "obl-3100"
+      ],
+      "source_seed_ids": [
+        "seed-4119"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/human-in-the-loop.md",
+      "new_heading_hint": "### Fidelity recovery cov-185: Approval scope key and approver identity",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/human-in-the-loop.md:L50"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03255",
+      "source_obligation_ids": [
+        "obl-3101"
+      ],
+      "source_seed_ids": [
+        "seed-4121"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "new_heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-03256",
+      "source_obligation_ids": [
+        "obl-3102"
+      ],
+      "source_seed_ids": [
+        "seed-4123"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Cross-surface runtime, concern, and route/open contracts",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L251"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

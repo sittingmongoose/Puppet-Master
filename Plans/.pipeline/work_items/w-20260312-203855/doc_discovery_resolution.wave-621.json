@@ -1,0 +1,114 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-621",
+  "group_ids": [
+    "discgrp-2481",
+    "discgrp-2482",
+    "discgrp-2483",
+    "discgrp-2484"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02759",
+      "source_obligation_ids": [
+        "obl-2606"
+      ],
+      "source_seed_ids": [
+        "seed-3414",
+        "seed-4001",
+        "seed-4827",
+        "seed-4957"
+      ],
+      "source_shard_ids": [
+        "shard-0040",
+        "shard-0044",
+        "shard-0050",
+        "shard-0051"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-02760",
+      "source_obligation_ids": [
+        "obl-2607"
+      ],
+      "source_seed_ids": [
+        "seed-3415",
+        "seed-3563",
+        "seed-3633",
+        "seed-3815"
+      ],
+      "source_shard_ids": [
+        "shard-0040",
+        "shard-0041",
+        "shard-0043"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02761",
+      "source_obligation_ids": [
+        "obl-2608"
+      ],
+      "source_seed_ids": [
+        "seed-3416"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Tools.md",
+      "new_heading_hint": "## 6. Ways to add tools (implementation angles)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Tools.md:L829"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02762",
+      "source_obligation_ids": [
+        "obl-2609"
+      ],
+      "source_seed_ids": [
+        "seed-3418",
+        "seed-3442",
+        "seed-3662",
+        "seed-3999",
+        "seed-4359",
+        "seed-4825"
+      ],
+      "source_shard_ids": [
+        "shard-0040",
+        "shard-0042",
+        "shard-0044",
+        "shard-0047",
+        "shard-0050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

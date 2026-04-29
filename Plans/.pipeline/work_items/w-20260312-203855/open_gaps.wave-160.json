@@ -1,0 +1,2733 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-160",
+  "group_ids": [
+    "gapgrp-0637",
+    "gapgrp-0638",
+    "gapgrp-0639",
+    "gapgrp-0640"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-00169",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00184 is partial for 2. **Tier-boundary HITL vs blocked-node/runtime-overlay HITL**",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00184"
+      ],
+      "source_obligation_ids": [
+        "obl-080"
+      ],
+      "source_seed_ids": [
+        "seed-080"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "2. **Tier-boundary HITL vs blocked-node/runtime-overlay HITL**"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00193",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00212 is partial for what old assumption is present: tier-boundary HITL payloads, incomplete execution identity",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00212"
+      ],
+      "source_obligation_ids": [
+        "obl-108"
+      ],
+      "source_seed_ids": [
+        "seed-111"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "what old assumption is present: tier-boundary HITL payloads, incomplete execution identity, no account fallback fields."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00195",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00217 is partial for what old assumption is present: HITL at tier boundaries, workspace paths under `<phase>/<t",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "## Tier Boundaries (DRY)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00217"
+      ],
+      "source_obligation_ids": [
+        "obl-112"
+      ],
+      "source_seed_ids": [
+        "seed-115"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "what old assumption is present: HITL at tier boundaries, workspace paths under `<phase>/<task>/<subtask>`, deprecated `allowed_actions[]` usage still lingering.",
+        "<phase>/<task>/<subtask>",
+        "allowed_actions[]"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00211",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00238 is partial for what old assumption is present: tier hierarchy, singular Overseer, tier-boundary HITL, old",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00238"
+      ],
+      "source_obligation_ids": [
+        "obl-127"
+      ],
+      "source_seed_ids": [
+        "seed-132"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "what old assumption is present: tier hierarchy, singular Overseer, tier-boundary HITL, old canonical owner map."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00230",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00261 is partial for impacted contract/runtime/storage area: HITL request schema.",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Canonical HITL request contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00261"
+      ],
+      "source_obligation_ids": [
+        "obl-142"
+      ],
+      "source_seed_ids": [
+        "seed-148"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "impacted contract/runtime/storage area: HITL request schema."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00342",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00437 is partial for neither doc yet gives a durable first-class account-switch / pressure-episode history mode",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00437"
+      ],
+      "source_obligation_ids": [
+        "obl-295"
+      ],
+      "source_seed_ids": [
+        "seed-340"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "neither doc yet gives a durable first-class account-switch / pressure-episode history model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00504",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00651 is partial for Actions that should generally be disabled in historical mode:",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00651"
+      ],
+      "source_obligation_ids": [
+        "obl-508"
+      ],
+      "source_seed_ids": [
+        "seed-583"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "Actions that should generally be disabled in historical mode:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00664",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00864 is partial for `corroboration`",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00864"
+      ],
+      "source_obligation_ids": [
+        "obl-721"
+      ],
+      "source_seed_ids": [
+        "seed-821",
+        "seed-2043"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "`corroboration`",
+        "corroboration"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00679",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00894 is partial for `Corroboration`",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00894"
+      ],
+      "source_obligation_ids": [
+        "obl-751"
+      ],
+      "source_seed_ids": [
+        "seed-856",
+        "seed-1260",
+        "seed-1326",
+        "seed-1747",
+        "seed-1778",
+        "seed-2506",
+        "seed-2535"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0021",
+        "shard-0022",
+        "shard-0026",
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "`Corroboration`",
+        "Corroboration"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00982",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01265 is partial for `Waiting on user approval`",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-101: Provider-native correlation and approval scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01265"
+      ],
+      "source_obligation_ids": [
+        "obl-1122"
+      ],
+      "source_seed_ids": [
+        "seed-1334"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "exact_missing_items": [
+        "`Waiting on user approval`",
+        "Waiting on user approval"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01792",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02305 is partial for Rewrite \u00a79 around dual-overseer / corroboration reality rather than layering more addenda",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "## Rewrite alignment (2026-02-21)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02305"
+      ],
+      "source_obligation_ids": [
+        "obl-2157"
+      ],
+      "source_seed_ids": [
+        "seed-2801"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "Rewrite \u00a79 around dual-overseer / corroboration reality rather than layering more addenda onto the current singular-Overseer protocol."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01981",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02538 is partial for base headless `ask -> deny unless HITL at current tier boundary` language is still tier-er",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02538"
+      ],
+      "source_obligation_ids": [
+        "obl-2387"
+      ],
+      "source_seed_ids": [
+        "seed-3100"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "base headless `ask -> deny unless HITL at current tier boundary` language is still tier-era and conflicts with unified blocked-overlay contracts",
+        "ask -> deny unless HITL at current tier boundary"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01983",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02540 is partial for approval caching still lacks an explicit actor/lane/run/account scope rule, which is unsaf",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-101: Provider-native correlation and approval scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02540"
+      ],
+      "source_obligation_ids": [
+        "obl-2389"
+      ],
+      "source_seed_ids": [
+        "seed-3102"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "approval caching still lacks an explicit actor/lane/run/account scope rule, which is unsafe under shared-runtime parallel actors"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02559 is partial for Replace permission tier-boundary language with runtime-overlay/blocked-state terminology a",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-185: Approval scope key and approver identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02559"
+      ],
+      "source_obligation_ids": [
+        "obl-2407"
+      ],
+      "source_seed_ids": [
+        "seed-3124"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "Replace permission tier-boundary language with runtime-overlay/blocked-state terminology and key approval cache scope by actor/run/lane/account context."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02113",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02691 is partial for headless `ask -> deny unless HITL at current tier boundary` still leaks tier-era gating in",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02691"
+      ],
+      "source_obligation_ids": [
+        "obl-2538"
+      ],
+      "source_seed_ids": [
+        "seed-3331"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "headless `ask -> deny unless HITL at current tier boundary` still leaks tier-era gating into what should now be normal blocked-overlay routing",
+        "ask -> deny unless HITL at current tier boundary"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02121",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02699 is partial for needs scope-keyed approval semantics, de-tiered gating language, and richer permission sna",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Approval resolution and rerun semantics"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02699"
+      ],
+      "source_obligation_ids": [
+        "obl-2546"
+      ],
+      "source_seed_ids": [
+        "seed-3343"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "needs scope-keyed approval semantics, de-tiered gating language, and richer permission snapshots"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02124",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02703 is partial for Permissions still use session-scoped approval logic without defining the session/actor/lan",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-185: Approval scope key and approver identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02703"
+      ],
+      "source_obligation_ids": [
+        "obl-2550"
+      ],
+      "source_seed_ids": [
+        "seed-3348"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Permissions still use session-scoped approval logic without defining the session/actor/lane scope key."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02128",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02708 is partial for Define an Approval Scope Key for permissions keyed by actor/lane/run/account context.",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-185: Approval scope key and approver identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02708"
+      ],
+      "source_obligation_ids": [
+        "obl-2555"
+      ],
+      "source_seed_ids": [
+        "seed-3353"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Define an Approval Scope Key for permissions keyed by actor/lane/run/account context."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02236",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02835 is partial for needs scope-keyed approval semantics and richer permission snapshots",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Approval resolution and rerun semantics"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02835"
+      ],
+      "source_obligation_ids": [
+        "obl-2682"
+      ],
+      "source_seed_ids": [
+        "seed-3528"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "needs scope-keyed approval semantics and richer permission snapshots"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02239",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02839 is partial for Permission approval caching and reject-cascade still lack actor/lane/account scope.",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-101: Provider-native correlation and approval scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02839"
+      ],
+      "source_obligation_ids": [
+        "obl-2686"
+      ],
+      "source_seed_ids": [
+        "seed-3533"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Permission approval caching and reject-cascade still lack actor/lane/account scope."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02244",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02844 is partial for Define an Approval Scope Key spanning actor/lane/run/account context.",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-185: Approval scope key and approver identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02844"
+      ],
+      "source_obligation_ids": [
+        "obl-2691"
+      ],
+      "source_seed_ids": [
+        "seed-3538"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Define an Approval Scope Key spanning actor/lane/run/account context."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02361",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02990 is partial for HITL requests/resolutions still carry no actor/lane/account identity strong enough to answ",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02990"
+      ],
+      "source_obligation_ids": [
+        "obl-2836"
+      ],
+      "source_seed_ids": [
+        "seed-3741"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "HITL requests/resolutions still carry no actor/lane/account identity strong enough to answer who asked, who approved, and under which effective runtime identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02373",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03006 is partial for Add actor/lane/account identity and approver provenance to HITL request/resolution events.",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03006"
+      ],
+      "source_obligation_ids": [
+        "obl-2852"
+      ],
+      "source_seed_ids": [
+        "seed-3762"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "Add actor/lane/account identity and approver provenance to HITL request/resolution events."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02512",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03205 is partial for HITL now visibly contains two contract eras at once:",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Canonical HITL request contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03205"
+      ],
+      "source_obligation_ids": [
+        "obl-3051"
+      ],
+      "source_seed_ids": [
+        "seed-4044"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "HITL now visibly contains two contract eras at once:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02527",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03227 is partial for Reconcile HITL so blocked/runtime semantics are canonical and tier-boundary examples becom",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03227"
+      ],
+      "source_obligation_ids": [
+        "obl-3073"
+      ],
+      "source_seed_ids": [
+        "seed-4073"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Reconcile HITL so blocked/runtime semantics are canonical and tier-boundary examples become derived copy only."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02538",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03242 is partial for Conversational / HITL / tooling contracts still break under shared-runtime and multi-lane",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03242"
+      ],
+      "source_obligation_ids": [
+        "obl-3088"
+      ],
+      "source_seed_ids": [
+        "seed-4103"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Conversational / HITL / tooling contracts still break under shared-runtime and multi-lane execution:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02569",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03282 is partial for restart persistence for HITL is still effectively run-scoped (`checkpoints.hitl.{run_id}`)",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03282"
+      ],
+      "source_obligation_ids": [
+        "obl-3128"
+      ],
+      "source_seed_ids": [
+        "seed-4162"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "restart persistence for HITL is still effectively run-scoped (`checkpoints.hitl.{run_id}`), which is unsafe once multiple concurrent approval episodes exist in one run.",
+        "checkpoints.hitl.{run_id}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02620",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03346 is partial for `allowed_actions[]` is still alive in neighboring docs even though HITL addenda say it is",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03346"
+      ],
+      "source_obligation_ids": [
+        "obl-3192"
+      ],
+      "source_seed_ids": [
+        "seed-4252"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "`allowed_actions[]` is still alive in neighboring docs even though HITL addenda say it is deprecated.",
+        "allowed_actions[]"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02685",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03438 is partial for approval identity, field-family normalization, and persistence semantics are still split a",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Approval resolution and rerun semantics"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03438"
+      ],
+      "source_obligation_ids": [
+        "obl-3284"
+      ],
+      "source_seed_ids": [
+        "seed-4401"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "approval identity, field-family normalization, and persistence semantics are still split across incompatible shapes."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02695",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03449 is partial for Normalize HITL/tool approval semantics onto one blocked-episode model with explicit scope",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-101: Provider-native correlation and approval scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03449"
+      ],
+      "source_obligation_ids": [
+        "obl-3295"
+      ],
+      "source_seed_ids": [
+        "seed-4417"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "Normalize HITL/tool approval semantics onto one blocked-episode model with explicit scope keying, field-family cleanup, and durable provenance."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02852",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03647 is partial for Recast HITL request contracts so `request_id` is explicitly subordinate to blocked-episode",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Canonical HITL request contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03647"
+      ],
+      "source_obligation_ids": [
+        "obl-3493"
+      ],
+      "source_seed_ids": [
+        "seed-4701"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "Recast HITL request contracts so `request_id` is explicitly subordinate to blocked-episode identity.",
+        "request_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03254",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04179 is partial for `/mode` is now clearly overloaded across runtime-mode vs overlay semantics while the docs",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04179"
+      ],
+      "source_obligation_ids": [
+        "obl-4019"
+      ],
+      "source_seed_ids": [
+        "seed-5538"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "`/mode` is now clearly overloaded across runtime-mode vs overlay semantics while the docs still expose only a single `{ mode }` payload.",
+        "/mode",
+        "{ mode }"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03308",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04245 is partial for `yolo` still overpromises approval freedom even though non-bypassable step-7 guards surviv",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-101: Provider-native correlation and approval scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04245"
+      ],
+      "source_obligation_ids": [
+        "obl-4085"
+      ],
+      "source_seed_ids": [
+        "seed-5647"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "`yolo` still overpromises approval freedom even though non-bypassable step-7 guards survive, and `external_publish_side_effect` remains impossible to enforce safely in DAE without pre-dispatch interception or forced host execution.",
+        "yolo",
+        "external_publish_side_effect"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03463",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04430 is partial for DAE still lacks a canonical lifecycle across defer/restart and still cannot safely enforce",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-101: Provider-native correlation and approval scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04430"
+      ],
+      "source_obligation_ids": [
+        "obl-4270"
+      ],
+      "source_seed_ids": [
+        "seed-5954"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "DAE still lacks a canonical lifecycle across defer/restart and still cannot safely enforce remote side-effect approval without a pre-dispatch intercept path."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03539",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04507 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04507"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04057",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05223 is partial for State blocked-episode identity directly:",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Restart recovery and blocked-episode continuity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05223"
+      ],
+      "source_obligation_ids": [
+        "obl-4999"
+      ],
+      "source_seed_ids": [
+        "seed-7293"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "State blocked-episode identity directly:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04526",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05842 is partial for `hitl.approval_requested` with `request_id`, `tier_id`, `tier_type`, `allowed_actions`",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05842"
+      ],
+      "source_obligation_ids": [
+        "obl-5614"
+      ],
+      "source_seed_ids": [
+        "seed-8333"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "`hitl.approval_requested` with `request_id`, `tier_id`, `tier_type`, `allowed_actions`",
+        "hitl.approval_requested",
+        "request_id",
+        "tier_id",
+        "tier_type",
+        "allowed_actions"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04544",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05868 is partial for HITL request-era and blocked/runtime-era canon still coexisting",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05868"
+      ],
+      "source_obligation_ids": [
+        "obl-5640"
+      ],
+      "source_seed_ids": [
+        "seed-8372"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "HITL request-era and blocked/runtime-era canon still coexisting"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04616",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05964 is partial for HITL contracts still preserve `request_id` and `allowed_actions[]` as a distinct request-e",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05964"
+      ],
+      "source_obligation_ids": [
+        "obl-5736"
+      ],
+      "source_seed_ids": [
+        "seed-8524"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "HITL contracts still preserve `request_id` and `allowed_actions[]` as a distinct request-era family",
+        "request_id",
+        "allowed_actions[]"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04622",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05971 is partial for But HITL owner docs still describe a parallel request-era approval model centered on `requ",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05971"
+      ],
+      "source_obligation_ids": [
+        "obl-5743"
+      ],
+      "source_seed_ids": [
+        "seed-8540"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "But HITL owner docs still describe a parallel request-era approval model centered on `request_id`, `tier_id`, and `tier_type`.",
+        "request_id",
+        "tier_id",
+        "tier_type"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00184",
+    "cov-00212",
+    "cov-00217",
+    "cov-00238",
+    "cov-00261",
+    "cov-00437",
+    "cov-00651",
+    "cov-00864",
+    "cov-00894",
+    "cov-01265",
+    "cov-02305",
+    "cov-02538",
+    "cov-02540",
+    "cov-02559",
+    "cov-02691",
+    "cov-02699",
+    "cov-02703",
+    "cov-02708",
+    "cov-02835",
+    "cov-02839",
+    "cov-02844",
+    "cov-02990",
+    "cov-03006",
+    "cov-03205",
+    "cov-03227",
+    "cov-03242",
+    "cov-03282",
+    "cov-03346",
+    "cov-03438",
+    "cov-03449",
+    "cov-03647",
+    "cov-04179",
+    "cov-04245",
+    "cov-04430",
+    "cov-04507",
+    "cov-05223",
+    "cov-05842",
+    "cov-05868",
+    "cov-05964",
+    "cov-05971"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-080",
+    "obl-108",
+    "obl-112",
+    "obl-1122",
+    "obl-127",
+    "obl-142",
+    "obl-2157",
+    "obl-2387",
+    "obl-2389",
+    "obl-2407",
+    "obl-2538",
+    "obl-2546",
+    "obl-2550",
+    "obl-2555",
+    "obl-2682",
+    "obl-2686",
+    "obl-2691",
+    "obl-2836",
+    "obl-2852",
+    "obl-295",
+    "obl-3051",
+    "obl-3073",
+    "obl-3088",
+    "obl-3128",
+    "obl-3192",
+    "obl-3284",
+    "obl-3295",
+    "obl-3493",
+    "obl-4019",
+    "obl-4085",
+    "obl-4270",
+    "obl-4292",
+    "obl-4999",
+    "obl-508",
+    "obl-5614",
+    "obl-5640",
+    "obl-5736",
+    "obl-5743",
+    "obl-721",
+    "obl-751"
+  ],
+  "source_seed_ids_represented": [
+    "seed-080",
+    "seed-111",
+    "seed-115",
+    "seed-1260",
+    "seed-132",
+    "seed-1326",
+    "seed-1334",
+    "seed-148",
+    "seed-1747",
+    "seed-1778",
+    "seed-2043",
+    "seed-2506",
+    "seed-2535",
+    "seed-2801",
+    "seed-3100",
+    "seed-3102",
+    "seed-3124",
+    "seed-3331",
+    "seed-3343",
+    "seed-3348",
+    "seed-3353",
+    "seed-340",
+    "seed-3528",
+    "seed-3533",
+    "seed-3538",
+    "seed-3741",
+    "seed-3762",
+    "seed-4044",
+    "seed-4073",
+    "seed-4103",
+    "seed-4162",
+    "seed-4252",
+    "seed-4401",
+    "seed-4417",
+    "seed-4701",
+    "seed-5538",
+    "seed-5647",
+    "seed-583",
+    "seed-5954",
+    "seed-6001",
+    "seed-7293",
+    "seed-821",
+    "seed-8333",
+    "seed-8372",
+    "seed-8524",
+    "seed-8540",
+    "seed-856"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0009",
+    "shard-0011",
+    "shard-0013",
+    "shard-0016",
+    "shard-0021",
+    "shard-0022",
+    "shard-0026",
+    "shard-0029",
+    "shard-0033",
+    "shard-0035",
+    "shard-0037",
+    "shard-0038",
+    "shard-0039",
+    "shard-0041",
+    "shard-0042",
+    "shard-0044",
+    "shard-0045",
+    "shard-0046",
+    "shard-0047",
+    "shard-0049",
+    "shard-0055",
+    "shard-0056",
+    "shard-0058",
+    "shard-0059",
+    "shard-0069",
+    "shard-0077",
+    "shard-0078"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-00169",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00184 is partial for 2. **Tier-boundary HITL vs blocked-node/runtime-overlay HITL**",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00184"
+      ],
+      "source_obligation_ids": [
+        "obl-080"
+      ],
+      "source_seed_ids": [
+        "seed-080"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "2. **Tier-boundary HITL vs blocked-node/runtime-overlay HITL**"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00193",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00212 is partial for what old assumption is present: tier-boundary HITL payloads, incomplete execution identity",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00212"
+      ],
+      "source_obligation_ids": [
+        "obl-108"
+      ],
+      "source_seed_ids": [
+        "seed-111"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "what old assumption is present: tier-boundary HITL payloads, incomplete execution identity, no account fallback fields."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00195",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00217 is partial for what old assumption is present: HITL at tier boundaries, workspace paths under `<phase>/<t",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "## Tier Boundaries (DRY)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00217"
+      ],
+      "source_obligation_ids": [
+        "obl-112"
+      ],
+      "source_seed_ids": [
+        "seed-115"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "what old assumption is present: HITL at tier boundaries, workspace paths under `<phase>/<task>/<subtask>`, deprecated `allowed_actions[]` usage still lingering.",
+        "<phase>/<task>/<subtask>",
+        "allowed_actions[]"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00211",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00238 is partial for what old assumption is present: tier hierarchy, singular Overseer, tier-boundary HITL, old",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00238"
+      ],
+      "source_obligation_ids": [
+        "obl-127"
+      ],
+      "source_seed_ids": [
+        "seed-132"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "what old assumption is present: tier hierarchy, singular Overseer, tier-boundary HITL, old canonical owner map."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00230",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00261 is partial for impacted contract/runtime/storage area: HITL request schema.",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Canonical HITL request contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00261"
+      ],
+      "source_obligation_ids": [
+        "obl-142"
+      ],
+      "source_seed_ids": [
+        "seed-148"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "impacted contract/runtime/storage area: HITL request schema."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00342",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00437 is partial for neither doc yet gives a durable first-class account-switch / pressure-episode history mode",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00437"
+      ],
+      "source_obligation_ids": [
+        "obl-295"
+      ],
+      "source_seed_ids": [
+        "seed-340"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "neither doc yet gives a durable first-class account-switch / pressure-episode history model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00504",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00651 is partial for Actions that should generally be disabled in historical mode:",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00651"
+      ],
+      "source_obligation_ids": [
+        "obl-508"
+      ],
+      "source_seed_ids": [
+        "seed-583"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "Actions that should generally be disabled in historical mode:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00664",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00864 is partial for `corroboration`",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00864"
+      ],
+      "source_obligation_ids": [
+        "obl-721"
+      ],
+      "source_seed_ids": [
+        "seed-821",
+        "seed-2043"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "`corroboration`",
+        "corroboration"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00679",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-00894 is partial for `Corroboration`",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00894"
+      ],
+      "source_obligation_ids": [
+        "obl-751"
+      ],
+      "source_seed_ids": [
+        "seed-856",
+        "seed-1260",
+        "seed-1326",
+        "seed-1747",
+        "seed-1778",
+        "seed-2506",
+        "seed-2535"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0021",
+        "shard-0022",
+        "shard-0026",
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "`Corroboration`",
+        "Corroboration"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00982",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-01265 is partial for `Waiting on user approval`",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-101: Provider-native correlation and approval scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01265"
+      ],
+      "source_obligation_ids": [
+        "obl-1122"
+      ],
+      "source_seed_ids": [
+        "seed-1334"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "exact_missing_items": [
+        "`Waiting on user approval`",
+        "Waiting on user approval"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01792",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02305 is partial for Rewrite \u00a79 around dual-overseer / corroboration reality rather than layering more addenda",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "## Rewrite alignment (2026-02-21)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02305"
+      ],
+      "source_obligation_ids": [
+        "obl-2157"
+      ],
+      "source_seed_ids": [
+        "seed-2801"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "Rewrite \u00a79 around dual-overseer / corroboration reality rather than layering more addenda onto the current singular-Overseer protocol."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01981",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02538 is partial for base headless `ask -> deny unless HITL at current tier boundary` language is still tier-er",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02538"
+      ],
+      "source_obligation_ids": [
+        "obl-2387"
+      ],
+      "source_seed_ids": [
+        "seed-3100"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "base headless `ask -> deny unless HITL at current tier boundary` language is still tier-era and conflicts with unified blocked-overlay contracts",
+        "ask -> deny unless HITL at current tier boundary"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01983",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02540 is partial for approval caching still lacks an explicit actor/lane/run/account scope rule, which is unsaf",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-101: Provider-native correlation and approval scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02540"
+      ],
+      "source_obligation_ids": [
+        "obl-2389"
+      ],
+      "source_seed_ids": [
+        "seed-3102"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "approval caching still lacks an explicit actor/lane/run/account scope rule, which is unsafe under shared-runtime parallel actors"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02559 is partial for Replace permission tier-boundary language with runtime-overlay/blocked-state terminology a",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-185: Approval scope key and approver identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02559"
+      ],
+      "source_obligation_ids": [
+        "obl-2407"
+      ],
+      "source_seed_ids": [
+        "seed-3124"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "Replace permission tier-boundary language with runtime-overlay/blocked-state terminology and key approval cache scope by actor/run/lane/account context."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02113",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02691 is partial for headless `ask -> deny unless HITL at current tier boundary` still leaks tier-era gating in",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02691"
+      ],
+      "source_obligation_ids": [
+        "obl-2538"
+      ],
+      "source_seed_ids": [
+        "seed-3331"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "headless `ask -> deny unless HITL at current tier boundary` still leaks tier-era gating into what should now be normal blocked-overlay routing",
+        "ask -> deny unless HITL at current tier boundary"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02121",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02699 is partial for needs scope-keyed approval semantics, de-tiered gating language, and richer permission sna",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Approval resolution and rerun semantics"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02699"
+      ],
+      "source_obligation_ids": [
+        "obl-2546"
+      ],
+      "source_seed_ids": [
+        "seed-3343"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "needs scope-keyed approval semantics, de-tiered gating language, and richer permission snapshots"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02124",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02703 is partial for Permissions still use session-scoped approval logic without defining the session/actor/lan",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-185: Approval scope key and approver identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02703"
+      ],
+      "source_obligation_ids": [
+        "obl-2550"
+      ],
+      "source_seed_ids": [
+        "seed-3348"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Permissions still use session-scoped approval logic without defining the session/actor/lane scope key."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02128",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02708 is partial for Define an Approval Scope Key for permissions keyed by actor/lane/run/account context.",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-185: Approval scope key and approver identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02708"
+      ],
+      "source_obligation_ids": [
+        "obl-2555"
+      ],
+      "source_seed_ids": [
+        "seed-3353"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Define an Approval Scope Key for permissions keyed by actor/lane/run/account context."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02236",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02835 is partial for needs scope-keyed approval semantics and richer permission snapshots",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Approval resolution and rerun semantics"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02835"
+      ],
+      "source_obligation_ids": [
+        "obl-2682"
+      ],
+      "source_seed_ids": [
+        "seed-3528"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "needs scope-keyed approval semantics and richer permission snapshots"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02239",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02839 is partial for Permission approval caching and reject-cascade still lack actor/lane/account scope.",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-101: Provider-native correlation and approval scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02839"
+      ],
+      "source_obligation_ids": [
+        "obl-2686"
+      ],
+      "source_seed_ids": [
+        "seed-3533"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Permission approval caching and reject-cascade still lack actor/lane/account scope."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02244",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02844 is partial for Define an Approval Scope Key spanning actor/lane/run/account context.",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-185: Approval scope key and approver identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02844"
+      ],
+      "source_obligation_ids": [
+        "obl-2691"
+      ],
+      "source_seed_ids": [
+        "seed-3538"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Define an Approval Scope Key spanning actor/lane/run/account context."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02361",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02990 is partial for HITL requests/resolutions still carry no actor/lane/account identity strong enough to answ",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02990"
+      ],
+      "source_obligation_ids": [
+        "obl-2836"
+      ],
+      "source_seed_ids": [
+        "seed-3741"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "HITL requests/resolutions still carry no actor/lane/account identity strong enough to answer who asked, who approved, and under which effective runtime identity"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02373",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03006 is partial for Add actor/lane/account identity and approver provenance to HITL request/resolution events.",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03006"
+      ],
+      "source_obligation_ids": [
+        "obl-2852"
+      ],
+      "source_seed_ids": [
+        "seed-3762"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "Add actor/lane/account identity and approver provenance to HITL request/resolution events."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02512",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03205 is partial for HITL now visibly contains two contract eras at once:",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Canonical HITL request contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03205"
+      ],
+      "source_obligation_ids": [
+        "obl-3051"
+      ],
+      "source_seed_ids": [
+        "seed-4044"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "HITL now visibly contains two contract eras at once:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02527",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03227 is partial for Reconcile HITL so blocked/runtime semantics are canonical and tier-boundary examples becom",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03227"
+      ],
+      "source_obligation_ids": [
+        "obl-3073"
+      ],
+      "source_seed_ids": [
+        "seed-4073"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Reconcile HITL so blocked/runtime semantics are canonical and tier-boundary examples become derived copy only."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02538",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03242 is partial for Conversational / HITL / tooling contracts still break under shared-runtime and multi-lane",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03242"
+      ],
+      "source_obligation_ids": [
+        "obl-3088"
+      ],
+      "source_seed_ids": [
+        "seed-4103"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Conversational / HITL / tooling contracts still break under shared-runtime and multi-lane execution:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02569",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03282 is partial for restart persistence for HITL is still effectively run-scoped (`checkpoints.hitl.{run_id}`)",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03282"
+      ],
+      "source_obligation_ids": [
+        "obl-3128"
+      ],
+      "source_seed_ids": [
+        "seed-4162"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "restart persistence for HITL is still effectively run-scoped (`checkpoints.hitl.{run_id}`), which is unsafe once multiple concurrent approval episodes exist in one run.",
+        "checkpoints.hitl.{run_id}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02620",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03346 is partial for `allowed_actions[]` is still alive in neighboring docs even though HITL addenda say it is",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03346"
+      ],
+      "source_obligation_ids": [
+        "obl-3192"
+      ],
+      "source_seed_ids": [
+        "seed-4252"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "`allowed_actions[]` is still alive in neighboring docs even though HITL addenda say it is deprecated.",
+        "allowed_actions[]"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02685",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03438 is partial for approval identity, field-family normalization, and persistence semantics are still split a",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Approval resolution and rerun semantics"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03438"
+      ],
+      "source_obligation_ids": [
+        "obl-3284"
+      ],
+      "source_seed_ids": [
+        "seed-4401"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "approval identity, field-family normalization, and persistence semantics are still split across incompatible shapes."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02695",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03449 is partial for Normalize HITL/tool approval semantics onto one blocked-episode model with explicit scope",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-101: Provider-native correlation and approval scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03449"
+      ],
+      "source_obligation_ids": [
+        "obl-3295"
+      ],
+      "source_seed_ids": [
+        "seed-4417"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "Normalize HITL/tool approval semantics onto one blocked-episode model with explicit scope keying, field-family cleanup, and durable provenance."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02852",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03647 is partial for Recast HITL request contracts so `request_id` is explicitly subordinate to blocked-episode",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Canonical HITL request contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03647"
+      ],
+      "source_obligation_ids": [
+        "obl-3493"
+      ],
+      "source_seed_ids": [
+        "seed-4701"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "Recast HITL request contracts so `request_id` is explicitly subordinate to blocked-episode identity.",
+        "request_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03254",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04179 is partial for `/mode` is now clearly overloaded across runtime-mode vs overlay semantics while the docs",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04179"
+      ],
+      "source_obligation_ids": [
+        "obl-4019"
+      ],
+      "source_seed_ids": [
+        "seed-5538"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "`/mode` is now clearly overloaded across runtime-mode vs overlay semantics while the docs still expose only a single `{ mode }` payload.",
+        "/mode",
+        "{ mode }"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03308",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04245 is partial for `yolo` still overpromises approval freedom even though non-bypassable step-7 guards surviv",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-101: Provider-native correlation and approval scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04245"
+      ],
+      "source_obligation_ids": [
+        "obl-4085"
+      ],
+      "source_seed_ids": [
+        "seed-5647"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "`yolo` still overpromises approval freedom even though non-bypassable step-7 guards survive, and `external_publish_side_effect` remains impossible to enforce safely in DAE without pre-dispatch interception or forced host execution.",
+        "yolo",
+        "external_publish_side_effect"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03463",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04430 is partial for DAE still lacks a canonical lifecycle across defer/restart and still cannot safely enforce",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Fidelity recovery cov-101: Provider-native correlation and approval scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04430"
+      ],
+      "source_obligation_ids": [
+        "obl-4270"
+      ],
+      "source_seed_ids": [
+        "seed-5954"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "DAE still lacks a canonical lifecycle across defer/restart and still cannot safely enforce remote side-effect approval without a pre-dispatch intercept path."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03539",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04507 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04507"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04057",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05223 is partial for State blocked-episode identity directly:",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Restart recovery and blocked-episode continuity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05223"
+      ],
+      "source_obligation_ids": [
+        "obl-4999"
+      ],
+      "source_seed_ids": [
+        "seed-7293"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "State blocked-episode identity directly:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04526",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05842 is partial for `hitl.approval_requested` with `request_id`, `tier_id`, `tier_type`, `allowed_actions`",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05842"
+      ],
+      "source_obligation_ids": [
+        "obl-5614"
+      ],
+      "source_seed_ids": [
+        "seed-8333"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "`hitl.approval_requested` with `request_id`, `tier_id`, `tier_type`, `allowed_actions`",
+        "hitl.approval_requested",
+        "request_id",
+        "tier_id",
+        "tier_type",
+        "allowed_actions"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04544",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05868 is partial for HITL request-era and blocked/runtime-era canon still coexisting",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05868"
+      ],
+      "source_obligation_ids": [
+        "obl-5640"
+      ],
+      "source_seed_ids": [
+        "seed-8372"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "exact_missing_items": [
+        "HITL request-era and blocked/runtime-era canon still coexisting"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04616",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05964 is partial for HITL contracts still preserve `request_id` and `allowed_actions[]` as a distinct request-e",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05964"
+      ],
+      "source_obligation_ids": [
+        "obl-5736"
+      ],
+      "source_seed_ids": [
+        "seed-8524"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "HITL contracts still preserve `request_id` and `allowed_actions[]` as a distinct request-era family",
+        "request_id",
+        "allowed_actions[]"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04622",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05971 is partial for But HITL owner docs still describe a parallel request-era approval model centered on `requ",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "# Human-in-the-Loop (HITL) Mode -- Plan"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05971"
+      ],
+      "source_obligation_ids": [
+        "obl-5743"
+      ],
+      "source_seed_ids": [
+        "seed-8540"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "But HITL owner docs still describe a parallel request-era approval model centered on `request_id`, `tier_id`, and `tier_type`.",
+        "request_id",
+        "tier_id",
+        "tier_type"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

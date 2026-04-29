@@ -1,0 +1,339 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-104",
+  "group_ids": [
+    "recgrp-0413",
+    "recgrp-0414",
+    "recgrp-0415",
+    "recgrp-0416"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0413",
+      "path": "Plans/Orchestrator_Page.md",
+      "mapped_owner_heading": "### Fidelity recovery cov-037: Focused run and historical routing contract",
+      "live_anchor": "### Fidelity recovery cov-037: Focused run and historical routing contract (Plans/Orchestrator_Page.md:L103)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00649",
+        "cov-00666",
+        "cov-00670",
+        "cov-00675",
+        "cov-00700",
+        "cov-01801"
+      ],
+      "source_obligation_ids": [
+        "obl-506",
+        "obl-523",
+        "obl-527",
+        "obl-532",
+        "obl-557",
+        "obl-1658"
+      ],
+      "source_seed_ids": [
+        "seed-581",
+        "seed-599",
+        "seed-603",
+        "seed-608",
+        "seed-638",
+        "seed-2065"
+      ],
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0014",
+        "shard-0029"
+      ],
+      "gap_ids": [
+        "gap-00502",
+        "gap-00518",
+        "gap-00522",
+        "gap-00525",
+        "gap-00549",
+        "gap-01408"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "all tabs clearly show the focused historical `run_id`",
+        "run_id",
+        "If Orchestrator shares one focused run across all tabs, then `Progress` needs an explicit historical behavior.",
+        "Progress",
+        "No obvious `orchestrator.project_state.{project_id}` for focused run persistence.",
+        "orchestrator.project_state.{project_id}",
+        "Add `orchestrator.project_state.{project_id}` with focused run and per-tab state.",
+        "evidence/artifact -> `Evidence` with panes focused appropriately",
+        "Evidence",
+        "explicit search navigation to a historical run likely should update persisted Orchestrator focused-run state"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-fb0e7c41cbae",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0414",
+      "path": "Plans/Orchestrator_Page.md",
+      "mapped_owner_heading": "### Fidelity recovery cov-042: Source Control and worktree handshake",
+      "live_anchor": "### Fidelity recovery cov-042: Source Control and worktree handshake (Plans/Orchestrator_Page.md:L115)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00253",
+        "cov-00456",
+        "cov-00502",
+        "cov-00520",
+        "cov-02213",
+        "cov-03023",
+        "cov-05563"
+      ],
+      "source_obligation_ids": [
+        "obl-136",
+        "obl-313",
+        "obl-359",
+        "obl-377",
+        "obl-2068",
+        "obl-2869",
+        "obl-5335"
+      ],
+      "source_seed_ids": [
+        "seed-142",
+        "seed-362",
+        "seed-414",
+        "seed-435",
+        "seed-2684",
+        "seed-3786",
+        "seed-7930"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0011",
+        "shard-0012",
+        "shard-0034",
+        "shard-0043",
+        "shard-0074"
+      ],
+      "gap_ids": [
+        "gap-00226",
+        "gap-00356",
+        "gap-00394",
+        "gap-00410",
+        "gap-01721",
+        "gap-02386",
+        "gap-04336"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "likely issue: row ownership is still `run/tier`, not package-lane ownership, so Orchestrator and Source Control cannot share a coherent worktree model.",
+        "run/tier",
+        "Source Control as the Git/worktree inventory/manipulation surface",
+        "Source Control = concrete Git/worktree inspection and mutation surface",
+        "Source Control rows and tabs must stay information-dense but selective.",
+        "no lane/package/worktree identity enters the bridged envelope where Source Control / Orchestrator handshake now needs it",
+        "no single authority is declared between Source Control worktree state and Orchestrator receipt lineage",
+        "The worktree doc correctly sets the Source Control versus Orchestrator surface boundary, but its identity model still hangs on `tier_id`.",
+        "tier_id"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-30d94b86c932",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0415",
+      "path": "Plans/Orchestrator_Page.md",
+      "mapped_owner_heading": "### Fidelity recovery cov-046: Projection trust and action gating",
+      "live_anchor": "### Fidelity recovery cov-046: Projection trust and action gating (Plans/Orchestrator_Page.md:L127)",
+      "action": "layout_repair_reference",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-02371"
+      ],
+      "source_obligation_ids": [
+        "obl-2222"
+      ],
+      "source_seed_ids": [
+        "seed-2888"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "gap_ids": [
+        "gap-01843"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "still mixes forbidden canonical names, incomplete account identity, widget-era tab assumptions, and missing projection trust semantics"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-66997f3e7e0f",
+      "packet_writer_role": "observe_only",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Observe-only layout repair reference: target records packetizable layout backlog without creating an overlapping mutation writer."
+      ]
+    },
+    {
+      "target_id": "target-0416",
+      "path": "Plans/Orchestrator_Page.md",
+      "mapped_owner_heading": "### Fidelity recovery cov-081: Project attention projection",
+      "live_anchor": "### Fidelity recovery cov-081: Project attention projection (Plans/Orchestrator_Page.md:L209)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-01287"
+      ],
+      "source_obligation_ids": [
+        "obl-1144"
+      ],
+      "source_seed_ids": [
+        "seed-1356"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "gap_ids": [
+        "gap-01003"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Existing `orchestrator status` (`idle/running/paused`) is too weak on its own to explain why a project needs attention.",
+        "orchestrator status",
+        "idle/running/paused"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-632d677fa879",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00649",
+    "cov-00666",
+    "cov-00670",
+    "cov-00675",
+    "cov-00700",
+    "cov-01801",
+    "cov-00253",
+    "cov-00456",
+    "cov-00502",
+    "cov-00520",
+    "cov-02213",
+    "cov-03023",
+    "cov-05563",
+    "cov-02371",
+    "cov-01287"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-506",
+    "obl-523",
+    "obl-527",
+    "obl-532",
+    "obl-557",
+    "obl-1658",
+    "obl-136",
+    "obl-313",
+    "obl-359",
+    "obl-377",
+    "obl-2068",
+    "obl-2869",
+    "obl-5335",
+    "obl-2222",
+    "obl-1144"
+  ],
+  "source_seed_ids_represented": [
+    "seed-581",
+    "seed-599",
+    "seed-603",
+    "seed-608",
+    "seed-638",
+    "seed-2065",
+    "seed-142",
+    "seed-362",
+    "seed-414",
+    "seed-435",
+    "seed-2684",
+    "seed-3786",
+    "seed-7930",
+    "seed-2888",
+    "seed-1356"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0013",
+    "shard-0014",
+    "shard-0029",
+    "shard-0009",
+    "shard-0011",
+    "shard-0012",
+    "shard-0034",
+    "shard-0043",
+    "shard-0074",
+    "shard-0036",
+    "shard-0022"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": [
+    {
+      "target_id": "target-0415",
+      "path": "Plans/Orchestrator_Page.md",
+      "reason": "observe_only non-packetizable source path"
+    }
+  ]
+}

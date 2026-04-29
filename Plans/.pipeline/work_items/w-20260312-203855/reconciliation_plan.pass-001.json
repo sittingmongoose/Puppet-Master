@@ -1,42 +1,343 @@
 {
-  "schema_id": "pm.reconciliation_plan_pass.v3",
+  "schema_id": "pm.reconciliation_plan_pass.v1",
   "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
   "pass_id": "pass-001",
-  "timestamp_utc": "2026-04-29T02:34:05Z",
-  "repair_mode": "scribe_blocker_targeted_repair",
-  "status": "blocked",
-  "subagent_tasks": [
-    "recplan-target-157",
-    "recplan-target-221"
-  ],
-  "assigned_input_boundaries": [
-    "targeted Scribe blocker rows cov-793 and cov-285 only"
-  ],
-  "subagent_result_status": {
-    "targeted_repair_verification": "blocked_exact_blockers_remain"
-  },
-  "completed_task_count": 2,
-  "failed_task_count": 0,
-  "coverage_row_ids_assigned": [
-    "cov-793",
-    "cov-285"
-  ],
-  "coverage_row_ids_completed": [
-    "cov-793",
-    "cov-285"
-  ],
-  "target_groups_assigned": [
-    "recgrp-repair-001",
-    "recgrp-repair-002"
-  ],
-  "target_groups_completed": [
-    "recgrp-repair-001",
-    "recgrp-repair-002"
-  ],
+  "status": "pass",
   "material_findings": [
-    "Plans/STATE_FILES.md missing for target-157",
-    "Plans/ledger.md missing for target-221"
+    {
+      "finding_type": "converted_non_packetizable_mutations_to_observe_only",
+      "count": 40,
+      "items": [
+        {
+          "target_id": "target-0001",
+          "path": "Plans/.../Evidence linking docs",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0002",
+          "path": "Plans/.../Evidence tab docs",
+          "original_action": "layout_repair_reference",
+          "original_packet_writer_role": "observe_only",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0003",
+          "path": "Plans/.../Ledger/History docs",
+          "original_action": "layout_repair_reference",
+          "original_packet_writer_role": "observe_only",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0004",
+          "path": "Plans/.../Orchestrator page shell docs",
+          "original_action": "layout_repair_reference",
+          "original_packet_writer_role": "observe_only",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0005",
+          "path": "Plans/.../Orchestrator shell docs",
+          "original_action": "stale_retirement",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0006",
+          "path": "Plans/.../blocked-state schema docs",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0007",
+          "path": "Plans/.../concern*",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0008",
+          "path": "Plans/.../cross-tab navigation contract docs",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0009",
+          "path": "Plans/.../current_state.md",
+          "original_action": "stale_retirement",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0010",
+          "path": "Plans/.../dashboard*",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0011",
+          "path": "Plans/.../evidence*",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0012",
+          "path": "Plans/.../graph detail inspector docs",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0013",
+          "path": "Plans/.../history*",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0014",
+          "path": "Plans/.../label glossary docs",
+          "original_action": "stale_retirement",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0015",
+          "path": "Plans/.../ledger*",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0016",
+          "path": "Plans/.../ledger_*",
+          "original_action": "stale_retirement",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0017",
+          "path": "Plans/.../orchestrator*",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0018",
+          "path": "Plans/.../ownership normalization docs",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0019",
+          "path": "Plans/.../progress*",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0020",
+          "path": "Plans/.../record views*",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0021",
+          "path": "Plans/.../seams*",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0022",
+          "path": "Plans/.../settings*",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0023",
+          "path": "Plans/.../widget*",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0024",
+          "path": "Plans/.../working_ledger.md",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains placeholder ellipsis",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0025",
+          "path": "Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path points at pipeline artifact instead of live Plans doc",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0026",
+          "path": "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path points at pipeline artifact instead of live Plans doc",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0027",
+          "path": "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path points at pipeline artifact instead of live Plans doc",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0028",
+          "path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path points at pipeline artifact instead of live Plans doc",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0458",
+          "path": "Plans/Promotion*",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains wildcard/glob syntax",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0502",
+          "path": "Plans/Source_Control*.md",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path contains wildcard/glob syntax",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0539",
+          "path": "Plans/Wiring_Matrix.schema.json",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path is not a markdown Plans doc",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0581",
+          "path": "Plans/auto_decisions.json",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path is not a markdown Plans doc",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0582",
+          "path": "Plans/auto_decisions.schema.json",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path is not a markdown Plans doc",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0598",
+          "path": "Plans/evidence.schema.json",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path is not a markdown Plans doc",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0600",
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "original_action": "layout_repair_reference",
+          "original_packet_writer_role": "observe_only",
+          "reason": "target path is not a markdown Plans doc",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0636",
+          "path": "Plans/plan_graph.schema.json",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path is not a markdown Plans doc",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0637",
+          "path": "Plans/project_plan_graph_index.schema.json",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path is not a markdown Plans doc",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0638",
+          "path": "Plans/project_plan_node.schema.json",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path is not a markdown Plans doc",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0646",
+          "path": "Plans/sharding_config.json",
+          "original_action": "insert_after",
+          "original_packet_writer_role": "parent_writer",
+          "reason": "target path is not a markdown Plans doc",
+          "converted_to": "observe_only"
+        },
+        {
+          "target_id": "target-0692",
+          "path": "Plans/test_strategy.schema.json",
+          "original_action": "layout_repair_reference",
+          "original_packet_writer_role": "observe_only",
+          "reason": "target path is not a markdown Plans doc",
+          "converted_to": "observe_only"
+        }
+      ]
+    }
   ],
-  "path_field_status": "pass",
-  "source_lineage_status": "pass"
+  "verification": {
+    "active_mutation_target_paths_packetizable": true,
+    "coverage_rows_unrepresented": 0,
+    "span_conflict_risk_groups": 0,
+    "source_seed_ids_represented": 6747,
+    "source_shard_ids_represented": 92
+  },
+  "blockers": []
 }

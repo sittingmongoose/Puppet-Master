@@ -1,0 +1,773 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-018",
+  "timestamp_utc": "2026-04-28T20:03:29Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-069",
+    "coverage-rowgrp-070",
+    "coverage-rowgrp-071",
+    "coverage-rowgrp-072"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-069 cov-014,cov-044,cov-265,cov-277,cov-462,cov-465,cov-522,cov-578,cov-598,cov-862 Plans/FinalGUISpec.md",
+    "rowgrp-070 cov-888,cov-905,cov-1004,cov-1189 Plans/FinalGUISpec.md",
+    "rowgrp-071 cov-047,cov-060,cov-076,cov-098,cov-150,cov-202,cov-218,cov-256,cov-263,cov-317 Plans/FinalGUISpec.md",
+    "rowgrp-072 cov-320,cov-323,cov-337,cov-342,cov-360,cov-366,cov-382,cov-532,cov-557,cov-657 Plans/FinalGUISpec.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-069": "completed_reduced_conservatively",
+    "coverage-rowgrp-070": "completed_reduced_conservatively",
+    "coverage-rowgrp-071": "completed_reduced_conservatively",
+    "coverage-rowgrp-072": "completed_reduced_conservatively"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-014",
+    "cov-044",
+    "cov-265",
+    "cov-277",
+    "cov-462",
+    "cov-465",
+    "cov-522",
+    "cov-578",
+    "cov-598",
+    "cov-862",
+    "cov-888",
+    "cov-905",
+    "cov-1004",
+    "cov-1189",
+    "cov-047",
+    "cov-060",
+    "cov-076",
+    "cov-098",
+    "cov-150",
+    "cov-202",
+    "cov-218",
+    "cov-256",
+    "cov-263",
+    "cov-317",
+    "cov-320",
+    "cov-323",
+    "cov-337",
+    "cov-342",
+    "cov-360",
+    "cov-366",
+    "cov-382",
+    "cov-532",
+    "cov-557",
+    "cov-657"
+  ],
+  "coverage_ids_completed": [
+    "cov-014",
+    "cov-044",
+    "cov-265",
+    "cov-277",
+    "cov-462",
+    "cov-465",
+    "cov-522",
+    "cov-578",
+    "cov-598",
+    "cov-862",
+    "cov-888",
+    "cov-905",
+    "cov-1004",
+    "cov-1189",
+    "cov-047",
+    "cov-060",
+    "cov-076",
+    "cov-098",
+    "cov-150",
+    "cov-202",
+    "cov-218",
+    "cov-256",
+    "cov-263",
+    "cov-317",
+    "cov-320",
+    "cov-323",
+    "cov-337",
+    "cov-342",
+    "cov-360",
+    "cov-366",
+    "cov-382",
+    "cov-532",
+    "cov-557",
+    "cov-657"
+  ],
+  "path_groups_assigned": [
+    "Plans/FinalGUISpec.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-014",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: assigned file reviewed; no canonical runtime storage mapping for node retry memory, attempt handoff artifacts, reusable learning records, or worker handoff packets into seglog/redb found"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Runtime storage mapping remains absent from the assigned GUI spec path.",
+      "source_obligation_ids": [
+        "obl-013"
+      ],
+      "source_seed_ids": [
+        "seed-013"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-044",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:904 Orchestrator projection states and sensitive-action gating are defined",
+        "Plans/FinalGUISpec.md:906 Only Progress is widget-composed inside Orchestrator and scale is a cross-tab contract"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Projection blockers are partly addressed, but work package/feature seam GUI scope and ownership boundaries are not fully defined.",
+      "source_obligation_ids": [
+        "obl-025"
+      ],
+      "source_seed_ids": [
+        "seed-025"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-265",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:11-12 Concern is a first-class durable record with evidence/source and lineage refs",
+        "Plans/FinalGUISpec.md:930 Progress event taxonomy includes concern, approval, recovery, artifact, and account events"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Some record-family structure is represented, but the shared envelope for review, corroboration, graph patch, and runtime record families is not fully specified.",
+      "source_obligation_ids": [
+        "obl-076"
+      ],
+      "source_seed_ids": [
+        "seed-076"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-277",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md:950-953 settings resolver separates source, request, and execution axes",
+        "Plans/FinalGUISpec.md:955 resolver display grammar shows worker-policy display, source snapshot, request snapshot, execution outcome, and switch_reason"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-080"
+      ],
+      "source_seed_ids": [
+        "seed-080"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-462",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:89-99 glossary/help governance defines inline help, context help, and canonical help entry layers while keeping terms stable"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Contextual-help layering exists, but the narrow-surface set for graph badges, inspector chips, trust chrome, widget filters, and action gating messages is not fully enumerated.",
+      "source_obligation_ids": [
+        "obl-134"
+      ],
+      "source_seed_ids": [
+        "seed-134"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-465",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:906 Only Progress is widget-composed inside Orchestrator and orchestrator:progress layout persists independently from Dashboard and Usage layout keys",
+        "Plans/FinalGUISpec.md:1602 project_state stores per-project shell snapshots including active view and side-panel refs"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Progress-only hostability is covered, but the broader Widget_System vs Orchestrator page/run-context migration is not fully resolved in this assigned path.",
+      "source_obligation_ids": [
+        "obl-135"
+      ],
+      "source_seed_ids": [
+        "seed-135"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-522",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:923-924 Progress catalog includes escalation-stack and attention-summary routes over project_attention_item.primary_route_payload",
+        "Plans/FinalGUISpec.md:959-961 project_summary and project_attention_item define reusable attention objects with primary route payload, projection trust, blocked owner, escalation level, and summary text"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Attention item payloads are partly defined, but explicit collapse precedence for multiple attention items into one project badge is not fully stated.",
+      "source_obligation_ids": [
+        "obl-150"
+      ],
+      "source_seed_ids": [
+        "seed-150"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-578",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:904 projection freshness/health states are owned and mutation affordances are gated",
+        "Plans/FinalGUISpec.md:946-955 requested/effective operational identity and resolver display grammar are defined",
+        "Plans/FinalGUISpec.md:959-961 project summary and project attention rows include projection trust and route payloads"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Identity, projection, and attention seams are partly represented, but the row remains a broad reconciliation seam rather than a fully closed handoff-ready owner model.",
+      "source_obligation_ids": [
+        "obl-162"
+      ],
+      "source_seed_ids": [
+        "seed-162"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-598",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:11-12 Concern is a first-class durable record with scope, evidence/source, lineage, severity/category/status, and governance metadata",
+        "Plans/FinalGUISpec.md:919 Progress includes artifact receipts filtered to receipt-linked runtime artifacts"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Concern records and artifact receipt surfaces exist, but GUI producer identity for artifacts/concerns is not fully specified.",
+      "source_obligation_ids": [
+        "obl-168"
+      ],
+      "source_seed_ids": [
+        "seed-168"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-862",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:906 orchestrator:progress layout persists independently from Dashboard and Usage layout keys",
+        "Plans/FinalGUISpec.md:939-941 route_target stays small and inspector_target is secondary metadata, not primary identity"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Route identity is separated from some layout/inspector metadata, but panel IDs and tab IDs are not explicitly excluded from route identity.",
+      "source_obligation_ids": [
+        "obl-242"
+      ],
+      "source_seed_ids": [
+        "seed-242"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-888",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:935 all search results, palette actions, widgets, recovery links, and cross-surface pivots emit one shared route/deep-link payload",
+        "Plans/FinalGUISpec.md:939-942 route_target stays small and destination/context overrides are only allowed to restore the target surface"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Route identity is constrained, but the controlled coarse destination vocabulary is not fully enumerated.",
+      "source_obligation_ids": [
+        "obl-251"
+      ],
+      "source_seed_ids": [
+        "seed-251"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-905",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:939-942 route_target stays small and destination/context overrides are allowed only when needed to restore the target surface"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "A route override boundary exists, but the rule for preserving unrelated remembered shell state while landing on the requested target is not fully stated.",
+      "source_obligation_ids": [
+        "obl-255"
+      ],
+      "source_seed_ids": [
+        "seed-255"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1004",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:935 all widgets, recovery links, and cross-surface pivots emit one shared route/deep-link payload",
+        "Plans/FinalGUISpec.md:937 concern results route as object-first results with focused-run and target-tab context",
+        "Plans/FinalGUISpec.md:2470-2477 wizard_blocked cards carry wizard_id, wizard_step, report_ref, and resume_url"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Object-first route behavior and wizard anchors are partially represented, but wizard steps and graph pivots are not fully normalized as one object-route model.",
+      "source_obligation_ids": [
+        "obl-282"
+      ],
+      "source_seed_ids": [
+        "seed-282"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1189",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: assigned file reviewed; no same-file supersession hot-list closure text found"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "The same-file supersession hot list remains absent from the assigned path.",
+      "source_obligation_ids": [
+        "obl-341"
+      ],
+      "source_seed_ids": [
+        "seed-341"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-047",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:920 Progress catalog includes Source Control worktree rows with lane/package/run refs"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "The assigned file mentions lane/package/run worktree refs, but it does not define whether worktrees are allocated or owned per node, package, seam, or remediation branch.",
+      "source_obligation_ids": [
+        "obl-026"
+      ],
+      "source_seed_ids": [
+        "seed-026"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-060",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: assigned file reviewed; no same-file supersession hotspot or impacted-doc canon-collapse target coverage found"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Same-file supersession hotspot coverage is absent from the assigned path.",
+      "source_obligation_ids": [
+        "obl-029"
+      ],
+      "source_seed_ids": [
+        "seed-029"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-076",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:906 Only Progress is widget-composed inside Orchestrator",
+        "Plans/FinalGUISpec.md:1749 tiers.rs is renamed to match the node/package/lane/seam model",
+        "Plans/FinalGUISpec.md:1983 Dashboard widget catalog still references progress_bars and Orchestrator Progress widgets"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Tiers-tab retirement is partly reflected, but stale widget/progress wording remains in the assigned file.",
+      "source_obligation_ids": [
+        "obl-031"
+      ],
+      "source_seed_ids": [
+        "seed-031"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-098",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:914-920 Progress catalog includes lane, node, artifact, and worktree rows with lane/package/run refs",
+        "Plans/FinalGUISpec.md:2137 implementation boundaries include Orchestrator node/package/lane/seam mappings"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Package/lane/worktree concepts are present, but stale graph-schema constants and canonical runtime/event envelope fields are not fully repaired here.",
+      "source_obligation_ids": [
+        "obl-034"
+      ],
+      "source_seed_ids": [
+        "seed-034"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-150",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:914-920 Progress catalog includes lane health and Source Control worktree rows with lane/package/run refs",
+        "Plans/FinalGUISpec.md:1955-1956 Orchestrator progress and active-lanes widgets expose node execution status, lane state, and worktree allocation state"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Lane/worktree visibility exists, but package-based lane pools replacing run/tier/subtask worktrees are not fully canonicalized.",
+      "source_obligation_ids": [
+        "obl-041"
+      ],
+      "source_seed_ids": [
+        "seed-041"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-202",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:471 Search, File Manager, Source Control, and other surfaces occupy a single right-hand side-panel slot",
+        "Plans/FinalGUISpec.md:485 source_control is a Git-first side-panel surface for repo state, changes, history, graph, branches/stash, and worktrees"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Source Control is identified as a constrained side-panel, but metadata density and deep-link-out rules are not fully specified.",
+      "source_obligation_ids": [
+        "obl-055"
+      ],
+      "source_seed_ids": [
+        "seed-055"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-218",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:904 degraded Orchestrator surfaces fall back to record-backed views and suppress live mutation affordances",
+        "Plans/FinalGUISpec.md:918 recovery-status drills to a recovery timeline for the selected concern or blocked episode"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Record-backed fallback is present, but the History/Ledger/direct evidence inspector hierarchy is not fully enumerated.",
+      "source_obligation_ids": [
+        "obl-060"
+      ],
+      "source_seed_ids": [
+        "seed-060"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-256",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md:11-12 Concern is a first-class durable record with concern_id, project/run scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-071"
+      ],
+      "source_seed_ids": [
+        "seed-071"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-263",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:908 Action surfaces classify affordances by navigation vs mutation, palette visibility, shortcut eligibility, multi-target safety, and confirmation/reversibility",
+        "Plans/FinalGUISpec.md:1229 reversible edits may use undo, but Git-native history actions and external side effects are not mislabeled as editor undo"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Action classification and reversibility are represented, but no/light/strong/hard_gate confirmation levels are not fully defined.",
+      "source_obligation_ids": [
+        "obl-075"
+      ],
+      "source_seed_ids": [
+        "seed-075"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-317",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md:67-77 Shared escalation ladder defines one ladder across Orchestrator, Dashboard, thread badges, and notifications, keeping attention_required distinct from blocked",
+        "Plans/FinalGUISpec.md:927-931 Progress labels and condition-aging policy distinguish attention_required, blocked, escalated, and degraded_projection"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-094"
+      ],
+      "source_seed_ids": [
+        "seed-094"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-320",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md:906 Slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors are mandatory across every dense tab, and scale is treated as a cross-tab contract"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-095"
+      ],
+      "source_seed_ids": [
+        "seed-095"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-323",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md:906 Slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors are mandatory across every dense tab"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-096"
+      ],
+      "source_seed_ids": [
+        "seed-096"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-337",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:908 Action surfaces classify affordances by navigation vs mutation, palette visibility, shortcut eligibility, multi-target safety, and confirmation/reversibility"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Command discoverability classification exists, but command palette/shortcut surfaces are not explicitly bound to strong/hard_gate/non_reversible preview requirements.",
+      "source_obligation_ids": [
+        "obl-100"
+      ],
+      "source_seed_ids": [
+        "seed-100"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-342",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md:904 Orchestrator renders current, refreshing, stale, degraded, and unavailable states; sensitive actions require current data or direct canonical revalidation; degraded surfaces fall back to record-backed views and suppress mutation affordances"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-101"
+      ],
+      "source_seed_ids": [
+        "seed-101"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-360",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:927-930 Progress labels and event taxonomy define canonical user-facing state/action/event terms"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Some shared labels exist, but cross-surface copy discipline for retry/old/completed/degraded/history and Source Control lane/worktree language is not fully governed.",
+      "source_obligation_ids": [
+        "obl-107"
+      ],
+      "source_seed_ids": [
+        "seed-107"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-366",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:948 Shared runtime identity carries execution_role with requested/effective operational identity into records, usage surfaces, and inspector payloads"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Shared runtime identity is represented, but the assistant/interviewer/builder ontology boundary is not explicitly stated.",
+      "source_obligation_ids": [
+        "obl-108"
+      ],
+      "source_seed_ids": [
+        "seed-108"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-382",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:927-931 Progress labels, alert taxonomy, event taxonomy, and condition-aging policy separate advisory, attention_required, blocked, escalated, and degraded_projection behavior",
+        "Plans/FinalGUISpec.md:959-961 project_attention_item carries projection-trust disclosure, blocked-owner kind, escalation level, and primary route payload"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Notification and attention trust signals are partly represented, but severity, execution impact, blocked owner, persistence, projection trust, and quiet-window routing are not fully unified.",
+      "source_obligation_ids": [
+        "obl-115"
+      ],
+      "source_seed_ids": [
+        "seed-115"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-532",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md:935 all search results, palette actions, widgets, recovery links, and cross-surface pivots emit one shared route/deep-link payload; resume_url is the serialized transport form",
+        "Plans/FinalGUISpec.md:939 route_target stays small as subject_id or object_kind/object_id identity"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-153"
+      ],
+      "source_seed_ids": [
+        "seed-153"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-557",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md:935 shared route/deep-link payload is the single routing model",
+        "Plans/FinalGUISpec.md:948 shared runtime identity carries execution_role with requested and effective operational identity"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Route payload and execution role identity are partly covered, but cross-document contradictions in Contracts_V0.md and storage-plan.md are not resolved in this assigned path.",
+      "source_obligation_ids": [
+        "obl-158"
+      ],
+      "source_seed_ids": [
+        "seed-158"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-657",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md:2585-2587 still lists cmd.orchestrator.replan_node, cmd.orchestrator.open_for_edit, and cmd.orchestrator.abort_node action IDs",
+        "Plans/FinalGUISpec.md:1983 still references Orchestrator Progress widgets and widget.progress_bars in Dashboard widget catalog"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Command catalog and wiring-template drift remains present in the assigned file.",
+      "source_obligation_ids": [
+        "obl-186"
+      ],
+      "source_seed_ids": [
+        "seed-186"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

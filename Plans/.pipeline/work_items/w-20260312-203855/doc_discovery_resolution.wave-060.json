@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-060",
+  "group_ids": [
+    "discgrp-0237",
+    "discgrp-0238",
+    "discgrp-0239",
+    "discgrp-0240"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00482",
+      "source_obligation_ids": [
+        "obl-339"
+      ],
+      "source_seed_ids": [
+        "seed-393"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00483",
+      "source_obligation_ids": [
+        "obl-340"
+      ],
+      "source_seed_ids": [
+        "seed-395"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00484",
+      "source_obligation_ids": [
+        "obl-341"
+      ],
+      "source_seed_ids": [
+        "seed-396"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "### 1. Hook-Based Lifecycle Middleware (BeforeUnit/AfterUnit)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L2012"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00485",
+      "source_obligation_ids": [
+        "obl-342"
+      ],
+      "source_seed_ids": [
+        "seed-397"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "# Worktree & Git Improvement -- Implementation Plan",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

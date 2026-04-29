@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1536",
+  "group_ids": [
+    "discgrp-6141",
+    "discgrp-6142",
+    "discgrp-6143",
+    "discgrp-6144"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06794",
+      "source_obligation_ids": [
+        "obl-6423"
+      ],
+      "source_seed_ids": [
+        "seed-9802"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06795",
+      "source_obligation_ids": [
+        "obl-6424"
+      ],
+      "source_seed_ids": [
+        "seed-9803"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-06796",
+      "source_obligation_ids": [
+        "obl-6425"
+      ],
+      "source_seed_ids": [
+        "seed-9804"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06797",
+      "source_obligation_ids": [
+        "obl-6426"
+      ],
+      "source_seed_ids": [
+        "seed-9805"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "## Provider/model precedence and settings resolution",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Models_System.md:L42"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

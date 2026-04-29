@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-224",
+  "group_ids": [
+    "discgrp-0893",
+    "discgrp-0894",
+    "discgrp-0895",
+    "discgrp-0896"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01140",
+      "source_obligation_ids": [
+        "obl-997"
+      ],
+      "source_seed_ids": [
+        "seed-1165"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01141",
+      "source_obligation_ids": [
+        "obl-998"
+      ],
+      "source_seed_ids": [
+        "seed-1166"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1310"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01142",
+      "source_obligation_ids": [
+        "obl-999"
+      ],
+      "source_seed_ids": [
+        "seed-1167"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "## Requested / Effective Model Snapshot Alignment",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Models_System.md:L891"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01143",
+      "source_obligation_ids": [
+        "obl-1000"
+      ],
+      "source_seed_ids": [
+        "seed-1168"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L193"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-538",
+  "group_ids": [
+    "discgrp-2149",
+    "discgrp-2150",
+    "discgrp-2151",
+    "discgrp-2152"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02420",
+      "source_obligation_ids": [
+        "obl-2270"
+      ],
+      "source_seed_ids": [
+        "seed-2946"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02421",
+      "source_obligation_ids": [
+        "obl-2271"
+      ],
+      "source_seed_ids": [
+        "seed-2947"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02422",
+      "source_obligation_ids": [
+        "obl-2272"
+      ],
+      "source_seed_ids": [
+        "seed-2948"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Commands_System.md",
+      "new_heading_hint": "### 1.1 User Command (preset)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Commands_System.md:L31"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02423",
+      "source_obligation_ids": [
+        "obl-2273"
+      ],
+      "source_seed_ids": [
+        "seed-2949"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "# Puppet Master \u2014 User-Project Project Plan Package Outputs (SSOT)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

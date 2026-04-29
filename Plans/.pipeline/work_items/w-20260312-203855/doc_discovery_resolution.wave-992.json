@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-992",
+  "group_ids": [
+    "discgrp-3965",
+    "discgrp-3966",
+    "discgrp-3967",
+    "discgrp-3968"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04273",
+      "source_obligation_ids": [
+        "obl-4113"
+      ],
+      "source_seed_ids": [
+        "seed-5701"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04274",
+      "source_obligation_ids": [
+        "obl-4114"
+      ],
+      "source_seed_ids": [
+        "seed-5702"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-04275",
+      "source_obligation_ids": [
+        "obl-4115"
+      ],
+      "source_seed_ids": [
+        "seed-5703"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "## 2. Canonical command IDs",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L64"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04276",
+      "source_obligation_ids": [
+        "obl-4116"
+      ],
+      "source_seed_ids": [
+        "seed-5704"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Projection freshness and health terms",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L82"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

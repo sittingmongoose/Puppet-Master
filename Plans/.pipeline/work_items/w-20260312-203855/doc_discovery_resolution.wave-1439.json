@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1439",
+  "group_ids": [
+    "discgrp-5753",
+    "discgrp-5754",
+    "discgrp-5755",
+    "discgrp-5756"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06296",
+      "source_obligation_ids": [
+        "obl-5999"
+      ],
+      "source_seed_ids": [
+        "seed-9082"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/00-plans-index.md",
+      "new_heading_hint": "### Instant Grep canon reconciliation note (2026-03-30)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/00-plans-index.md:L57"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06297",
+      "source_obligation_ids": [
+        "obl-6000"
+      ],
+      "source_seed_ids": [
+        "seed-9083"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "# Crosswalk (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06298",
+      "source_obligation_ids": [
+        "obl-6001"
+      ],
+      "source_seed_ids": [
+        "seed-9084"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "new_heading_hint": "# GUI Rebuild Requirements Checklist (2026-02-23)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06299",
+      "source_obligation_ids": [
+        "obl-6002"
+      ],
+      "source_seed_ids": [
+        "seed-9085"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

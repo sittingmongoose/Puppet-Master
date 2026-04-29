@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-119",
+  "group_ids": [
+    "discgrp-0473",
+    "discgrp-0474",
+    "discgrp-0475",
+    "discgrp-0476"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00720",
+      "source_obligation_ids": [
+        "obl-577"
+      ],
+      "source_seed_ids": [
+        "seed-658"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 15.2 Search result card widget",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2658"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00721",
+      "source_obligation_ids": [
+        "obl-578"
+      ],
+      "source_seed_ids": [
+        "seed-659"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00722",
+      "source_obligation_ids": [
+        "obl-579"
+      ],
+      "source_seed_ids": [
+        "seed-660"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00723",
+      "source_obligation_ids": [
+        "obl-580"
+      ],
+      "source_seed_ids": [
+        "seed-661"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/OpenCode_Deep_Extraction.md",
+      "new_heading_hint": "# OpenCode Deep Extraction (for Puppet Master)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,676 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-156",
+  "row_group_ids": [
+    "rowgrp-0621",
+    "rowgrp-0622",
+    "rowgrp-0623",
+    "rowgrp-0624"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-02529",
+      "source_obligation_ids": [
+        "obl-2378"
+      ],
+      "source_seed_ids": [
+        "seed-3091"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "OpenCode still preserves the older model/permission snapshot view of runtime identity, not",
+      "row_type": "consumer",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "## OpenCode Runtime Retry / Blocked-State / Packet Reconciliation Addendum (2026-03-09)",
+      "status": "partial",
+      "exact_items": [
+        "OpenCode still preserves the older model/permission snapshot view of runtime identity, not the newer auth/account bundle:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L567"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06342",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05296",
+      "source_obligation_ids": [
+        "obl-5072"
+      ],
+      "source_seed_ids": [
+        "seed-7420"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`BinaryLocator_Spec.md` sharpens an ownership vacuum around OpenCode `cli_launcher`, has a",
+      "row_type": "layout_blocker",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "partial",
+      "exact_items": [
+        "`BinaryLocator_Spec.md` sharpens an ownership vacuum around OpenCode `cli_launcher`, has a dangling/false ContractRef to a non-existent four-tier naming rule, and still uses ambiguous Session wording.",
+        "BinaryLocator_Spec.md",
+        "cli_launcher"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L8"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06292",
+      "source_obligation_ids": [
+        "obl-5995"
+      ],
+      "source_seed_ids": [
+        "seed-9038"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "`OpenCode_Deep_Extraction.md`, `OpenCode_Coverage_Matrix.md`, and `Provider_OpenCode` adja",
+      "row_type": "layout_blocker",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "partial",
+      "exact_items": [
+        "`OpenCode_Deep_Extraction.md`, `OpenCode_Coverage_Matrix.md`, and `Provider_OpenCode` adjacencies still lack a canonical SSE filter discriminator, stable mapping of OpenCode session IDs into provider-native identity fields, and parity for requested/effective account/auth identity.",
+        "OpenCode_Deep_Extraction.md",
+        "OpenCode_Coverage_Matrix.md",
+        "Provider_OpenCode"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L389"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00388",
+      "source_obligation_ids": [
+        "obl-246"
+      ],
+      "source_seed_ids": [
+        "seed-278",
+        "seed-2663",
+        "seed-3076",
+        "seed-3108",
+        "seed-3315",
+        "seed-3336",
+        "seed-3500",
+        "seed-3521",
+        "seed-8411",
+        "seed-8986",
+        "seed-9077"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0034",
+        "shard-0037",
+        "shard-0039",
+        "shard-0040",
+        "shard-0041",
+        "shard-0077",
+        "shard-0082"
+      ],
+      "canon_label": "`Plans/Provider_OpenCode.md`",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Provider_OpenCode.md`",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02219",
+      "source_obligation_ids": [
+        "obl-2073"
+      ],
+      "source_seed_ids": [
+        "seed-2693"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "`Plans/Permissions_System.md` + `Plans/Provider_OpenCode.md`",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Permissions_System.md` + `Plans/Provider_OpenCode.md`",
+        "Plans/Permissions_System.md",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L265"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02230",
+      "source_obligation_ids": [
+        "obl-2084"
+      ],
+      "source_seed_ids": [
+        "seed-2704"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "Re-scope permission session cache / reject cascade and OpenCode SSE/session isolation rule",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "partial",
+      "exact_items": [
+        "Re-scope permission session cache / reject cascade and OpenCode SSE/session isolation rules to actor/lane-aware boundaries."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02532",
+      "source_obligation_ids": [
+        "obl-2381"
+      ],
+      "source_seed_ids": [
+        "seed-3094"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "GPT-5.4 sharpened that the OpenCode transport platform vs upstream provider identity split",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "partial",
+      "exact_items": [
+        "GPT-5.4 sharpened that the OpenCode transport platform vs upstream provider identity split now needs explicit ownership"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02552",
+      "source_obligation_ids": [
+        "obl-2400"
+      ],
+      "source_seed_ids": [
+        "seed-3117"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "OpenCode still exposes transport platform/model without clear ownership of upstream provid",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "partial",
+      "exact_items": [
+        "OpenCode still exposes transport platform/model without clear ownership of upstream provider/account identity."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02557",
+      "source_obligation_ids": [
+        "obl-2405"
+      ],
+      "source_seed_ids": [
+        "seed-3122"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "Extend OpenCode and bridged request/runtime bundles with the full auth/account identity bl",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "partial",
+      "exact_items": [
+        "Extend OpenCode and bridged request/runtime bundles with the full auth/account identity block plus explicit upstream-provider identity rules."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02562",
+      "source_obligation_ids": [
+        "obl-2410"
+      ],
+      "source_seed_ids": [
+        "seed-3127"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "OpenCode must preserve its split between transport realm and upstream provider/account rea",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "partial",
+      "exact_items": [
+        "OpenCode must preserve its split between transport realm and upstream provider/account realm."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02682",
+      "source_obligation_ids": [
+        "obl-2529"
+      ],
+      "source_seed_ids": [
+        "seed-3322"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "it maps canonical `thread_id` to an OpenCode session ID",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "present",
+      "exact_items": [
+        "it maps canonical `thread_id` to an OpenCode session ID",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L66",
+        "Plans/Provider_OpenCode.md:L68",
+        "Plans/Provider_OpenCode.md:L192",
+        "Plans/Provider_OpenCode.md:L194",
+        "Plans/Provider_OpenCode.md:L199"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02684",
+      "source_obligation_ids": [
+        "obl-2531"
+      ],
+      "source_seed_ids": [
+        "seed-3324"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "GPT-5.2 sharpened that OpenCode session IDs belong in provider-native correlation, not in",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "present",
+      "exact_items": [
+        "GPT-5.2 sharpened that OpenCode session IDs belong in provider-native correlation, not in canonical `thread_id`",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L66",
+        "Plans/Provider_OpenCode.md:L68",
+        "Plans/Provider_OpenCode.md:L192",
+        "Plans/Provider_OpenCode.md:L194",
+        "Plans/Provider_OpenCode.md:L199"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02701",
+      "source_obligation_ids": [
+        "obl-2548"
+      ],
+      "source_seed_ids": [
+        "seed-3346"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "OpenCode still repurposes canonical `thread_id` for provider-native session identity.",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "present",
+      "exact_items": [
+        "OpenCode still repurposes canonical `thread_id` for provider-native session identity.",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L66",
+        "Plans/Provider_OpenCode.md:L68",
+        "Plans/Provider_OpenCode.md:L192",
+        "Plans/Provider_OpenCode.md:L194",
+        "Plans/Provider_OpenCode.md:L199"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02706",
+      "source_obligation_ids": [
+        "obl-2553"
+      ],
+      "source_seed_ids": [
+        "seed-3351"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "Move OpenCode session IDs to provider-native correlation fields and keep `thread_id` canon",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "present",
+      "exact_items": [
+        "Move OpenCode session IDs to provider-native correlation fields and keep `thread_id` canonical to PM correlation.",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L66",
+        "Plans/Provider_OpenCode.md:L68",
+        "Plans/Provider_OpenCode.md:L192",
+        "Plans/Provider_OpenCode.md:L194",
+        "Plans/Provider_OpenCode.md:L199"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02818",
+      "source_obligation_ids": [
+        "obl-2665"
+      ],
+      "source_seed_ids": [
+        "seed-3507"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "Codex confirmed the sharpest provider-side contract bug is still the **OpenCode `thread_id",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "present",
+      "exact_items": [
+        "Codex confirmed the sharpest provider-side contract bug is still the **OpenCode `thread_id` collision**:",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L66",
+        "Plans/Provider_OpenCode.md:L68",
+        "Plans/Provider_OpenCode.md:L192",
+        "Plans/Provider_OpenCode.md:L194",
+        "Plans/Provider_OpenCode.md:L199"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02820",
+      "source_obligation_ids": [
+        "obl-2667"
+      ],
+      "source_seed_ids": [
+        "seed-3509"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "OpenCode session ID is still being treated as if it were that canonical field",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "partial",
+      "exact_items": [
+        "OpenCode session ID is still being treated as if it were that canonical field"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02837",
+      "source_obligation_ids": [
+        "obl-2684"
+      ],
+      "source_seed_ids": [
+        "seed-3531"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "OpenCode still misuses canonical `thread_id` for provider-native session identity.",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "present",
+      "exact_items": [
+        "OpenCode still misuses canonical `thread_id` for provider-native session identity.",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L66",
+        "Plans/Provider_OpenCode.md:L68",
+        "Plans/Provider_OpenCode.md:L192",
+        "Plans/Provider_OpenCode.md:L194",
+        "Plans/Provider_OpenCode.md:L199"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02841",
+      "source_obligation_ids": [
+        "obl-2688"
+      ],
+      "source_seed_ids": [
+        "seed-3535"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "Move OpenCode session IDs into provider-native correlation fields.",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "partial",
+      "exact_items": [
+        "Move OpenCode session IDs into provider-native correlation fields."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04488",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06174",
+      "source_obligation_ids": [
+        "obl-5946"
+      ],
+      "source_seed_ids": [
+        "seed-8845"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "OpenCode limitations are now source-verified enough that they should be treated as hard ar",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "partial",
+      "exact_items": [
+        "OpenCode limitations are now source-verified enough that they should be treated as hard architectural constraints unless the bridge changes:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06186",
+      "source_obligation_ids": [
+        "obl-5958"
+      ],
+      "source_seed_ids": [
+        "seed-8893"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "There are still unresolved architectural edges around DAE enforcement, OpenCode bridge lim",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "## OpenCode Runtime Retry / Blocked-State / Packet Reconciliation Addendum (2026-03-09)",
+      "status": "partial",
+      "exact_items": [
+        "There are still unresolved architectural edges around DAE enforcement, OpenCode bridge limits, promoted-feature shell ownership, and runtime identity provenance."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L567"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06204",
+      "source_obligation_ids": [
+        "obl-5973"
+      ],
+      "source_seed_ids": [
+        "seed-8941"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`BinaryLocator_Spec.md` now has a sharper ownership gap around OpenCode launcher discovery",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "partial",
+      "exact_items": [
+        "`BinaryLocator_Spec.md` now has a sharper ownership gap around OpenCode launcher discovery and an explicitly dangling `Spec_Lock` naming-rule claim.",
+        "BinaryLocator_Spec.md",
+        "Spec_Lock"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L48"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06257",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

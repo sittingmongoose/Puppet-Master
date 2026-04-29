@@ -1,0 +1,297 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-079",
+  "group_ids": [
+    "recgrp-0313",
+    "recgrp-0314",
+    "recgrp-0315",
+    "recgrp-0316"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0313",
+      "path": "Plans/FinalGUISpec.md",
+      "mapped_owner_heading": "### Terminal section presentation rules",
+      "live_anchor": "### Terminal section presentation rules (Plans/FinalGUISpec.md:L597)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-03764",
+        "cov-06114",
+        "cov-06127"
+      ],
+      "source_obligation_ids": [
+        "obl-3609",
+        "obl-5886",
+        "obl-5899"
+      ],
+      "source_seed_ids": [
+        "seed-4879",
+        "seed-8743",
+        "seed-8759"
+      ],
+      "source_shard_ids": [
+        "shard-0050",
+        "shard-0080"
+      ],
+      "gap_ids": [
+        "gap-02939",
+        "gap-04727",
+        "gap-04739"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "tier-scoped evidence and terminal widgets",
+        "Research Progress - 2026-03-17 - `Orchestrator_Page.md` Progress widgets still center active-tier and tier-targeted terminal semantics",
+        "Orchestrator_Page.md",
+        "Reconcile terminal widgets so targeting uses runtime/worker identity rather than `tier_id` as the primary selector.",
+        "tier_id"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-ea586040de14",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0314",
+      "path": "Plans/FinalGUISpec.md",
+      "mapped_owner_heading": "#### 10.9.1 Copy path and copy value",
+      "live_anchor": "#### 10.9.1 Copy path and copy value (Plans/FinalGUISpec.md:L1272)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-03594",
+        "cov-06616"
+      ],
+      "source_obligation_ids": [
+        "obl-3440",
+        "obl-6257"
+      ],
+      "source_seed_ids": [
+        "seed-4633",
+        "seed-9464"
+      ],
+      "source_shard_ids": [
+        "shard-0049",
+        "shard-0085"
+      ],
+      "gap_ids": [
+        "gap-02815",
+        "gap-05134"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "replacing old worktree/tier copy with lane/worktree/package/seam-aware wording",
+        "`Copy tier_id`",
+        "Copy tier_id"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-3f0b35398009",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0315",
+      "path": "Plans/FinalGUISpec.md",
+      "mapped_owner_heading": "#### 7.16.1 Thread header and message stream",
+      "live_anchor": "#### 7.16.1 Thread header and message stream (Plans/FinalGUISpec.md:L1000)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-04705",
+        "cov-04708"
+      ],
+      "source_obligation_ids": [
+        "obl-4483",
+        "obl-4486"
+      ],
+      "source_seed_ids": [
+        "seed-6372",
+        "seed-6375",
+        "seed-7358",
+        "seed-7503"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0069",
+        "shard-0070"
+      ],
+      "gap_ids": [
+        "gap-03674",
+        "gap-03676"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`message_id` when the real target is the message itself",
+        "message_id",
+        "`object_kind = message`",
+        "object_kind = message"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-eff194b39b5e",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0316",
+      "path": "Plans/FinalGUISpec.md",
+      "mapped_owner_heading": "#### 7.19.1 Embedded document pane",
+      "live_anchor": "#### 7.19.1 Embedded document pane (Plans/FinalGUISpec.md:L1096)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-02669",
+        "cov-04347",
+        "cov-05534"
+      ],
+      "source_obligation_ids": [
+        "obl-2516",
+        "obl-4187",
+        "obl-5306"
+      ],
+      "source_seed_ids": [
+        "seed-3303",
+        "seed-5817",
+        "seed-7884"
+      ],
+      "source_shard_ids": [
+        "shard-0039",
+        "shard-0057",
+        "shard-0073"
+      ],
+      "gap_ids": [
+        "gap-02098",
+        "gap-03392",
+        "gap-04311"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`requested_persona_id` / `effective_persona_id` remain embedded in consumer docs despite canonical prohibition.",
+        "requested_persona_id",
+        "effective_persona_id",
+        "`FinalGUISpec.md` aligns with that newer model in the embedded document pane:",
+        "FinalGUISpec.md",
+        "the embedded document pane already shares canonical document identity and backend restore pipelines rather than pure path opens"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-d7b7204b3198",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-03764",
+    "cov-06114",
+    "cov-06127",
+    "cov-03594",
+    "cov-06616",
+    "cov-04705",
+    "cov-04708",
+    "cov-02669",
+    "cov-04347",
+    "cov-05534"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-3609",
+    "obl-5886",
+    "obl-5899",
+    "obl-3440",
+    "obl-6257",
+    "obl-4483",
+    "obl-4486",
+    "obl-2516",
+    "obl-4187",
+    "obl-5306"
+  ],
+  "source_seed_ids_represented": [
+    "seed-4879",
+    "seed-8743",
+    "seed-8759",
+    "seed-4633",
+    "seed-9464",
+    "seed-6372",
+    "seed-6375",
+    "seed-7358",
+    "seed-7503",
+    "seed-3303",
+    "seed-5817",
+    "seed-7884"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0050",
+    "shard-0080",
+    "shard-0049",
+    "shard-0085",
+    "shard-0061",
+    "shard-0069",
+    "shard-0070",
+    "shard-0039",
+    "shard-0057",
+    "shard-0073"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": []
+}

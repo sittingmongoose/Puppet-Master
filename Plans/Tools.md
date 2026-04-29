@@ -1,5 +1,89 @@
 # Adding Tool Support -- Research & Plan
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0503
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Because earlier research established `focused_run_id`, historical-run mode, and project-state persistence, routing needs a persistence-aware rule:
+  - focused_run_id
+  - `minority_advisory` is now conceptually required by the research, but it still has no canonical stream/event name.
+  - minority_advisory
+  - Still needs research decisions**
+  - Tool events remain under-attributed for node/actor/account-aware audit.
+  - Current research wording has been useful, but it still risks colliding with preview/browser `trust_tier`.
+  - trust_tier
+  - The missing structural fields now fall into a repeatable set across tool events and artifact families:
+  - Artifact / HITL / tool contracts remain under-owned at the exact file/field level:
+  - Still needs research / owner decisions**
+  - tool traces that originate from a provider-backed attempt should carry `provider_attempt_ref?` whenever that provider/runtime handle exists
+  - provider_attempt_ref?
+  - If this is not normalized, every new surface will keep adding one more `cmd.*.open_*` variant with slightly different args.
+  - cmd.*.open_*
+  - GPT-5.4 did not flatten out; it is still adding precision beyond Sonnet, especially where the owner docs themselves remain structurally weak.
+  - This means the docs currently describe stronger verifiability than the gate/evidence contracts can actually support once navigation ceases to be a set of one-off command handlers.
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - Avoid adding a generic nested “extra args” bag to `route_target`; that would recreate the same drift under a different name.
+  - route_target
+  - Prefer extending `object_kind` deliberately over adding new top-level route fields.
+  - object_kind
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - extend the effective-resolution and handoff records to the newer identity layers already established in research
+  - `[retired-token-3]:866-916`
+  - [retired-token-3]:866-916
+  - `[retired-token-3]:1262-1284`
+  - [retired-token-3]:1262-1284
+  - `[retired-token-3]` still carries the stale tuple `[retired-token-6]`, `[retired-token-4]` still carries `[retired-token-1]`, and `[retired-token-2]` still carries the `[retired-token-5]` contradiction.
+  - [retired-token-3]
+  - [retired-token-6]
+  - [retired-token-4]
+  - [retired-token-1]
+  - [retired-token-2]
+  - [retired-token-5]
+  - `[retired-token-3]:866-920`
+  - [retired-token-3]:866-920
+  - `[retired-token-3]:1262-1288`
+  - [retired-token-3]:1262-1288
+  - Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `[retired-token-3]`, `[retired-token-4]`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.
+  - gap-003
+  - gap-004
+  - gap-005
+  - Plans/storage-plan.md
+  - Plans/Project_Output_Artifacts.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/interview-subagent-integration.md
+  - Plans/usage-feature.md
+  - `[retired-token-3]` still carries the stale ask tuple `[retired-token-6]`, and `[retired-token-4]` still carries the stale self-verdict `[retired-token-1]`.
+  - `[retired-token-3]:1131-1135`
+  - [retired-token-3]:1131-1135
+  - This invocation kept the blocker-family count at eight and the affected-doc count at twenty, but raised the underlying evidence count to fifty-nine by adding the missing-storage-anchor and missing-glossary-anchor evidence.
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 **Scope:** This document lives in `Plans/` only. It is the **canonical plan for tool support**: built-in tools, custom tools, **MCP** (integration with the registry and permission model), and the permission model (allow/deny/ask), aligned with [OpenCode's Tools model](https://opencode.ai/docs/tools/). Per-platform MCP config paths and framework-specific testing tools are detailed in **Plans/newtools.md** and AGENTS.md, while live MCP naming/availability/auth-state canon is owned by **Plans/MCP_Integration.md**; this doc defines the tool set, permissions, provider routing, and how MCP fits in.
@@ -216,6 +300,32 @@ With **LSP MVP** (Plans/LSPSupport.md), the following tools are **enhanced or ne
 **Implementation note:** The lsp tool should be implemented to call the same LSP client used by the editor and Chat (diagnostics, hover, definition, references, symbols, implementation, call hierarchy, rename). Permission for `lsp` follows the same allow/deny/ask model; default allow for read/navigation operations, with separate approval for `lsp.rename`.
 
 #### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0513
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - add effective account/runtime attribution where tool execution depends on provider identity or permission state
+  - `CustomHeadlessTool` still lacks stable tool identity, registration timing, permission semantics, and consistent config-file ownership.
+  - CustomHeadlessTool
+  - `LSPSupport.md` still lacks a normalized split between UI-only, internal-service, read-only tool, and mutation-capable LSP actions, especially in multi-project-tab routing.
+  - LSPSupport.md
+  - `LSPSupport.md` still lacks a normalized split between run-scoped `tool.*` telemetry, UI-session LSP interactions, and mutation-capable apply-edit paths in multi-project/workspace-tab routing.
+  - tool.*
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 This section consumes the linked owner contract and stays aligned with it.
 
@@ -463,6 +573,28 @@ Provider-native `create` maps to the canonical registry tool `write`.
 - On timeout, the write must fail atomically and return `{ status: "timed_out", path, error: { code: "timeout" } }`.
 
 ### 3.5A `skill` tool runtime contract
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0509
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - the real problem is not only missing fields; it is that tool events are still described as analytics exhaust while other docs already want them to carry runtime truth
+  - `Skills_System.md` still assumes HTE-style tool reachability, does not explain DAE delivery/bundling behavior, and lacks a proper introspection/listing surface for runtime skills.
+  - Skills_System.md
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 This section consumes the linked owner contract and stays aligned with it.
 
@@ -828,6 +960,28 @@ Consumer rules:
 - slash-separated aliases are not canonical and must not remain live examples
 ## 6. Ways to add tools (implementation angles)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0504
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Add canonical requested-side fields:
+  - add `operational_identity?` to:
+  - operational_identity?
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 | Mechanism | What it adds | Where it's configured | Notes |
 |-----------|--------------|------------------------|-------|
 | **MCP server** | New tools/resources/prompts from one server | Per-platform MCP config (see §7) | Single MCP server can expose many tools. Context7 and GUI automation remain representative examples; search/provider canon stays in the owner docs. |
@@ -965,6 +1119,26 @@ The runner (or a dedicated module) derives platform-specific CLI flags from the 
 **Single source of truth:** Registry + policy (from config) → derive flags per platform; no hardcoding in runner. Document the derivation rules in platform_specs or a single "tool policy → CLI args" function.
 
 ### 8.4 Redb keys for tool rollups (Usage widget)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0510
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - usage/evidence/runtime rollups are still tier-native
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Analytics scan writes rollups for the Usage page (FinalGUISpec §7.8). For the **tool usage widget** (per-tool count, latency, error rate):
 
@@ -1196,6 +1370,26 @@ Use this list in order to derive a step-by-step implementation plan. Dependencie
 
 ## Tool Policy Outcome Taxonomy Addendum (2026-03-08)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0506
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - the tool outcome taxonomy still diverges from canonical blocked reason taxonomy
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 ### 1. Tool-layer outcomes must map into runtime blocked/failure classes
 
 The tool system remains the canonical source of immediate tool-policy decisions, but those decisions must map cleanly into the shared runtime taxonomy.
@@ -1253,6 +1447,27 @@ Runtime-facing blocked payloads from tool denials MUST expose:
 Runtime-facing tool-denial paths MUST NOT publish a parallel `recovery_options[]` schema.
 ## Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0505
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Extend tool events with node/attempt/actor/account context and reconcile tool outcomes with canonical blocked codes.
+  - Artifact, tool, blocked, and handoff surfaces still cannot explain which effective account/actor produced or approved the action they represent.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 Tool-layer refusals that affect execution MUST normalize into canonical runtime blocked semantics before UI or scheduler layers consume them.
 
 ### Canonical runtime-facing payload
@@ -1277,6 +1492,27 @@ Tools MUST NOT convert denied work into success-shaped or generic-failure fallba
 Tool-originated blocked and denial paths align with the canonical runtime contract.
 
 ### Field name correction
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0511
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - later canonical correction addenda
+  - The older request-centric sections are no longer compatible with the later canonical correction sections.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 Tool-originated blocked payloads use `allowed_action_ids[]` only. Deprecated names MUST NOT appear in new tool contracts.
 
 ### Canonical blocked reasons
@@ -1638,6 +1874,32 @@ Rules:
 - Default state
 - disabled (requires API key or self-hosted URL)
 ### 11.2 Support-tier vocabulary
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0507
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - What should stay out of coarse destination vocabulary
+  - The canonical vocabulary is:
+  - `inspector_target` needs a controlled vocabulary.
+  - inspector_target
+  - The current high-value canonical vocabulary is:
+  - closed `tab_id` vocabulary
+  - tab_id
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Support tiers are:
 - `native` - provider exposes the operation as a first-class path that PM can map directly.

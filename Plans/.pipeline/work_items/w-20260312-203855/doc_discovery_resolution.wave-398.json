@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-398",
+  "group_ids": [
+    "discgrp-1589",
+    "discgrp-1590",
+    "discgrp-1591",
+    "discgrp-1592"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01842",
+      "source_obligation_ids": [
+        "obl-1699"
+      ],
+      "source_seed_ids": [
+        "seed-2132"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-014 -- Shared mutable state requires RWMutex",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L129"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01843",
+      "source_obligation_ids": [
+        "obl-1700"
+      ],
+      "source_seed_ids": [
+        "seed-2133"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01844",
+      "source_obligation_ids": [
+        "obl-1701"
+      ],
+      "source_seed_ids": [
+        "seed-2134"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "#### `remediation.resolved`",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1262"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01845",
+      "source_obligation_ids": [
+        "obl-1702"
+      ],
+      "source_seed_ids": [
+        "seed-2135"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### 2.8 Lane/worktree lifecycle, storage families, and historical vocabulary",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L216"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

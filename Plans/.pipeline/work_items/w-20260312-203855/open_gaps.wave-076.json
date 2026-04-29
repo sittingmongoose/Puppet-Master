@@ -1,0 +1,3529 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-076",
+  "group_ids": [
+    "gapgrp-0301",
+    "gapgrp-0302",
+    "gapgrp-0303",
+    "gapgrp-0304"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-00037",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00037 is missing for handoff storage/delivery mapping",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "Storage/delivery clarification pressure from user"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00037"
+      ],
+      "source_obligation_ids": [
+        "obl-012"
+      ],
+      "source_seed_ids": [
+        "seed-012"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "exact_missing_items": [
+        "pin down whether handoff/retry artifacts are literally JSON/JSONL/redb-backed records/projections",
+        "specify the concrete project-scoped paths or storage domains that own them",
+        "specify how a worker receives the handoff packet: inline prompt block, referenced artifact, fetched context, or mixed model"
+      ],
+      "stale_tokens": [
+        "optional JSON"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00061",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00061 is missing for work_package / feature_seam GUI surfaces missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "GUI gap is now explicit"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00061"
+      ],
+      "source_obligation_ids": [
+        "obl-025"
+      ],
+      "source_seed_ids": [
+        "seed-025"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "exact_missing_items": [
+        "no documented GUI surface yet for `work package`",
+        "no documented GUI surface yet for `feature seam`",
+        "no documented seam-level acceptance / weak-integration / corroboration review affordance yet"
+      ],
+      "stale_tokens": [
+        "PuppetMasterEvent::*",
+        "Overseer",
+        "Phase",
+        "Task",
+        "Subtask",
+        "Iteration"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00077",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00080 is missing for seam review loop behavior",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "seam review loop"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00080"
+      ],
+      "source_obligation_ids": [
+        "obl-031"
+      ],
+      "source_seed_ids": [
+        "seed-031"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "exact_missing_items": [
+        "define concrete seam review loop behavior",
+        "include trigger points, checks performed, corroboration thresholds, and emitted artifacts",
+        "candidate outputs: seam review verdict, failure classes with severity, evidence bundle/rationale, remediation-node recommendation or graph-patch recommendation, corroboration requirement and outcome when invoked"
+      ],
+      "stale_tokens": [
+        "HITL",
+        "package overseer",
+        "graph-patch"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00085",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00088 is missing for projection ownership and source-control partitioning",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "projection ownership by surface"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00088"
+      ],
+      "source_obligation_ids": [
+        "obl-034"
+      ],
+      "source_seed_ids": [
+        "seed-034"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "exact_missing_items": [
+        "which Orchestrator seam should lead the discussion: runtime ownership boundary, page/tab IA, blocked/remediation UX, lineage across graph/evidence/history/usage",
+        "Source Control worktree area likely needs top-level partitioning into Orchestrator Owned and Other",
+        "Orchestrator Owned section likely needs further subdivision by feature seam",
+        "Orchestrator page is a high-density information surface with very large detail volume"
+      ],
+      "stale_tokens": [
+        "Tiers tab",
+        "page layer",
+        "Orchestrator Owned"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00095",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00098 is missing for package/seam overseer + lane-aware execution model",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "Highest-Impact Docs"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00098"
+      ],
+      "source_obligation_ids": [
+        "obl-036"
+      ],
+      "source_seed_ids": [
+        "seed-036"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Replace tier-rooted execution with package/seam/lane model",
+        "Define package overseer + seam overseer roles",
+        "Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage",
+        "Redefine gates to package-complete / seam-complete",
+        "Rename or retire Tiers UI/tab and tier_tree/progress bars"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars",
+        "phase/task/subtask"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00107",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00110 is missing for orchestrator attention routing and lane-aware widgets",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "GUI / UX Impacts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00110"
+      ],
+      "source_obligation_ids": [
+        "obl-038"
+      ],
+      "source_seed_ids": [
+        "seed-038"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Replace Tiers-first navigation",
+        "Define Dashboard\u2192Orchestrator\u2192thread routing contract",
+        "Add package/seam/lane visualization widgets",
+        "Define which overseer's thread opens on click",
+        "Make worktree/lane state visible and navigable"
+      ],
+      "stale_tokens": [
+        "Tiers tab",
+        "widget.tier_tree",
+        "3-bar layout",
+        "grouped-by-phase",
+        "single-threaded",
+        "current_task"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00128",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00131 is missing for graph-native attention routing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "Cleanup Priorities"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00131"
+      ],
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "source_seed_ids": [
+        "seed-042"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "exact_missing_items": [
+        "Replace or demote tiers-first widgets and layouts.",
+        "Add package/seam/lane-aware identity, worktree, and attention surfaces.",
+        "Define Dashboard \u2192 Orchestrator \u2192 chat-thread routing using canonical runtime objects rather than prose-only references."
+      ],
+      "stale_tokens": [
+        "tiers-first",
+        "phase-grouped layouts",
+        "single current task",
+        "single worktree",
+        "prose-only references"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00145",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00148 is partial for Acceptance, evidence, coverage, GUI automation, and test schemas can represent nodes and c",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00148"
+      ],
+      "source_obligation_ids": [
+        "obl-045"
+      ],
+      "source_seed_ids": [
+        "seed-045"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "Acceptance, evidence, coverage, GUI automation, and test schemas can represent nodes and checks, but not work package, feature seam, lane, promotion class, contamination state, resolution thread, or effective account identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00163",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00171 is present for `Plans/FinalGUISpec.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00171"
+      ],
+      "source_obligation_ids": [
+        "obl-067"
+      ],
+      "source_seed_ids": [
+        "seed-067",
+        "seed-184",
+        "seed-219",
+        "seed-390",
+        "seed-431",
+        "seed-441",
+        "seed-493",
+        "seed-505",
+        "seed-561",
+        "seed-616",
+        "seed-675",
+        "seed-759",
+        "seed-884",
+        "seed-954",
+        "seed-1017",
+        "seed-1081",
+        "seed-1179",
+        "seed-1233",
+        "seed-1296",
+        "seed-1360",
+        "seed-1404",
+        "seed-1454",
+        "seed-1504",
+        "seed-1574",
+        "seed-1636",
+        "seed-1728",
+        "seed-1807",
+        "seed-1861",
+        "seed-1932",
+        "seed-1991",
+        "seed-2078",
+        "seed-2146",
+        "seed-2438",
+        "seed-2454",
+        "seed-2490",
+        "seed-2514",
+        "seed-2553",
+        "seed-2574",
+        "seed-2916",
+        "seed-2938",
+        "seed-2975",
+        "seed-2990",
+        "seed-3082",
+        "seed-3132",
+        "seed-3146",
+        "seed-3205",
+        "seed-3222",
+        "seed-3361",
+        "seed-3398",
+        "seed-3432",
+        "seed-3622",
+        "seed-3677",
+        "seed-3689",
+        "seed-3711",
+        "seed-3829",
+        "seed-3934",
+        "seed-4085",
+        "seed-4113",
+        "seed-4142",
+        "seed-4199",
+        "seed-4369",
+        "seed-4490",
+        "seed-4516",
+        "seed-5408",
+        "seed-5443",
+        "seed-5464",
+        "seed-5505",
+        "seed-5680",
+        "seed-5812",
+        "seed-5829",
+        "seed-5853",
+        "seed-5873",
+        "seed-5897",
+        "seed-5907",
+        "seed-5986",
+        "seed-6002",
+        "seed-6019",
+        "seed-6050",
+        "seed-6064",
+        "seed-6082",
+        "seed-6096",
+        "seed-6142",
+        "seed-6199",
+        "seed-6270",
+        "seed-6286",
+        "seed-6344",
+        "seed-6356",
+        "seed-6386",
+        "seed-6404",
+        "seed-6429",
+        "seed-6491",
+        "seed-6517",
+        "seed-6540",
+        "seed-6552",
+        "seed-6567",
+        "seed-6586",
+        "seed-6602",
+        "seed-6615",
+        "seed-6624",
+        "seed-6636",
+        "seed-6668",
+        "seed-6710",
+        "seed-6737",
+        "seed-6755",
+        "seed-6779",
+        "seed-6796",
+        "seed-6909",
+        "seed-6933",
+        "seed-6951",
+        "seed-6979",
+        "seed-7004",
+        "seed-7038",
+        "seed-7058",
+        "seed-7116",
+        "seed-7133",
+        "seed-7155",
+        "seed-7167",
+        "seed-7192",
+        "seed-7202",
+        "seed-7226",
+        "seed-7305",
+        "seed-7329",
+        "seed-7339",
+        "seed-7368",
+        "seed-7450",
+        "seed-7477",
+        "seed-7522",
+        "seed-7656",
+        "seed-7674",
+        "seed-7681",
+        "seed-7699",
+        "seed-7756",
+        "seed-7777",
+        "seed-7799",
+        "seed-7819",
+        "seed-7983",
+        "seed-8039",
+        "seed-8053",
+        "seed-8111",
+        "seed-8126",
+        "seed-8137",
+        "seed-8157",
+        "seed-8368",
+        "seed-8398",
+        "seed-8793",
+        "seed-8804",
+        "seed-8811",
+        "seed-8882",
+        "seed-8974",
+        "seed-9068",
+        "seed-9127",
+        "seed-9210",
+        "seed-9338",
+        "seed-9367",
+        "seed-9430",
+        "seed-9497",
+        "seed-9550",
+        "seed-9578",
+        "seed-9607",
+        "seed-9646",
+        "seed-9683",
+        "seed-9709",
+        "seed-9767",
+        "seed-9899",
+        "seed-9931",
+        "seed-9979",
+        "seed-10018",
+        "seed-10053",
+        "seed-10141",
+        "seed-10230",
+        "seed-10300",
+        "seed-10329"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010",
+        "shard-0011",
+        "shard-0012",
+        "shard-0013",
+        "shard-0014",
+        "shard-0015",
+        "shard-0016",
+        "shard-0017",
+        "shard-0018",
+        "shard-0019",
+        "shard-0020",
+        "shard-0021",
+        "shard-0022",
+        "shard-0023",
+        "shard-0024",
+        "shard-0025",
+        "shard-0026",
+        "shard-0027",
+        "shard-0028",
+        "shard-0029",
+        "shard-0030",
+        "shard-0033",
+        "shard-0034",
+        "shard-0036",
+        "shard-0037",
+        "shard-0038",
+        "shard-0039",
+        "shard-0040",
+        "shard-0041",
+        "shard-0042",
+        "shard-0043",
+        "shard-0044",
+        "shard-0045",
+        "shard-0046",
+        "shard-0047",
+        "shard-0048",
+        "shard-0054",
+        "shard-0055",
+        "shard-0056",
+        "shard-0057",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060",
+        "shard-0061",
+        "shard-0062",
+        "shard-0063",
+        "shard-0064",
+        "shard-0065",
+        "shard-0066",
+        "shard-0067",
+        "shard-0068",
+        "shard-0069",
+        "shard-0070",
+        "shard-0071",
+        "shard-0072",
+        "shard-0073",
+        "shard-0074",
+        "shard-0075",
+        "shard-0077",
+        "shard-0080",
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084",
+        "shard-0085",
+        "shard-0086",
+        "shard-0087",
+        "shard-0088",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/FinalGUISpec.md`",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00180",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00197 is present for Docs involved: `FinalGUISpec.md`, `newtools.md`, `Containers_Registry_and_Unraid.md`, `ass",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00197"
+      ],
+      "source_obligation_ids": [
+        "obl-093"
+      ],
+      "source_seed_ids": [
+        "seed-093"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "Docs involved: `FinalGUISpec.md`, `newtools.md`, `Containers_Registry_and_Unraid.md`, `assistant-chat-design.md`",
+        "FinalGUISpec.md",
+        "newtools.md",
+        "Containers_Registry_and_Unraid.md",
+        "assistant-chat-design.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00208",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00232 is partial for what old assumption is present: node-only lifecycle, lexicographic selection, no blocked/c",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 2.4 Backend Selection"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00232"
+      ],
+      "source_obligation_ids": [
+        "obl-123"
+      ],
+      "source_seed_ids": [
+        "seed-128"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "what old assumption is present: node-only lifecycle, lexicographic selection, no blocked/contaminated/restore-required states."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00218",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00245 is present for `Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00245"
+      ],
+      "source_obligation_ids": [
+        "obl-131"
+      ],
+      "source_seed_ids": [
+        "seed-136"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "`Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md`",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00281",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00344 is present for `Run_Graph_View` already requires historical SCM/worktree lineage to remain visible when l",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# display-font = \"CustomFont\"  # requires font file in ~/.puppet-master/fonts/"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00344"
+      ],
+      "source_obligation_ids": [
+        "obl-202"
+      ],
+      "source_seed_ids": [
+        "seed-234"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "`Run_Graph_View` already requires historical SCM/worktree lineage to remain visible when live targets no longer exist",
+        "Run_Graph_View"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00351",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00449 is present for `Orchestrator_Page.md` says Progress widgets are Dashboard-portable while `Widget_System.m",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-050: Progress-only widget hostability"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00449"
+      ],
+      "source_obligation_ids": [
+        "obl-306"
+      ],
+      "source_seed_ids": [
+        "seed-355"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator_Page.md` says Progress widgets are Dashboard-portable while `Widget_System.md` still excludes some of those widgets from Dashboard hostability.",
+        "Orchestrator_Page.md",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00360",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00460 is partial for Usage/UI requests for auth-mode/effective-account filtering are already present in adjacen",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00460"
+      ],
+      "source_obligation_ids": [
+        "obl-317"
+      ],
+      "source_seed_ids": [
+        "seed-366"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "Usage/UI requests for auth-mode/effective-account filtering are already present in adjacent GUI docs even though usage contracts do not yet guarantee them."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00409",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00519 is present for The `Source Control` panel is narrow/small and should be treated as a constrained side-pan",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### Bottom runtime information architecture"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00519"
+      ],
+      "source_obligation_ids": [
+        "obl-376"
+      ],
+      "source_seed_ids": [
+        "seed-434"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "The `Source Control` panel is narrow/small and should be treated as a constrained side-panel surface, not a broad information canvas.",
+        "Source Control"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00411",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00521 is partial for Do not assume package/lane/run/worktree metadata can all be shown at full fidelity at once",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Fidelity recovery addendum"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00521"
+      ],
+      "source_obligation_ids": [
+        "obl-378"
+      ],
+      "source_seed_ids": [
+        "seed-436"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "Do not assume package/lane/run/worktree metadata can all be shown at full fidelity at once in the panel."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00412",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00522 is partial for Source Control = compact Git/worktree operational panel",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-090: Execution role and operational identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00522"
+      ],
+      "source_obligation_ids": [
+        "obl-379"
+      ],
+      "source_seed_ids": [
+        "seed-437"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "Source Control = compact Git/worktree operational panel"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00431",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00548 is partial for attention/blocker projection",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00548"
+      ],
+      "source_obligation_ids": [
+        "obl-405"
+      ],
+      "source_seed_ids": [
+        "seed-467"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "attention/blocker projection"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00440",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00557 is present for many `Progress` widgets may also be hostable on `Dashboard`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### Progress catalog source and default drills"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00557"
+      ],
+      "source_obligation_ids": [
+        "obl-414"
+      ],
+      "source_seed_ids": [
+        "seed-476"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "many `Progress` widgets may also be hostable on `Dashboard`",
+        "Progress",
+        "Dashboard"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00444",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00563 is present for `widget_layout:v1:dashboard`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 12.3 Dashboard Grid Responsive"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00563"
+      ],
+      "source_obligation_ids": [
+        "obl-420"
+      ],
+      "source_seed_ids": [
+        "seed-482"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "`widget_layout:v1:dashboard`",
+        "widget_layout:v1:dashboard"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00454",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00573 is partial for which widgets are hostable where after the seam/package rewrite",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00573"
+      ],
+      "source_obligation_ids": [
+        "obl-430"
+      ],
+      "source_seed_ids": [
+        "seed-495"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "which widgets are hostable where after the seam/package rewrite"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00459",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00582 is partial for replay/rebuild targets a deterministic `target_seq`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 13.5 Minimum Touch/Click Targets"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00582"
+      ],
+      "source_obligation_ids": [
+        "obl-439"
+      ],
+      "source_seed_ids": [
+        "seed-509"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "replay/rebuild targets a deterministic `target_seq`",
+        "target_seq"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00460",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00583 is partial for UI freshness notifications should derive from committed projection state, not ad-hoc polli",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-096: Projection freshness vs projection health"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00583"
+      ],
+      "source_obligation_ids": [
+        "obl-440"
+      ],
+      "source_seed_ids": [
+        "seed-510"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "UI freshness notifications should derive from committed projection state, not ad-hoc polling"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00461",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00586 is partial for the GUI must not imply hidden fallback or hidden retry behavior",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### GUI behavior rules"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00586"
+      ],
+      "source_obligation_ids": [
+        "obl-443"
+      ],
+      "source_seed_ids": [
+        "seed-513"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "the GUI must not imply hidden fallback or hidden retry behavior"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00465",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00594 is present for `refreshing`: old committed projection still visible while refresh/rebuild runs",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00594"
+      ],
+      "source_obligation_ids": [
+        "obl-451"
+      ],
+      "source_seed_ids": [
+        "seed-521"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "`refreshing`: old committed projection still visible while refresh/rebuild runs",
+        "refreshing"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00484",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00625 is partial for Make `trust state` and `last updated` first-class UI fields for projection-backed surfaces",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00625"
+      ],
+      "source_obligation_ids": [
+        "obl-482"
+      ],
+      "source_seed_ids": [
+        "seed-552"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "Make `trust state` and `last updated` first-class UI fields for projection-backed surfaces.",
+        "trust state",
+        "last updated"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00501",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00648 is present for Required behavior:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-027: Concern routing and object-first search behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00648"
+      ],
+      "source_obligation_ids": [
+        "obl-505"
+      ],
+      "source_seed_ids": [
+        "seed-580"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "Required behavior:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00512",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00659 is partial for `selected_tab`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00659"
+      ],
+      "source_obligation_ids": [
+        "obl-516"
+      ],
+      "source_seed_ids": [
+        "seed-592"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "`selected_tab`",
+        "selected_tab"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00535",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00685 is partial for distinguish `global object search` from `tab-local filtering`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-027: Concern routing and object-first search behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00685"
+      ],
+      "source_obligation_ids": [
+        "obl-542"
+      ],
+      "source_seed_ids": [
+        "seed-623"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "distinguish `global object search` from `tab-local filtering`",
+        "global object search",
+        "tab-local filtering"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00537",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00687 is partial for `tab-local search`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-027: Concern routing and object-first search behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00687"
+      ],
+      "source_obligation_ids": [
+        "obl-544"
+      ],
+      "source_seed_ids": [
+        "seed-625"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "`tab-local search`",
+        "tab-local search"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00558",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00711 is partial for tab-local search stays embedded in tabs like Graph/Evidence/Ledger",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-027: Concern routing and object-first search behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00711"
+      ],
+      "source_obligation_ids": [
+        "obl-568"
+      ],
+      "source_seed_ids": [
+        "seed-649"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "tab-local search stays embedded in tabs like Graph/Evidence/Ledger"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00565",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00718 is partial for search should prefer stable object identity matches first",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-027: Concern routing and object-first search behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00718"
+      ],
+      "source_obligation_ids": [
+        "obl-575"
+      ],
+      "source_seed_ids": [
+        "seed-656"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "search should prefer stable object identity matches first"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00581",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00735 is present for remediation resolution already includes `fixed`, `superseded`, `abandoned`, `replan_requir",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 9.4 Conflict resolution"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00735"
+      ],
+      "source_obligation_ids": [
+        "obl-592"
+      ],
+      "source_seed_ids": [
+        "seed-678"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "remediation resolution already includes `fixed`, `superseded`, `abandoned`, `replan_required`",
+        "fixed",
+        "superseded",
+        "abandoned",
+        "replan_required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00661",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00860 is partial for `gui_alignment`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00860"
+      ],
+      "source_obligation_ids": [
+        "obl-717"
+      ],
+      "source_seed_ids": [
+        "seed-817"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "exact_missing_items": [
+        "`gui_alignment`",
+        "gui_alignment"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00667",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00872 is partial for should require rationale when it disagrees with corroborated/high-severity evidence",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-179: Dismissed vs resolved rationale enforcement"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00872"
+      ],
+      "source_obligation_ids": [
+        "obl-729"
+      ],
+      "source_seed_ids": [
+        "seed-832"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "exact_missing_items": [
+        "should require rationale when it disagrees with corroborated/high-severity evidence"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00674",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00888 is partial for Need to distinguish:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00888"
+      ],
+      "source_obligation_ids": [
+        "obl-745"
+      ],
+      "source_seed_ids": [
+        "seed-850"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "exact_missing_items": [
+        "Need to distinguish:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00688",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00911 is partial for Concern importance is already established, but canonical storage/contract shape is still u",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Recommended minimum concern record shape"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00911"
+      ],
+      "source_obligation_ids": [
+        "obl-768"
+      ],
+      "source_seed_ids": [
+        "seed-875"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "exact_missing_items": [
+        "Concern importance is already established, but canonical storage/contract shape is still underdefined."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00696",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00919 is partial for blockers requiring action must not be trivially dismissible into a false sense of health",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-096: Projection freshness vs projection health"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00919"
+      ],
+      "source_obligation_ids": [
+        "obl-776"
+      ],
+      "source_seed_ids": [
+        "seed-883"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "exact_missing_items": [
+        "blockers requiring action must not be trivially dismissible into a false sense of health"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00759",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00992 is partial for required quorum model",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00992"
+      ],
+      "source_obligation_ids": [
+        "obl-849"
+      ],
+      "source_seed_ids": [
+        "seed-994"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "exact_missing_items": [
+        "required quorum model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00037",
+    "cov-00061",
+    "cov-00080",
+    "cov-00088",
+    "cov-00098",
+    "cov-00110",
+    "cov-00131",
+    "cov-00148",
+    "cov-00171",
+    "cov-00197",
+    "cov-00232",
+    "cov-00245",
+    "cov-00344",
+    "cov-00449",
+    "cov-00460",
+    "cov-00519",
+    "cov-00521",
+    "cov-00522",
+    "cov-00548",
+    "cov-00557",
+    "cov-00563",
+    "cov-00573",
+    "cov-00582",
+    "cov-00583",
+    "cov-00586",
+    "cov-00594",
+    "cov-00625",
+    "cov-00648",
+    "cov-00659",
+    "cov-00685",
+    "cov-00687",
+    "cov-00711",
+    "cov-00718",
+    "cov-00735",
+    "cov-00860",
+    "cov-00872",
+    "cov-00888",
+    "cov-00911",
+    "cov-00919",
+    "cov-00992"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-012",
+    "obl-025",
+    "obl-031",
+    "obl-034",
+    "obl-036",
+    "obl-038",
+    "obl-042",
+    "obl-045",
+    "obl-067",
+    "obl-093",
+    "obl-123",
+    "obl-131",
+    "obl-202",
+    "obl-306",
+    "obl-317",
+    "obl-376",
+    "obl-378",
+    "obl-379",
+    "obl-405",
+    "obl-414",
+    "obl-420",
+    "obl-430",
+    "obl-439",
+    "obl-440",
+    "obl-443",
+    "obl-451",
+    "obl-482",
+    "obl-505",
+    "obl-516",
+    "obl-542",
+    "obl-544",
+    "obl-568",
+    "obl-575",
+    "obl-592",
+    "obl-717",
+    "obl-729",
+    "obl-745",
+    "obl-768",
+    "obl-776",
+    "obl-849"
+  ],
+  "source_seed_ids_represented": [
+    "seed-012",
+    "seed-025",
+    "seed-031",
+    "seed-034",
+    "seed-036",
+    "seed-038",
+    "seed-042",
+    "seed-045",
+    "seed-067",
+    "seed-093",
+    "seed-10018",
+    "seed-10053",
+    "seed-10141",
+    "seed-1017",
+    "seed-10230",
+    "seed-10300",
+    "seed-10329",
+    "seed-1081",
+    "seed-1179",
+    "seed-1233",
+    "seed-128",
+    "seed-1296",
+    "seed-136",
+    "seed-1360",
+    "seed-1404",
+    "seed-1454",
+    "seed-1504",
+    "seed-1574",
+    "seed-1636",
+    "seed-1728",
+    "seed-1807",
+    "seed-184",
+    "seed-1861",
+    "seed-1932",
+    "seed-1991",
+    "seed-2078",
+    "seed-2146",
+    "seed-219",
+    "seed-234",
+    "seed-2438",
+    "seed-2454",
+    "seed-2490",
+    "seed-2514",
+    "seed-2553",
+    "seed-2574",
+    "seed-2916",
+    "seed-2938",
+    "seed-2975",
+    "seed-2990",
+    "seed-3082",
+    "seed-3132",
+    "seed-3146",
+    "seed-3205",
+    "seed-3222",
+    "seed-3361",
+    "seed-3398",
+    "seed-3432",
+    "seed-355",
+    "seed-3622",
+    "seed-366",
+    "seed-3677",
+    "seed-3689",
+    "seed-3711",
+    "seed-3829",
+    "seed-390",
+    "seed-3934",
+    "seed-4085",
+    "seed-4113",
+    "seed-4142",
+    "seed-4199",
+    "seed-431",
+    "seed-434",
+    "seed-436",
+    "seed-4369",
+    "seed-437",
+    "seed-441",
+    "seed-4490",
+    "seed-4516",
+    "seed-467",
+    "seed-476",
+    "seed-482",
+    "seed-493",
+    "seed-495",
+    "seed-505",
+    "seed-509",
+    "seed-510",
+    "seed-513",
+    "seed-521",
+    "seed-5408",
+    "seed-5443",
+    "seed-5464",
+    "seed-5505",
+    "seed-552",
+    "seed-561",
+    "seed-5680",
+    "seed-580",
+    "seed-5812",
+    "seed-5829",
+    "seed-5853",
+    "seed-5873",
+    "seed-5897",
+    "seed-5907",
+    "seed-592",
+    "seed-5986",
+    "seed-6002",
+    "seed-6019",
+    "seed-6050",
+    "seed-6064",
+    "seed-6082",
+    "seed-6096",
+    "seed-6142",
+    "seed-616",
+    "seed-6199",
+    "seed-623",
+    "seed-625",
+    "seed-6270",
+    "seed-6286",
+    "seed-6344",
+    "seed-6356",
+    "seed-6386",
+    "seed-6404",
+    "seed-6429",
+    "seed-649",
+    "seed-6491",
+    "seed-6517",
+    "seed-6540",
+    "seed-6552",
+    "seed-656",
+    "seed-6567",
+    "seed-6586",
+    "seed-6602",
+    "seed-6615",
+    "seed-6624",
+    "seed-6636",
+    "seed-6668",
+    "seed-6710",
+    "seed-6737",
+    "seed-675",
+    "seed-6755",
+    "seed-6779",
+    "seed-678",
+    "seed-6796",
+    "seed-6909",
+    "seed-6933",
+    "seed-6951",
+    "seed-6979",
+    "seed-7004",
+    "seed-7038",
+    "seed-7058",
+    "seed-7116",
+    "seed-7133",
+    "seed-7155",
+    "seed-7167",
+    "seed-7192",
+    "seed-7202",
+    "seed-7226",
+    "seed-7305",
+    "seed-7329",
+    "seed-7339",
+    "seed-7368",
+    "seed-7450",
+    "seed-7477",
+    "seed-7522",
+    "seed-759",
+    "seed-7656",
+    "seed-7674",
+    "seed-7681",
+    "seed-7699",
+    "seed-7756",
+    "seed-7777",
+    "seed-7799",
+    "seed-7819",
+    "seed-7983",
+    "seed-8039",
+    "seed-8053",
+    "seed-8111",
+    "seed-8126",
+    "seed-8137",
+    "seed-8157",
+    "seed-817",
+    "seed-832",
+    "seed-8368",
+    "seed-8398",
+    "seed-850",
+    "seed-875",
+    "seed-8793",
+    "seed-8804",
+    "seed-8811",
+    "seed-883",
+    "seed-884",
+    "seed-8882",
+    "seed-8974",
+    "seed-9068",
+    "seed-9127",
+    "seed-9210",
+    "seed-9338",
+    "seed-9367",
+    "seed-9430",
+    "seed-9497",
+    "seed-954",
+    "seed-9550",
+    "seed-9578",
+    "seed-9607",
+    "seed-9646",
+    "seed-9683",
+    "seed-9709",
+    "seed-9767",
+    "seed-9899",
+    "seed-9931",
+    "seed-994",
+    "seed-9979"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0003",
+    "shard-0004",
+    "shard-0006",
+    "shard-0007",
+    "shard-0008",
+    "shard-0009",
+    "shard-0010",
+    "shard-0011",
+    "shard-0012",
+    "shard-0013",
+    "shard-0014",
+    "shard-0015",
+    "shard-0016",
+    "shard-0017",
+    "shard-0018",
+    "shard-0019",
+    "shard-0020",
+    "shard-0021",
+    "shard-0022",
+    "shard-0023",
+    "shard-0024",
+    "shard-0025",
+    "shard-0026",
+    "shard-0027",
+    "shard-0028",
+    "shard-0029",
+    "shard-0030",
+    "shard-0033",
+    "shard-0034",
+    "shard-0036",
+    "shard-0037",
+    "shard-0038",
+    "shard-0039",
+    "shard-0040",
+    "shard-0041",
+    "shard-0042",
+    "shard-0043",
+    "shard-0044",
+    "shard-0045",
+    "shard-0046",
+    "shard-0047",
+    "shard-0048",
+    "shard-0054",
+    "shard-0055",
+    "shard-0056",
+    "shard-0057",
+    "shard-0058",
+    "shard-0059",
+    "shard-0060",
+    "shard-0061",
+    "shard-0062",
+    "shard-0063",
+    "shard-0064",
+    "shard-0065",
+    "shard-0066",
+    "shard-0067",
+    "shard-0068",
+    "shard-0069",
+    "shard-0070",
+    "shard-0071",
+    "shard-0072",
+    "shard-0073",
+    "shard-0074",
+    "shard-0075",
+    "shard-0077",
+    "shard-0080",
+    "shard-0081",
+    "shard-0082",
+    "shard-0083",
+    "shard-0084",
+    "shard-0085",
+    "shard-0086",
+    "shard-0087",
+    "shard-0088",
+    "shard-0089",
+    "shard-0090",
+    "shard-0091"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-00037",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00037 is missing for handoff storage/delivery mapping",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "Storage/delivery clarification pressure from user"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00037"
+      ],
+      "source_obligation_ids": [
+        "obl-012"
+      ],
+      "source_seed_ids": [
+        "seed-012"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "exact_missing_items": [
+        "pin down whether handoff/retry artifacts are literally JSON/JSONL/redb-backed records/projections",
+        "specify the concrete project-scoped paths or storage domains that own them",
+        "specify how a worker receives the handoff packet: inline prompt block, referenced artifact, fetched context, or mixed model"
+      ],
+      "stale_tokens": [
+        "optional JSON"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00061",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00061 is missing for work_package / feature_seam GUI surfaces missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "GUI gap is now explicit"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00061"
+      ],
+      "source_obligation_ids": [
+        "obl-025"
+      ],
+      "source_seed_ids": [
+        "seed-025"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "exact_missing_items": [
+        "no documented GUI surface yet for `work package`",
+        "no documented GUI surface yet for `feature seam`",
+        "no documented seam-level acceptance / weak-integration / corroboration review affordance yet"
+      ],
+      "stale_tokens": [
+        "PuppetMasterEvent::*",
+        "Overseer",
+        "Phase",
+        "Task",
+        "Subtask",
+        "Iteration"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00077",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00080 is missing for seam review loop behavior",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "seam review loop"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00080"
+      ],
+      "source_obligation_ids": [
+        "obl-031"
+      ],
+      "source_seed_ids": [
+        "seed-031"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "exact_missing_items": [
+        "define concrete seam review loop behavior",
+        "include trigger points, checks performed, corroboration thresholds, and emitted artifacts",
+        "candidate outputs: seam review verdict, failure classes with severity, evidence bundle/rationale, remediation-node recommendation or graph-patch recommendation, corroboration requirement and outcome when invoked"
+      ],
+      "stale_tokens": [
+        "HITL",
+        "package overseer",
+        "graph-patch"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00085",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00088 is missing for projection ownership and source-control partitioning",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "projection ownership by surface"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00088"
+      ],
+      "source_obligation_ids": [
+        "obl-034"
+      ],
+      "source_seed_ids": [
+        "seed-034"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "exact_missing_items": [
+        "which Orchestrator seam should lead the discussion: runtime ownership boundary, page/tab IA, blocked/remediation UX, lineage across graph/evidence/history/usage",
+        "Source Control worktree area likely needs top-level partitioning into Orchestrator Owned and Other",
+        "Orchestrator Owned section likely needs further subdivision by feature seam",
+        "Orchestrator page is a high-density information surface with very large detail volume"
+      ],
+      "stale_tokens": [
+        "Tiers tab",
+        "page layer",
+        "Orchestrator Owned"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00095",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00098 is missing for package/seam overseer + lane-aware execution model",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "Highest-Impact Docs"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00098"
+      ],
+      "source_obligation_ids": [
+        "obl-036"
+      ],
+      "source_seed_ids": [
+        "seed-036"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Replace tier-rooted execution with package/seam/lane model",
+        "Define package overseer + seam overseer roles",
+        "Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage",
+        "Redefine gates to package-complete / seam-complete",
+        "Rename or retire Tiers UI/tab and tier_tree/progress bars"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars",
+        "phase/task/subtask"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00107",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00110 is missing for orchestrator attention routing and lane-aware widgets",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "GUI / UX Impacts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00110"
+      ],
+      "source_obligation_ids": [
+        "obl-038"
+      ],
+      "source_seed_ids": [
+        "seed-038"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Replace Tiers-first navigation",
+        "Define Dashboard\u2192Orchestrator\u2192thread routing contract",
+        "Add package/seam/lane visualization widgets",
+        "Define which overseer's thread opens on click",
+        "Make worktree/lane state visible and navigable"
+      ],
+      "stale_tokens": [
+        "Tiers tab",
+        "widget.tier_tree",
+        "3-bar layout",
+        "grouped-by-phase",
+        "single-threaded",
+        "current_task"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00128",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00131 is missing for graph-native attention routing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "Cleanup Priorities"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00131"
+      ],
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "source_seed_ids": [
+        "seed-042"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "exact_missing_items": [
+        "Replace or demote tiers-first widgets and layouts.",
+        "Add package/seam/lane-aware identity, worktree, and attention surfaces.",
+        "Define Dashboard \u2192 Orchestrator \u2192 chat-thread routing using canonical runtime objects rather than prose-only references."
+      ],
+      "stale_tokens": [
+        "tiers-first",
+        "phase-grouped layouts",
+        "single current task",
+        "single worktree",
+        "prose-only references"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00145",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00148 is partial for Acceptance, evidence, coverage, GUI automation, and test schemas can represent nodes and c",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00148"
+      ],
+      "source_obligation_ids": [
+        "obl-045"
+      ],
+      "source_seed_ids": [
+        "seed-045"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "Acceptance, evidence, coverage, GUI automation, and test schemas can represent nodes and checks, but not work package, feature seam, lane, promotion class, contamination state, resolution thread, or effective account identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00163",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00171 is present for `Plans/FinalGUISpec.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00171"
+      ],
+      "source_obligation_ids": [
+        "obl-067"
+      ],
+      "source_seed_ids": [
+        "seed-067",
+        "seed-184",
+        "seed-219",
+        "seed-390",
+        "seed-431",
+        "seed-441",
+        "seed-493",
+        "seed-505",
+        "seed-561",
+        "seed-616",
+        "seed-675",
+        "seed-759",
+        "seed-884",
+        "seed-954",
+        "seed-1017",
+        "seed-1081",
+        "seed-1179",
+        "seed-1233",
+        "seed-1296",
+        "seed-1360",
+        "seed-1404",
+        "seed-1454",
+        "seed-1504",
+        "seed-1574",
+        "seed-1636",
+        "seed-1728",
+        "seed-1807",
+        "seed-1861",
+        "seed-1932",
+        "seed-1991",
+        "seed-2078",
+        "seed-2146",
+        "seed-2438",
+        "seed-2454",
+        "seed-2490",
+        "seed-2514",
+        "seed-2553",
+        "seed-2574",
+        "seed-2916",
+        "seed-2938",
+        "seed-2975",
+        "seed-2990",
+        "seed-3082",
+        "seed-3132",
+        "seed-3146",
+        "seed-3205",
+        "seed-3222",
+        "seed-3361",
+        "seed-3398",
+        "seed-3432",
+        "seed-3622",
+        "seed-3677",
+        "seed-3689",
+        "seed-3711",
+        "seed-3829",
+        "seed-3934",
+        "seed-4085",
+        "seed-4113",
+        "seed-4142",
+        "seed-4199",
+        "seed-4369",
+        "seed-4490",
+        "seed-4516",
+        "seed-5408",
+        "seed-5443",
+        "seed-5464",
+        "seed-5505",
+        "seed-5680",
+        "seed-5812",
+        "seed-5829",
+        "seed-5853",
+        "seed-5873",
+        "seed-5897",
+        "seed-5907",
+        "seed-5986",
+        "seed-6002",
+        "seed-6019",
+        "seed-6050",
+        "seed-6064",
+        "seed-6082",
+        "seed-6096",
+        "seed-6142",
+        "seed-6199",
+        "seed-6270",
+        "seed-6286",
+        "seed-6344",
+        "seed-6356",
+        "seed-6386",
+        "seed-6404",
+        "seed-6429",
+        "seed-6491",
+        "seed-6517",
+        "seed-6540",
+        "seed-6552",
+        "seed-6567",
+        "seed-6586",
+        "seed-6602",
+        "seed-6615",
+        "seed-6624",
+        "seed-6636",
+        "seed-6668",
+        "seed-6710",
+        "seed-6737",
+        "seed-6755",
+        "seed-6779",
+        "seed-6796",
+        "seed-6909",
+        "seed-6933",
+        "seed-6951",
+        "seed-6979",
+        "seed-7004",
+        "seed-7038",
+        "seed-7058",
+        "seed-7116",
+        "seed-7133",
+        "seed-7155",
+        "seed-7167",
+        "seed-7192",
+        "seed-7202",
+        "seed-7226",
+        "seed-7305",
+        "seed-7329",
+        "seed-7339",
+        "seed-7368",
+        "seed-7450",
+        "seed-7477",
+        "seed-7522",
+        "seed-7656",
+        "seed-7674",
+        "seed-7681",
+        "seed-7699",
+        "seed-7756",
+        "seed-7777",
+        "seed-7799",
+        "seed-7819",
+        "seed-7983",
+        "seed-8039",
+        "seed-8053",
+        "seed-8111",
+        "seed-8126",
+        "seed-8137",
+        "seed-8157",
+        "seed-8368",
+        "seed-8398",
+        "seed-8793",
+        "seed-8804",
+        "seed-8811",
+        "seed-8882",
+        "seed-8974",
+        "seed-9068",
+        "seed-9127",
+        "seed-9210",
+        "seed-9338",
+        "seed-9367",
+        "seed-9430",
+        "seed-9497",
+        "seed-9550",
+        "seed-9578",
+        "seed-9607",
+        "seed-9646",
+        "seed-9683",
+        "seed-9709",
+        "seed-9767",
+        "seed-9899",
+        "seed-9931",
+        "seed-9979",
+        "seed-10018",
+        "seed-10053",
+        "seed-10141",
+        "seed-10230",
+        "seed-10300",
+        "seed-10329"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010",
+        "shard-0011",
+        "shard-0012",
+        "shard-0013",
+        "shard-0014",
+        "shard-0015",
+        "shard-0016",
+        "shard-0017",
+        "shard-0018",
+        "shard-0019",
+        "shard-0020",
+        "shard-0021",
+        "shard-0022",
+        "shard-0023",
+        "shard-0024",
+        "shard-0025",
+        "shard-0026",
+        "shard-0027",
+        "shard-0028",
+        "shard-0029",
+        "shard-0030",
+        "shard-0033",
+        "shard-0034",
+        "shard-0036",
+        "shard-0037",
+        "shard-0038",
+        "shard-0039",
+        "shard-0040",
+        "shard-0041",
+        "shard-0042",
+        "shard-0043",
+        "shard-0044",
+        "shard-0045",
+        "shard-0046",
+        "shard-0047",
+        "shard-0048",
+        "shard-0054",
+        "shard-0055",
+        "shard-0056",
+        "shard-0057",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060",
+        "shard-0061",
+        "shard-0062",
+        "shard-0063",
+        "shard-0064",
+        "shard-0065",
+        "shard-0066",
+        "shard-0067",
+        "shard-0068",
+        "shard-0069",
+        "shard-0070",
+        "shard-0071",
+        "shard-0072",
+        "shard-0073",
+        "shard-0074",
+        "shard-0075",
+        "shard-0077",
+        "shard-0080",
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084",
+        "shard-0085",
+        "shard-0086",
+        "shard-0087",
+        "shard-0088",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/FinalGUISpec.md`",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00180",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00197 is present for Docs involved: `FinalGUISpec.md`, `newtools.md`, `Containers_Registry_and_Unraid.md`, `ass",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00197"
+      ],
+      "source_obligation_ids": [
+        "obl-093"
+      ],
+      "source_seed_ids": [
+        "seed-093"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "Docs involved: `FinalGUISpec.md`, `newtools.md`, `Containers_Registry_and_Unraid.md`, `assistant-chat-design.md`",
+        "FinalGUISpec.md",
+        "newtools.md",
+        "Containers_Registry_and_Unraid.md",
+        "assistant-chat-design.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00208",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00232 is partial for what old assumption is present: node-only lifecycle, lexicographic selection, no blocked/c",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 2.4 Backend Selection"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00232"
+      ],
+      "source_obligation_ids": [
+        "obl-123"
+      ],
+      "source_seed_ids": [
+        "seed-128"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "what old assumption is present: node-only lifecycle, lexicographic selection, no blocked/contaminated/restore-required states."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00218",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00245 is present for `Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00245"
+      ],
+      "source_obligation_ids": [
+        "obl-131"
+      ],
+      "source_seed_ids": [
+        "seed-136"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "`Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md`",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00281",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00344 is present for `Run_Graph_View` already requires historical SCM/worktree lineage to remain visible when l",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# display-font = \"CustomFont\"  # requires font file in ~/.puppet-master/fonts/"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00344"
+      ],
+      "source_obligation_ids": [
+        "obl-202"
+      ],
+      "source_seed_ids": [
+        "seed-234"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "`Run_Graph_View` already requires historical SCM/worktree lineage to remain visible when live targets no longer exist",
+        "Run_Graph_View"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00351",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00449 is present for `Orchestrator_Page.md` says Progress widgets are Dashboard-portable while `Widget_System.m",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-050: Progress-only widget hostability"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00449"
+      ],
+      "source_obligation_ids": [
+        "obl-306"
+      ],
+      "source_seed_ids": [
+        "seed-355"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator_Page.md` says Progress widgets are Dashboard-portable while `Widget_System.md` still excludes some of those widgets from Dashboard hostability.",
+        "Orchestrator_Page.md",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00360",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00460 is partial for Usage/UI requests for auth-mode/effective-account filtering are already present in adjacen",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00460"
+      ],
+      "source_obligation_ids": [
+        "obl-317"
+      ],
+      "source_seed_ids": [
+        "seed-366"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "Usage/UI requests for auth-mode/effective-account filtering are already present in adjacent GUI docs even though usage contracts do not yet guarantee them."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00409",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00519 is present for The `Source Control` panel is narrow/small and should be treated as a constrained side-pan",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### Bottom runtime information architecture"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00519"
+      ],
+      "source_obligation_ids": [
+        "obl-376"
+      ],
+      "source_seed_ids": [
+        "seed-434"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "The `Source Control` panel is narrow/small and should be treated as a constrained side-panel surface, not a broad information canvas.",
+        "Source Control"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00411",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00521 is partial for Do not assume package/lane/run/worktree metadata can all be shown at full fidelity at once",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Fidelity recovery addendum"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00521"
+      ],
+      "source_obligation_ids": [
+        "obl-378"
+      ],
+      "source_seed_ids": [
+        "seed-436"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "Do not assume package/lane/run/worktree metadata can all be shown at full fidelity at once in the panel."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00412",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00522 is partial for Source Control = compact Git/worktree operational panel",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-090: Execution role and operational identity"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00522"
+      ],
+      "source_obligation_ids": [
+        "obl-379"
+      ],
+      "source_seed_ids": [
+        "seed-437"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "Source Control = compact Git/worktree operational panel"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00431",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00548 is partial for attention/blocker projection",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00548"
+      ],
+      "source_obligation_ids": [
+        "obl-405"
+      ],
+      "source_seed_ids": [
+        "seed-467"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "attention/blocker projection"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00440",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00557 is present for many `Progress` widgets may also be hostable on `Dashboard`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### Progress catalog source and default drills"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00557"
+      ],
+      "source_obligation_ids": [
+        "obl-414"
+      ],
+      "source_seed_ids": [
+        "seed-476"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "many `Progress` widgets may also be hostable on `Dashboard`",
+        "Progress",
+        "Dashboard"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00444",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00563 is present for `widget_layout:v1:dashboard`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 12.3 Dashboard Grid Responsive"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00563"
+      ],
+      "source_obligation_ids": [
+        "obl-420"
+      ],
+      "source_seed_ids": [
+        "seed-482"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "`widget_layout:v1:dashboard`",
+        "widget_layout:v1:dashboard"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00454",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00573 is partial for which widgets are hostable where after the seam/package rewrite",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00573"
+      ],
+      "source_obligation_ids": [
+        "obl-430"
+      ],
+      "source_seed_ids": [
+        "seed-495"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "which widgets are hostable where after the seam/package rewrite"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00459",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00582 is partial for replay/rebuild targets a deterministic `target_seq`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 13.5 Minimum Touch/Click Targets"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00582"
+      ],
+      "source_obligation_ids": [
+        "obl-439"
+      ],
+      "source_seed_ids": [
+        "seed-509"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "replay/rebuild targets a deterministic `target_seq`",
+        "target_seq"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00460",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00583 is partial for UI freshness notifications should derive from committed projection state, not ad-hoc polli",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-096: Projection freshness vs projection health"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00583"
+      ],
+      "source_obligation_ids": [
+        "obl-440"
+      ],
+      "source_seed_ids": [
+        "seed-510"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "UI freshness notifications should derive from committed projection state, not ad-hoc polling"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00461",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00586 is partial for the GUI must not imply hidden fallback or hidden retry behavior",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### GUI behavior rules"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00586"
+      ],
+      "source_obligation_ids": [
+        "obl-443"
+      ],
+      "source_seed_ids": [
+        "seed-513"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "the GUI must not imply hidden fallback or hidden retry behavior"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00465",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00594 is present for `refreshing`: old committed projection still visible while refresh/rebuild runs",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00594"
+      ],
+      "source_obligation_ids": [
+        "obl-451"
+      ],
+      "source_seed_ids": [
+        "seed-521"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "`refreshing`: old committed projection still visible while refresh/rebuild runs",
+        "refreshing"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00484",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00625 is partial for Make `trust state` and `last updated` first-class UI fields for projection-backed surfaces",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-047: Projection trust and action gating"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00625"
+      ],
+      "source_obligation_ids": [
+        "obl-482"
+      ],
+      "source_seed_ids": [
+        "seed-552"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "Make `trust state` and `last updated` first-class UI fields for projection-backed surfaces.",
+        "trust state",
+        "last updated"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00501",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00648 is present for Required behavior:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-027: Concern routing and object-first search behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00648"
+      ],
+      "source_obligation_ids": [
+        "obl-505"
+      ],
+      "source_seed_ids": [
+        "seed-580"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "Required behavior:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00512",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00659 is partial for `selected_tab`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00659"
+      ],
+      "source_obligation_ids": [
+        "obl-516"
+      ],
+      "source_seed_ids": [
+        "seed-592"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "`selected_tab`",
+        "selected_tab"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00535",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00685 is partial for distinguish `global object search` from `tab-local filtering`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-027: Concern routing and object-first search behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00685"
+      ],
+      "source_obligation_ids": [
+        "obl-542"
+      ],
+      "source_seed_ids": [
+        "seed-623"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "distinguish `global object search` from `tab-local filtering`",
+        "global object search",
+        "tab-local filtering"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00537",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00687 is partial for `tab-local search`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-027: Concern routing and object-first search behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00687"
+      ],
+      "source_obligation_ids": [
+        "obl-544"
+      ],
+      "source_seed_ids": [
+        "seed-625"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "`tab-local search`",
+        "tab-local search"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00558",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00711 is partial for tab-local search stays embedded in tabs like Graph/Evidence/Ledger",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-027: Concern routing and object-first search behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00711"
+      ],
+      "source_obligation_ids": [
+        "obl-568"
+      ],
+      "source_seed_ids": [
+        "seed-649"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "tab-local search stays embedded in tabs like Graph/Evidence/Ledger"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00565",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00718 is partial for search should prefer stable object identity matches first",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-027: Concern routing and object-first search behavior"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00718"
+      ],
+      "source_obligation_ids": [
+        "obl-575"
+      ],
+      "source_seed_ids": [
+        "seed-656"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "search should prefer stable object identity matches first"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00581",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00735 is present for remediation resolution already includes `fixed`, `superseded`, `abandoned`, `replan_requir",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 9.4 Conflict resolution"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00735"
+      ],
+      "source_obligation_ids": [
+        "obl-592"
+      ],
+      "source_seed_ids": [
+        "seed-678"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "exact_missing_items": [
+        "remediation resolution already includes `fixed`, `superseded`, `abandoned`, `replan_required`",
+        "fixed",
+        "superseded",
+        "abandoned",
+        "replan_required"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00661",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00860 is partial for `gui_alignment`",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00860"
+      ],
+      "source_obligation_ids": [
+        "obl-717"
+      ],
+      "source_seed_ids": [
+        "seed-817"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "exact_missing_items": [
+        "`gui_alignment`",
+        "gui_alignment"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00667",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00872 is partial for should require rationale when it disagrees with corroborated/high-severity evidence",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-179: Dismissed vs resolved rationale enforcement"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00872"
+      ],
+      "source_obligation_ids": [
+        "obl-729"
+      ],
+      "source_seed_ids": [
+        "seed-832"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "exact_missing_items": [
+        "should require rationale when it disagrees with corroborated/high-severity evidence"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00674",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00888 is partial for Need to distinguish:",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00888"
+      ],
+      "source_obligation_ids": [
+        "obl-745"
+      ],
+      "source_seed_ids": [
+        "seed-850"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "exact_missing_items": [
+        "Need to distinguish:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00688",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00911 is partial for Concern importance is already established, but canonical storage/contract shape is still u",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Recommended minimum concern record shape"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00911"
+      ],
+      "source_obligation_ids": [
+        "obl-768"
+      ],
+      "source_seed_ids": [
+        "seed-875"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "exact_missing_items": [
+        "Concern importance is already established, but canonical storage/contract shape is still underdefined."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00696",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00919 is partial for blockers requiring action must not be trivially dismissible into a false sense of health",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### Fidelity recovery cov-096: Projection freshness vs projection health"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00919"
+      ],
+      "source_obligation_ids": [
+        "obl-776"
+      ],
+      "source_seed_ids": [
+        "seed-883"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "exact_missing_items": [
+        "blockers requiring action must not be trivially dismissible into a false sense of health"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00759",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00992 is partial for required quorum model",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00992"
+      ],
+      "source_obligation_ids": [
+        "obl-849"
+      ],
+      "source_seed_ids": [
+        "seed-994"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "exact_missing_items": [
+        "required quorum model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "uncertain_items": []
+}

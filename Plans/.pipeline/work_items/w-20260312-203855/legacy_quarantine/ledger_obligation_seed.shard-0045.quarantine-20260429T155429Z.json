@@ -1,0 +1,106 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0045",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0045-L008801-L009000.md",
+  "source_line_range": "L008801-L009000",
+  "covered_shard_id": "shard-0045",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "approval scope anchoring and approver identity",
+      "exact_items": [
+        "The missing structural piece is approval scope anchoring. Under the rewrite, approval must anchor to canonical execution-unit context first.",
+        "Contracts_V0.md still publishes HITLRequest with legacy allowed_actions[] and approve_continue. No durable approver identity is defined on approval/rejection events yet."
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "allowed_actions[]",
+        "approve_continue"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8807-L8812",
+        "working_ledger.md:L8825-L8828"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "runtime HITL command mapping",
+      "exact_items": [
+        "UI_Command_Catalog.md still has graph-local cmd.graph.approve_hitl / cmd.graph.deny_hitl entries. Deprecate graph-local HITL command IDs in favor of cmd.runtime.* mappings everywhere.",
+        "UI_Command_Catalog.md is now directly self-contradictory: it still presents graph-local HITL mutators as canon while later insisting all blocked-state recovery buttons across graph/chat/GUI must map to cmd.runtime.*."
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "cmd.graph.approve_hitl",
+        "cmd.graph.deny_hitl",
+        "cmd.runtime.*"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8827-L8844",
+        "working_ledger.md:L8948-L8950"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "HITL event persistence scope",
+      "exact_items": [
+        "storage-plan.md still registers HITL events as request_id, run_id, tier_id, tier_type, request_kind, message, allowed_actions, which is now behind the newer blocked-projection/action-family model.",
+        "restart persistence for HITL is still effectively run-scoped (checkpoints.hitl.{run_id}), which is unsafe once multiple concurrent approval episodes exist in one run."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "tier_id",
+        "tier_type",
+        "allowed_actions",
+        "checkpoints.hitl.{run_id}"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8826-L8826",
+        "working_ledger.md:L8954-L8956"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "HITL deprecated allowed_actions and approve_continue",
+      "exact_items": [
+        "deprecated allowed_actions[] is compatibility-only and MUST NOT appear in new canonical schemas; canonical recovery maps from allowed_action_ids[] to cmd.runtime.*",
+        "approve_continue is legacy vocabulary and should not survive as canonical runtime action naming; pre-attempt blocked episodes must not invent an attempt_id."
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "allowed_actions[]",
+        "allowed_action_ids[]",
+        "approve_continue"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8802-L8805",
+        "working_ledger.md:L8848-L8849"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": []
+}

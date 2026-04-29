@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/interview-subagent-integration.md",
-  "source_sha256": "02b8958a12a448fbc53809263ed899d1fd21fbb561c681b75701722dced7e0f5",
+  "source_sha256": "7f54ff0047b58f947b6175a0f5a959918dc6db562a57120c2c4bd310d9a68839",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -10,28 +10,28 @@
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/01-preamble.md",
       "start_line": 1,
-      "end_line": 2,
-      "segment_sha256": "e3c044c6d3b6c90f7bf07f0767ee0db67caa038189ec7c7071a3c8bdd530a381",
+      "end_line": 64,
+      "segment_sha256": "584a4e6065e179a76a2271611a5b026bc2080baafa3e20b5699f5ebdff6fa8f9",
       "heading": null
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/02-fidelity-recovery-addendum.md",
-      "start_line": 3,
-      "end_line": 21,
+      "start_line": 65,
+      "end_line": 83,
       "segment_sha256": "5b0bf1dffb70586ca49ae4f4bb15fb34c24a0e4502775966c5b8f0a23d01bebd",
       "heading": "## Fidelity recovery addendum"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/03-change-summary.md",
-      "start_line": 22,
-      "end_line": 29,
+      "start_line": 84,
+      "end_line": 91,
       "segment_sha256": "ff16c185cc1f6c626a897a07f352f28fceb422e0c0eb1334b22737a6f4b746dd",
       "heading": "## Change Summary"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/04-interview-runtime-boundary-and-handoff-lineage.md",
-      "start_line": 30,
-      "end_line": 49,
+      "start_line": 92,
+      "end_line": 111,
       "segment_sha256": "d70d64150e8e1439955fb6e805e0d29c65c22031cb578479c645ccb11672c6b4",
       "heading": "## Interview runtime boundary and handoff lineage"
     }

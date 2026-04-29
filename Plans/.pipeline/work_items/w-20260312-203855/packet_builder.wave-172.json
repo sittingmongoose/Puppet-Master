@@ -1,0 +1,302 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-172",
+  "group_ids": [
+    "pktgrp-0685",
+    "pktgrp-0686",
+    "pktgrp-0687",
+    "pktgrp-0688"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0130",
+      "source_reconciliation_target_id": "target-0600",
+      "source_reconciliation_target_ids": [
+        "target-0600"
+      ],
+      "path": "Plans/gui_automation_manifest.schema.json",
+      "operation": "observe_only",
+      "live_anchor": "Plans/gui_automation_manifest.schema.json:L1",
+      "coverage_row_ids": [
+        "cov-00264"
+      ],
+      "source_obligation_ids": [
+        "obl-144"
+      ],
+      "source_seed_ids": [
+        "seed-150"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-144"
+        ],
+        "source_seed_ids": [
+          "seed-150"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ]
+      },
+      "gap_ids": [
+        "gap-00233"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `Plans/test_strategy.schema.json`, `Plans/evidence.schema.json`, `Plans/gui_automation_manifest.schema.json`",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/test_strategy.schema.json",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-1499915f57cb",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0131",
+      "source_reconciliation_target_id": "target-0602",
+      "source_reconciliation_target_ids": [
+        "target-0602"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "operation": "observe_only",
+      "live_anchor": "## Canonical HITL Recovery Action Alignment Addendum (2026-03-09) (Plans/human-in-the-loop.md:L324)",
+      "coverage_row_ids": [
+        "cov-02179",
+        "cov-02338"
+      ],
+      "source_obligation_ids": [
+        "obl-2034",
+        "obl-2189"
+      ],
+      "source_seed_ids": [
+        "seed-2643",
+        "seed-2844"
+      ],
+      "source_shard_ids": [
+        "shard-0034",
+        "shard-0035"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-2034",
+          "obl-2189"
+        ],
+        "source_seed_ids": [
+          "seed-2643",
+          "seed-2844"
+        ],
+        "source_shard_ids": [
+          "shard-0034",
+          "shard-0035"
+        ]
+      },
+      "gap_ids": [
+        "gap-01696",
+        "gap-01814"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`UI_Command_Catalog.md` already normalizes HITL and recovery around `request_id`, `blocked_sequence`, and `cmd.runtime.*`, but `Run_Graph_View.md` still presents older node-only command shapes.",
+        "UI_Command_Catalog.md",
+        "request_id",
+        "blocked_sequence",
+        "cmd.runtime.*",
+        "Run_Graph_View.md",
+        "`Run_Graph_View.md` still conflicts with `UI_Command_Catalog.md` on HITL args and recovery command namespaces."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-11c66e187933",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0132",
+      "source_reconciliation_target_id": "target-0607",
+      "source_reconciliation_target_ids": [
+        "target-0607"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "operation": "observe_only",
+      "live_anchor": "### Fidelity recovery cov-006: Retire tier-era canon and shadow fields (Plans/human-in-the-loop.md:L7)",
+      "coverage_row_ids": [
+        "cov-03277"
+      ],
+      "source_obligation_ids": [
+        "obl-3123"
+      ],
+      "source_seed_ids": [
+        "seed-4157"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3123"
+        ],
+        "source_seed_ids": [
+          "seed-4157"
+        ],
+        "source_shard_ids": [
+          "shard-0045"
+        ]
+      },
+      "gap_ids": [
+        "gap-02565"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`UI_Command_Catalog.md` is now directly self-contradictory: it still presents graph-local HITL mutators as canon while later insisting all blocked-state recovery buttons across graph/chat/GUI must map to `cmd.runtime.*`.",
+        "UI_Command_Catalog.md",
+        "cmd.runtime.*"
+      ],
+      "exact_stale_tokens_to_retire": [
+        "UI_Command_Catalog.md",
+        "cmd.runtime.*"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "UI_Command_Catalog.md",
+        "cmd.runtime.*"
+      ],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-e08ce1998737",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0133",
+      "source_reconciliation_target_id": "target-0617",
+      "source_reconciliation_target_ids": [
+        "target-0617"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "operation": "observe_only",
+      "live_anchor": "## Avoiding \"Built but Not Wired\" (Plans/orchestrator-subagent-integration.md:L1186)",
+      "coverage_row_ids": [
+        "cov-00158"
+      ],
+      "source_obligation_ids": [
+        "obl-055"
+      ],
+      "source_seed_ids": [
+        "seed-055"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-055"
+        ],
+        "source_seed_ids": [
+          "seed-055"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ]
+      },
+      "gap_ids": [
+        "gap-00155"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Package-based lane pools are still missing as a canonical concept.** GPT-5.4 found subtask/tier worktrees, branch-per-run flows, and direct merge/PR assumptions across SCM docs, but no stable lane-pool model."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-02e24b64f3c3",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-00264",
+    "cov-02179",
+    "cov-02338",
+    "cov-03277",
+    "cov-00158"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-144",
+    "obl-2034",
+    "obl-2189",
+    "obl-3123",
+    "obl-055"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-150",
+    "seed-2643",
+    "seed-2844",
+    "seed-4157",
+    "seed-055"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0009",
+    "shard-0034",
+    "shard-0035",
+    "shard-0045"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "preserved_exact_required_items": [
+    "`Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `Plans/test_strategy.schema.json`, `Plans/evidence.schema.json`, `Plans/gui_automation_manifest.schema.json`",
+    "Plans/plan_graph.schema.json",
+    "Plans/project_plan_node.schema.json",
+    "Plans/test_strategy.schema.json",
+    "Plans/evidence.schema.json",
+    "Plans/gui_automation_manifest.schema.json",
+    "`UI_Command_Catalog.md` already normalizes HITL and recovery around `request_id`, `blocked_sequence`, and `cmd.runtime.*`, but `Run_Graph_View.md` still presents older node-only command shapes.",
+    "UI_Command_Catalog.md",
+    "request_id",
+    "blocked_sequence",
+    "cmd.runtime.*",
+    "Run_Graph_View.md",
+    "`Run_Graph_View.md` still conflicts with `UI_Command_Catalog.md` on HITL args and recovery command namespaces.",
+    "`UI_Command_Catalog.md` is now directly self-contradictory: it still presents graph-local HITL mutators as canon while later insisting all blocked-state recovery buttons across graph/chat/GUI must map to `cmd.runtime.*`.",
+    "Package-based lane pools are still missing as a canonical concept.** GPT-5.4 found subtask/tier worktrees, branch-per-run flows, and direct merge/PR assumptions across SCM docs, but no stable lane-pool model."
+  ],
+  "blocked_targets": []
+}

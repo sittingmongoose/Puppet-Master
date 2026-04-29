@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-287",
+  "group_ids": [
+    "discgrp-1145",
+    "discgrp-1146",
+    "discgrp-1147",
+    "discgrp-1148"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01395",
+      "source_obligation_ids": [
+        "obl-1252"
+      ],
+      "source_seed_ids": [
+        "seed-1497"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01396",
+      "source_obligation_ids": [
+        "obl-1253"
+      ],
+      "source_seed_ids": [
+        "seed-1498"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01397",
+      "source_obligation_ids": [
+        "obl-1254"
+      ],
+      "source_seed_ids": [
+        "seed-1499"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "## 2. Canonical command IDs",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L64"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01398",
+      "source_obligation_ids": [
+        "obl-1255"
+      ],
+      "source_seed_ids": [
+        "seed-1500"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Concern record family, lifecycle, and deferred visibility",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L294"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

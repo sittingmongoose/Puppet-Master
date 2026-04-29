@@ -1,0 +1,102 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-124",
+  "group_ids": [
+    "discgrp-0493",
+    "discgrp-0494",
+    "discgrp-0495",
+    "discgrp-0496"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00740",
+      "source_obligation_ids": [
+        "obl-597"
+      ],
+      "source_seed_ids": [
+        "seed-684",
+        "seed-694",
+        "seed-1621",
+        "seed-2093",
+        "seed-2101",
+        "seed-2140"
+      ],
+      "source_shard_ids": [
+        "shard-0015",
+        "shard-0025",
+        "shard-0029",
+        "shard-0030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-00741",
+      "source_obligation_ids": [
+        "obl-598"
+      ],
+      "source_seed_ids": [
+        "seed-686"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/MiscPlan.md",
+      "new_heading_hint": "### 3.1 What Must Never Be Removed",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/MiscPlan.md:L91"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00742",
+      "source_obligation_ids": [
+        "obl-599"
+      ],
+      "source_seed_ids": [
+        "seed-687"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "### 3. No silent runtime identity collapse",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L242"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00743",
+      "source_obligation_ids": [
+        "obl-600"
+      ],
+      "source_seed_ids": [
+        "seed-688"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Retry, reroute, replacement, and resume",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1490"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

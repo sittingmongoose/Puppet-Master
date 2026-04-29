@@ -1,0 +1,134 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0049",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0049-L009601-L009800.md",
+  "source_line_range": "L009601-L009800",
+  "covered_shard_id": "shard-0049",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "blocked sequence and execution-context ownership",
+      "exact_items": [
+        "canonical execution-context replacement / TierContext successor ownership; blocked/approval identity minting and scope (blocked_sequence, approval scope key, request/block bridge); missing storage families for runtime-artifact indexing and worktree/lane lifecycle; durable lineage bridges from planning/wizard/validation into launched execution",
+        "execution-unit context owner and minimum field contract; blocked approval identity/scope and blocked_sequence minting ownership; durable storage families for runtime-artifact indexing/projection; worktree/lane lifecycle; validation/wizard/interview lineage bridge into launched execution",
+        "no doc clearly says who mints blocked_sequence; no doc clearly says when a new blocked episode starts versus an existing one being updated; request_id still competes with blocked_sequence in HITL/storage examples; startup recovery wakeups are named but not tied to a concrete blocked-episode restoration rule"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md",
+        "Plans/Decision_Policy.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "blocked_sequence",
+        "TierContext",
+        "request_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L9618-L9621",
+        "working_ledger.md:L9636-L9642",
+        "working_ledger.md:L9687-L9690"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "blocked episode consumers and startup recovery",
+      "exact_items": [
+        "storage-plan.md still publishes HITL events with allowed_actions and tier-local request payloads while its runtime blocked projections already use blocked_sequence and allowed_action_ids[]; UI_Command_Catalog.md already routes canonical runtime actions by blocked_sequence, but graph-local HITL commands still use request_id; Decision_Policy.md does not currently own the minting rule; Executor_Protocol.md names startup_recovered but does not define the restore handshake strongly enough",
+        "Make Executor_Protocol.md + Contracts_V0.md the joint owners of blocked_sequence minting semantics, blocked-episode lifecycle, startup-recovery scheduler handshake; Recast HITL request contracts so request_id is explicitly subordinate to blocked-episode identity; Update storage/event docs so approval records and blocked projections are consistent"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/Decision_Policy.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "allowed_actions",
+        "allowed_action_ids[]",
+        "blocked_sequence",
+        "request_id",
+        "startup_recovered"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L9734-L9737",
+        "working_ledger.md:L9749-L9754"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "ghost commands and schema/section integrity",
+      "exact_items": [
+        "ghost command IDs; missing catalog rows for referenced commands; missing runtime-artifact schema family / storage registration; duplicated executor canon; missing advertised sections and dead glossary references",
+        "command/catalog ghost IDs and missing owner rows; payload/schema-owner triangle for runtime artifacts; duplicated / contradictory executor and HITL canon; glossary/crosswalk/TOC dead references and missing advertised sections",
+        "internal acceptance-criteria contradiction on reserved slash-command overrides; canonical catalog does not register cmd.chat.run_user_command; ghost chat/orchestrator command IDs; UI_Wiring_Rules.md still cannot express dispatcher preconditions; Project_Output_Artifacts.md is now clearly under-keyed; FileManager.md still cannot satisfy its own addendum"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/FileManager.md",
+        "Plans/Glossary.md",
+        "Plans/Crosswalk.md"
+      ],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [],
+      "stale_tokens": [
+        "cmd.chat.run_user_command"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L9623-L9627",
+        "working_ledger.md:L9644-L9647",
+        "working_ledger.md:L9776-L9783"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "tier-era consumer and route-payload cleanup",
+      "exact_items": [
+        "Everything else is increasingly cleanup/reconciliation: updating stale tier-era consumers; aligning requested/effective/account/runtime identity displays; moving surfaces to canonical route payloads and runtime actions; tab/layout/help/glossary cleanup; replacing old worktree/tier copy with lane/worktree/package/seam-aware wording",
+        "Orchestrator tab/page retargeting; Source Control vs Orchestrator surface cleanup; help/glossary expansion; stale consumer-doc requested/effective/runtime identity cleanup; concern/search/attention/project-summary surface alignment"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Glossary.md",
+        "Plans/Crosswalk.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "tier-era consumers",
+        "old worktree/tier copy"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L9628-L9633",
+        "working_ledger.md:L9649-L9653"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "L009601 blank",
+    "L009602 research progress heading",
+    "L009604-L009610 targeted docs",
+    "L009612-L009666 section headings/summary",
+    "L009668-L009800 later broad commentary"
+  ],
+  "uncertain_items": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1495",
+  "group_ids": [
+    "discgrp-5977",
+    "discgrp-5978",
+    "discgrp-5979",
+    "discgrp-5980"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06600",
+      "source_obligation_ids": [
+        "obl-6241"
+      ],
+      "source_seed_ids": [
+        "seed-9439"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Shared governance and runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L260"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06601",
+      "source_obligation_ids": [
+        "obl-6242"
+      ],
+      "source_seed_ids": [
+        "seed-9440"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-06602",
+      "source_obligation_ids": [
+        "obl-6243"
+      ],
+      "source_seed_ids": [
+        "seed-9441"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "new_heading_hint": "#### Action tiers",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md:L72"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06603",
+      "source_obligation_ids": [
+        "obl-6244"
+      ],
+      "source_seed_ids": [
+        "seed-9442"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### Progress catalog source and default drills",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L910"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

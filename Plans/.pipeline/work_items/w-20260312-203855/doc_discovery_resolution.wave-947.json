@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-947",
+  "group_ids": [
+    "discgrp-3785",
+    "discgrp-3786",
+    "discgrp-3787",
+    "discgrp-3788"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04087",
+      "source_obligation_ids": [
+        "obl-3929"
+      ],
+      "source_seed_ids": [
+        "seed-5383"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Prompt_Pipeline.md",
+      "new_heading_hint": "### 1.2A Structured attachment normalization for browser element context",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L133"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04088",
+      "source_obligation_ids": [
+        "obl-3930"
+      ],
+      "source_seed_ids": [
+        "seed-5384"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "new_heading_hint": "# Puppet Master -- GitHub API Auth and Flows",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04089",
+      "source_obligation_ids": [
+        "obl-3931"
+      ],
+      "source_seed_ids": [
+        "seed-5385"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "#### Open subject navigation rules",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L96"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04090",
+      "source_obligation_ids": [
+        "obl-3932"
+      ],
+      "source_seed_ids": [
+        "seed-5390"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Runtime and routing terms",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L70"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

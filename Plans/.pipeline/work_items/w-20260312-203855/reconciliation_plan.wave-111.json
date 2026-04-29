@@ -1,0 +1,351 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-111",
+  "group_ids": [
+    "recgrp-0441",
+    "recgrp-0442",
+    "recgrp-0443",
+    "recgrp-0444"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0441",
+      "path": "Plans/Progression_Gates.md",
+      "mapped_owner_heading": "### Compatibility fallback and contradiction-fail rules",
+      "live_anchor": "### Compatibility fallback and contradiction-fail rules (Plans/Progression_Gates.md:L70)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00423",
+        "cov-02997",
+        "cov-05997",
+        "cov-06466"
+      ],
+      "source_obligation_ids": [
+        "obl-281",
+        "obl-2843",
+        "obl-5769",
+        "obl-6107"
+      ],
+      "source_seed_ids": [
+        "seed-319",
+        "seed-3750",
+        "seed-8585",
+        "seed-9225"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0042",
+        "shard-0079",
+        "shard-0083"
+      ],
+      "gap_ids": [
+        "gap-00330",
+        "gap-02365",
+        "gap-04641",
+        "gap-05011"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Add execution-entity, lane, package, and effective-account dimensions to permission resolution and approval carryover/cascade rules.",
+        "still needs actor/lane/account identity, approval provenance, and concurrency-safe queue/scope rules",
+        "Keep any surviving `request_id` only as lineage or compatibility metadata for historical replay, not as the primary approval action target.",
+        "request_id",
+        "`request_id` can survive as compatibility lineage. It cannot remain the primary approval identity."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-a360e739456f",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0442",
+      "path": "Plans/Progression_Gates.md",
+      "mapped_owner_heading": "### Fidelity recovery cov-034: Promotion classes and gate evidence",
+      "live_anchor": "### Fidelity recovery cov-034: Promotion classes and gate evidence (Plans/Progression_Gates.md:L7)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00161",
+        "cov-00218",
+        "cov-00233",
+        "cov-00244",
+        "cov-00297",
+        "cov-00768",
+        "cov-00942",
+        "cov-00953",
+        "cov-01708",
+        "cov-05385"
+      ],
+      "source_obligation_ids": [
+        "obl-058",
+        "obl-113",
+        "obl-124",
+        "obl-130",
+        "obl-164",
+        "obl-625",
+        "obl-799",
+        "obl-810",
+        "obl-1565",
+        "obl-5157"
+      ],
+      "source_seed_ids": [
+        "seed-058",
+        "seed-116",
+        "seed-129",
+        "seed-135",
+        "seed-174",
+        "seed-720",
+        "seed-922",
+        "seed-934",
+        "seed-1952",
+        "seed-7639"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010",
+        "shard-0015",
+        "shard-0017",
+        "shard-0028",
+        "shard-0071"
+      ],
+      "gap_ids": [
+        "gap-00158",
+        "gap-00196",
+        "gap-00209",
+        "gap-00217",
+        "gap-00252",
+        "gap-00599",
+        "gap-00716",
+        "gap-00722",
+        "gap-01341",
+        "gap-04188"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "None of these cleanly map to package/seam promotion or lane-pool capacity.",
+        "what likely new model pressure is: optional HITL boundaries at node/package/seam promotions, lane/worktree identity, mid-run blocked-resolution routing, automation-first default.",
+        "what likely new model pressure is: package/seam/lane IDs, promotion classes, safe-point and contamination lineage, requested/effective execution identity.",
+        "likely issue: UI still presents `Tiers` as a primary mental model and lacks first-class work package, feature seam, lane, promotion, contamination, and resolution-thread surfaces.",
+        "Tiers",
+        "likely issue: completion, cleanup, concurrency, and queueing are still framed around tiers, runs, and threads instead of package lanes and promotion boundaries.",
+        "`Promotion Revoked`",
+        "Promotion Revoked",
+        "revoke promotion / seam completion",
+        "`Re-request Promotion`",
+        "Re-request Promotion",
+        "concern that blocks seam completion, promotion, or recovery",
+        "`object_kind = promotion`",
+        "object_kind = promotion"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-7a25dbe05022",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0443",
+      "path": "Plans/Progression_Gates.md",
+      "mapped_owner_heading": "### Gate rule clarification: canonical blocked-payload field name",
+      "live_anchor": "### Gate rule clarification: canonical blocked-payload field name (Plans/Progression_Gates.md:L538)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-01674"
+      ],
+      "source_obligation_ids": [
+        "obl-1531"
+      ],
+      "source_seed_ids": [
+        "seed-1908"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "gap_ids": [
+        "gap-01312"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "This seam reinforces a rule already visible elsewhere:"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-328afa84feb6",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0444",
+      "path": "Plans/Progression_Gates.md",
+      "mapped_owner_heading": "### Verifier result normalization",
+      "live_anchor": "### Verifier result normalization (Plans/Progression_Gates.md:L114)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-03486",
+        "cov-04102"
+      ],
+      "source_obligation_ids": [
+        "obl-3332",
+        "obl-3944"
+      ],
+      "source_seed_ids": [
+        "seed-4480",
+        "seed-5403"
+      ],
+      "source_shard_ids": [
+        "shard-0047",
+        "shard-0054"
+      ],
+      "gap_ids": [
+        "gap-02727",
+        "gap-03186"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Add an explicit bridge from the accepted sweep result into the launched execution package/run, likely via a launch receipt or promoted package ref rather than by mutating the pass report afterward.",
+        "This seam now looks tightly connected to routing/deep-link normalization, not just FileManager UX."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-f6d725260174",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00423",
+    "cov-02997",
+    "cov-05997",
+    "cov-06466",
+    "cov-00161",
+    "cov-00218",
+    "cov-00233",
+    "cov-00244",
+    "cov-00297",
+    "cov-00768",
+    "cov-00942",
+    "cov-00953",
+    "cov-01708",
+    "cov-05385",
+    "cov-01674",
+    "cov-03486",
+    "cov-04102"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-281",
+    "obl-2843",
+    "obl-5769",
+    "obl-6107",
+    "obl-058",
+    "obl-113",
+    "obl-124",
+    "obl-130",
+    "obl-164",
+    "obl-625",
+    "obl-799",
+    "obl-810",
+    "obl-1565",
+    "obl-5157",
+    "obl-1531",
+    "obl-3332",
+    "obl-3944"
+  ],
+  "source_seed_ids_represented": [
+    "seed-319",
+    "seed-3750",
+    "seed-8585",
+    "seed-9225",
+    "seed-058",
+    "seed-116",
+    "seed-129",
+    "seed-135",
+    "seed-174",
+    "seed-720",
+    "seed-922",
+    "seed-934",
+    "seed-1952",
+    "seed-7639",
+    "seed-1908",
+    "seed-4480",
+    "seed-5403"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0011",
+    "shard-0042",
+    "shard-0079",
+    "shard-0083",
+    "shard-0009",
+    "shard-0010",
+    "shard-0015",
+    "shard-0017",
+    "shard-0028",
+    "shard-0071",
+    "shard-0047",
+    "shard-0054"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": []
+}

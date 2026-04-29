@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-983",
+  "group_ids": [
+    "discgrp-3929",
+    "discgrp-3930",
+    "discgrp-3931",
+    "discgrp-3932"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04236",
+      "source_obligation_ids": [
+        "obl-4076"
+      ],
+      "source_seed_ids": [
+        "seed-5638"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FileManager.md",
+      "new_heading_hint": "## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FileManager.md:L323"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04237",
+      "source_obligation_ids": [
+        "obl-4077"
+      ],
+      "source_seed_ids": [
+        "seed-5639"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04238",
+      "source_obligation_ids": [
+        "obl-4078"
+      ],
+      "source_seed_ids": [
+        "seed-5640"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Executor_Protocol.md",
+      "new_heading_hint": "### Runtime recovery attempt identity and safe points",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Executor_Protocol.md:L497"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04239",
+      "source_obligation_ids": [
+        "obl-4079"
+      ],
+      "source_seed_ids": [
+        "seed-5641"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Requested/effective account and execution identity",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L270"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

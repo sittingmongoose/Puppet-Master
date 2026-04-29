@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1075",
+  "group_ids": [
+    "discgrp-4297",
+    "discgrp-4298",
+    "discgrp-4299",
+    "discgrp-4300"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04674",
+      "source_obligation_ids": [
+        "obl-4452"
+      ],
+      "source_seed_ids": [
+        "seed-6317"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-04675",
+      "source_obligation_ids": [
+        "obl-4453"
+      ],
+      "source_seed_ids": [
+        "seed-6318"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Permissions_System.md",
+      "new_heading_hint": "## 5. Tool permission keys",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Permissions_System.md:L391"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04676",
+      "source_obligation_ids": [
+        "obl-4454"
+      ],
+      "source_seed_ids": [
+        "seed-6320"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "### B) Project Contracts (generated per user project)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L188"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04677",
+      "source_obligation_ids": [
+        "obl-4455"
+      ],
+      "source_seed_ids": [
+        "seed-6321"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## 19. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2020"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

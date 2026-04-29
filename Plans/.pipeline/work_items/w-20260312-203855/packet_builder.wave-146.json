@@ -1,0 +1,288 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-146",
+  "group_ids": [
+    "pktgrp-0581",
+    "pktgrp-0582",
+    "pktgrp-0583",
+    "pktgrp-0584"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "observe-target-0026",
+      "source_reconciliation_target_id": "target-0026",
+      "source_reconciliation_target_ids": [
+        "target-0026"
+      ],
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.pipeline/work_items/w-20260312-203855/current_state.md:L1",
+      "coverage_row_ids": [
+        "cov-06892"
+      ],
+      "source_obligation_ids": [
+        "obl-6494"
+      ],
+      "source_seed_ids": [
+        "seed-9873",
+        "seed-9876",
+        "seed-9984"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-6494"
+        ],
+        "source_seed_ids": [
+          "seed-9873",
+          "seed-9876",
+          "seed-9984"
+        ],
+        "source_shard_ids": [
+          "shard-0088",
+          "shard-0089"
+        ]
+      },
+      "gap_ids": [
+        "gap-05338"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Plans/.pipeline/work_items/w-20260312-203855/current_state.md`",
+        "Plans/.pipeline/work_items/w-20260312-203855/current_state.md"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-f087ef38d5cc",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0027",
+      "source_reconciliation_target_id": "target-0027",
+      "source_reconciliation_target_ids": [
+        "target-0027"
+      ],
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.pipeline/work_items/w-20260312-203855/meta.json:L1",
+      "coverage_row_ids": [
+        "cov-06891"
+      ],
+      "source_obligation_ids": [
+        "obl-6493"
+      ],
+      "source_seed_ids": [
+        "seed-9872",
+        "seed-9879"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-6493"
+        ],
+        "source_seed_ids": [
+          "seed-9872",
+          "seed-9879"
+        ],
+        "source_shard_ids": [
+          "shard-0088"
+        ]
+      },
+      "gap_ids": [
+        "gap-05337"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Plans/.pipeline/work_items/w-20260312-203855/meta.json`",
+        "Plans/.pipeline/work_items/w-20260312-203855/meta.json"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-52b572a43de7",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0028",
+      "source_reconciliation_target_id": "target-0028",
+      "source_reconciliation_target_ids": [
+        "target-0028"
+      ],
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "operation": "observe_only",
+      "live_anchor": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json:L1",
+      "coverage_row_ids": [
+        "cov-06894"
+      ],
+      "source_obligation_ids": [
+        "obl-6496"
+      ],
+      "source_seed_ids": [
+        "seed-9875",
+        "seed-9878",
+        "seed-9983"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-6496"
+        ],
+        "source_seed_ids": [
+          "seed-9875",
+          "seed-9878",
+          "seed-9983"
+        ],
+        "source_shard_ids": [
+          "shard-0088",
+          "shard-0089"
+        ]
+      },
+      "gap_ids": [
+        "gap-05340"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json`",
+        "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-d1ce56ad213f",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    },
+    {
+      "target_id": "observe-target-0029",
+      "source_reconciliation_target_id": "target-0030",
+      "source_reconciliation_target_ids": [
+        "target-0030"
+      ],
+      "path": "Plans/00-plans-index.md",
+      "operation": "observe_only",
+      "live_anchor": "## Anti-drift layer (required reading order) (Plans/00-plans-index.md:L13)",
+      "coverage_row_ids": [
+        "cov-06822"
+      ],
+      "source_obligation_ids": [
+        "obl-6441"
+      ],
+      "source_seed_ids": [
+        "seed-9820"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-6441"
+        ],
+        "source_seed_ids": [
+          "seed-9820"
+        ],
+        "source_shard_ids": [
+          "shard-0088"
+        ]
+      },
+      "gap_ids": [
+        "gap-05295"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "persistent-blocker semantics at the UI layer"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-55e6958b0392",
+      "packet_writer_role": "observe_only",
+      "observe_only_reason": "Non-mutation reconciliation reference; not emitted as a packet mutation doc_intent."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-06892",
+    "cov-06891",
+    "cov-06894",
+    "cov-06822"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-6494",
+    "obl-6493",
+    "obl-6496",
+    "obl-6441"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-9873",
+    "seed-9876",
+    "seed-9984",
+    "seed-9872",
+    "seed-9879",
+    "seed-9875",
+    "seed-9878",
+    "seed-9983",
+    "seed-9820"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0088",
+    "shard-0089"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "`Plans/.pipeline/work_items/w-20260312-203855/current_state.md`",
+    "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+    "`Plans/.pipeline/work_items/w-20260312-203855/meta.json`",
+    "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+    "`Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json`",
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+    "persistent-blocker semantics at the UI layer"
+  ],
+  "blocked_targets": []
+}

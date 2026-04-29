@@ -1,0 +1,239 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-070",
+  "timestamp_utc": "2026-04-28T21:49:29Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-277",
+    "coverage-rowgrp-278",
+    "coverage-rowgrp-279",
+    "coverage-rowgrp-280"
+  ],
+  "assigned_input_boundaries": [
+    "rowgrp-277 cov-017,cov-616,cov-681 Plans/orchestrator-subagent-integration.md",
+    "rowgrp-278 cov-298,cov-438 Plans/orchestrator-subagent-integration.md",
+    "rowgrp-279 cov-619 Plans/orchestrator-subagent-integration.md",
+    "rowgrp-280 cov-050,cov-057,cov-634 Plans/orchestrator-subagent-integration.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-277": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-278": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-279": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-280": "completed_reduced_conservatively_with_upgrade"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-017",
+    "cov-616",
+    "cov-681",
+    "cov-298",
+    "cov-438",
+    "cov-619",
+    "cov-050",
+    "cov-057",
+    "cov-634"
+  ],
+  "coverage_ids_completed": [
+    "cov-017",
+    "cov-616",
+    "cov-681",
+    "cov-298",
+    "cov-438",
+    "cov-619",
+    "cov-050",
+    "cov-057",
+    "cov-634"
+  ],
+  "path_groups_assigned": [
+    "Plans/orchestrator-subagent-integration.md"
+  ],
+  "rows": [
+    {
+      "coverage_id": "cov-017",
+      "status": "partial",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:6229-6235 says the orchestrator is the primary consumer of the runtime scheduler contract and treats queue analysis, attempt identity, remediation lineage, and blocked outcomes as first-class orchestration inputs",
+        "Plans/orchestrator-subagent-integration.md:6251-6257 defines blocked outcome handling with blocked_reason_code, allowed recovery actions, and no hidden retries/fallbacks",
+        "Plans/orchestrator-subagent-integration.md:6260-6263 requires projections to update immediately on runtime wakeups and reconsider newly-unblocked work in the same event cycle",
+        "Plans/orchestrator-subagent-integration.md:6271-6276 requires consuming canonical event names and identities from Contracts_V0, same-cycle reevaluation, capacity_deferred, allowed_action_ids, and no hidden retry/fallback loops"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Runtime contract consumption, blocked outcomes, and wake reconsideration are strongly covered, but retry/backoff posture and the exact consolidated shared-contract wording remain incomplete.",
+      "source_obligation_ids": [
+        "obl-015"
+      ],
+      "source_seed_ids": [
+        "seed-015"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-616",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/orchestrator-subagent-integration.md does not directly cover node-native plan ingest feeding tier-native execution models, lane-aware scheduling gaps into worktree/active-agent tracking, or UI_Command_Catalog.md as a de facto navigation contract.",
+      "source_obligation_ids": [
+        "obl-172"
+      ],
+      "source_seed_ids": [
+        "seed-172"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-681",
+      "status": "partial",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:54-56 references Contracts_V0.md and storage-plan.md as co-owners",
+        "Plans/orchestrator-subagent-integration.md:122 references Executor_Protocol.md and Run_Graph_View.md",
+        "Plans/orchestrator-subagent-integration.md:1997-1999 references interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md:2964 references WorktreeGitImprovement.md and assistant-chat-design.md",
+        "Plans/orchestrator-subagent-integration.md:6148 references storage-plan.md, Run_Graph_View.md, and Orchestrator_Page.md"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Some downstream/high-risk docs are referenced, but the full assigned set is incomplete.",
+      "source_obligation_ids": [
+        "obl-189"
+      ],
+      "source_seed_ids": [
+        "seed-189"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-298",
+      "status": "partial",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:5998-6020 defines tier_personas, operation_frame_personas, requested_persona rules, override behavior, and registry validation",
+        "Plans/orchestrator-subagent-integration.md:6054-6059 lists auto Persona resolution inputs including tier level, task type, repo language/framework, operation type, recommendations, and config overrides"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Persona resolution content exists, but global precedence chain, ranked candidate set, explanation metadata, and actor/operation dominance over stack hints are incomplete.",
+      "source_obligation_ids": [
+        "obl-085"
+      ],
+      "source_seed_ids": [
+        "seed-085"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-438",
+      "status": "partial",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:40 references deterministic defaults per Decision_Policy.md",
+        "Plans/orchestrator-subagent-integration.md:839 references Permissions_System.md, Contracts_V0.md, and assistant-chat-design.md",
+        "Plans/orchestrator-subagent-integration.md:3487-3527 references Architecture_Invariants.md"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Relevant authorities are referenced, but concern/corroboration/promotion objects, requested/effective identity model, scheduler lane ordering, and mutation-safe-point invariants are not directly covered.",
+      "source_obligation_ids": [
+        "obl-126"
+      ],
+      "source_seed_ids": [
+        "seed-126"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-619",
+      "status": "partial",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:1-5 identifies this file as an ordered parent-writer recovery container preserving row-level fidelity repairs",
+        "Plans/orchestrator-subagent-integration.md:507-517 introduces execution_unit_context and lane-managed worktree leases with package/seam reuse constraints",
+        "Plans/orchestrator-subagent-integration.md:6128-6154 defines event-driven wakeups, wake_reason, and scheduler_lane",
+        "Plans/orchestrator-subagent-integration.md:6261-6289 requires same-cycle reconsideration of newly-unblocked canonical nodes and remediation children"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Orchestration/wake/lane/package material exists, but not a complete consolidated repair of split-brain/addenda actor/corroboration/concern/wake semantics.",
+      "source_obligation_ids": [
+        "obl-173"
+      ],
+      "source_seed_ids": [
+        "seed-173"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-050",
+      "status": "partial",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:67 says this plan remains authoritative for tier policy, subagent selection policy, and wiring/verification requirements",
+        "Plans/orchestrator-subagent-integration.md:516-517 defines lane-managed worktree leases for each execution_unit_context with package/seam reuse only when lineage matches and no contamination guard is active"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Tier policy and worktree allocation language exists, but the node/package/seam/remediation ownership model and governing-layer decision are incomplete.",
+      "source_obligation_ids": [
+        "obl-026"
+      ],
+      "source_seed_ids": [
+        "seed-026"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-057",
+      "status": "partial",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:3549 defines a canonical coordination projection optionally mirrored to .puppet-master/state/active-agents.json",
+        "Plans/orchestrator-subagent-integration.md:3539 describes conflict prevention for concurrent file/module edits",
+        "Plans/orchestrator-subagent-integration.md:3993 says GUI and future Assistant-surface affordances are consumer projections and must disclose canonical crew/member state and runtime ceilings"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Active-agent and GUI projection evidence exists, but not the same-file supersession hotspot list or specific impact-doc coverage.",
+      "source_obligation_ids": [
+        "obl-029"
+      ],
+      "source_seed_ids": [
+        "seed-029"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-634",
+      "status": "partial",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:507-510 introduces execution_unit_context as the canonical runtime-facing context object and demotes TierContext to a derived or compatibility-only selection/decomposition helper",
+        "Plans/orchestrator-subagent-integration.md:525 says the subsection is retirement-only and canonical runtime-context and worktree-allocation rules remain in sibling subsections"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "TierContext is demoted with related execution_unit_context coverage, but the row-specific replacement/ownership gap is not fully resolved in one direct contract.",
+      "source_obligation_ids": [
+        "obl-177"
+      ],
+      "source_seed_ids": [
+        "seed-177"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "path_field_status": "match"
+    }
+  ]
+}

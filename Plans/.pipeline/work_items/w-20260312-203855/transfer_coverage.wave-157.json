@@ -1,0 +1,520 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-157",
+  "row_group_ids": [
+    "rowgrp-0625",
+    "rowgrp-0626",
+    "rowgrp-0627",
+    "rowgrp-0628"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-06291",
+      "source_obligation_ids": [
+        "obl-5994"
+      ],
+      "source_seed_ids": [
+        "seed-9037"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "OpenCode limits and provider identity seams are now final-pass concrete:",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "partial",
+      "exact_items": [
+        "OpenCode limits and provider identity seams are now final-pass concrete:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06300",
+      "source_obligation_ids": [
+        "obl-6003"
+      ],
+      "source_seed_ids": [
+        "seed-9086"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "OpenCode provider-native identity and event correlation contracts (`OpenCode_*`, provider",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "present",
+      "exact_items": [
+        "OpenCode provider-native identity and event correlation contracts (`OpenCode_*`, provider bridge docs)",
+        "OpenCode_*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L1",
+        "Plans/Provider_OpenCode.md:L7",
+        "Plans/Provider_OpenCode.md:L8",
+        "Plans/Provider_OpenCode.md:L9",
+        "Plans/Provider_OpenCode.md:L15"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06305",
+      "source_obligation_ids": [
+        "obl-6008"
+      ],
+      "source_seed_ids": [
+        "seed-9091"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "OpenCode provider-native identity / SSE correlation / requested-effective disclosure clean",
+      "row_type": "owner",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "partial",
+      "exact_items": [
+        "OpenCode provider-native identity / SSE correlation / requested-effective disclosure cleanup fourth"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04901",
+      "source_obligation_ids": [
+        "obl-4678"
+      ],
+      "source_seed_ids": [
+        "seed-6697"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "`BinaryLocator_Spec.md` now looks stale around OpenCode launcher ownership, dead four-tier",
+      "row_type": "stale_retirement",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "# Provider: OpenCode (Server-Bridged)",
+      "status": "present",
+      "exact_items": [
+        "`BinaryLocator_Spec.md` now looks stale around OpenCode launcher ownership, dead four-tier naming references, and process/session-scope wording.",
+        "BinaryLocator_Spec.md"
+      ],
+      "stale_tokens": [
+        "BinaryLocator_Spec.md"
+      ],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:L1-L627 scanned_no_stale_tokens_found"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01853",
+      "source_obligation_ids": [
+        "obl-1710"
+      ],
+      "source_seed_ids": [
+        "seed-2157"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "A review can create or update concerns; a blocked episode can reference a concern; a patch",
+      "row_type": "consumer",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "status": "partial",
+      "exact_items": [
+        "A review can create or update concerns; a blocked episode can reference a concern; a patch/recovery can obsolete or resolve a concern; but these should remain different record families."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02894",
+      "source_obligation_ids": [
+        "obl-2741"
+      ],
+      "source_seed_ids": [
+        "seed-3600"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "Usage and receipt surfaces can correlate to external systems via refs, but that is weaker",
+      "row_type": "consumer",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "status": "partial",
+      "exact_items": [
+        "Usage and receipt surfaces can correlate to external systems via refs, but that is weaker than first-class requested/effective operational identity disclosure."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04001",
+      "source_obligation_ids": [
+        "obl-3845"
+      ],
+      "source_seed_ids": [
+        "seed-5269"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "Make cross-surface open actions resolve through these bridge fields instead of ad hoc feat",
+      "row_type": "consumer",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "status": "partial",
+      "exact_items": [
+        "Make cross-surface open actions resolve through these bridge fields instead of ad hoc feature-local joins."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04759",
+      "source_obligation_ids": [
+        "obl-4537"
+      ],
+      "source_seed_ids": [
+        "seed-6454"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "This uncovered tranche produced real new synthesis, not filler. The remaining Gemini-only",
+      "row_type": "consumer",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "heading_hint": "### 8.1 Tool-use ID synthesis",
+      "status": "partial",
+      "exact_items": [
+        "This uncovered tranche produced real new synthesis, not filler. The remaining Gemini-only surface still hides several owner-level contradictions."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L172"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06343",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02257",
+      "source_obligation_ids": [
+        "obl-2111"
+      ],
+      "source_seed_ids": [
+        "seed-2743"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "now clearly owns the missing bridge semantics for `usage_event_ref`, projection freshness,",
+      "row_type": "layout_blocker",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "status": "partial",
+      "exact_items": [
+        "now clearly owns the missing bridge semantics for `usage_event_ref`, projection freshness, receipt pivots, and project-scoped UI state, but has not finished naming them",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02299",
+      "source_obligation_ids": [
+        "obl-2151"
+      ],
+      "source_seed_ids": [
+        "seed-2795"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "The A2A addenda require `attempt_id` continuity, but the schema anchor never permits it ex",
+      "row_type": "layout_blocker",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "status": "present",
+      "exact_items": [
+        "The A2A addenda require `attempt_id` continuity, but the schema anchor never permits it explicitly.",
+        "attempt_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L314",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L335",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L337",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L339",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L342"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02558",
+      "source_obligation_ids": [
+        "obl-2406"
+      ],
+      "source_seed_ids": [
+        "seed-3123"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "Re-anchor A2A scope away from tier-specific required keys and add actor/account/provenance",
+      "row_type": "layout_blocker",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "status": "partial",
+      "exact_items": [
+        "Re-anchor A2A scope away from tier-specific required keys and add actor/account/provenance/trust hints for stream consumers."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02563",
+      "source_obligation_ids": [
+        "obl-2411"
+      ],
+      "source_seed_ids": [
+        "seed-3128"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "A2A\u2019s duplicate attempt-continuity addenda and tier-boundary schema are signals that this",
+      "row_type": "layout_blocker",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "status": "partial",
+      "exact_items": [
+        "A2A\u2019s duplicate attempt-continuity addenda and tier-boundary schema are signals that this seam needs consolidation plus version governance, not more scattered annotations."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-02683",
+      "source_obligation_ids": [
+        "obl-2530"
+      ],
+      "source_seed_ids": [
+        "seed-3323"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "while `CLI_Bridged_Providers.md` treats `thread_id` as the stable PM correlation id and se",
+      "row_type": "layout_blocker",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "heading_hint": "### Fidelity recovery cov-100: Provider-native correlation and approval scope",
+      "status": "present",
+      "exact_items": [
+        "while `CLI_Bridged_Providers.md` treats `thread_id` as the stable PM correlation id and separately allows provider-native identifiers",
+        "CLI_Bridged_Providers.md",
+        "thread_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L11",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L15",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L23",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L25",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L31"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02710",
+      "source_obligation_ids": [
+        "obl-2557"
+      ],
+      "source_seed_ids": [
+        "seed-3355"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "Add explicit versioning/migration guidance to A2A before introducing new actor/account/tru",
+      "row_type": "layout_blocker",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "status": "partial",
+      "exact_items": [
+        "Add explicit versioning/migration guidance to A2A before introducing new actor/account/trust semantics."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03815",
+      "source_obligation_ids": [
+        "obl-3660"
+      ],
+      "source_seed_ids": [
+        "seed-4959"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "required whenever execution can touch repo/worktree or external side effects:",
+      "row_type": "layout_blocker",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "status": "partial",
+      "exact_items": [
+        "required whenever execution can touch repo/worktree or external side effects:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04038",
+      "source_obligation_ids": [
+        "obl-3881"
+      ],
+      "source_seed_ids": [
+        "seed-5327"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "should carry external linkage refs but still anchor locally on `attempt_id`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "status": "present",
+      "exact_items": [
+        "should carry external linkage refs but still anchor locally on `attempt_id`",
+        "attempt_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L314",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L335",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L337",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L339",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L342"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05062",
+      "source_obligation_ids": [
+        "obl-4838"
+      ],
+      "source_seed_ids": [
+        "seed-6966"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "may reference `subject_id`, `object_kind/object_id`, `tab_id`, `inspector_target`, and rel",
+      "row_type": "layout_blocker",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "status": "partial",
+      "exact_items": [
+        "may reference `subject_id`, `object_kind/object_id`, `tab_id`, `inspector_target`, and related scope fields",
+        "subject_id",
+        "object_kind/object_id",
+        "tab_id",
+        "inspector_target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05703",
+      "source_obligation_ids": [
+        "obl-5475"
+      ],
+      "source_seed_ids": [
+        "seed-8123"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "mapping from `FinalGUISpec section 7.7`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "heading_hint": "# Provider Stream Mapping \u2014 External Reference (A2A Bridge)",
+      "status": "partial",
+      "exact_items": [
+        "mapping from `FinalGUISpec section 7.7`",
+        "FinalGUISpec section 7.7"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    }
+  ]
+}

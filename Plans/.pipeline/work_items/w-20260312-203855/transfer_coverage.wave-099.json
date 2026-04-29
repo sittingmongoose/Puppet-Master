@@ -1,0 +1,1283 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-099",
+  "row_group_ids": [
+    "rowgrp-0393",
+    "rowgrp-0394",
+    "rowgrp-0395",
+    "rowgrp-0396"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-06637",
+      "source_obligation_ids": [
+        "obl-6278"
+      ],
+      "source_seed_ids": [
+        "seed-9505"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Run_Graph_View.md`",
+      "row_type": "consumer",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "present",
+      "exact_items": [
+        "`Run_Graph_View.md`",
+        "Run_Graph_View.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2564",
+        "Plans/FinalGUISpec.md:L2576",
+        "Plans/FinalGUISpec.md:L2591"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06638",
+      "source_obligation_ids": [
+        "obl-6279"
+      ],
+      "source_seed_ids": [
+        "seed-9506"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Widget_System.md`",
+      "row_type": "consumer",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "present",
+      "exact_items": [
+        "`Widget_System.md`",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1168",
+        "Plans/FinalGUISpec.md:L1939",
+        "Plans/FinalGUISpec.md:L1940",
+        "Plans/FinalGUISpec.md:L1941",
+        "Plans/FinalGUISpec.md:L1950"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06644",
+      "source_obligation_ids": [
+        "obl-6285"
+      ],
+      "source_seed_ids": [
+        "seed-9512"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Run_Graph_View.md` needs:",
+      "row_type": "consumer",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "present",
+      "exact_items": [
+        "`Run_Graph_View.md` needs:",
+        "Run_Graph_View.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2564",
+        "Plans/FinalGUISpec.md:L2576",
+        "Plans/FinalGUISpec.md:L2591"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06648",
+      "source_obligation_ids": [
+        "obl-6289"
+      ],
+      "source_seed_ids": [
+        "seed-9516"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Widget_System.md` needs:",
+      "row_type": "consumer",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "present",
+      "exact_items": [
+        "`Widget_System.md` needs:",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1168",
+        "Plans/FinalGUISpec.md:L1939",
+        "Plans/FinalGUISpec.md:L1940",
+        "Plans/FinalGUISpec.md:L1941",
+        "Plans/FinalGUISpec.md:L1950"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06849",
+      "source_obligation_ids": [
+        "obl-6452"
+      ],
+      "source_seed_ids": [
+        "seed-9831"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`execution_role` absent in many key owner/consumer docs",
+      "row_type": "consumer",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### C.5 redb Key Migration",
+      "status": "present",
+      "exact_items": [
+        "`execution_role` absent in many key owner/consumer docs",
+        "execution_role"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L157",
+        "Plans/FinalGUISpec.md:L163",
+        "Plans/FinalGUISpec.md:L948",
+        "Plans/FinalGUISpec.md:L952",
+        "Plans/FinalGUISpec.md:L953"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-07017",
+      "source_obligation_ids": [
+        "obl-6611"
+      ],
+      "source_seed_ids": [
+        "seed-10081"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "summary: Ran one more narrow pass on the blocked-episode canon and confirmed that several",
+      "row_type": "consumer",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-079: Project summary projection",
+      "status": "partial",
+      "exact_items": [
+        "summary: Ran one more narrow pass on the blocked-episode canon and confirmed that several gap-005 items were overstated as globally missing when they are actually owner-defined elsewhere and only missing from the Tools/chat/usage consumers."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L123",
+        "Plans/FinalGUISpec.md:L130"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-07045",
+      "source_obligation_ids": [
+        "obl-6636"
+      ],
+      "source_seed_ids": [
+        "seed-10121"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "`gap-008` now points at the real storage/usage/interview sections that currently carry the",
+      "row_type": "consumer",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Progress labels and taxonomy",
+      "status": "partial",
+      "exact_items": [
+        "`gap-008` now points at the real storage/usage/interview sections that currently carry the partial account-history and requested/effective identity transfer, rather than pseudo owner-section labels that do not yet exist verbatim.",
+        "gap-008"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L926"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00148",
+      "source_obligation_ids": [
+        "obl-045"
+      ],
+      "source_seed_ids": [
+        "seed-045"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Acceptance, evidence, coverage, GUI automation, and test schemas can represent nodes and c",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "partial",
+      "exact_items": [
+        "Acceptance, evidence, coverage, GUI automation, and test schemas can represent nodes and checks, but not work package, feature seam, lane, promotion class, contamination state, resolution thread, or effective account identity."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00171",
+      "source_obligation_ids": [
+        "obl-067"
+      ],
+      "source_seed_ids": [
+        "seed-067",
+        "seed-184",
+        "seed-219",
+        "seed-390",
+        "seed-431",
+        "seed-441",
+        "seed-493",
+        "seed-505",
+        "seed-561",
+        "seed-616",
+        "seed-675",
+        "seed-759",
+        "seed-884",
+        "seed-954",
+        "seed-1017",
+        "seed-1081",
+        "seed-1179",
+        "seed-1233",
+        "seed-1296",
+        "seed-1360",
+        "seed-1404",
+        "seed-1454",
+        "seed-1504",
+        "seed-1574",
+        "seed-1636",
+        "seed-1728",
+        "seed-1807",
+        "seed-1861",
+        "seed-1932",
+        "seed-1991",
+        "seed-2078",
+        "seed-2146",
+        "seed-2438",
+        "seed-2454",
+        "seed-2490",
+        "seed-2514",
+        "seed-2553",
+        "seed-2574",
+        "seed-2916",
+        "seed-2938",
+        "seed-2975",
+        "seed-2990",
+        "seed-3082",
+        "seed-3132",
+        "seed-3146",
+        "seed-3205",
+        "seed-3222",
+        "seed-3361",
+        "seed-3398",
+        "seed-3432",
+        "seed-3622",
+        "seed-3677",
+        "seed-3689",
+        "seed-3711",
+        "seed-3829",
+        "seed-3934",
+        "seed-4085",
+        "seed-4113",
+        "seed-4142",
+        "seed-4199",
+        "seed-4369",
+        "seed-4490",
+        "seed-4516",
+        "seed-5408",
+        "seed-5443",
+        "seed-5464",
+        "seed-5505",
+        "seed-5680",
+        "seed-5812",
+        "seed-5829",
+        "seed-5853",
+        "seed-5873",
+        "seed-5897",
+        "seed-5907",
+        "seed-5986",
+        "seed-6002",
+        "seed-6019",
+        "seed-6050",
+        "seed-6064",
+        "seed-6082",
+        "seed-6096",
+        "seed-6142",
+        "seed-6199",
+        "seed-6270",
+        "seed-6286",
+        "seed-6344",
+        "seed-6356",
+        "seed-6386",
+        "seed-6404",
+        "seed-6429",
+        "seed-6491",
+        "seed-6517",
+        "seed-6540",
+        "seed-6552",
+        "seed-6567",
+        "seed-6586",
+        "seed-6602",
+        "seed-6615",
+        "seed-6624",
+        "seed-6636",
+        "seed-6668",
+        "seed-6710",
+        "seed-6737",
+        "seed-6755",
+        "seed-6779",
+        "seed-6796",
+        "seed-6909",
+        "seed-6933",
+        "seed-6951",
+        "seed-6979",
+        "seed-7004",
+        "seed-7038",
+        "seed-7058",
+        "seed-7116",
+        "seed-7133",
+        "seed-7155",
+        "seed-7167",
+        "seed-7192",
+        "seed-7202",
+        "seed-7226",
+        "seed-7305",
+        "seed-7329",
+        "seed-7339",
+        "seed-7368",
+        "seed-7450",
+        "seed-7477",
+        "seed-7522",
+        "seed-7656",
+        "seed-7674",
+        "seed-7681",
+        "seed-7699",
+        "seed-7756",
+        "seed-7777",
+        "seed-7799",
+        "seed-7819",
+        "seed-7983",
+        "seed-8039",
+        "seed-8053",
+        "seed-8111",
+        "seed-8126",
+        "seed-8137",
+        "seed-8157",
+        "seed-8368",
+        "seed-8398",
+        "seed-8793",
+        "seed-8804",
+        "seed-8811",
+        "seed-8882",
+        "seed-8974",
+        "seed-9068",
+        "seed-9127",
+        "seed-9210",
+        "seed-9338",
+        "seed-9367",
+        "seed-9430",
+        "seed-9497",
+        "seed-9550",
+        "seed-9578",
+        "seed-9607",
+        "seed-9646",
+        "seed-9683",
+        "seed-9709",
+        "seed-9767",
+        "seed-9899",
+        "seed-9931",
+        "seed-9979",
+        "seed-10018",
+        "seed-10053",
+        "seed-10141",
+        "seed-10230",
+        "seed-10300",
+        "seed-10329"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010",
+        "shard-0011",
+        "shard-0012",
+        "shard-0013",
+        "shard-0014",
+        "shard-0015",
+        "shard-0016",
+        "shard-0017",
+        "shard-0018",
+        "shard-0019",
+        "shard-0020",
+        "shard-0021",
+        "shard-0022",
+        "shard-0023",
+        "shard-0024",
+        "shard-0025",
+        "shard-0026",
+        "shard-0027",
+        "shard-0028",
+        "shard-0029",
+        "shard-0030",
+        "shard-0033",
+        "shard-0034",
+        "shard-0036",
+        "shard-0037",
+        "shard-0038",
+        "shard-0039",
+        "shard-0040",
+        "shard-0041",
+        "shard-0042",
+        "shard-0043",
+        "shard-0044",
+        "shard-0045",
+        "shard-0046",
+        "shard-0047",
+        "shard-0048",
+        "shard-0054",
+        "shard-0055",
+        "shard-0056",
+        "shard-0057",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060",
+        "shard-0061",
+        "shard-0062",
+        "shard-0063",
+        "shard-0064",
+        "shard-0065",
+        "shard-0066",
+        "shard-0067",
+        "shard-0068",
+        "shard-0069",
+        "shard-0070",
+        "shard-0071",
+        "shard-0072",
+        "shard-0073",
+        "shard-0074",
+        "shard-0075",
+        "shard-0077",
+        "shard-0080",
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084",
+        "shard-0085",
+        "shard-0086",
+        "shard-0087",
+        "shard-0088",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "canon_label": "`Plans/FinalGUISpec.md`",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L14",
+        "Plans/FinalGUISpec.md:L17",
+        "Plans/FinalGUISpec.md:L26",
+        "Plans/FinalGUISpec.md:L38",
+        "Plans/FinalGUISpec.md:L41"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00197",
+      "source_obligation_ids": [
+        "obl-093"
+      ],
+      "source_seed_ids": [
+        "seed-093"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Docs involved: `FinalGUISpec.md`, `newtools.md`, `Containers_Registry_and_Unraid.md`, `ass",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "present",
+      "exact_items": [
+        "Docs involved: `FinalGUISpec.md`, `newtools.md`, `Containers_Registry_and_Unraid.md`, `assistant-chat-design.md`",
+        "FinalGUISpec.md",
+        "newtools.md",
+        "Containers_Registry_and_Unraid.md",
+        "assistant-chat-design.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L14",
+        "Plans/FinalGUISpec.md:L17",
+        "Plans/FinalGUISpec.md:L26",
+        "Plans/FinalGUISpec.md:L38",
+        "Plans/FinalGUISpec.md:L41"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00232",
+      "source_obligation_ids": [
+        "obl-123"
+      ],
+      "source_seed_ids": [
+        "seed-128"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "what old assumption is present: node-only lifecycle, lexicographic selection, no blocked/c",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 2.4 Backend Selection",
+      "status": "partial",
+      "exact_items": [
+        "what old assumption is present: node-only lifecycle, lexicographic selection, no blocked/contaminated/restore-required states."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L307"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00245",
+      "source_obligation_ids": [
+        "obl-131"
+      ],
+      "source_seed_ids": [
+        "seed-136"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "`Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md`",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L14",
+        "Plans/FinalGUISpec.md:L17",
+        "Plans/FinalGUISpec.md:L26",
+        "Plans/FinalGUISpec.md:L38",
+        "Plans/FinalGUISpec.md:L41"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00344",
+      "source_obligation_ids": [
+        "obl-202"
+      ],
+      "source_seed_ids": [
+        "seed-234"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "`Run_Graph_View` already requires historical SCM/worktree lineage to remain visible when l",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# display-font = \"CustomFont\"  # requires font file in ~/.puppet-master/fonts/",
+      "status": "present",
+      "exact_items": [
+        "`Run_Graph_View` already requires historical SCM/worktree lineage to remain visible when live targets no longer exist",
+        "Run_Graph_View"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2562",
+        "Plans/FinalGUISpec.md:L2564",
+        "Plans/FinalGUISpec.md:L2576",
+        "Plans/FinalGUISpec.md:L2583",
+        "Plans/FinalGUISpec.md:L2591"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00449",
+      "source_obligation_ids": [
+        "obl-306"
+      ],
+      "source_seed_ids": [
+        "seed-355"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "`Orchestrator_Page.md` says Progress widgets are Dashboard-portable while `Widget_System.m",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-050: Progress-only widget hostability",
+      "status": "present",
+      "exact_items": [
+        "`Orchestrator_Page.md` says Progress widgets are Dashboard-portable while `Widget_System.md` still excludes some of those widgets from Dashboard hostability.",
+        "Orchestrator_Page.md",
+        "Widget_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1168",
+        "Plans/FinalGUISpec.md:L1939",
+        "Plans/FinalGUISpec.md:L1940",
+        "Plans/FinalGUISpec.md:L1941",
+        "Plans/FinalGUISpec.md:L1950"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00460",
+      "source_obligation_ids": [
+        "obl-317"
+      ],
+      "source_seed_ids": [
+        "seed-366"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "Usage/UI requests for auth-mode/effective-account filtering are already present in adjacen",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "partial",
+      "exact_items": [
+        "Usage/UI requests for auth-mode/effective-account filtering are already present in adjacent GUI docs even though usage contracts do not yet guarantee them."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00519",
+      "source_obligation_ids": [
+        "obl-376"
+      ],
+      "source_seed_ids": [
+        "seed-434"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "The `Source Control` panel is narrow/small and should be treated as a constrained side-pan",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Bottom runtime information architecture",
+      "status": "present",
+      "exact_items": [
+        "The `Source Control` panel is narrow/small and should be treated as a constrained side-panel surface, not a broad information canvas.",
+        "Source Control"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L260",
+        "Plans/FinalGUISpec.md:L462",
+        "Plans/FinalGUISpec.md:L471",
+        "Plans/FinalGUISpec.md:L485",
+        "Plans/FinalGUISpec.md:L523"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00521",
+      "source_obligation_ids": [
+        "obl-378"
+      ],
+      "source_seed_ids": [
+        "seed-436"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "Do not assume package/lane/run/worktree metadata can all be shown at full fidelity at once",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Fidelity recovery addendum",
+      "status": "partial",
+      "exact_items": [
+        "Do not assume package/lane/run/worktree metadata can all be shown at full fidelity at once in the panel."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L3"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00522",
+      "source_obligation_ids": [
+        "obl-379"
+      ],
+      "source_seed_ids": [
+        "seed-437"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "Source Control = compact Git/worktree operational panel",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-090: Execution role and operational identity",
+      "status": "partial",
+      "exact_items": [
+        "Source Control = compact Git/worktree operational panel"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L157",
+        "Plans/FinalGUISpec.md:L163"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00548",
+      "source_obligation_ids": [
+        "obl-405"
+      ],
+      "source_seed_ids": [
+        "seed-467"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "attention/blocker projection",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "status": "partial",
+      "exact_items": [
+        "attention/blocker projection"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L43",
+        "Plans/FinalGUISpec.md:L50"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00557",
+      "source_obligation_ids": [
+        "obl-414"
+      ],
+      "source_seed_ids": [
+        "seed-476"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "many `Progress` widgets may also be hostable on `Dashboard`",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "#### Progress catalog source and default drills",
+      "status": "present",
+      "exact_items": [
+        "many `Progress` widgets may also be hostable on `Dashboard`",
+        "Progress",
+        "Dashboard"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L55",
+        "Plans/FinalGUISpec.md:L59",
+        "Plans/FinalGUISpec.md:L60",
+        "Plans/FinalGUISpec.md:L62",
+        "Plans/FinalGUISpec.md:L63"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00563",
+      "source_obligation_ids": [
+        "obl-420"
+      ],
+      "source_seed_ids": [
+        "seed-482"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "`widget_layout:v1:dashboard`",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 12.3 Dashboard Grid Responsive",
+      "status": "present",
+      "exact_items": [
+        "`widget_layout:v1:dashboard`",
+        "widget_layout:v1:dashboard"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1596",
+        "Plans/FinalGUISpec.md:L1659",
+        "Plans/FinalGUISpec.md:L1681",
+        "Plans/FinalGUISpec.md:L1948",
+        "Plans/FinalGUISpec.md:L2004"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00573",
+      "source_obligation_ids": [
+        "obl-430"
+      ],
+      "source_seed_ids": [
+        "seed-495"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "which widgets are hostable where after the seam/package rewrite",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "partial",
+      "exact_items": [
+        "which widgets are hostable where after the seam/package rewrite"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00582",
+      "source_obligation_ids": [
+        "obl-439"
+      ],
+      "source_seed_ids": [
+        "seed-509"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "replay/rebuild targets a deterministic `target_seq`",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 13.5 Minimum Touch/Click Targets",
+      "status": "partial",
+      "exact_items": [
+        "replay/rebuild targets a deterministic `target_seq`",
+        "target_seq"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1439"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00583",
+      "source_obligation_ids": [
+        "obl-440"
+      ],
+      "source_seed_ids": [
+        "seed-510"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "UI freshness notifications should derive from committed projection state, not ad-hoc polli",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-096: Projection freshness vs projection health",
+      "status": "partial",
+      "exact_items": [
+        "UI freshness notifications should derive from committed projection state, not ad-hoc polling"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L167",
+        "Plans/FinalGUISpec.md:L175"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00586",
+      "source_obligation_ids": [
+        "obl-443"
+      ],
+      "source_seed_ids": [
+        "seed-513"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "the GUI must not imply hidden fallback or hidden retry behavior",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### GUI behavior rules",
+      "status": "partial",
+      "exact_items": [
+        "the GUI must not imply hidden fallback or hidden retry behavior"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2169"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00594",
+      "source_obligation_ids": [
+        "obl-451"
+      ],
+      "source_seed_ids": [
+        "seed-521"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "`refreshing`: old committed projection still visible while refresh/rebuild runs",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "status": "present",
+      "exact_items": [
+        "`refreshing`: old committed projection still visible while refresh/rebuild runs",
+        "refreshing"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L47",
+        "Plans/FinalGUISpec.md:L51",
+        "Plans/FinalGUISpec.md:L374",
+        "Plans/FinalGUISpec.md:L904"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00625",
+      "source_obligation_ids": [
+        "obl-482"
+      ],
+      "source_seed_ids": [
+        "seed-552"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Make `trust state` and `last updated` first-class UI fields for projection-backed surfaces",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "status": "partial",
+      "exact_items": [
+        "Make `trust state` and `last updated` first-class UI fields for projection-backed surfaces.",
+        "trust state",
+        "last updated"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L43",
+        "Plans/FinalGUISpec.md:L50"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00648",
+      "source_obligation_ids": [
+        "obl-505"
+      ],
+      "source_seed_ids": [
+        "seed-580"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Required behavior:",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "status": "present",
+      "exact_items": [
+        "Required behavior:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L631",
+        "Plans/FinalGUISpec.md:L1039",
+        "Plans/FinalGUISpec.md:L1049",
+        "Plans/FinalGUISpec.md:L1077",
+        "Plans/FinalGUISpec.md:L1109"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00659",
+      "source_obligation_ids": [
+        "obl-516"
+      ],
+      "source_seed_ids": [
+        "seed-592"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "`selected_tab`",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "partial",
+      "exact_items": [
+        "`selected_tab`",
+        "selected_tab"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1828"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00685",
+      "source_obligation_ids": [
+        "obl-542"
+      ],
+      "source_seed_ids": [
+        "seed-623"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "distinguish `global object search` from `tab-local filtering`",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "status": "partial",
+      "exact_items": [
+        "distinguish `global object search` from `tab-local filtering`",
+        "global object search",
+        "tab-local filtering"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L19",
+        "Plans/FinalGUISpec.md:L26"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00687",
+      "source_obligation_ids": [
+        "obl-544"
+      ],
+      "source_seed_ids": [
+        "seed-625"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "`tab-local search`",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "status": "partial",
+      "exact_items": [
+        "`tab-local search`",
+        "tab-local search"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L19",
+        "Plans/FinalGUISpec.md:L26"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00711",
+      "source_obligation_ids": [
+        "obl-568"
+      ],
+      "source_seed_ids": [
+        "seed-649"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "tab-local search stays embedded in tabs like Graph/Evidence/Ledger",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "status": "partial",
+      "exact_items": [
+        "tab-local search stays embedded in tabs like Graph/Evidence/Ledger"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L19",
+        "Plans/FinalGUISpec.md:L26"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00718",
+      "source_obligation_ids": [
+        "obl-575"
+      ],
+      "source_seed_ids": [
+        "seed-656"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "search should prefer stable object identity matches first",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-027: Concern routing and object-first search behavior",
+      "status": "partial",
+      "exact_items": [
+        "search should prefer stable object identity matches first"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L19",
+        "Plans/FinalGUISpec.md:L26"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00735",
+      "source_obligation_ids": [
+        "obl-592"
+      ],
+      "source_seed_ids": [
+        "seed-678"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "remediation resolution already includes `fixed`, `superseded`, `abandoned`, `replan_requir",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### 9.4 Conflict resolution",
+      "status": "present",
+      "exact_items": [
+        "remediation resolution already includes `fixed`, `superseded`, `abandoned`, `replan_required`",
+        "fixed",
+        "superseded",
+        "abandoned",
+        "replan_required"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L360",
+        "Plans/FinalGUISpec.md:L361",
+        "Plans/FinalGUISpec.md:L365",
+        "Plans/FinalGUISpec.md:L1357",
+        "Plans/FinalGUISpec.md:L1936"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00860",
+      "source_obligation_ids": [
+        "obl-717"
+      ],
+      "source_seed_ids": [
+        "seed-817"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "`gui_alignment`",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "partial",
+      "exact_items": [
+        "`gui_alignment`",
+        "gui_alignment"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00872",
+      "source_obligation_ids": [
+        "obl-729"
+      ],
+      "source_seed_ids": [
+        "seed-832"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "should require rationale when it disagrees with corroborated/high-severity evidence",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Fidelity recovery cov-179: Dismissed vs resolved rationale enforcement",
+      "status": "partial",
+      "exact_items": [
+        "should require rationale when it disagrees with corroborated/high-severity evidence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L181",
+        "Plans/FinalGUISpec.md:L188"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00888",
+      "source_obligation_ids": [
+        "obl-745"
+      ],
+      "source_seed_ids": [
+        "seed-850"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "Need to distinguish:",
+      "row_type": "layout_blocker",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "status": "partial",
+      "exact_items": [
+        "Need to distinguish:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    }
+  ]
+}

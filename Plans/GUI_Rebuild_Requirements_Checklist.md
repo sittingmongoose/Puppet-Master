@@ -1,5 +1,88 @@
 # GUI Rebuild Requirements Checklist (2026-02-23)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0325
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`
+  - Plans/Orchestrator_Page.md
+  - Plans/Run_Graph_View.md
+  - Plans/Widget_System.md
+  - Plans/GUI_Rebuild_Requirements_Checklist.md
+  - Add `resolution_kind` and rationale requirements for dismiss/resolve paths.
+  - resolution_kind
+  - requested/effective Persona display requirements
+  - Only hard requirements should force stronger handling.
+  - command discoverability does not weaken confirmation requirements
+  - Requirements Builder must show effective Persona, selection reason, effective platform/model, and [retired-token-3] unsupported Persona controls for the active stage/pass
+  - Add trust-state disclosure or canonical revalidation requirements for exports built from projections.
+  - adapters currently have no canonical way to satisfy both requirements at once
+  - Align FileManager open-by-identity requirements with the runtime-artifact envelope rather than inventing a parallel artifact-opening identity model.
+  - `[retired-token-4]` still conflicts with workflow-required `[retired-token-3]`, but GPT-5.2 also pinned missing `[retired-token-1]`, a Pass-1 scope contradiction around requirements creation, and unresolved `workflow_[retired-token-2]` vs canonical `[retired-token-2]` identity.
+  - [retired-token-4]
+  - [retired-token-3]
+  - [retired-token-1]
+  - workflow_[retired-token-2]
+  - [retired-token-2]
+  - There is still no schema-level place to express argument-contract requirements for subject-open or route-payload commands.
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - `Plans/GUI_Rebuild_Requirements_Checklist.md`
+  - with `Plans/00-plans-index.md` and `Plans/GUI_Rebuild_Requirements_Checklist.md` important as drift-multipliers.
+  - Plans/00-plans-index.md
+  - with `Plans/00-plans-index.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/Formatters_System.md` also still clearly above the noise floor.
+  - Plans/Plugins_System.md
+  - Plans/Skills_System.md
+  - Plans/Formatters_System.md
+  - Remove `requested_persona_id` / `effective_persona_id` from consumer requirements.
+  - requested_persona_id
+  - effective_persona_id
+  - with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/LSPSupport.md` still clearly active.
+  - Plans/LSPSupport.md
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - promoted-shell command and persistence identity ownership (`Section15`, `FinalGUISpec`, `GUI checklist`, `feature-list`, `newfeatures`)
+  - Section15
+  - FinalGUISpec
+  - GUI checklist
+  - feature-list
+  - newfeatures
+  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+  - 61
+  - `Plans/GUI_Rebuild_Requirements_Checklist.md` is now clearly a reconciliation follower, not a source:
+  - `cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resolution_kind` coverage including `accepted_risk`, and a concern-action confirmation matrix, but the live docs only expose fragments: `Plans/Orchestrator_Page.md:12-13` keeps concern and notification surfaces distinct from health/activity, `Plans/storage-plan.md:294` lists `concern_record.v1`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31` calls for first-class concern lifecycle and lineage, and `Plans/Contracts_V0.md:649` only names `concern` as a routable object. Exact ledger evidence remains at `working_ledger.md:L3070-L3092`, `working_ledger.md:L3170-L3182`, `working_ledger.md:L5990-L6015`, and `working_ledger.md:L6442-L6490`.
+  - cov-034
+  - obl-016
+  - active
+  - acknowledged
+  - resolved
+  - dismissed
+  - accepted_risk
+  - `Plans/GUI_Rebuild_Requirements_Checklist.md:31`
+  - Plans/GUI_Rebuild_Requirements_Checklist.md:31
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 ## Fidelity recovery addendum
 
 This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
@@ -96,6 +179,29 @@ ContractRef: ContractName:Plans/Widget_System.md, ContractName:Plans/Run_Graph_V
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md
 
 ## 2026-03-09 addendum — Artifacts panel and Usage/Ledger linkage
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0326
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - follow `usage_event_ref` to canonical Usage/Ledger identity
+  - usage_event_ref
+  - `cost_usage` already routes to canonical Usage/Ledger identity
+  - cost_usage
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - [ ] Artifacts panel in view inventory and panel system (FinalGUISpec §7.1, §4.1, §5).
 - [ ] Panel toggling: Git, Docker, Source Control, Unraid, Artifacts, Chat, Files (single side-panel slot, last-click wins).
 - [ ] Usage/Ledger linkage from cost_usage artifact (Show in Ledger / Show in Usage actions).
@@ -111,6 +217,26 @@ Before shipping the rebuilt Orchestrator GUI, verify the following concern lifec
 - [ ] The escalation_stack accumulates frames; frames are never removed or reordered.
 
 ### Concern visibility and filtering
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0328
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - if the preferred candidate is unavailable after capability/provider/model filtering, fall through deterministically to the next candidate
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - [ ] Active concerns are visible to users with execute permission on the execution_unit_context.
 - [ ] Escalation stack internals are hidden unless audit mode is active.
 - [ ] Help/notification surfaces show concern_id and general guidance without exposing sensitive escalation details.
@@ -129,6 +255,31 @@ Before shipping the rebuilt Orchestrator GUI, verify the following concern lifec
 - [ ] Route fallback (e.g., switching to workspace://project/concern) is logged in the concern record; do not hide route failures.
 
 ### Concern cleanup and retention
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0327
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - lane/package complete and no retention reason remains
+  - `[retired-token-1]` now has a tighter cleanup contradiction: best-effort prepare/cleanup can still invalidate safe-point prerequisites and mtime-based evidence pruning can cut across attempt-lineage retention requirements.
+  - [retired-token-1]
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - [ ] Resolved concerns remain visible for inspection but are marked with resolution metadata (resolved_at, resolved_by, resolution_reason).
 - [ ] Dismissed concerns are retained per retention policy (default: 7 days, configurable per concern_class).
 - [ ] Archived concerns are moved to a separate ledger; do not delete them.

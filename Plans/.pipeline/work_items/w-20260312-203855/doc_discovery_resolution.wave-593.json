@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-593",
+  "group_ids": [
+    "discgrp-2369",
+    "discgrp-2370",
+    "discgrp-2371",
+    "discgrp-2372"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02644",
+      "source_obligation_ids": [
+        "obl-2492"
+      ],
+      "source_seed_ids": [
+        "seed-3275"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02645",
+      "source_obligation_ids": [
+        "obl-2493"
+      ],
+      "source_seed_ids": [
+        "seed-3276"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/CLI_Bridged_Providers.md",
+      "new_heading_hint": "# CLI-Bridged Providers (Provider Facade)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02646",
+      "source_obligation_ids": [
+        "obl-2494"
+      ],
+      "source_seed_ids": [
+        "seed-3277"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L91"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02647",
+      "source_obligation_ids": [
+        "obl-2495"
+      ],
+      "source_seed_ids": [
+        "seed-3278"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "## 28. Markdown and Mermaid Rendering in Chat and Planning Surfaces (2026-03-07)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L2093"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

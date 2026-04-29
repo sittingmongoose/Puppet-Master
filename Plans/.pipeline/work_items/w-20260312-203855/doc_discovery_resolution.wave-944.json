@@ -1,0 +1,101 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-944",
+  "group_ids": [
+    "discgrp-3773",
+    "discgrp-3774",
+    "discgrp-3775",
+    "discgrp-3776"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04075",
+      "source_obligation_ids": [
+        "obl-3917"
+      ],
+      "source_seed_ids": [
+        "seed-5371",
+        "seed-6294",
+        "seed-6995",
+        "seed-7014",
+        "seed-7348"
+      ],
+      "source_shard_ids": [
+        "shard-0054",
+        "shard-0061",
+        "shard-0067",
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Runtime artifact and projection storage scope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L965"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04076",
+      "source_obligation_ids": [
+        "obl-3918"
+      ],
+      "source_seed_ids": [
+        "seed-5372"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "## 2. Required artifact set (SSOT) \u2014 Project Plan Package",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L37"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04077",
+      "source_obligation_ids": [
+        "obl-3919"
+      ],
+      "source_seed_ids": [
+        "seed-5373"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L767"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04078",
+      "source_obligation_ids": [
+        "obl-3920"
+      ],
+      "source_seed_ids": [
+        "seed-5374"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "#### `safe_point.created`",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1210"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

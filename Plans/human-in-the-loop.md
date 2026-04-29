@@ -1,5 +1,119 @@
 # Human-in-the-Loop (HITL) Mode -- Plan
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+  - seam review loop
+
+#### Source target target-0601
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+  - seam review loop
+- Exact required items represented:
+  - define concrete seam review loop behavior
+  - include trigger points, checks performed, corroboration thresholds, and emitted artifacts
+  - candidate outputs: seam review verdict, failure classes with severity, evidence bundle/rationale, remediation-node recommendation or [retired-token-3] recommendation, corroboration requirement and outcome when invoked
+  - 2. **Tier-boundary [retired-token-1] vs blocked-node/runtime-overlay [retired-token-1]**
+  - Docs involved: `UI_Command_Catalog.md`, `Wiring_Matrix.md`, `Run_Graph_View.md`, `[retired-token-8]`
+  - UI_Command_Catalog.md
+  - Wiring_Matrix.md
+  - Run_Graph_View.md
+  - [retired-token-8]
+  - what old assumption is present: tier-boundary [retired-token-1] payloads, incomplete execution identity, no account fallback fields.
+  - what old assumption is present: tier hierarchy, singular Overseer, tier-boundary [retired-token-1], old canonical owner map.
+  - neither doc yet gives a durable first-class account-switch / pressure-episode history model
+  - Actions that should generally be disabled in historical mode:
+  - `corroboration`
+  - corroboration
+  - `Corroboration`
+  - Corroboration
+  - app-level `Interaction Mode (Expert/ELI5)` controls authored help/tooltip/interviewer copy
+  - Interaction Mode (Expert/ELI5)
+  - [retired-token-1] approval required
+  - historical-run mode needs to be designed for widgets and graph/page surfaces, not just live mode
+  - moving between live and historical mode should not require per-widget manual retargeting
+  - `router/page scope`: `project_id`, `focused_run_id`, historical/live mode, deep-link target
+  - router/page scope
+  - project_id
+  - focused_run_id
+  - [retired-token-1] commands already require `request_id`
+  - request_id
+  - base headless `ask -> deny unless [retired-token-1] at current tier boundary` language is still tier-era and conflicts with unified blocked-overlay contracts
+  - ask -> deny unless [retired-token-1] at current tier boundary
+  - headless `ask -> deny unless [retired-token-1] at current tier boundary` still leaks tier-era gating into what should now be normal blocked-overlay routing
+  - [retired-token-1] requests/resolutions still carry no actor/lane/account identity strong enough to answer who asked, who approved, and under which effective runtime identity
+  - Add actor/lane/account identity and approver provenance to [retired-token-1] request/resolution events.
+  - `[retired-token-4]` still publishes `[retired-token-1]Request` with legacy `[retired-token-6]` and `[retired-token-7]`, while the later correction in `[retired-token-8]` says deprecated field names must not appear in new canonical schemas.
+  - [retired-token-4]
+  - [retired-token-1]Request
+  - [retired-token-6]
+  - [retired-token-7]
+  - Reconcile [retired-token-1] so blocked/runtime semantics are canonical and tier-boundary examples become derived copy only.
+  - Conversational / [retired-token-1] / tooling contracts still break under shared-runtime and multi-lane execution:
+  - `[retired-token-8]` remains tier-keyed at its canonical request/storage layer, still lacks node/package/lane/attempt anchors, still has no approver identity on durable [retired-token-1] events, and still leaves session-scoped reject/always semantics lane-unsafe.
+  - restart persistence for [retired-token-1] is still effectively run-scoped (`checkpoints.hitl.{run_id}`), which is unsafe once multiple concurrent approval episodes exist in one run.
+  - checkpoints.hitl.{run_id}
+  - `[retired-token-6]` is still alive in neighboring docs even though [retired-token-1] addenda say it is deprecated.
+  - `UI_Command_Catalog.md` already routes canonical runtime actions by `blocked_sequence`, but graph-local [retired-token-1] commands still use `request_id`.
+  - blocked_sequence
+  - Recast [retired-token-1] surface state around blocked-episode identity first, with tier labels as explanatory metadata rather than canonical targeting.
+  - `[retired-token-9]` is now clearly overloaded across runtime-mode vs overlay semantics while the docs still expose only a single `[retired-token-10]` payload.
+  - [retired-token-9]
+  - [retired-token-10]
+  - `[retired-token-9]` is still unresolved, but GPT-5.2 made the payload ambiguity more concrete by showing it now collides across chat-overlay mode, runtime run mode, and User Command frontmatter.
+  - `[retired-token-9]` is now a payload-shape contradiction because the current single `[retired-token-10]` contract cannot carry the requested/effective overlay/runtime split already required elsewhere.
+  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.
+  - Plans/*.md
+  - `hitl.approval_requested` with `request_id`, `tier_id`, `tier_type`, `allowed_actions`
+  - hitl.approval_requested
+  - tier_id
+  - tier_type
+  - allowed_actions
+  - [retired-token-1] request-era and blocked/runtime-era canon still coexisting
+  - `Plans/[retired-token-8]` is still explicitly built around:
+  - Plans/[retired-token-8]
+  - [retired-token-1] contracts still preserve `request_id` and `[retired-token-6]` as a distinct request-era family
+  - But [retired-token-1] owner docs still describe a parallel request-era approval model centered on `request_id`, `tier_id`, and `tier_type`.
+  - This is the cleanest remaining bridge between the old [retired-token-1] plan and the new blocked/runtime command model.
+  - live status still says [retired-token-1] requests are keyed by `request_id`
+  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+  - 39
+  - 22
+  - `Plans/[retired-token-8]` still opens with a canonical request contract built on:
+  - `Active mode and tier`
+  - Active mode and tier
+  - still treats [retired-token-1] requests as keyed by `request_id`
+  - blocked/runtime event sources elevated over request-centric [retired-token-1] and `TierChanged` event assumptions
+  - TierChanged
+  - `Plans/[retired-token-8]:29-33`
+  - Plans/[retired-token-8]:29-33
+  - `Plans/[retired-token-8]:96`
+  - Plans/[retired-token-8]:96
+  - `Plans/[retired-token-8]:22-49`
+  - Plans/[retired-token-8]:22-49
+- Legacy token retirement handling:
+  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 ## Fidelity recovery addendum
 
 This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
@@ -26,6 +140,46 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-006` repair removes stale live vocabulary and, if needed, confines any mention to an explicit compatibility-retirement note.
 
 ### Fidelity recovery cov-101: Provider-native correlation and approval scope
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0608
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - `Waiting on user approval`
+  - Waiting on user approval
+  - approval caching still lacks an explicit actor/lane/run/account scope rule, which is unsafe under shared-runtime parallel actors
+  - Permission approval caching and reject-cascade still lack actor/lane/account scope.
+  - still lacks concrete auth/account/role disclosure and still leaves session approval and handoff scopes ambiguous.
+  - Normalize HITL/tool approval semantics onto one blocked-episode model with explicit scope keying, field-family cleanup, and durable provenance.
+  - `yolo` still overpromises approval freedom even though non-bypassable step-7 guards survive, and `external_publish_side_effect` remains impossible to enforce safely in DAE without pre-dispatch interception or forced host execution.
+  - yolo
+  - external_publish_side_effect
+  - DAE still lacks a canonical lifecycle across defer/restart and still cannot safely enforce remote side-effect approval without a pre-dispatch intercept path.
+  - Collapse approval identity onto the runtime/blocked model.
+  - `request_id` approval targeting
+  - request_id
+  - section `6. HITLRequest` still defines approval around `request_id`, `tier_id`, `tier_type`, `request_kind = tier_boundary_approval`, and `allowed_actions[]`
+  - 6. HITLRequest
+  - tier_id
+  - tier_type
+  - request_kind = tier_boundary_approval
+  - allowed_actions[]
+  - pending approval is `blocked_reason_code = waiting_approval`
+  - blocked_reason_code = waiting_approval
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-101
 - Fidelity gap refs: cov-101
 - Required fidelity items:
@@ -48,6 +202,31 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 - Exact acceptance check: The `cov-161` repair is in the owner section for `Plans/human-in-the-loop.md` and is not only a downstream consumer note.
 
 ### Fidelity recovery cov-185: Approval scope key and approver identity
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0609
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Replace permission tier-boundary language with runtime-overlay/blocked-state terminology and key approval cache scope by actor/run/lane/account context.
+  - Permissions still use session-scoped approval logic without defining the session/actor/lane scope key.
+  - Define an Approval Scope Key for permissions keyed by actor/lane/run/account context.
+  - Define an Approval Scope Key spanning actor/lane/run/account context.
+  - The missing structural piece is approval scope anchoring. Current docs still do not define one durable scope key that answers:
+  - still lacks execution anchors, approver identity, concurrency-safe approval scope, and escalation behavior.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 - Coverage rows: cov-185
 - Fidelity gap refs: cov-185
 - Required fidelity items:
@@ -72,6 +251,26 @@ This addendum is an ordered parent-writer recovery container. It preserves the r
 
 ## Rewrite alignment (2026-02-21)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0603
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - Rewrite §9 around dual-overseer / corroboration reality rather than layering more addenda onto the current singular-Overseer protocol.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 HITL semantics are part of the deterministic agent-loop core described in `Plans/rewrite-tie-in-memo.md`:
 
 - HITL approvals should be represented as explicit **events** in the unified event model (seglog ledger)
@@ -79,6 +278,35 @@ HITL semantics are part of the deterministic agent-loop core described in `Plans
 - UI can change (Slint rewrite), but tier-boundary meaning and approval requirements must not
 
 ### Canonical HITL request contract
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0606
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - impacted contract/runtime/storage area: HITL request schema.
+  - HITL now visibly contains two contract eras at once:
+  - Recast HITL request contracts so `request_id` is explicitly subordinate to blocked-episode identity.
+  - request_id
+  - Keep any surviving HITL request identifiers as family-local compatibility handles or UI-facing lineage fields, not as the stronger approval identity.
+  - Reconcile HITL restore/state docs so restart behavior restores blocked approval episodes rather than a competing tier-boundary request object.
+  - canonical HITL request contract is `request_id` + `tier_id` + `tier_type` + `request_kind`
+  - tier_id
+  - tier_type
+  - request_kind
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 The canonical human-in-the-loop contract remains a blocked-runtime overlay.
 
 Required runtime-facing fields are:
@@ -134,6 +362,28 @@ ContractRef: PolicyRule:Decision_Policy.md§4, Gate:GATE-001
 | **Plans/newfeatures.md §20** | Summary and orchestrator integration: HITL is a **setting** only; tier semantics stay in Plans/orchestrator-subagent-integration.md; newfeatures defers full HITL spec to this document. |
 
 ## Tier Boundaries (DRY)
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0604
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - what old assumption is present: HITL at tier boundaries, workspace paths under `<phase>/<task>/<subtask>`, deprecated `allowed_actions[]` usage still lingering.
+  - <phase>/<task>/<subtask>
+  - allowed_actions[]
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Tier boundaries are not a co-equal execution model.
 
@@ -261,6 +511,26 @@ When implementing:
 
 ### Restart recovery and blocked-episode continuity
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0610
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - State blocked-episode identity directly:
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 #### Acceptance carry-through
 - Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
 - Carry usage switch-history and usage execution-role follow-through
@@ -347,6 +617,28 @@ Depending on classification, the canonical action families are:
 All surfaces MUST use the same action names, meanings, and enablement conditions. A surface may hide an action for layout reasons, but it MUST NOT rename or reinterpret it.
 
 ### Approval resolution and rerun semantics
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0605
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - needs scope-keyed approval semantics, de-tiered gating language, and richer permission snapshots
+  - needs scope-keyed approval semantics and richer permission snapshots
+  - approval identity, field-family normalization, and persistence semantics are still split across incompatible shapes.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 
 Rules:
 - waiting for approval is a blocked state with `blocked_reason_code = waiting_approval`

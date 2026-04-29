@@ -1,0 +1,2669 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-050",
+  "group_ids": [
+    "gapgrp-0197",
+    "gapgrp-0198",
+    "gapgrp-0199",
+    "gapgrp-0200"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-04162",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05358 is partial for Add these lineage examples to the route contract owner docs.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05358"
+      ],
+      "source_obligation_ids": [
+        "obl-5130"
+      ],
+      "source_seed_ids": [
+        "seed-7588"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "Add these lineage examples to the route contract owner docs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04165",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05362 is partial for Keep scheduler/safe-point/remediation/patch lineage under `inspector_target = lineage` whe",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 4. Remediation lineage events"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05362"
+      ],
+      "source_obligation_ids": [
+        "obl-5134"
+      ],
+      "source_seed_ids": [
+        "seed-7592"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "Keep scheduler/safe-point/remediation/patch lineage under `inspector_target = lineage` when the object is already selected.",
+        "inspector_target = lineage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04170",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05367 is partial for `object_id = <worktree_id>`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05367"
+      ],
+      "source_obligation_ids": [
+        "obl-5139"
+      ],
+      "source_seed_ids": [
+        "seed-7604"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_id = <worktree_id>`",
+        "object_id = <worktree_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04173",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05370 is partial for `object_id = <lane_id>`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05370"
+      ],
+      "source_obligation_ids": [
+        "obl-5142"
+      ],
+      "source_seed_ids": [
+        "seed-7610"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_id = <lane_id>`",
+        "object_id = <lane_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04175",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05372 is partial for `inspector_target = details | lineage`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 4. Remediation lineage events"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05372"
+      ],
+      "source_obligation_ids": [
+        "obl-5144"
+      ],
+      "source_seed_ids": [
+        "seed-7612"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`inspector_target = details | lineage`",
+        "inspector_target = details | lineage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04177",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05374 is partial for `object_kind = feature_seam`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05374"
+      ],
+      "source_obligation_ids": [
+        "obl-5146"
+      ],
+      "source_seed_ids": [
+        "seed-7617"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_kind = feature_seam`",
+        "object_kind = feature_seam"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04178",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05375 is partial for `object_id = <feature_seam_id>`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05375"
+      ],
+      "source_obligation_ids": [
+        "obl-5147"
+      ],
+      "source_seed_ids": [
+        "seed-7618"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_id = <feature_seam_id>`",
+        "object_id = <feature_seam_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04182",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05379 is partial for `object_kind = work_package`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05379"
+      ],
+      "source_obligation_ids": [
+        "obl-5151"
+      ],
+      "source_seed_ids": [
+        "seed-7625"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_kind = work_package`",
+        "object_kind = work_package"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04183",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05380 is partial for `object_id = <work_package_id>`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05380"
+      ],
+      "source_obligation_ids": [
+        "obl-5152"
+      ],
+      "source_seed_ids": [
+        "seed-7626"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_id = <work_package_id>`",
+        "object_id = <work_package_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04185",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05382 is partial for `object_kind = concern`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-019: Concern record family definition"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05382"
+      ],
+      "source_obligation_ids": [
+        "obl-5154"
+      ],
+      "source_seed_ids": [
+        "seed-7632"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_kind = concern`",
+        "object_kind = concern"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04186",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05383 is partial for `object_id = <concern_id>`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05383"
+      ],
+      "source_obligation_ids": [
+        "obl-5155"
+      ],
+      "source_seed_ids": [
+        "seed-7633"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_id = <concern_id>`",
+        "object_id = <concern_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04189",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05386 is partial for `object_id = <promotion_id>`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05386"
+      ],
+      "source_obligation_ids": [
+        "obl-5158"
+      ],
+      "source_seed_ids": [
+        "seed-7640"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_id = <promotion_id>`",
+        "object_id = <promotion_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04207",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05407 is partial for Without rejection rules, route producers will keep slipping local payload habits into the",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 5.1B Persona/Runtime Snapshot Payload Contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05407"
+      ],
+      "source_obligation_ids": [
+        "obl-5179"
+      ],
+      "source_seed_ids": [
+        "seed-7675"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "Without rejection rules, route producers will keep slipping local payload habits into the base contract."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04208",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05409 is partial for State that invalid route payloads are contract failures, not \u201cbest effort\u201d cases.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-012: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05409"
+      ],
+      "source_obligation_ids": [
+        "obl-5181"
+      ],
+      "source_seed_ids": [
+        "seed-7677"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "State that invalid route payloads are contract failures, not \u201cbest effort\u201d cases."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04213",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05415 is partial for `seams`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05415"
+      ],
+      "source_obligation_ids": [
+        "obl-5187"
+      ],
+      "source_seed_ids": [
+        "seed-7686"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "`seams`",
+        "seams"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04214",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05416 is partial for `node_graph`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05416"
+      ],
+      "source_obligation_ids": [
+        "obl-5188"
+      ],
+      "source_seed_ids": [
+        "seed-7687"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "`node_graph`",
+        "node_graph"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04228",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05431 is partial for base route contract stays small",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-012: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05431"
+      ],
+      "source_obligation_ids": [
+        "obl-5203"
+      ],
+      "source_seed_ids": [
+        "seed-7712"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "base route contract stays small"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04232",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05435 is partial for `object_id = scheduler_pass_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05435"
+      ],
+      "source_obligation_ids": [
+        "obl-5207"
+      ],
+      "source_seed_ids": [
+        "seed-7719"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "`object_id = scheduler_pass_id`",
+        "object_id = scheduler_pass_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04233",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05436 is partial for `object_id = safe_point_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05436"
+      ],
+      "source_obligation_ids": [
+        "obl-5208"
+      ],
+      "source_seed_ids": [
+        "seed-7722"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "`object_id = safe_point_id`",
+        "object_id = safe_point_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04234",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05437 is partial for `object_id = remediation_root_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05437"
+      ],
+      "source_obligation_ids": [
+        "obl-5209"
+      ],
+      "source_seed_ids": [
+        "seed-7725"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "`object_id = remediation_root_id`",
+        "object_id = remediation_root_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04235",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05438 is partial for `object_id = attempt_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05438"
+      ],
+      "source_obligation_ids": [
+        "obl-5210"
+      ],
+      "source_seed_ids": [
+        "seed-7728"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "`object_id = attempt_id`",
+        "object_id = attempt_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04236",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05439 is partial for The route contract does not need to grow extra top-level scope ids for each of these famil",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-012: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05439"
+      ],
+      "source_obligation_ids": [
+        "obl-5211"
+      ],
+      "source_seed_ids": [
+        "seed-7730"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "The route contract does not need to grow extra top-level scope ids for each of these families."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04238",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05441 is partial for Current docs still sometimes imply that scoped runtime identities need bespoke top-level r",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-180: Runtime attribution ownership split"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05441"
+      ],
+      "source_obligation_ids": [
+        "obl-5213"
+      ],
+      "source_seed_ids": [
+        "seed-7736"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "Current docs still sometimes imply that scoped runtime identities need bespoke top-level route fields."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04240",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05445 is partial for Small contract, strong resolver.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-012: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05445"
+      ],
+      "source_obligation_ids": [
+        "obl-5217"
+      ],
+      "source_seed_ids": [
+        "seed-7740"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "Small contract, strong resolver."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04243",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05448 is partial for The owner-doc adoption split is:",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-175: Concern source-event vs record vs projection split"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05448"
+      ],
+      "source_obligation_ids": [
+        "obl-5220"
+      ],
+      "source_seed_ids": [
+        "seed-7743"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "The owner-doc adoption split is:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04253",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05466 is partial for normalize seam/package/lane/worktree/concern/promotion/graph lineage pivots through object",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 4. Remediation lineage events"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05466"
+      ],
+      "source_obligation_ids": [
+        "obl-5238"
+      ],
+      "source_seed_ids": [
+        "seed-7771"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "normalize seam/package/lane/worktree/concern/promotion/graph lineage pivots through object-first route recipes"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04257",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05470 is partial for Reconcile owner docs in this order:",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-001: Owner-first fidelity recovery order"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05470"
+      ],
+      "source_obligation_ids": [
+        "obl-5242"
+      ],
+      "source_seed_ids": [
+        "seed-7787"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "Reconcile owner docs in this order:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04308",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05531 is partial for it still says all open-file actions share that one internal contract and one code path",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-012: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05531"
+      ],
+      "source_obligation_ids": [
+        "obl-5303"
+      ],
+      "source_seed_ids": [
+        "seed-7881"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "it still says all open-file actions share that one internal contract and one code path"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04328",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05554 is partial for recovery/conflict persistence phrased in `tier_id` terms",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 6.2 Scope and persistence rules"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05554"
+      ],
+      "source_obligation_ids": [
+        "obl-5326"
+      ],
+      "source_seed_ids": [
+        "seed-7914"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "recovery/conflict persistence phrased in `tier_id` terms",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04329",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05555 is partial for several future crew/message examples still propagate `tier_id` through git/worktree coordi",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Crew-board coordination contracts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05555"
+      ],
+      "source_obligation_ids": [
+        "obl-5327"
+      ],
+      "source_seed_ids": [
+        "seed-7915"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "several future crew/message examples still propagate `tier_id` through git/worktree coordination",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04342",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05570 is partial for The git/worktree coordination examples are a high-risk backdoor for reintroducing tier-era",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05570"
+      ],
+      "source_obligation_ids": [
+        "obl-5342"
+      ],
+      "source_seed_ids": [
+        "seed-7937"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "The git/worktree coordination examples are a high-risk backdoor for reintroducing tier-era identity after reconciliation."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04359",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05592 is partial for This is now a clear owner-doc gap, not a vague alignment issue.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### `tool.denied` alignment"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05592"
+      ],
+      "source_obligation_ids": [
+        "obl-5364"
+      ],
+      "source_seed_ids": [
+        "seed-7968"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "This is now a clear owner-doc gap, not a vague alignment issue."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04362",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05596 is partial for one command/wiring normalization gap",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### route_target, OpenSubject, and command normalization"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05596"
+      ],
+      "source_obligation_ids": [
+        "obl-5368"
+      ],
+      "source_seed_ids": [
+        "seed-7972"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "one command/wiring normalization gap"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04363",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05600 is partial for Stratum 1: owner docs",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05600"
+      ],
+      "source_obligation_ids": [
+        "obl-5372"
+      ],
+      "source_seed_ids": [
+        "seed-7978"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "Stratum 1: owner docs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04367",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05605 is partial for Treat the routing tranche as structurally closed after the owner-doc contracts are added.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05605"
+      ],
+      "source_obligation_ids": [
+        "obl-5377"
+      ],
+      "source_seed_ids": [
+        "seed-7995"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "Treat the routing tranche as structurally closed after the owner-doc contracts are added."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04370",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05608 is partial for Research Progress - 2026-03-17 - Exact owner-doc insertion points for route/open contracts",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Cross-surface runtime, concern, and route/open contracts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05608"
+      ],
+      "source_obligation_ids": [
+        "obl-5380"
+      ],
+      "source_seed_ids": [
+        "seed-7998"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - Exact owner-doc insertion points for route/open contracts"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04373",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "owner coverage row cov-05612 is partial for subsection `7.2 WiringEntry`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05612"
+      ],
+      "source_obligation_ids": [
+        "obl-5384"
+      ],
+      "source_seed_ids": [
+        "seed-8004"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "subsection `7.2 WiringEntry`",
+        "7.2 WiringEntry"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04374",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05613 is partial for The document is still missing the canonical route/open contracts entirely.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Cross-surface runtime, concern, and route/open contracts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05613"
+      ],
+      "source_obligation_ids": [
+        "obl-5385"
+      ],
+      "source_seed_ids": [
+        "seed-8005"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "The document is still missing the canonical route/open contracts entirely."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04375",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05614 is partial for The clean contract placement is:",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-012: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05614"
+      ],
+      "source_obligation_ids": [
+        "obl-5386"
+      ],
+      "source_seed_ids": [
+        "seed-8006"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "The clean contract placement is:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04388",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05638 is partial for This is not just a missing paragraph. The owner-doc section order already tells us where t",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-001: Owner-first fidelity recovery order"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05638"
+      ],
+      "source_obligation_ids": [
+        "obl-5410"
+      ],
+      "source_seed_ids": [
+        "seed-8035"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "This is not just a missing paragraph. The owner-doc section order already tells us where the contract belongs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-05358",
+    "cov-05362",
+    "cov-05367",
+    "cov-05370",
+    "cov-05372",
+    "cov-05374",
+    "cov-05375",
+    "cov-05379",
+    "cov-05380",
+    "cov-05382",
+    "cov-05383",
+    "cov-05386",
+    "cov-05407",
+    "cov-05409",
+    "cov-05415",
+    "cov-05416",
+    "cov-05431",
+    "cov-05435",
+    "cov-05436",
+    "cov-05437",
+    "cov-05438",
+    "cov-05439",
+    "cov-05441",
+    "cov-05445",
+    "cov-05448",
+    "cov-05466",
+    "cov-05470",
+    "cov-05531",
+    "cov-05554",
+    "cov-05555",
+    "cov-05570",
+    "cov-05592",
+    "cov-05596",
+    "cov-05600",
+    "cov-05605",
+    "cov-05608",
+    "cov-05612",
+    "cov-05613",
+    "cov-05614",
+    "cov-05638"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-5130",
+    "obl-5134",
+    "obl-5139",
+    "obl-5142",
+    "obl-5144",
+    "obl-5146",
+    "obl-5147",
+    "obl-5151",
+    "obl-5152",
+    "obl-5154",
+    "obl-5155",
+    "obl-5158",
+    "obl-5179",
+    "obl-5181",
+    "obl-5187",
+    "obl-5188",
+    "obl-5203",
+    "obl-5207",
+    "obl-5208",
+    "obl-5209",
+    "obl-5210",
+    "obl-5211",
+    "obl-5213",
+    "obl-5217",
+    "obl-5220",
+    "obl-5238",
+    "obl-5242",
+    "obl-5303",
+    "obl-5326",
+    "obl-5327",
+    "obl-5342",
+    "obl-5364",
+    "obl-5368",
+    "obl-5372",
+    "obl-5377",
+    "obl-5380",
+    "obl-5384",
+    "obl-5385",
+    "obl-5386",
+    "obl-5410"
+  ],
+  "source_seed_ids_represented": [
+    "seed-7588",
+    "seed-7592",
+    "seed-7604",
+    "seed-7610",
+    "seed-7612",
+    "seed-7617",
+    "seed-7618",
+    "seed-7625",
+    "seed-7626",
+    "seed-7632",
+    "seed-7633",
+    "seed-7640",
+    "seed-7675",
+    "seed-7677",
+    "seed-7686",
+    "seed-7687",
+    "seed-7712",
+    "seed-7719",
+    "seed-7722",
+    "seed-7725",
+    "seed-7728",
+    "seed-7730",
+    "seed-7736",
+    "seed-7740",
+    "seed-7743",
+    "seed-7771",
+    "seed-7787",
+    "seed-7881",
+    "seed-7914",
+    "seed-7915",
+    "seed-7937",
+    "seed-7968",
+    "seed-7972",
+    "seed-7978",
+    "seed-7995",
+    "seed-7998",
+    "seed-8004",
+    "seed-8005",
+    "seed-8006",
+    "seed-8035"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0071",
+    "shard-0072",
+    "shard-0073",
+    "shard-0074"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-04162",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05358 is partial for Add these lineage examples to the route contract owner docs.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05358"
+      ],
+      "source_obligation_ids": [
+        "obl-5130"
+      ],
+      "source_seed_ids": [
+        "seed-7588"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "Add these lineage examples to the route contract owner docs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04165",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05362 is partial for Keep scheduler/safe-point/remediation/patch lineage under `inspector_target = lineage` whe",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 4. Remediation lineage events"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05362"
+      ],
+      "source_obligation_ids": [
+        "obl-5134"
+      ],
+      "source_seed_ids": [
+        "seed-7592"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "Keep scheduler/safe-point/remediation/patch lineage under `inspector_target = lineage` when the object is already selected.",
+        "inspector_target = lineage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04170",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05367 is partial for `object_id = <worktree_id>`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05367"
+      ],
+      "source_obligation_ids": [
+        "obl-5139"
+      ],
+      "source_seed_ids": [
+        "seed-7604"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_id = <worktree_id>`",
+        "object_id = <worktree_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04173",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05370 is partial for `object_id = <lane_id>`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05370"
+      ],
+      "source_obligation_ids": [
+        "obl-5142"
+      ],
+      "source_seed_ids": [
+        "seed-7610"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_id = <lane_id>`",
+        "object_id = <lane_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04175",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05372 is partial for `inspector_target = details | lineage`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 4. Remediation lineage events"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05372"
+      ],
+      "source_obligation_ids": [
+        "obl-5144"
+      ],
+      "source_seed_ids": [
+        "seed-7612"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`inspector_target = details | lineage`",
+        "inspector_target = details | lineage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04177",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05374 is partial for `object_kind = feature_seam`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05374"
+      ],
+      "source_obligation_ids": [
+        "obl-5146"
+      ],
+      "source_seed_ids": [
+        "seed-7617"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_kind = feature_seam`",
+        "object_kind = feature_seam"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04178",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05375 is partial for `object_id = <feature_seam_id>`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05375"
+      ],
+      "source_obligation_ids": [
+        "obl-5147"
+      ],
+      "source_seed_ids": [
+        "seed-7618"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_id = <feature_seam_id>`",
+        "object_id = <feature_seam_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04182",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05379 is partial for `object_kind = work_package`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05379"
+      ],
+      "source_obligation_ids": [
+        "obl-5151"
+      ],
+      "source_seed_ids": [
+        "seed-7625"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_kind = work_package`",
+        "object_kind = work_package"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04183",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05380 is partial for `object_id = <work_package_id>`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05380"
+      ],
+      "source_obligation_ids": [
+        "obl-5152"
+      ],
+      "source_seed_ids": [
+        "seed-7626"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_id = <work_package_id>`",
+        "object_id = <work_package_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04185",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05382 is partial for `object_kind = concern`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-019: Concern record family definition"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05382"
+      ],
+      "source_obligation_ids": [
+        "obl-5154"
+      ],
+      "source_seed_ids": [
+        "seed-7632"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_kind = concern`",
+        "object_kind = concern"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04186",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05383 is partial for `object_id = <concern_id>`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05383"
+      ],
+      "source_obligation_ids": [
+        "obl-5155"
+      ],
+      "source_seed_ids": [
+        "seed-7633"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_id = <concern_id>`",
+        "object_id = <concern_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04189",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05386 is partial for `object_id = <promotion_id>`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05386"
+      ],
+      "source_obligation_ids": [
+        "obl-5158"
+      ],
+      "source_seed_ids": [
+        "seed-7640"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "exact_missing_items": [
+        "`object_id = <promotion_id>`",
+        "object_id = <promotion_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04207",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05407 is partial for Without rejection rules, route producers will keep slipping local payload habits into the",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 5.1B Persona/Runtime Snapshot Payload Contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05407"
+      ],
+      "source_obligation_ids": [
+        "obl-5179"
+      ],
+      "source_seed_ids": [
+        "seed-7675"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "Without rejection rules, route producers will keep slipping local payload habits into the base contract."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04208",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05409 is partial for State that invalid route payloads are contract failures, not \u201cbest effort\u201d cases.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-012: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05409"
+      ],
+      "source_obligation_ids": [
+        "obl-5181"
+      ],
+      "source_seed_ids": [
+        "seed-7677"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "State that invalid route payloads are contract failures, not \u201cbest effort\u201d cases."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04213",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05415 is partial for `seams`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05415"
+      ],
+      "source_obligation_ids": [
+        "obl-5187"
+      ],
+      "source_seed_ids": [
+        "seed-7686"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "`seams`",
+        "seams"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04214",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05416 is partial for `node_graph`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05416"
+      ],
+      "source_obligation_ids": [
+        "obl-5188"
+      ],
+      "source_seed_ids": [
+        "seed-7687"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "`node_graph`",
+        "node_graph"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04228",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05431 is partial for base route contract stays small",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-012: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05431"
+      ],
+      "source_obligation_ids": [
+        "obl-5203"
+      ],
+      "source_seed_ids": [
+        "seed-7712"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "base route contract stays small"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04232",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05435 is partial for `object_id = scheduler_pass_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05435"
+      ],
+      "source_obligation_ids": [
+        "obl-5207"
+      ],
+      "source_seed_ids": [
+        "seed-7719"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "`object_id = scheduler_pass_id`",
+        "object_id = scheduler_pass_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04233",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05436 is partial for `object_id = safe_point_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05436"
+      ],
+      "source_obligation_ids": [
+        "obl-5208"
+      ],
+      "source_seed_ids": [
+        "seed-7722"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "`object_id = safe_point_id`",
+        "object_id = safe_point_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04234",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05437 is partial for `object_id = remediation_root_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05437"
+      ],
+      "source_obligation_ids": [
+        "obl-5209"
+      ],
+      "source_seed_ids": [
+        "seed-7725"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "`object_id = remediation_root_id`",
+        "object_id = remediation_root_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04235",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05438 is partial for `object_id = attempt_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05438"
+      ],
+      "source_obligation_ids": [
+        "obl-5210"
+      ],
+      "source_seed_ids": [
+        "seed-7728"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "`object_id = attempt_id`",
+        "object_id = attempt_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04236",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05439 is partial for The route contract does not need to grow extra top-level scope ids for each of these famil",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-012: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05439"
+      ],
+      "source_obligation_ids": [
+        "obl-5211"
+      ],
+      "source_seed_ids": [
+        "seed-7730"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "The route contract does not need to grow extra top-level scope ids for each of these families."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04238",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05441 is partial for Current docs still sometimes imply that scoped runtime identities need bespoke top-level r",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-180: Runtime attribution ownership split"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05441"
+      ],
+      "source_obligation_ids": [
+        "obl-5213"
+      ],
+      "source_seed_ids": [
+        "seed-7736"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "Current docs still sometimes imply that scoped runtime identities need bespoke top-level route fields."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04240",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05445 is partial for Small contract, strong resolver.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-012: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05445"
+      ],
+      "source_obligation_ids": [
+        "obl-5217"
+      ],
+      "source_seed_ids": [
+        "seed-7740"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "Small contract, strong resolver."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04243",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05448 is partial for The owner-doc adoption split is:",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-175: Concern source-event vs record vs projection split"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05448"
+      ],
+      "source_obligation_ids": [
+        "obl-5220"
+      ],
+      "source_seed_ids": [
+        "seed-7743"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "The owner-doc adoption split is:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04253",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05466 is partial for normalize seam/package/lane/worktree/concern/promotion/graph lineage pivots through object",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 4. Remediation lineage events"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05466"
+      ],
+      "source_obligation_ids": [
+        "obl-5238"
+      ],
+      "source_seed_ids": [
+        "seed-7771"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "normalize seam/package/lane/worktree/concern/promotion/graph lineage pivots through object-first route recipes"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04257",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05470 is partial for Reconcile owner docs in this order:",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-001: Owner-first fidelity recovery order"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05470"
+      ],
+      "source_obligation_ids": [
+        "obl-5242"
+      ],
+      "source_seed_ids": [
+        "seed-7787"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "Reconcile owner docs in this order:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04308",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05531 is partial for it still says all open-file actions share that one internal contract and one code path",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-012: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05531"
+      ],
+      "source_obligation_ids": [
+        "obl-5303"
+      ],
+      "source_seed_ids": [
+        "seed-7881"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "it still says all open-file actions share that one internal contract and one code path"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04328",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05554 is partial for recovery/conflict persistence phrased in `tier_id` terms",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 6.2 Scope and persistence rules"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05554"
+      ],
+      "source_obligation_ids": [
+        "obl-5326"
+      ],
+      "source_seed_ids": [
+        "seed-7914"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "recovery/conflict persistence phrased in `tier_id` terms",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04329",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05555 is partial for several future crew/message examples still propagate `tier_id` through git/worktree coordi",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Crew-board coordination contracts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05555"
+      ],
+      "source_obligation_ids": [
+        "obl-5327"
+      ],
+      "source_seed_ids": [
+        "seed-7915"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "several future crew/message examples still propagate `tier_id` through git/worktree coordination",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04342",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05570 is partial for The git/worktree coordination examples are a high-risk backdoor for reintroducing tier-era",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05570"
+      ],
+      "source_obligation_ids": [
+        "obl-5342"
+      ],
+      "source_seed_ids": [
+        "seed-7937"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "The git/worktree coordination examples are a high-risk backdoor for reintroducing tier-era identity after reconciliation."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04359",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05592 is partial for This is now a clear owner-doc gap, not a vague alignment issue.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### `tool.denied` alignment"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05592"
+      ],
+      "source_obligation_ids": [
+        "obl-5364"
+      ],
+      "source_seed_ids": [
+        "seed-7968"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "This is now a clear owner-doc gap, not a vague alignment issue."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04362",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05596 is partial for one command/wiring normalization gap",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### route_target, OpenSubject, and command normalization"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05596"
+      ],
+      "source_obligation_ids": [
+        "obl-5368"
+      ],
+      "source_seed_ids": [
+        "seed-7972"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "one command/wiring normalization gap"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04363",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-05600 is partial for Stratum 1: owner docs",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05600"
+      ],
+      "source_obligation_ids": [
+        "obl-5372"
+      ],
+      "source_seed_ids": [
+        "seed-7978"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "Stratum 1: owner docs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04367",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05605 is partial for Treat the routing tranche as structurally closed after the owner-doc contracts are added.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05605"
+      ],
+      "source_obligation_ids": [
+        "obl-5377"
+      ],
+      "source_seed_ids": [
+        "seed-7995"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "Treat the routing tranche as structurally closed after the owner-doc contracts are added."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04370",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05608 is partial for Research Progress - 2026-03-17 - Exact owner-doc insertion points for route/open contracts",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Cross-surface runtime, concern, and route/open contracts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05608"
+      ],
+      "source_obligation_ids": [
+        "obl-5380"
+      ],
+      "source_seed_ids": [
+        "seed-7998"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - Exact owner-doc insertion points for route/open contracts"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04373",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "owner coverage row cov-05612 is partial for subsection `7.2 WiringEntry`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05612"
+      ],
+      "source_obligation_ids": [
+        "obl-5384"
+      ],
+      "source_seed_ids": [
+        "seed-8004"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "subsection `7.2 WiringEntry`",
+        "7.2 WiringEntry"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04374",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05613 is partial for The document is still missing the canonical route/open contracts entirely.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Cross-surface runtime, concern, and route/open contracts"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05613"
+      ],
+      "source_obligation_ids": [
+        "obl-5385"
+      ],
+      "source_seed_ids": [
+        "seed-8005"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "The document is still missing the canonical route/open contracts entirely."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04375",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05614 is partial for The clean contract placement is:",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-012: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05614"
+      ],
+      "source_obligation_ids": [
+        "obl-5386"
+      ],
+      "source_seed_ids": [
+        "seed-8006"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "The clean contract placement is:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04388",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05638 is partial for This is not just a missing paragraph. The owner-doc section order already tells us where t",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Fidelity recovery cov-001: Owner-first fidelity recovery order"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05638"
+      ],
+      "source_obligation_ids": [
+        "obl-5410"
+      ],
+      "source_seed_ids": [
+        "seed-8035"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "This is not just a missing paragraph. The owner-doc section order already tells us where the contract belongs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

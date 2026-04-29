@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-033",
+  "group_ids": [
+    "discgrp-0129",
+    "discgrp-0130",
+    "discgrp-0131",
+    "discgrp-0132"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00364",
+      "source_obligation_ids": [
+        "obl-222"
+      ],
+      "source_seed_ids": [
+        "seed-254"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/feature-list.md",
+      "new_heading_hint": "# Puppet Master Feature List (Reference)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/feature-list.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00365",
+      "source_obligation_ids": [
+        "obl-223"
+      ],
+      "source_seed_ids": [
+        "seed-255"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "## Avoiding \"Built but Not Wired\"",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L1186"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00366",
+      "source_obligation_ids": [
+        "obl-224"
+      ],
+      "source_seed_ids": [
+        "seed-256"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### 2.8 Lane/worktree lifecycle, storage families, and historical vocabulary",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L216"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00367",
+      "source_obligation_ids": [
+        "obl-225"
+      ],
+      "source_seed_ids": [
+        "seed-257",
+        "seed-1654",
+        "seed-1663"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0025"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Canonical records baseline",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L457"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

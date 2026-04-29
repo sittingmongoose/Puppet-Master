@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1163",
+  "group_ids": [
+    "discgrp-4649",
+    "discgrp-4650",
+    "discgrp-4651",
+    "discgrp-4652"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05047",
+      "source_obligation_ids": [
+        "obl-4823"
+      ],
+      "source_seed_ids": [
+        "seed-6944"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05048",
+      "source_obligation_ids": [
+        "obl-4824"
+      ],
+      "source_seed_ids": [
+        "seed-6945"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 4.2 Question and clarification state",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1187"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05049",
+      "source_obligation_ids": [
+        "obl-4825"
+      ],
+      "source_seed_ids": [
+        "seed-6946"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05050",
+      "source_obligation_ids": [
+        "obl-4826"
+      ],
+      "source_seed_ids": [
+        "seed-6947"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "# Crosswalk (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

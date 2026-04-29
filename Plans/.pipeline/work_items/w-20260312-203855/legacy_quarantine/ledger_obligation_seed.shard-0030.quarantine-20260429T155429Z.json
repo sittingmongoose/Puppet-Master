@@ -1,0 +1,170 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0030",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0030-L005801-L006000.md",
+  "source_line_range": "L005801-L006000",
+  "covered_shard_id": "shard-0030",
+  "seed_candidates": [
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "shared historical-semantic vocabulary",
+      "exact_items": [
+        "historical",
+        "stale_historical",
+        "superseded",
+        "revoked",
+        "reopened",
+        "archived",
+        "removed"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Search / ledger implication",
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "stale_historical",
+        "historical",
+        "archived",
+        "removed"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L5879-L5905"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "remediation.resolved enum conflict",
+      "exact_items": [
+        "resolution enum: fixed/superseded/abandoned/replan_required",
+        "minimum payload resolution: success/failed/ceiling_exceeded"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Important contradiction surfaced",
+        "Remediation semantic direction"
+      ],
+      "stale_tokens": [
+        "resolved",
+        "superseded",
+        "replan_required",
+        "abandoned",
+        "failed"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L5826-L5846"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "ledger/search inspector distinction contract",
+      "exact_items": [
+        "current vs historical",
+        "superseded vs revoked",
+        "archived vs removed",
+        "stale_historical vs merely historical"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Search / ledger implication"
+      ],
+      "stale_tokens": [
+        "ledger inspectors",
+        "search filters",
+        "historical"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L5879-L5887"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "concern record minimum shape and lifecycle",
+      "exact_items": [
+        "concern_id",
+        "project_id",
+        "scope_type",
+        "scope_id",
+        "status",
+        "severity",
+        "category",
+        "summary",
+        "source_refs[]",
+        "evidence_refs[]",
+        "lineage_refs[]",
+        "active",
+        "acknowledged",
+        "resolved",
+        "dismissed"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [
+        "Recommended minimum concern shape",
+        "Lifecycle direction"
+      ],
+      "stale_tokens": [
+        "concern",
+        "resolved",
+        "acknowledged",
+        "dismissed"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L5957-L5999"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    {
+      "line_range": "L005801-L005812",
+      "reason": "token list / status definitions only"
+    },
+    {
+      "line_range": "L005814-L005824",
+      "reason": "general guidance without new obligation-grade seed"
+    },
+    {
+      "line_range": "L005848-L005855",
+      "reason": "explanatory examples only"
+    },
+    {
+      "line_range": "L005857-L005867",
+      "reason": "storage/UI distinction examples only"
+    },
+    {
+      "line_range": "L005869-L005878",
+      "reason": "recommendation summary only"
+    },
+    {
+      "line_range": "L005889-L005910",
+      "reason": "recap / carry-forward summary only"
+    },
+    {
+      "line_range": "L005912-L005999",
+      "reason": "process/count/status-like research progress and shape listing; only exact seed lines extracted above"
+    }
+  ],
+  "uncertain_items": []
+}

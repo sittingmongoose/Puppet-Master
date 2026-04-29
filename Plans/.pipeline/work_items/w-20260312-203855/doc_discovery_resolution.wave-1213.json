@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1213",
+  "group_ids": [
+    "discgrp-4849",
+    "discgrp-4850",
+    "discgrp-4851",
+    "discgrp-4852"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05248",
+      "source_obligation_ids": [
+        "obl-5024"
+      ],
+      "source_seed_ids": [
+        "seed-7325"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Account pressure, history, and runtime attribution baseline",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L491"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05249",
+      "source_obligation_ids": [
+        "obl-5025"
+      ],
+      "source_seed_ids": [
+        "seed-7331"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/LSPSupport.md",
+      "new_heading_hint": "### 3.6 Extension conflicts (multiple servers per extension)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/LSPSupport.md:L179"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05250",
+      "source_obligation_ids": [
+        "obl-5026"
+      ],
+      "source_seed_ids": [
+        "seed-7332"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "#### `restore_outcome` enum",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1230"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05251",
+      "source_obligation_ids": [
+        "obl-5027"
+      ],
+      "source_seed_ids": [
+        "seed-7333"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/DRY_Rules.md",
+      "new_heading_hint": "## 8. Reference style",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/DRY_Rules.md:L155"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

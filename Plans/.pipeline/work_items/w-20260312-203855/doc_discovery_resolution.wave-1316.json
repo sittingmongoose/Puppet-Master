@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1316",
+  "group_ids": [
+    "discgrp-5261",
+    "discgrp-5262",
+    "discgrp-5263",
+    "discgrp-5264"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05692",
+      "source_obligation_ids": [
+        "obl-5464"
+      ],
+      "source_seed_ids": [
+        "seed-8108"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### route_target, OpenSubject, and command normalization",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L315"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05693",
+      "source_obligation_ids": [
+        "obl-5465"
+      ],
+      "source_seed_ids": [
+        "seed-8113"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "## 3. Assessment: what we have and gaps (filled)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L104"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05695",
+      "source_obligation_ids": [
+        "obl-5467"
+      ],
+      "source_seed_ids": [
+        "seed-8115"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "### 3.14 DocumentInlineNotes",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L237"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05696",
+      "source_obligation_ids": [
+        "obl-5468"
+      ],
+      "source_seed_ids": [
+        "seed-8116"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "### 3.15 TargetedRevisionPass",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L258"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

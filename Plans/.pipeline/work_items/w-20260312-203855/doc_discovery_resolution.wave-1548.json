@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1548",
+  "group_ids": [
+    "discgrp-6189",
+    "discgrp-6190",
+    "discgrp-6191",
+    "discgrp-6192"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06885",
+      "source_obligation_ids": [
+        "obl-6487"
+      ],
+      "source_seed_ids": [
+        "seed-9866"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L35"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06886",
+      "source_obligation_ids": [
+        "obl-6488"
+      ],
+      "source_seed_ids": [
+        "seed-9867"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-077: Project summary projection",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/storage-plan.md:L123"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06887",
+      "source_obligation_ids": [
+        "obl-6489"
+      ],
+      "source_seed_ids": [
+        "seed-9868"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "#### Required: `contracts/index.json` (Project Contract Pack index)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L196"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06888",
+      "source_obligation_ids": [
+        "obl-6490"
+      ],
+      "source_seed_ids": [
+        "seed-9869"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "#### Required: `contracts/index.json` (Project Contract Pack index)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L196"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

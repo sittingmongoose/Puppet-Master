@@ -1,0 +1,421 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-164",
+  "group_ids": [
+    "recgrp-0653",
+    "recgrp-0654",
+    "recgrp-0655",
+    "recgrp-0656"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0653",
+      "path": "Plans/storage-plan.md",
+      "mapped_owner_heading": "## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)",
+      "live_anchor": "## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09) (Plans/storage-plan.md:L1623)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-06421"
+      ],
+      "source_obligation_ids": [
+        "obl-6062"
+      ],
+      "source_seed_ids": [
+        "seed-9160"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "gap_ids": [
+        "gap-04984"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "`Runtime Recovery Canonicalization Gate Addendum` appears twice with the same body",
+        "Runtime Recovery Canonicalization Gate Addendum"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-81b62bce0eb9",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0654",
+      "path": "Plans/storage-plan.md",
+      "mapped_owner_heading": "## Scheduler Runtime, Safe-Point, and Remediation Storage Addendum (2026-03-08)",
+      "live_anchor": "## Scheduler Runtime, Safe-Point, and Remediation Storage Addendum (2026-03-08) (Plans/storage-plan.md:L1520)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00407",
+        "cov-02313",
+        "cov-04767"
+      ],
+      "source_obligation_ids": [
+        "obl-265",
+        "obl-2165",
+        "obl-4545"
+      ],
+      "source_seed_ids": [
+        "seed-299",
+        "seed-2816",
+        "seed-6462"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0035",
+        "shard-0062"
+      ],
+      "gap_ids": [
+        "gap-00320",
+        "gap-01798",
+        "gap-03722"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "strongest owner for switch/pressure behavior, but still lacks durable switch-history storage and does not align cleanly with scheduler dispatch or usage/storage identity fields",
+        "storage and UI consumers now have no single obviously-canonical payload block for scheduler, safe point, and remediation lineage",
+        "`MiscPlan.md` still embeds sequential tier-era cleanup/remediation assumptions, including a cleanup-remediation loop outside the canonical runtime failure matrix and prepare/cleanup ordering that can erase safe-point baselines.",
+        "MiscPlan.md"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-d8e91e70e37e",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0655",
+      "path": "Plans/storage-plan.md",
+      "mapped_owner_heading": "### 2.3 redb: schema, migrations, key patterns",
+      "live_anchor": "### 2.3 redb: schema, migrations, key patterns (Plans/storage-plan.md:L455)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [
+        "Contracts_V0.md",
+        "GitHub_API_Auth_and_Flows.md",
+        "GitHub_Integration.md",
+        "Multi-Account.md",
+        "Orchestrator_Page.md",
+        "Project_Output_Artifacts.md",
+        "Prompt_Pipeline.md",
+        "Run_Graph_View.md",
+        "UI_Wiring_Rules.md",
+        "Wiring_Matrix.schema.json",
+        "storage-plan.md"
+      ],
+      "coverage_row_ids": [
+        "cov-02578",
+        "cov-02734",
+        "cov-03258",
+        "cov-03273",
+        "cov-03317",
+        "cov-03515",
+        "cov-04248",
+        "cov-04961",
+        "cov-04984",
+        "cov-05003",
+        "cov-06035",
+        "cov-06715",
+        "cov-06856"
+      ],
+      "source_obligation_ids": [
+        "obl-2426",
+        "obl-2581",
+        "obl-3104",
+        "obl-3119",
+        "obl-3163",
+        "obl-3361",
+        "obl-4088",
+        "obl-4737",
+        "obl-4760",
+        "obl-4779",
+        "obl-5807",
+        "obl-6356",
+        "obl-6459"
+      ],
+      "source_seed_ids": [
+        "seed-3150",
+        "seed-3383",
+        "seed-4127",
+        "seed-4153",
+        "seed-4216",
+        "seed-4525",
+        "seed-5650",
+        "seed-6823",
+        "seed-6857",
+        "seed-6885",
+        "seed-8634",
+        "seed-9703",
+        "seed-9838"
+      ],
+      "source_shard_ids": [
+        "shard-0038",
+        "shard-0040",
+        "shard-0045",
+        "shard-0046",
+        "shard-0048",
+        "shard-0056",
+        "shard-0065",
+        "shard-0066",
+        "shard-0079",
+        "shard-0087",
+        "shard-0088"
+      ],
+      "gap_ids": [
+        "gap-02019",
+        "gap-02149",
+        "gap-02547",
+        "gap-02561",
+        "gap-02597",
+        "gap-02749",
+        "gap-03311",
+        "gap-03883",
+        "gap-03903",
+        "gap-03918",
+        "gap-04671",
+        "gap-05202",
+        "gap-05311"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "There is still no canonical redb key pattern or record shape for:",
+        "one canonical route-payload schema owner",
+        "Several downstream docs now fail at the schema level, not only at the prose level:",
+        "adjacent owner docs pulled for contradiction checks (`Contracts_V0.md`, `Prompt_Pipeline.md`, `storage-plan.md`, `Multi-Account.md`, `Orchestrator_Page.md`, `Run_Graph_View.md`, `UI_Wiring_Rules.md`, `Wiring_Matrix.schema.json`, `GitHub_Integration.md`, `GitHub_API_Auth_and_Flows.md`, `Project_Output_Artifacts.md`)",
+        "Contracts_V0.md",
+        "Prompt_Pipeline.md",
+        "storage-plan.md",
+        "Multi-Account.md",
+        "Orchestrator_Page.md",
+        "Run_Graph_View.md",
+        "UI_Wiring_Rules.md",
+        "Wiring_Matrix.schema.json",
+        "Artifact / HITL / tool surfaces still have direct schema and key mismatches:",
+        "canonical redb key registration",
+        "`pm.evidence.schema.v1` still cannot encode the tri-state or machine-readable arrays that GATE-011/GATE-012 now demand.",
+        "pm.evidence.schema.v1",
+        "`evidence.schema.json` is also very generic here. It can store pass/fail checks, but it has no structured slot for wrapper-normalization or alias-resolution evidence.",
+        "evidence.schema.json",
+        "the route schema remains the owner of actual route-target structure",
+        "`Wiring_Matrix.schema.json` is intentionally lean, which is good, but it means verification must mostly derive normalization expectations from the catalog rather than from repeated row-local metadata.",
+        "deprecated field names such as `allowed_actions[]` must not appear in new canonical schemas",
+        "allowed_actions[]",
+        "Storage or key registration landed without the **field schema / value-shape contract**.",
+        "account-pressure and account-switch key families remain present; the missing transfer is schema and contract ownership, not simple existence."
+      ],
+      "exact_stale_tokens_to_retire": [
+        "Contracts_V0.md",
+        "GitHub_API_Auth_and_Flows.md",
+        "GitHub_Integration.md",
+        "Multi-Account.md",
+        "Orchestrator_Page.md",
+        "Project_Output_Artifacts.md",
+        "Prompt_Pipeline.md",
+        "Run_Graph_View.md",
+        "UI_Wiring_Rules.md",
+        "Wiring_Matrix.schema.json",
+        "storage-plan.md"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "packet_span_group_id": "span-94f22aca900e",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0656",
+      "path": "Plans/storage-plan.md",
+      "mapped_owner_heading": "### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints",
+      "live_anchor": "### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints (Plans/storage-plan.md:L1068)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-05515",
+        "cov-05814",
+        "cov-06691"
+      ],
+      "source_obligation_ids": [
+        "obl-5287",
+        "obl-5586",
+        "obl-6332"
+      ],
+      "source_seed_ids": [
+        "seed-7858",
+        "seed-8296",
+        "seed-9594"
+      ],
+      "source_shard_ids": [
+        "shard-0073",
+        "shard-0076",
+        "shard-0086"
+      ],
+      "gap_ids": [
+        "gap-04293",
+        "gap-04506",
+        "gap-05182"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "several older rollup sections still speak in `usage.jsonl` and tier-based aggregation language rather than canonical object-first pivots",
+        "usage.jsonl",
+        "`usage.jsonl` aggregation is tier-based",
+        "Mirror docs should be updated only after their owner docs are reconciled."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-3f88a2362c8f",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-06421",
+    "cov-00407",
+    "cov-02313",
+    "cov-04767",
+    "cov-02578",
+    "cov-02734",
+    "cov-03258",
+    "cov-03273",
+    "cov-03317",
+    "cov-03515",
+    "cov-04248",
+    "cov-04961",
+    "cov-04984",
+    "cov-05003",
+    "cov-06035",
+    "cov-06715",
+    "cov-06856",
+    "cov-05515",
+    "cov-05814",
+    "cov-06691"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-6062",
+    "obl-265",
+    "obl-2165",
+    "obl-4545",
+    "obl-2426",
+    "obl-2581",
+    "obl-3104",
+    "obl-3119",
+    "obl-3163",
+    "obl-3361",
+    "obl-4088",
+    "obl-4737",
+    "obl-4760",
+    "obl-4779",
+    "obl-5807",
+    "obl-6356",
+    "obl-6459",
+    "obl-5287",
+    "obl-5586",
+    "obl-6332"
+  ],
+  "source_seed_ids_represented": [
+    "seed-9160",
+    "seed-299",
+    "seed-2816",
+    "seed-6462",
+    "seed-3150",
+    "seed-3383",
+    "seed-4127",
+    "seed-4153",
+    "seed-4216",
+    "seed-4525",
+    "seed-5650",
+    "seed-6823",
+    "seed-6857",
+    "seed-6885",
+    "seed-8634",
+    "seed-9703",
+    "seed-9838",
+    "seed-7858",
+    "seed-8296",
+    "seed-9594"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0083",
+    "shard-0011",
+    "shard-0035",
+    "shard-0062",
+    "shard-0038",
+    "shard-0040",
+    "shard-0045",
+    "shard-0046",
+    "shard-0048",
+    "shard-0056",
+    "shard-0065",
+    "shard-0066",
+    "shard-0079",
+    "shard-0087",
+    "shard-0088",
+    "shard-0073",
+    "shard-0076",
+    "shard-0086"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": []
+}

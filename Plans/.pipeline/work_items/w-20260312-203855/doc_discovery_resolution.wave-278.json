@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-278",
+  "group_ids": [
+    "discgrp-1109",
+    "discgrp-1110",
+    "discgrp-1111",
+    "discgrp-1112"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01359",
+      "source_obligation_ids": [
+        "obl-1216"
+      ],
+      "source_seed_ids": [
+        "seed-1452"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01360",
+      "source_obligation_ids": [
+        "obl-1217"
+      ],
+      "source_seed_ids": [
+        "seed-1453"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "#### GitHub Actions command family",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L322"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01361",
+      "source_obligation_ids": [
+        "obl-1218"
+      ],
+      "source_seed_ids": [
+        "seed-1459"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01362",
+      "source_obligation_ids": [
+        "obl-1219"
+      ],
+      "source_seed_ids": [
+        "seed-1460"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

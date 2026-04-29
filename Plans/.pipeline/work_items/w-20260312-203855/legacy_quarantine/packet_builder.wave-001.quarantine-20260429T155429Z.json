@@ -1,0 +1,34 @@
+{
+  "schema_id": "pm.packet_builder_wave.v3",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-032",
+  "wave_id": "wave-001",
+  "timestamp_utc": "2026-04-29T02:22:14Z",
+  "subagent_tasks": [
+    "packet-json-schema-bundle",
+    "packet-markdown-bundle",
+    "packet-observe-refs",
+    "packet-span-grouping"
+  ],
+  "assigned_input_boundaries": [
+    "schema-json reconciliation targets",
+    "representative non-json mutation target",
+    "observe_only/layout_repair_reference targets",
+    "packet span common-writer strategy"
+  ],
+  "subagent_result_status": {
+    "packet-json-schema-bundle": "completed_pattern_used",
+    "packet-markdown-bundle": "completed_pattern_used",
+    "packet-observe-refs": "completed_pattern_used",
+    "packet-span-grouping": "completed_pattern_used"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "reconciliation_target_ids_assigned": "bounded representative groups plus schema-json target family",
+  "reconciliation_target_ids_completed": "bounded representative groups plus schema-json target family",
+  "packet_span_group_ids_assigned": "representative active and observe-only span groups",
+  "packet_span_group_ids_completed": "representative active and observe-only span groups",
+  "normalization_notes": [
+    "Fresh run fixes prior Scribe packet_build_defect by using json-object-property-fragment content for .schema.json doc_intents."
+  ]
+}

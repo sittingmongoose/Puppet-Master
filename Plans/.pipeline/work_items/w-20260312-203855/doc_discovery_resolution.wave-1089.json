@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1089",
+  "group_ids": [
+    "discgrp-4353",
+    "discgrp-4354",
+    "discgrp-4355",
+    "discgrp-4356"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04730",
+      "source_obligation_ids": [
+        "obl-4508"
+      ],
+      "source_seed_ids": [
+        "seed-6411"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-04731",
+      "source_obligation_ids": [
+        "obl-4509"
+      ],
+      "source_seed_ids": [
+        "seed-6412"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "## 2. Primitive index (definitions are DRY)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L66"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04732",
+      "source_obligation_ids": [
+        "obl-4510"
+      ],
+      "source_seed_ids": [
+        "seed-6413"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Architecture_Invariants.md",
+      "new_heading_hint": "## INV-016 -- Token fields are never aggregated at storage layer",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L148"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04733",
+      "source_obligation_ids": [
+        "obl-4511"
+      ],
+      "source_seed_ids": [
+        "seed-6416"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-352",
+  "group_ids": [
+    "discgrp-1405",
+    "discgrp-1406",
+    "discgrp-1407",
+    "discgrp-1408"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01657",
+      "source_obligation_ids": [
+        "obl-1514"
+      ],
+      "source_seed_ids": [
+        "seed-1873"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "## 7. Plan graph requirements (**sharded-only canonical** + optional derived export)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L256"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01658",
+      "source_obligation_ids": [
+        "obl-1515"
+      ],
+      "source_seed_ids": [
+        "seed-1874"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01659",
+      "source_obligation_ids": [
+        "obl-1516"
+      ],
+      "source_seed_ids": [
+        "seed-1875"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-018: Export taxonomy and manifest contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L31"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01660",
+      "source_obligation_ids": [
+        "obl-1517"
+      ],
+      "source_seed_ids": [
+        "seed-1876"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Fidelity recovery cov-018: Export taxonomy and manifest contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L31"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

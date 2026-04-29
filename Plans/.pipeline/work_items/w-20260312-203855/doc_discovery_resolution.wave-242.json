@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-242",
+  "group_ids": [
+    "discgrp-0965",
+    "discgrp-0966",
+    "discgrp-0967",
+    "discgrp-0968"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01214",
+      "source_obligation_ids": [
+        "obl-1071"
+      ],
+      "source_seed_ids": [
+        "seed-1264",
+        "seed-9103"
+      ],
+      "source_shard_ids": [
+        "shard-0021",
+        "shard-0082"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### 5.2 Requested vs effective runtime state must remain visible",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1310"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01215",
+      "source_obligation_ids": [
+        "obl-1072"
+      ],
+      "source_seed_ids": [
+        "seed-1265"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### Fidelity recovery cov-059: Lane vs worktree lifecycle split",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01216",
+      "source_obligation_ids": [
+        "obl-1073"
+      ],
+      "source_seed_ids": [
+        "seed-1266"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### 7.19.2 Bundle controls and review gate",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1105"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01217",
+      "source_obligation_ids": [
+        "obl-1074"
+      ],
+      "source_seed_ids": [
+        "seed-1267"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Fidelity recovery cov-194: Help entry template and related-concept clusters",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Glossary.md:L17"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

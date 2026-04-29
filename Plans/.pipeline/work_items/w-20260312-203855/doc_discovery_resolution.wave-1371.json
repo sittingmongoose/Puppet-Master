@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1371",
+  "group_ids": [
+    "discgrp-5481",
+    "discgrp-5482",
+    "discgrp-5483",
+    "discgrp-5484"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05933",
+      "source_obligation_ids": [
+        "obl-5705"
+      ],
+      "source_seed_ids": [
+        "seed-8478"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Prompt_Pipeline.md",
+      "new_heading_hint": "### 6.2A Settings, persona, and resolver model",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L464"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05935",
+      "source_obligation_ids": [
+        "obl-5707"
+      ],
+      "source_seed_ids": [
+        "seed-8481"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05936",
+      "source_obligation_ids": [
+        "obl-5708"
+      ],
+      "source_seed_ids": [
+        "seed-8482"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05937",
+      "source_obligation_ids": [
+        "obl-5709"
+      ],
+      "source_seed_ids": [
+        "seed-8483"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 19.3 Compatibility panel copy examples",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2069"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

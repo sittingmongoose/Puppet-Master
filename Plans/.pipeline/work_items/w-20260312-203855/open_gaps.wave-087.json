@@ -1,0 +1,1646 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-087",
+  "group_ids": [
+    "gapgrp-0345",
+    "gapgrp-0346",
+    "gapgrp-0347",
+    "gapgrp-0348"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-04902",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06323 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06323"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00213",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00240 is present for `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00240"
+      ],
+      "source_obligation_ids": [
+        "obl-129"
+      ],
+      "source_seed_ids": [
+        "seed-134"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00693",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00916 is present for Add `resolution_kind` and rationale requirements for dismiss/resolve paths.",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00916"
+      ],
+      "source_obligation_ids": [
+        "obl-773"
+      ],
+      "source_seed_ids": [
+        "seed-880",
+        "seed-2235"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "Add `resolution_kind` and rationale requirements for dismiss/resolve paths.",
+        "resolution_kind"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00825",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01064 is partial for requested/effective Persona display requirements",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01064"
+      ],
+      "source_obligation_ids": [
+        "obl-921"
+      ],
+      "source_seed_ids": [
+        "seed-1085"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "requested/effective Persona display requirements"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00915",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01171 is partial for Only hard requirements should force stronger handling.",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01171"
+      ],
+      "source_obligation_ids": [
+        "obl-1028"
+      ],
+      "source_seed_ids": [
+        "seed-1206"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "Only hard requirements should force stronger handling."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01090",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01386 is partial for command discoverability does not weaken confirmation requirements",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01386"
+      ],
+      "source_obligation_ids": [
+        "obl-1243"
+      ],
+      "source_seed_ids": [
+        "seed-1486"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "exact_missing_items": [
+        "command discoverability does not weaken confirmation requirements"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01258",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01607 is partial for Requirements Builder must show effective Persona, selection reason, effective platform/mod",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01607"
+      ],
+      "source_obligation_ids": [
+        "obl-1464"
+      ],
+      "source_seed_ids": [
+        "seed-1816"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "Requirements Builder must show effective Persona, selection reason, effective platform/model, and skipped unsupported Persona controls for the active stage/pass"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01328",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01693 is partial for Add trust-state disclosure or canonical revalidation requirements for exports built from p",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01693"
+      ],
+      "source_obligation_ids": [
+        "obl-1550"
+      ],
+      "source_seed_ids": [
+        "seed-1927"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "Add trust-state disclosure or canonical revalidation requirements for exports built from projections."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01773",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02282 is partial for adapters currently have no canonical way to satisfy both requirements at once",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02282"
+      ],
+      "source_obligation_ids": [
+        "obl-2135"
+      ],
+      "source_seed_ids": [
+        "seed-2775"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "adapters currently have no canonical way to satisfy both requirements at once"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03146",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04050 is partial for Align FileManager open-by-identity requirements with the runtime-artifact envelope rather",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04050"
+      ],
+      "source_obligation_ids": [
+        "obl-3893"
+      ],
+      "source_seed_ids": [
+        "seed-5344"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "exact_missing_items": [
+        "Align FileManager open-by-identity requirements with the runtime-artifact envelope rather than inventing a parallel artifact-opening identity model."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03300",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04234 is partial for `validation_pass_report` still conflicts with workflow-required `skipped`, but GPT-5.2 als",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04234"
+      ],
+      "source_obligation_ids": [
+        "obl-4074"
+      ],
+      "source_seed_ids": [
+        "seed-5636"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "`validation_pass_report` still conflicts with workflow-required `skipped`, but GPT-5.2 also pinned missing `auto_fixes_applied[]`, a Pass-1 scope contradiction around requirements creation, and unresolved `workflow_run_id` vs canonical `run_id` identity.",
+        "validation_pass_report",
+        "skipped",
+        "auto_fixes_applied[]",
+        "workflow_run_id",
+        "run_id"
+      ],
+      "stale_tokens": [
+        "auto_fixes_applied[]",
+        "run_id",
+        "skipped",
+        "validation_pass_report",
+        "workflow_run_id"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03344",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04284 is partial for There is still no schema-level place to express argument-contract requirements for subject",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04284"
+      ],
+      "source_obligation_ids": [
+        "obl-4124"
+      ],
+      "source_seed_ids": [
+        "seed-5721"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "There is still no schema-level place to express argument-contract requirements for subject-open or route-payload commands."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03714",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04754 is present for `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04754"
+      ],
+      "source_obligation_ids": [
+        "obl-4532"
+      ],
+      "source_seed_ids": [
+        "seed-6447",
+        "seed-6484",
+        "seed-7388",
+        "seed-7433",
+        "seed-8403",
+        "seed-8824",
+        "seed-8865",
+        "seed-8919",
+        "seed-8957",
+        "seed-9000",
+        "seed-9017",
+        "seed-9051",
+        "seed-9527",
+        "seed-9549",
+        "seed-9585",
+        "seed-9617",
+        "seed-9667",
+        "seed-10396"
+      ],
+      "source_shard_ids": [
+        "shard-0062",
+        "shard-0070",
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0085",
+        "shard-0086",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "`Plans/GUI_Rebuild_Requirements_Checklist.md`",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03740",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04787 is partial for with `Plans/00-plans-index.md` and `Plans/GUI_Rebuild_Requirements_Checklist.md` important",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04787"
+      ],
+      "source_obligation_ids": [
+        "obl-4564"
+      ],
+      "source_seed_ids": [
+        "seed-6514"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "with `Plans/00-plans-index.md` and `Plans/GUI_Rebuild_Requirements_Checklist.md` important as drift-multipliers.",
+        "Plans/00-plans-index.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04111",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05304 is partial for with `Plans/00-plans-index.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plug",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05304"
+      ],
+      "source_obligation_ids": [
+        "obl-5078"
+      ],
+      "source_seed_ids": [
+        "seed-7472"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "with `Plans/00-plans-index.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/Formatters_System.md` also still clearly above the noise floor.",
+        "Plans/00-plans-index.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Plugins_System.md",
+        "Plans/Skills_System.md",
+        "Plans/Formatters_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04587",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05924 is partial for Remove `requested_persona_id` / `effective_persona_id` from consumer requirements.",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05924"
+      ],
+      "source_obligation_ids": [
+        "obl-5696"
+      ],
+      "source_seed_ids": [
+        "seed-8464"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "Remove `requested_persona_id` / `effective_persona_id` from consumer requirements.",
+        "requested_persona_id",
+        "effective_persona_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04785",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06188 is partial for with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skil",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06188"
+      ],
+      "source_obligation_ids": [
+        "obl-5960"
+      ],
+      "source_seed_ids": [
+        "seed-8906"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/LSPSupport.md` still clearly active.",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Plugins_System.md",
+        "Plans/Skills_System.md",
+        "Plans/LSPSupport.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04796",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06202 is partial for `MiscPlan.md` now has a tighter cleanup contradiction: best-effort prepare/cleanup can sti",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "### Concern cleanup and retention"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06202"
+      ],
+      "source_obligation_ids": [
+        "obl-5971"
+      ],
+      "source_seed_ids": [
+        "seed-8939"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "`MiscPlan.md` now has a tighter cleanup contradiction: best-effort prepare/cleanup can still invalidate safe-point prerequisites and mtime-based evidence pruning can cut across attempt-lineage retention requirements.",
+        "MiscPlan.md"
+      ],
+      "stale_tokens": [
+        "MiscPlan.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04878",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06298 is present for promoted-shell command and persistence identity ownership (`Section15`, `FinalGUISpec`, `G",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06298"
+      ],
+      "source_obligation_ids": [
+        "obl-6001"
+      ],
+      "source_seed_ids": [
+        "seed-9084"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "promoted-shell command and persistence identity ownership (`Section15`, `FinalGUISpec`, `GUI checklist`, `feature-list`, `newfeatures`)",
+        "Section15",
+        "FinalGUISpec",
+        "GUI checklist",
+        "feature-list",
+        "newfeatures"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05167",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06670 is present for `Plans/GUI_Rebuild_Requirements_Checklist.md` is now clearly a reconciliation follower, no",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06670"
+      ],
+      "source_obligation_ids": [
+        "obl-6311"
+      ],
+      "source_seed_ids": [
+        "seed-9542"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "`Plans/GUI_Rebuild_Requirements_Checklist.md` is now clearly a reconciliation follower, not a source:",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05583",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07185 is present for `cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-l",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07185"
+      ],
+      "source_obligation_ids": [
+        "obl-6751"
+      ],
+      "source_seed_ids": [
+        "seed-10390"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "`cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resolution_kind` coverage including `accepted_risk`, and a concern-action confirmation matrix, but the live docs only expose fragments: `Plans/Orchestrator_Page.md:12-13` keeps concern and notification surfaces distinct from health/activity, `Plans/storage-plan.md:294` lists `concern_record.v1`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31` calls for first-class concern lifecycle and lineage, and `Plans/Contracts_V0.md:649` only names `concern` as a routable object. Exact ledger evidence remains at `working_ledger.md:L3070-L3092`, `working_ledger.md:L3170-L3182`, `working_ledger.md:L5990-L6015`, and `working_ledger.md:L6442-L6490`.",
+        "cov-034",
+        "obl-016",
+        "active",
+        "acknowledged",
+        "resolved",
+        "dismissed",
+        "resolution_kind",
+        "accepted_risk"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05602",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07206 is missing for `Plans/GUI_Rebuild_Requirements_Checklist.md:31`",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07206"
+      ],
+      "source_obligation_ids": [
+        "obl-6766"
+      ],
+      "source_seed_ids": [
+        "seed-10416"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "`Plans/GUI_Rebuild_Requirements_Checklist.md:31`",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:31"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-06323",
+    "cov-00240",
+    "cov-00916",
+    "cov-01064",
+    "cov-01171",
+    "cov-01386",
+    "cov-01607",
+    "cov-01693",
+    "cov-02282",
+    "cov-04050",
+    "cov-04234",
+    "cov-04284",
+    "cov-04754",
+    "cov-04787",
+    "cov-05304",
+    "cov-05924",
+    "cov-06188",
+    "cov-06202",
+    "cov-06298",
+    "cov-06670",
+    "cov-07185",
+    "cov-07206"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1028",
+    "obl-1243",
+    "obl-129",
+    "obl-1464",
+    "obl-1550",
+    "obl-2135",
+    "obl-3893",
+    "obl-4074",
+    "obl-4124",
+    "obl-4532",
+    "obl-4564",
+    "obl-5078",
+    "obl-5696",
+    "obl-5960",
+    "obl-5971",
+    "obl-6001",
+    "obl-6009",
+    "obl-6311",
+    "obl-6751",
+    "obl-6766",
+    "obl-773",
+    "obl-921"
+  ],
+  "source_seed_ids_represented": [
+    "seed-10390",
+    "seed-10396",
+    "seed-10416",
+    "seed-1085",
+    "seed-1206",
+    "seed-134",
+    "seed-1486",
+    "seed-1816",
+    "seed-1927",
+    "seed-2235",
+    "seed-2775",
+    "seed-5344",
+    "seed-5636",
+    "seed-5721",
+    "seed-6447",
+    "seed-6484",
+    "seed-6514",
+    "seed-7388",
+    "seed-7433",
+    "seed-7472",
+    "seed-8403",
+    "seed-8464",
+    "seed-880",
+    "seed-8824",
+    "seed-8865",
+    "seed-8906",
+    "seed-8919",
+    "seed-8939",
+    "seed-8957",
+    "seed-9000",
+    "seed-9017",
+    "seed-9051",
+    "seed-9084",
+    "seed-9092",
+    "seed-9527",
+    "seed-9542",
+    "seed-9549",
+    "seed-9585",
+    "seed-9617",
+    "seed-9667"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0009",
+    "shard-0016",
+    "shard-0019",
+    "shard-0020",
+    "shard-0024",
+    "shard-0027",
+    "shard-0028",
+    "shard-0031",
+    "shard-0035",
+    "shard-0054",
+    "shard-0056",
+    "shard-0057",
+    "shard-0062",
+    "shard-0070",
+    "shard-0077",
+    "shard-0078",
+    "shard-0081",
+    "shard-0082",
+    "shard-0085",
+    "shard-0086",
+    "shard-0092"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-04902",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "consumer coverage row cov-06323 is missing for After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06323"
+      ],
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00213",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00240 is present for `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00240"
+      ],
+      "source_obligation_ids": [
+        "obl-129"
+      ],
+      "source_seed_ids": [
+        "seed-134"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00693",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-00916 is present for Add `resolution_kind` and rationale requirements for dismiss/resolve paths.",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00916"
+      ],
+      "source_obligation_ids": [
+        "obl-773"
+      ],
+      "source_seed_ids": [
+        "seed-880",
+        "seed-2235"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "Add `resolution_kind` and rationale requirements for dismiss/resolve paths.",
+        "resolution_kind"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00825",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01064 is partial for requested/effective Persona display requirements",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01064"
+      ],
+      "source_obligation_ids": [
+        "obl-921"
+      ],
+      "source_seed_ids": [
+        "seed-1085"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "requested/effective Persona display requirements"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-00915",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01171 is partial for Only hard requirements should force stronger handling.",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01171"
+      ],
+      "source_obligation_ids": [
+        "obl-1028"
+      ],
+      "source_seed_ids": [
+        "seed-1206"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "Only hard requirements should force stronger handling."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01090",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01386 is partial for command discoverability does not weaken confirmation requirements",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01386"
+      ],
+      "source_obligation_ids": [
+        "obl-1243"
+      ],
+      "source_seed_ids": [
+        "seed-1486"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "exact_missing_items": [
+        "command discoverability does not weaken confirmation requirements"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01258",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01607 is partial for Requirements Builder must show effective Persona, selection reason, effective platform/mod",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01607"
+      ],
+      "source_obligation_ids": [
+        "obl-1464"
+      ],
+      "source_seed_ids": [
+        "seed-1816"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "Requirements Builder must show effective Persona, selection reason, effective platform/model, and skipped unsupported Persona controls for the active stage/pass"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01328",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-01693 is partial for Add trust-state disclosure or canonical revalidation requirements for exports built from p",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01693"
+      ],
+      "source_obligation_ids": [
+        "obl-1550"
+      ],
+      "source_seed_ids": [
+        "seed-1927"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "Add trust-state disclosure or canonical revalidation requirements for exports built from projections."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-01773",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-02282 is partial for adapters currently have no canonical way to satisfy both requirements at once",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02282"
+      ],
+      "source_obligation_ids": [
+        "obl-2135"
+      ],
+      "source_seed_ids": [
+        "seed-2775"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "adapters currently have no canonical way to satisfy both requirements at once"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03146",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04050 is partial for Align FileManager open-by-identity requirements with the runtime-artifact envelope rather",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04050"
+      ],
+      "source_obligation_ids": [
+        "obl-3893"
+      ],
+      "source_seed_ids": [
+        "seed-5344"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "exact_missing_items": [
+        "Align FileManager open-by-identity requirements with the runtime-artifact envelope rather than inventing a parallel artifact-opening identity model."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03300",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04234 is partial for `validation_pass_report` still conflicts with workflow-required `skipped`, but GPT-5.2 als",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04234"
+      ],
+      "source_obligation_ids": [
+        "obl-4074"
+      ],
+      "source_seed_ids": [
+        "seed-5636"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "`validation_pass_report` still conflicts with workflow-required `skipped`, but GPT-5.2 also pinned missing `auto_fixes_applied[]`, a Pass-1 scope contradiction around requirements creation, and unresolved `workflow_run_id` vs canonical `run_id` identity.",
+        "validation_pass_report",
+        "skipped",
+        "auto_fixes_applied[]",
+        "workflow_run_id",
+        "run_id"
+      ],
+      "stale_tokens": [
+        "auto_fixes_applied[]",
+        "run_id",
+        "skipped",
+        "validation_pass_report",
+        "workflow_run_id"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03344",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04284 is partial for There is still no schema-level place to express argument-contract requirements for subject",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04284"
+      ],
+      "source_obligation_ids": [
+        "obl-4124"
+      ],
+      "source_seed_ids": [
+        "seed-5721"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "There is still no schema-level place to express argument-contract requirements for subject-open or route-payload commands."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03714",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04754 is present for `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04754"
+      ],
+      "source_obligation_ids": [
+        "obl-4532"
+      ],
+      "source_seed_ids": [
+        "seed-6447",
+        "seed-6484",
+        "seed-7388",
+        "seed-7433",
+        "seed-8403",
+        "seed-8824",
+        "seed-8865",
+        "seed-8919",
+        "seed-8957",
+        "seed-9000",
+        "seed-9017",
+        "seed-9051",
+        "seed-9527",
+        "seed-9549",
+        "seed-9585",
+        "seed-9617",
+        "seed-9667",
+        "seed-10396"
+      ],
+      "source_shard_ids": [
+        "shard-0062",
+        "shard-0070",
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0085",
+        "shard-0086",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "`Plans/GUI_Rebuild_Requirements_Checklist.md`",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03740",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04787 is partial for with `Plans/00-plans-index.md` and `Plans/GUI_Rebuild_Requirements_Checklist.md` important",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04787"
+      ],
+      "source_obligation_ids": [
+        "obl-4564"
+      ],
+      "source_seed_ids": [
+        "seed-6514"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "with `Plans/00-plans-index.md` and `Plans/GUI_Rebuild_Requirements_Checklist.md` important as drift-multipliers.",
+        "Plans/00-plans-index.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04111",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05304 is partial for with `Plans/00-plans-index.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plug",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05304"
+      ],
+      "source_obligation_ids": [
+        "obl-5078"
+      ],
+      "source_seed_ids": [
+        "seed-7472"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "with `Plans/00-plans-index.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/Formatters_System.md` also still clearly above the noise floor.",
+        "Plans/00-plans-index.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Plugins_System.md",
+        "Plans/Skills_System.md",
+        "Plans/Formatters_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04587",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05924 is partial for Remove `requested_persona_id` / `effective_persona_id` from consumer requirements.",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05924"
+      ],
+      "source_obligation_ids": [
+        "obl-5696"
+      ],
+      "source_seed_ids": [
+        "seed-8464"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "Remove `requested_persona_id` / `effective_persona_id` from consumer requirements.",
+        "requested_persona_id",
+        "effective_persona_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04785",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06188 is partial for with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skil",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06188"
+      ],
+      "source_obligation_ids": [
+        "obl-5960"
+      ],
+      "source_seed_ids": [
+        "seed-8906"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/LSPSupport.md` still clearly active.",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Plugins_System.md",
+        "Plans/Skills_System.md",
+        "Plans/LSPSupport.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04796",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06202 is partial for `MiscPlan.md` now has a tighter cleanup contradiction: best-effort prepare/cleanup can sti",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "### Concern cleanup and retention"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06202"
+      ],
+      "source_obligation_ids": [
+        "obl-5971"
+      ],
+      "source_seed_ids": [
+        "seed-8939"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "`MiscPlan.md` now has a tighter cleanup contradiction: best-effort prepare/cleanup can still invalidate safe-point prerequisites and mtime-based evidence pruning can cut across attempt-lineage retention requirements.",
+        "MiscPlan.md"
+      ],
+      "stale_tokens": [
+        "MiscPlan.md"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04878",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06298 is present for promoted-shell command and persistence identity ownership (`Section15`, `FinalGUISpec`, `G",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "# GUI Rebuild Requirements Checklist (2026-02-23)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06298"
+      ],
+      "source_obligation_ids": [
+        "obl-6001"
+      ],
+      "source_seed_ids": [
+        "seed-9084"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "promoted-shell command and persistence identity ownership (`Section15`, `FinalGUISpec`, `GUI checklist`, `feature-list`, `newfeatures`)",
+        "Section15",
+        "FinalGUISpec",
+        "GUI checklist",
+        "feature-list",
+        "newfeatures"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05167",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06670 is present for `Plans/GUI_Rebuild_Requirements_Checklist.md` is now clearly a reconciliation follower, no",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06670"
+      ],
+      "source_obligation_ids": [
+        "obl-6311"
+      ],
+      "source_seed_ids": [
+        "seed-9542"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "`Plans/GUI_Rebuild_Requirements_Checklist.md` is now clearly a reconciliation follower, not a source:",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05583",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07185 is present for `cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-l",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07185"
+      ],
+      "source_obligation_ids": [
+        "obl-6751"
+      ],
+      "source_seed_ids": [
+        "seed-10390"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "`cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resolution_kind` coverage including `accepted_risk`, and a concern-action confirmation matrix, but the live docs only expose fragments: `Plans/Orchestrator_Page.md:12-13` keeps concern and notification surfaces distinct from health/activity, `Plans/storage-plan.md:294` lists `concern_record.v1`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31` calls for first-class concern lifecycle and lineage, and `Plans/Contracts_V0.md:649` only names `concern` as a routable object. Exact ledger evidence remains at `working_ledger.md:L3070-L3092`, `working_ledger.md:L3170-L3182`, `working_ledger.md:L5990-L6015`, and `working_ledger.md:L6442-L6490`.",
+        "cov-034",
+        "obl-016",
+        "active",
+        "acknowledged",
+        "resolved",
+        "dismissed",
+        "resolution_kind",
+        "accepted_risk"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05602",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07206 is missing for `Plans/GUI_Rebuild_Requirements_Checklist.md:31`",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07206"
+      ],
+      "source_obligation_ids": [
+        "obl-6766"
+      ],
+      "source_seed_ids": [
+        "seed-10416"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "`Plans/GUI_Rebuild_Requirements_Checklist.md:31`",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:31"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "uncertain_items": []
+}

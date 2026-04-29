@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-516",
+  "group_ids": [
+    "discgrp-2061",
+    "discgrp-2062",
+    "discgrp-2063",
+    "discgrp-2064"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02328",
+      "source_obligation_ids": [
+        "obl-2180"
+      ],
+      "source_seed_ids": [
+        "seed-2832"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Models_System.md",
+      "new_heading_hint": "## Model Selection Versus Runtime Retry Ownership Consolidation Addendum (2026-03-09)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Models_System.md:L882"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02329",
+      "source_obligation_ids": [
+        "obl-2181"
+      ],
+      "source_seed_ids": [
+        "seed-2834"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "#### Cross-surface receipt record baseline",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/storage-plan.md:L481"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02330",
+      "source_obligation_ids": [
+        "obl-2182"
+      ],
+      "source_seed_ids": [
+        "seed-2836"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-014: Shared governance/runtime record envelope",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L35"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02331",
+      "source_obligation_ids": [
+        "obl-2183"
+      ],
+      "source_seed_ids": [
+        "seed-2838"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Fidelity recovery addendum",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L3"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,135 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0077",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0077-L015201-L015400.md",
+  "source_line_range": "L015201-L015400",
+  "seed_candidates": [
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "usage identity tier correlation split",
+      "exact_items": [
+        "The docs currently try to do both:",
+        "canonical usage identity via usage_event_ref",
+        "cross-surface node usage via tier_id",
+        "That leaves usage_record and evidence/summary families in an unstable middle state:",
+        "canonical enough for Ledger and cost artifacts",
+        "still tier-correlated for Run Graph and Orchestrator",
+        "The result is that node-first routing and attempt-native runtime identity still cannot flow cleanly through Usage and Evidence without compatibility translation."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "usage_event_ref",
+        "tier_id",
+        "usage_record"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L15211-L15217"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "storage canon split across execution eras",
+      "exact_items": [
+        "Plans/storage-plan.md now contains a clear same-file canon split between:",
+        "early event-table and writer-facing sections",
+        "later runtime recovery / canonical-record addenda",
+        "The later sections already teach the stronger model:",
+        "canonical runtime events like scheduler.pass, node.blocked, safe_point.*, remediation.*",
+        "canonical keys for blocked_projection, attempt_record, scheduler_pass_record",
+        "The canonical-record section partially regresses again by keeping:",
+        "tier_runtime_record",
+        "tier-keyed usage_record",
+        "tier-adjacent evidence_record",
+        "thread_blocked_notice / wizard_runtime_state with resume_url?"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "scheduler.pass",
+        "node.blocked",
+        "safe_point.*",
+        "remediation.*",
+        "blocked_projection",
+        "attempt_record",
+        "scheduler_pass_record",
+        "tier_runtime_record",
+        "usage_record",
+        "evidence_record",
+        "thread_blocked_notice",
+        "wizard_runtime_state",
+        "resume_url"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L15235-L15255"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "retire tier HITL request era storage tables",
+      "exact_items": [
+        "The strongest runtime model is already present in the file; the problem is that older canon has not been retired.",
+        "Retire or explicitly compatibility-label the older tier/HITL request-era tables instead of letting them stand as live canon beside the newer runtime sections."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "tier",
+        "HITL"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L15261-L15272"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "consumer docs mirror stale owner era",
+      "exact_items": [
+        "The strongest repeated pattern is:",
+        "owner docs already contain stronger rewrite-era addenda",
+        "older base text still remains live and keeps teaching the stale model",
+        "consumer docs mirror whichever era they happened to read first",
+        "tier-keyed usage/evidence correlation",
+        "legacy PuppetMasterEvent::* source tables"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/usage-feature.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_tokens": [
+        "PuppetMasterEvent::*"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L15281-L15313"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "Primary owner/consumer doc-list-only lines",
+    "targeted docs read headings",
+    "impact/contradiction/candidate-fix headings",
+    "process/status-only lines"
+  ],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0077"
+}

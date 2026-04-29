@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-095",
+  "group_ids": [
+    "discgrp-0377",
+    "discgrp-0378",
+    "discgrp-0379",
+    "discgrp-0380"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-00624",
+      "source_obligation_ids": [
+        "obl-481"
+      ],
+      "source_seed_ids": [
+        "seed-551"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-012: Requested/effective account identity contract",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00625",
+      "source_obligation_ids": [
+        "obl-482"
+      ],
+      "source_seed_ids": [
+        "seed-552"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-047: Projection trust and action gating",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L43"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00626",
+      "source_obligation_ids": [
+        "obl-483"
+      ],
+      "source_seed_ids": [
+        "seed-553"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### 1. Worktree-native safe points",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L684"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-00627",
+      "source_obligation_ids": [
+        "obl-484"
+      ],
+      "source_seed_ids": [
+        "seed-554"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "### Fidelity recovery cov-200: Route/open compatibility-only fallback marking",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Crosswalk.md:L19"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-447",
+  "group_ids": [
+    "discgrp-1785",
+    "discgrp-1786",
+    "discgrp-1787",
+    "discgrp-1788"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02042",
+      "source_obligation_ids": [
+        "obl-1899"
+      ],
+      "source_seed_ids": [
+        "seed-2452"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/GitHub_Integration.md",
+      "new_heading_hint": "# GitHub Integration -- Spec",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/GitHub_Integration.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-02043",
+      "source_obligation_ids": [
+        "obl-1900"
+      ],
+      "source_seed_ids": [
+        "seed-2453"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Fidelity recovery cov-019: Concern record family definition",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L47"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02044",
+      "source_obligation_ids": [
+        "obl-1901"
+      ],
+      "source_seed_ids": [
+        "seed-2459"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/OpenCode_Coverage_Matrix.md",
+      "new_heading_hint": "# OpenCode Coverage Matrix (Audit)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02045",
+      "source_obligation_ids": [
+        "obl-1902"
+      ],
+      "source_seed_ids": [
+        "seed-2460"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Containers_Registry_and_Unraid.md",
+      "new_heading_hint": "## Relationship to existing plans",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L17"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

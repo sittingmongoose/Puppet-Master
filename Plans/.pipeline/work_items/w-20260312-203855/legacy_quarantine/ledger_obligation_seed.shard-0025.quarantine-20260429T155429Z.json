@@ -1,0 +1,73 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0025",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0025-L004801-L005000.md",
+  "source_line_range": "L004801-L005000",
+  "covered_shard_id": "shard-0025",
+  "seed_candidates": [
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "shared record-envelope contract",
+      "exact_items": [
+        "add one shared governance/runtime record-envelope pattern",
+        "shared envelope fields: record_id, record_kind, schema_version, project_id, run_id?, scope_type, scope_id, status, created_at_utc, updated_at_utc?, summary, summary_kind?, detail_ref?, source_refs[], artifact_refs[], related_record_refs[], lineage_refs[], actor_ref?, requested_effective_snapshot_refs?"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/usage-feature.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Recommended normalization direction",
+        "Family-specific payload direction",
+        "UI / search implication"
+      ],
+      "stale_tokens": [
+        "one-off top-level shapes",
+        "inventing a custom viewer for every new object"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L4828-L4890"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "lane/worktree cleanup lifecycle split",
+      "exact_items": [
+        "treat lane lifecycle and worktree lifecycle as related but non-identical",
+        "lane states: baseline, active, suspect, restoring, retained, cleanup_eligible, archived, removed, historical",
+        "worktree row posture: live, dirty, conflict, orphaned, recovering, retained, archived, removed",
+        "recover, archive, prune, and remove must not blur together"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Research Progress - 2026-03-16 - Lane / Worktree Cleanup Lifecycle",
+        "Recommended lifecycle split",
+        "Recommended lane-oriented states",
+        "Worktree-oriented state implication",
+        "Cleanup-action semantics"
+      ],
+      "stale_tokens": [
+        "cleanup eligible",
+        "historical posture",
+        "live backing removed"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L4918-L5000"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": []
+}

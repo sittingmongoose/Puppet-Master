@@ -1,0 +1,104 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-549",
+  "group_ids": [
+    "discgrp-2193",
+    "discgrp-2194",
+    "discgrp-2195",
+    "discgrp-2196"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02464",
+      "source_obligation_ids": [
+        "obl-2314"
+      ],
+      "source_seed_ids": [
+        "seed-3000",
+        "seed-3177"
+      ],
+      "source_shard_ids": [
+        "shard-0037",
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-02465",
+      "source_obligation_ids": [
+        "obl-2315"
+      ],
+      "source_seed_ids": [
+        "seed-3002"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02466",
+      "source_obligation_ids": [
+        "obl-2316"
+      ],
+      "source_seed_ids": [
+        "seed-3004",
+        "seed-3181"
+      ],
+      "source_shard_ids": [
+        "shard-0037",
+        "shard-0038"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-02467",
+      "source_obligation_ids": [
+        "obl-2317"
+      ],
+      "source_seed_ids": [
+        "seed-3005",
+        "seed-3182",
+        "seed-3647",
+        "seed-7024"
+      ],
+      "source_shard_ids": [
+        "shard-0037",
+        "shard-0038",
+        "shard-0042",
+        "shard-0067"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "unresolved": []
+}

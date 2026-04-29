@@ -1,0 +1,2688 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-170",
+  "group_ids": [
+    "gapgrp-0677",
+    "gapgrp-0678",
+    "gapgrp-0679",
+    "gapgrp-0680"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-02765",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03537 is partial for it must be rebuildable from seglog",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03537"
+      ],
+      "source_obligation_ids": [
+        "obl-3383"
+      ],
+      "source_seed_ids": [
+        "seed-4559"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "it must be rebuildable from seglog"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02768",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03540 is partial for Keep Source Control worktree-first at the UI level, but storage needs both durable worktre",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-043: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03540"
+      ],
+      "source_obligation_ids": [
+        "obl-3386"
+      ],
+      "source_seed_ids": [
+        "seed-4562"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "Keep Source Control worktree-first at the UI level, but storage needs both durable worktree identity and lane lineage."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02803",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03579 is partial for Source Control being worktree-first in UI does not remove the need for lane lineage in sto",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-205: Lane cleanup lineage fields"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03579"
+      ],
+      "source_obligation_ids": [
+        "obl-3425"
+      ],
+      "source_seed_ids": [
+        "seed-4612"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "Source Control being worktree-first in UI does not remove the need for lane lineage in storage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03189",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04105 is present for spot-checks against `Plans/storage-plan.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plan",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04105"
+      ],
+      "source_obligation_ids": [
+        "obl-3946"
+      ],
+      "source_seed_ids": [
+        "seed-5409"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "exact_missing_items": [
+        "spot-checks against `Plans/storage-plan.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/usage-feature.md`",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03257",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04182 is partial for `Wiring_Matrix.schema.json` still cannot represent the normative recovery producer/consume",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Fidelity recovery addendum"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04182"
+      ],
+      "source_obligation_ids": [
+        "obl-4022"
+      ],
+      "source_seed_ids": [
+        "seed-5541"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "`Wiring_Matrix.schema.json` still cannot represent the normative recovery producer/consumer rows or wildcard command-family requirements now described in the doc.",
+        "Wiring_Matrix.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03306",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04243 is partial for startup recovery still lacks a single owner, but GPT-5.2 also exposed that the governance",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-188: Projection fields for startup rehydration"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04243"
+      ],
+      "source_obligation_ids": [
+        "obl-4083"
+      ],
+      "source_seed_ids": [
+        "seed-5645"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "startup recovery still lacks a single owner, but GPT-5.2 also exposed that the governance UX wants a stable `blocked_owner` field that the canonical blocked projection schema still does not define.",
+        "blocked_owner"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03339",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04279 is partial for The addenda in `Wiring_Matrix.md` increasingly ask the matrix to cover runtime producers,",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Runtime artifact and projection storage scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04279"
+      ],
+      "source_obligation_ids": [
+        "obl-4119"
+      ],
+      "source_seed_ids": [
+        "seed-5707"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "The addenda in `Wiring_Matrix.md` increasingly ask the matrix to cover runtime producers, blocked/recovery actions, and projection consumers, but the actual schema still models only UI element rows. The prose is now expecting more than `Wiring_Matrix.schema.json` can encode.",
+        "Wiring_Matrix.md",
+        "Wiring_Matrix.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03403",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04359 is present for `Runtime_Artifacts_Panel.md` depends on artifact identity opens without fully owning the r",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-018: Export taxonomy and manifest contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04359"
+      ],
+      "source_obligation_ids": [
+        "obl-4199"
+      ],
+      "source_seed_ids": [
+        "seed-5838"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "`Runtime_Artifacts_Panel.md` depends on artifact identity opens without fully owning the resolver contract, so the open-by-identity behavior still risks being re-invented per surface.",
+        "Runtime_Artifacts_Panel.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03421",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04383 is present for `storage-plan.md` and `FinalGUISpec.md` are already speaking in stronger identity terms (`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-018: Export taxonomy and manifest contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04383"
+      ],
+      "source_obligation_ids": [
+        "obl-4223"
+      ],
+      "source_seed_ids": [
+        "seed-5866"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "`storage-plan.md` and `FinalGUISpec.md` are already speaking in stronger identity terms (`preview_subject_id`, `doc:<document_id>`, `artifact:<artifact_id>`), but that identity model has not been lifted into the cross-cutting contract layer.",
+        "storage-plan.md",
+        "FinalGUISpec.md",
+        "preview_subject_id",
+        "doc:<document_id>",
+        "artifact:<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03422",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04384 is partial for `UI_Command_Catalog.md` therefore has to carry routing meaning indirectly in per-command a",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-039: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04384"
+      ],
+      "source_obligation_ids": [
+        "obl-4224"
+      ],
+      "source_seed_ids": [
+        "seed-5867"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "`UI_Command_Catalog.md` therefore has to carry routing meaning indirectly in per-command arg tables instead of relying on a shared contract family.",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03425",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04387 is partial for Surface docs and storage docs are converging on identity-native navigation, but they are d",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04387"
+      ],
+      "source_obligation_ids": [
+        "obl-4227"
+      ],
+      "source_seed_ids": [
+        "seed-5878"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "Surface docs and storage docs are converging on identity-native navigation, but they are doing it without a stable shared contract owner."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03454",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04418 is partial for `Wiring_Matrix.schema.json` still cannot represent wildcard family rows or the producer/co",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-020: Concern record family definition"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04418"
+      ],
+      "source_obligation_ids": [
+        "obl-4258"
+      ],
+      "source_seed_ids": [
+        "seed-5942"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "`Wiring_Matrix.schema.json` still cannot represent wildcard family rows or the producer/consumer normative rows the docs already require.",
+        "Wiring_Matrix.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03957",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05071 is present for `FinalGUISpec.md` and adjacent docs already contain enough `doc:` / `artifact:` / `generat",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-018: Export taxonomy and manifest contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05071"
+      ],
+      "source_obligation_ids": [
+        "obl-4847"
+      ],
+      "source_seed_ids": [
+        "seed-6984"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` and adjacent docs already contain enough `doc:` / `artifact:` / `generated://` concepts to imply `OpenSubject`, but there is still no owner contract stating that split directly.",
+        "FinalGUISpec.md",
+        "doc:",
+        "artifact:",
+        "generated://",
+        "OpenSubject"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04015",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05162 is present for `workspace_tab_id` and `browser_tab_id` exist in storage and command docs, but they are no",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05162"
+      ],
+      "source_obligation_ids": [
+        "obl-4938"
+      ],
+      "source_seed_ids": [
+        "seed-7159"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "exact_missing_items": [
+        "`workspace_tab_id` and `browser_tab_id` exist in storage and command docs, but they are not `target_kind` values.",
+        "workspace_tab_id",
+        "browser_tab_id",
+        "target_kind"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04450",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05715 is present for `Plans/storage-plan.md` continues that ambiguity:",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05715"
+      ],
+      "source_obligation_ids": [
+        "obl-5487"
+      ],
+      "source_seed_ids": [
+        "seed-8144"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md` continues that ambiguity:",
+        "Plans/storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04947",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06370 is present for No planning-doc edits were made outside the required work-item ledger/meta files; session-",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06370"
+      ],
+      "source_obligation_ids": [
+        "obl-6011"
+      ],
+      "source_seed_ids": [
+        "seed-9094"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "No planning-doc edits were made outside the required work-item ledger/meta files; session-local `plan.md` was updated for execution tracking only.",
+        "plan.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05230",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06750 is present for `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Comma",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06750"
+      ],
+      "source_obligation_ids": [
+        "obl-6386"
+      ],
+      "source_seed_ids": [
+        "seed-9750"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05268",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06792 is present for `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/Final",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06792"
+      ],
+      "source_obligation_ids": [
+        "obl-6421"
+      ],
+      "source_seed_ids": [
+        "seed-9800"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/FinalGUISpec.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Decision_Policy.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05279",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06804 is present for `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Mod",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06804"
+      ],
+      "source_obligation_ids": [
+        "obl-6427"
+      ],
+      "source_seed_ids": [
+        "seed-9806"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05288",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06815 is present for `Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06815"
+      ],
+      "source_obligation_ids": [
+        "obl-6435"
+      ],
+      "source_seed_ids": [
+        "seed-9814"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05303",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06830 is present for `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Cr",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06830"
+      ],
+      "source_obligation_ids": [
+        "obl-6442"
+      ],
+      "source_seed_ids": [
+        "seed-9821"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Crosswalk.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md",
+        "Plans/FileManager.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05329",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06883 is partial for result: storage receipt/activity gaps should continue to be treated as under-transfer / an",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06883"
+      ],
+      "source_obligation_ids": [
+        "obl-6485"
+      ],
+      "source_seed_ids": [
+        "seed-9864"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "result: storage receipt/activity gaps should continue to be treated as under-transfer / anchor failures, not as total missing-content claims"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05332",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06886 is partial for summary: Rewrote the work item bundle to the v2 artifact shapes and re-confirmed that muta",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-077: Project summary projection"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06886"
+      ],
+      "source_obligation_ids": [
+        "obl-6488"
+      ],
+      "source_seed_ids": [
+        "seed-9867"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "summary: Rewrote the work item bundle to the v2 artifact shapes and re-confirmed that mutation planning is still blocked because eight material blocker families remain."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05373",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06933 is present for `gap-004` therefore narrows to the missing `### Cross-surface receipt record` anchor, the",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "#### Cross-surface receipt record baseline"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06933"
+      ],
+      "source_obligation_ids": [
+        "obl-6533"
+      ],
+      "source_seed_ids": [
+        "seed-9925"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`gap-004` therefore narrows to the missing `### Cross-surface receipt record` anchor, the unresolved fields `run_id`, `pass_verdict`, `phase_plan_ref`, and `requirements_quality_report_ref`, and the still-missing consumer anchors.",
+        "gap-004",
+        "### Cross-surface receipt record",
+        "run_id",
+        "pass_verdict",
+        "phase_plan_ref",
+        "requirements_quality_report_ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05400",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06962 is present for `gap-004` is stable as written; no further storage/lineage audit was productive beyond con",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "#### Cross-surface receipt record baseline"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06962"
+      ],
+      "source_obligation_ids": [
+        "obl-6562"
+      ],
+      "source_seed_ids": [
+        "seed-9973"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`gap-004` is stable as written; no further storage/lineage audit was productive beyond confirming that the remaining defects are the missing `### Cross-surface receipt record` anchor, four unresolved receipt fields, and the absent consumer anchors.",
+        "gap-004",
+        "### Cross-surface receipt record"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05407",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06969 is partial for summary: Re-audited the condensed blocker bundle against live plan sections in bounded chu",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06969"
+      ],
+      "source_obligation_ids": [
+        "obl-6569"
+      ],
+      "source_seed_ids": [
+        "seed-9999"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "summary: Re-audited the condensed blocker bundle against live plan sections in bounded chunks and confirmed all eight blocker families remain, but one storage item was overstated and several blocker reasons needed sharper exact wording."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05409",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06972 is present for `Plans/storage-plan.md` still omits `run_id` from the receipt minimum-fields list and stil",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06972"
+      ],
+      "source_obligation_ids": [
+        "obl-6572"
+      ],
+      "source_seed_ids": [
+        "seed-10002"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md` still omits `run_id` from the receipt minimum-fields list and still does not carry `pass_verdict`, `phase_plan_ref`, or `requirements_quality_report_ref`.",
+        "Plans/storage-plan.md",
+        "run_id",
+        "pass_verdict",
+        "phase_plan_ref",
+        "requirements_quality_report_ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05476",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07061 is present for Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-0",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07061"
+      ],
+      "source_obligation_ids": [
+        "obl-6643"
+      ],
+      "source_seed_ids": [
+        "seed-10135"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.",
+        "gap-003",
+        "gap-004",
+        "gap-005",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05481",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07067 is partial for summary: Re-audited the condensed blocker bundle against live plan sections in delegated c",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07067"
+      ],
+      "source_obligation_ids": [
+        "obl-6648"
+      ],
+      "source_seed_ids": [
+        "seed-10168"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "summary: Re-audited the condensed blocker bundle against live plan sections in delegated chunks and found one material overstatement in receipt lineage plus several exact owner/consumer refinements that leave all eight blocker families unresolved but sharper."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05518",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07111 is present for `gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` r",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07111"
+      ],
+      "source_obligation_ids": [
+        "obl-6686"
+      ],
+      "source_seed_ids": [
+        "seed-10258"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference survives not only in `Plans/GitHub_Integration.md` but also in `Plans/storage-plan.md` and `Plans/WorktreeGitImprovement.md`, while `Plans/FinalGUISpec.md` still preserves the `restore points` contradiction.",
+        "gap-007",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "Plans/GitHub_Integration.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FinalGUISpec.md",
+        "restore points"
+      ],
+      "stale_tokens": [
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md",
+        "gap-007",
+        "restore points"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05529",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07124 is partial for summary: Ran another bounded audit pass after the blocked Ready Check; the first wave shar",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07124"
+      ],
+      "source_obligation_ids": [
+        "obl-6699"
+      ],
+      "source_seed_ids": [
+        "seed-10288"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and glossary blocker families with missing discoverable anchors and broken consumer references, and the follow-up sweeps produced zero new exact missing items beyond those refinements."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05531",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07126 is present for `gap-003` sharpened: `Plans/storage-plan.md` still lacks a discoverable `Canonical records",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07126"
+      ],
+      "source_obligation_ids": [
+        "obl-6700"
+      ],
+      "source_seed_ids": [
+        "seed-10289"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`gap-003` sharpened: `Plans/storage-plan.md` still lacks a discoverable `Canonical records` heading even though it contains inline `Canonical records for this feature set...` prose and a `canonical_record.v1:{project_id}:{record_id}` authoritative container, and `Plans/Orchestrator_Page.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor from three different sections.",
+        "gap-003",
+        "Plans/storage-plan.md",
+        "Canonical records",
+        "Canonical records for this feature set...",
+        "canonical_record.v1:{project_id}:{record_id}",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md#Canonical records"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05546",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07144 is partial for summary: Ran another bounded audit pass after the blocked Ready Check; the first wave shar",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Cross-surface receipt record (storage rules)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07144"
+      ],
+      "source_obligation_ids": [
+        "obl-6717"
+      ],
+      "source_seed_ids": [
+        "seed-10318"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and receipt blocker families with additional broken storage-plan anchor evidence and downgraded the overstated restore-point contradiction, and two bounded follow-up sweeps then produced zero new exact missing items."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05552",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07150 is present for `gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missi",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07150"
+      ],
+      "source_obligation_ids": [
+        "obl-6719"
+      ],
+      "source_seed_ids": [
+        "seed-10320"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missing `Plans/storage-plan.md#Cross-surface receipt record` anchor, so the receipt blocker now includes a live broken consumer reference rather than only missing owner/consumer headings.",
+        "gap-004",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md#Cross-surface receipt record"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05554",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07152 is present for `gap-007` downgraded: the prior `restore points` contradiction was overstated because `Pla",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07152"
+      ],
+      "source_obligation_ids": [
+        "obl-6720"
+      ],
+      "source_seed_ids": [
+        "seed-10321"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`gap-007` downgraded: the prior `restore points` contradiction was overstated because `Plans/storage-plan.md` now cleanly separates runtime safe points from project-scoped restore points and `Plans/FinalGUISpec.md` explicitly forbids presenting safe points as restore points; the remaining blocker is structural-heading and broken-reference drift.",
+        "gap-007",
+        "restore points",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_tokens": [
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "gap-007",
+        "restore points"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05565",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07166 is present for Wave 1 rechecked `gap-003`, `gap-004`, and `gap-008` against live storage, runtime-artifac",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07166"
+      ],
+      "source_obligation_ids": [
+        "obl-6734"
+      ],
+      "source_seed_ids": [
+        "seed-10351"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "Wave 1 rechecked `gap-003`, `gap-004`, and `gap-008` against live storage, runtime-artifact, receipt, and usage docs and only reconfirmed the already-recorded missing storage/receipt headings, broken `Plans/storage-plan.md` anchor consumers, missing `orchestrator.project_state.{project_id}` naming, and missing usage-side account-history / degrade sections.",
+        "gap-003",
+        "gap-004",
+        "gap-008",
+        "Plans/storage-plan.md",
+        "orchestrator.project_state.{project_id}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05585",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07187 is present for `cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-l",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07187"
+      ],
+      "source_obligation_ids": [
+        "obl-6751"
+      ],
+      "source_seed_ids": [
+        "seed-10390"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "`cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resolution_kind` coverage including `accepted_risk`, and a concern-action confirmation matrix, but the live docs only expose fragments: `Plans/Orchestrator_Page.md:12-13` keeps concern and notification surfaces distinct from health/activity, `Plans/storage-plan.md:294` lists `concern_record.v1`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31` calls for first-class concern lifecycle and lineage, and `Plans/Contracts_V0.md:649` only names `concern` as a routable object. Exact ledger evidence remains at `working_ledger.md:L3070-L3092`, `working_ledger.md:L3170-L3182`, `working_ledger.md:L5990-L6015`, and `working_ledger.md:L6442-L6490`.",
+        "cov-034",
+        "obl-016",
+        "active",
+        "acknowledged",
+        "resolved",
+        "dismissed",
+        "resolution_kind",
+        "accepted_risk"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-03537",
+    "cov-03540",
+    "cov-03579",
+    "cov-04105",
+    "cov-04182",
+    "cov-04243",
+    "cov-04279",
+    "cov-04359",
+    "cov-04383",
+    "cov-04384",
+    "cov-04387",
+    "cov-04418",
+    "cov-05071",
+    "cov-05162",
+    "cov-05715",
+    "cov-06370",
+    "cov-06750",
+    "cov-06792",
+    "cov-06804",
+    "cov-06815",
+    "cov-06830",
+    "cov-06883",
+    "cov-06886",
+    "cov-06933",
+    "cov-06962",
+    "cov-06969",
+    "cov-06972",
+    "cov-07061",
+    "cov-07067",
+    "cov-07111",
+    "cov-07124",
+    "cov-07126",
+    "cov-07144",
+    "cov-07150",
+    "cov-07152",
+    "cov-07166",
+    "cov-07187"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-3383",
+    "obl-3386",
+    "obl-3425",
+    "obl-3946",
+    "obl-4022",
+    "obl-4083",
+    "obl-4119",
+    "obl-4199",
+    "obl-4223",
+    "obl-4224",
+    "obl-4227",
+    "obl-4258",
+    "obl-4847",
+    "obl-4938",
+    "obl-5487",
+    "obl-6011",
+    "obl-6386",
+    "obl-6421",
+    "obl-6427",
+    "obl-6435",
+    "obl-6442",
+    "obl-6485",
+    "obl-6488",
+    "obl-6533",
+    "obl-6562",
+    "obl-6569",
+    "obl-6572",
+    "obl-6643",
+    "obl-6648",
+    "obl-6686",
+    "obl-6699",
+    "obl-6700",
+    "obl-6717",
+    "obl-6719",
+    "obl-6720",
+    "obl-6734",
+    "obl-6751"
+  ],
+  "source_seed_ids_represented": [
+    "seed-10002",
+    "seed-10135",
+    "seed-10168",
+    "seed-10258",
+    "seed-10288",
+    "seed-10289",
+    "seed-10318",
+    "seed-10320",
+    "seed-10321",
+    "seed-10351",
+    "seed-10390",
+    "seed-4559",
+    "seed-4562",
+    "seed-4612",
+    "seed-5409",
+    "seed-5541",
+    "seed-5645",
+    "seed-5707",
+    "seed-5838",
+    "seed-5866",
+    "seed-5867",
+    "seed-5878",
+    "seed-5942",
+    "seed-6984",
+    "seed-7159",
+    "seed-8144",
+    "seed-9094",
+    "seed-9750",
+    "seed-9800",
+    "seed-9806",
+    "seed-9814",
+    "seed-9821",
+    "seed-9864",
+    "seed-9867",
+    "seed-9925",
+    "seed-9973",
+    "seed-9999"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0048",
+    "shard-0054",
+    "shard-0055",
+    "shard-0056",
+    "shard-0057",
+    "shard-0058",
+    "shard-0067",
+    "shard-0068",
+    "shard-0075",
+    "shard-0082",
+    "shard-0087",
+    "shard-0088",
+    "shard-0089",
+    "shard-0090",
+    "shard-0091",
+    "shard-0092"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-02765",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03537 is partial for it must be rebuildable from seglog",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03537"
+      ],
+      "source_obligation_ids": [
+        "obl-3383"
+      ],
+      "source_seed_ids": [
+        "seed-4559"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "it must be rebuildable from seglog"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02768",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03540 is partial for Keep Source Control worktree-first at the UI level, but storage needs both durable worktre",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-043: Source Control and worktree handshake"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03540"
+      ],
+      "source_obligation_ids": [
+        "obl-3386"
+      ],
+      "source_seed_ids": [
+        "seed-4562"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "Keep Source Control worktree-first at the UI level, but storage needs both durable worktree identity and lane lineage."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-02803",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-03579 is partial for Source Control being worktree-first in UI does not remove the need for lane lineage in sto",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-205: Lane cleanup lineage fields"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03579"
+      ],
+      "source_obligation_ids": [
+        "obl-3425"
+      ],
+      "source_seed_ids": [
+        "seed-4612"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "Source Control being worktree-first in UI does not remove the need for lane lineage in storage"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03189",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04105 is present for spot-checks against `Plans/storage-plan.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plan",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04105"
+      ],
+      "source_obligation_ids": [
+        "obl-3946"
+      ],
+      "source_seed_ids": [
+        "seed-5409"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "exact_missing_items": [
+        "spot-checks against `Plans/storage-plan.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/usage-feature.md`",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03257",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04182 is partial for `Wiring_Matrix.schema.json` still cannot represent the normative recovery producer/consume",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Fidelity recovery addendum"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04182"
+      ],
+      "source_obligation_ids": [
+        "obl-4022"
+      ],
+      "source_seed_ids": [
+        "seed-5541"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "`Wiring_Matrix.schema.json` still cannot represent the normative recovery producer/consumer rows or wildcard command-family requirements now described in the doc.",
+        "Wiring_Matrix.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03306",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04243 is partial for startup recovery still lacks a single owner, but GPT-5.2 also exposed that the governance",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-188: Projection fields for startup rehydration"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04243"
+      ],
+      "source_obligation_ids": [
+        "obl-4083"
+      ],
+      "source_seed_ids": [
+        "seed-5645"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "startup recovery still lacks a single owner, but GPT-5.2 also exposed that the governance UX wants a stable `blocked_owner` field that the canonical blocked projection schema still does not define.",
+        "blocked_owner"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03339",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04279 is partial for The addenda in `Wiring_Matrix.md` increasingly ask the matrix to cover runtime producers,",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Runtime artifact and projection storage scope"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04279"
+      ],
+      "source_obligation_ids": [
+        "obl-4119"
+      ],
+      "source_seed_ids": [
+        "seed-5707"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "The addenda in `Wiring_Matrix.md` increasingly ask the matrix to cover runtime producers, blocked/recovery actions, and projection consumers, but the actual schema still models only UI element rows. The prose is now expecting more than `Wiring_Matrix.schema.json` can encode.",
+        "Wiring_Matrix.md",
+        "Wiring_Matrix.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03403",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04359 is present for `Runtime_Artifacts_Panel.md` depends on artifact identity opens without fully owning the r",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-018: Export taxonomy and manifest contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04359"
+      ],
+      "source_obligation_ids": [
+        "obl-4199"
+      ],
+      "source_seed_ids": [
+        "seed-5838"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "`Runtime_Artifacts_Panel.md` depends on artifact identity opens without fully owning the resolver contract, so the open-by-identity behavior still risks being re-invented per surface.",
+        "Runtime_Artifacts_Panel.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03421",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04383 is present for `storage-plan.md` and `FinalGUISpec.md` are already speaking in stronger identity terms (`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-018: Export taxonomy and manifest contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04383"
+      ],
+      "source_obligation_ids": [
+        "obl-4223"
+      ],
+      "source_seed_ids": [
+        "seed-5866"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "`storage-plan.md` and `FinalGUISpec.md` are already speaking in stronger identity terms (`preview_subject_id`, `doc:<document_id>`, `artifact:<artifact_id>`), but that identity model has not been lifted into the cross-cutting contract layer.",
+        "storage-plan.md",
+        "FinalGUISpec.md",
+        "preview_subject_id",
+        "doc:<document_id>",
+        "artifact:<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03422",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04384 is partial for `UI_Command_Catalog.md` therefore has to carry routing meaning indirectly in per-command a",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-039: Focused run and historical routing contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04384"
+      ],
+      "source_obligation_ids": [
+        "obl-4224"
+      ],
+      "source_seed_ids": [
+        "seed-5867"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "`UI_Command_Catalog.md` therefore has to carry routing meaning indirectly in per-command arg tables instead of relying on a shared contract family.",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03425",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04387 is partial for Surface docs and storage docs are converging on identity-native navigation, but they are d",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04387"
+      ],
+      "source_obligation_ids": [
+        "obl-4227"
+      ],
+      "source_seed_ids": [
+        "seed-5878"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "Surface docs and storage docs are converging on identity-native navigation, but they are doing it without a stable shared contract owner."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03454",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-04418 is partial for `Wiring_Matrix.schema.json` still cannot represent wildcard family rows or the producer/co",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-020: Concern record family definition"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04418"
+      ],
+      "source_obligation_ids": [
+        "obl-4258"
+      ],
+      "source_seed_ids": [
+        "seed-5942"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "`Wiring_Matrix.schema.json` still cannot represent wildcard family rows or the producer/consumer normative rows the docs already require.",
+        "Wiring_Matrix.schema.json"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-03957",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05071 is present for `FinalGUISpec.md` and adjacent docs already contain enough `doc:` / `artifact:` / `generat",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-018: Export taxonomy and manifest contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05071"
+      ],
+      "source_obligation_ids": [
+        "obl-4847"
+      ],
+      "source_seed_ids": [
+        "seed-6984"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` and adjacent docs already contain enough `doc:` / `artifact:` / `generated://` concepts to imply `OpenSubject`, but there is still no owner contract stating that split directly.",
+        "FinalGUISpec.md",
+        "doc:",
+        "artifact:",
+        "generated://",
+        "OpenSubject"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04015",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05162 is present for `workspace_tab_id` and `browser_tab_id` exist in storage and command docs, but they are no",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05162"
+      ],
+      "source_obligation_ids": [
+        "obl-4938"
+      ],
+      "source_seed_ids": [
+        "seed-7159"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "exact_missing_items": [
+        "`workspace_tab_id` and `browser_tab_id` exist in storage and command docs, but they are not `target_kind` values.",
+        "workspace_tab_id",
+        "browser_tab_id",
+        "target_kind"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04450",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-05715 is present for `Plans/storage-plan.md` continues that ambiguity:",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05715"
+      ],
+      "source_obligation_ids": [
+        "obl-5487"
+      ],
+      "source_seed_ids": [
+        "seed-8144"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md` continues that ambiguity:",
+        "Plans/storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-04947",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06370 is present for No planning-doc edits were made outside the required work-item ledger/meta files; session-",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06370"
+      ],
+      "source_obligation_ids": [
+        "obl-6011"
+      ],
+      "source_seed_ids": [
+        "seed-9094"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "No planning-doc edits were made outside the required work-item ledger/meta files; session-local `plan.md` was updated for execution tracking only.",
+        "plan.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05230",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06750 is present for `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Comma",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06750"
+      ],
+      "source_obligation_ids": [
+        "obl-6386"
+      ],
+      "source_seed_ids": [
+        "seed-9750"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05268",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06792 is present for `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/Final",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06792"
+      ],
+      "source_obligation_ids": [
+        "obl-6421"
+      ],
+      "source_seed_ids": [
+        "seed-9800"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/FinalGUISpec.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Decision_Policy.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05279",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06804 is present for `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Mod",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06804"
+      ],
+      "source_obligation_ids": [
+        "obl-6427"
+      ],
+      "source_seed_ids": [
+        "seed-9806"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05288",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06815 is present for `Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06815"
+      ],
+      "source_obligation_ids": [
+        "obl-6435"
+      ],
+      "source_seed_ids": [
+        "seed-9814"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05303",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06830 is present for `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Cr",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06830"
+      ],
+      "source_obligation_ids": [
+        "obl-6442"
+      ],
+      "source_seed_ids": [
+        "seed-9821"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Crosswalk.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md",
+        "Plans/FileManager.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05329",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06883 is partial for result: storage receipt/activity gaps should continue to be treated as under-transfer / an",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06883"
+      ],
+      "source_obligation_ids": [
+        "obl-6485"
+      ],
+      "source_seed_ids": [
+        "seed-9864"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "result: storage receipt/activity gaps should continue to be treated as under-transfer / anchor failures, not as total missing-content claims"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05332",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06886 is partial for summary: Rewrote the work item bundle to the v2 artifact shapes and re-confirmed that muta",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Fidelity recovery cov-077: Project summary projection"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06886"
+      ],
+      "source_obligation_ids": [
+        "obl-6488"
+      ],
+      "source_seed_ids": [
+        "seed-9867"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "summary: Rewrote the work item bundle to the v2 artifact shapes and re-confirmed that mutation planning is still blocked because eight material blocker families remain."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05373",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06933 is present for `gap-004` therefore narrows to the missing `### Cross-surface receipt record` anchor, the",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "#### Cross-surface receipt record baseline"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06933"
+      ],
+      "source_obligation_ids": [
+        "obl-6533"
+      ],
+      "source_seed_ids": [
+        "seed-9925"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`gap-004` therefore narrows to the missing `### Cross-surface receipt record` anchor, the unresolved fields `run_id`, `pass_verdict`, `phase_plan_ref`, and `requirements_quality_report_ref`, and the still-missing consumer anchors.",
+        "gap-004",
+        "### Cross-surface receipt record",
+        "run_id",
+        "pass_verdict",
+        "phase_plan_ref",
+        "requirements_quality_report_ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05400",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06962 is present for `gap-004` is stable as written; no further storage/lineage audit was productive beyond con",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "#### Cross-surface receipt record baseline"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06962"
+      ],
+      "source_obligation_ids": [
+        "obl-6562"
+      ],
+      "source_seed_ids": [
+        "seed-9973"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`gap-004` is stable as written; no further storage/lineage audit was productive beyond confirming that the remaining defects are the missing `### Cross-surface receipt record` anchor, four unresolved receipt fields, and the absent consumer anchors.",
+        "gap-004",
+        "### Cross-surface receipt record"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05407",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06969 is partial for summary: Re-audited the condensed blocker bundle against live plan sections in bounded chu",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06969"
+      ],
+      "source_obligation_ids": [
+        "obl-6569"
+      ],
+      "source_seed_ids": [
+        "seed-9999"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "summary: Re-audited the condensed blocker bundle against live plan sections in bounded chunks and confirmed all eight blocker families remain, but one storage item was overstated and several blocker reasons needed sharper exact wording."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05409",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-06972 is present for `Plans/storage-plan.md` still omits `run_id` from the receipt minimum-fields list and stil",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-06972"
+      ],
+      "source_obligation_ids": [
+        "obl-6572"
+      ],
+      "source_seed_ids": [
+        "seed-10002"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md` still omits `run_id` from the receipt minimum-fields list and still does not carry `pass_verdict`, `phase_plan_ref`, or `requirements_quality_report_ref`.",
+        "Plans/storage-plan.md",
+        "run_id",
+        "pass_verdict",
+        "phase_plan_ref",
+        "requirements_quality_report_ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05476",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07061 is present for Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-0",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07061"
+      ],
+      "source_obligation_ids": [
+        "obl-6643"
+      ],
+      "source_seed_ids": [
+        "seed-10135"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.",
+        "gap-003",
+        "gap-004",
+        "gap-005",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05481",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07067 is partial for summary: Re-audited the condensed blocker bundle against live plan sections in delegated c",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07067"
+      ],
+      "source_obligation_ids": [
+        "obl-6648"
+      ],
+      "source_seed_ids": [
+        "seed-10168"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "summary: Re-audited the condensed blocker bundle against live plan sections in delegated chunks and found one material overstatement in receipt lineage plus several exact owner/consumer refinements that leave all eight blocker families unresolved but sharper."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05518",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07111 is present for `gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` r",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07111"
+      ],
+      "source_obligation_ids": [
+        "obl-6686"
+      ],
+      "source_seed_ids": [
+        "seed-10258"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference survives not only in `Plans/GitHub_Integration.md` but also in `Plans/storage-plan.md` and `Plans/WorktreeGitImprovement.md`, while `Plans/FinalGUISpec.md` still preserves the `restore points` contradiction.",
+        "gap-007",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "Plans/GitHub_Integration.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FinalGUISpec.md",
+        "restore points"
+      ],
+      "stale_tokens": [
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md",
+        "gap-007",
+        "restore points"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05529",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07124 is partial for summary: Ran another bounded audit pass after the blocked Ready Check; the first wave shar",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07124"
+      ],
+      "source_obligation_ids": [
+        "obl-6699"
+      ],
+      "source_seed_ids": [
+        "seed-10288"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and glossary blocker families with missing discoverable anchors and broken consumer references, and the follow-up sweeps produced zero new exact missing items beyond those refinements."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05531",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07126 is present for `gap-003` sharpened: `Plans/storage-plan.md` still lacks a discoverable `Canonical records",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07126"
+      ],
+      "source_obligation_ids": [
+        "obl-6700"
+      ],
+      "source_seed_ids": [
+        "seed-10289"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`gap-003` sharpened: `Plans/storage-plan.md` still lacks a discoverable `Canonical records` heading even though it contains inline `Canonical records for this feature set...` prose and a `canonical_record.v1:{project_id}:{record_id}` authoritative container, and `Plans/Orchestrator_Page.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor from three different sections.",
+        "gap-003",
+        "Plans/storage-plan.md",
+        "Canonical records",
+        "Canonical records for this feature set...",
+        "canonical_record.v1:{project_id}:{record_id}",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md#Canonical records"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05546",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07144 is partial for summary: Ran another bounded audit pass after the blocked Ready Check; the first wave shar",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Cross-surface receipt record (storage rules)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07144"
+      ],
+      "source_obligation_ids": [
+        "obl-6717"
+      ],
+      "source_seed_ids": [
+        "seed-10318"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and receipt blocker families with additional broken storage-plan anchor evidence and downgraded the overstated restore-point contradiction, and two bounded follow-up sweeps then produced zero new exact missing items."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05552",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07150 is present for `gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missi",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07150"
+      ],
+      "source_obligation_ids": [
+        "obl-6719"
+      ],
+      "source_seed_ids": [
+        "seed-10320"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missing `Plans/storage-plan.md#Cross-surface receipt record` anchor, so the receipt blocker now includes a live broken consumer reference rather than only missing owner/consumer headings.",
+        "gap-004",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md#Cross-surface receipt record"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05554",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07152 is present for `gap-007` downgraded: the prior `restore points` contradiction was overstated because `Pla",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07152"
+      ],
+      "source_obligation_ids": [
+        "obl-6720"
+      ],
+      "source_seed_ids": [
+        "seed-10321"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`gap-007` downgraded: the prior `restore points` contradiction was overstated because `Plans/storage-plan.md` now cleanly separates runtime safe points from project-scoped restore points and `Plans/FinalGUISpec.md` explicitly forbids presenting safe points as restore points; the remaining blocker is structural-heading and broken-reference drift.",
+        "gap-007",
+        "restore points",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_tokens": [
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "gap-007",
+        "restore points"
+      ],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05565",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07166 is present for Wave 1 rechecked `gap-003`, `gap-004`, and `gap-008` against live storage, runtime-artifac",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07166"
+      ],
+      "source_obligation_ids": [
+        "obl-6734"
+      ],
+      "source_seed_ids": [
+        "seed-10351"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "Wave 1 rechecked `gap-003`, `gap-004`, and `gap-008` against live storage, runtime-artifact, receipt, and usage docs and only reconfirmed the already-recorded missing storage/receipt headings, broken `Plans/storage-plan.md` anchor consumers, missing `orchestrator.project_state.{project_id}` naming, and missing usage-side account-history / degrade sections.",
+        "gap-003",
+        "gap-004",
+        "gap-008",
+        "Plans/storage-plan.md",
+        "orchestrator.project_state.{project_id}"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    },
+    {
+      "gap_id": "gap-05585",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "packetizable_layout_defect",
+      "description": "layout_blocker coverage row cov-07187 is present for `cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-l",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-07187"
+      ],
+      "source_obligation_ids": [
+        "obl-6751"
+      ],
+      "source_seed_ids": [
+        "seed-10390"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "`cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resolution_kind` coverage including `accepted_risk`, and a concern-action confirmation matrix, but the live docs only expose fragments: `Plans/Orchestrator_Page.md:12-13` keeps concern and notification surfaces distinct from health/activity, `Plans/storage-plan.md:294` lists `concern_record.v1`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31` calls for first-class concern lifecycle and lineage, and `Plans/Contracts_V0.md:649` only names `concern` as a routable object. Exact ledger evidence remains at `working_ledger.md:L3070-L3092`, `working_ledger.md:L3170-L3182`, `working_ledger.md:L5990-L6015`, and `working_ledger.md:L6442-L6490`.",
+        "cov-034",
+        "obl-016",
+        "active",
+        "acknowledged",
+        "resolved",
+        "dismissed",
+        "resolution_kind",
+        "accepted_risk"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "uncertain_items": []
+}

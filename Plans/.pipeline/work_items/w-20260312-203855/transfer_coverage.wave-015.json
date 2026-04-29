@@ -1,319 +1,1070 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v3",
+  "schema_id": "pm.transfer_coverage_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-015",
-  "timestamp_utc": "2026-04-28T19:52:18Z",
-  "subagent_tasks": [
-    "coverage-rowgrp-057",
-    "coverage-rowgrp-058",
-    "coverage-rowgrp-059",
-    "coverage-rowgrp-060"
+  "row_group_ids": [
+    "rowgrp-0057",
+    "rowgrp-0058",
+    "rowgrp-0059",
+    "rowgrp-0060"
   ],
-  "assigned_input_boundaries": [
-    "rowgrp-057 cov-722,cov-779,cov-877 Plans/FileManager.md",
-    "rowgrp-058 cov-846 Plans/FileManager.md",
-    "rowgrp-059 cov-423,cov-431,cov-770,cov-819,cov-941,cov-950,cov-1180 Plans/FileManager.md",
-    "rowgrp-060 cov-853,cov-1032 Plans/FileManager.md"
-  ],
-  "subagent_result_status": {
-    "coverage-rowgrp-057": "completed_reduced_conservatively",
-    "coverage-rowgrp-058": "completed_reduced_conservatively",
-    "coverage-rowgrp-059": "completed_reduced_conservatively",
-    "coverage-rowgrp-060": "completed"
-  },
-  "completed_task_count": 4,
-  "failed_task_count": 0,
-  "coverage_ids_assigned": [
-    "cov-722",
-    "cov-779",
-    "cov-877",
-    "cov-846",
-    "cov-423",
-    "cov-431",
-    "cov-770",
-    "cov-819",
-    "cov-941",
-    "cov-950",
-    "cov-1180",
-    "cov-853",
-    "cov-1032"
-  ],
-  "coverage_ids_completed": [
-    "cov-722",
-    "cov-779",
-    "cov-877",
-    "cov-846",
-    "cov-423",
-    "cov-431",
-    "cov-770",
-    "cov-819",
-    "cov-941",
-    "cov-950",
-    "cov-1180",
-    "cov-853",
-    "cov-1032"
-  ],
-  "path_groups_assigned": [
-    "Plans/FileManager.md"
-  ],
-  "rows": [
+  "coverage_rows": [
     {
-      "coverage_id": "cov-722",
-      "status": "missing",
-      "evidence": [
-        "Plans/FileManager.md:145 token mention is drag-out security, unrelated to ghost command/schema integrity",
-        "Plans/FileManager.md:198 token mention is syntax highlighting, unrelated to ghost command/schema integrity",
-        "Plans/FileManager.md:232 stale mention is annotation-state handling, unrelated to ghost command/schema integrity"
-      ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "FileManager.md does not contain row-specific coverage for ghost commands, missing catalog rows, runtime-artifact schema ownership, duplicated executor canon, or dead glossary/TOC references.",
+      "coverage_id": "cov-05132",
       "source_obligation_ids": [
-        "obl-197"
+        "obl-4908"
       ],
       "source_seed_ids": [
-        "seed-197"
+        "seed-7089"
       ],
       "source_shard_ids": [
-        "shard-0049"
+        "shard-0067"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-779",
+      "canon_label": "`focused_run_id` and `thread_id` remain route fields because they are scope restorers, not",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## 0. Scope",
       "status": "partial",
+      "exact_items": [
+        "`focused_run_id` and `thread_id` remain route fields because they are scope restorers, not just object metadata.",
+        "focused_run_id",
+        "thread_id"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FileManager.md:303 identity-based routing resolves route_target schemes through shared route/open semantics",
-        "Plans/FileManager.md:305 artifacts are stored by content hash and indexed by concern_id, route_target, artifact_type, and timestamp",
-        "Plans/FileManager.md:311-312 Contracts_V0 owns route_target/OpenSubject and FileManager keeps OpenFile narrow and path-based",
-        "Plans/FileManager.md:325-327 runtime artifacts are attempt-native and artifact open flows resolve by artifact_id"
+        "Plans/Architecture_Invariants.md:L26"
       ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "Artifact identity and OpenSubject references are present, but a complete canonical OpenArtifact/OpenSubject contract is not fully defined here.",
-      "source_obligation_ids": [
-        "obl-215"
-      ],
-      "source_seed_ids": [
-        "seed-215"
-      ],
-      "source_shard_ids": [
-        "shard-0054"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-877",
+      "coverage_id": "cov-05149",
+      "source_obligation_ids": [
+        "obl-4925"
+      ],
+      "source_seed_ids": [
+        "seed-7127"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "Keep all transport/open realization detail outside `route_target`.",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-007 -- No stringly-typed IDs outside SSOT",
       "status": "partial",
+      "exact_items": [
+        "Keep all transport/open realization detail outside `route_target`.",
+        "route_target"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FileManager.md:313 route_target stays small with subject_id or object_kind/object_id identity",
-        "Plans/FileManager.md:314 subject_id families are limited and inspector_target is kept secondary"
+        "Plans/Architecture_Invariants.md:L75"
       ],
-      "required_action": "packetizable_layout_repair",
-      "unresolved_reason": "inspector_target sub-selection is mentioned, but the full layout-blocker rule for object/detail UI focus is not completely defined in FileManager.md.",
-      "source_obligation_ids": [
-        "obl-246"
-      ],
-      "source_seed_ids": [
-        "seed-246"
-      ],
-      "source_shard_ids": [
-        "shard-0062"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-846",
+      "coverage_id": "cov-05152",
+      "source_obligation_ids": [
+        "obl-4928"
+      ],
+      "source_seed_ids": [
+        "seed-7130"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "It carries navigation identity, scope restoration, and narrow focus refinement.",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## 0. Scope",
       "status": "partial",
+      "exact_items": [
+        "It carries navigation identity, scope restoration, and narrow focus refinement."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FileManager.md:301 FileManager owns the file-open and artifact-storage contract",
-        "Plans/FileManager.md:303 identity-based routing uses route_target through shared route/open semantics in Contracts_V0.md",
-        "Plans/FileManager.md:311-312 Contracts_V0 owns route_target/OpenSubject, Crosswalk owns primitive boundary, and FileManager keeps OpenFile narrow and path-based"
+        "Plans/Architecture_Invariants.md:L14"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "The owner split is partly present, but route payload boundaries are not fully stated as the exact owner split requested by the row.",
-      "source_obligation_ids": [
-        "obl-236"
-      ],
-      "source_seed_ids": [
-        "seed-236"
-      ],
-      "source_shard_ids": [
-        "shard-0060"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-423",
-      "status": "missing",
-      "evidence": [
-        "Plans/FileManager.md:301-306 file-open/artifact contract exists, but no requested/effective/provider/account identity disclosure contract is present"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Requested/effective identity disclosure contract is absent; FileManager.md only has route/open and artifact-by-identity language for this area.",
+      "coverage_id": "cov-05169",
       "source_obligation_ids": [
-        "obl-124"
+        "obl-4945"
       ],
       "source_seed_ids": [
-        "seed-124"
+        "seed-7170"
       ],
       "source_shard_ids": [
-        "shard-0031"
+        "shard-0068"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-431",
-      "status": "missing",
-      "evidence": [
-        "Plans/FileManager.md:303-305 route/open and artifact-by-identity rules exist, but no seam_id, package_id, lane_id, attempt_id, tier_id, run.tier_*, tier_tree, or Tiers attribution pivot coverage was found"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "FileManager.md does not contain the assigned storage/usage attribution pivot away from tier-era routing.",
-      "source_obligation_ids": [
-        "obl-125"
-      ],
-      "source_seed_ids": [
-        "seed-125"
-      ],
-      "source_shard_ids": [
-        "shard-0031"
-      ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-770",
+      "canon_label": "`route_target` needs an explicit selector precedence rule.",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-011 -- UI command dispatch only (Rule 1)",
       "status": "partial",
+      "exact_items": [
+        "`route_target` needs an explicit selector precedence rule.",
+        "route_target"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FileManager.md:305 artifacts are indexed by concern_id, route_target, artifact_type, and timestamp",
-        "Plans/FileManager.md:325-327 runtime artifacts are attempt-native and artifact open flows resolve by artifact_id and linked envelope refs"
+        "Plans/Architecture_Invariants.md:L108"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Artifact identity and linked envelope refs are present, but the complete runtime-artifact envelope common field contract is not fully stated in FileManager.md.",
-      "source_obligation_ids": [
-        "obl-213"
-      ],
-      "source_seed_ids": [
-        "seed-213"
-      ],
-      "source_shard_ids": [
-        "shard-0054"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-819",
+      "coverage_id": "cov-05170",
+      "source_obligation_ids": [
+        "obl-4946"
+      ],
+      "source_seed_ids": [
+        "seed-7171"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "The canonical selector rule is:",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-011 -- UI command dispatch only (Rule 1)",
+      "status": "partial",
+      "exact_items": [
+        "The canonical selector rule is:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L108"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05185",
+      "source_obligation_ids": [
+        "obl-4961"
+      ],
+      "source_seed_ids": [
+        "seed-7197"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "State the precedence rule directly in `Contracts_V0.md`.",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-011 -- UI command dispatch only (Rule 1)",
       "status": "present",
+      "exact_items": [
+        "State the precedence rule directly in `Contracts_V0.md`.",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FileManager.md:311-312 Contracts_V0 owns route_target/OpenSubject while FileManager keeps OpenFile narrow and path-based"
+        "Plans/Architecture_Invariants.md:L3",
+        "Plans/Architecture_Invariants.md:L27",
+        "Plans/Architecture_Invariants.md:L48",
+        "Plans/Architecture_Invariants.md:L56",
+        "Plans/Architecture_Invariants.md:L111"
       ],
-      "required_action": "none",
-      "unresolved_reason": "",
-      "source_obligation_ids": [
-        "obl-229"
-      ],
-      "source_seed_ids": [
-        "seed-229"
-      ],
-      "source_shard_ids": [
-        "shard-0058"
-      ],
-      "path_field_status": "match"
+      "required_action": "none"
     },
     {
-      "coverage_id": "cov-941",
+      "coverage_id": "cov-05187",
+      "source_obligation_ids": [
+        "obl-4963"
+      ],
+      "source_seed_ids": [
+        "seed-7199"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "Normalize all special-case ids into `subject_id` or `object_kind` + `object_id` before the",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-007 -- No stringly-typed IDs outside SSOT",
       "status": "partial",
+      "exact_items": [
+        "Normalize all special-case ids into `subject_id` or `object_kind` + `object_id` before they enter the canonical route layer.",
+        "subject_id",
+        "object_kind",
+        "object_id"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FileManager.md:311 Contracts_V0 owns OpenSubject contracts",
-        "Plans/FileManager.md:313-314 route/open rules include subject_id, object_kind/object_id identity, and inspector_target secondary focus"
+        "Plans/Architecture_Invariants.md:L75"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "OpenSubject and subject identity are referenced, but open_intent and complete OpenSubject contract definition are not present in FileManager.md.",
-      "source_obligation_ids": [
-        "obl-264"
-      ],
-      "source_seed_ids": [
-        "seed-264"
-      ],
-      "source_shard_ids": [
-        "shard-0067"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-950",
+      "coverage_id": "cov-05188",
+      "source_obligation_ids": [
+        "obl-4964"
+      ],
+      "source_seed_ids": [
+        "seed-7200"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "Scope and focus fields are not selector identity.",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## 0. Scope",
       "status": "partial",
+      "exact_items": [
+        "Scope and focus fields are not selector identity."
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FileManager.md:311-312 Contracts_V0 owns route_target/OpenSubject and FileManager OpenFile remains narrow and path-based"
+        "Plans/Architecture_Invariants.md:L14"
       ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "OpenFile path-editor scope is present, but line/range ownership and the route_target/OpenSubject non-overlap are not fully stated.",
-      "source_obligation_ids": [
-        "obl-266"
-      ],
-      "source_seed_ids": [
-        "seed-266"
-      ],
-      "source_shard_ids": [
-        "shard-0067"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1180",
-      "status": "missing",
-      "evidence": [
-        "Plans/FileManager.md:301-327 file-open/artifact routing section exists, but no MUST CHANGE / MUST RECONCILE / MUST VERIFY packet inclusion category coverage was found"
-      ],
-      "required_action": "owner_create_or_rewrite",
-      "unresolved_reason": "Assigned packet inclusion categories are absent from Plans/FileManager.md.",
+      "coverage_id": "cov-05190",
       "source_obligation_ids": [
-        "obl-339"
+        "obl-4966"
       ],
       "source_seed_ids": [
-        "seed-339"
+        "seed-7206"
       ],
       "source_shard_ids": [
-        "shard-0086"
+        "shard-0068"
       ],
-      "path_field_status": "match"
-    },
-    {
-      "coverage_id": "cov-853",
+      "canon_label": "`resume_url` is a serialized transport of `route_target`.",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
       "status": "partial",
+      "exact_items": [
+        "`resume_url` is a serialized transport of `route_target`.",
+        "resume_url",
+        "route_target"
+      ],
+      "stale_tokens": [],
       "evidence": [
-        "Plans/FileManager.md:311-312 FileManager keeps OpenFile narrow and path-based"
+        "Plans/Architecture_Invariants.md:L91"
       ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "OpenFile narrowing is present, but explicit retirement of OpenFile as a surrogate navigation primitive is not complete.",
-      "source_obligation_ids": [
-        "obl-238"
-      ],
-      "source_seed_ids": [
-        "seed-238"
-      ],
-      "source_shard_ids": [
-        "shard-0060"
-      ],
-      "path_field_status": "match"
+      "required_action": "owner_create_or_rewrite"
     },
     {
-      "coverage_id": "cov-1032",
-      "status": "partial",
-      "evidence": [
-        "Plans/FileManager.md:311-312 OpenSubject is owned by Contracts_V0 and FileManager OpenFile remains narrow and path-based",
-        "Plans/FileManager.md:325-327 runtime artifacts are attempt-native and resolve by artifact_id"
-      ],
-      "required_action": "stale_retirement",
-      "unresolved_reason": "OpenSubject and artifact_id resolution are present, but generated://<artifact_id> resolver-output handling and full universal-open overclaim retirement are not complete.",
+      "coverage_id": "cov-05205",
       "source_obligation_ids": [
-        "obl-290"
+        "obl-4981"
       ],
       "source_seed_ids": [
-        "seed-290"
+        "seed-7231"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "Define `resume_url` as serialized `route_target` transport in `Contracts_V0.md`.",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
+      "status": "present",
+      "exact_items": [
+        "Define `resume_url` as serialized `route_target` transport in `Contracts_V0.md`.",
+        "resume_url",
+        "route_target",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L3",
+        "Plans/Architecture_Invariants.md:L27",
+        "Plans/Architecture_Invariants.md:L48",
+        "Plans/Architecture_Invariants.md:L56",
+        "Plans/Architecture_Invariants.md:L111"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05208",
+      "source_obligation_ids": [
+        "obl-4984"
+      ],
+      "source_seed_ids": [
+        "seed-7234"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "`resume_url` is transport.",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
+      "status": "partial",
+      "exact_items": [
+        "`resume_url` is transport.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L91"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05214",
+      "source_obligation_ids": [
+        "obl-4990"
+      ],
+      "source_seed_ids": [
+        "seed-7266"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "`object_id` must use existing canonical ids:",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-007 -- No stringly-typed IDs outside SSOT",
+      "status": "partial",
+      "exact_items": [
+        "`object_id` must use existing canonical ids:",
+        "object_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L75"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05215",
+      "source_obligation_ids": [
+        "obl-4991"
+      ],
+      "source_seed_ids": [
+        "seed-7273"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "`blocked_sequence` in `{ run_id, node_id }` scope",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## 0. Scope",
+      "status": "partial",
+      "exact_items": [
+        "`blocked_sequence` in `{ run_id, node_id }` scope",
+        "blocked_sequence",
+        "{ run_id, node_id }"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L226"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05218",
+      "source_obligation_ids": [
+        "obl-4994"
+      ],
+      "source_seed_ids": [
+        "seed-7288"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "`usage_event_ref` still appears as a special-case route concept in some docs instead of be",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "status": "partial",
+      "exact_items": [
+        "`usage_event_ref` still appears as a special-case route concept in some docs instead of being normalized into `object_kind = usage_event`.",
+        "usage_event_ref",
+        "object_kind = usage_event"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05222",
+      "source_obligation_ids": [
+        "obl-4998"
+      ],
+      "source_seed_ids": [
+        "seed-7292"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "Normalize older route/pivot docs away from `tier_id` and one-off special-case ids.",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-007 -- No stringly-typed IDs outside SSOT",
+      "status": "partial",
+      "exact_items": [
+        "Normalize older route/pivot docs away from `tier_id` and one-off special-case ids.",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L75"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05243",
+      "source_obligation_ids": [
+        "obl-5019"
+      ],
+      "source_seed_ids": [
+        "seed-7320"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "`wizard_step`, `message_id`, `line`, `range`, and compare-target state are not `inspector_",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-015 -- Monetary values are integer microdollars",
+      "status": "partial",
+      "exact_items": [
+        "`wizard_step`, `message_id`, `line`, `range`, and compare-target state are not `inspector_target` values.",
+        "wizard_step",
+        "message_id",
+        "line",
+        "range",
+        "inspector_target"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L216",
+        "Plans/Architecture_Invariants.md:L225"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05256",
+      "source_obligation_ids": [
+        "obl-5032"
+      ],
+      "source_seed_ids": [
+        "seed-7343"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "The split needs a hard classification rule.",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-011 -- UI command dispatch only (Rule 1)",
+      "status": "partial",
+      "exact_items": [
+        "The split needs a hard classification rule."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L108"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05270",
+      "source_obligation_ids": [
+        "obl-5046"
+      ],
+      "source_seed_ids": [
+        "seed-7372"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`usage_event_ref` still reads like a direct route field in some docs rather than a normali",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "status": "partial",
+      "exact_items": [
+        "`usage_event_ref` still reads like a direct route field in some docs rather than a normalized object identity.",
+        "usage_event_ref"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05272",
+      "source_obligation_ids": [
+        "obl-5048"
+      ],
+      "source_seed_ids": [
+        "seed-7374"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "Put the classification rule directly in `Contracts_V0.md`.",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-011 -- UI command dispatch only (Rule 1)",
+      "status": "present",
+      "exact_items": [
+        "Put the classification rule directly in `Contracts_V0.md`.",
+        "Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L3",
+        "Plans/Architecture_Invariants.md:L27",
+        "Plans/Architecture_Invariants.md:L48",
+        "Plans/Architecture_Invariants.md:L56",
+        "Plans/Architecture_Invariants.md:L111"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05430",
+      "source_obligation_ids": [
+        "obl-5202"
+      ],
+      "source_seed_ids": [
+        "seed-7711"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "The canonical rule is:",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-011 -- UI command dispatch only (Rule 1)",
+      "status": "partial",
+      "exact_items": [
+        "The canonical rule is:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L108"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05454",
+      "source_obligation_ids": [
+        "obl-5226"
+      ],
+      "source_seed_ids": [
+        "seed-7750"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "own `resume_url` serialization rule",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-011 -- UI command dispatch only (Rule 1)",
+      "status": "partial",
+      "exact_items": [
+        "own `resume_url` serialization rule",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L108"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05523",
+      "source_obligation_ids": [
+        "obl-5295"
+      ],
+      "source_seed_ids": [
+        "seed-7871"
       ],
       "source_shard_ids": [
         "shard-0073"
       ],
-      "path_field_status": "match"
+      "canon_label": "Keep filter/scroll/highlight behavior as destination realization, not as canonical navigat",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-003 -- UI SSOT (no bespoke UI behavior)",
+      "status": "partial",
+      "exact_items": [
+        "Keep filter/scroll/highlight behavior as destination realization, not as canonical navigation identity."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L45"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05544",
+      "source_obligation_ids": [
+        "obl-5316"
+      ],
+      "source_seed_ids": [
+        "seed-7901"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "`generated://<artifact_id>` is correctly treated as transport realization in assistant-cha",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-003 -- UI SSOT (no bespoke UI behavior)",
+      "status": "partial",
+      "exact_items": [
+        "`generated://<artifact_id>` is correctly treated as transport realization in assistant-chat behavior, but FileManager still lacks the matching subject-open model that explains how those buffers are opened without pretending they are normal workspace paths.",
+        "generated://<artifact_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L45"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05635",
+      "source_obligation_ids": [
+        "obl-5407"
+      ],
+      "source_seed_ids": [
+        "seed-8032"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "add a primitive boundary for route-target / open-by-identity navigation",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-004 -- UI command boundary (no business logic in UI)",
+      "status": "partial",
+      "exact_items": [
+        "add a primitive boundary for route-target / open-by-identity navigation"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L53"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05678",
+      "source_obligation_ids": [
+        "obl-5450"
+      ],
+      "source_seed_ids": [
+        "seed-8087"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "there is no structured place for wrapper target, alias target, route-payload validation re",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-013 -- Pre-dispatch tool validation",
+      "status": "partial",
+      "exact_items": [
+        "there is no structured place for wrapper target, alias target, route-payload validation result, or canonical-contract normalization evidence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L119"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05711",
+      "source_obligation_ids": [
+        "obl-5483"
+      ],
+      "source_seed_ids": [
+        "seed-8140"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "`resume_url` is still acting as a shadow routing primitive in multiple docs instead of bei",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
+      "status": "partial",
+      "exact_items": [
+        "`resume_url` is still acting as a shadow routing primitive in multiple docs instead of being treated as serialized transport for canonical route identity.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L91"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05725",
+      "source_obligation_ids": [
+        "obl-5497"
+      ],
+      "source_seed_ids": [
+        "seed-8161"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "`resume_url` is still being used as if it were canonical navigation identity instead of se",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
+      "status": "partial",
+      "exact_items": [
+        "`resume_url` is still being used as if it were canonical navigation identity instead of serialized transport.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L91"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05728",
+      "source_obligation_ids": [
+        "obl-5500"
+      ],
+      "source_seed_ids": [
+        "seed-8164"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "Treat `resume_url` as serialized transport only.",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
+      "status": "partial",
+      "exact_items": [
+        "Treat `resume_url` as serialized transport only.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L91"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05742",
+      "source_obligation_ids": [
+        "obl-5514"
+      ],
+      "source_seed_ids": [
+        "seed-8186"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "`resume_url` is the only field in this cluster that is trying to act as navigation transpo",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
+      "status": "partial",
+      "exact_items": [
+        "`resume_url` is the only field in this cluster that is trying to act as navigation transport",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L91"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05756",
+      "source_obligation_ids": [
+        "obl-5528"
+      ],
+      "source_seed_ids": [
+        "seed-8207"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "Keep `resume_url` only as serialized transport derived from canonical route identity.",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
+      "status": "partial",
+      "exact_items": [
+        "Keep `resume_url` only as serialized transport derived from canonical route identity.",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L91"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05771",
+      "source_obligation_ids": [
+        "obl-5543"
+      ],
+      "source_seed_ids": [
+        "seed-8227"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "but they still carry `resume_url?`, which keeps navigation transport inside persisted stat",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "status": "partial",
+      "exact_items": [
+        "but they still carry `resume_url?`, which keeps navigation transport inside persisted state as if it were canonical identity",
+        "resume_url?"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05843",
+      "source_obligation_ids": [
+        "obl-5615"
+      ],
+      "source_seed_ids": [
+        "seed-8334"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "tier-start validation/persona/QA events",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "status": "partial",
+      "exact_items": [
+        "tier-start validation/persona/QA events"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05871",
+      "source_obligation_ids": [
+        "obl-5643"
+      ],
+      "source_seed_ids": [
+        "seed-8375"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "tier-keyed usage/evidence correlation",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "status": "partial",
+      "exact_items": [
+        "tier-keyed usage/evidence correlation"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05884",
+      "source_obligation_ids": [
+        "obl-5656"
+      ],
+      "source_seed_ids": [
+        "seed-8388"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "1. owner-doc integrity and routing",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "status": "partial",
+      "exact_items": [
+        "1. owner-doc integrity and routing"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05943",
+      "source_obligation_ids": [
+        "obl-5715"
+      ],
+      "source_seed_ids": [
+        "seed-8494"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "canon_label": "The system now has canonical field-name modernization without canonical scope modernizatio",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## 0. Scope",
+      "status": "partial",
+      "exact_items": [
+        "The system now has canonical field-name modernization without canonical scope modernization."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L14"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05983",
+      "source_obligation_ids": [
+        "obl-5755"
+      ],
+      "source_seed_ids": [
+        "seed-8557",
+        "seed-8632"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0079"
+      ],
+      "canon_label": "`waiting_approval` is a blocked/runtime overlay",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "### Invariant A -- Debug overlay is not a runtime mode",
+      "status": "partial",
+      "exact_items": [
+        "`waiting_approval` is a blocked/runtime overlay",
+        "waiting_approval"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L208"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06090",
+      "source_obligation_ids": [
+        "obl-5862"
+      ],
+      "source_seed_ids": [
+        "seed-8706"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "`tier_id` worker-output correlation",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
+      "status": "partial",
+      "exact_items": [
+        "`tier_id` worker-output correlation",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L22"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06094",
+      "source_obligation_ids": [
+        "obl-5866"
+      ],
+      "source_seed_ids": [
+        "seed-8710"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Keep any surviving `PuppetMasterEvent::*` references explicitly marked as compatibility tr",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-009 -- Cursor transport is invisible to consumers",
+      "status": "partial",
+      "exact_items": [
+        "Keep any surviving `PuppetMasterEvent::*` references explicitly marked as compatibility transport or migration notes, not as the primary operational source.",
+        "PuppetMasterEvent::*"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L91"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06181",
+      "source_obligation_ids": [
+        "obl-5953"
+      ],
+      "source_seed_ids": [
+        "seed-8852"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`Formatters_System.md` continues to sit outside the central mutation/policy engine and los",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## INV-007 -- No stringly-typed IDs outside SSOT",
+      "status": "partial",
+      "exact_items": [
+        "`Formatters_System.md` continues to sit outside the central mutation/policy engine and loses attribution under DAE.",
+        "Formatters_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L75"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06205",
+      "source_obligation_ids": [
+        "obl-5974"
+      ],
+      "source_seed_ids": [
+        "seed-8942"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`Media_Generation_and_Capabilities.md`, `agent-rules-context.md`, and `Skills_System.md` a",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "## 0. Scope",
+      "status": "partial",
+      "exact_items": [
+        "`Media_Generation_and_Capabilities.md`, `agent-rules-context.md`, and `Skills_System.md` all still under-specify caller scope, execution-role capture, identity disclosure, or currently-usable-vs-instance-enabled capability semantics.",
+        "Media_Generation_and_Capabilities.md",
+        "agent-rules-context.md",
+        "Skills_System.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L14"
+      ],
+      "required_action": "owner_create_or_rewrite"
     }
   ]
 }

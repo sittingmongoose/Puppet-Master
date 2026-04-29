@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1087",
+  "group_ids": [
+    "discgrp-4345",
+    "discgrp-4346",
+    "discgrp-4347",
+    "discgrp-4348"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04722",
+      "source_obligation_ids": [
+        "obl-4500"
+      ],
+      "source_seed_ids": [
+        "seed-6399"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 13.2 Focus Indicators",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1418"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04723",
+      "source_obligation_ids": [
+        "obl-4501"
+      ],
+      "source_seed_ids": [
+        "seed-6400"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "### Fidelity recovery cov-038: Focused run and historical routing contract",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04724",
+      "source_obligation_ids": [
+        "obl-4502"
+      ],
+      "source_seed_ids": [
+        "seed-6401"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "## 4. Navigation Architecture",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L452"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04725",
+      "source_obligation_ids": [
+        "obl-4503"
+      ],
+      "source_seed_ids": [
+        "seed-6406"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1409"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

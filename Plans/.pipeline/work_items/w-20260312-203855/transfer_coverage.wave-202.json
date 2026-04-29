@@ -1,0 +1,325 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-202",
+  "row_group_ids": [
+    "rowgrp-0805",
+    "rowgrp-0806",
+    "rowgrp-0807",
+    "rowgrp-0808"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-03309",
+      "source_obligation_ids": [
+        "obl-3155"
+      ],
+      "source_seed_ids": [
+        "seed-4197"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`project_id` and validation/report lineage are still missing from the wizard\u2019s normalized",
+      "row_type": "owner",
+      "path": "Plans/chain-wizard.md",
+      "heading_hint": "## Wizard and launched-run lineage reconciliation",
+      "status": "partial",
+      "exact_items": [
+        "`project_id` and validation/report lineage are still missing from the wizard\u2019s normalized handoff payload.",
+        "project_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard.md:L6"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-03479",
+      "source_obligation_ids": [
+        "obl-3325"
+      ],
+      "source_seed_ids": [
+        "seed-4466"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "The pass reports are canonical enough to gate wizard transitions and downstream artifact p",
+      "row_type": "owner",
+      "path": "Plans/chain-wizard.md",
+      "heading_hint": "## Wizard and launched-run lineage reconciliation",
+      "status": "partial",
+      "exact_items": [
+        "The pass reports are canonical enough to gate wizard transitions and downstream artifact promotion, but not canonical enough to explain their own upstream/downstream lineage without consulting multiple other records."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard.md:L3"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04505",
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "row_type": "owner",
+      "path": "Plans/chain-wizard.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-06274",
+      "source_obligation_ids": [
+        "obl-5986"
+      ],
+      "source_seed_ids": [
+        "seed-9006"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full si",
+      "row_type": "owner",
+      "path": "Plans/chain-wizard.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard.md:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00263",
+      "source_obligation_ids": [
+        "obl-144"
+      ],
+      "source_seed_ids": [
+        "seed-150"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "`Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `Plans/test_strateg",
+      "row_type": "layout_blocker",
+      "path": "Plans/evidence.schema.json",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `Plans/test_strategy.schema.json`, `Plans/evidence.schema.json`, `Plans/gui_automation_manifest.schema.json`",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/test_strategy.schema.json",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/evidence.schema.json:content_absent_after_scan"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04300",
+      "source_obligation_ids": [
+        "obl-4140"
+      ],
+      "source_seed_ids": [
+        "seed-5738",
+        "seed-5751",
+        "seed-5989",
+        "seed-6812",
+        "seed-6834",
+        "seed-8074",
+        "seed-8095",
+        "seed-9172"
+      ],
+      "source_shard_ids": [
+        "shard-0057",
+        "shard-0059",
+        "shard-0065",
+        "shard-0075",
+        "shard-0083"
+      ],
+      "canon_label": "`Plans/evidence.schema.json`",
+      "row_type": "owner",
+      "path": "Plans/evidence.schema.json",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/evidence.schema.json`",
+        "Plans/evidence.schema.json"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/evidence.schema.json:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-04307",
+      "source_obligation_ids": [
+        "obl-4147"
+      ],
+      "source_seed_ids": [
+        "seed-5747"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "The evidence side is similarly underspecified. `Plans/evidence.schema.json` only gives a g",
+      "row_type": "owner",
+      "path": "Plans/evidence.schema.json",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "The evidence side is similarly underspecified. `Plans/evidence.schema.json` only gives a generic `checks[]` array with `name`, `result`, `details`, and optional `contract_refs`. That is too weak to carry structured route-aware verification outcomes without each check inventing its own ad hoc text.",
+        "Plans/evidence.schema.json",
+        "checks[]",
+        "name",
+        "result",
+        "details",
+        "contract_refs"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/evidence.schema.json:L17",
+        "Plans/evidence.schema.json:L20",
+        "Plans/evidence.schema.json:L173",
+        "Plans/evidence.schema.json:L190",
+        "Plans/evidence.schema.json:L234"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04316",
+      "source_obligation_ids": [
+        "obl-4156"
+      ],
+      "source_seed_ids": [
+        "seed-5766"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "Either extend `Plans/evidence.schema.json` with structured gate-specific detail blocks, or",
+      "row_type": "owner",
+      "path": "Plans/evidence.schema.json",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Either extend `Plans/evidence.schema.json` with structured gate-specific detail blocks, or add a dedicated wiring-evidence schema for richer machine-readable results.",
+        "Plans/evidence.schema.json"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/evidence.schema.json:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05676",
+      "source_obligation_ids": [
+        "obl-5448"
+      ],
+      "source_seed_ids": [
+        "seed-8085"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "`Plans/evidence.schema.json` is also too generic to express route/wrapper verification cle",
+      "row_type": "owner",
+      "path": "Plans/evidence.schema.json",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/evidence.schema.json` is also too generic to express route/wrapper verification cleanly:",
+        "Plans/evidence.schema.json"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/evidence.schema.json:content_absent_after_scan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00499",
+      "source_obligation_ids": [
+        "obl-356"
+      ],
+      "source_seed_ids": [
+        "seed-411"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "Source Control should keep `Worktrees` as the primary subview/object list rather than flip",
+      "row_type": "consumer",
+      "path": "Plans/feature-list.md",
+      "heading_hint": "# Puppet Master Feature List (Reference)",
+      "status": "partial",
+      "exact_items": [
+        "Source Control should keep `Worktrees` as the primary subview/object list rather than flipping to a lane-first list.",
+        "Worktrees"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/feature-list.md:L131"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-06360",
+      "source_obligation_ids": [
+        "obl-6009"
+      ],
+      "source_seed_ids": [
+        "seed-9092"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` d",
+      "row_type": "consumer",
+      "path": "Plans/feature-list.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "Plans/*.md",
+        "61"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/feature-list.md:content_absent_after_scan"
+      ],
+      "required_action": "consumer_propagation"
+    }
+  ]
+}

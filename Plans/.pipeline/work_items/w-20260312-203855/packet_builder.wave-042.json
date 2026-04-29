@@ -1,0 +1,511 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-042",
+  "group_ids": [
+    "pktgrp-0165",
+    "pktgrp-0166",
+    "pktgrp-0167",
+    "pktgrp-0168"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "packet-target-0165",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### 2.7 Large files (Plans/FileManager.md:L256)",
+      "path": "Plans/FileManager.md",
+      "coverage_row_ids": [
+        "cov-04656"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-04656"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-4434"
+      ],
+      "source_seed_ids": [
+        "seed-6279"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4434"
+        ],
+        "source_seed_ids": [
+          "seed-6279"
+        ],
+        "source_shard_ids": [
+          "shard-0061"
+        ]
+      },
+      "gap_ids": [
+        "gap-03647"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "If the base target object grows too large, it stops being canonical and just becomes a new dumping ground."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-7fb7fc967712",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0216",
+      "source_reconciliation_target_ids": [
+        "target-0216"
+      ],
+      "source_target_ids": [
+        "target-0216"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0216\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - If the base target object grows too large, it stops being canonical and just becomes a new dumping ground.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0166",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### 2.8 Keyboard shortcuts (Plans/FileManager.md:L262)",
+      "path": "Plans/FileManager.md",
+      "coverage_row_ids": [
+        "cov-01377"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-01377"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-1234"
+      ],
+      "source_seed_ids": [
+        "seed-1475"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-1234"
+        ],
+        "source_seed_ids": [
+          "seed-1475"
+        ],
+        "source_shard_ids": [
+          "shard-0023"
+        ]
+      },
+      "gap_ids": [
+        "gap-01082"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Keyboard shortcuts should stay useful but sparse."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-15c9f2262841",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0217",
+      "source_reconciliation_target_ids": [
+        "target-0217"
+      ],
+      "source_target_ids": [
+        "target-0217"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0217\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Keyboard shortcuts should stay useful but sparse.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0167",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "# === Raw SQL via CLI clients === (Plans/FileSafe.md:L862)",
+      "path": "Plans/FileSafe.md",
+      "coverage_row_ids": [
+        "cov-02856",
+        "cov-04707",
+        "cov-06454"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-02856",
+          "cov-04707",
+          "cov-06454"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-2703",
+        "obl-4485",
+        "obl-6095"
+      ],
+      "source_seed_ids": [
+        "seed-3556",
+        "seed-6374",
+        "seed-9213"
+      ],
+      "source_shard_ids": [
+        "shard-0041",
+        "shard-0061",
+        "shard-0083"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-2703",
+          "obl-4485",
+          "obl-6095"
+        ],
+        "source_seed_ids": [
+          "seed-3556",
+          "seed-6374",
+          "seed-9213"
+        ],
+        "source_shard_ids": [
+          "shard-0041",
+          "shard-0061",
+          "shard-0083"
+        ]
+      },
+      "gap_ids": [
+        "gap-02254",
+        "gap-03675",
+        "gap-05006"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "role-scoped pools already exist in policy/storage via `allowed_roles?` and `disallowed_roles?`",
+        "allowed_roles?",
+        "disallowed_roles?",
+        "raw provider/account disclosure fields",
+        "raw `resume_url`",
+        "resume_url"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-93b624550767",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0219",
+      "source_reconciliation_target_ids": [
+        "target-0219"
+      ],
+      "source_target_ids": [
+        "target-0219"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0219\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - role-scoped pools already exist in policy/storage via `allowed_roles?` and `disallowed_roles?`\n  - allowed_roles?\n  - disallowed_roles?\n  - raw provider/account disclosure fields\n  - raw `resume_url`\n  - resume_url\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0168",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "# FileSafe -- Implementation Plan (Plans/FileSafe.md:L1)",
+      "path": "Plans/FileSafe.md",
+      "coverage_row_ids": [
+        "cov-00087",
+        "cov-00116",
+        "cov-00137",
+        "cov-04009",
+        "cov-04466",
+        "cov-06235",
+        "cov-06320",
+        "cov-06768"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-00087",
+          "cov-00116",
+          "cov-00137",
+          "cov-04009",
+          "cov-04466",
+          "cov-06235",
+          "cov-06320",
+          "cov-06768"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-033",
+        "obl-039",
+        "obl-043",
+        "obl-3852",
+        "obl-4292",
+        "obl-5986",
+        "obl-6009",
+        "obl-6404"
+      ],
+      "source_seed_ids": [
+        "seed-033",
+        "seed-039",
+        "seed-043",
+        "seed-5279",
+        "seed-6001",
+        "seed-9006",
+        "seed-9092",
+        "seed-9783"
+      ],
+      "source_shard_ids": [
+        "shard-0006",
+        "shard-0007",
+        "shard-0008",
+        "shard-0053",
+        "shard-0059",
+        "shard-0082",
+        "shard-0087"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-033",
+          "obl-039",
+          "obl-043",
+          "obl-3852",
+          "obl-4292",
+          "obl-5986",
+          "obl-6009",
+          "obl-6404"
+        ],
+        "source_seed_ids": [
+          "seed-033",
+          "seed-039",
+          "seed-043",
+          "seed-5279",
+          "seed-6001",
+          "seed-9006",
+          "seed-9092",
+          "seed-9783"
+        ],
+        "source_shard_ids": [
+          "shard-0006",
+          "shard-0007",
+          "shard-0008",
+          "shard-0053",
+          "shard-0059",
+          "shard-0082",
+          "shard-0087"
+        ]
+      },
+      "gap_ids": [
+        "gap-00084",
+        "gap-00113",
+        "gap-00134",
+        "gap-03116",
+        "gap-03498",
+        "gap-04824",
+        "gap-04899",
+        "gap-05246"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "how are worktrees assigned for parallel nodes within the same package or seam",
+        "what happens to worktree ownership during remediation, corroboration, or graph-patch-triggered work",
+        "for package-based worktree pools, whether downstream dependent nodes reuse the same worktree lane or start a fresh lane from the promoted upstream result",
+        "preserve same-lane continuation by default; promote-then-fork only when it materially improves safe parallelism",
+        "Define lane\u2194worktree mapping",
+        "Specify contamination detection and cross-lane reuse rules",
+        "Define safe-point restore for lane/package context",
+        "Resolve no-worktrees vs per-subtask worktrees contradiction",
+        "Register PM-managed worktrees in source control visibility",
+        "Remove legacy `reason_code` / `recovery_options[]` drift and older singular worktree assumptions.",
+        "Normalize safe-point / restore-point / rollback / contamination terminology into one authoritative mapping and event taxonomy.",
+        "`Runtime_Artifacts_Panel.md` currently treats the envelope mostly as an implementation hook:",
+        "Runtime_Artifacts_Panel.md",
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md",
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "22",
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+        "61",
+        "Missing field schemas will cause different implementation agents to invent incompatible shapes."
+      ],
+      "exact_stale_tokens_to_retire": [
+        "task/subtask hierarchy",
+        "one worktree per subtask",
+        "per-subtask worktrees",
+        "no-worktrees",
+        "safe points",
+        "cleanup policy",
+        "one active worktree",
+        "project-root artifact paths",
+        "reason_code",
+        "recovery_options[]",
+        "safe-point",
+        "restore-point",
+        "rollback",
+        "contamination",
+        "older singular worktree assumptions"
+      ],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+        "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+      ],
+      "forbidden_strings": [
+        "task/subtask hierarchy",
+        "one worktree per subtask",
+        "per-subtask worktrees",
+        "no-worktrees",
+        "safe points",
+        "cleanup policy",
+        "one active worktree",
+        "project-root artifact paths",
+        "reason_code",
+        "recovery_options[]",
+        "safe-point",
+        "restore-point",
+        "rollback",
+        "contamination",
+        "older singular worktree assumptions"
+      ],
+      "required_structural_headings": [
+        "### Reconciliation addendum",
+        "worktree behavior",
+        "Worktree / SCM / Parallelism Impacts",
+        "Cleanup Priorities"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-4a083e2bbb2d",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0220",
+      "source_reconciliation_target_ids": [
+        "target-0220"
+      ],
+      "source_target_ids": [
+        "target-0220"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n  - worktree behavior\n  - Worktree / SCM / Parallelism Impacts\n  - Cleanup Priorities\n\n#### Source target target-0220\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n  - worktree behavior\n  - Worktree / SCM / Parallelism Impacts\n  - Cleanup Priorities\n- Exact required items represented:\n  - how are worktrees assigned for parallel nodes within the same package or seam\n  - what happens to worktree ownership during remediation, corroboration, or graph-patch-triggered work\n  - for package-based worktree pools, whether downstream dependent nodes reuse the same worktree lane or start a fresh lane from the promoted upstream result\n  - preserve same-lane continuation by default; promote-then-fork only when it materially improves safe parallelism\n  - Define lane\u2194worktree mapping\n  - Specify [retired-token-14] detection and cross-lane reuse rules\n  - Define [retired-token-11] restore for lane/package context\n  - Resolve [retired-token-4] vs [retired-token-3] contradiction\n  - Register PM-managed worktrees in source control visibility\n  - Remove legacy `[retired-token-9]` / `[retired-token-10]` drift and [retired-token-15].\n  - Normalize [retired-token-11] / [retired-token-12] / [retired-token-13] / [retired-token-14] terminology into one authoritative mapping and event taxonomy.\n  - `Runtime_Artifacts_Panel.md` currently treats the envelope mostly as an implementation hook:\n  - Runtime_Artifacts_Panel.md\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.\n  - 61\n  - Missing field schemas will cause different implementation agents to invent incompatible shapes.\n- Legacy token retirement handling:\n  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #14 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #15 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-04656",
+    "cov-01377",
+    "cov-02856",
+    "cov-04707",
+    "cov-06454",
+    "cov-00087",
+    "cov-00116",
+    "cov-00137",
+    "cov-04009",
+    "cov-04466",
+    "cov-06235",
+    "cov-06320",
+    "cov-06768"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-4434",
+    "obl-1234",
+    "obl-2703",
+    "obl-4485",
+    "obl-6095",
+    "obl-033",
+    "obl-039",
+    "obl-043",
+    "obl-3852",
+    "obl-4292",
+    "obl-5986",
+    "obl-6009",
+    "obl-6404"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-6279",
+    "seed-1475",
+    "seed-3556",
+    "seed-6374",
+    "seed-9213",
+    "seed-033",
+    "seed-039",
+    "seed-043",
+    "seed-5279",
+    "seed-6001",
+    "seed-9006",
+    "seed-9092",
+    "seed-9783"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0061",
+    "shard-0023",
+    "shard-0041",
+    "shard-0083",
+    "shard-0006",
+    "shard-0007",
+    "shard-0008",
+    "shard-0053",
+    "shard-0059",
+    "shard-0082",
+    "shard-0087"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.",
+    "All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases."
+  ],
+  "preserved_exact_required_items": [
+    "If the base target object grows too large, it stops being canonical and just becomes a new dumping ground.",
+    "Keyboard shortcuts should stay useful but sparse.",
+    "role-scoped pools already exist in policy/storage via `allowed_roles?` and `disallowed_roles?`",
+    "allowed_roles?",
+    "disallowed_roles?",
+    "raw provider/account disclosure fields",
+    "raw `resume_url`",
+    "resume_url",
+    "how are worktrees assigned for parallel nodes within the same package or seam",
+    "what happens to worktree ownership during remediation, corroboration, or graph-patch-triggered work",
+    "for package-based worktree pools, whether downstream dependent nodes reuse the same worktree lane or start a fresh lane from the promoted upstream result",
+    "preserve same-lane continuation by default; promote-then-fork only when it materially improves safe parallelism",
+    "Define lane\u2194worktree mapping",
+    "Specify contamination detection and cross-lane reuse rules",
+    "Define safe-point restore for lane/package context",
+    "Resolve no-worktrees vs per-subtask worktrees contradiction",
+    "Register PM-managed worktrees in source control visibility",
+    "Remove legacy `reason_code` / `recovery_options[]` drift and older singular worktree assumptions.",
+    "Normalize safe-point / restore-point / rollback / contamination terminology into one authoritative mapping and event taxonomy.",
+    "`Runtime_Artifacts_Panel.md` currently treats the envelope mostly as an implementation hook:",
+    "Runtime_Artifacts_Panel.md",
+    "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+    "Plans/*.md",
+    "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+    "39",
+    "22",
+    "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+    "61",
+    "Missing field schemas will cause different implementation agents to invent incompatible shapes."
+  ],
+  "blocked_targets": []
+}

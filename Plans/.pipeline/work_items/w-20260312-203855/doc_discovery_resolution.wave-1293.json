@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1293",
+  "group_ids": [
+    "discgrp-5169",
+    "discgrp-5170",
+    "discgrp-5171",
+    "discgrp-5172"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05585",
+      "source_obligation_ids": [
+        "obl-5357"
+      ],
+      "source_seed_ids": [
+        "seed-7961"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "# Runtime Artifacts Panel \u2014 SSOT",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05586",
+      "source_obligation_ids": [
+        "obl-5358"
+      ],
+      "source_seed_ids": [
+        "seed-7962"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "# Runtime Artifacts Panel \u2014 SSOT",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05589",
+      "source_obligation_ids": [
+        "obl-5361"
+      ],
+      "source_seed_ids": [
+        "seed-7965"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Project_Output_Artifacts.md",
+      "new_heading_hint": "### B) Project Contracts (generated per user project)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:L188"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05590",
+      "source_obligation_ids": [
+        "obl-5362"
+      ],
+      "source_seed_ids": [
+        "seed-7966"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "# Storage plan (seglog, redb, Tantivy, projectors)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

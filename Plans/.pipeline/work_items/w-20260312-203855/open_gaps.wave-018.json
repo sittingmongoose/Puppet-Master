@@ -1,0 +1,2683 @@
+{
+  "schema_id": "pm.open_gaps_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-018",
+  "group_ids": [
+    "gapgrp-0069",
+    "gapgrp-0070",
+    "gapgrp-0071",
+    "gapgrp-0072"
+  ],
+  "gap_candidates": [
+    {
+      "gap_id": "gap-00322",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00409 is partial for still too weak to support canonical account identity, switch-reason disclosure, or convers",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00409"
+      ],
+      "source_obligation_ids": [
+        "obl-267"
+      ],
+      "source_seed_ids": [
+        "seed-303"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "still too weak to support canonical account identity, switch-reason disclosure, or conversational-actor routing through the provider facade"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00832",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01072 is partial for `honored/skipped/clamped` from provider capability handling",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01072"
+      ],
+      "source_obligation_ids": [
+        "obl-929"
+      ],
+      "source_seed_ids": [
+        "seed-1093"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "`honored/skipped/clamped` from provider capability handling",
+        "honored/skipped/clamped"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00845",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01089 is partial for `Reason: provider does not support effort on this model`",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01089"
+      ],
+      "source_obligation_ids": [
+        "obl-946"
+      ],
+      "source_seed_ids": [
+        "seed-1113"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "`Reason: provider does not support effort on this model`",
+        "Reason: provider does not support effort on this model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00923",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01179 is partial for `Provider fallback from preferred persona model`",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01179"
+      ],
+      "source_obligation_ids": [
+        "obl-1036"
+      ],
+      "source_seed_ids": [
+        "seed-1214"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "`Provider fallback from preferred persona model`",
+        "Provider fallback from preferred persona model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01281",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01638 is partial for shared provider runtime does not imply shared execution ontology",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01638"
+      ],
+      "source_obligation_ids": [
+        "obl-1495"
+      ],
+      "source_seed_ids": [
+        "seed-1849"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "shared provider runtime does not imply shared execution ontology"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01358",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01731 is partial for `Warning: provider pressure high`",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01731"
+      ],
+      "source_obligation_ids": [
+        "obl-1588"
+      ],
+      "source_seed_ids": [
+        "seed-1980"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "`Warning: provider pressure high`",
+        "Warning: provider pressure high"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01727",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02220 is partial for still encode single-session/single-actor assumptions that break under shared provider runt",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02220"
+      ],
+      "source_obligation_ids": [
+        "obl-2074"
+      ],
+      "source_seed_ids": [
+        "seed-2694"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "still encode single-session/single-actor assumptions that break under shared provider runtime, multi-lane orchestration, and server-bridged transport"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01812",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02335 is partial for `storage-plan.md` still models durable provider account snapshots for runs but not for oth",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02335"
+      ],
+      "source_obligation_ids": [
+        "obl-2186"
+      ],
+      "source_seed_ids": [
+        "seed-2841"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`storage-plan.md` still models durable provider account snapshots for runs but not for other actor classes that use the same provider runtime.",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01965",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02520 is partial for Actor/runtime unification must preserve ontology separation: conversational actors share p",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02520"
+      ],
+      "source_obligation_ids": [
+        "obl-2369"
+      ],
+      "source_seed_ids": [
+        "seed-3074"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "Actor/runtime unification must preserve ontology separation: conversational actors share provider runtime without becoming orchestration-node objects."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01967",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02522 is partial for direct providers must expose capability metadata like multi-account support, switch bounda",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02522"
+      ],
+      "source_obligation_ids": [
+        "obl-2371"
+      ],
+      "source_seed_ids": [
+        "seed-3084"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "direct providers must expose capability metadata like multi-account support, switch boundary, quota signal sources/confidence, and role-scoped pools"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01969",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02524 is partial for that means multi-account routing and pressure interpretation are currently stronger on pap",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02524"
+      ],
+      "source_obligation_ids": [
+        "obl-2373"
+      ],
+      "source_seed_ids": [
+        "seed-3086"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "that means multi-account routing and pressure interpretation are currently stronger on paper for direct providers than for bridged providers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01974",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02530 is partial for it carries requested/effective model IDs and permission snapshots",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02530"
+      ],
+      "source_obligation_ids": [
+        "obl-2379"
+      ],
+      "source_seed_ids": [
+        "seed-3092"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "it carries requested/effective model IDs and permission snapshots"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01975",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02531 is partial for but not requested/effective auth/account fields, upstream provider identity ownership, or",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02531"
+      ],
+      "source_obligation_ids": [
+        "obl-2380"
+      ],
+      "source_seed_ids": [
+        "seed-3093"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "but not requested/effective auth/account fields, upstream provider identity ownership, or switch attribution"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01992",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02550 is partial for now show a concrete parity gap on auth/account disclosure for conversational actors sharin",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02550"
+      ],
+      "source_obligation_ids": [
+        "obl-2398"
+      ],
+      "source_seed_ids": [
+        "seed-3115"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "now show a concrete parity gap on auth/account disclosure for conversational actors sharing provider runtime"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02074",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02640 is partial for The rewrite now needs one explicit **operational identity** layer in addition to provider-",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02640"
+      ],
+      "source_obligation_ids": [
+        "obl-2488"
+      ],
+      "source_seed_ids": [
+        "seed-3271"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "The rewrite now needs one explicit **operational identity** layer in addition to provider-account identity:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02078",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02644 is partial for `Models_System.md` still contains a concrete naming collision between **transport host** a",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02644"
+      ],
+      "source_obligation_ids": [
+        "obl-2492"
+      ],
+      "source_seed_ids": [
+        "seed-3275"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "`Models_System.md` still contains a concrete naming collision between **transport host** and **upstream provider**:",
+        "Models_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02079",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02645 is partial for canonical model IDs treat `provider_id` as upstream provider slug",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02645"
+      ],
+      "source_obligation_ids": [
+        "obl-2493"
+      ],
+      "source_seed_ids": [
+        "seed-3276"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "canonical model IDs treat `provider_id` as upstream provider slug",
+        "provider_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02096",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02667 is partial for `Models_System.md` still mixes transport host and upstream provider in one `provider_id` v",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02667"
+      ],
+      "source_obligation_ids": [
+        "obl-2514"
+      ],
+      "source_seed_ids": [
+        "seed-3301"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "`Models_System.md` still mixes transport host and upstream provider in one `provider_id` vocabulary.",
+        "Models_System.md",
+        "provider_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02114",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02692 is partial for Permission snapshots still do not satisfy rewrite-era requested/effective disclosure:",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02692"
+      ],
+      "source_obligation_ids": [
+        "obl-2539"
+      ],
+      "source_seed_ids": [
+        "seed-3332"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Permission snapshots still do not satisfy rewrite-era requested/effective disclosure:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02125",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02704 is partial for Permission snapshots still omit requested state and identity context despite rewrite-era r",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02704"
+      ],
+      "source_obligation_ids": [
+        "obl-2551"
+      ],
+      "source_seed_ids": [
+        "seed-3349"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Permission snapshots still omit requested state and identity context despite rewrite-era requested/effective disclosure needs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02129",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02709 is partial for Upgrade permission snapshots to include requested/effective values, downgrade reasons, and",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02709"
+      ],
+      "source_obligation_ids": [
+        "obl-2556"
+      ],
+      "source_seed_ids": [
+        "seed-3354"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Upgrade permission snapshots to include requested/effective values, downgrade reasons, and identity context."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02205",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02800 is partial for `Models_System.md` still needs one explicit split between **transport host identity** and",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02800"
+      ],
+      "source_obligation_ids": [
+        "obl-2647"
+      ],
+      "source_seed_ids": [
+        "seed-3476"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "`Models_System.md` still needs one explicit split between **transport host identity** and **upstream provider identity**, or requested/effective identity renderers will keep colliding those concepts",
+        "Models_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02219",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02817 is partial for Research Progress - 2026-03-16 - GPT-5.3-Codex Provider / Permission Closure",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02817"
+      ],
+      "source_obligation_ids": [
+        "obl-2664"
+      ],
+      "source_seed_ids": [
+        "seed-3498"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - GPT-5.3-Codex Provider / Permission Closure"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02223",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02822 is partial for The provider boundary still lacks a legal place for rewrite-era correlation and pressure s",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02822"
+      ],
+      "source_obligation_ids": [
+        "obl-2669"
+      ],
+      "source_seed_ids": [
+        "seed-3511"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "The provider boundary still lacks a legal place for rewrite-era correlation and pressure semantics:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02240",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02840 is partial for Permission snapshots still do not project requested/effective identity richly enough for b",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02840"
+      ],
+      "source_obligation_ids": [
+        "obl-2687"
+      ],
+      "source_seed_ids": [
+        "seed-3534"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Permission snapshots still do not project requested/effective identity richly enough for blocked/approval truth."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02245",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02845 is partial for Upgrade permission snapshots to carry requested/effective values, downgrade reasons, and i",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02845"
+      ],
+      "source_obligation_ids": [
+        "obl-2692"
+      ],
+      "source_seed_ids": [
+        "seed-3539"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Upgrade permission snapshots to carry requested/effective values, downgrade reasons, and identity context."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02356",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02984 is partial for Artifact provenance/trust needs to work even when the live worktree or provider session is",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02984"
+      ],
+      "source_obligation_ids": [
+        "obl-2830"
+      ],
+      "source_seed_ids": [
+        "seed-3728"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "Artifact provenance/trust needs to work even when the live worktree or provider session is gone."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02367",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03000 is partial for still needs scope-keyed approvals and richer requested/effective permission snapshots",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03000"
+      ],
+      "source_obligation_ids": [
+        "obl-2846"
+      ],
+      "source_seed_ids": [
+        "seed-3756"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "still needs scope-keyed approvals and richer requested/effective permission snapshots"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02909",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03727 is partial for requested/effective persona refs or embedded snapshot refs",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03727"
+      ],
+      "source_obligation_ids": [
+        "obl-3572"
+      ],
+      "source_seed_ids": [
+        "seed-4819"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "requested/effective persona refs or embedded snapshot refs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02974",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03811 is partial for requested/effective persona snapshot ref",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03811"
+      ],
+      "source_obligation_ids": [
+        "obl-3656"
+      ],
+      "source_seed_ids": [
+        "seed-4950"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "requested/effective persona snapshot ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02976",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03813 is partial for requested/effective permission snapshot ref",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03813"
+      ],
+      "source_obligation_ids": [
+        "obl-3658"
+      ],
+      "source_seed_ids": [
+        "seed-4952"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "requested/effective permission snapshot ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03007",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03856 is partial for Those should not be collapsed into provider account identity because the same provider acc",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03856"
+      ],
+      "source_obligation_ids": [
+        "obl-3701"
+      ],
+      "source_seed_ids": [
+        "seed-5024"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "Those should not be collapsed into provider account identity because the same provider account may drive multiple operational targets, and the same operational target may be accessed by different provider accounts over time."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03014",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03865 is partial for `Orchestrator_Page.md` still uses a weak worker identity row (`requested_persona_id`, `eff",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03865"
+      ],
+      "source_obligation_ids": [
+        "obl-3710"
+      ],
+      "source_seed_ids": [
+        "seed-5044"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator_Page.md` still uses a weak worker identity row (`requested_persona_id`, `effective_persona_id`, provider, model, attempt_id, session_id?`) that does not expose `execution_role` or operational target context.",
+        "Orchestrator_Page.md",
+        "requested_persona_id",
+        "effective_persona_id",
+        ") that does not expose"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03080",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03955 is partial for which provider attempt and effective account/runtime identity it used",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03955"
+      ],
+      "source_obligation_ids": [
+        "obl-3799"
+      ],
+      "source_seed_ids": [
+        "seed-5199"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "which provider attempt and effective account/runtime identity it used"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03090",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03971 is partial for `provider_attempt_ref` appears on `attempt_record` and is the closest thing to a provider/",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03971"
+      ],
+      "source_obligation_ids": [
+        "obl-3815"
+      ],
+      "source_seed_ids": [
+        "seed-5231"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "`provider_attempt_ref` appears on `attempt_record` and is the closest thing to a provider/runtime execution trace handle.",
+        "provider_attempt_ref",
+        "attempt_record"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03269",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04196 is partial for Contribute(PR) vs DAE isolation is now a three-way collision between PR branch ownership,",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04196"
+      ],
+      "source_obligation_ids": [
+        "obl-4036"
+      ],
+      "source_seed_ids": [
+        "seed-5555"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "Contribute(PR) vs DAE isolation is now a three-way collision between PR branch ownership, worktree/jail isolation, and provider execution context."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03487",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04455 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04455"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03667",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04694 is partial for But these are not all the same kind of data, and they should not all become first-class ta",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Required data shape"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04694"
+      ],
+      "source_obligation_ids": [
+        "obl-4472"
+      ],
+      "source_seed_ids": [
+        "seed-6361"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "But these are not all the same kind of data, and they should not all become first-class target identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04038",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05195 is partial for provider/account disclosure data",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Required data shape"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05195"
+      ],
+      "source_obligation_ids": [
+        "obl-4971"
+      ],
+      "source_seed_ids": [
+        "seed-7211"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "exact_missing_items": [
+        "provider/account disclosure data"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04573",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05907 is partial for `Provider / Model`",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05907"
+      ],
+      "source_obligation_ids": [
+        "obl-5679"
+      ],
+      "source_seed_ids": [
+        "seed-8441"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "`Provider / Model`",
+        "Provider / Model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-00409",
+    "cov-01072",
+    "cov-01089",
+    "cov-01179",
+    "cov-01638",
+    "cov-01731",
+    "cov-02220",
+    "cov-02335",
+    "cov-02520",
+    "cov-02522",
+    "cov-02524",
+    "cov-02530",
+    "cov-02531",
+    "cov-02550",
+    "cov-02640",
+    "cov-02644",
+    "cov-02645",
+    "cov-02667",
+    "cov-02692",
+    "cov-02704",
+    "cov-02709",
+    "cov-02800",
+    "cov-02817",
+    "cov-02822",
+    "cov-02840",
+    "cov-02845",
+    "cov-02984",
+    "cov-03000",
+    "cov-03727",
+    "cov-03811",
+    "cov-03813",
+    "cov-03856",
+    "cov-03865",
+    "cov-03955",
+    "cov-03971",
+    "cov-04196",
+    "cov-04455",
+    "cov-04694",
+    "cov-05195",
+    "cov-05907"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1036",
+    "obl-1495",
+    "obl-1588",
+    "obl-2074",
+    "obl-2186",
+    "obl-2369",
+    "obl-2371",
+    "obl-2373",
+    "obl-2379",
+    "obl-2380",
+    "obl-2398",
+    "obl-2488",
+    "obl-2492",
+    "obl-2493",
+    "obl-2514",
+    "obl-2539",
+    "obl-2551",
+    "obl-2556",
+    "obl-2647",
+    "obl-2664",
+    "obl-2669",
+    "obl-267",
+    "obl-2687",
+    "obl-2692",
+    "obl-2830",
+    "obl-2846",
+    "obl-3572",
+    "obl-3656",
+    "obl-3658",
+    "obl-3701",
+    "obl-3710",
+    "obl-3799",
+    "obl-3815",
+    "obl-4036",
+    "obl-4292",
+    "obl-4472",
+    "obl-4971",
+    "obl-5679",
+    "obl-929",
+    "obl-946"
+  ],
+  "source_seed_ids_represented": [
+    "seed-1093",
+    "seed-1113",
+    "seed-1214",
+    "seed-1849",
+    "seed-1980",
+    "seed-2694",
+    "seed-2841",
+    "seed-303",
+    "seed-3074",
+    "seed-3084",
+    "seed-3086",
+    "seed-3092",
+    "seed-3093",
+    "seed-3115",
+    "seed-3271",
+    "seed-3275",
+    "seed-3276",
+    "seed-3301",
+    "seed-3332",
+    "seed-3349",
+    "seed-3354",
+    "seed-3476",
+    "seed-3498",
+    "seed-3511",
+    "seed-3534",
+    "seed-3539",
+    "seed-3728",
+    "seed-3756",
+    "seed-4819",
+    "seed-4950",
+    "seed-4952",
+    "seed-5024",
+    "seed-5044",
+    "seed-5199",
+    "seed-5231",
+    "seed-5555",
+    "seed-6001",
+    "seed-6361",
+    "seed-7211",
+    "seed-8441"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0011",
+    "shard-0019",
+    "shard-0020",
+    "shard-0027",
+    "shard-0028",
+    "shard-0034",
+    "shard-0035",
+    "shard-0037",
+    "shard-0038",
+    "shard-0039",
+    "shard-0040",
+    "shard-0041",
+    "shard-0042",
+    "shard-0050",
+    "shard-0051",
+    "shard-0052",
+    "shard-0053",
+    "shard-0056",
+    "shard-0059",
+    "shard-0061",
+    "shard-0068",
+    "shard-0078"
+  ],
+  "planning_blocker_candidates": [],
+  "fix_backlog_candidates": [
+    {
+      "gap_id": "gap-00322",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-00409 is partial for still too weak to support canonical account identity, switch-reason disclosure, or convers",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-00409"
+      ],
+      "source_obligation_ids": [
+        "obl-267"
+      ],
+      "source_seed_ids": [
+        "seed-303"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "still too weak to support canonical account identity, switch-reason disclosure, or conversational-actor routing through the provider facade"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00832",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01072 is partial for `honored/skipped/clamped` from provider capability handling",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01072"
+      ],
+      "source_obligation_ids": [
+        "obl-929"
+      ],
+      "source_seed_ids": [
+        "seed-1093"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "`honored/skipped/clamped` from provider capability handling",
+        "honored/skipped/clamped"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00845",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01089 is partial for `Reason: provider does not support effort on this model`",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01089"
+      ],
+      "source_obligation_ids": [
+        "obl-946"
+      ],
+      "source_seed_ids": [
+        "seed-1113"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "`Reason: provider does not support effort on this model`",
+        "Reason: provider does not support effort on this model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-00923",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01179 is partial for `Provider fallback from preferred persona model`",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01179"
+      ],
+      "source_obligation_ids": [
+        "obl-1036"
+      ],
+      "source_seed_ids": [
+        "seed-1214"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_missing_items": [
+        "`Provider fallback from preferred persona model`",
+        "Provider fallback from preferred persona model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01281",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01638 is partial for shared provider runtime does not imply shared execution ontology",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01638"
+      ],
+      "source_obligation_ids": [
+        "obl-1495"
+      ],
+      "source_seed_ids": [
+        "seed-1849"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "shared provider runtime does not imply shared execution ontology"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01358",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-01731 is partial for `Warning: provider pressure high`",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-01731"
+      ],
+      "source_obligation_ids": [
+        "obl-1588"
+      ],
+      "source_seed_ids": [
+        "seed-1980"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "`Warning: provider pressure high`",
+        "Warning: provider pressure high"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01727",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02220 is partial for still encode single-session/single-actor assumptions that break under shared provider runt",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02220"
+      ],
+      "source_obligation_ids": [
+        "obl-2074"
+      ],
+      "source_seed_ids": [
+        "seed-2694"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "still encode single-session/single-actor assumptions that break under shared provider runtime, multi-lane orchestration, and server-bridged transport"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01812",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02335 is partial for `storage-plan.md` still models durable provider account snapshots for runs but not for oth",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02335"
+      ],
+      "source_obligation_ids": [
+        "obl-2186"
+      ],
+      "source_seed_ids": [
+        "seed-2841"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "`storage-plan.md` still models durable provider account snapshots for runs but not for other actor classes that use the same provider runtime.",
+        "storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01965",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02520 is partial for Actor/runtime unification must preserve ontology separation: conversational actors share p",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02520"
+      ],
+      "source_obligation_ids": [
+        "obl-2369"
+      ],
+      "source_seed_ids": [
+        "seed-3074"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "Actor/runtime unification must preserve ontology separation: conversational actors share provider runtime without becoming orchestration-node objects."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01967",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02522 is partial for direct providers must expose capability metadata like multi-account support, switch bounda",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02522"
+      ],
+      "source_obligation_ids": [
+        "obl-2371"
+      ],
+      "source_seed_ids": [
+        "seed-3084"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "direct providers must expose capability metadata like multi-account support, switch boundary, quota signal sources/confidence, and role-scoped pools"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01969",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02524 is partial for that means multi-account routing and pressure interpretation are currently stronger on pap",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02524"
+      ],
+      "source_obligation_ids": [
+        "obl-2373"
+      ],
+      "source_seed_ids": [
+        "seed-3086"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "that means multi-account routing and pressure interpretation are currently stronger on paper for direct providers than for bridged providers"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01974",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02530 is partial for it carries requested/effective model IDs and permission snapshots",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02530"
+      ],
+      "source_obligation_ids": [
+        "obl-2379"
+      ],
+      "source_seed_ids": [
+        "seed-3092"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "it carries requested/effective model IDs and permission snapshots"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01975",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02531 is partial for but not requested/effective auth/account fields, upstream provider identity ownership, or",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02531"
+      ],
+      "source_obligation_ids": [
+        "obl-2380"
+      ],
+      "source_seed_ids": [
+        "seed-3093"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "but not requested/effective auth/account fields, upstream provider identity ownership, or switch attribution"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-01992",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02550 is partial for now show a concrete parity gap on auth/account disclosure for conversational actors sharin",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02550"
+      ],
+      "source_obligation_ids": [
+        "obl-2398"
+      ],
+      "source_seed_ids": [
+        "seed-3115"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "now show a concrete parity gap on auth/account disclosure for conversational actors sharing provider runtime"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02074",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02640 is partial for The rewrite now needs one explicit **operational identity** layer in addition to provider-",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02640"
+      ],
+      "source_obligation_ids": [
+        "obl-2488"
+      ],
+      "source_seed_ids": [
+        "seed-3271"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "The rewrite now needs one explicit **operational identity** layer in addition to provider-account identity:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02078",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02644 is partial for `Models_System.md` still contains a concrete naming collision between **transport host** a",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02644"
+      ],
+      "source_obligation_ids": [
+        "obl-2492"
+      ],
+      "source_seed_ids": [
+        "seed-3275"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "`Models_System.md` still contains a concrete naming collision between **transport host** and **upstream provider**:",
+        "Models_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02079",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02645 is partial for canonical model IDs treat `provider_id` as upstream provider slug",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02645"
+      ],
+      "source_obligation_ids": [
+        "obl-2493"
+      ],
+      "source_seed_ids": [
+        "seed-3276"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "canonical model IDs treat `provider_id` as upstream provider slug",
+        "provider_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02096",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02667 is partial for `Models_System.md` still mixes transport host and upstream provider in one `provider_id` v",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02667"
+      ],
+      "source_obligation_ids": [
+        "obl-2514"
+      ],
+      "source_seed_ids": [
+        "seed-3301"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "`Models_System.md` still mixes transport host and upstream provider in one `provider_id` vocabulary.",
+        "Models_System.md",
+        "provider_id"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02114",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-02692 is partial for Permission snapshots still do not satisfy rewrite-era requested/effective disclosure:",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02692"
+      ],
+      "source_obligation_ids": [
+        "obl-2539"
+      ],
+      "source_seed_ids": [
+        "seed-3332"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Permission snapshots still do not satisfy rewrite-era requested/effective disclosure:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02125",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02704 is partial for Permission snapshots still omit requested state and identity context despite rewrite-era r",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02704"
+      ],
+      "source_obligation_ids": [
+        "obl-2551"
+      ],
+      "source_seed_ids": [
+        "seed-3349"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Permission snapshots still omit requested state and identity context despite rewrite-era requested/effective disclosure needs."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02129",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02709 is partial for Upgrade permission snapshots to include requested/effective values, downgrade reasons, and",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02709"
+      ],
+      "source_obligation_ids": [
+        "obl-2556"
+      ],
+      "source_seed_ids": [
+        "seed-3354"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Upgrade permission snapshots to include requested/effective values, downgrade reasons, and identity context."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02205",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02800 is partial for `Models_System.md` still needs one explicit split between **transport host identity** and",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02800"
+      ],
+      "source_obligation_ids": [
+        "obl-2647"
+      ],
+      "source_seed_ids": [
+        "seed-3476"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "`Models_System.md` still needs one explicit split between **transport host identity** and **upstream provider identity**, or requested/effective identity renderers will keep colliding those concepts",
+        "Models_System.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02219",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02817 is partial for Research Progress - 2026-03-16 - GPT-5.3-Codex Provider / Permission Closure",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02817"
+      ],
+      "source_obligation_ids": [
+        "obl-2664"
+      ],
+      "source_seed_ids": [
+        "seed-3498"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-16 - GPT-5.3-Codex Provider / Permission Closure"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02223",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02822 is partial for The provider boundary still lacks a legal place for rewrite-era correlation and pressure s",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02822"
+      ],
+      "source_obligation_ids": [
+        "obl-2669"
+      ],
+      "source_seed_ids": [
+        "seed-3511"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "The provider boundary still lacks a legal place for rewrite-era correlation and pressure semantics:"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02240",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02840 is partial for Permission snapshots still do not project requested/effective identity richly enough for b",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02840"
+      ],
+      "source_obligation_ids": [
+        "obl-2687"
+      ],
+      "source_seed_ids": [
+        "seed-3534"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Permission snapshots still do not project requested/effective identity richly enough for blocked/approval truth."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02245",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02845 is partial for Upgrade permission snapshots to carry requested/effective values, downgrade reasons, and i",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02845"
+      ],
+      "source_obligation_ids": [
+        "obl-2692"
+      ],
+      "source_seed_ids": [
+        "seed-3539"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Upgrade permission snapshots to carry requested/effective values, downgrade reasons, and identity context."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02356",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-02984 is partial for Artifact provenance/trust needs to work even when the live worktree or provider session is",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-02984"
+      ],
+      "source_obligation_ids": [
+        "obl-2830"
+      ],
+      "source_seed_ids": [
+        "seed-3728"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "Artifact provenance/trust needs to work even when the live worktree or provider session is gone."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02367",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03000 is partial for still needs scope-keyed approvals and richer requested/effective permission snapshots",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03000"
+      ],
+      "source_obligation_ids": [
+        "obl-2846"
+      ],
+      "source_seed_ids": [
+        "seed-3756"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "still needs scope-keyed approvals and richer requested/effective permission snapshots"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02909",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03727 is partial for requested/effective persona refs or embedded snapshot refs",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03727"
+      ],
+      "source_obligation_ids": [
+        "obl-3572"
+      ],
+      "source_seed_ids": [
+        "seed-4819"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "requested/effective persona refs or embedded snapshot refs"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02974",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03811 is partial for requested/effective persona snapshot ref",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03811"
+      ],
+      "source_obligation_ids": [
+        "obl-3656"
+      ],
+      "source_seed_ids": [
+        "seed-4950"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "requested/effective persona snapshot ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-02976",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-03813 is partial for requested/effective permission snapshot ref",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Fidelity recovery cov-010: Requested/effective account identity contract"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03813"
+      ],
+      "source_obligation_ids": [
+        "obl-3658"
+      ],
+      "source_seed_ids": [
+        "seed-4952"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "requested/effective permission snapshot ref"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03007",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03856 is partial for Those should not be collapsed into provider account identity because the same provider acc",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03856"
+      ],
+      "source_obligation_ids": [
+        "obl-3701"
+      ],
+      "source_seed_ids": [
+        "seed-5024"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "Those should not be collapsed into provider account identity because the same provider account may drive multiple operational targets, and the same operational target may be accessed by different provider accounts over time."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03014",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03865 is partial for `Orchestrator_Page.md` still uses a weak worker identity row (`requested_persona_id`, `eff",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03865"
+      ],
+      "source_obligation_ids": [
+        "obl-3710"
+      ],
+      "source_seed_ids": [
+        "seed-5044"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "`Orchestrator_Page.md` still uses a weak worker identity row (`requested_persona_id`, `effective_persona_id`, provider, model, attempt_id, session_id?`) that does not expose `execution_role` or operational target context.",
+        "Orchestrator_Page.md",
+        "requested_persona_id",
+        "effective_persona_id",
+        ") that does not expose"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03080",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03955 is partial for which provider attempt and effective account/runtime identity it used",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03955"
+      ],
+      "source_obligation_ids": [
+        "obl-3799"
+      ],
+      "source_seed_ids": [
+        "seed-5199"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "which provider attempt and effective account/runtime identity it used"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03090",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-03971 is partial for `provider_attempt_ref` appears on `attempt_record` and is the closest thing to a provider/",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-03971"
+      ],
+      "source_obligation_ids": [
+        "obl-3815"
+      ],
+      "source_seed_ids": [
+        "seed-5231"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "exact_missing_items": [
+        "`provider_attempt_ref` appears on `attempt_record` and is the closest thing to a provider/runtime execution trace handle.",
+        "provider_attempt_ref",
+        "attempt_record"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03269",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04196 is partial for Contribute(PR) vs DAE isolation is now a three-way collision between PR branch ownership,",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04196"
+      ],
+      "source_obligation_ids": [
+        "obl-4036"
+      ],
+      "source_seed_ids": [
+        "seed-5555"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "Contribute(PR) vs DAE isolation is now a three-way collision between PR branch ownership, worktree/jail isolation, and provider execution context."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03487",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "owner coverage row cov-04455 is missing for The key remaining question is breadth: how many authored `Plans/*.md` docs are still only",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": ""
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04455"
+      ],
+      "source_obligation_ids": [
+        "obl-4292"
+      ],
+      "source_seed_ids": [
+        "seed-6001"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "Plans/*.md"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-03667",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-04694 is partial for But these are not all the same kind of data, and they should not all become first-class ta",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Required data shape"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-04694"
+      ],
+      "source_obligation_ids": [
+        "obl-4472"
+      ],
+      "source_seed_ids": [
+        "seed-6361"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "But these are not all the same kind of data, and they should not all become first-class target identity."
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04038",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05195 is partial for provider/account disclosure data",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "### Required data shape"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05195"
+      ],
+      "source_obligation_ids": [
+        "obl-4971"
+      ],
+      "source_seed_ids": [
+        "seed-7211"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "exact_missing_items": [
+        "provider/account disclosure data"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-04573",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "owner coverage row cov-05907 is partial for `Provider / Model`",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "# CLI-Bridged Providers (Provider Facade)"
+        }
+      ],
+      "coverage_row_ids": [
+        "cov-05907"
+      ],
+      "source_obligation_ids": [
+        "obl-5679"
+      ],
+      "source_seed_ids": [
+        "seed-8441"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "`Provider / Model`",
+        "Provider / Model"
+      ],
+      "stale_tokens": [],
+      "blocking_reason": "Concrete target is known; unresolved row is actionable fix backlog.",
+      "next_resolution_stage": "Reconciliation Planner"
+    }
+  ],
+  "uncertain_items": []
+}

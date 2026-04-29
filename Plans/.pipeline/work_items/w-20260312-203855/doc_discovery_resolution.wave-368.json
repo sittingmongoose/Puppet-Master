@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-368",
+  "group_ids": [
+    "discgrp-1469",
+    "discgrp-1470",
+    "discgrp-1471",
+    "discgrp-1472"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01721",
+      "source_obligation_ids": [
+        "obl-1578"
+      ],
+      "source_seed_ids": [
+        "seed-1969"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "### 10.1 Smart auto-retrieval (RAG) across project sources (NOT \u201calways search everything\u201d)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:L769"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01722",
+      "source_obligation_ids": [
+        "obl-1579"
+      ],
+      "source_seed_ids": [
+        "seed-1971"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-01723",
+      "source_obligation_ids": [
+        "obl-1580"
+      ],
+      "source_seed_ids": [
+        "seed-1972"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Blocked episode, approval scope, and compatibility fallback",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L327"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01724",
+      "source_obligation_ids": [
+        "obl-1581"
+      ],
+      "source_seed_ids": [
+        "seed-1973"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-067: Notification routing policy",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L101"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

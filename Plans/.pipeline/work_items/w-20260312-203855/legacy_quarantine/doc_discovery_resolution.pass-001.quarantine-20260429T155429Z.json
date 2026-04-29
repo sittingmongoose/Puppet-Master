@@ -1,0 +1,61 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_pass.v3",
+  "work_id": "w-20260312-203855",
+  "pass_id": "pass-001",
+  "timestamp_utc": "2026-04-29T00:35:45Z",
+  "subagent_tasks": [],
+  "assigned_input_boundaries": [
+    "doc discovery verification pass-001 over resolved rows"
+  ],
+  "subagent_result_status": "complete",
+  "completed_task_count": 0,
+  "failed_task_count": 0,
+  "coverage_row_ids_assigned": [
+    "cov-001",
+    "cov-002",
+    "cov-003",
+    "cov-004",
+    "cov-005",
+    "cov-006",
+    "cov-007",
+    "cov-008",
+    "cov-009",
+    "cov-010",
+    "cov-011",
+    "cov-012",
+    "cov-018",
+    "cov-021",
+    "cov-022",
+    "cov-1096",
+    "cov-352",
+    "cov-379",
+    "cov-381",
+    "cov-414"
+  ],
+  "coverage_row_ids_completed": [
+    "cov-001",
+    "cov-002",
+    "cov-003",
+    "cov-004",
+    "cov-005",
+    "cov-006",
+    "cov-007",
+    "cov-008",
+    "cov-009",
+    "cov-010",
+    "cov-011",
+    "cov-012",
+    "cov-018",
+    "cov-021",
+    "cov-022",
+    "cov-1096",
+    "cov-352",
+    "cov-379",
+    "cov-381",
+    "cov-414"
+  ],
+  "material_findings": [],
+  "noise_findings": [
+    "All resolved rows point to existing concrete Plans paths and no invalid path values were introduced."
+  ]
+}

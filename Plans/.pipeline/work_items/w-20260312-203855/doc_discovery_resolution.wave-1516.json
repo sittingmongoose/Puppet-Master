@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1516",
+  "group_ids": [
+    "discgrp-6061",
+    "discgrp-6062",
+    "discgrp-6063",
+    "discgrp-6064"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-06692",
+      "source_obligation_ids": [
+        "obl-6333"
+      ],
+      "source_seed_ids": [
+        "seed-9633"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/00-plans-index.md",
+      "new_heading_hint": "## Change Summary",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/00-plans-index.md:L6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-06693",
+      "source_obligation_ids": [
+        "obl-6334"
+      ],
+      "source_seed_ids": [
+        "seed-9652"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-06694",
+      "source_obligation_ids": [
+        "obl-6335"
+      ],
+      "source_seed_ids": [
+        "seed-9668"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-06695",
+      "source_obligation_ids": [
+        "obl-6336"
+      ],
+      "source_seed_ids": [
+        "seed-9674"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/00-plans-index.md",
+      "new_heading_hint": "## Change Summary",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/00-plans-index.md:L6"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

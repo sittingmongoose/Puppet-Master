@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-461",
+  "group_ids": [
+    "discgrp-1841",
+    "discgrp-1842",
+    "discgrp-1843",
+    "discgrp-1844"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02098",
+      "source_obligation_ids": [
+        "obl-1955"
+      ],
+      "source_seed_ids": [
+        "seed-2544"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Glossary.md",
+      "new_heading_hint": "### Fidelity recovery cov-061: Glossary and help governance",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Glossary.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02099",
+      "source_obligation_ids": [
+        "obl-1956"
+      ],
+      "source_seed_ids": [
+        "seed-2545"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "### 3. No silent runtime identity collapse",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L242"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02100",
+      "source_obligation_ids": [
+        "obl-1957"
+      ],
+      "source_seed_ids": [
+        "seed-2546"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/WorktreeGitImprovement.md",
+      "new_heading_hint": "### Fidelity recovery cov-059: Lane vs worktree lifecycle split",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02101",
+      "source_obligation_ids": [
+        "obl-1958"
+      ],
+      "source_seed_ids": [
+        "seed-2547"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

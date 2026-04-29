@@ -1,0 +1,104 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1073",
+  "group_ids": [
+    "discgrp-4289",
+    "discgrp-4290",
+    "discgrp-4291",
+    "discgrp-4292"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04666",
+      "source_obligation_ids": [
+        "obl-4444"
+      ],
+      "source_seed_ids": [
+        "seed-6297"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### Recommended minimum concern record shape",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L199"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04667",
+      "source_obligation_ids": [
+        "obl-4445"
+      ],
+      "source_seed_ids": [
+        "seed-6299",
+        "seed-7248"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "#### 7.16.1 Thread header and message stream",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1000"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04668",
+      "source_obligation_ids": [
+        "obl-4446"
+      ],
+      "source_seed_ids": [
+        "seed-6301",
+        "seed-7250"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-04669",
+      "source_obligation_ids": [
+        "obl-4447"
+      ],
+      "source_seed_ids": [
+        "seed-6304",
+        "seed-7253",
+        "seed-7727",
+        "seed-7839"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0069",
+        "shard-0072",
+        "shard-0073"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "## 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L767"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

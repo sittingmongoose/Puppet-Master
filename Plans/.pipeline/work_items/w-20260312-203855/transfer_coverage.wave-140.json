@@ -1,0 +1,1096 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-140",
+  "row_group_ids": [
+    "rowgrp-0557",
+    "rowgrp-0558",
+    "rowgrp-0559",
+    "rowgrp-0560"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-03289",
+      "source_obligation_ids": [
+        "obl-3135"
+      ],
+      "source_seed_ids": [
+        "seed-4169"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "`chain-wizard-flexibility.md` still leaks orchestrator ownership into pre-run CUP/quality",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "present",
+      "exact_items": [
+        "`chain-wizard-flexibility.md` still leaks orchestrator ownership into pre-run CUP/quality blocking, still omits hard lineage keys from the normalized downstream payload (`project_id`, thread/report identity), and still overstates Contribute(PR) as \u201cno worktrees\u201d rather than a stable-branch policy with isolated runtime execution underneath.",
+        "chain-wizard-flexibility.md",
+        "project_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L36",
+        "Plans/Orchestrator_Page.md:L40",
+        "Plans/Orchestrator_Page.md:L477",
+        "Plans/Orchestrator_Page.md:L497"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03314",
+      "source_obligation_ids": [
+        "obl-3160"
+      ],
+      "source_seed_ids": [
+        "seed-4213"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`FinalGUISpec.md` still conflicts with Orchestrator-page canon by listing standalone `Tier",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "present",
+      "exact_items": [
+        "`FinalGUISpec.md` still conflicts with Orchestrator-page canon by listing standalone `Tiers` / `Evidence` / `History` / `Ledger` views, and still hosts non-canonical `cmd.orchestrator.*` action IDs where `UI_Command_Catalog.md` defines different stable IDs.",
+        "FinalGUISpec.md",
+        "Tiers",
+        "Evidence",
+        "History",
+        "Ledger",
+        "cmd.orchestrator.*",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L23",
+        "Plans/Orchestrator_Page.md:L27",
+        "Plans/Orchestrator_Page.md:L36",
+        "Plans/Orchestrator_Page.md:L40",
+        "Plans/Orchestrator_Page.md:L91"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03344",
+      "source_obligation_ids": [
+        "obl-3190"
+      ],
+      "source_seed_ids": [
+        "seed-4250"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "`cmd.orchestrator.switch_tab` currently appears in the wiring template without existing in",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`cmd.orchestrator.switch_tab` currently appears in the wiring template without existing in the catalog.",
+        "cmd.orchestrator.switch_tab"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03416",
+      "source_obligation_ids": [
+        "obl-3262"
+      ],
+      "source_seed_ids": [
+        "seed-4365"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "Keep wizard/interview separate from Orchestrator ontology, but require them to emit enough",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Keep wizard/interview separate from Orchestrator ontology, but require them to emit enough canonical identity for downstream consumers to remain truthful without reconstructing context heuristically."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03423",
+      "source_obligation_ids": [
+        "obl-3269"
+      ],
+      "source_seed_ids": [
+        "seed-4383"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "`Wiring_Matrix.md` still references `cmd.orchestrator.switch_tab`, but `UI_Command_Catalog",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`Wiring_Matrix.md` still references `cmd.orchestrator.switch_tab`, but `UI_Command_Catalog.md` does not define it.",
+        "Wiring_Matrix.md",
+        "cmd.orchestrator.switch_tab",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03451",
+      "source_obligation_ids": [
+        "obl-3297"
+      ],
+      "source_seed_ids": [
+        "seed-4419"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "Collapse duplicated executor canon and explicitly assign owners for `blocked_sequence`, `s",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-024: Concern lifecycle and resolution kinds",
+      "status": "partial",
+      "exact_items": [
+        "Collapse duplicated executor canon and explicitly assign owners for `blocked_sequence`, `startup_recovered` handshake, `execution_role`, and reviewer/corroboration lifecycle.",
+        "blocked_sequence",
+        "startup_recovered",
+        "execution_role"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L43",
+        "Plans/Orchestrator_Page.md:L50"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03454",
+      "source_obligation_ids": [
+        "obl-3300"
+      ],
+      "source_seed_ids": [
+        "seed-4422"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "`cmd.orchestrator.switch_tab` is still referenced without existing in the catalog.",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`cmd.orchestrator.switch_tab` is still referenced without existing in the catalog.",
+        "cmd.orchestrator.switch_tab"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03667",
+      "source_obligation_ids": [
+        "obl-3513"
+      ],
+      "source_seed_ids": [
+        "seed-4729"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "`newtools.md` introduces additional ghost command IDs (`cmd.orchestrator.preview_*`, `cmd.",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`newtools.md` introduces additional ghost command IDs (`cmd.orchestrator.preview_*`, `cmd.orchestrator.build_run`, etc.) and a new `CustomHeadlessTool` ToolID without registering them in the canonical catalog/tool/permission owners.",
+        "newtools.md",
+        "cmd.orchestrator.preview_*",
+        "cmd.orchestrator.build_run",
+        "CustomHeadlessTool"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03774",
+      "source_obligation_ids": [
+        "obl-3619"
+      ],
+      "source_seed_ids": [
+        "seed-4889"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "what should the progress tree / compact terminal / high-level tab badges display right now",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "what should the progress tree / compact terminal / high-level tab badges display right now"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03780",
+      "source_obligation_ids": [
+        "obl-3625"
+      ],
+      "source_seed_ids": [
+        "seed-4904"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "`Orchestrator_Page.md` still describes tab 2 as `Tiers` and uses tier-keyed widgets/event",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "present",
+      "exact_items": [
+        "`Orchestrator_Page.md` still describes tab 2 as `Tiers` and uses tier-keyed widgets/event rows even though the rewrite direction is now `Seams` plus node/package/seam/lane-native execution objects.",
+        "Orchestrator_Page.md",
+        "Tiers",
+        "Seams"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L14",
+        "Plans/Orchestrator_Page.md:L17",
+        "Plans/Orchestrator_Page.md:L26",
+        "Plans/Orchestrator_Page.md:L29",
+        "Plans/Orchestrator_Page.md:L38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04043",
+      "source_obligation_ids": [
+        "obl-3886"
+      ],
+      "source_seed_ids": [
+        "seed-5332"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "that means the envelope, not ad hoc UI glue, should hold the minimum openable routing fiel",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-204: Artifact envelope routing preference",
+      "status": "partial",
+      "exact_items": [
+        "that means the envelope, not ad hoc UI glue, should hold the minimum openable routing fields"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L309",
+        "Plans/Orchestrator_Page.md:L316"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04123",
+      "source_obligation_ids": [
+        "obl-3963"
+      ],
+      "source_seed_ids": [
+        "seed-5427"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "Orchestrator with `focused_run_id`, selected node/attempt, tab, inspector target",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "present",
+      "exact_items": [
+        "Orchestrator with `focused_run_id`, selected node/attempt, tab, inspector target",
+        "focused_run_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L107",
+        "Plans/Orchestrator_Page.md:L111",
+        "Plans/Orchestrator_Page.md:L375",
+        "Plans/Orchestrator_Page.md:L397"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04202",
+      "source_obligation_ids": [
+        "obl-4042"
+      ],
+      "source_seed_ids": [
+        "seed-5561"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "preview/build/open-artifact orchestrator command IDs are still exact uncataloged gaps.",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "preview/build/open-artifact orchestrator command IDs are still exact uncataloged gaps."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04251",
+      "source_obligation_ids": [
+        "obl-4091"
+      ],
+      "source_seed_ids": [
+        "seed-5653"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "the missing orchestrator command set now includes `cmd.orchestrator.push_image` in additio",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "the missing orchestrator command set now includes `cmd.orchestrator.push_image` in addition to preview/build/open-artifact IDs.",
+        "cmd.orchestrator.push_image"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04285",
+      "source_obligation_ids": [
+        "obl-4125"
+      ],
+      "source_seed_ids": [
+        "seed-5722"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "`correlation_id` is part of the canonical envelope in prose but not part of any matrix-ver",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-015: Shared governance/runtime record envelope",
+      "status": "partial",
+      "exact_items": [
+        "`correlation_id` is part of the canonical envelope in prose but not part of any matrix-verifiable passthrough requirement.",
+        "correlation_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L19",
+        "Plans/Orchestrator_Page.md:L26"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04324",
+      "source_obligation_ids": [
+        "obl-4164"
+      ],
+      "source_seed_ids": [
+        "seed-5782"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "`cmd.panel.switch`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-093: Account switch and pressure history",
+      "status": "partial",
+      "exact_items": [
+        "`cmd.panel.switch`",
+        "cmd.panel.switch"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L221",
+        "Plans/Orchestrator_Page.md:L228"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04520",
+      "source_obligation_ids": [
+        "obl-4298"
+      ],
+      "source_seed_ids": [
+        "seed-6017"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "`UI_Command_Catalog.md` mirrors the same fragmentation: artifact actions, thread usage act",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`UI_Command_Catalog.md` mirrors the same fragmentation: artifact actions, thread usage actions, panel switches, and Orchestrator pivots all carry their own local arg sets.",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04702",
+      "source_obligation_ids": [
+        "obl-4480"
+      ],
+      "source_seed_ids": [
+        "seed-6369"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "evidence tab vs history tab vs review tab within an inspector",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "evidence tab vs history tab vs review tab within an inspector"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04760",
+      "source_obligation_ids": [
+        "obl-4538"
+      ],
+      "source_seed_ids": [
+        "seed-6455"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "`UI_Command_Catalog.md` backfill plus adjacent docs sharpened command/event ownership furt",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-031: Concern linkage to adjacent families",
+      "status": "partial",
+      "exact_items": [
+        "`UI_Command_Catalog.md` backfill plus adjacent docs sharpened command/event ownership further:",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L79",
+        "Plans/Orchestrator_Page.md:L86"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-04821",
+      "source_obligation_ids": [
+        "obl-4598"
+      ],
+      "source_seed_ids": [
+        "seed-6566"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "canon_label": "If a route needs a panel or tab visible, that should be expressed as destination intent, n",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "If a route needs a panel or tab visible, that should be expressed as destination intent, not as raw shell-state restoration payload."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05133",
+      "source_obligation_ids": [
+        "obl-4909"
+      ],
+      "source_seed_ids": [
+        "seed-7090"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "`tab_id` remains allowed because top-level tab restoration is part of route/focus behavior",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`tab_id` remains allowed because top-level tab restoration is part of route/focus behavior.",
+        "tab_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05158",
+      "source_obligation_ids": [
+        "obl-4934"
+      ],
+      "source_seed_ids": [
+        "seed-7150"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "tab within a routed page that still needs explicit tab selection",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "tab within a routed page that still needs explicit tab selection"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05163",
+      "source_obligation_ids": [
+        "obl-4939"
+      ],
+      "source_seed_ids": [
+        "seed-7160"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "`page_tab` is currently most needed for Orchestrator, but it should remain general and not",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`page_tab` is currently most needed for Orchestrator, but it should remain general and not be renamed around one page.",
+        "page_tab"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05166",
+      "source_obligation_ids": [
+        "obl-4942"
+      ],
+      "source_seed_ids": [
+        "seed-7163"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "Use `page_tab` when the routed destination must land inside a known page and force a speci",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Use `page_tab` when the routed destination must land inside a known page and force a specific tab.",
+        "page_tab"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05316",
+      "source_obligation_ids": [
+        "obl-5088"
+      ],
+      "source_seed_ids": [
+        "seed-7492"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`thread_id = <thread_id>` when thread-scoped history is required",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-093: Account switch and pressure history",
+      "status": "partial",
+      "exact_items": [
+        "`thread_id = <thread_id>` when thread-scoped history is required",
+        "thread_id = <thread_id>"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L221",
+        "Plans/Orchestrator_Page.md:L228"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05332",
+      "source_obligation_ids": [
+        "obl-5104"
+      ],
+      "source_seed_ids": [
+        "seed-7526"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "Some graph/detail pivots still read as tab switches plus local state instead of canonical",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Some graph/detail pivots still read as tab switches plus local state instead of canonical route restoration."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05338",
+      "source_obligation_ids": [
+        "obl-5110"
+      ],
+      "source_seed_ids": [
+        "seed-7542"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`tab_id = node_graph` or `tab_id = history`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-093: Account switch and pressure history",
+      "status": "partial",
+      "exact_items": [
+        "`tab_id = node_graph` or `tab_id = history`",
+        "tab_id = node_graph",
+        "tab_id = history"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L221",
+        "Plans/Orchestrator_Page.md:L228"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05343",
+      "source_obligation_ids": [
+        "obl-5115"
+      ],
+      "source_seed_ids": [
+        "seed-7550",
+        "seed-7557",
+        "seed-7564",
+        "seed-7578"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "`tab_id = history`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-093: Account switch and pressure history",
+      "status": "partial",
+      "exact_items": [
+        "`tab_id = history`",
+        "tab_id = history"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L221",
+        "Plans/Orchestrator_Page.md:L228"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05420",
+      "source_obligation_ids": [
+        "obl-5192"
+      ],
+      "source_seed_ids": [
+        "seed-7693"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "`tab_id` is meaningful only with `target_kind = page_tab` or with a routed page whose visi",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`tab_id` is meaningful only with `target_kind = page_tab` or with a routed page whose visibility depends on a known stable tab family.",
+        "tab_id",
+        "target_kind = page_tab"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05423",
+      "source_obligation_ids": [
+        "obl-5195"
+      ],
+      "source_seed_ids": [
+        "seed-7696"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "`tab_id` should stay absent when the destination surface can reveal the target without exp",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`tab_id` should stay absent when the destination surface can reveal the target without explicit tab forcing.",
+        "tab_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05426",
+      "source_obligation_ids": [
+        "obl-5198"
+      ],
+      "source_seed_ids": [
+        "seed-7703"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Start with the Orchestrator tab family as the first canonical enum set.",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Start with the Orchestrator tab family as the first canonical enum set."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05429",
+      "source_obligation_ids": [
+        "obl-5201"
+      ],
+      "source_seed_ids": [
+        "seed-7706"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "It is not a generic \u201cany tab anywhere\u201d field.",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "It is not a generic \u201cany tab anywhere\u201d field."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05479",
+      "source_obligation_ids": [
+        "obl-5251"
+      ],
+      "source_seed_ids": [
+        "seed-7803"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "tab 2 is still `Tiers`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "tab 2 is still `Tiers`",
+        "Tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05604",
+      "source_obligation_ids": [
+        "obl-5376"
+      ],
+      "source_seed_ids": [
+        "seed-7994"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "`UI_Command_Catalog.md` and `FinalGUISpec.md` are the pressure points that will either spr",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-093: Account switch and pressure history",
+      "status": "partial",
+      "exact_items": [
+        "`UI_Command_Catalog.md` and `FinalGUISpec.md` are the pressure points that will either spread the canonical route/object vocabulary cleanly or re-fragment it.",
+        "UI_Command_Catalog.md",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L221",
+        "Plans/Orchestrator_Page.md:L228"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05625",
+      "source_obligation_ids": [
+        "obl-5397"
+      ],
+      "source_seed_ids": [
+        "seed-8022"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "`Contracts_V0.md` chapter 7 still jumps directly from a thin `UICommand` envelope to `Wiri",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-015: Shared governance/runtime record envelope",
+      "status": "partial",
+      "exact_items": [
+        "`Contracts_V0.md` chapter 7 still jumps directly from a thin `UICommand` envelope to `WiringEntry`, which leaves no canonical place for shared route/open payloads.",
+        "Contracts_V0.md",
+        "UICommand",
+        "WiringEntry"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L19",
+        "Plans/Orchestrator_Page.md:L26"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05643",
+      "source_obligation_ids": [
+        "obl-5415"
+      ],
+      "source_seed_ids": [
+        "seed-8044"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "`cmd.panel.switch` with contextual object refs",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Fidelity recovery cov-093: Account switch and pressure history",
+      "status": "partial",
+      "exact_items": [
+        "`cmd.panel.switch` with contextual object refs",
+        "cmd.panel.switch"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L221",
+        "Plans/Orchestrator_Page.md:L228"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05701",
+      "source_obligation_ids": [
+        "obl-5473"
+      ],
+      "source_seed_ids": [
+        "seed-8121"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "`Tab 2: Tiers`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "`Tab 2: Tiers`",
+        "Tab 2: Tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06115",
+      "source_obligation_ids": [
+        "obl-5887"
+      ],
+      "source_seed_ids": [
+        "seed-8745"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "The `Progress` tab is already correctly identified as widget-composed, but its default wid",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "#### Progress widget catalog and drill mappings",
+      "status": "present",
+      "exact_items": [
+        "The `Progress` tab is already correctly identified as widget-composed, but its default widget contract is still strongly tier-era.",
+        "Progress"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L139",
+        "Plans/Orchestrator_Page.md:L143",
+        "Plans/Orchestrator_Page.md:L144",
+        "Plans/Orchestrator_Page.md:L146",
+        "Plans/Orchestrator_Page.md:L147"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-06547",
+      "source_obligation_ids": [
+        "obl-6188"
+      ],
+      "source_seed_ids": [
+        "seed-9363"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "Appendix C still expands widgetization around Dashboard and references `Orchestrator tabs`",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "Appendix C still expands widgetization around Dashboard and references `Orchestrator tabs` through the widget system",
+        "Orchestrator tabs"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06548",
+      "source_obligation_ids": [
+        "obl-6189"
+      ],
+      "source_seed_ids": [
+        "seed-9364"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "the Settings tab inventory still includes `Tiers` and tier-oriented settings language",
+      "row_type": "layout_blocker",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "status": "partial",
+      "exact_items": [
+        "the Settings tab inventory still includes `Tiers` and tier-oriented settings language",
+        "Tiers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1"
+      ],
+      "required_action": "packetizable_layout_repair"
+    }
+  ]
+}

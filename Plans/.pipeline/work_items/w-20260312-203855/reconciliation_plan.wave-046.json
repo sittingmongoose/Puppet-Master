@@ -1,0 +1,264 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_mode": "coverage",
+  "wave_id": "wave-046",
+  "group_ids": [
+    "recgrp-0181",
+    "recgrp-0182",
+    "recgrp-0183",
+    "recgrp-0184"
+  ],
+  "target_candidates": [
+    {
+      "target_id": "target-0181",
+      "path": "Plans/Decision_Policy.md",
+      "mapped_owner_heading": "### 1. No hidden orchestration fallbacks",
+      "live_anchor": "### 1. No hidden orchestration fallbacks (Plans/Decision_Policy.md:L227)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-01625",
+        "cov-01993"
+      ],
+      "source_obligation_ids": [
+        "obl-1482",
+        "obl-1850"
+      ],
+      "source_seed_ids": [
+        "seed-1834",
+        "seed-2381"
+      ],
+      "source_shard_ids": [
+        "shard-0027",
+        "shard-0032"
+      ],
+      "gap_ids": [
+        "gap-01272",
+        "gap-01554"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "orchestration identity:",
+        "`provider_account_id` needs an explicit relationship to `effective_account_id` / `effective_provider_identity` or it will become a hidden second identity system",
+        "provider_account_id",
+        "effective_account_id",
+        "effective_provider_identity"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-4387d726f9a1",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0182",
+      "path": "Plans/Decision_Policy.md",
+      "mapped_owner_heading": "### 2. Deterministic blocked and approval identity",
+      "live_anchor": "### 2. Deterministic blocked and approval identity (Plans/Decision_Policy.md:L232)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-03219"
+      ],
+      "source_obligation_ids": [
+        "obl-3065"
+      ],
+      "source_seed_ids": [
+        "seed-4058"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "gap_ids": [
+        "gap-02521"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "whether the approval is specific to one blocked episode vs reusable session policy"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-2e67a64544ce",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0183",
+      "path": "Plans/Decision_Policy.md",
+      "mapped_owner_heading": "### 3. No silent runtime identity collapse",
+      "live_anchor": "### 3. No silent runtime identity collapse (Plans/Decision_Policy.md:L242)",
+      "action": "insert_after",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00742",
+        "cov-02099",
+        "cov-02775"
+      ],
+      "source_obligation_ids": [
+        "obl-599",
+        "obl-1956",
+        "obl-2622"
+      ],
+      "source_seed_ids": [
+        "seed-687",
+        "seed-2545",
+        "seed-3438"
+      ],
+      "source_shard_ids": [
+        "shard-0015",
+        "shard-0033",
+        "shard-0040"
+      ],
+      "gap_ids": [
+        "gap-00583",
+        "gap-01631",
+        "gap-02184"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "These should not collapse into a generic \"old\" state.",
+        "`History` and `Ledger` especially need precise help because they are easy to collapse into one generic \u201cpast activity\u201d concept",
+        "History",
+        "Ledger",
+        "those are not the same thing and should not collapse"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-c5e2783d67f6",
+      "packet_writer_role": "parent_writer",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Grouped by concrete Plans path and live owner heading to avoid overlapping same-file active writers."
+      ]
+    },
+    {
+      "target_id": "target-0184",
+      "path": "Plans/Decision_Policy.md",
+      "mapped_owner_heading": "### 3.1 Autonomous decision logging contract",
+      "live_anchor": "### 3.1 Autonomous decision logging contract (Plans/Decision_Policy.md:L68)",
+      "action": "layout_repair_reference",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [],
+      "replace_scope": "insert_only",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-00503"
+      ],
+      "source_obligation_ids": [
+        "obl-360"
+      ],
+      "source_seed_ids": [
+        "seed-415"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "gap_ids": [
+        "gap-00395"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "Recommended UI contract from this decision"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "packet_span_group_id": "span-9d9ff9a240e4",
+      "packet_writer_role": "observe_only",
+      "span_ownership_notes": "One target owns this live heading span for the file/heading group; no sibling target uses the same packet_span_group_id as an active writer.",
+      "notes": [
+        "Observe-only layout repair reference: target records packetizable layout backlog without creating an overlapping mutation writer."
+      ]
+    }
+  ],
+  "coverage_row_ids_represented": [
+    "cov-01625",
+    "cov-01993",
+    "cov-03219",
+    "cov-00742",
+    "cov-02099",
+    "cov-02775",
+    "cov-00503"
+  ],
+  "source_obligation_ids_represented": [
+    "obl-1482",
+    "obl-1850",
+    "obl-3065",
+    "obl-599",
+    "obl-1956",
+    "obl-2622",
+    "obl-360"
+  ],
+  "source_seed_ids_represented": [
+    "seed-1834",
+    "seed-2381",
+    "seed-4058",
+    "seed-687",
+    "seed-2545",
+    "seed-3438",
+    "seed-415"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0027",
+    "shard-0032",
+    "shard-0045",
+    "shard-0015",
+    "shard-0033",
+    "shard-0040",
+    "shard-0012"
+  ],
+  "exact_acceptance_checks_preserved": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "suspected_span_conflicts": [],
+  "layout_blockers": [
+    {
+      "target_id": "target-0184",
+      "path": "Plans/Decision_Policy.md",
+      "reason": "observe_only non-packetizable source path"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-280",
+  "group_ids": [
+    "discgrp-1117",
+    "discgrp-1118",
+    "discgrp-1119",
+    "discgrp-1120"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-01367",
+      "source_obligation_ids": [
+        "obl-1224"
+      ],
+      "source_seed_ids": [
+        "seed-1465"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Decision_Policy.md",
+      "new_heading_hint": "# Decision Policy (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Decision_Policy.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01368",
+      "source_obligation_ids": [
+        "obl-1225"
+      ],
+      "source_seed_ids": [
+        "seed-1466"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Recommended minimum concern record shape",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L203"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01369",
+      "source_obligation_ids": [
+        "obl-1226"
+      ],
+      "source_seed_ids": [
+        "seed-1467"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-01370",
+      "source_obligation_ids": [
+        "obl-1227"
+      ],
+      "source_seed_ids": [
+        "seed-1468"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Permissions_System.md",
+      "new_heading_hint": "# Granular rules (object syntax)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Permissions_System.md:L593"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

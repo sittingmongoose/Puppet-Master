@@ -1,0 +1,1184 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-131",
+  "row_group_ids": [
+    "rowgrp-0521",
+    "rowgrp-0522",
+    "rowgrp-0523",
+    "rowgrp-0524"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-02768",
+      "source_obligation_ids": [
+        "obl-2615"
+      ],
+      "source_seed_ids": [
+        "seed-3425"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "`required`: a concrete account was explicitly pinned; fallback is not silent and must surf",
+      "row_type": "layout_blocker",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "present",
+      "exact_items": [
+        "`required`: a concrete account was explicitly pinned; fallback is not silent and must surface as blocked or explicit override failure if unmet",
+        "required"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L10",
+        "Plans/Multi-Account.md:L11",
+        "Plans/Multi-Account.md:L12",
+        "Plans/Multi-Account.md:L13",
+        "Plans/Multi-Account.md:L26"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02788",
+      "source_obligation_ids": [
+        "obl-2635"
+      ],
+      "source_seed_ids": [
+        "seed-3455"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "`requested_account_id` must use the stable internal account id, not provider-native displa",
+      "row_type": "layout_blocker",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "present",
+      "exact_items": [
+        "`requested_account_id` must use the stable internal account id, not provider-native display identity",
+        "requested_account_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L11",
+        "Plans/Multi-Account.md:L17",
+        "Plans/Multi-Account.md:L82",
+        "Plans/Multi-Account.md:L91",
+        "Plans/Multi-Account.md:L238"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02792",
+      "source_obligation_ids": [
+        "obl-2639"
+      ],
+      "source_seed_ids": [
+        "seed-3468"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "without it, requested/effective account decisions remain only partially auditable even aft",
+      "row_type": "layout_blocker",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "without it, requested/effective account decisions remain only partially auditable even after adding account fields"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03259",
+      "source_obligation_ids": [
+        "obl-3105"
+      ],
+      "source_seed_ids": [
+        "seed-4128"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "missing `attempt_id`, `blocked_sequence`, account identity, or execution-role fields mean",
+      "row_type": "layout_blocker",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "missing `attempt_id`, `blocked_sequence`, account identity, or execution-role fields mean later UI/runtime promises cannot be implemented faithfully from the current contracts.",
+        "attempt_id",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03264",
+      "source_obligation_ids": [
+        "obl-3110"
+      ],
+      "source_seed_ids": [
+        "seed-4133"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "Extend artifact/tool/HITL/blocked/handoff envelopes with the missing identity anchors: `at",
+      "row_type": "layout_blocker",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "present",
+      "exact_items": [
+        "Extend artifact/tool/HITL/blocked/handoff envelopes with the missing identity anchors: `attempt_id`, `node_id`, `lane_id`, `package_id`, `execution_role`, actor identity, account identity, and `blocked_sequence` where appropriate.",
+        "attempt_id",
+        "node_id",
+        "lane_id",
+        "package_id",
+        "execution_role",
+        "blocked_sequence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L87",
+        "Plans/Multi-Account.md:L246",
+        "Plans/Multi-Account.md:L261",
+        "Plans/Multi-Account.md:L362"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03340",
+      "source_obligation_ids": [
+        "obl-3186"
+      ],
+      "source_seed_ids": [
+        "seed-4246"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "Promote `thread_id`, `project_id`, validation/report lineage, and requested/effective acco",
+      "row_type": "layout_blocker",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "Promote `thread_id`, `project_id`, validation/report lineage, and requested/effective account identity into wizard/interview pre-run governance payloads where adjacent canonical docs already require them.",
+        "thread_id",
+        "project_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L189"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03395",
+      "source_obligation_ids": [
+        "obl-3241"
+      ],
+      "source_seed_ids": [
+        "seed-4327"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "requested/effective account fields are not carried through the concrete handoff/provenance",
+      "row_type": "layout_blocker",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "requested/effective account fields are not carried through the concrete handoff/provenance requirements"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-03425",
+      "source_obligation_ids": [
+        "obl-3271"
+      ],
+      "source_seed_ids": [
+        "seed-4385"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "catalog/promoted-family gaps remain explicit: account, concern, promotion, and several pro",
+      "row_type": "layout_blocker",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "catalog/promoted-family gaps remain explicit: account, concern, promotion, and several promised tab/window/catalog/dev command families still do not exist as concrete catalog entries."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-05286",
+      "source_obligation_ids": [
+        "obl-5062"
+      ],
+      "source_seed_ids": [
+        "seed-7410"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`OpenCode_Deep_Extraction.md` source-verifies hard architecture limits: server-global SSE",
+      "row_type": "layout_blocker",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "`OpenCode_Deep_Extraction.md` source-verifies hard architecture limits: server-global SSE with concurrent-client pollution, fixed server working directory requiring separate instances per worktree, session-scoped approvals and compaction state that are destroyed on session deletion, no observable upstream account identity, and no real reconnect/observe path for mid-run SSE loss.",
+        "OpenCode_Deep_Extraction.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L343"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-06800",
+      "source_obligation_ids": [
+        "obl-6427"
+      ],
+      "source_seed_ids": [
+        "seed-9806"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Mod",
+      "row_type": "layout_blocker",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L16",
+        "Plans/Multi-Account.md:L21",
+        "Plans/Multi-Account.md:L30",
+        "Plans/Multi-Account.md:L33",
+        "Plans/Multi-Account.md:L39"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00149",
+      "source_obligation_ids": [
+        "obl-046"
+      ],
+      "source_seed_ids": [
+        "seed-046"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Many contracts have `run_id`, maybe `node_id`, but still lack `project_id`, `attempt_id`,",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "Many contracts have `run_id`, maybe `node_id`, but still lack `project_id`, `attempt_id`, `package_id`, `seam_id`, `lane_id`, `worktree_id`, `safe_point_id`, `promotion_class`, or requested/effective account fields.",
+        "run_id",
+        "node_id",
+        "project_id",
+        "attempt_id",
+        "package_id",
+        "seam_id",
+        "lane_id",
+        "worktree_id"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L189"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00150",
+      "source_obligation_ids": [
+        "obl-047"
+      ],
+      "source_seed_ids": [
+        "seed-047",
+        "seed-159"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "canon_label": "Settings / Provider / Persona / Account Impacts",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "Settings / Provider / Persona / Account Impacts"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00190",
+      "source_obligation_ids": [
+        "obl-086"
+      ],
+      "source_seed_ids": [
+        "seed-086"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Why it matters: persisted/runtime field drift is already visible and will worsen when acco",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "Why it matters: persisted/runtime field drift is already visible and will worsen when account identity is added too."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00201",
+      "source_obligation_ids": [
+        "obl-097"
+      ],
+      "source_seed_ids": [
+        "seed-097"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "2. **Extend requested/effective runtime identity to include account and overseer role.**",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "2. **Extend requested/effective runtime identity to include account and overseer role.**"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00202",
+      "source_obligation_ids": [
+        "obl-098"
+      ],
+      "source_seed_ids": [
+        "seed-098"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Why it matters: provider/persona fields exist, but effective account switching and request",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "Why it matters: provider/persona fields exist, but effective account switching and requested/effective execution identity are still mostly unmodeled."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00213",
+      "source_obligation_ids": [
+        "obl-109"
+      ],
+      "source_seed_ids": [
+        "seed-112"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "what likely new model pressure is: requested/effective account identity, package/seam/lane",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "what likely new model pressure is: requested/effective account identity, package/seam/lane/promotion objects, blocked/recovery payload normalization."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00282",
+      "source_obligation_ids": [
+        "obl-154"
+      ],
+      "source_seed_ids": [
+        "seed-161"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "likely issue: requested/effective platform/model/persona are modeled, but requested/effect",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "likely issue: requested/effective platform/model/persona are modeled, but requested/effective account identity and fallback reason are missing."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00287",
+      "source_obligation_ids": [
+        "obl-157"
+      ],
+      "source_seed_ids": [
+        "seed-164"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "`Plans/Multi-Account.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/GitHub_Integration.",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Multi-Account.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/GitHub_Integration.md`",
+        "Plans/Multi-Account.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L16",
+        "Plans/Multi-Account.md:L21",
+        "Plans/Multi-Account.md:L30",
+        "Plans/Multi-Account.md:L33",
+        "Plans/Multi-Account.md:L235"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00288",
+      "source_obligation_ids": [
+        "obl-158"
+      ],
+      "source_seed_ids": [
+        "seed-165"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "likely issue: multi-account behavior exists in slices, but active/effective account switch",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "# Multi-Account Specification",
+      "status": "partial",
+      "exact_items": [
+        "likely issue: multi-account behavior exists in slices, but active/effective account switching is not carried through repo/project/worktree execution contracts."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00308",
+      "source_obligation_ids": [
+        "obl-174"
+      ],
+      "source_seed_ids": [
+        "seed-200"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "why it matters: canonical persona field names already disagree before account identity is",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "why it matters: canonical persona field names already disagree before account identity is added."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00328",
+      "source_obligation_ids": [
+        "obl-186"
+      ],
+      "source_seed_ids": [
+        "seed-212"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "why it matters: formalize requested vs effective execution identity, including account fal",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "why it matters: formalize requested vs effective execution identity, including account fallback/switching, before more provider/chat/SCM docs extend the wrong model."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00383",
+      "source_obligation_ids": [
+        "obl-241"
+      ],
+      "source_seed_ids": [
+        "seed-273",
+        "seed-298",
+        "seed-1077",
+        "seed-1237",
+        "seed-1300",
+        "seed-1731",
+        "seed-1808",
+        "seed-2659",
+        "seed-2687",
+        "seed-2763",
+        "seed-2790",
+        "seed-2860",
+        "seed-3024",
+        "seed-3053",
+        "seed-3262",
+        "seed-3292",
+        "seed-3395",
+        "seed-3431",
+        "seed-3457",
+        "seed-3483",
+        "seed-3544",
+        "seed-3592",
+        "seed-3617",
+        "seed-3672",
+        "seed-3851",
+        "seed-5003",
+        "seed-5038",
+        "seed-5114",
+        "seed-5584",
+        "seed-5678",
+        "seed-5984",
+        "seed-6498",
+        "seed-6714",
+        "seed-7452",
+        "seed-8410",
+        "seed-8884",
+        "seed-8976",
+        "seed-9070",
+        "seed-9322",
+        "seed-9621",
+        "seed-9657"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0011",
+        "shard-0019",
+        "shard-0021",
+        "shard-0026",
+        "shard-0027",
+        "shard-0034",
+        "shard-0035",
+        "shard-0036",
+        "shard-0037",
+        "shard-0039",
+        "shard-0040",
+        "shard-0041",
+        "shard-0042",
+        "shard-0043",
+        "shard-0051",
+        "shard-0052",
+        "shard-0056",
+        "shard-0058",
+        "shard-0062",
+        "shard-0064",
+        "shard-0070",
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0084",
+        "shard-0086"
+      ],
+      "canon_label": "`Plans/Multi-Account.md`",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Multi-Account.md`",
+        "Plans/Multi-Account.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L16",
+        "Plans/Multi-Account.md:L21",
+        "Plans/Multi-Account.md:L30",
+        "Plans/Multi-Account.md:L33"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00394",
+      "source_obligation_ids": [
+        "obl-252"
+      ],
+      "source_seed_ids": [
+        "seed-285"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "The account identity chain is still split across incompatible concepts:",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "The account identity chain is still split across incompatible concepts:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00400",
+      "source_obligation_ids": [
+        "obl-258"
+      ],
+      "source_seed_ids": [
+        "seed-291"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "`Provider_OpenCode.md` never explains how PM obtains upstream account identity from behind",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "present",
+      "exact_items": [
+        "`Provider_OpenCode.md` never explains how PM obtains upstream account identity from behind the server bridge",
+        "Provider_OpenCode.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L334",
+        "Plans/Multi-Account.md:L434"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00410",
+      "source_obligation_ids": [
+        "obl-268"
+      ],
+      "source_seed_ids": [
+        "seed-305"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "still internally contradicts canonical field naming and still has no overseer Persona mode",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "still internally contradicts canonical field naming and still has no overseer Persona model or account disclosure rule"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00413",
+      "source_obligation_ids": [
+        "obl-271"
+      ],
+      "source_seed_ids": [
+        "seed-309"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "`Prompt_Pipeline.md` and `Contracts_V0.md` carry `requested_account_policy`, but no parall",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "present",
+      "exact_items": [
+        "`Prompt_Pipeline.md` and `Contracts_V0.md` carry `requested_account_policy`, but no parallel requested-side concrete account field exists, so downstream docs are forced to guess how explicit account pinning is represented.",
+        "Prompt_Pipeline.md",
+        "Contracts_V0.md",
+        "requested_account_policy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L11",
+        "Plans/Multi-Account.md:L17",
+        "Plans/Multi-Account.md:L35",
+        "Plans/Multi-Account.md:L55",
+        "Plans/Multi-Account.md:L83"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00417",
+      "source_obligation_ids": [
+        "obl-275"
+      ],
+      "source_seed_ids": [
+        "seed-313"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "Add one canonical requested-side concrete-account field to the requested/effective runtime",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "present",
+      "exact_items": [
+        "Add one canonical requested-side concrete-account field to the requested/effective runtime identity bundle, while retaining `requested_account_policy` as the routing rule rather than the selected account.",
+        "requested_account_policy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L11",
+        "Plans/Multi-Account.md:L17",
+        "Plans/Multi-Account.md:L83",
+        "Plans/Multi-Account.md:L91",
+        "Plans/Multi-Account.md:L240"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00430",
+      "source_obligation_ids": [
+        "obl-288"
+      ],
+      "source_seed_ids": [
+        "seed-333"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "requested/effective account identity is still asymmetric",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "requested/effective account identity is still asymmetric"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-00440",
+      "source_obligation_ids": [
+        "obl-298"
+      ],
+      "source_seed_ids": [
+        "seed-343"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "GitHub account identity is still not aligned with the canonical account model:",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "GitHub account identity is still not aligned with the canonical account model:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01067",
+      "source_obligation_ids": [
+        "obl-924"
+      ],
+      "source_seed_ids": [
+        "seed-1088"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "canon_label": "project-owned multi-account policies plus run snapshots and effective account selection",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "# Multi-Account Specification",
+      "status": "partial",
+      "exact_items": [
+        "project-owned multi-account policies plus run snapshots and effective account selection"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01128",
+      "source_obligation_ids": [
+        "obl-985"
+      ],
+      "source_seed_ids": [
+        "seed-1153"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "canon_label": "Multi-account implication",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "# Multi-Account Specification",
+      "status": "partial",
+      "exact_items": [
+        "Multi-account implication"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01129",
+      "source_obligation_ids": [
+        "obl-986"
+      ],
+      "source_seed_ids": [
+        "seed-1154"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "canon_label": "Multi-account adds a second layer of confusion if not presented carefully:",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "# Multi-Account Specification",
+      "status": "partial",
+      "exact_items": [
+        "Multi-account adds a second layer of confusion if not presented carefully:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01131",
+      "source_obligation_ids": [
+        "obl-988"
+      ],
+      "source_seed_ids": [
+        "seed-1156"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "canon_label": "manual preferred account is not the same as guaranteed selected account",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "manual preferred account is not the same as guaranteed selected account"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01133",
+      "source_obligation_ids": [
+        "obl-990"
+      ],
+      "source_seed_ids": [
+        "seed-1158"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "canon_label": "`Effective account: gemini-oauth-2`",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "`Effective account: gemini-oauth-2`",
+        "Effective account: gemini-oauth-2"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01248",
+      "source_obligation_ids": [
+        "obl-1105"
+      ],
+      "source_seed_ids": [
+        "seed-1306"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "multi-account pressure",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "# Multi-Account Specification",
+      "status": "partial",
+      "exact_items": [
+        "multi-account pressure"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L1"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01274",
+      "source_obligation_ids": [
+        "obl-1131"
+      ],
+      "source_seed_ids": [
+        "seed-1343"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "`Account switch active`",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "`Account switch active`",
+        "Account switch active"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-01585",
+      "source_obligation_ids": [
+        "obl-1442"
+      ],
+      "source_seed_ids": [
+        "seed-1788"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "`Multi-Account.md`, `Models_System.md`, and `Personas.md` already align on:",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "# Multi-Account Specification",
+      "status": "present",
+      "exact_items": [
+        "`Multi-Account.md`, `Models_System.md`, and `Personas.md` already align on:",
+        "Multi-Account.md",
+        "Models_System.md",
+        "Personas.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L16",
+        "Plans/Multi-Account.md:L21",
+        "Plans/Multi-Account.md:L30",
+        "Plans/Multi-Account.md:L33",
+        "Plans/Multi-Account.md:L174"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01999",
+      "source_obligation_ids": [
+        "obl-1856"
+      ],
+      "source_seed_ids": [
+        "seed-2395"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "supporting references from `Multi-Account.md`, `Prompt_Pipeline.md`, and the current ledge",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "# Multi-Account Specification",
+      "status": "present",
+      "exact_items": [
+        "supporting references from `Multi-Account.md`, `Prompt_Pipeline.md`, and the current ledger",
+        "Multi-Account.md",
+        "Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L16",
+        "Plans/Multi-Account.md:L21",
+        "Plans/Multi-Account.md:L30",
+        "Plans/Multi-Account.md:L33",
+        "Plans/Multi-Account.md:L55"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02018",
+      "source_obligation_ids": [
+        "obl-1875"
+      ],
+      "source_seed_ids": [
+        "seed-2422"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "canon_label": "downstream docs therefore improvise or omit requested account selection semantics",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "status": "partial",
+      "exact_items": [
+        "downstream docs therefore improvise or omit requested account selection semantics"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L7",
+        "Plans/Multi-Account.md:L16"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-02150",
+      "source_obligation_ids": [
+        "obl-2007"
+      ],
+      "source_seed_ids": [
+        "seed-2613"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "Account switching is still modeled as fields and latest-state hints rather than as a first",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "### 4.2 Account record (canonical)",
+      "status": "partial",
+      "exact_items": [
+        "Account switching is still modeled as fields and latest-state hints rather than as a first-class historical record family:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:L176"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

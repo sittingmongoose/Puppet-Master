@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1094",
+  "group_ids": [
+    "discgrp-4373",
+    "discgrp-4374",
+    "discgrp-4375",
+    "discgrp-4376"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-04759",
+      "source_obligation_ids": [
+        "obl-4537"
+      ],
+      "source_seed_ids": [
+        "seed-6454"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "new_heading_hint": "### 8.1 Tool-use ID synthesis",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:L172"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04760",
+      "source_obligation_ids": [
+        "obl-4538"
+      ],
+      "source_seed_ids": [
+        "seed-6455"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Fidelity recovery cov-031: Concern linkage to adjacent families",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L79"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04761",
+      "source_obligation_ids": [
+        "obl-4539"
+      ],
+      "source_seed_ids": [
+        "seed-6456"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "### Fidelity recovery cov-032: Concern linkage to adjacent families",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-04762",
+      "source_obligation_ids": [
+        "obl-4540"
+      ],
+      "source_seed_ids": [
+        "seed-6457"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/UI_Command_Catalog.md",
+      "new_heading_hint": "# UI Command Catalog (Canonical)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

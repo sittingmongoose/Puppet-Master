@@ -1,0 +1,407 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_id": "wave-102",
+  "group_ids": [
+    "pktgrp-0405",
+    "pktgrp-0406",
+    "pktgrp-0407",
+    "pktgrp-0408"
+  ],
+  "packet_target_bundle": [
+    {
+      "target_id": "packet-target-0405",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### 11.2 Support-tier vocabulary (Plans/Tools.md:L1640)",
+      "path": "Plans/Tools.md",
+      "coverage_row_ids": [
+        "cov-04840",
+        "cov-05155",
+        "cov-05231",
+        "cov-05413",
+        "cov-06732"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-04840",
+          "cov-05155",
+          "cov-05231",
+          "cov-05413",
+          "cov-06732"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-4617",
+        "obl-4931",
+        "obl-5007",
+        "obl-5185",
+        "obl-6373"
+      ],
+      "source_seed_ids": [
+        "seed-6598",
+        "seed-7137",
+        "seed-7307",
+        "seed-7306",
+        "seed-7684",
+        "seed-9731"
+      ],
+      "source_shard_ids": [
+        "shard-0063",
+        "shard-0068",
+        "shard-0069",
+        "shard-0072",
+        "shard-0087"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-4617",
+          "obl-4931",
+          "obl-5007",
+          "obl-5185",
+          "obl-6373"
+        ],
+        "source_seed_ids": [
+          "seed-6598",
+          "seed-7137",
+          "seed-7307",
+          "seed-7306",
+          "seed-7684",
+          "seed-9731"
+        ],
+        "source_shard_ids": [
+          "shard-0063",
+          "shard-0068",
+          "shard-0069",
+          "shard-0072",
+          "shard-0087"
+        ]
+      },
+      "gap_ids": [
+        "gap-03784",
+        "gap-04010",
+        "gap-04064",
+        "gap-04212",
+        "gap-05217"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "What should stay out of coarse destination vocabulary",
+        "The canonical vocabulary is:",
+        "`inspector_target` needs a controlled vocabulary.",
+        "inspector_target",
+        "The current high-value canonical vocabulary is:",
+        "closed `tab_id` vocabulary",
+        "tab_id"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-1d619df22664",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0507",
+      "source_reconciliation_target_ids": [
+        "target-0507"
+      ],
+      "source_target_ids": [
+        "target-0507"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0507\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - What should stay out of coarse destination vocabulary\n  - The canonical vocabulary is:\n  - `inspector_target` needs a controlled vocabulary.\n  - inspector_target\n  - The current high-value canonical vocabulary is:\n  - closed `tab_id` vocabulary\n  - tab_id\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0406",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### 3.5A `skill` tool runtime contract (Plans/Tools.md:L465)",
+      "path": "Plans/Tools.md",
+      "coverage_row_ids": [
+        "cov-03379",
+        "cov-04898"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-03379",
+          "cov-04898"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-3225",
+        "obl-4675"
+      ],
+      "source_seed_ids": [
+        "seed-4306",
+        "seed-6694"
+      ],
+      "source_shard_ids": [
+        "shard-0046",
+        "shard-0064"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-3225",
+          "obl-4675"
+        ],
+        "source_seed_ids": [
+          "seed-4306",
+          "seed-6694"
+        ],
+        "source_shard_ids": [
+          "shard-0046",
+          "shard-0064"
+        ]
+      },
+      "gap_ids": [
+        "gap-02637",
+        "gap-03831"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "the real problem is not only missing fields; it is that tool events are still described as analytics exhaust while other docs already want them to carry runtime truth",
+        "`Skills_System.md` still assumes HTE-style tool reachability, does not explain DAE delivery/bundling behavior, and lacks a proper introspection/listing surface for runtime skills.",
+        "Skills_System.md"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-d511b5c354a2",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0509",
+      "source_reconciliation_target_ids": [
+        "target-0509"
+      ],
+      "source_target_ids": [
+        "target-0509"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0509\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - the real problem is not only missing fields; it is that tool events are still described as analytics exhaust while other docs already want them to carry runtime truth\n  - `Skills_System.md` still assumes HTE-style tool reachability, does not explain DAE delivery/bundling behavior, and lacks a proper introspection/listing surface for runtime skills.\n  - Skills_System.md\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0407",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### 8.4 Redb keys for tool rollups (Usage widget) (Plans/Tools.md:L967)",
+      "path": "Plans/Tools.md",
+      "coverage_row_ids": [
+        "cov-05778"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-05778"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-5550"
+      ],
+      "source_seed_ids": [
+        "seed-8239"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-5550"
+        ],
+        "source_seed_ids": [
+          "seed-8239"
+        ],
+        "source_shard_ids": [
+          "shard-0076"
+        ]
+      },
+      "gap_ids": [
+        "gap-04487"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "usage/evidence/runtime rollups are still tier-native"
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-85a28870d0a0",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0510",
+      "source_reconciliation_target_ids": [
+        "target-0510"
+      ],
+      "source_target_ids": [
+        "target-0510"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0510\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - usage/evidence/runtime rollups are still tier-native\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    },
+    {
+      "target_id": "packet-target-0408",
+      "anchor_type": "live_anchor",
+      "operation": "insert_after",
+      "anchor": "### Field name correction (Plans/Tools.md:L1279)",
+      "path": "Plans/Tools.md",
+      "coverage_row_ids": [
+        "cov-06030",
+        "cov-06038"
+      ],
+      "coverage": {
+        "coverage_row_ids": [
+          "cov-06030",
+          "cov-06038"
+        ]
+      },
+      "source_obligation_ids": [
+        "obl-5802",
+        "obl-5810"
+      ],
+      "source_seed_ids": [
+        "seed-8628",
+        "seed-8639"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "source_ids": {
+        "source_obligation_ids": [
+          "obl-5802",
+          "obl-5810"
+        ],
+        "source_seed_ids": [
+          "seed-8628",
+          "seed-8639"
+        ],
+        "source_shard_ids": [
+          "shard-0079"
+        ]
+      },
+      "gap_ids": [
+        "gap-04666",
+        "gap-04674"
+      ],
+      "fidelity_gap_refs": [],
+      "exact_required_items": [
+        "later canonical correction addenda",
+        "The older request-centric sections are no longer compatible with the later canonical correction sections."
+      ],
+      "exact_stale_tokens_to_retire": [],
+      "exact_acceptance_checks": [
+        "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+        "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+        "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+      ],
+      "forbidden_strings": [],
+      "required_structural_headings": [
+        "### Reconciliation addendum"
+      ],
+      "exact_survivors": [],
+      "packet_span_group_id": "span-0d1448e18b6a",
+      "packet_writer_role": "single_writer",
+      "source_reconciliation_target_id": "target-0511",
+      "source_reconciliation_target_ids": [
+        "target-0511"
+      ],
+      "source_target_ids": [
+        "target-0511"
+      ],
+      "content_format": "markdown",
+      "content_markdown": "\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0511\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - later canonical correction addenda\n  - The older request-centric sections are no longer compatible with the later canonical correction sections.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n",
+      "span_ownership_notes": "Line-qualified live_anchor insert_after target with unique active write key."
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-04840",
+    "cov-05155",
+    "cov-05231",
+    "cov-05413",
+    "cov-06732",
+    "cov-03379",
+    "cov-04898",
+    "cov-05778",
+    "cov-06030",
+    "cov-06038"
+  ],
+  "preserved_source_obligation_ids": [
+    "obl-4617",
+    "obl-4931",
+    "obl-5007",
+    "obl-5185",
+    "obl-6373",
+    "obl-3225",
+    "obl-4675",
+    "obl-5550",
+    "obl-5802",
+    "obl-5810"
+  ],
+  "preserved_source_seed_ids": [
+    "seed-6598",
+    "seed-7137",
+    "seed-7307",
+    "seed-7306",
+    "seed-7684",
+    "seed-9731",
+    "seed-4306",
+    "seed-6694",
+    "seed-8239",
+    "seed-8628",
+    "seed-8639"
+  ],
+  "preserved_source_shard_ids": [
+    "shard-0063",
+    "shard-0068",
+    "shard-0069",
+    "shard-0072",
+    "shard-0087",
+    "shard-0046",
+    "shard-0064",
+    "shard-0076",
+    "shard-0079"
+  ],
+  "preserved_fidelity_gap_refs": [],
+  "preserved_exact_acceptance_checks": [
+    "All coverage_row_ids listed on this target are represented without broad summary substitution.",
+    "All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.",
+    "Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor."
+  ],
+  "preserved_exact_required_items": [
+    "What should stay out of coarse destination vocabulary",
+    "The canonical vocabulary is:",
+    "`inspector_target` needs a controlled vocabulary.",
+    "inspector_target",
+    "The current high-value canonical vocabulary is:",
+    "closed `tab_id` vocabulary",
+    "tab_id",
+    "the real problem is not only missing fields; it is that tool events are still described as analytics exhaust while other docs already want them to carry runtime truth",
+    "`Skills_System.md` still assumes HTE-style tool reachability, does not explain DAE delivery/bundling behavior, and lacks a proper introspection/listing surface for runtime skills.",
+    "Skills_System.md",
+    "usage/evidence/runtime rollups are still tier-native",
+    "later canonical correction addenda",
+    "The older request-centric sections are no longer compatible with the later canonical correction sections."
+  ],
+  "blocked_targets": []
+}

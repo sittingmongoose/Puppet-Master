@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-479",
+  "group_ids": [
+    "discgrp-1913",
+    "discgrp-1914",
+    "discgrp-1915",
+    "discgrp-1916"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-02174",
+      "source_obligation_ids": [
+        "obl-2029"
+      ],
+      "source_seed_ids": [
+        "seed-2638"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "### Fidelity recovery cov-008: Requested/effective account identity contract",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Multi-Account.md:L7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02175",
+      "source_obligation_ids": [
+        "obl-2030"
+      ],
+      "source_seed_ids": [
+        "seed-2639"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Run_Graph_View.md",
+      "new_heading_hint": "# Run Graph View (Node Graph Display) -- Specification",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/Run_Graph_View.md:L1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02176",
+      "source_obligation_ids": [
+        "obl-2031"
+      ],
+      "source_seed_ids": [
+        "seed-2640"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "### 3. Event ledger (existing concept, under Usage umbrella)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/usage-feature.md:L187"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-02177",
+      "source_obligation_ids": [
+        "obl-2032"
+      ],
+      "source_seed_ids": [
+        "seed-2641"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# display-font = \"CustomFont\"  # requires font file in ~/.puppet-master/fonts/",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L871"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

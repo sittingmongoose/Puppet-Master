@@ -2,6 +2,34 @@
 
 ### 6.1 Three Theme Families (Three User-Facing Choices)
 
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0283
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - The system currently has at least three different concepts that the UI must not blur:
+  - Replace pseudo-tier interview/wizard/runtime lineage keys with the same canonical thread/project/run/attempt identity families already required elsewhere.
+  - If new object families appear, they must be added deliberately, not ad hoc in surface docs.
+  - Research Progress - 2026-03-17 - Usage and evidence families still use tier-era correlation
+  - That leaves `usage_record` and evidence/summary families in an unstable middle state:
+  - usage_record
+  - This pass did not remove any blocker families; it only removed one overstated exact-missing item and sharpened several blocker reasons.
+  - This pass kept the blocker-family count at eight and did not add new blocker families, but it removed one overstated unresolved item and made several owner/consumer defects more exact.
+  - The current unresolved blocker inventory therefore remains at eight blocker families, nineteen affected docs, and fifty underlying evidence refs.
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
+
 | Theme Family | Variants | Retro Effects | Target Audience |
 |-------|--------|--------------|----------------|
 | **Retro Dark** | 1 | Full: pixel grid, paper texture, scanlines, hard shadows, sharp corners, Orbitron + Rajdhani | Users who love the current aesthetic |
@@ -151,6 +179,28 @@ border-radius = 4
 
 [fonts]
 # omitted = inherit from base
+
+### Reconciliation addendum
+
+This addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.
+
+- Required structural headings for this packet target:
+  - ### Reconciliation addendum
+
+#### Source target target-0249
+- Reconciliation action: insert_after
+- Replace scope: insert_only
+- Required structural headings represented:
+  - ### Reconciliation addendum
+- Exact required items represented:
+  - step/clarification focus is a domain-local anchor or serialized deep-link detail, not base identity
+  - Let routes optionally name a destination-local subview only when that is necessary for the task, but treat it as destination refinement, not base identity.
+  - the base structs and callbacks still teach tier/request-era identity
+- Exact acceptance checks represented:
+  - All coverage_row_ids listed on this target are represented without broad summary substitution.
+  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.
+  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.
+- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.
 # display-font = "CustomFont"  # requires font file in ~/.puppet-master/fonts/
 ```
 

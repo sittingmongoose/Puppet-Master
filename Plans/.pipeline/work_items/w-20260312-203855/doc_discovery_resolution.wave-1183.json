@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-1183",
+  "group_ids": [
+    "discgrp-4729",
+    "discgrp-4730",
+    "discgrp-4731",
+    "discgrp-4732"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-05128",
+      "source_obligation_ids": [
+        "obl-4904"
+      ],
+      "source_seed_ids": [
+        "seed-7072"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "# Contracts V0 (Canonical)",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/Contracts_V0.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05129",
+      "source_obligation_ids": [
+        "obl-4905"
+      ],
+      "source_seed_ids": [
+        "seed-7084"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "# Puppet Master GUI Specification -- Slint Rewrite",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-05130",
+      "source_obligation_ids": [
+        "obl-4906"
+      ],
+      "source_seed_ids": [
+        "seed-7085"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 2. Assistant thread selector / badges",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2392"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-05131",
+      "source_obligation_ids": [
+        "obl-4907"
+      ],
+      "source_seed_ids": [
+        "seed-7088"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### Fidelity recovery cov-071: Canonical route payload",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:L113"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}
