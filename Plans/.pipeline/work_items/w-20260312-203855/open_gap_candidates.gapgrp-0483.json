@@ -1,0 +1,105 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0483",
+  "coverage_row_ids_represented": [
+    "cov-01609",
+    "cov-01616",
+    "cov-01645",
+    "cov-01663",
+    "cov-01664",
+    "cov-01665",
+    "cov-01666",
+    "cov-01667",
+    "cov-01668",
+    "cov-01669"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0483",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "Run Graph and Orchestrator are still said to aggregate by `tier_id` and `attempt_id?` | Runtime identity and recovery semantics sharpened again: | Slint rewrite, seglog/redb/Tantivy, and Provider terminology are already locked | Still missing field schemas for `project_summary.v1`, `project_attention_item.v1`, `account_pressure_episode.v1`, `account_switch_event.v1`, and broader governance/runtime record-envelope families. | Still preserve `resume_url` as a primary routing primitive in places that should treat it as derived transport only.",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-01609",
+        "cov-01616",
+        "cov-01645",
+        "cov-01663",
+        "cov-01664",
+        "cov-01665",
+        "cov-01666",
+        "cov-01667",
+        "cov-01668",
+        "cov-01669"
+      ],
+      "source_obligation_ids": [
+        "obl-0931",
+        "obl-0936",
+        "obl-0949",
+        "obl-0957",
+        "obl-0958",
+        "obl-0959",
+        "obl-0960",
+        "obl-0961",
+        "obl-0962",
+        "obl-0963"
+      ],
+      "source_seed_ids": [
+        "shard-0085-s089",
+        "shard-0081-s029",
+        "shard-0084-s085",
+        "shard-0087-s026",
+        "shard-0087-s053",
+        "shard-0087-s040",
+        "shard-0084-s029",
+        "shard-0084-s036",
+        "shard-0087-s016",
+        "shard-0078-s060"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0081",
+        "shard-0084",
+        "shard-0085",
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Run Graph and Orchestrator are still said to aggregate by `tier_id` and `attempt_id?`",
+        "tier_id",
+        "attempt_id?",
+        "Runtime identity and recovery semantics sharpened again:",
+        "Slint rewrite, seglog/redb/Tantivy, and Provider terminology are already locked",
+        "Still missing field schemas for `project_summary.v1`, `project_attention_item.v1`, `account_pressure_episode.v1`, `account_switch_event.v1`, and broader governance/runtime record-envelope families.",
+        "project_summary.v1",
+        "project_attention_item.v1",
+        "account_pressure_episode.v1",
+        "account_switch_event.v1",
+        "Still preserve `resume_url` as a primary routing primitive in places that should treat it as derived transport only.",
+        "resume_url",
+        "Still preserves `TierContext`-era live canon rather than fully reflecting `execution_unit_context` direction.",
+        "TierContext",
+        "execution_unit_context",
+        "Storage already has the stronger blocked and attempt identities, but still preserves tier-era keys as peer canonical records.",
+        "Storage family ownership still needs explicit additions for:",
+        "Storage or key registration landed without the **field schema / value-shape contract**.",
+        "Strong adjacent owner:"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

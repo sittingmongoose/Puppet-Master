@@ -1,0 +1,110 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0494",
+  "coverage_row_ids_represented": [
+    "cov-01890",
+    "cov-01891",
+    "cov-01892",
+    "cov-01893",
+    "cov-01894",
+    "cov-01895",
+    "cov-01896",
+    "cov-01897",
+    "cov-01898",
+    "cov-01899"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0494",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "`FileSafe.md` still has a concrete DAE enforcement seam: post-approval arg mutation, `context_files` widening write scope, fail-open initialization paths, and `recovery_options[]` vs `allowed_action_i\u2026 | `FileSafe.md`, `MiscPlan.md`, and `Executor_Protocol.md` as adjacent runtime-lineage enforcement owners | `Formatters_System.md` continues to sit outside the central mutation/policy engine and loses attribution under DAE. | `Formatters_System.md` still has no authoritative rule for formatter-vs-LSP ownership, DAE non-triggering host writes, or overlapping formatter detectors. | `Formatters_System.md`, `LSPSupport.md`, `Plugins_System.md`, and `Skills_System.md` still lack clean ownership boundaries for mutation-capable semantics, hosted-vs-DAE execution reachability, tool/ev\u2026",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-01890",
+        "cov-01891",
+        "cov-01892",
+        "cov-01893",
+        "cov-01894",
+        "cov-01895",
+        "cov-01896",
+        "cov-01897",
+        "cov-01898",
+        "cov-01899"
+      ],
+      "source_obligation_ids": [
+        "obl-1106",
+        "obl-1107",
+        "obl-1108",
+        "obl-1109",
+        "obl-1110",
+        "obl-1111",
+        "obl-1112",
+        "obl-1113",
+        "obl-1114",
+        "obl-1115"
+      ],
+      "source_seed_ids": [
+        "shard-0081-s126",
+        "shard-0077-s083",
+        "shard-0081-s040",
+        "shard-0081-s132",
+        "shard-0082-s063",
+        "shard-0083-s045",
+        "shard-0083-s022",
+        "shard-0079-s111",
+        "shard-0079-s110",
+        "shard-0079-s109"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0079",
+        "shard-0081",
+        "shard-0082",
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "`FileSafe.md` still has a concrete DAE enforcement seam: post-approval arg mutation, `context_files` widening write scope, fail-open initialization paths, and `recovery_options[]` vs `allowed_action_ids[]` schema drift.",
+        "FileSafe.md",
+        "context_files",
+        "recovery_options[]",
+        "allowed_action_ids[]",
+        "`FileSafe.md`, `MiscPlan.md`, and `Executor_Protocol.md` as adjacent runtime-lineage enforcement owners",
+        "MiscPlan.md",
+        "Executor_Protocol.md",
+        "`Formatters_System.md` continues to sit outside the central mutation/policy engine and loses attribution under DAE.",
+        "Formatters_System.md",
+        "`Formatters_System.md` still has no authoritative rule for formatter-vs-LSP ownership, DAE non-triggering host writes, or overlapping formatter detectors.",
+        "`Formatters_System.md`, `LSPSupport.md`, `Plugins_System.md`, and `Skills_System.md` still lack clean ownership boundaries for mutation-capable semantics, hosted-vs-DAE execution reachability, tool/event identity, and plugin/skill introspection or isolation guarantees.",
+        "LSPSupport.md",
+        "Plugins_System.md",
+        "Skills_System.md",
+        "`GATE-010` needs an explicit relationship to:",
+        "GATE-010",
+        "`GATE-010` still validates flat wiring coverage only. It does not validate:",
+        "`GateComplete`",
+        "GateComplete",
+        "`GateStart`",
+        "GateStart",
+        "`IterationStart`",
+        "IterationStart"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0260",
+  "represented_seed_ids": [
+    "seed-WAVE007-0016"
+  ],
+  "source_shard_ids": [
+    "shard-0063"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE007-0016"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "canon_label": "Define a controlled coarse destination enum/family in the route contract layer.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define a controlled coarse destination enum/family in the route contract layer.",
+        "Let object identity and scope pick the thing to show; let destination pick the major surface class; let shell state handle the rest.",
+        "Recommended coarse destination classes: `primary_view` (Dashboard, Projects, Wizard, Interview, Settings, Usage, FileEditor, Orchestrator), `side_panel` (chat, files, source_control, github_actions, docker_manager, artifacts, run_debug), `bottom_panel` (terminal, problems, output, ports, browser, debug), `embedded_surface` (document_pane, agent_activity), `page_tab` (Orchestrator tabs like Progress, Seams/Tiers, Node Graph, Evidence, History, Ledger)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Destination Surface Vocabulary",
+        "## target_kind Enum"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L012544-L012600"
+      ],
+      "notes": [
+        "Contracts_V0.md must define the controlled coarse destination vocabulary. The vocabulary must stay coarse \u2014 not include dock/floating realization, subview state, widget slots, remembered collapse/expand preferences.",
+        "Some current commands still mix coarse destination choice with detailed shell/subview state in one payload \u2014 this must be resolved."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

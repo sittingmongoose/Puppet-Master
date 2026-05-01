@@ -1,0 +1,104 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0532",
+  "coverage_row_ids_represented": [
+    "cov-02931",
+    "cov-02932",
+    "cov-02933",
+    "cov-02934",
+    "cov-02935",
+    "cov-02936",
+    "cov-02937",
+    "cov-02938",
+    "cov-02939",
+    "cov-02940"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0532",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "Primary stale consumer: | Primary stale consumers: | Primary stale owner/consumer hybrid: | Primary stale/inconsistent consumers: | Reconcile widget layout persistence keys so stale non-Progress Orchestrator widget-layout keys are not left as live canon.",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-02931",
+        "cov-02932",
+        "cov-02933",
+        "cov-02934",
+        "cov-02935",
+        "cov-02936",
+        "cov-02937",
+        "cov-02938",
+        "cov-02939",
+        "cov-02940"
+      ],
+      "source_obligation_ids": [
+        "obl-1889",
+        "obl-1890",
+        "obl-1891",
+        "obl-1892",
+        "obl-1893",
+        "obl-1894",
+        "obl-1895",
+        "obl-1896",
+        "obl-1897",
+        "obl-1898"
+      ],
+      "source_seed_ids": [
+        "shard-0080-s030",
+        "shard-0080-s051",
+        "shard-0078-s018",
+        "shard-0079-s033",
+        "shard-0079-s124",
+        "shard-0086-s036",
+        "shard-0080-s079",
+        "shard-0079-s084",
+        "shard-0080-s088",
+        "shard-0079-s070",
+        "shard-0084-s073",
+        "shard-0083-s120",
+        "shard-0079-s071",
+        "shard-0079-s094"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0079",
+        "shard-0080",
+        "shard-0083",
+        "shard-0084",
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "Primary stale consumer:",
+        "Primary stale consumers:",
+        "Primary stale owner/consumer hybrid:",
+        "Primary stale/inconsistent consumers:",
+        "Reconcile widget layout persistence keys so stale non-Progress Orchestrator widget-layout keys are not left as live canon.",
+        "Reconciliation must retire or rewrite the earlier sections, not merely append another addendum.",
+        "Reconciliation should keep the field names that are already correct and replace the stale scope model under them:",
+        "Reconciliation should retire the request-centric opening contract and rebuild the file around:",
+        "Research Progress - 2026-03-17 - Graph approval command shapes are now internally inconsistent as well as stale",
+        "Research Progress - 2026-03-17 - Live-status sourcing still mixes canonical runtime records with legacy `PuppetMasterEvent::*` streams",
+        "PuppetMasterEvent::*"
+      ],
+      "stale_tokens": [
+        "PuppetMasterEvent::*"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

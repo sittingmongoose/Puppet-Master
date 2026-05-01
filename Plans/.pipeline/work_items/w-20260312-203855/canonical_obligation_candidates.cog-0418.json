@@ -1,0 +1,135 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0418",
+  "represented_seed_ids": [
+    "shard-0083-s115",
+    "shard-0084-s024",
+    "shard-0084-s068",
+    "shard-0084-s115",
+    "shard-0085-s003",
+    "shard-0085-s035",
+    "shard-0085-s104",
+    "shard-0086-s012",
+    "shard-0086-s037",
+    "shard-0086-s066",
+    "shard-0086-s105",
+    "shard-0086-s142",
+    "shard-0087-s020",
+    "shard-0087-s079",
+    "shard-0088-s045"
+  ],
+  "source_shard_ids": [
+    "shard-0083",
+    "shard-0084",
+    "shard-0085",
+    "shard-0086",
+    "shard-0087",
+    "shard-0088"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0083-s115",
+        "shard-0084-s024",
+        "shard-0084-s068",
+        "shard-0084-s115",
+        "shard-0085-s003",
+        "shard-0085-s035",
+        "shard-0085-s104",
+        "shard-0086-s012",
+        "shard-0086-s037",
+        "shard-0086-s066",
+        "shard-0086-s105",
+        "shard-0086-s142",
+        "shard-0087-s020",
+        "shard-0087-s079"
+      ],
+      "source_shard_ids": [
+        "shard-0083",
+        "shard-0084",
+        "shard-0085",
+        "shard-0086",
+        "shard-0087"
+      ],
+      "canon_label": "`Plans/Orchestrator_Page.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md`",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016580",
+        "working_ledger.md:L016635",
+        "working_ledger.md:L016701",
+        "working_ledger.md:L016766",
+        "working_ledger.md:L016805",
+        "working_ledger.md:L016845",
+        "working_ledger.md:L016939",
+        "working_ledger.md:L017017",
+        "working_ledger.md:L017053",
+        "working_ledger.md:L017104",
+        "working_ledger.md:L017150",
+        "working_ledger.md:L017194",
+        "working_ledger.md:L017248",
+        "working_ledger.md:L017326"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Orchestrator_Page.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0088-s045"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "4. `Plans/Orchestrator_Page.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "4. `Plans/Orchestrator_Page.md`",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017490"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: 4. `Plans/Orchestrator_Page.md`"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

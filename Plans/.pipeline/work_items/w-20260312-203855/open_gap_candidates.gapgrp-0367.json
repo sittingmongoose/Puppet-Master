@@ -1,0 +1,71 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0367",
+  "coverage_row_ids_represented": [
+    "cov-00664",
+    "cov-00665"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0367",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "human-in-the-loop.md is currently split across two models: older request state keyed by request_id, tier_id, tier_type; newer addenda acknowledging blocked_reason_code = waiting_approval and blocked_s\u2026 | human-in-the-loop.md still contains an intra-doc contradiction on allowed_actions vs allowed_action_ids",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00664",
+        "cov-00665"
+      ],
+      "source_obligation_ids": [
+        "obl-0467",
+        "obl-0468"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0074",
+        "seed-WAVE005-0047"
+      ],
+      "source_shard_ids": [
+        "shard-0047",
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "human-in-the-loop.md is currently split across two models: older request state keyed by request_id, tier_id, tier_type; newer addenda acknowledging blocked_reason_code = waiting_approval and blocked_sequence",
+        "The important split is blocked-episode approval versus session-wide policy; the docs still do not formalize that boundary",
+        "pre-attempt blocked episodes must not invent an attempt_id; blocked_sequence is already the cleaner anchor",
+        "human-in-the-loop.md still contains an intra-doc contradiction on allowed_actions vs allowed_action_ids",
+        "human-in-the-loop.md still leaves request_id <-> blocked_sequence mapping unowned",
+        "human-in-the-loop.md still keeps approval-scope/session semantics under-keyed while neighboring docs cascade approvals broadly"
+      ],
+      "stale_tokens": [
+        "tier_id/tier_type (in HITL request keying)",
+        "request_id (as primary blocked-episode anchor)",
+        "allowed_actions (deprecated, still present in doc)",
+        "request_id (competing with blocked_sequence)"
+      ],
+      "canonical_replacement_hints": [
+        "blocked_sequence",
+        "blocked_reason_code = waiting_approval",
+        "allowed_action_ids[]"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

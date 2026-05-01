@@ -1,17 +1,18 @@
 # Current State
 
-## Legacy Artifact Sanitizer v2.1 — complete
+## Open Gaps Reducer / Ready-Routing Gate v2.1 — complete
 
 - **work_id:** w-20260312-203855
-- **root_files_before:** 3127 immediate files (see `legacy_sanitizer.root_inventory.json`)
-- **files_quarantined:** 3123 → `legacy_quarantine/*.<20260501T190511Z>.*` (UTC batch timestamp)
-- **files_left_active at root:** `meta.json`, `current_state.md`, `working_ledger.md`, `resolve_work_item_report.json`, `legacy_sanitizer.root_inventory.json`, `legacy_sanitizer.worklist.json`, `legacy_sanitizer.wave-001.json`, `legacy_sanitizer_report.json`
-- **root_clean_after_sanitizer:** yes — no generated downstream artifact families remain active at the work-item root
-- **ledger_shards:** unchanged on disk (`ledger_shards/` not modified by this stage)
-- **subagent_execution:** required (>25 root files); verification subagent attested immediate root allowlist (`legacy_sanitizer.wave-001.json`)
-- **next_required_stage:** Ledger Shard Indexer
+- **inputs:** `open_gaps.worklist.json` v2.1; **540** `open_gap_candidates.gapgrp-####.json` v2.1; classifier waves **001–012**; `transfer_coverage_source_coverage_report.json` **pass**
+- **outputs:** `open_gaps.json` (`pm.open_gaps.v2.1`); `open_gaps_reducer.worklist.json`; **12** `open_gaps_reducer.wave-00N.json`; `open_gaps.noise.json` (empty `noise_rows`); **540** gaps; **2260** coverage rows preserved
+- **summary:** planning_blockers **255**, fix_backlog **285**; `planning_blocker_route_breakdown` sums to **255**; `unclassified_planning_blockers` **0**
+- **global route:** `open_gaps.next_required_stage` = **Coverage Matrix Reducer / Source Gate** (priority: **path_field_defect** = **2** → `gap-0001`, `gap-0002`; per-gap `path_field_defect` rows aligned to that stage). **Audit Mode** is not the global next stage.
+- **meta:** `status` **ready_for_planning**; top-level **next_required_stage:** Coverage Matrix Reducer / Source Gate
+- **not done:** `reconciliation_plan.json` not written
 
-**Historical pipeline sections** that previously lived in this file were removed when the file was rewritten after sanitization; prior stage narrative is not authoritative. Process detail is in quarantined artifacts under `legacy_quarantine/` if needed for audit.
+## Open Gaps Classifier v2.1 — complete (reference)
+
+- **540** candidate files; attestation `f2d5ab35-a6be-4bdc-be17-3efb78e9d37c`
 
 WORK_ID LOCK:
 - Active work_id: w-20260312-203855

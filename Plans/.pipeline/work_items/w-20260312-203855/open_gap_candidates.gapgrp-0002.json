@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0002",
+  "coverage_row_ids_represented": [
+    "cov-01019"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0002",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "path_field_defect",
+      "description": "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "missing",
+      "coverage_row_ids": [
+        "cov-01019"
+      ],
+      "source_obligation_ids": [
+        "obl-0657"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s029"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.",
+        "39",
+        "Plans/*.md",
+        "22"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Path is not a concrete Plans/** file target (e.g. glob or invalid): Plans/*.md",
+      "next_resolution_stage": "Audit Mode"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

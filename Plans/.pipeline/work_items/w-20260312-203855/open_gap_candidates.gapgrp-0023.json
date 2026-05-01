@@ -1,0 +1,127 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0023",
+  "coverage_row_ids_represented": [
+    "cov-00232",
+    "cov-00266",
+    "cov-00291",
+    "cov-00323",
+    "cov-00427",
+    "cov-00446",
+    "cov-00466",
+    "cov-00470",
+    "cov-00474",
+    "cov-00483"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0023",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "Current docs define plenty of positive rules, but almost no explicit invalid-combination rules. | Introduce OpenSubject as the named identity-open contract consumed by FileManager and assistant chat. | Plans/Contracts_V0.md still has resume_url, detail_ref, and event-local linkage fields, but it still does not own a named route_target or OpenSubject contract. | Reserved-name policy is split across three docs (Commands_System.md, UI_Command_Catalog.md, and Contracts_V0.md) with different scope, depth, and authority claims | `Crosswalk.md` still names `Primitive:UICommand` and `Primitive:DocumentPane`, but it has no primitive boundary for route-target navigation or identity-native open/focus behavior.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Route Contracts"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00232",
+        "cov-00266",
+        "cov-00291",
+        "cov-00323",
+        "cov-00427",
+        "cov-00446",
+        "cov-00466",
+        "cov-00470",
+        "cov-00474",
+        "cov-00483"
+      ],
+      "source_obligation_ids": [
+        "obl-0186",
+        "obl-0205",
+        "obl-0221",
+        "obl-0244",
+        "obl-0311",
+        "obl-0324",
+        "obl-0335",
+        "obl-0336",
+        "obl-0337",
+        "obl-0339"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0008",
+        "seed-WAVE008-0021",
+        "seed-WAVE008-0024",
+        "seed-WAVE006-0056",
+        "seed-WAVE007-0028",
+        "seed-WAVE007-0023",
+        "shard-0087-s113",
+        "shard-0087-s063",
+        "shard-0088-s018",
+        "shard-0088-s084"
+      ],
+      "source_shard_ids": [
+        "shard-0057",
+        "shard-0064",
+        "shard-0065",
+        "shard-0072",
+        "shard-0073",
+        "shard-0074",
+        "shard-0087",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "Current docs define plenty of positive rules, but almost no explicit invalid-combination rules.",
+        "Without rejection rules, route producers will keep slipping local payload habits into the base contract.",
+        "A bounded contract needs rejection rules. Otherwise every bad payload becomes a precedent.",
+        "Introduce OpenSubject as the named identity-open contract consumed by FileManager and assistant chat.",
+        "assistant-chat-design.md already proves the subject-open split is required.",
+        "FileManager.md is now the main stale consumer for this seam.",
+        "Keep generated://<artifact_id> as resolver output, not canonical subject identity.",
+        "Plans/Contracts_V0.md still has resume_url, detail_ref, and event-local linkage fields, but it still does not own a named route_target or OpenSubject contract.",
+        "Structural gaps still live: Contracts_V0.md still lacks the named canonical contracts for route_target and OpenSubject.",
+        "Plans/Crosswalk.md still lacks the matching primitive-boundary declaration for route-target and subject-open navigation.",
+        "This is now a clear owner-doc gap, not a vague alignment issue. storage-plan.md is ahead of Contracts_V0.md and Crosswalk.md on this seam.",
+        "Reserved-name policy is split across three docs (Commands_System.md, UI_Command_Catalog.md, and Contracts_V0.md) with different scope, depth, and authority claims",
+        "One doc must own the reserved-name policy, the others must defer",
+        "`Crosswalk.md` still names `Primitive:UICommand` and `Primitive:DocumentPane`, but it has no primitive boundary for route-target navigation or identity-native open/focus behavior.",
+        "Add a Crosswalk primitive boundary for route-target / open-subject ownership so the split between shell-state and canonical navigation is explicit.",
+        "`Formatters_System.md` has unresolved ownership splits with LSP formatting, under-specified DAE behavior, custom formatter subprocess/FileSafe bypass risk, and unregistered `format.*` events.",
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/FinalGUISpec.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Decision_Policy.md",
+        "Plans/FinalGUISpec.md",
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`",
+        "Plans/UI_Command_Catalog.md",
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`",
+        "Plans/Crosswalk.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md",
+        "Plans/FileManager.md",
+        "Plans/Project_Output_Artifacts.md",
+        "`Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but `Plans/Contracts_V0.md` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` heading.",
+        "Plans/Executor_Protocol.md",
+        "execution_unit_context",
+        "### 5.1B Persona/Runtime Snapshot Payload Contract"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

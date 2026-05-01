@@ -1,0 +1,55 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0065",
+  "coverage_row_ids_represented": [
+    "cov-01550"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0065",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "Reconcile owner docs in this order: Contracts_V0.md, Crosswalk.md, UI_Command_Catalog.md, FinalGUISpec.md, then consumer docs.",
+      "affected_targets": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-01550"
+      ],
+      "source_obligation_ids": [
+        "obl-0892"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0013"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "Reconcile owner docs in this order: Contracts_V0.md, Crosswalk.md, UI_Command_Catalog.md, FinalGUISpec.md, then consumer docs.",
+        "Keep the routing tranche centralized in owner docs before touching broad consumer prose.",
+        "The contract conclusions are now stronger than several owner docs, especially Contracts_V0.md, Crosswalk.md, UI_Command_Catalog.md, and FinalGUISpec.md.",
+        "If reconciliation starts from surface docs first instead of owner docs, drift will reappear immediately because the route vocabulary is now cross-cutting rather than page-local."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

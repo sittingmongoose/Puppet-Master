@@ -1,0 +1,112 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0460",
+  "coverage_row_ids_represented": [
+    "cov-00388",
+    "cov-00418",
+    "cov-00424",
+    "cov-00425",
+    "cov-00428",
+    "cov-00429",
+    "cov-00430",
+    "cov-00431",
+    "cov-00432",
+    "cov-00438"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0460",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "UI/behavior docs often contain the top-level statement, but not the **operational policy layer** implementation agents would need. | `Architecture_Invariants.md` remains missing owner-level invariants for attempt immutability, failure-vs-blocked family separation, restore identity, projection authority, and shared provider-pool con\u2026 | `Contracts_V0.md` still lacks the late refinement layer: selector precedence order, reject rules, closed `tab_id` vocabulary, scoped resolver rules, route examples, ref-family split | `Crosswalk.md` still acts as if owner primitives are stable while the rewrite has already shifted ownership boundaries around Orchestrator, widgets, route/open contracts, blocked identity, and runtime\u2026 | `Crosswalk.md`, `DRY_Rules.md`, `Progression_Gates.md`, and `Decision_Log.md` now have explicitly cited duplicate section numbers, misbound `ContractRef`s, line-level gate semantics that do not match \u2026",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-00388",
+        "cov-00418",
+        "cov-00424",
+        "cov-00425",
+        "cov-00428",
+        "cov-00429",
+        "cov-00430",
+        "cov-00431",
+        "cov-00432",
+        "cov-00438"
+      ],
+      "source_obligation_ids": [
+        "obl-0293",
+        "obl-0307",
+        "obl-0309",
+        "obl-0310",
+        "obl-0312",
+        "obl-0313",
+        "obl-0314",
+        "obl-0315",
+        "obl-0316",
+        "obl-0319"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s017",
+        "shard-0082-s058",
+        "shard-0088-s024",
+        "shard-0082-s157",
+        "shard-0082-s055",
+        "shard-0081-s026",
+        "shard-0081-s122",
+        "shard-0081-s031",
+        "shard-0085-s051",
+        "shard-0080-s083"
+      ],
+      "source_shard_ids": [
+        "shard-0080",
+        "shard-0081",
+        "shard-0082",
+        "shard-0085",
+        "shard-0087",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "UI/behavior docs often contain the top-level statement, but not the **operational policy layer** implementation agents would need.",
+        "`Architecture_Invariants.md` remains missing owner-level invariants for attempt immutability, failure-vs-blocked family separation, restore identity, projection authority, and shared provider-pool concurrency.",
+        "Architecture_Invariants.md",
+        "`Contracts_V0.md` still lacks the late refinement layer: selector precedence order, reject rules, closed `tab_id` vocabulary, scoped resolver rules, route examples, ref-family split",
+        "Contracts_V0.md",
+        "tab_id",
+        "`Crosswalk.md` still acts as if owner primitives are stable while the rewrite has already shifted ownership boundaries around Orchestrator, widgets, route/open contracts, blocked identity, and runtime identity disclosure.",
+        "Crosswalk.md",
+        "`Crosswalk.md`, `DRY_Rules.md`, `Progression_Gates.md`, and `Decision_Log.md` now have explicitly cited duplicate section numbers, misbound `ContractRef`s, line-level gate semantics that do not match adjacent canon usage, and missing rewrite-era governance records.",
+        "DRY_Rules.md",
+        "Progression_Gates.md",
+        "Decision_Log.md",
+        "ContractRef",
+        "`DRY_Rules.md` cross-checks surfaced duplicated canonical sections, malformed/uncategorized `ContractRef`s, lowercase normative text that evades traceability gates, and alias-canonicalization rules that now contradict owner docs.",
+        "`DRY_Rules.md`, `Crosswalk.md`, `Progression_Gates.md`, and `Contracts_V0.md` now show concrete `ContractRef` format, anchor, and duplicate-section failures that would break deterministic traceability rather than just weaken it.",
+        "`Decision_Log.md` still lacks canonical entries for the very rewrite decisions that are currently only captured as addenda or ledger facts, which is now causing canon ambiguity rather than simple under-documentation.",
+        "`Evidence`, `History`, and `Ledger` treated as native tabs",
+        "Evidence",
+        "History",
+        "Ledger",
+        "`FinalGUISpec.md`",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [
+        "ContractRef",
+        "DRY_Rules.md"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

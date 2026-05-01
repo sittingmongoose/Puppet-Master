@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0517",
+  "represented_seed_ids": [
+    "shard-0024-s004",
+    "shard-0024-s005"
+  ],
+  "source_shard_ids": [
+    "shard-0024"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0024-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "shortcuts primarily target navigation, focus, search, inspector toggles, and common non-destructive actions",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "shortcuts primarily target navigation, focus, search, inspector toggles, and common non-destructive actions"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Keyboard Shortcut Policy"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": [
+        "Good Orchestrator shortcut candidates: focus global search, next/previous tab, open/close right-side inspector, jump between attention items, fit graph/focus selected node/toggle generation overlay"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0024-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "object context menus should show only actions valid for that object's current state, with canonical labels from runtime semantics",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "object context menus should show only actions valid for that object's current state, with canonical labels from runtime semantics"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Context Menu Policy"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": [
+        "Objects needing context menus: node, concern, promotion, graph patch, lane/worktree, recovery record"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

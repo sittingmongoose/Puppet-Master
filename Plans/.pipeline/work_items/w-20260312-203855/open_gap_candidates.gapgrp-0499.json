@@ -1,0 +1,111 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0499",
+  "coverage_row_ids_represented": [
+    "cov-02146",
+    "cov-02148",
+    "cov-02149",
+    "cov-02150",
+    "cov-02151",
+    "cov-02152",
+    "cov-02153",
+    "cov-02154",
+    "cov-02155",
+    "cov-02156"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0499",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "`auto` follows the most recently started worker | `blocked_reason_code` | `blocked_sequence` | `blocked_sequence` is part of the runtime-facing identity | `blocked_sequence` minting ownership still missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-02146",
+        "cov-02148",
+        "cov-02149",
+        "cov-02150",
+        "cov-02151",
+        "cov-02152",
+        "cov-02153",
+        "cov-02154",
+        "cov-02155",
+        "cov-02156"
+      ],
+      "source_obligation_ids": [
+        "obl-1350",
+        "obl-1352",
+        "obl-1353",
+        "obl-1354",
+        "obl-1355",
+        "obl-1356",
+        "obl-1357",
+        "obl-1358",
+        "obl-1359",
+        "obl-1360"
+      ],
+      "source_seed_ids": [
+        "shard-0080-s048",
+        "shard-0080-s025",
+        "shard-0078-s106",
+        "shard-0078-s131",
+        "shard-0085-s075",
+        "shard-0083-s104",
+        "shard-0088-s032",
+        "shard-0091-s054",
+        "shard-0091-s084",
+        "shard-0091-s115",
+        "shard-0084-s099",
+        "shard-0084-s100",
+        "shard-0084-s097",
+        "shard-0084-s096"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0080",
+        "shard-0083",
+        "shard-0084",
+        "shard-0085",
+        "shard-0088",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`auto` follows the most recently started worker",
+        "auto",
+        "`blocked_reason_code`",
+        "blocked_reason_code",
+        "`blocked_sequence`",
+        "blocked_sequence",
+        "`blocked_sequence` is part of the runtime-facing identity",
+        "`blocked_sequence` minting ownership still missing",
+        "`canon_inventory.json` now lags the sharpened audit wording again, so the next useful stage is `Ledger Condenser`.",
+        "canon_inventory.json",
+        "Ledger Condenser",
+        "`cmd.artifacts.show_in_ledger`",
+        "cmd.artifacts.show_in_ledger",
+        "`cmd.artifacts.show_in_usage`",
+        "cmd.artifacts.show_in_usage",
+        "`cmd.chat.focus_thread_usage`",
+        "cmd.chat.focus_thread_usage",
+        "`cmd.chat.open_thread_usage`",
+        "cmd.chat.open_thread_usage"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

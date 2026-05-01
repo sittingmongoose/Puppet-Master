@@ -1,0 +1,69 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0263",
+  "coverage_row_ids_represented": [
+    "cov-03204",
+    "cov-03243"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0263",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_cross_reference",
+      "description": "Plans/Runtime_Artifacts_Panel.md still frames open/link behavior in artifact-panel terms and still uses a task_id rule that reflects older task-granularity language. | tier_id can still survive as a human-readable grouping label, but it should stop acting like the canonical execution correlation key",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-03204",
+        "cov-03243"
+      ],
+      "source_obligation_ids": [
+        "obl-2057",
+        "obl-2074"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0025",
+        "seed-WAVE006-0001"
+      ],
+      "source_shard_ids": [
+        "shard-0051",
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "Plans/Runtime_Artifacts_Panel.md still frames open/link behavior in artifact-panel terms and still uses a task_id rule that reflects older task-granularity language.",
+        "Reconcile runtime-artifact identity language away from stale task_id framing and toward runtime/object identity.",
+        "tier_id can still survive as a human-readable grouping label, but it should stop acting like the canonical execution correlation key",
+        "Tier-shaped surfaces may still display and group by tier_id, but they should resolve through pointers to canonical execution objects rather than using tier_id as if it were the durable execution key",
+        "Retarget Run Graph and Usage links toward node_id / attempt_id semantics, with tier_id surviving only as a display/grouping label where needed"
+      ],
+      "stale_tokens": [
+        "task_id as artifact identity/rule anchor in Runtime_Artifacts_Panel.md",
+        "tier_id"
+      ],
+      "canonical_replacement_hints": [
+        "runtime object identity: node/attempt/run; route through Contracts_V0.md route_target and OpenSubject primitives",
+        "node_id",
+        "attempt_id",
+        "run_id"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

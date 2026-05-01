@@ -1,0 +1,61 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0322",
+  "coverage_row_ids_represented": [
+    "cov-03187"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0322",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_cross_reference",
+      "description": "Graph-local commands Retry/Replan/Reopen/Approve/Deny must be mapped to canonical cmd.runtime.* action families \u2014 graph-local naming must not be used in contracts or schemas",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "## Graph-Local Command Canonicalization"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-03187"
+      ],
+      "source_obligation_ids": [
+        "obl-2047"
+      ],
+      "source_seed_ids": [
+        "shard-0010-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "Graph-local commands Retry/Replan/Reopen/Approve/Deny must be mapped to canonical cmd.runtime.* action families \u2014 graph-local naming must not be used in contracts or schemas"
+      ],
+      "stale_tokens": [
+        "Retry",
+        "Replan",
+        "Reopen",
+        "Approve",
+        "Deny",
+        "approve_continue"
+      ],
+      "canonical_replacement_hints": [
+        "Map to canonical cmd.runtime.* action families"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

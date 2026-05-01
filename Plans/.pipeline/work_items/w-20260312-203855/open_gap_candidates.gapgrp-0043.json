@@ -1,0 +1,133 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0043",
+  "coverage_row_ids_represented": [
+    "cov-01934",
+    "cov-01935",
+    "cov-01936",
+    "cov-01937",
+    "cov-01938",
+    "cov-02010",
+    "cov-02072",
+    "cov-02191",
+    "cov-02237",
+    "cov-02307"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0043",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "`Plans/Contracts_V0.md` explicitly forbids parallel canonical fields: | `Plans/Contracts_V0.md` is mixed: | `Plans/Contracts_V0.md` preserves the same split: | `Plans/Contracts_V0.md` still lacks named canonical contracts for: | `Plans/Contracts_V0.md` still preserves forbidden `detached_window` in the closed `target_kind` enum.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Sub-Selection and inspector_target"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-01934",
+        "cov-01935",
+        "cov-01936",
+        "cov-01937",
+        "cov-01938",
+        "cov-02010",
+        "cov-02072",
+        "cov-02191",
+        "cov-02237",
+        "cov-02307"
+      ],
+      "source_obligation_ids": [
+        "obl-1149",
+        "obl-1150",
+        "obl-1151",
+        "obl-1152",
+        "obl-1153",
+        "obl-1224",
+        "obl-1277",
+        "obl-1394",
+        "obl-1434",
+        "obl-1497"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s128",
+        "shard-0078-s048",
+        "shard-0078-s090",
+        "shard-0083-s053",
+        "shard-0088-s085",
+        "shard-0088-s027",
+        "shard-0089-s078",
+        "seed-WAVE007-0004",
+        "shard-0087-s069",
+        "shard-0033-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0033",
+        "shard-0061",
+        "shard-0077",
+        "shard-0078",
+        "shard-0083",
+        "shard-0087",
+        "shard-0088",
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/Contracts_V0.md` explicitly forbids parallel canonical fields:",
+        "Plans/Contracts_V0.md",
+        "`Plans/Contracts_V0.md` is mixed:",
+        "`Plans/Contracts_V0.md` preserves the same split:",
+        "`Plans/Contracts_V0.md` still lacks named canonical contracts for:",
+        "`Plans/Contracts_V0.md` still preserves forbidden `detached_window` in the closed `target_kind` enum.",
+        "detached_window",
+        "target_kind",
+        "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md`",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Tools.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Run_Modes.md",
+        "Plans/Executor_Protocol.md",
+        "`Plans/orchestrator-subagent-integration.md` still actively carries `TierContext` / `tier_id` residue, and `Plans/Contracts_V0.md` still preserves `detached_window`.",
+        "TierContext",
+        "tier_id",
+        "`inspector_target` is still useful, but it should stay for reusable detail-pane or subsection focus, not as a universal dumping ground for all feature-local anchors.",
+        "Sub-selection is handled by one of three mechanisms: `OpenFile` specialization for `line`/`range`; `inspector_target` for reusable detail-surface focus; object-family-specific anchor fields only when the anchor is truly domain-local and not reusable",
+        "Define `inspector_target` narrowly in the contract layer as reusable detail/subsection focus.",
+        "`route_target`, `OpenSubject`, `command_kind`, `normalizes_to_contract`, `target_kind`, `object_kind`, and `inspector_target` are already present in `Plans/Contracts_V0.md`.",
+        "route_target",
+        "OpenSubject",
+        "command_kind",
+        "normalizes_to_contract",
+        "object_kind",
+        "inspector_target",
+        "acknowledge is closest to noise-control / ownership-signaling",
+        "dismiss is a durable semantic judgment and must not look like closing a toast",
+        "resolve is not one generic operation; it needs resolution_kind",
+        "merge / split / supersede are structural lineage edits, not ordinary state toggles",
+        "concern actions never hard-delete canonical concern history in normal operation",
+        "concern undo should generally be implemented as compensating follow-up records (reopened, reverse-merge lineage, successor concern, etc.), not history erasure"
+      ],
+      "stale_tokens": [
+        "Plans/Contracts_V0.md",
+        "detached_window",
+        "target_kind"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

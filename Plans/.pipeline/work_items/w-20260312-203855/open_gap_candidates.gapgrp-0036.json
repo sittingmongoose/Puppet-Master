@@ -1,0 +1,125 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0036",
+  "coverage_row_ids_represented": [
+    "cov-00805",
+    "cov-00836",
+    "cov-00848",
+    "cov-00866",
+    "cov-00882",
+    "cov-00885",
+    "cov-00891",
+    "cov-00914",
+    "cov-00945",
+    "cov-00951"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0036",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "1. `Plans/Contracts_V0.md` | Add a canonical route payload / target model owner section, likely in Contracts_V0.md or an equivalent routing owner doc | Add a minimal command-classification / normalization contract to the command-definition layer: `command_kind` (shell_view | navigation_wrapper | domain_action); optional `normalization` with `kind` (w\u2026 | Add an explicit command-catalog pattern for: canonical command, wrapper command, deprecated alias, migration rule | Add explicit route validation rules to Contracts_V0.md.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Route Target Payload"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00805",
+        "cov-00836",
+        "cov-00848",
+        "cov-00866",
+        "cov-00882",
+        "cov-00885",
+        "cov-00891",
+        "cov-00914",
+        "cov-00945",
+        "cov-00951"
+      ],
+      "source_obligation_ids": [
+        "obl-0560",
+        "obl-0577",
+        "obl-0581",
+        "obl-0586",
+        "obl-0593",
+        "obl-0595",
+        "obl-0596",
+        "obl-0609",
+        "obl-0624",
+        "obl-0626"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s042",
+        "seed-WAVE006-0033",
+        "seed-WAVE007-0030",
+        "seed-WAVE006-0051",
+        "seed-WAVE008-0007",
+        "shard-0035-s002",
+        "seed-WAVE008-0011",
+        "shard-0037-s002",
+        "shard-0004-s013",
+        "shard-0003-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0003",
+        "shard-0004",
+        "shard-0035",
+        "shard-0037",
+        "shard-0054",
+        "shard-0056",
+        "shard-0066",
+        "shard-0072",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "1. `Plans/Contracts_V0.md`",
+        "Plans/Contracts_V0.md",
+        "Add a canonical route payload / target model owner section, likely in Contracts_V0.md or an equivalent routing owner doc",
+        "define one canonical internal route/target payload for navigation",
+        "resume_url should be one serialized transport form of that payload",
+        "Add a minimal command-classification / normalization contract to the command-definition layer: `command_kind` (shell_view | navigation_wrapper | domain_action); optional `normalization` with `kind` (wrapper | deprecated_alias) and exactly one target field: `normalizes_to_contract` for wrappers OR `alias_of_command_id` for deprecated aliases",
+        "Keep wrapper metadata contract-level and narrow: point to the canonical primitive family; do not restate route payload structure there",
+        "Deprecated alias metadata should remain explicit and separate because it implies lifecycle/removal expectations that wrapper commands do not have.",
+        "Extend `GATE-010` to verify: wrapper commands marked as normalizing to the same primitive do not diverge in handler semantics unexpectedly; deprecated aliases resolve to real canonical command IDs; normalization metadata is internally consistent with the command kind",
+        "Add an explicit command-catalog pattern for: canonical command, wrapper command, deprecated alias, migration rule",
+        "Reuse the event-side alias discipline from Contracts_V0.md as the template for command deprecation/migration rules rather than inventing a weaker prose-only pattern",
+        "Event contracts already have a recognizable alias/migration pattern, but command contracts do not",
+        "Add explicit route validation rules to Contracts_V0.md.",
+        "State that invalid route payloads are contract failures, not 'best effort' cases.",
+        "Normalize before route construction, not during late destination-specific handling.",
+        "Canonical route validation rules are: reject when project_id is missing; reject when no primary selector exists; reject when both subject_id and object_kind/object_id are supplied as competing primary selectors; reject when object_kind is present without object_id; reject when object_id is present without object_kind; reject when inspector_target is present but no object selector exists; reject when tab_id conflicts with target_kind; reject when line or range appears in route_target; reject when per-surface state appears in route_target.",
+        "Add requested_account_id?, effective_account_id?, execution-scope fields, and actor_kind / execution_role to the shared runtime identity bundle and to the bridged-provider envelope",
+        "Replace tier-era persisted names/values in Prompt_Pipeline.md and Personas.md before they become entrenched in durable records",
+        "Define a canonical switch-history / pressure-episode family and make it queryable from History, Ledger, Usage, and Account/Usage Pressure projections",
+        "Add a canonical role enumeration and apply it consistently to role-scoped account policies, Persona resolution, permission scoping, and provider dispatch",
+        "Re-scope permission session cache / reject cascade and OpenCode SSE/session isolation rules to actor/lane-aware boundaries",
+        "Add scoped-identity resolver rules to Contracts_V0.md.",
+        "Keep scoped runtime families object-first and resolver-backed.",
+        "Do not add family-specific top-level route fields just because some ids are only unique within run scope.",
+        "Scoped identity rules: blocked_episode (object_id=blocked_sequence, resolver scope requires focused_run_id + node membership); scheduler_pass (requires focused_run_id); safe_point (requires focused_run_id); remediation (object_id=remediation_root_id, requires focused_run_id); attempt (object_id=attempt_id, requires focused_run_id).",
+        "Attention item rollup rules must be specified: when can N concern records collapse into one attention item, what is the severity-merge strategy, when must distinct items remain separate",
+        "Attention item disclosure rules must be specified: which items are shown inline on surfaces vs surfaced only on click vs hidden until the user navigates to the attention center",
+        "Routing rules from attention item to primary/secondary action surfaces must be specified",
+        "Canonical event families must be shared between the runtime and UI projections \u2014 the Orchestrator must NOT invent a shadow event language separate from the runtime event model",
+        "Canonical handoff/retry memory must be stored as structured runtime records NOT loose markdown; worker-facing handoff = synthesized bounded packet derived from canonical records"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

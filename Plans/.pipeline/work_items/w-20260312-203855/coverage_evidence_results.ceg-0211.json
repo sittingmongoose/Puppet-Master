@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0211",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-00552",
+      "source_obligation_ids": [
+        "obl-0388"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s052"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "path": "Plans/chain-wizard-flexibility.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00645",
+      "source_obligation_ids": [
+        "obl-0451"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0050"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path": "Plans/chain-wizard-flexibility.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00996",
+      "source_obligation_ids": [
+        "obl-0645"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0026"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "path": "Plans/chain-wizard-flexibility.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md: exact_items matched 3/4 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01015",
+      "source_obligation_ids": [
+        "obl-0655"
+      ],
+      "source_seed_ids": [
+        "shard-0032-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "path": "Plans/chain-wizard-flexibility.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01153",
+      "source_obligation_ids": [
+        "obl-0702"
+      ],
+      "source_seed_ids": [
+        "shard-0032-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "path": "Plans/chain-wizard-flexibility.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md: exact_items matched 4/5 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01157",
+      "source_obligation_ids": [
+        "obl-0704"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0052"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path": "Plans/chain-wizard-flexibility.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md: exact_items matched 3/4 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01232",
+      "source_obligation_ids": [
+        "obl-0740"
+      ],
+      "source_seed_ids": [
+        "shard-0003-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path": "Plans/chain-wizard-flexibility.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01269",
+      "source_obligation_ids": [
+        "obl-0757"
+      ],
+      "source_seed_ids": [
+        "shard-0003-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path": "Plans/chain-wizard-flexibility.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01492",
+      "source_obligation_ids": [
+        "obl-0867"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0043"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "path": "Plans/chain-wizard-flexibility.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01579",
+      "source_obligation_ids": [
+        "obl-0912"
+      ],
+      "source_seed_ids": [
+        "shard-0003-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path": "Plans/chain-wizard-flexibility.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

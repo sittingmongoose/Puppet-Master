@@ -1,0 +1,77 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0147",
+  "coverage_row_ids_represented": [
+    "cov-02875",
+    "cov-02898",
+    "cov-02899"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0147",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "'Tiers' tab name is stale and must be retired; canonical replacement is 'Seams' | Glossary.md is still being cited as the owner of Overseer while not defining it | Glossary.md uses 'handoff' for at minimum three distinct concepts: Assistant\u2192HITL session transfer, attempt\u2192promotion pipeline step, and project-switch/context change",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "## Tab Navigation"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-02875",
+        "cov-02898",
+        "cov-02899"
+      ],
+      "source_obligation_ids": [
+        "obl-1846",
+        "obl-1866",
+        "obl-1867"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s001",
+        "seed-WAVE006-0041",
+        "seed-WAVE006-0062"
+      ],
+      "source_shard_ids": [
+        "shard-0001",
+        "shard-0055",
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "'Tiers' tab name is stale and must be retired; canonical replacement is 'Seams'",
+        "Glossary.md is still being cited as the owner of Overseer while not defining it",
+        "effective state is now clearly too broad to safely stand in for requested/effective runtime identity",
+        "add missing Glossary entries for rewrite-era terms",
+        "Glossary.md uses 'handoff' for at minimum three distinct concepts: Assistant\u2192HITL session transfer, attempt\u2192promotion pipeline step, and project-switch/context change",
+        "These must be disambiguated with distinct terms or sub-entries in the Glossary and correctly pointed at by the Assistant, Executor, and storage docs"
+      ],
+      "stale_tokens": [
+        "Tiers",
+        "effective state",
+        "handoff"
+      ],
+      "canonical_replacement_hints": [
+        "Use 'Seams' as the canonical tab name",
+        "requested/effective execution identity",
+        "assistant_handoff",
+        "attempt_promotion",
+        "project_context_switch"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

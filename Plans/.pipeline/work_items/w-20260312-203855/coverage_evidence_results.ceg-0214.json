@@ -1,0 +1,189 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0214",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-01139",
+      "source_obligation_ids": [
+        "obl-0697"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0015"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "path": "Plans/feature-list.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/feature-list.md: exact_items matched 4/5 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02057",
+      "source_obligation_ids": [
+        "obl-1262"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s097",
+        "shard-0081-s022",
+        "shard-0081-s063",
+        "shard-0081-s091",
+        "shard-0081-s117",
+        "shard-0081-s155",
+        "shard-0082-s024",
+        "shard-0082-s050",
+        "shard-0082-s084",
+        "shard-0085-s134",
+        "shard-0086-s007",
+        "shard-0086-s043",
+        "shard-0086-s075",
+        "shard-0086-s125"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0085",
+        "shard-0086"
+      ],
+      "path": "Plans/feature-list.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/feature-list.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02953",
+      "source_obligation_ids": [
+        "obl-1907"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0017"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "path": "Plans/feature-list.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/feature-list.md: first-400-line window scan for stale_retirement",
+        "stale tokens absent or only in retirement/compatibility context in window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02979",
+      "source_obligation_ids": [
+        "obl-1930"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0045"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "path": "Plans/feature-list.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/feature-list.md: first-400-line window scan for stale_retirement",
+        "stale tokens absent or only in retirement/compatibility context in window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03024",
+      "source_obligation_ids": [
+        "obl-1959"
+      ],
+      "source_seed_ids": [
+        "shard-0085-s140"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "path": "Plans/feature-list.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/feature-list.md: first-400-line window scan for stale_retirement",
+        "stale token still appears in live-use context in window"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03038",
+      "source_obligation_ids": [
+        "obl-1970"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0022"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "path": "Plans/feature-list.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/feature-list.md: first-400-line window scan for stale_retirement",
+        "stale tokens absent or only in retirement/compatibility context in window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03153",
+      "source_obligation_ids": [
+        "obl-2035"
+      ],
+      "source_seed_ids": [
+        "shard-0009-s018"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path": "Plans/feature-list.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/feature-list.md: bounded window token/phrase match 1/1"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

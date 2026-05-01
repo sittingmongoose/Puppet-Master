@@ -1,0 +1,87 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0076",
+  "coverage_row_ids_represented": [
+    "cov-00225",
+    "cov-00249",
+    "cov-00259",
+    "cov-00262",
+    "cov-00282",
+    "cov-00695",
+    "cov-00701"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0076",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "Contamination is a major gap: there is no shared event family, state object, or vocabulary for contamination classification, restore-before-reuse, or lane quarantine semantics | GPT-5.3-Codex: contamination policy is a vocabulary gap \u2014 safe-point language exists in newer addenda but contamination classification, restore-before-reuse, and lane quarantine semantics are mostly a\u2026 | Gap: package-based worktrees are not yet defined as a canonical concept; per-node worktrees are the current model but are the wrong shape for scale | Gap: provider/model settings are not yet defined at node, work package, feature seam, work package overseer, and delegated-subagent levels \u2014 this gap must be filled before schemas can be finalized | Not yet defined: how node retry memory, attempt handoff artifacts, reusable learning records, and worker handoff packets map into the seglog/redb/Tantivy stack \u2014 this gap must be resolved",
+      "affected_targets": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "## Contamination Model Gap"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00225",
+        "cov-00249",
+        "cov-00259",
+        "cov-00262",
+        "cov-00282",
+        "cov-00695",
+        "cov-00701"
+      ],
+      "source_obligation_ids": [
+        "obl-0181",
+        "obl-0199",
+        "obl-0202",
+        "obl-0203",
+        "obl-0215",
+        "obl-0491",
+        "obl-0494"
+      ],
+      "source_seed_ids": [
+        "shard-0007-s018",
+        "shard-0010-s017",
+        "shard-0005-s008",
+        "shard-0005-s007",
+        "shard-0003-s011",
+        "shard-0007-s017",
+        "seed-WAVE006-0044"
+      ],
+      "source_shard_ids": [
+        "shard-0003",
+        "shard-0005",
+        "shard-0007",
+        "shard-0010",
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "Contamination is a major gap: there is no shared event family, state object, or vocabulary for contamination classification, restore-before-reuse, or lane quarantine semantics",
+        "GPT-5.3-Codex: contamination policy is a vocabulary gap \u2014 safe-point language exists in newer addenda but contamination classification, restore-before-reuse, and lane quarantine semantics are mostly absent",
+        "Gap: package-based worktrees are not yet defined as a canonical concept; per-node worktrees are the current model but are the wrong shape for scale",
+        "Gap: provider/model settings are not yet defined at node, work package, feature seam, work package overseer, and delegated-subagent levels \u2014 this gap must be filled before schemas can be finalized",
+        "Not yet defined: how node retry memory, attempt handoff artifacts, reusable learning records, and worker handoff packets map into the seglog/redb/Tantivy stack \u2014 this gap must be resolved",
+        "safe-point vs restore-point vs rollback vocabulary is NOT normalized across runtime, policy, interview, and worktree docs \u2014 one canonical vocabulary must be chosen",
+        "startup recovery remains split across policy, executor, and storage docs with no single owner deciding how interrupted attempts become stale_historical vs rehydrated vs startup_recovered",
+        "give startup recovery, backoff, counter ceilings, DAE/jail lifecycle, account-switch strategy invalidation, and wizard blocked-escalation semantics explicit homes in the policy/run-mode/gate docs"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0079",
+  "coverage_row_ids_represented": [
+    "cov-01274",
+    "cov-01720"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0079",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "Introduce execution_unit_context as the canonical runtime-facing context object and make TierContext explicitly derived or compatibility-only | The current TierContext in orchestrator-subagent-integration.md is overloaded: mixes decomposition/view identity, workspace binding, project heuristics, live execution hints, and requested/effective r\u2026",
+      "affected_targets": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-01274",
+        "cov-01720"
+      ],
+      "source_obligation_ids": [
+        "obl-0759",
+        "obl-0989"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0072",
+        "seed-WAVE005-0024"
+      ],
+      "source_shard_ids": [
+        "shard-0044",
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "Introduce execution_unit_context as the canonical runtime-facing context object and make TierContext explicitly derived or compatibility-only",
+        "Canonical execution_unit_context minimum shape: project_id, run_id, thread_id?, feature_seam_id?, work_package_id?, node_id, attempt_id?, blocked_sequence?, replan_generation, execution_role, scheduler_lane, manual_priority?, safe_point_id?, remediation lineage refs, lane_id?, worktree_id?, workspace_ref, snapshot_ref?, requested/effective runtime identity, runtime state hooks",
+        "Refactor orchestrator-subagent-integration.md so selector and hook APIs consume: canonical execution-unit refs for truth and a smaller derived selection/decomposition object for heuristics",
+        "The current TierContext in orchestrator-subagent-integration.md is overloaded: mixes decomposition/view identity, workspace binding, project heuristics, live execution hints, and requested/effective runtime state",
+        "orchestrator-subagent-integration.md should stop owning a canonical mixed runtime object; it should consume canonical execution/runtime context by reference",
+        "TierContext replacement/wrapper is one of the most important structural follow-ups still open",
+        "ActiveAgent, crew structs, and coordination payloads are still tier-keyed and therefore inherit the same problem"
+      ],
+      "stale_tokens": [
+        "TierContext (as canonical execution context)",
+        "TierContext (as canonical runtime execution context)",
+        "ActiveAgent (tier-keyed)",
+        "crew structs (tier-keyed)"
+      ],
+      "canonical_replacement_hints": [
+        "execution_unit_context",
+        "execution_unit_context (canonical)",
+        "decomposition_context or selection_context (derived helper only)"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

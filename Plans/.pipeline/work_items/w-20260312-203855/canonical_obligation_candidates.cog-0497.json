@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0497",
+  "represented_seed_ids": [
+    "shard-0034-s011"
+  ],
+  "source_shard_ids": [
+    "shard-0034"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0034-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "UI_Command_Catalog.md already normalizes HITL and recovery around request_id, blocked_sequence, and cmd.runtime.* actions",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "UI_Command_Catalog.md already normalizes HITL and recovery around request_id, blocked_sequence, and cmd.runtime.* actions",
+        "Run_Graph_View.md and Orchestrator_Page.md still describe node-only or tier-era action/addressing patterns",
+        "Make Run Graph and Orchestrator consume attempt/receipt-based canonical projections and command args already present in UI_Command_Catalog.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Run Graph Command Normalization",
+        "## HITL Command Alignment"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006601"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

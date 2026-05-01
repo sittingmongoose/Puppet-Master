@@ -1,0 +1,100 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0094",
+  "coverage_row_ids_represented": [
+    "cov-01039",
+    "cov-01050",
+    "cov-01137",
+    "cov-01187",
+    "cov-01203",
+    "cov-02194"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0094",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Define `OpenSubject` in `Contracts_V0.md` with: `subject_id`; `open_intent` | Define `route_target` as the canonical navigation-and-focus contract. | Explicitly state that workspace-tab selection, panel docking, and per-project layout restore are shell-state concerns layered underneath canonical routing. | Formalize the three-way command taxonomy: pure shell/view-state commands; route-consuming navigation commands; domain mutation/runtime commands | GitHub_Integration.md still frames worktree ownership around run/tier",
+      "affected_targets": [
+        {
+          "path": "Plans/FileManager.md",
+          "heading": "## OpenSubject Contract"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-01039",
+        "cov-01050",
+        "cov-01137",
+        "cov-01187",
+        "cov-01203",
+        "cov-02194"
+      ],
+      "source_obligation_ids": [
+        "obl-0666",
+        "obl-0668",
+        "obl-0697",
+        "obl-0717",
+        "obl-0726",
+        "obl-1394"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0035",
+        "seed-WAVE007-0034",
+        "seed-WAVE007-0015",
+        "seed-WAVE007-0027",
+        "shard-0031-s012",
+        "seed-WAVE007-0004"
+      ],
+      "source_shard_ids": [
+        "shard-0031",
+        "shard-0061",
+        "shard-0063",
+        "shard-0065",
+        "shard-0067"
+      ],
+      "exact_missing_items": [
+        "Define `OpenSubject` in `Contracts_V0.md` with: `subject_id`; `open_intent`",
+        "Keep the intent vocabulary controlled and small: `open_source`; `open_preview`; `open_review`",
+        "Keep resolver-support metadata out of the contract.",
+        "State the resolution rule directly: `OpenSubject(subject_id = doc:...)` resolves to workspace-backed source opening; `OpenSubject(subject_id = artifact:...)` resolves to real document source if one exists; otherwise it resolves to transient `generated://<artifact_id>` source opening",
+        "`OpenSubject` does not carry: `project_id`, `thread_id`, `run_id`, `tab_id`, `panel_id`, `inspector_target`, `origin_surface`, `source_kind`, `backing_document_id`, `last_saved_path`, `generated://<artifact_id>`, preview persistence state, transport mode",
+        "Define `route_target` as the canonical navigation-and-focus contract.",
+        "Define `OpenSubject` as the canonical identity-native source-open contract.",
+        "Keep `OpenFile` as the path-based editor contract only.",
+        "State the resolution chain directly: `route_target` may land on a surface that then invokes `OpenSubject`; `OpenSubject` may resolve to `OpenFile`; `OpenSubject` may resolve to a transient `generated://<artifact_id>` source buffer",
+        "The three contracts are now distinct: `route_target` = navigation; `OpenSubject` = identity-native source open; `OpenFile` = path-based editor open",
+        "Explicitly state that workspace-tab selection, panel docking, and per-project layout restore are shell-state concerns layered underneath canonical routing.",
+        "Treat commands like `cmd.panel.switch` as shell/view commands that can consume normalized routing context, not replace it.",
+        "Keep shell/workspace persistence in the shell/storage docs, not in the base route contract.",
+        "Allow the route model to name major destination surfaces/tabs/panels where operationally necessary.",
+        "This seam prevents the route model from swallowing the whole shell. The right question for routing is 'where should the user land,' not 'how should every panel be laid out when they get there.'",
+        "Formalize the three-way command taxonomy: pure shell/view-state commands; route-consuming navigation commands; domain mutation/runtime commands",
+        "Keep `cmd.panel.switch` and `cmd.source_control.switch_subview` as pure shell/view-state commands with controlled destination vocabularies.",
+        "Move object-targeting payload semantics out of `cmd.panel.switch` and into canonical route-consuming commands or normalized `route_target` wrappers.",
+        "Treat `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, `cmd.project.open`, `cmd.artifacts.show_in_*`, and cross-surface Orchestrator pivots as wrapper navigation commands over canonical route targeting rather than as generic layout toggles.",
+        "GitHub_Integration.md still frames worktree ownership around run/tier",
+        "FileManager.md already wants identity-based artifact opening, but its open contract is still too path-first",
+        "Runtime_Artifacts_Panel.md is missing attempt_id in its canonical id set and does not yet absorb trust-tier / degraded-artifact semantics cleanly",
+        "`inspector_target` is still useful, but it should stay for reusable detail-pane or subsection focus, not as a universal dumping ground for all feature-local anchors.",
+        "Sub-selection is handled by one of three mechanisms: `OpenFile` specialization for `line`/`range`; `inspector_target` for reusable detail-surface focus; object-family-specific anchor fields only when the anchor is truly domain-local and not reusable",
+        "Define `inspector_target` narrowly in the contract layer as reusable detail/subsection focus."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0126",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-01762",
+      "source_obligation_ids": [
+        "obl-1027"
+      ],
+      "source_seed_ids": [
+        "shard-0002-s016"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01784",
+      "source_obligation_ids": [
+        "obl-1044"
+      ],
+      "source_seed_ids": [
+        "shard-0032-s016"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01793",
+      "source_obligation_ids": [
+        "obl-1048"
+      ],
+      "source_seed_ids": [
+        "shard-0033-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 2/4 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01797",
+      "source_obligation_ids": [
+        "obl-1050"
+      ],
+      "source_seed_ids": [
+        "shard-0034-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01805",
+      "source_obligation_ids": [
+        "obl-1055"
+      ],
+      "source_seed_ids": [
+        "shard-0002-s020"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01823",
+      "source_obligation_ids": [
+        "obl-1059"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0017"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 3/5 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01833",
+      "source_obligation_ids": [
+        "obl-1064"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01835",
+      "source_obligation_ids": [
+        "obl-1065"
+      ],
+      "source_seed_ids": [
+        "shard-0005-s018"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01839",
+      "source_obligation_ids": [
+        "obl-1066"
+      ],
+      "source_seed_ids": [
+        "shard-0002-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01841",
+      "source_obligation_ids": [
+        "obl-1067"
+      ],
+      "source_seed_ids": [
+        "shard-0032-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

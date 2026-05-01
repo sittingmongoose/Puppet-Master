@@ -1,0 +1,271 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0058",
+  "seed_candidates": [
+    {
+      "seed_id": "seed-WAVE006-0071",
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "FileManager.md universalizes OpenFile to cover all object-open semantics, including identity-native subject opens that belong to a different contract family",
+        "FileManager.md must be narrowed to workspace-document path operations only; the OpenSubject family belongs in a separate contract"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## OpenFile"
+      ],
+      "stale_tokens": [
+        "OpenFile"
+      ],
+      "canonical_replacement_hints": [
+        "OpenFile",
+        "OpenSubject"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0058",
+      "source_evidence": [
+        "working_ledger.md:L011401-L011410"
+      ],
+      "notes": [
+        "FileManager.md OpenFile overclaim confirmed again in GPT-5.3-Codex synthesis. Must narrow to workspace path operations; identity-native/subject-open family is a separate contract."
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE006-0072",
+      "seed_type": "missing_doc_reference",
+      "exact_items": [
+        "Runtime_Artifacts_Panel.md shows artifacts but provides no documented linkage from usage receipts to runtime artifacts",
+        "The receipt\u2192artifact join is the critical projection step that populates the panel; without a documented linkage, implementations will diverge"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [
+        "## Receipt to Artifact Linkage",
+        "## Projection"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0058",
+      "source_evidence": [
+        "working_ledger.md:L011410-L011420"
+      ],
+      "notes": [
+        "Runtime_Artifacts_Panel.md must document the receipt\u2192artifact linkage model: which fields join, which event triggers panel population, and which contract owns the join specification"
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE006-0073",
+      "seed_type": "owner",
+      "exact_items": [
+        "Contracts_V0.md has no route-target contract \u2014 the canonical shape that all navigation/subject-open commands and surface pivots must conform to",
+        "Add a concrete route_target contract to Contracts_V0.md with minimum required fields and a normalization rule for surface-specific IDs"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [
+        "## route_target",
+        "## Navigation Contracts"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "route_target"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0058",
+      "source_evidence": [
+        "working_ledger.md:L011420-L011430"
+      ],
+      "notes": [
+        "Contracts_V0.md needs a canonical route_target contract shape. This is the foundational contract for all navigation/pivot/subject-open operations across the app."
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE006-0074",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "resume_url is currently positioned as a canonical route-target contract field, but its semantics are transport-layer (serialized URL) not application-layer (structured route model)",
+        "resume_url must be demoted to a transport-only serialized form; the canonical route model must be the structured route_target contract"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## resume_url"
+      ],
+      "stale_tokens": [
+        "resume_url"
+      ],
+      "canonical_replacement_hints": [
+        "route_target"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0058",
+      "source_evidence": [
+        "working_ledger.md:L011430-L011440"
+      ],
+      "notes": [
+        "resume_url is an architecture inversion: it treats serialized URL as the canonical model rather than as a serialized transport of a structured route_target. The contract must explicitly demote resume_url to transport-only."
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE006-0075",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "Project_Output_Artifacts.md draft lineage is described in a subject-first model but there is no link from the draft lineage to a route-target contract",
+        "Connect the draft lineage model to the route-target contract so draft artifacts can be opened, referenced, and routed through the canonical navigation model"
+      ],
+      "affected_doc_hints": [
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Draft Lineage",
+        "## Subject-First"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0058",
+      "source_evidence": [
+        "working_ledger.md:L011440-L011450"
+      ],
+      "notes": [
+        "Project_Output_Artifacts.md draft lineage is subject-first but unlinked to the route-target contract. This gap means draft artifacts cannot be routed through the canonical navigation model."
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE006-0076",
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "workflow_run_id vs run_id lineage conflict in Project_Output_Artifacts.md is confirmed again in the GPT-5.3-Codex synthesis",
+        "This is a blocking naming conflict that must be resolved before any automated tooling can safely emit or consume these records"
+      ],
+      "affected_doc_hints": [
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## workflow_run_id",
+        "## run_id"
+      ],
+      "stale_tokens": [
+        "workflow_run_id"
+      ],
+      "canonical_replacement_hints": [
+        "run_id"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0058",
+      "source_evidence": [
+        "working_ledger.md:L011541-L011545"
+      ],
+      "notes": [
+        "GPT-5.3-Codex synthesis confirms workflow_run_id/run_id conflict. run_id is the canonical form (aligned with attempt_id/run/storage conventions); workflow_run_id should be tombstoned."
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE006-0077",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "run-gates script has no numbered gate mapping \u2014 it cannot associate a gate label (GATE-001 through GATE-015) with an executable check",
+        "The gate registry in Progression_Gates.md must export a machine-readable numbered mapping that run-gates can import"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Gate Registry",
+        "## run-gates"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0058",
+      "source_evidence": [
+        "working_ledger.md:L011554-L011563"
+      ],
+      "notes": [
+        "Progression_Gates.md gate registry must export (or reference) a numbered machine-readable mapping for the run-gates pipeline script. Without it, gates can't be associated with executable checks."
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE006-0078",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "pm.evidence.schema.v1 binary pass/fail gap is confirmed a third time in GPT-5.3-Codex synthesis",
+        "The tri-state extension (pass/fail/skipped) to pm.evidence.schema.v1 is a blocking deficiency for multiple gates"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## pm.evidence.schema.v1"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "pass",
+        "fail",
+        "skipped"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0058",
+      "source_evidence": [
+        "working_ledger.md:L011563-L011572"
+      ],
+      "notes": [
+        "Third independent finding: pm.evidence.schema.v1 binary verdicts are blocking. Tri-state extension is required before gate verification tooling can be built. Priority: high."
+      ]
+    }
+  ],
+  "noise_items": [
+    "L011401-L011404: structural section transition from shard-0057 GPT-5.2 synthesis",
+    "L011404: ## Research Progress - 2026-03-16 - Storage/routing handshake for open commands (structural ledger section header)",
+    "L011406: ### Targeted docs read (structural ledger section header)",
+    "L011409: ### Key findings (structural ledger section header)",
+    "L011416: ### Impacted docs (structural ledger section header)",
+    "L011432: ### Contradictions / gaps surfaced (structural ledger section header)",
+    "L011440: ### Candidate fixes to carry forward (structural ledger section header)",
+    "L011453: ### Do-not-forget details (structural ledger section header)",
+    "L011459: ## Research Progress - 2026-03-16 - GPT-5.3-Codex owner-doc tranche synthesis (structural ledger section header)",
+    "L011461: ### Targeted docs read (structural ledger section header)",
+    "L011480: ### Key findings (structural ledger section header)",
+    "L011525: ### Impacted docs (structural ledger section header)",
+    "L011549: ### Contradictions / gaps surfaced (structural ledger section header)",
+    "L011557: ### Candidate fixes to carry forward (structural ledger section header)",
+    "L011572: ### Do-not-forget details (structural ledger section header)",
+    "L011578: blank lines and structural section transitions"
+  ],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

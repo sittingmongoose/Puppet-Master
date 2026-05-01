@@ -1,0 +1,103 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0490",
+  "coverage_row_ids_represented": [
+    "cov-01776",
+    "cov-01777",
+    "cov-01778",
+    "cov-01779",
+    "cov-01791",
+    "cov-01795",
+    "cov-01825",
+    "cov-01850",
+    "cov-01851",
+    "cov-01852"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0490",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "This seam is upstream of several earlier findings: | This seam links storage, Usage, Run Graph, and Orchestrator all at once. | This split now feeds directly into command payloads, graph detail structs, and orchestrator live-status bindings. | This tranche mostly inherits contradictions from stronger owner docs instead of inventing new ones. | Treat `storage-plan.md` as a same-file reconciliation problem, not only a cross-doc mismatch.",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-01776",
+        "cov-01777",
+        "cov-01778",
+        "cov-01779",
+        "cov-01791",
+        "cov-01795",
+        "cov-01825",
+        "cov-01850",
+        "cov-01851",
+        "cov-01852"
+      ],
+      "source_obligation_ids": [
+        "obl-1039",
+        "obl-1040",
+        "obl-1041",
+        "obl-1042",
+        "obl-1047",
+        "obl-1049",
+        "obl-1060",
+        "obl-1071",
+        "obl-1072",
+        "obl-1073"
+      ],
+      "source_seed_ids": [
+        "shard-0078-s116",
+        "shard-0077-s018",
+        "shard-0078-s111",
+        "shard-0086-s016",
+        "shard-0077-s042",
+        "shard-0080-s111",
+        "shard-0087-s092",
+        "shard-0088-s054",
+        "shard-0081-s039",
+        "shard-0081-s135"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0078",
+        "shard-0080",
+        "shard-0081",
+        "shard-0086",
+        "shard-0087",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "This seam is upstream of several earlier findings:",
+        "This seam links storage, Usage, Run Graph, and Orchestrator all at once.",
+        "This split now feeds directly into command payloads, graph detail structs, and orchestrator live-status bindings.",
+        "This tranche mostly inherits contradictions from stronger owner docs instead of inventing new ones.",
+        "Treat `storage-plan.md` as a same-file reconciliation problem, not only a cross-doc mismatch.",
+        "storage-plan.md",
+        "Treat this as a persistence-contract decision, not as appendix-level wording trivia.",
+        "Verification / mirror followers should remain downstream of owner reconciliation.",
+        "`**Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (\u00a723.4). No remaining gaps; **accessibility** is explicitly not MVP.`",
+        "**Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (\u00a723.4). No remaining gaps; **accessibility** is explicitly not MVP.",
+        "`00-plans-index.md` still under-routes rewrite-critical owner docs, especially around Multi-Account, Provider, and Orchestrator packet ownership.",
+        "00-plans-index.md",
+        "`00-plans-index.md`, `Decision_Log.md`, and `rewrite-tie-in-memo.md` still under-route or fail to record rewrite-era owner decisions around Seams/Packages/Overseers, requested/effective identity scope, operational identity classes, and Crosswalk-based owner precedence.",
+        "Decision_Log.md",
+        "rewrite-tie-in-memo.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

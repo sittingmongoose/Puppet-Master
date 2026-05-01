@@ -1,0 +1,63 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0119",
+  "represented_seed_ids": [
+    "seed-WAVE007-0013"
+  ],
+  "source_shard_ids": [
+    "shard-0062"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE007-0013"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "`LSPSupport.md` still assumes `tool.invoked` for user editor actions, which conflicts with event requirements that assume a `run_id`.",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`LSPSupport.md` still assumes `tool.invoked` for user editor actions, which conflicts with event requirements that assume a `run_id`.",
+        "plan-mode tooling policy still denies `lsp` even though LSP context is assumed for planning/interview features.",
+        "mixed mutation semantics inside `lsp` remain unresolved against the `mutation_capable: bool` contract."
+      ],
+      "affected_doc_hints": [
+        "Plans/LSPSupport.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Run_Modes.md",
+        "Plans/Permissions_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [
+        "## tool.invoked Event Contract",
+        "## mutation_capable Contract",
+        "## Plan-Mode LSP Policy"
+      ],
+      "stale_residue_to_retire": [
+        "tool.invoked for user editor actions"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "source_evidence": [
+        "working_ledger.md:L012341-L012343"
+      ],
+      "notes": [
+        "Three distinct contradictions in LSPSupport.md: (1) tool.invoked assumption vs run_id requirement, (2) plan-mode denies lsp but planning/interview assumes LSP context, (3) mutation_capable contract unresolved for LSP tools."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

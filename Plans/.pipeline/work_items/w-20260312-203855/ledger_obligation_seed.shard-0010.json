@@ -1,0 +1,509 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0010",
+  "seed_candidates": [
+    {
+      "seed_id": "shard-0010-s001",
+      "seed_type": "owner",
+      "exact_items": [
+        "Source Control / Worktree Handshake research findings: Source Control is the primary operational surface for worktree inventory and user actions; Orchestrator consumes worktree identity/ownership/blocked state/lineage for run/history/recovery views",
+        "Existing docs still describe ownership as run/tier/subtask worktrees which collides with the package-based lane-pool model"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Source Control / Worktree Handshake"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001801-L001840"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0010-s002",
+      "seed_type": "owner",
+      "exact_items": [
+        "Recommended boundary: Orchestrator owns package lane-pool operational truth; Source Control owns repo/worktree execution and inspection operations \u2014 this is the canonical surface division"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Orchestrator vs Source Control Boundary"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001835-L001860"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0010-s003",
+      "seed_type": "owner",
+      "exact_items": [
+        "Lane is the primary operational object in Orchestrator; Worktree is the concrete filesystem/Git backing for a lane instance \u2014 lane identity persists after the live worktree is cleaned up/archived/removed"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Lane vs Worktree Relationship"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001855-L001880"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0010-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "Lane/worktree lifecycle vocabulary must include these states: baseline, active, suspect, restoring, retained, cleanup_eligible, archived, removed, historical; 'historical' coexists with 'archived' or 'removed'; 'cleanup_eligible' \u2260 already removed"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Glossary.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Lane/Worktree Lifecycle States"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001870-L001900"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0010-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "'suspect' and 'restoring' states are Orchestrator-first, Source Control-second \u2014 Orchestrator determines these states and Source Control reflects them"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## State Ownership: Suspect and Restoring"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001895-L001915"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0010-s006",
+      "seed_type": "owner",
+      "exact_items": [
+        "orchestrator.receipt.{run_id}.{attempt_id} already carries: repo_id, worktree_id, branch, commit-range, workflow refs \u2014 this existing data contract must be formally documented and extended"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Orchestrator Receipt Fields"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001910-L001935"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0010-s007",
+      "seed_type": "owner",
+      "exact_items": [
+        "source_control.project_state.{project_id} already has selected_worktree_id \u2014 this existing field must be formally documented and extended to support lane linkage"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Source Control Project State Fields"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001930-L001950"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0010-s008",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "GPT-5.3-Codex: requested/effective account is missing from Plans/Models_System.md, Plans/Prompt_Pipeline.md, and Plans/Personas.md \u2014 these must be updated to carry the full runtime identity bundle"
+      ],
+      "affected_doc_hints": [
+        "Plans/Models_System.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_sweep",
+      "heading_hints": [
+        "## Requested/Effective Account in Provider Docs"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001801-L001830"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0010-s009",
+      "seed_type": "owner",
+      "exact_items": [
+        "Provider/model controls must support these configuration levels: package, seam, node, overseer, and delegated-subagent \u2014 per-thread/per-run granularity alone is insufficient"
+      ],
+      "affected_doc_hints": [
+        "Plans/Models_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Provider/Model Control Levels"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001820-L001850"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0010-s010",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "GPT-5.3-Codex: tier-boundary and single-Overseer audit rules are too rigid for a package/seam overseer model \u2014 Permissions_System.md must be updated"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_sweep",
+      "heading_hints": [
+        "## Permissions Audit Rules Update"
+      ],
+      "stale_tokens": [
+        "tier_boundary_approval",
+        "single Overseer"
+      ],
+      "canonical_replacement_hints": [
+        "Rewrite audit rules around package/seam overseer actors"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001840-L001865"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0010-s011",
+      "seed_type": "owner",
+      "exact_items": [
+        "Follow-up research items (6 canonical): (1) define package/seam/lane/promotion object family canonically; (2) extend requested/effective runtime identity to include account and overseer role; (3) choose one HITL model and one action family; (4) separate plan structure from mutable runtime state; (5) specify package-based worktree lane pools end-to-end; (6) normalize recovery vocabulary (safe point, restore point, rollback, contamination, retry)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Follow-Up Research Items"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001950-L001980"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0010-s012",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "tier_boundary_approval must be retired everywhere and replaced with optional HITL at node/package/seam promotion boundaries"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md",
+        "Plans/Permissions_System.md",
+        "Plans/Progression_Gates.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## tier_boundary_approval Retirement"
+      ],
+      "stale_tokens": [
+        "tier_boundary_approval"
+      ],
+      "canonical_replacement_hints": [
+        "Use 'optional HITL at node/package/seam promotion boundaries'"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001960-L001985"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0010-s013",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "<phase>/<task>/<subtask> canonical path patterns must be retired and replaced with <package_id>/<node_id> or <seam_id>/<package_id>/<node_id>"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Canonical Path Pattern Update"
+      ],
+      "stale_tokens": [
+        "<phase>/<task>/<subtask>",
+        "phase_id",
+        "task_id",
+        "subtask_id"
+      ],
+      "canonical_replacement_hints": [
+        "Use <package_id>/<node_id> or <seam_id>/<package_id>/<node_id>"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001970-L001995"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0010-s014",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "Graph-local commands Retry/Replan/Reopen/Approve/Deny must be mapped to canonical cmd.runtime.* action families \u2014 graph-local naming must not be used in contracts or schemas"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Graph-Local Command Canonicalization"
+      ],
+      "stale_tokens": [
+        "Retry",
+        "Replan",
+        "Reopen",
+        "Approve",
+        "Deny",
+        "approve_continue"
+      ],
+      "canonical_replacement_hints": [
+        "Map to canonical cmd.runtime.* action families"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001980-L002000"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0010-s015",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "approve_continue must be retired and replaced with its canonical cmd.runtime.* equivalent"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## approve_continue Retirement"
+      ],
+      "stale_tokens": [
+        "approve_continue"
+      ],
+      "canonical_replacement_hints": [
+        "Map approve_continue to canonical cmd.runtime.* action family"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001985-L002000"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0010-s016",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "Multi-account behavior exists in slices (provider/auth panels) but is not threaded through repo/project/worktree execution contracts \u2014 account identity must be end-to-end in all execution contracts"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Contracts_V0.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_sweep",
+      "heading_hints": [
+        "## Multi-Account End-to-End Wiring"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001801-L001835"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0010-s017",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "GPT-5.3-Codex: contamination policy is a vocabulary gap \u2014 safe-point language exists in newer addenda but contamination classification, restore-before-reuse, and lane quarantine semantics are mostly absent"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_sweep",
+      "heading_hints": [
+        "## Contamination Policy Gap"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001870-L001900"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0010-s018",
+      "seed_type": "owner",
+      "exact_items": [
+        "Recovery vocabulary normalization is required: safe_point, restore_point, rollback, contamination, retry must be canonically defined with clear distinctions \u2014 current usage is inconsistent across 6+ docs"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/storage-plan.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_reconciliation",
+      "heading_hints": [
+        "## Recovery Vocabulary Canon"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0010",
+      "source_evidence": [
+        "working_ledger.md:L001900-L001940"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

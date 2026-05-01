@@ -1,0 +1,64 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0043",
+  "represented_seed_ids": [
+    "seed-WAVE008-0012"
+  ],
+  "source_shard_ids": [
+    "shard-0072"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE008-0012"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Plans/usage-feature.md \u2014 normalize usage_event_ref into object_kind = usage_event",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Plans/usage-feature.md \u2014 normalize usage_event_ref into object_kind = usage_event",
+        "Plans/assistant-chat-design.md \u2014 normalize wizard/message routes to object-first forms; keep deep-link step/message anchors secondary",
+        "Plans/Run_Graph_View.md \u2014 normalize scheduler/blocking/safe-point/remediation/attempt pivots through object-first route recipes",
+        "Plans/storage-plan.md \u2014 persist refs like resume_url; persist route-adjacent state; stop owning canonical navigation identity",
+        "Plans/FileManager.md \u2014 keep OpenFile narrow; consume OpenSubject; stop reading path-open as the universal navigation primitive",
+        "Plans/Crosswalk.md \u2014 declare primitive ownership for route-target / open-subject navigation; declare that storage and surface docs consume, not own, navigation identity"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FileManager.md",
+        "Plans/Crosswalk.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "route_target and OpenSubject contracts in Contracts_V0.md are the canonical navigation primitives; consumer docs realize but do not own them"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L014354-L014400"
+      ],
+      "notes": [
+        "This is the owner-doc adoption map for the routing tranche. Reconcile owner docs in order: Contracts_V0.md, Crosswalk.md, UI_Command_Catalog.md, FinalGUISpec.md, then consumer docs."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

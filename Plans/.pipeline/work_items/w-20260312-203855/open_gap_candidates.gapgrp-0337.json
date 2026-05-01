@@ -1,0 +1,73 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0337",
+  "coverage_row_ids_represented": [
+    "cov-03207",
+    "cov-03214"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0337",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_cross_reference",
+      "description": "Plans/WorktreeGitImprovement.md is still structurally tier-era in its low-level ownership model: get_tier_worktree(tier_id); worktree paths and branches keyed by tier_id; recovery/conflict persistence\u2026 | WorktreeGitImprovement.md now has a specifically named failure mode: extract_tier_id() is a hidden migration tripwire that would silently drop lane/node-named worktrees during restart repopulation",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-03207",
+        "cov-03214"
+      ],
+      "source_obligation_ids": [
+        "obl-2060",
+        "obl-2063"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0022",
+        "seed-WAVE005-0032"
+      ],
+      "source_shard_ids": [
+        "shard-0045",
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "Plans/WorktreeGitImprovement.md is still structurally tier-era in its low-level ownership model: get_tier_worktree(tier_id); worktree paths and branches keyed by tier_id; recovery/conflict persistence phrased in tier_id terms.",
+        "The future crew/message examples are especially risky because they would propagate tier_id back into git/worktree coordination even after the broader execution-context rewrite.",
+        "Replace tier-bound worktree identity in SCM/runtime flows with the newer lane/worktree plus execution-context model.",
+        "Reconcile git/worktree coordination examples so they stop carrying tier_id as the operational identity anchor.",
+        "WorktreeGitImprovement.md now has a specifically named failure mode: extract_tier_id() is a hidden migration tripwire that would silently drop lane/node-named worktrees during restart repopulation",
+        "WorktreeGitImprovement.md still has no lane lifecycle model, no shared worktree projection object, and no account identity in Git/PR operation contexts",
+        "Replace tier-keyed worktree path and registry assumptions before lane-named worktrees exist, or restart recovery will silently lose state"
+      ],
+      "stale_tokens": [
+        "get_tier_worktree(tier_id) in WorktreeGitImprovement.md",
+        "worktree paths keyed by tier_id",
+        "tier_id as worktree identity anchor in crew/message examples",
+        "extract_tier_id()",
+        "tier_id (as worktree registry key)"
+      ],
+      "canonical_replacement_hints": [
+        "lane/worktree plus execution-context model; canonical worktree object identity via object_kind=worktree",
+        "worktree_id (durable identity)",
+        "lane_id (operational lineage)"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

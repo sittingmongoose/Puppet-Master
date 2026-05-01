@@ -1,0 +1,490 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0051",
+  "represented_seed_ids": [
+    "shard-0085-s051",
+    "shard-0085-s062",
+    "shard-0085-s070",
+    "shard-0085-s077",
+    "shard-0085-s079",
+    "shard-0085-s080",
+    "shard-0085-s081",
+    "shard-0085-s082",
+    "shard-0085-s083",
+    "shard-0085-s088",
+    "shard-0085-s109",
+    "shard-0085-s125",
+    "shard-0085-s126",
+    "shard-0085-s141",
+    "shard-0085-s142"
+  ],
+  "source_shard_ids": [
+    "shard-0085"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0085-s051"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Evidence`, `History`, and `Ledger` treated as native tabs",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Evidence`, `History`, and `Ledger` treated as native tabs",
+        "Evidence",
+        "History",
+        "Ledger"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016867"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Evidence`, `History`, and `Ledger` treated as native tabs"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0085-s062"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "worker activity requires `PuppetMasterEvent::Output` filtered by `tier_id`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "worker activity requires `PuppetMasterEvent::Output` filtered by `tier_id`",
+        "PuppetMasterEvent::Output",
+        "tier_id"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016886"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: worker activity requires `PuppetMasterEvent::Output` filtered by `tier_id`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0085-s070"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Open that tier in the Tiers tab`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Open that tier in the Tiers tab`",
+        "Open that tier in the Tiers tab"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016896"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Open that tier in the Tiers tab`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0085-s077"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "still defines `Dashboard, Usage, Orchestrator widget tabs`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "still defines `Dashboard, Usage, Orchestrator widget tabs`",
+        "Dashboard, Usage, Orchestrator widget tabs"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016905"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: still defines `Dashboard, Usage, Orchestrator widget tabs`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0085-s079"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`widget_layout:v1:orchestrator:tiers`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`widget_layout:v1:orchestrator:tiers`",
+        "widget_layout:v1:orchestrator:tiers"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016908"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `widget_layout:v1:orchestrator:tiers`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0085-s080"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`widget_layout:v1:orchestrator:evidence`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`widget_layout:v1:orchestrator:evidence`",
+        "widget_layout:v1:orchestrator:evidence"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016909"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `widget_layout:v1:orchestrator:evidence`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0085-s081"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`widget_layout:v1:orchestrator:history`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`widget_layout:v1:orchestrator:history`",
+        "widget_layout:v1:orchestrator:history"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016910"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `widget_layout:v1:orchestrator:history`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0085-s082"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`widget_layout:v1:orchestrator:ledger`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`widget_layout:v1:orchestrator:ledger`",
+        "widget_layout:v1:orchestrator:ledger"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016911"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `widget_layout:v1:orchestrator:ledger`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0085-s083"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "keep `dashboard_layout:v1` as backup",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "keep `dashboard_layout:v1` as backup",
+        "dashboard_layout:v1"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016913"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: keep `dashboard_layout:v1` as backup"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0085-s088"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "canonical `UsageRecord` still requires `tier_id`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "canonical `UsageRecord` still requires `tier_id`",
+        "UsageRecord",
+        "tier_id"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016918"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: canonical `UsageRecord` still requires `tier_id`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0085-s109"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Widget_System.md` and `Orchestrator_Page.md` still reinforce each other through the old \u201call Orchestrator tabs are widget canvases\u201d model.",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Widget_System.md` and `Orchestrator_Page.md` still reinforce each other through the old \u201call Orchestrator tabs are widget canvases\u201d model.",
+        "Widget_System.md",
+        "Orchestrator_Page.md"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016946"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Widget_System.md` and `Orchestrator_Page.md` still reinforce each other through the old \u201c"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "shard-0085-s125"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "Orchestrator hostability narrowed to `Progress`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Orchestrator hostability narrowed to `Progress`",
+        "Progress"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016964"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Orchestrator hostability narrowed to `Progress`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-013",
+      "source_seed_ids": [
+        "shard-0085-s126"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "non-Progress Orchestrator tabs removed from widget layout persistence",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "non-Progress Orchestrator tabs removed from widget layout persistence"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016965"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: non-Progress Orchestrator tabs removed from widget layout persistence"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-014",
+      "source_seed_ids": [
+        "shard-0085-s141"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "still describes Dashboard/orchestrator layout in widget-card and tier terms",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "still describes Dashboard/orchestrator layout in widget-card and tier terms"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016989"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: still describes Dashboard/orchestrator layout in widget-card and tier terms"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-015",
+      "source_seed_ids": [
+        "shard-0085-s142"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "still lists `Orchestrator single-page with 6 tabs` including `Tiers`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "still lists `Orchestrator single-page with 6 tabs` including `Tiers`",
+        "Orchestrator single-page with 6 tabs",
+        "Tiers"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016990"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: still lists `Orchestrator single-page with 6 tabs` including `Tiers`"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

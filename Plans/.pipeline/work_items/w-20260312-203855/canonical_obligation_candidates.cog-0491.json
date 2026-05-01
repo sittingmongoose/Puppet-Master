@@ -1,0 +1,164 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0491",
+  "represented_seed_ids": [
+    "shard-0011-s010",
+    "shard-0023-s002",
+    "shard-0023-s003",
+    "shard-0023-s011"
+  ],
+  "source_shard_ids": [
+    "shard-0011",
+    "shard-0023"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0011-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "Run_Graph_View.md still lacks the full requested/effective identity and governance-object model the current rewrite expects",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Run_Graph_View.md still lacks the full requested/effective identity and governance-object model the current rewrite expects",
+        "Run_Graph_View.md now needs explicit requested/effective identity, trust-state, and governance-record drill-in contracts"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Node Identity",
+        "## Requested/Effective Identity",
+        "## Governance Object Model"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L002084",
+        "working_ledger.md:L002101-L002103"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0023-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "render target: 500 nodes, stretch 1000",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "render target: 500 nodes, stretch 1000",
+        "60 fps pan/zoom",
+        "layout under 500ms at 500 nodes",
+        "initial load under 1s at 500 nodes"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Node Graph Scale Targets",
+        "## Performance Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0023-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "viewport culling with overscan",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "viewport culling with overscan",
+        "table virtualization",
+        "per-generation layout caching",
+        "incremental row/item updates instead of full replacement",
+        "burst throttling at frame cadence",
+        "optional canvas-style fallback if rectangle-based rendering drops below target performance"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Graph Rendering Implementation Requirements"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0023-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "current generation emphasized",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "current generation emphasized",
+        "superseded branches visually muted",
+        "branch/rejoin overlays available on demand",
+        "minimap/search/focus-to-object remain generation-aware"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Graph Generation Visibility Defaults"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004401"
+      ],
+      "notes": [
+        "Focused generation + nearby lineage context as default; not fully expanded all-generations wall"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

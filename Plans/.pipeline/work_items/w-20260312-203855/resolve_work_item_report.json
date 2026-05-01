@@ -34,8 +34,15 @@
   "subagent_execution": {
     "required": false,
     "used": false,
-    "skip_reason": null,
+    "skip_reason": {
+      "skipped": true,
+      "worklist_item_count": 1,
+      "largest_file_lines_read": 312,
+      "largest_json_items_read": 25,
+      "broad_scan_performed": false,
+      "candidate_work_items_inspected_in_detail": 1
+    },
     "wave_files_valid": true
   },
-  "next_required_stage": "Legacy Artifact Sanitizer"
+  "next_required_stage": "Ledger Shard Indexer"
 }

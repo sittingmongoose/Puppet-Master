@@ -1,0 +1,55 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0028",
+  "coverage_row_ids_represented": [
+    "cov-00776"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0028",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_doc_reference",
+      "description": "there is currently no canonical OpenArtifact/OpenSubject contract even though multiple docs implicitly need it",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## OpenSubject Contract"
+        }
+      ],
+      "missing_doc_path_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00776"
+      ],
+      "source_obligation_ids": [
+        "obl-0546"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0032"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "exact_missing_items": [
+        "there is currently no canonical OpenArtifact/OpenSubject contract even though multiple docs implicitly need it",
+        "generated://<artifact_id> exists in preview restore behavior, but that identity pattern has not yet been generalized for other artifact/report opens"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Missing or incomplete doc reference vs obligation (concrete path known).",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

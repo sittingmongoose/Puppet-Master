@@ -1,0 +1,55 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0251",
+  "coverage_row_ids_represented": [
+    "cov-00436"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0251",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "`FileSafe.md` still contains major DAE-enforcement holes, write-scope contradictions (`context_files` and prefix matching), absent remote side-effect integration, undefined safe-point restore triggers\u2026",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Modes.md",
+          "heading": "## DAE Enforcement Contract"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00436"
+      ],
+      "source_obligation_ids": [
+        "obl-0317"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0047"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`FileSafe.md` still contains major DAE-enforcement holes, write-scope contradictions (`context_files` and prefix matching), absent remote side-effect integration, undefined safe-point restore triggers, and silent-disable / bypass paths."
+      ],
+      "stale_tokens": [
+        "HTE-only enforcement (stale)",
+        "silent-disable paths without explicit owner"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

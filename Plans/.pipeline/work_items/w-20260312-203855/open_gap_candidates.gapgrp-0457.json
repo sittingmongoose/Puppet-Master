@@ -1,0 +1,105 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0457",
+  "coverage_row_ids_represented": [
+    "cov-00345",
+    "cov-00346",
+    "cov-00347",
+    "cov-00350",
+    "cov-00351",
+    "cov-00352",
+    "cov-00353",
+    "cov-00354",
+    "cov-00355",
+    "cov-00356"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0457",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "That split keeps teaching implementers that `TierChanged` and `UserInteractionRequired` are the primary operational truth even though the runtime/storage owner docs have already moved to canonical eve\u2026 | The Slint-facing `GraphNodeUI` and callbacks still preserve the same assumptions: | The `Progress` tab is already correctly identified as widget-composed, but its default widget contract is still strongly tier-era. | The blocker bundle remains materially blocked, but the next useful stage is now `Ledger Condenser`, not another Audit Mode sweep. | The current unresolved blocker inventory therefore remains at eight blocker families, nineteen affected docs, and fifty underlying evidence refs.",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-00345",
+        "cov-00346",
+        "cov-00347",
+        "cov-00350",
+        "cov-00351",
+        "cov-00352",
+        "cov-00353",
+        "cov-00354",
+        "cov-00355",
+        "cov-00356"
+      ],
+      "source_obligation_ids": [
+        "obl-0258",
+        "obl-0259",
+        "obl-0260",
+        "obl-0262",
+        "obl-0263",
+        "obl-0264",
+        "obl-0265",
+        "obl-0266",
+        "obl-0267",
+        "obl-0268"
+      ],
+      "source_seed_ids": [
+        "shard-0080-s002",
+        "shard-0080-s021",
+        "shard-0080-s042",
+        "shard-0090-s085",
+        "shard-0090-s133",
+        "shard-0083-s012",
+        "shard-0083-s041",
+        "shard-0084-s055",
+        "shard-0083-s119",
+        "shard-0079-s087"
+      ],
+      "source_shard_ids": [
+        "shard-0079",
+        "shard-0080",
+        "shard-0083",
+        "shard-0084",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "That split keeps teaching implementers that `TierChanged` and `UserInteractionRequired` are the primary operational truth even though the runtime/storage owner docs have already moved to canonical event and projection families.",
+        "TierChanged",
+        "UserInteractionRequired",
+        "The Slint-facing `GraphNodeUI` and callbacks still preserve the same assumptions:",
+        "GraphNodeUI",
+        "The `Progress` tab is already correctly identified as widget-composed, but its default widget contract is still strongly tier-era.",
+        "Progress",
+        "The blocker bundle remains materially blocked, but the next useful stage is now `Ledger Condenser`, not another Audit Mode sweep.",
+        "Ledger Condenser",
+        "The current unresolved blocker inventory therefore remains at eight blocker families, nineteen affected docs, and fifty underlying evidence refs.",
+        "The duplicated `Crosswalk.md` numbering is not cosmetic. It undermines `ContractRef` stability and gateable traceability.",
+        "Crosswalk.md",
+        "ContractRef",
+        "The duplicated runtime-recovery addendum means the gate doc now has same-file canon duplication similar to the problems already logged in `Crosswalk.md`, `human-in-the-loop.md`, and `storage-plan.md`.",
+        "human-in-the-loop.md",
+        "storage-plan.md",
+        "The effective-resolution record is close to the rewrite direction, but it still lacks the newer identity layers already established elsewhere:",
+        "The file still treats tier boundaries as the approval scope anchor, while newer runtime canon requires blocked-episode identity anchored by run/node/blocked sequence.",
+        "The graph approval commands do not currently have one stable args contract even before considering the broader runtime-model rewrite."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

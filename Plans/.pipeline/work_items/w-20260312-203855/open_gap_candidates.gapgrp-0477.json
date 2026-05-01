@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0477",
+  "coverage_row_ids_represented": [
+    "cov-01322",
+    "cov-01323",
+    "cov-01324",
+    "cov-01325",
+    "cov-01326",
+    "cov-01327",
+    "cov-01328",
+    "cov-01329",
+    "cov-01330",
+    "cov-01377"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0477",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "Mirror docs should be updated only after their owner docs are reconciled. | Missing `execution_role` in attempt/runtime packet families and still incomplete around blocked-family minimums and ref-family separation. | Missing a unified execution-role and operational/account identity layer. | Missing blocked-owner / escalation / resurfacing rules will produce inconsistent UX and inconsistent persistence semantics. | Missing field schemas will cause different implementation agents to invent incompatible shapes.",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-01322",
+        "cov-01323",
+        "cov-01324",
+        "cov-01325",
+        "cov-01326",
+        "cov-01327",
+        "cov-01328",
+        "cov-01329",
+        "cov-01330",
+        "cov-01377"
+      ],
+      "source_obligation_ids": [
+        "obl-0780",
+        "obl-0781",
+        "obl-0782",
+        "obl-0783",
+        "obl-0784",
+        "obl-0785",
+        "obl-0786",
+        "obl-0787",
+        "obl-0788",
+        "obl-0805"
+      ],
+      "source_seed_ids": [
+        "shard-0086-s054",
+        "shard-0087-s034",
+        "shard-0087-s032",
+        "shard-0087-s098",
+        "shard-0087-s096",
+        "shard-0087-s055",
+        "shard-0087-s059",
+        "shard-0087-s047",
+        "shard-0087-s097",
+        "shard-0087-s061"
+      ],
+      "source_shard_ids": [
+        "shard-0086",
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Mirror docs should be updated only after their owner docs are reconciled.",
+        "Missing `execution_role` in attempt/runtime packet families and still incomplete around blocked-family minimums and ref-family separation.",
+        "execution_role",
+        "Missing a unified execution-role and operational/account identity layer.",
+        "Missing blocked-owner / escalation / resurfacing rules will produce inconsistent UX and inconsistent persistence semantics.",
+        "Missing field schemas will cause different implementation agents to invent incompatible shapes.",
+        "Missing full lane/worktree lifecycle vocabularies, cleanup semantics, gating checks, and transition rules.",
+        "Missing help-entry template, related-concept linking, and distinction rules for high-risk term pairs.",
+        "Missing per-command `command_kind` / normalization metadata and still lacks the canonicalized navigation-family treatment implied by the ledger.",
+        "command_kind",
+        "Missing route/ref-family boundaries will invite shadow routing and ad hoc payloads that gates cannot verify.",
+        "Older request/tier-era canon still coexists with newer blocked-runtime canon."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

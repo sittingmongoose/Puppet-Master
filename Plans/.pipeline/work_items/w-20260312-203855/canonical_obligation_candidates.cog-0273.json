@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0273",
+  "represented_seed_ids": [
+    "shard-0038-s004",
+    "shard-0040-s009"
+  ],
+  "source_shard_ids": [
+    "shard-0038",
+    "shard-0040"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0038-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "A canonical internal route payload schema must be defined in one doc (Contracts_V0.md or FinalGUISpec.md)",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "A canonical internal route payload schema must be defined in one doc (Contracts_V0.md or FinalGUISpec.md)",
+        "Minimum required fields for all route payloads: surface_id, object_kind, object_id (or object_ref), project_id?",
+        "Optional fields depending on surface: run_id, attempt_id, node_id, concern_id, attention_item_id, focus_sub_tab, lane_id, worktree_id",
+        "route payload is used by: deep links, palette actions, cmd.*.open_in_* commands, attention item primary_route_payload, and resume_url serialization"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Canonical Route Payload Schema",
+        "## Route Payload Minimum Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L007401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0040-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "Projection closure for route payloads: every primary_route_payload on an attention item and every resume_url must be derivable from the canonical route payload schema",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Projection closure for route payloads: every primary_route_payload on an attention item and every resume_url must be derivable from the canonical route payload schema",
+        "Any surface that accepts a route payload as input (deep-link, cmd.*.open_in_*, palette action, attention item navigation) must validate it against the canonical schema",
+        "Stale or malformed route payloads must surface a clear user-facing error, not silently navigate to the wrong surface"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Route Payload Closure",
+        "## Route Payload Validation"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

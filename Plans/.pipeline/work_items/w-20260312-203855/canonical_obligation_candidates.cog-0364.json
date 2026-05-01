@@ -1,0 +1,61 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0364",
+  "represented_seed_ids": [
+    "shard-0036-s004"
+  ],
+  "source_shard_ids": [
+    "shard-0036"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0036-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "GitHub_API_Auth_and_Flows.md still uses GitHub login as the durable identity key",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "GitHub_API_Auth_and_Flows.md still uses GitHub login as the durable identity key",
+        "GitHub OAuth scopes are still derived from token inspection rather than being declared as a discrete identity sub-capability set",
+        "no account-health / degraded-capability model exists in GitHub_API_Auth_and_Flows.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_API_Auth_and_Flows.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## GitHub Durable Identity",
+        "## GitHub Capability Declaration"
+      ],
+      "stale_residue_to_retire": [
+        "login"
+      ],
+      "canonical_replacement_hints": [
+        "stable internal account_id"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": [
+        "OAuth scopes must be declared, not inferred \u2014 this is an audit and trust-safety requirement"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

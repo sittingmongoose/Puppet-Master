@@ -1,0 +1,101 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0488",
+  "coverage_row_ids_represented": [
+    "cov-01746",
+    "cov-01747",
+    "cov-01748",
+    "cov-01749",
+    "cov-01750",
+    "cov-01751",
+    "cov-01758",
+    "cov-01759",
+    "cov-01760",
+    "cov-01761"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0488",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "The rerun confirms that these were not just vague \"help gaps\", but concrete missing contracts: | The rerun did **not** overturn the prior conclusion that the major issue is incomplete ledger transfer rather than missing whole primitives. | The rerun makes it clear that the concern/action/governance tranche is missing not just \"some schemas\", but the following concrete families: | The result is that node-first routing and attempt-native runtime identity still cannot flow cleanly through Usage and Evidence without compatibility translation. | The routing and command-normalization model now depends on checks that `GATE-010` cannot express, which means the gate layer is behind the owner contract layer.",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-01746",
+        "cov-01747",
+        "cov-01748",
+        "cov-01749",
+        "cov-01750",
+        "cov-01751",
+        "cov-01758",
+        "cov-01759",
+        "cov-01760",
+        "cov-01761"
+      ],
+      "source_obligation_ids": [
+        "obl-1015",
+        "obl-1016",
+        "obl-1017",
+        "obl-1018",
+        "obl-1019",
+        "obl-1020",
+        "obl-1023",
+        "obl-1024",
+        "obl-1025",
+        "obl-1026"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s011",
+        "shard-0087-s102",
+        "shard-0087-s114",
+        "shard-0077-s013",
+        "shard-0083-s040",
+        "shard-0084-s072",
+        "shard-0078-s062",
+        "shard-0082-s011",
+        "shard-0077-s033",
+        "shard-0081-s081"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0078",
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084",
+        "shard-0087",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "The rerun confirms that these were not just vague \"help gaps\", but concrete missing contracts:",
+        "The rerun did **not** overturn the prior conclusion that the major issue is incomplete ledger transfer rather than missing whole primitives.",
+        "The rerun makes it clear that the concern/action/governance tranche is missing not just \"some schemas\", but the following concrete families:",
+        "The result is that node-first routing and attempt-native runtime identity still cannot flow cleanly through Usage and Evidence without compatibility translation.",
+        "The routing and command-normalization model now depends on checks that `GATE-010` cannot express, which means the gate layer is behind the owner contract layer.",
+        "GATE-010",
+        "The runtime identity model across the rewrite now needs more than Persona/model/account disclosure. It also needs execution-role and operational-identity disclosure, and this owner doc has not caught up yet.",
+        "The system now has canonical field-name modernization without canonical scope modernization.",
+        "The tail still has broad, meaningful signal at the fifth model pass; it still merits carrying the full tranche into the final `GPT-5.3-Codex` pass rather than narrowing early.",
+        "GPT-5.3-Codex",
+        "Then the canonical-record section partially regresses again by keeping:",
+        "There are still unresolved architectural edges around DAE enforcement, OpenCode bridge limits, promoted-feature shell ownership, and runtime identity provenance."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

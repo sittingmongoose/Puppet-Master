@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0377",
+  "coverage_row_ids_represented": [
+    "cov-00667"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0377",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "interview-subagent-integration.md still contradicts itself on persona field names (requested_persona_id vs requested_persona)",
+      "affected_targets": [
+        {
+          "path": "Plans/interview-subagent-integration.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00667"
+      ],
+      "source_obligation_ids": [
+        "obl-0470"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0039"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "interview-subagent-integration.md still contradicts itself on persona field names (requested_persona_id vs requested_persona)",
+        "interview-subagent-integration.md still writes blocked bundle language against attention_required",
+        "interview-subagent-integration.md contains a likely routing bug (interview-phase-phase-*) inside its pseudo-tier message keys"
+      ],
+      "stale_tokens": [
+        "interview-phase-phase-* (malformed routing key)",
+        "attention_required (as blocked bundle target)"
+      ],
+      "canonical_replacement_hints": [
+        "blocked_reason_code (canonical blocked vocabulary)"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

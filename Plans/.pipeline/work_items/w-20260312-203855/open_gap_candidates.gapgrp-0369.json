@@ -1,0 +1,58 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0369",
+  "coverage_row_ids_represented": [
+    "cov-00264",
+    "cov-00697"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0369",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "Gemini: chat is still single-threaded with no multi-lane overseer routing \u2014 the design must define how multiple overseer lanes communicate via chat | safe-point vs restore-point vs rollback vocabulary is NOT normalized across runtime, policy, interview, and worktree docs \u2014 one canonical vocabulary must be chosen",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "## Multi-Lane Chat Routing"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00264",
+        "cov-00697"
+      ],
+      "source_obligation_ids": [
+        "obl-0204",
+        "obl-0491"
+      ],
+      "source_seed_ids": [
+        "shard-0006-s013",
+        "shard-0007-s017"
+      ],
+      "source_shard_ids": [
+        "shard-0006",
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Gemini: chat is still single-threaded with no multi-lane overseer routing \u2014 the design must define how multiple overseer lanes communicate via chat",
+        "safe-point vs restore-point vs rollback vocabulary is NOT normalized across runtime, policy, interview, and worktree docs \u2014 one canonical vocabulary must be chosen"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

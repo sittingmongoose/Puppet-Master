@@ -1,0 +1,87 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0432",
+  "represented_seed_ids": [
+    "shard-0003-s012",
+    "shard-0003-s013"
+  ],
+  "source_shard_ids": [
+    "shard-0003"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0003-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Execution-policy settings must allow the user to choose between fresh and retained-context retry workers; these must be separately configurable settings",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Execution-policy settings must allow the user to choose between fresh and retained-context retry workers; these must be separately configurable settings"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Retry Worker Policy Settings"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000500-L000530"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0003-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Worker kind (subagent vs full agent) and retry-context policy (fresh vs retained) are SEPARATE settings \u2014 they must not be combined into a single toggle",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Worker kind (subagent vs full agent) and retry-context policy (fresh vs retained) are SEPARATE settings \u2014 they must not be combined into a single toggle"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Worker Kind vs Retry Context Policy"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000525-L000555"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

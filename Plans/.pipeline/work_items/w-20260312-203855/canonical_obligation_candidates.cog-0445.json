@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0445",
+  "represented_seed_ids": [
+    "shard-0001-s004",
+    "shard-0012-s004"
+  ],
+  "source_shard_ids": [
+    "shard-0001",
+    "shard-0012"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0001-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "canon_label": "The Progress tab is the widget-hosting operational tab; non-Orchestrator widgets must not be hosted in the Progress tab",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The Progress tab is the widget-hosting operational tab; non-Orchestrator widgets must not be hosted in the Progress tab"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Progress Tab",
+        "## Widget Hosting Rules"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000046-L000070"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0012-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "canon_label": "Progress is the widget-hosting tab",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Progress is the widget-hosting tab",
+        "Seams, Node Graph, Evidence, History, and Ledger are fixed-purpose tabs with stronger native layouts and interaction contracts",
+        "Node Graph is explicitly not a widget",
+        "Evidence has separate evidence/artifact panes",
+        "History and Ledger stay distinct for chronology vs exact record inspection"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Orchestrator Tabs",
+        "## Widget-Composed vs Native Tabs"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L002280-L002284"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

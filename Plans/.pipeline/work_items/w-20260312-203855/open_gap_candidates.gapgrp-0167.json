@@ -1,0 +1,77 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0167",
+  "coverage_row_ids_represented": [
+    "cov-00933",
+    "cov-01566",
+    "cov-01829"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0167",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "CLI_Bridged_Providers.md imposes shared-runtime snapshot language and multi-account capability declarations on direct providers but leaves bridged providers exempt by omission | Reconciliation-readiness criteria must be specified: when is a project/run state ready for reconciliation after an account switch or degradation event? | Wave-004 identity closure checklist \u2014 each item must be tracked to a doc owner:",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "## Bridged Provider Capability Parity"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00933",
+        "cov-01566",
+        "cov-01829"
+      ],
+      "source_obligation_ids": [
+        "obl-0620",
+        "obl-0905",
+        "obl-1063"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s001",
+        "shard-0040-s001",
+        "shard-0040-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0035",
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "CLI_Bridged_Providers.md imposes shared-runtime snapshot language and multi-account capability declarations on direct providers but leaves bridged providers exempt by omission",
+        "Multi-Account.md requires switch notifications/history semantics that storage-plan.md, Prompt_Pipeline.md, and bridged-provider stream contracts still cannot represent durably",
+        "Permissions_System.md still treats session cache and reject-cascade as globally session-scoped, which directly conflicts with multi-lane isolation and shared-runtime actor separation",
+        "Reconciliation-readiness criteria must be specified: when is a project/run state ready for reconciliation after an account switch or degradation event?",
+        "Criteria list must be explicit and testable: all pending receipts committed, no open HITL requests tied to the old account context, permission snapshots revalidated under new account, active workers notified and acknowledged",
+        "This criteria list is the gate for resuming execution and must be normative in Contracts_V0.md and referenced by Multi-Account.md",
+        "Wave-004 identity closure checklist \u2014 each item must be tracked to a doc owner:",
+        "1. operational_identity block anchored in Contracts_V0.md",
+        "2. requested_account_binding (none/preferred/required) defined in Contracts_V0.md + Multi-Account.md",
+        "3. manual_preferred_account_id vs requested_account_id distinction in Multi-Account.md",
+        "4. account_switch_event + account_pressure_episode in storage-plan.md + Contracts_V0.md",
+        "5. reconciliation-readiness criteria list in Contracts_V0.md + Multi-Account.md",
+        "6. actor_kind + execution_role enums in Contracts_V0.md",
+        "7. transport_host_id vs upstream_provider_id separation in Models_System.md",
+        "8. OperationalIdentity block present in run.started, receipts, usage events, concern records",
+        "9. UsageRecord account_switch_reason? + switch_event_ref? in usage-feature.md",
+        "10. blocked/degraded reason field pairs in Contracts_V0.md effective-resolution record"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

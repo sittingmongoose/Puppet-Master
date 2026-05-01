@@ -1,0 +1,82 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0233",
+  "coverage_row_ids_represented": [
+    "cov-00873",
+    "cov-01313",
+    "cov-02624"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0233",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Add execution_role to effective-resolution record, attempt_record, tier_runtime_record or successor, and usage_record | Make execution_role part of the canonical attempt packet in Contracts_V0.md and storage-plan.md | plan_or_tier_default is still a persisted enum value in Prompt_Pipeline.md",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "## Attempt Packet Fields"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00873",
+        "cov-01313",
+        "cov-02624"
+      ],
+      "source_obligation_ids": [
+        "obl-0589",
+        "obl-0777",
+        "obl-1696"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0006",
+        "seed-WAVE006-0007",
+        "shard-0034-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0034",
+        "shard-0041",
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "Add execution_role to effective-resolution record, attempt_record, tier_runtime_record or successor, and usage_record",
+        "Add operational-identity blocks to runtime records where side-effectful or externally-scoped actions matter",
+        "Operational identity kinds: github_api_account, registry_namespace, kubernetes_context",
+        "Ensure GUI inspectors can show requested/effective provider/account identity, requested/effective operational identity, execution role, and selection/switch reason",
+        "Make execution_role part of the canonical attempt packet in Contracts_V0.md and storage-plan.md",
+        "Define operational_identity as a separate optional field family for receipts, artifacts, and side-effect-bearing attempt/tool records",
+        "execution_role and operational_identity solve different problems and should not be merged",
+        "plan_or_tier_default is still a persisted enum value in Prompt_Pipeline.md",
+        "persona_override_owner_id still allows tier_id",
+        "Prompt_Pipeline.md still contains a normative MUST against creating execution layers beyond Phase / Task / Subtask / Iteration",
+        "Personas.md still references select_for_tier() and still violates canonical persona field naming inside its own SSOT section"
+      ],
+      "stale_tokens": [
+        "plan_or_tier_default",
+        "tier_id",
+        "Phase / Task / Subtask / Iteration",
+        "select_for_tier()"
+      ],
+      "canonical_replacement_hints": [
+        "execution_role",
+        "operational_identity (kind/requested_ref/effective_ref/selection_reason/partial_capability)",
+        "operational_identity",
+        "seam/package/node/lane authority"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

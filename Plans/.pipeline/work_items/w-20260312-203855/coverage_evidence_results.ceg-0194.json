@@ -1,0 +1,148 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0194",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-01361",
+      "source_obligation_ids": [
+        "obl-0800"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0006"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "path": "Plans/Wiring_Matrix.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Wiring_Matrix.md: exact_items matched 3/4 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02033",
+      "source_obligation_ids": [
+        "obl-1238"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s050"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "path": "Plans/Wiring_Matrix.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Wiring_Matrix.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02973",
+      "source_obligation_ids": [
+        "obl-1927"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0012"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "path": "Plans/Wiring_Matrix.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Wiring_Matrix.md: first-400-line window scan for stale_retirement",
+        "stale token still appears in live-use context in window"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02974",
+      "source_obligation_ids": [
+        "obl-1928"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0053"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "path": "Plans/Wiring_Matrix.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Wiring_Matrix.md: first-400-line window scan for stale_retirement",
+        "stale token still appears in live-use context in window"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03135",
+      "source_obligation_ids": [
+        "obl-2029"
+      ],
+      "source_seed_ids": [
+        "shard-0009-s017"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path": "Plans/Wiring_Matrix.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Wiring_Matrix.md: bounded window token/phrase match 1/1"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03187",
+      "source_obligation_ids": [
+        "obl-2047"
+      ],
+      "source_seed_ids": [
+        "shard-0010-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path": "Plans/Wiring_Matrix.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Wiring_Matrix.md: bounded window token/phrase match 1/1"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

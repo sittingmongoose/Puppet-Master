@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0434",
+  "coverage_row_ids_represented": [
+    "cov-00728"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0434",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "usage-feature.md and Runtime_Artifacts_Panel.md implement 'Show in *' as view-specific deep links rather than as activations of the canonical route-target model",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "## Show-in-*"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00728"
+      ],
+      "source_obligation_ids": [
+        "obl-0520"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0080"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "usage-feature.md and Runtime_Artifacts_Panel.md implement 'Show in *' as view-specific deep links rather than as activations of the canonical route-target model",
+        "All 'Show in Panel', 'Show in Usage', 'Show in Artifacts' surface actions must be modeled as route-target activations with the appropriate target_kind and identifiers"
+      ],
+      "stale_tokens": [
+        "Show in Panel",
+        "Show in Usage",
+        "Show in Artifacts"
+      ],
+      "canonical_replacement_hints": [
+        "route_target"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

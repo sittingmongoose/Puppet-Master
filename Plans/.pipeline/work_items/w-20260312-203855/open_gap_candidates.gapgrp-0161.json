@@ -1,0 +1,71 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0161",
+  "coverage_row_ids_represented": [
+    "cov-03036"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0161",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "`cov-511` / `obl-215` remains unresolved because the ledger requires one coherent owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent lev\u2026",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-03036"
+      ],
+      "source_obligation_ids": [
+        "obl-1969"
+      ],
+      "source_seed_ids": [
+        "shard-0092-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "`cov-511` / `obl-215` remains unresolved because the ledger requires one coherent owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels together with parallel-node worktree assignment and ownership transitions, but the live docs split the topic without closing it: `Plans/Models_System.md:58-80` defines run/persona/surface/default priority only, `Plans/Executor_Protocol.md:134-178` defines `DispatchContext.provider_id` / `model_id` without precedence rules, and `Plans/WorktreeGitImprovement.md:78-161` keeps the legacy tier-keyed worktree model without a package/seam/lane allocation owner. Exact ledger evidence remains at `working_ledger.md:L1030`, `working_ledger.md:L1035-L1036`, and `working_ledger.md:L1283-L1290`.",
+        "cov-511",
+        "obl-215",
+        "Plans/Models_System.md:58-80",
+        "Plans/Executor_Protocol.md:134-178",
+        "DispatchContext.provider_id",
+        "model_id",
+        "Plans/WorktreeGitImprovement.md:78-161",
+        "working_ledger.md:L1030"
+      ],
+      "stale_tokens": [
+        "DispatchContext.provider_id",
+        "Plans/Executor_Protocol.md:134-178",
+        "Plans/Models_System.md:58-80",
+        "Plans/WorktreeGitImprovement.md:78-161",
+        "cov-511",
+        "model_id",
+        "obl-215",
+        "working_ledger.md:L1030",
+        "working_ledger.md:L1035-L1036",
+        "working_ledger.md:L1283-L1290"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

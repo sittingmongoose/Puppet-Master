@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0170",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-01073",
+      "source_obligation_ids": [
+        "obl-0674"
+      ],
+      "source_seed_ids": [
+        "shard-0031-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01098",
+      "source_obligation_ids": [
+        "obl-0680"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md: exact_items matched 3/5 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01145",
+      "source_obligation_ids": [
+        "obl-0700"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0082"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01154",
+      "source_obligation_ids": [
+        "obl-0703"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0038"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01204",
+      "source_obligation_ids": [
+        "obl-0726"
+      ],
+      "source_seed_ids": [
+        "shard-0031-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01491",
+      "source_obligation_ids": [
+        "obl-0866"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0028"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01526",
+      "source_obligation_ids": [
+        "obl-0879"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md: exact_items matched 7/8 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01617",
+      "source_obligation_ids": [
+        "obl-0937"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0030"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01620",
+      "source_obligation_ids": [
+        "obl-0938"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0010"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02334",
+      "source_obligation_ids": [
+        "obl-1509"
+      ],
+      "source_seed_ids": [
+        "shard-0028-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

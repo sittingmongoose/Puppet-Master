@@ -1,0 +1,102 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0456",
+  "coverage_row_ids_represented": [
+    "cov-00317",
+    "cov-00318",
+    "cov-00319",
+    "cov-00320",
+    "cov-00337",
+    "cov-00338",
+    "cov-00339",
+    "cov-00342",
+    "cov-00343",
+    "cov-00344"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0456",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "Remove `requested_persona_id` / `effective_persona_id` from consumer requirements. | Replace `hitl_request_id` in graph data requirements with blocked/runtime approval identity or explicit compatibility lineage-only fields. | Research Progress - 2026-03-17 - Widget layout migration contract is internally inconsistent | Research Progress - 2026-03-17 - rewrite-root and GUI-drift seam: rewrite tie-in memo, UI command catalog, Final GUI spec | Several docs are now clearly causing canon ambiguity because addenda and base text conflict in active owner docs with no Decision Log resolution.",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-00317",
+        "cov-00318",
+        "cov-00319",
+        "cov-00320",
+        "cov-00337",
+        "cov-00338",
+        "cov-00339",
+        "cov-00342",
+        "cov-00343",
+        "cov-00344"
+      ],
+      "source_obligation_ids": [
+        "obl-0240",
+        "obl-0241",
+        "obl-0242",
+        "obl-0243",
+        "obl-0251",
+        "obl-0252",
+        "obl-0253",
+        "obl-0255",
+        "obl-0256",
+        "obl-0257"
+      ],
+      "source_seed_ids": [
+        "shard-0078-s032",
+        "shard-0079-s045",
+        "shard-0080-s090",
+        "shard-0084-s079",
+        "shard-0081-s080",
+        "shard-0081-s036",
+        "shard-0087-s038",
+        "shard-0079-s006",
+        "shard-0077-s011",
+        "shard-0077-s041"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0078",
+        "shard-0079",
+        "shard-0080",
+        "shard-0081",
+        "shard-0084",
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Remove `requested_persona_id` / `effective_persona_id` from consumer requirements.",
+        "requested_persona_id",
+        "effective_persona_id",
+        "Replace `hitl_request_id` in graph data requirements with blocked/runtime approval identity or explicit compatibility lineage-only fields.",
+        "hitl_request_id",
+        "Research Progress - 2026-03-17 - Widget layout migration contract is internally inconsistent",
+        "Research Progress - 2026-03-17 - rewrite-root and GUI-drift seam: rewrite tie-in memo, UI command catalog, Final GUI spec",
+        "Several docs are now clearly causing canon ambiguity because addenda and base text conflict in active owner docs with no Decision Log resolution.",
+        "Shell / promoted-feature / UI owner drift remains active:",
+        "Still login-keyed rather than stably account-keyed.",
+        "That ambiguity is no longer harmless because command payloads, restart restore, graph actions, and blocked projections are now split across the two identities.",
+        "That leaves `usage_record` and evidence/summary families in an unstable middle state:",
+        "usage_record",
+        "That makes the doc hard to reconcile mechanically because early tables, migration addenda, and canonical-record sections are not all pointing in the same direction."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

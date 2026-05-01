@@ -1,0 +1,68 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0006",
+  "coverage_row_ids_represented": [
+    "cov-00819",
+    "cov-01273"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0006",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "A2A stream schema tier_boundary replacement must be versioned: introduce governance_boundary in stream version N+1, provide migration adapter from version N | Introduce a versioned replacement for tier_boundary such as governance_boundary, keeping compatibility aliases only as an explicit migration strategy",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "## A2A Schema Migration Plan"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00819",
+        "cov-01273"
+      ],
+      "source_obligation_ids": [
+        "obl-0571",
+        "obl-0758"
+      ],
+      "source_seed_ids": [
+        "shard-0038-s008",
+        "shard-0035-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0035",
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "A2A stream schema tier_boundary replacement must be versioned: introduce governance_boundary in stream version N+1, provide migration adapter from version N",
+        "attempt_id must be declared as a required field in the governance_boundary diagnostic category",
+        "A compatibility alias tier_boundary -> governance_boundary must be explicitly time-boxed in Architecture_Invariants.md",
+        "Introduce a versioned replacement for tier_boundary such as governance_boundary, keeping compatibility aliases only as an explicit migration strategy",
+        "Add attempt_id to the reserved diagnostic schemas that represent execution, audit, handoff, and HITL events, and back it with a new architecture invariant for attempt continuity",
+        "Extend the stream/event contract with account attribution, actor kind, blocked-owner context, and package/seam/lane identity where downstream projections depend on them",
+        "Rewrite \u00a79 around dual-overseer / corroboration reality rather than layering more addenda onto the current singular-Overseer protocol",
+        "Promote governance-relevant speaker/handoff selections out of raw_observation when they affect orchestration projections or audit reconstruction"
+      ],
+      "stale_tokens": [
+        "tier_boundary"
+      ],
+      "canonical_replacement_hints": [
+        "governance_boundary"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

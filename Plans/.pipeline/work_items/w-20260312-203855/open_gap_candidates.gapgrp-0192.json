@@ -1,0 +1,105 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0192",
+  "coverage_row_ids_represented": [
+    "cov-03170",
+    "cov-03191",
+    "cov-03201",
+    "cov-03229",
+    "cov-03240"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0192",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_cross_reference",
+      "description": "Field name drift: 'requested_persona_id' is used in some docs while 'requested_persona' is the canonical field name defined in Contracts_V0.md | Orchestrator_Page.md still keeps Tiers and multi-tab widget composition | Plans/Orchestrator_Page.md still hardcodes: Tab 2: Tiers; orchestrator:tiers; mapping from FinalGUISpec section 7.7. | some docs still normalize around requested_persona_id / effective_persona_id | tier_id can still survive as a human-readable grouping label, but it should stop acting like the canonical execution correlation key",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Persona Field Name Drift"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-03170",
+        "cov-03191",
+        "cov-03201",
+        "cov-03229",
+        "cov-03240"
+      ],
+      "source_obligation_ids": [
+        "obl-2040",
+        "obl-2049",
+        "obl-2054",
+        "obl-2070",
+        "obl-2074"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s017",
+        "shard-0011-s011",
+        "seed-WAVE008-0036",
+        "shard-0032-s007",
+        "seed-WAVE006-0001"
+      ],
+      "source_shard_ids": [
+        "shard-0008",
+        "shard-0011",
+        "shard-0032",
+        "shard-0051",
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "Field name drift: 'requested_persona_id' is used in some docs while 'requested_persona' is the canonical field name defined in Contracts_V0.md",
+        "Orchestrator_Page.md still keeps Tiers and multi-tab widget composition",
+        "Widget_System.md still catalogs tier widgets and weak hostability rules",
+        "usage-feature.md still aggregates around tier_id",
+        "storage-plan.md still splits tier-era event tables from newer attempt-centric records",
+        "Plans/Orchestrator_Page.md still hardcodes: Tab 2: Tiers; orchestrator:tiers; mapping from FinalGUISpec section 7.7.",
+        "Remove stale Tiers page/tab structures from FinalGUISpec.md and Orchestrator_Page.md in the same reconciliation tranche so they do not keep cross-referencing each other.",
+        "some docs still normalize around requested_persona_id / effective_persona_id",
+        "Contracts_V0.md explicitly says those are not canonical persisted names",
+        "Orchestrator_Page.md still requires forbidden requested_persona_id / effective_persona_id names in live-status dependencies",
+        "tier_id can still survive as a human-readable grouping label, but it should stop acting like the canonical execution correlation key",
+        "Tier-shaped surfaces may still display and group by tier_id, but they should resolve through pointers to canonical execution objects rather than using tier_id as if it were the durable execution key",
+        "Retarget Run Graph and Usage links toward node_id / attempt_id semantics, with tier_id surviving only as a display/grouping label where needed"
+      ],
+      "stale_tokens": [
+        "requested_persona_id",
+        "effective_persona_id",
+        "Tiers tab",
+        "tier_id aggregation",
+        "tier-era event tables",
+        "TierChanged",
+        "IterationStart",
+        "TierTree",
+        "Tab 2: Tiers in Orchestrator_Page.md",
+        "orchestrator:tiers layout key",
+        "mapping from FinalGUISpec section 7.7 in Orchestrator_Page.md",
+        "tier_id"
+      ],
+      "canonical_replacement_hints": [
+        "Use 'requested_persona' and 'effective_persona' as canonical field names",
+        "attempt/node/lane/package/seam-aware attribution; tier terms only as compatibility aliases if needed",
+        "Tab 2: Seams; orchestrator:seams",
+        "canonical requested_* / effective_* contract from Contracts_V0.md",
+        "node_id",
+        "attempt_id",
+        "run_id"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

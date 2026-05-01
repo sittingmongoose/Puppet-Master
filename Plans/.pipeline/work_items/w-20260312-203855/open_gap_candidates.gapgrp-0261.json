@@ -1,0 +1,55 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0261",
+  "coverage_row_ids_represented": [
+    "cov-01620"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0261",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "Runtime_Artifacts_Panel.md still needs producer identity, trust/provenance, and stronger cross-surface linkage contracts",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-01620"
+      ],
+      "source_obligation_ids": [
+        "obl-0938"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0010"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "Runtime_Artifacts_Panel.md still needs producer identity, trust/provenance, and stronger cross-surface linkage contracts",
+        "Artifact envelopes still have no producer identity, role, account, or switch lineage",
+        "cost_usage still does not require a durable usage/switch join key strongly enough to back the promised Usage/Ledger deep links",
+        "Extend runtime-artifact envelopes and cost_usage linkage with canonical identity/trust/switch fields or refs"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

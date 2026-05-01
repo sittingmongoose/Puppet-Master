@@ -1,0 +1,654 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0002",
+  "seed_candidates": [
+    {
+      "seed_id": "shard-0002-s001",
+      "seed_type": "owner",
+      "exact_items": [
+        "Alert levels must be exactly: Info, Warning, Attention, Action Required \u2014 this is a closed four-level taxonomy"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Alert Levels"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000201-L000220"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s002",
+      "seed_type": "owner",
+      "exact_items": [
+        "Alert surface split: Dashboard shows summary/urgency only; Orchestrator shows detailed operational alerts; chat shows only Action Required alerts"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Alert Surface Rules"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000210-L000240"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s003",
+      "seed_type": "owner",
+      "exact_items": [
+        "Canonical event families must be: seam.*, package.*, node.*, promotion.*, corroboration.*, graph_patch.*, recovery.*, account.* \u2014 no surface-local shadow event language"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Canonical Event Families"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000220-L000250"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "Operator event visibility must be tiered: history-only / badge-worthy / attention-card-worthy / chat-thread action-required \u2014 each event family must declare its tier"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Event Visibility Tiers"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000240-L000260"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "Tab badges must be sparse and purposeful; the Progress tab badge must count only meaningful attention/action-required items, not routine events"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Tab Badge Rules"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000255-L000270"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s006",
+      "seed_type": "owner",
+      "exact_items": [
+        "Condition-aging defaults: normal resolved conditions clear in ~15 minutes; major resolved conditions persist until dismissed or up to 24 hours"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Condition Aging"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000265-L000280"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s007",
+      "seed_type": "owner",
+      "exact_items": [
+        "Alert state semantics: 'resolved' means the underlying condition changed; 'dismissed' means presentation hidden only; blockers must NOT be dismissible",
+        "These three states are not synonyms and must not be conflated in any doc"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Alert State Semantics"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000270-L000295"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s008",
+      "seed_type": "owner",
+      "exact_items": [
+        "Acknowledgement model: 'acknowledged' \u2260 'resolved' \u2260 'dismissed'; acknowledgement is for advisory/non-blocking concerns only; blockers are not acknowledgeable"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Acknowledgement Model"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000285-L000305"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s009",
+      "seed_type": "owner",
+      "exact_items": [
+        "Concern model must be a first-class record with fields: identity, scope, severity, category, owner, lifecycle state, meaning/summary, linkage to evidence/artifacts/history, visibility flags"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Model Fields"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000295-L000325"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s010",
+      "seed_type": "owner",
+      "exact_items": [
+        "Concern lifecycle states must be: active, acknowledged, resolved, dismissed \u2014 in that sequence with defined allowed transitions"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Glossary.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Lifecycle States"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000315-L000335"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s011",
+      "seed_type": "owner",
+      "exact_items": [
+        "Concern creation authority: runtime, package overseer, seam overseer, corroboration outcome, graph patch/state-transition logic may mint canonical concerns; workers may NOMINATE but not mint canonical concerns"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Creation Authority"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000325-L000345"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s012",
+      "seed_type": "owner",
+      "exact_items": [
+        "The same concern model must be projected per surface: Progress=operational, Seams=integration/governance, Evidence=proof-backed, History=lifecycle timeline, Ledger=structured record; no surface invents its own concern shape"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Projection Rule"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000335-L000360"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s013",
+      "seed_type": "owner",
+      "exact_items": [
+        "Concern user actions must include: open/focus, open evidence, open history, open ledger, acknowledge (where allowed), dismiss (where allowed), open resolution thread, approve/reject at HITL boundaries"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern User Actions"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000350-L000370"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s014",
+      "seed_type": "owner",
+      "exact_items": [
+        "Widget data-contract rule: widgets must consume stable shared projections, NOT raw event streams; each widget shell needs: identity/type, scope, filter/sort/display config, projection reference"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Widget Data Contract"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000360-L000385"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s015",
+      "seed_type": "owner",
+      "exact_items": [
+        "Required orchestrator projection families (12): Run Summary, Seam Summary, Package Summary, Node Summary, Promotion Summary, Lane/Worktree Summary, Concern Summary, Account/Usage Pressure, Recent Major Events, Corroboration Summary, Recovery Summary, Overseer Activity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Orchestrator Projection Families"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000375-L000395"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s016",
+      "seed_type": "owner",
+      "exact_items": [
+        "These projection families are broadly reusable across Orchestrator/Dashboard/Projects: Run Summary, Seam Summary, Concern Summary, Account/Usage Pressure, Recent Major Events"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Widget_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Reuse"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000385-L000400"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s017",
+      "seed_type": "owner",
+      "exact_items": [
+        "Projection freshness model: event-driven updates are primary; each projection must carry one of these health states: current, refreshing, stale, failed"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Freshness"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000300-L000320"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s018",
+      "seed_type": "owner",
+      "exact_items": [
+        "Projection degradation policy: a stale projection that undermines blocked/promotion/recovery/patch/account-pressure truth must mint a real concern \u2014 degraded projections are not silent"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Degradation Policy"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000310-L000335"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s019",
+      "seed_type": "owner",
+      "exact_items": [
+        "Action-gating under stale projections: execution/promotion/recovery/approval actions require fresh-enough projection; the UI must explain gating inline, not silently block"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Action Gating Under Stale Projections"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000325-L000350"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s020",
+      "seed_type": "owner",
+      "exact_items": [
+        "Under degraded projections, the UI must fall back to Ledger and direct record views; fallback path must be defined and surfaced to the user"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Degraded Projection Fallback"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000345-L000365"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s021",
+      "seed_type": "owner",
+      "exact_items": [
+        "Direct-record views (promotion record, graph patch record + state transition report, recovery/restore record, concern record) must each show: currentness, generation match, superseded flag, actionable state"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Direct-Record Actionability"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000360-L000385"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s022",
+      "seed_type": "owner",
+      "exact_items": [
+        "Each Orchestrator tab needs role-appropriate filters; Orchestrator must support saved views scoped per project; sort defaults: Seams=most operationally problematic first, History=newest first, Ledger=newest first"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Filters and Saved Views",
+        "## Sort Defaults"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000385-L000400"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s023",
+      "seed_type": "owner",
+      "exact_items": [
+        "Settings groupings must be: Providers & Models, Execution Identity, Governance, Workers, Recovery, HITL \u2014 these are the canonical top-level settings categories"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Settings Groupings"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000370-L000395"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s024",
+      "seed_type": "owner",
+      "exact_items": [
+        "Settings scope hierarchy must flow: App/Global \u2192 Project \u2192 Seam \u2192 Package \u2192 Node \u2192 Actor/Role \u2192 Runtime only; each scope must support override visibility"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Settings Scope Hierarchy"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000375-L000400"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0002-s025",
+      "seed_type": "owner",
+      "exact_items": [
+        "Override display rule: all settings pages must show Inherited, Overridden, and Effective values inline without requiring a separate modal"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Override Display"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0002",
+      "source_evidence": [
+        "working_ledger.md:L000390-L000400"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

@@ -1,0 +1,236 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0164",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-02458",
+      "source_obligation_ids": [
+        "obl-1587"
+      ],
+      "source_seed_ids": [
+        "shard-0023-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Run_Graph_View.md: exact_items matched 2/4 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02470",
+      "source_obligation_ids": [
+        "obl-1597"
+      ],
+      "source_seed_ids": [
+        "shard-0013-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Run_Graph_View.md: exact_items matched 3/5 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02472",
+      "source_obligation_ids": [
+        "obl-1598"
+      ],
+      "source_seed_ids": [
+        "shard-0014-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Run_Graph_View.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02525",
+      "source_obligation_ids": [
+        "obl-1634"
+      ],
+      "source_seed_ids": [
+        "shard-0032-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Run_Graph_View.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02662",
+      "source_obligation_ids": [
+        "obl-1717"
+      ],
+      "source_seed_ids": [
+        "shard-0013-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Run_Graph_View.md: exact_items matched 6/6 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02693",
+      "source_obligation_ids": [
+        "obl-1736"
+      ],
+      "source_seed_ids": [
+        "shard-0023-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Run_Graph_View.md: exact_items matched 1/4 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02813",
+      "source_obligation_ids": [
+        "obl-1811"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0075"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Run_Graph_View.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02838",
+      "source_obligation_ids": [
+        "obl-1825"
+      ],
+      "source_seed_ids": [
+        "shard-0023-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Run_Graph_View.md: exact_items matched 1/6 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02917",
+      "source_obligation_ids": [
+        "obl-1881"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0015"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Run_Graph_View.md: first-400-line window scan for stale_retirement",
+        "stale tokens absent or only in retirement/compatibility context in window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02946",
+      "source_obligation_ids": [
+        "obl-1904"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0071"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Run_Graph_View.md: first-400-line window scan for stale_retirement",
+        "stale tokens absent or only in retirement/compatibility context in window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

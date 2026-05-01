@@ -1,0 +1,56 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0363",
+  "coverage_row_ids_represented": [
+    "cov-01139"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0363",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Explicitly state that workspace-tab selection, panel docking, and per-project layout restore are shell-state concerns layered underneath canonical routing.",
+      "affected_targets": [
+        {
+          "path": "Plans/feature-list.md",
+          "heading": "## Shell/Workspace State Boundary"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-01139"
+      ],
+      "source_obligation_ids": [
+        "obl-0697"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0015"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "Explicitly state that workspace-tab selection, panel docking, and per-project layout restore are shell-state concerns layered underneath canonical routing.",
+        "Treat commands like `cmd.panel.switch` as shell/view commands that can consume normalized routing context, not replace it.",
+        "Keep shell/workspace persistence in the shell/storage docs, not in the base route contract.",
+        "Allow the route model to name major destination surfaces/tabs/panels where operationally necessary.",
+        "This seam prevents the route model from swallowing the whole shell. The right question for routing is 'where should the user land,' not 'how should every panel be laid out when they get there.'"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,246 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0062",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-00433",
+      "source_obligation_ids": [
+        "obl-0317"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0047"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "path": "Plans/FileSafe.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/FileSafe.md: exact_items matched 0/1 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00437",
+      "source_obligation_ids": [
+        "obl-0318"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0012"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "path": "Plans/FileSafe.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/FileSafe.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00445",
+      "source_obligation_ids": [
+        "obl-0324"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0023"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "path": "Plans/FileSafe.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/FileSafe.md: exact_items matched 0/1 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00563",
+      "source_obligation_ids": [
+        "obl-0394"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0050"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "path": "Plans/FileSafe.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/FileSafe.md: exact_items matched 0/3 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00571",
+      "source_obligation_ids": [
+        "obl-0395"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0024"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "path": "Plans/FileSafe.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/FileSafe.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01954",
+      "source_obligation_ids": [
+        "obl-1169"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s101",
+        "shard-0081-s010",
+        "shard-0081-s051",
+        "shard-0081-s084",
+        "shard-0081-s105",
+        "shard-0081-s143",
+        "shard-0082-s016",
+        "shard-0082-s038",
+        "shard-0082-s072"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "path": "Plans/FileSafe.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/FileSafe.md: exact_items matched 0/2 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02912",
+      "source_obligation_ids": [
+        "obl-1877"
+      ],
+      "source_seed_ids": [
+        "shard-0006-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path": "Plans/FileSafe.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/FileSafe.md: first-400-line window scan for stale_retirement",
+        "stale tokens absent or only in retirement/compatibility context in window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02920",
+      "source_obligation_ids": [
+        "obl-1883"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/FileSafe.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/FileSafe.md: first-400-line window scan for stale_retirement",
+        "stale tokens absent or only in retirement/compatibility context in window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03112",
+      "source_obligation_ids": [
+        "obl-2020"
+      ],
+      "source_seed_ids": [
+        "shard-0010-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path": "Plans/FileSafe.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/FileSafe.md: bounded window token/phrase match 1/1"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03119",
+      "source_obligation_ids": [
+        "obl-2023"
+      ],
+      "source_seed_ids": [
+        "shard-0007-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "path": "Plans/FileSafe.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/FileSafe.md: canonical_replacement_status unknown; requires resolution"
+      ],
+      "required_action": "stale_token_replacement_resolution",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

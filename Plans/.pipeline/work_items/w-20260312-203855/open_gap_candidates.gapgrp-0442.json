@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0442",
+  "coverage_row_ids_represented": [
+    "cov-00001",
+    "cov-00010",
+    "cov-00011",
+    "cov-00012",
+    "cov-00023",
+    "cov-00025",
+    "cov-00026",
+    "cov-00027",
+    "cov-00028",
+    "cov-00029"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0442",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "3. Reconcile routing, blocked-family, and attribution flows end-to-end across owner + consumer docs. | As long as owner docs still speak canonically in `tier` terms, consumer docs will keep reconstructing tier-shaped surfaces and payloads even when their field names are updated. | Consumer docs are still asking for provider/model shorthand where the rewrite now expects requested/effective identity disclosure. | Consumer docs now simultaneously claim: | Fixing consumer docs without fixing this owner-language seam will not hold.",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-00001",
+        "cov-00010",
+        "cov-00011",
+        "cov-00012",
+        "cov-00023",
+        "cov-00025",
+        "cov-00026",
+        "cov-00027",
+        "cov-00028",
+        "cov-00029"
+      ],
+      "source_obligation_ids": [
+        "obl-0001",
+        "obl-0005",
+        "obl-0006",
+        "obl-0007",
+        "obl-0010",
+        "obl-0012",
+        "obl-0013",
+        "obl-0014",
+        "obl-0015",
+        "obl-0016"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s094",
+        "shard-0078-s064",
+        "shard-0078-s027",
+        "shard-0079-s038",
+        "shard-0078-s070",
+        "shard-0081-s002",
+        "shard-0080-s055",
+        "shard-0078-s031",
+        "shard-0078-s066",
+        "shard-0080-s038"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0079",
+        "shard-0080",
+        "shard-0081",
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "3. Reconcile routing, blocked-family, and attribution flows end-to-end across owner + consumer docs.",
+        "As long as owner docs still speak canonically in `tier` terms, consumer docs will keep reconstructing tier-shaped surfaces and payloads even when their field names are updated.",
+        "tier",
+        "Consumer docs are still asking for provider/model shorthand where the rewrite now expects requested/effective identity disclosure.",
+        "Consumer docs now simultaneously claim:",
+        "Fixing consumer docs without fixing this owner-language seam will not hold.",
+        "It sits in a cross-cutting SSOT and should be cleaned up during the same widget reconciliation tranche.",
+        "Keep Progress widget composition, but bind widgets to canonical runtime and orchestration objects:",
+        "Keep any graph-local display structs derived from the canonical runtime snapshot rather than naming parallel canonical fields.",
+        "Keep any surviving `tier` language explicitly marked as compatibility or derived-view vocabulary.",
+        "Keep any surviving tier labels explicitly as derived display/grouping metadata, not as the core runtime identity shape."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

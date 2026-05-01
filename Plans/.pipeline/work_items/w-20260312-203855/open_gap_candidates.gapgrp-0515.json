@@ -1,0 +1,105 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0515",
+  "coverage_row_ids_represented": [
+    "cov-02395",
+    "cov-02399",
+    "cov-02400",
+    "cov-02401",
+    "cov-02403",
+    "cov-02404",
+    "cov-02405",
+    "cov-02406",
+    "cov-02407",
+    "cov-02408"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0515",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "canonical HITL request contract is `request_id` + `tier_id` + `tier_type` + `request_kind` | canonical dispatch already uses scored ready-set selection, not pure lexical `node_id` | canonical enough for Ledger and cost artifacts | canonical event families | canonical key families",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-02395",
+        "cov-02399",
+        "cov-02400",
+        "cov-02401",
+        "cov-02403",
+        "cov-02404",
+        "cov-02405",
+        "cov-02406",
+        "cov-02407",
+        "cov-02408"
+      ],
+      "source_obligation_ids": [
+        "obl-1549",
+        "obl-1551",
+        "obl-1552",
+        "obl-1553",
+        "obl-1555",
+        "obl-1556",
+        "obl-1557",
+        "obl-1558",
+        "obl-1559",
+        "obl-1560"
+      ],
+      "source_seed_ids": [
+        "shard-0079-s053",
+        "shard-0085-s005",
+        "shard-0077-s012",
+        "shard-0077-s043",
+        "shard-0077-s044",
+        "shard-0077-s045",
+        "shard-0083-s122",
+        "shard-0079-s067",
+        "shard-0078-s128",
+        "shard-0077-s030"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0078",
+        "shard-0079",
+        "shard-0083",
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "canonical HITL request contract is `request_id` + `tier_id` + `tier_type` + `request_kind`",
+        "request_id",
+        "tier_id",
+        "tier_type",
+        "request_kind",
+        "canonical dispatch already uses scored ready-set selection, not pure lexical `node_id`",
+        "node_id",
+        "canonical enough for Ledger and cost artifacts",
+        "canonical event families",
+        "canonical key families",
+        "canonical record families",
+        "canonical runtime action families",
+        "canonical runtime actions",
+        "canonical runtime commands use:",
+        "canonical runtime events like `scheduler.pass`, `node.blocked`, `safe_point.*`, `remediation.*`",
+        "scheduler.pass",
+        "node.blocked",
+        "safe_point.*",
+        "remediation.*"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

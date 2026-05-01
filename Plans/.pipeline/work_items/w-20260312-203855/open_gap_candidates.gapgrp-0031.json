@@ -1,0 +1,152 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0031",
+  "coverage_row_ids_represented": [
+    "cov-01228",
+    "cov-01257",
+    "cov-01278",
+    "cov-01310",
+    "cov-01334",
+    "cov-01379",
+    "cov-01385",
+    "cov-01597",
+    "cov-01618",
+    "cov-01697"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0031",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "HITL now contains two contract eras: older request-local (HITLRequest with tier_id, tier_type, allowed_actions[]) and newer runtime-facing (waiting_approval as blocked overlay, allowed_action_ids[], c\u2026 | Identity semantics across docs must converge on OperationalIdentity block as the canonical snapshot | Introduce execution_unit_context as the canonical runtime-facing context object and make TierContext explicitly derived or compatibility-only | Make execution_role part of the canonical attempt packet in Contracts_V0.md and storage-plan.md | Multi-Account.md still has no durable account.switched / switch-episode family",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Requested vs Effective Account Binding Rules"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-01228",
+        "cov-01257",
+        "cov-01278",
+        "cov-01310",
+        "cov-01334",
+        "cov-01379",
+        "cov-01385",
+        "cov-01597",
+        "cov-01618",
+        "cov-01697"
+      ],
+      "source_obligation_ids": [
+        "obl-0738",
+        "obl-0750",
+        "obl-0759",
+        "obl-0777",
+        "obl-0790",
+        "obl-0806",
+        "obl-0811",
+        "obl-0926",
+        "obl-0937",
+        "obl-0980"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0025",
+        "shard-0039-s009",
+        "seed-WAVE005-0072",
+        "seed-WAVE006-0007",
+        "shard-0034-s014",
+        "seed-WAVE005-0060",
+        "shard-0039-s002",
+        "shard-0038-s006",
+        "seed-WAVE005-0030",
+        "shard-0037-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0034",
+        "shard-0037",
+        "shard-0038",
+        "shard-0039",
+        "shard-0044",
+        "shard-0045",
+        "shard-0049",
+        "shard-0050",
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "HITL now contains two contract eras: older request-local (HITLRequest with tier_id, tier_type, allowed_actions[]) and newer runtime-facing (waiting_approval as blocked overlay, allowed_action_ids[], cmd.runtime.*)",
+        "Move approval anchoring onto canonical runtime identity: run_id, node_id, blocked_sequence, attempt_id?, plus execution-unit context refs",
+        "Add an explicit approval-scope field or object, likely approval_scope_key, so reusable approvals and one-off blocked-episode approvals cannot bleed together",
+        "Add durable approver identity fields to approval/rejection records/events so audit/history can explain who approved or declined",
+        "Deprecated allowed_actions[] is compatibility-only and MUST NOT appear in new canonical schemas",
+        "Identity semantics across docs must converge on OperationalIdentity block as the canonical snapshot",
+        "requested_account_id must always be accompanied by requested_account_binding (none / preferred / required) to clarify what failure mode applies when the requested account is unavailable",
+        "effective_account_id must always be present (may equal the default) and never absent from any record that involves a provider/model call",
+        "Introduce execution_unit_context as the canonical runtime-facing context object and make TierContext explicitly derived or compatibility-only",
+        "Canonical execution_unit_context minimum shape: project_id, run_id, thread_id?, feature_seam_id?, work_package_id?, node_id, attempt_id?, blocked_sequence?, replan_generation, execution_role, scheduler_lane, manual_priority?, safe_point_id?, remediation lineage refs, lane_id?, worktree_id?, workspace_ref, snapshot_ref?, requested/effective runtime identity, runtime state hooks",
+        "Refactor orchestrator-subagent-integration.md so selector and hook APIs consume: canonical execution-unit refs for truth and a smaller derived selection/decomposition object for heuristics",
+        "Make execution_role part of the canonical attempt packet in Contracts_V0.md and storage-plan.md",
+        "Define operational_identity as a separate optional field family for receipts, artifacts, and side-effect-bearing attempt/tool records",
+        "execution_role and operational_identity solve different problems and should not be merged",
+        "Multi-Account.md still has no durable account.switched / switch-episode family",
+        "provider_accounts.run_snapshot still stores only an opaque policy_hash rather than a queryable policy version/ref",
+        "no canonical role enum or actor_kind / execution_role field exists to support role-by-provider and role-by-account overrides consistently across docs",
+        "On restart, the runtime restores current unresolved blocked episodes from canonical blocked/runtime records/projections",
+        "The scheduler then emits a scheduler pass with wake_reason = startup_recovered; that startup-recovery pass does not mint new blocked episodes by itself; it rehydrates existing unresolved episodes",
+        "Executor_Protocol.md names startup_recovered but does not define the restore handshake strongly enough to prevent silent block-loss or accidental episode reminting",
+        "Define startup-recovery handshake ownership in Executor_Protocol.md + Contracts_V0.md",
+        "OperationalIdentity block is missing from runtime snapshots in storage-plan.md and Contracts_V0.md",
+        "OperationalIdentity must carry: effective_account_id, effective_runtime_id, effective_persona_key, execution_role, actor_kind, requested_account_binding, any_pressure_flags, any_degradation_flags",
+        "This block is the single source of effective-identity truth for auditing, receipts, and downstream projections",
+        "Retire generic page: string route payload field \u2014 it is too coarse for cross-surface navigation and deep-link targeting",
+        "Replace all occurrences of bare page: string with the canonical route payload schema (surface_id + object_kind + object_id)",
+        "Any existing uses of page: string in cmd.* args or attention item payloads must be migrated",
+        "Runtime_Artifacts_Panel.md still lacks attempt-level identity, producer attribution, trustworthy cost_usage linkage, and degraded/stale projector behavior",
+        "attempt_id is still absent from the canonical artifact ID set even though receipt linkage and the run-graph model now rely on attempt-level identity",
+        "runtime-artifact payload ownership is still split across docs without an actually-populated canonical schema family",
+        "The attention center cluster requires a canonical record family for project_attention_item",
+        "Minimum projection shape: attention_item_id, project_id, severity, owner_kind, reason_code, source_kind, source_object_ref, primary_route_payload, secondary_route_payloads[], display_title, display_subtitle, disclosure_visibility",
+        "This record family is absent from storage-plan.md and from Contracts_V0.md"
+      ],
+      "stale_tokens": [
+        "HITLRequest with tier_id/tier_type",
+        "allowed_actions[] (deprecated HITL field)",
+        "approve_continue (legacy HITL action)",
+        "TierContext (as canonical execution context)",
+        "page: string",
+        "task_id (in artifact docs, where rewrite needs node_id/package/seam/lane identity)"
+      ],
+      "canonical_replacement_hints": [
+        "blocked_reason_code = waiting_approval",
+        "allowed_action_ids[]",
+        "approval_scope_key",
+        "cmd.runtime.*",
+        "requested_account_binding: none | preferred | required",
+        "execution_unit_context",
+        "execution_role",
+        "operational_identity",
+        "actor_kind",
+        "startup_recovered (wake_reason value)",
+        "blocked episode rehydration on restart",
+        "OperationalIdentity block",
+        "surface_id + object_kind + object_id",
+        "attempt_id",
+        "node_id",
+        "project_attention_item"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

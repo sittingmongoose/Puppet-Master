@@ -1,0 +1,56 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0287",
+  "coverage_row_ids_represented": [
+    "cov-00774"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0287",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_doc_reference",
+      "description": "cmd.orchestrator.switch_tab currently appears in the wiring template without existing in the catalog",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00774"
+      ],
+      "source_obligation_ids": [
+        "obl-0544"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0036"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "cmd.orchestrator.switch_tab currently appears in the wiring template without existing in the catalog",
+        "Wiring_Matrix.md references cmd.orchestrator.switch_tab, but the canonical command catalog does not define it",
+        "graph-local retry/HITL commands still cannot actually be thin aliases to runtime commands because they omit runtime-minimum anchors like run_id, attempt_id, and blocked_sequence"
+      ],
+      "stale_tokens": [
+        "cmd.orchestrator.switch_tab (ghost ID)"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Missing or incomplete doc reference vs obligation (concrete path known).",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

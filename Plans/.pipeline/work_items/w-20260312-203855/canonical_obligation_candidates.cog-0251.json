@@ -1,0 +1,551 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0251",
+  "represented_seed_ids": [
+    "seed-WAVE006-0020",
+    "seed-WAVE007-0001",
+    "seed-WAVE007-0002",
+    "seed-WAVE008-0001",
+    "seed-WAVE008-0007",
+    "seed-WAVE008-0009",
+    "seed-WAVE008-0011",
+    "seed-WAVE008-0026",
+    "seed-WAVE008-0044",
+    "shard-0025-s008",
+    "shard-0025-s010",
+    "shard-0025-s011",
+    "shard-0030-s003",
+    "shard-0038-s012",
+    "shard-0077-s054"
+  ],
+  "source_shard_ids": [
+    "shard-0025",
+    "shard-0030",
+    "shard-0038",
+    "shard-0053",
+    "shard-0061",
+    "shard-0071",
+    "shard-0072",
+    "shard-0074",
+    "shard-0076",
+    "shard-0077"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE006-0020"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "Define one shared runtime attribution packet and make tool events, artifact envelopes, receipts, and usage records reference it",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define one shared runtime attribution packet and make tool events, artifact envelopes, receipts, and usage records reference it",
+        "Contracts_V0.md: own the shared cross-family attribution packet shape for runtime events"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Runtime Attribution Packet"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010401-L010454"
+      ],
+      "notes": [
+        "One shared attribution family must be available to tool.invoked, tool.denied, runtime_artifact.*, runtime receipts, usage_record, evidence/trace views. Contracts_V0.md should own the cross-family packet shape."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-WAVE007-0001"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "Keep `route_target` intentionally small and force normalization pressure through `subject_id` and `object_kind/object_id`.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Keep `route_target` intentionally small and force normalization pressure through `subject_id` and `object_kind/object_id`.",
+        "Let specialized contracts carry specialized selectors: `OpenFile` owns `path`, `line`, `range`; `OpenSubject` owns `subject_id` and subject realization rules",
+        "Avoid adding a generic nested 'extra args' bag to `route_target`; that would recreate the same drift under a different name."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Route Target Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L012034-L012045"
+      ],
+      "notes": [
+        "Contracts_V0.md must own the canonical route_target shape. The key quality bar is restraint \u2014 base target object must not grow large."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "seed-WAVE007-0002"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "Keep the initial canonical set deliberately small: `doc:<document_id>`, `artifact:<artifact_id>`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Keep the initial canonical set deliberately small: `doc:<document_id>`, `artifact:<artifact_id>`",
+        "Avoid adding `thread:`, `run:`, `wizard:`, `safe_point:`, etc. as `subject_id` families when those are better modeled as `object_kind/object_id`",
+        "Declare the initial `subject_id` families narrowly and explicitly.",
+        "Declare an early canonical `object_kind` enum family in the contract layer, with room for later controlled extension."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## subject_id Families",
+        "## object_kind Vocabulary"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L012063-L012149"
+      ],
+      "notes": [
+        "subject_id must stay sparse for openable/renderable content. object_kind covers domain/runtime/governance objects."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "seed-WAVE008-0001"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "canon_label": "Add these lineage examples to the route contract owner docs.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add these lineage examples to the route contract owner docs.",
+        "Keep blocked-episode identity explicit: blocked_sequence is the canonical id; run and node scope remain required resolver context",
+        "Keep scheduler/safe-point/remediation/patch lineage under inspector_target = lineage when the object is already selected."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## 7. UICommand",
+        "## Route Contracts"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L014032-L014119"
+      ],
+      "notes": [
+        "Contracts_V0.md must add canonical route recipes for runtime lineage objects: blocked_episode (object_id=blocked_sequence, tab_id=node_graph|history, inspector_target=details|history), scheduler_pass (tab_id=history, inspector_target=lineage|details), safe_point (tab_id=history, inspector_target=lineage|history), remediation (tab_id=history, inspector_target=lineage), graph_generation (tab_id=node_graph, inspector_target=lineage), graph_patch (tab_id=history, inspector_target=lineage|details)."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "seed-WAVE008-0007"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Add explicit route validation rules to Contracts_V0.md.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add explicit route validation rules to Contracts_V0.md.",
+        "State that invalid route payloads are contract failures, not 'best effort' cases.",
+        "Normalize before route construction, not during late destination-specific handling.",
+        "Canonical route validation rules are: reject when project_id is missing; reject when no primary selector exists; reject when both subject_id and object_kind/object_id are supplied as competing primary selectors; reject when object_kind is present without object_id; reject when object_id is present without object_kind; reject when inspector_target is present but no object selector exists; reject when tab_id conflicts with target_kind; reject when line or range appears in route_target; reject when per-surface state appears in route_target."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Route Contracts",
+        "## 7. UICommand"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L014202-L014246"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "seed-WAVE008-0009"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Define tab_id as stable page-tab focus only.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define tab_id as stable page-tab focus only.",
+        "Start with the Orchestrator tab family as the first canonical enum set.",
+        "Keep panel-subview and shell-tab identities outside the route base contract.",
+        "tab_id should stay absent when the destination surface can reveal the target without explicit tab forcing.",
+        "The current high-value canonical vocabulary is: Orchestrator: progress, seams, node_graph, evidence, history, ledger"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Route Contracts",
+        "## tab_id vocabulary"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L014247-L014298"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "seed-WAVE008-0011"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Add scoped-identity resolver rules to Contracts_V0.md.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add scoped-identity resolver rules to Contracts_V0.md.",
+        "Keep scoped runtime families object-first and resolver-backed.",
+        "Do not add family-specific top-level route fields just because some ids are only unique within run scope.",
+        "Scoped identity rules: blocked_episode (object_id=blocked_sequence, resolver scope requires focused_run_id + node membership); scheduler_pass (requires focused_run_id); safe_point (requires focused_run_id); remediation (object_id=remediation_root_id, requires focused_run_id); attempt (object_id=attempt_id, requires focused_run_id)."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Route Contracts",
+        "## Scoped Resolver Rules"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L014299-L014353"
+      ],
+      "notes": [
+        "Small contract, strong resolver. The route contract does not need to grow extra top-level scope ids for each scoped family."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "seed-WAVE008-0026"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "In Plans/Contracts_V0.md: add canonical route_target contract section under chapter 7.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "In Plans/Contracts_V0.md: add canonical route_target contract section under chapter 7.",
+        "The clean contract placement is: keep 7.1 UICommand envelope; add route_target and OpenSubject as new sibling contract sections inside chapter 7; keep WiringEntry after those sections so the wiring layer consumes, rather than owns, route/open semantics.",
+        "This is not just a missing paragraph. The owner-doc section order already tells us where the contract belongs."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [
+        "## 7. UICommand",
+        "## 7.1 UICommand envelope",
+        "## 7.2 route_target",
+        "## 7.3 OpenSubject"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L014733-L014786"
+      ],
+      "notes": [
+        "WiringEntry must consume route/open contracts, not become their surrogate owner."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "seed-WAVE008-0044"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "Define a cross-family blocked minimum for canonical blocked objects: blocked reason; ordered allowed actions where applicable; preserved-work / local-state disclosure where applicable; stable blocked-\u2026",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define a cross-family blocked minimum for canonical blocked objects: blocked reason; ordered allowed actions where applicable; preserved-work / local-state disclosure where applicable; stable blocked-episode identity or family-local equivalent; detail/report inspection refs.",
+        "Keep family-local additions separate: node-blocked keeps blocked_sequence, attempt_id, failure_class; wizard-blocked keeps wizard-specific clarification/report fields; thread blocked notices stay as rendered/persisted consumer state, not canonical blocked ownership.",
+        "assistant-chat-design.md is already stronger than the owner docs in how it treats blocked thread actions."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [
+        "## Blocked Family Contracts",
+        "## Cross-Family Blocked Minimum"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L015109-L015170"
+      ],
+      "notes": [
+        "This is a family-contract mismatch, not a request for one giant shared blocked payload."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0025-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "concern payload: severity, category, owner, lifecycle, resolution_kind",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "concern payload: severity, category, owner, lifecycle, resolution_kind",
+        "promotion payload: promotion_class, source_scope, target_scope, canonical verdict, revoked/reopened lineage",
+        "corroboration payload: claim refs, corroborator refs, 2-of-3 outcome, unresolved minority concerns",
+        "graph patch payload: patch point, target generation, resulting generation, requested reason, applied outcome",
+        "recovery payload: blocked episode ref, action id, preconditions, result, safe-point refs",
+        "review payload: review scope, findings counts, unresolved findings, verdict, canonical findings summary ref"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Family-Specific Record Payload Blocks"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0025-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "detail_ref and *_ref conventions already exist and should be expanded, not replaced",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "detail_ref and *_ref conventions already exist and should be expanded, not replaced"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Reference Convention Rule"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "shard-0025-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "canonical findings summaries and prose summaries are artifacts/views that must still resolve back to exact records",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "canonical findings summaries and prose summaries are artifacts/views that must still resolve back to exact records"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Canonical vs Summary Artifact Rule"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-013",
+      "source_seed_ids": [
+        "shard-0030-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "preferred remediation resolution enum: fixed, superseded, abandoned, replan_required",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "preferred remediation resolution enum: fixed, superseded, abandoned, replan_required"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Canonical Remediation Resolution Enum"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": [
+        "Richer lineage-aware enum: superseded matters for graph patch/generation lineage; abandoned \u2260 simple failure; generic failed loses historical meaning"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-014",
+      "source_seed_ids": [
+        "shard-0038-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "The canonical actor envelope (project_id + actor_kind + sparse actor refs + requested/effective identity block) must be anchored in Contracts_V0.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The canonical actor envelope (project_id + actor_kind + sparse actor refs + requested/effective identity block) must be anchored in Contracts_V0.md",
+        "All runtime records, receipts, usage events, stream events, concern records, and attention items must reference the canonical actor envelope by name rather than redeclaring fields ad-hoc",
+        "actor_kind and execution_role enums must be defined in the same anchoring section"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Canonical Actor Envelope Anchoring"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L007401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-015",
+      "source_seed_ids": [
+        "shard-0077-s054"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "`Plans/Contracts_V0.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Contracts_V0.md`",
+        "Plans/Contracts_V0.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L015288"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Contracts_V0.md`"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0301",
+  "coverage_row_ids_represented": [
+    "cov-00389"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0301",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "UI_Wiring_Rules.md already treats correlation_id as part of the command envelope, but the matrix/schema pair has no way to declare or verify passthrough obligations for route payloads, subject IDs, or\u2026",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "heading": "## correlation_id Passthrough"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00389"
+      ],
+      "source_obligation_ids": [
+        "obl-0294"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0047"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "UI_Wiring_Rules.md already treats correlation_id as part of the command envelope, but the matrix/schema pair has no way to declare or verify passthrough obligations for route payloads, subject IDs, or correlation continuity into downstream events",
+        "Tighten UI_Wiring_Rules.md so reusable navigation commands and subject-open commands are treated as first-class wiring shapes rather than smuggled through generic args",
+        "There is still no schema-level place to express argument-contract requirements for subject-open or route-payload commands"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "command_arg_contract_ref",
+        "route_target_kind",
+        "subject_kind",
+        "deprecated_alias_for",
+        "preconditions",
+        "arg_passthrough_requirements",
+        "correlation_passthrough"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

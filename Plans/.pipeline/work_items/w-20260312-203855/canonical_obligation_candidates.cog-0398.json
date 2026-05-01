@@ -1,0 +1,54 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0398",
+  "represented_seed_ids": [
+    "shard-0019-s005"
+  ],
+  "source_shard_ids": [
+    "shard-0019"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0019-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "canon_label": "Worker policy needs the same source/requested/effective/reason display treatment: source (project/package/node override source), requested (subagent, fresh_worker), effective (what runtime actually us\u2026",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Worker policy needs the same source/requested/effective/reason display treatment: source (project/package/node override source), requested (subagent, fresh_worker), effective (what runtime actually used), reason (why it changed if it changed)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Models_System.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Worker Policy Display",
+        "## Worker Override Display"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003780-L003787"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

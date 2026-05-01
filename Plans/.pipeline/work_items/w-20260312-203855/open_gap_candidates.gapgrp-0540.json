@@ -1,0 +1,86 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0540",
+  "coverage_row_ids_represented": [
+    "cov-02864",
+    "cov-02865",
+    "cov-02866",
+    "cov-02867",
+    "cov-02868",
+    "cov-02869"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0540",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "prompt_process_followup",
+      "description": "`Plans/.evidence/**` | `Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json` | `Plans/.pipeline/work_items/w-20260312-203855/current_state.md` | `Plans/.pipeline/work_items/w-20260312-203855/meta.json` | `Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json`",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-02864",
+        "cov-02865",
+        "cov-02866",
+        "cov-02867",
+        "cov-02868",
+        "cov-02869"
+      ],
+      "source_obligation_ids": [
+        "obl-1839",
+        "obl-1840",
+        "obl-1841",
+        "obl-1842",
+        "obl-1843",
+        "obl-1844"
+      ],
+      "source_seed_ids": [
+        "shard-0086-s138",
+        "shard-0088-s072",
+        "shard-0088-s075",
+        "shard-0088-s071",
+        "shard-0088-s074",
+        "shard-0089-s057",
+        "shard-0088-s070",
+        "shard-0088-s077",
+        "shard-0088-s073",
+        "shard-0088-s076",
+        "shard-0089-s056",
+        "shard-0086-s137"
+      ],
+      "source_shard_ids": [
+        "shard-0086",
+        "shard-0088",
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "`Plans/.evidence/**`",
+        "Plans/.evidence/**",
+        "`Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json`",
+        "Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json",
+        "`Plans/.pipeline/work_items/w-20260312-203855/current_state.md`",
+        "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+        "`Plans/.pipeline/work_items/w-20260312-203855/meta.json`",
+        "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+        "`Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json`",
+        "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+        "`Plans/_shards/**`",
+        "Plans/_shards/**"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Process-only obligation; reconcile via prompt/packet update (no Plans/** packet target).",
+      "next_resolution_stage": "prompt_packet_update"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

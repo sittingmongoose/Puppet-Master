@@ -1,0 +1,101 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0520",
+  "coverage_row_ids_represented": [
+    "cov-02565",
+    "cov-02566",
+    "cov-02567",
+    "cov-02568",
+    "cov-02569",
+    "cov-02573",
+    "cov-02577",
+    "cov-02585",
+    "cov-02586",
+    "cov-02587"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0520",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "later canonical correction addenda | later reconciliation addendum weakens it to `resume_url?` | later runtime recovery / canonical-record addenda | lexicographic `node_id` is explicitly demoted to final tiebreak only | lineage-preserving persistence through blocked records",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-02565",
+        "cov-02566",
+        "cov-02567",
+        "cov-02568",
+        "cov-02569",
+        "cov-02573",
+        "cov-02577",
+        "cov-02585",
+        "cov-02586",
+        "cov-02587"
+      ],
+      "source_obligation_ids": [
+        "obl-1656",
+        "obl-1657",
+        "obl-1658",
+        "obl-1659",
+        "obl-1660",
+        "obl-1663",
+        "obl-1666",
+        "obl-1670",
+        "obl-1671",
+        "obl-1672"
+      ],
+      "source_seed_ids": [
+        "shard-0079-s052",
+        "shard-0083-s063",
+        "shard-0077-s023",
+        "shard-0085-s009",
+        "shard-0083-s123",
+        "shard-0079-s030",
+        "shard-0088-s039",
+        "shard-0086-s049",
+        "shard-0086-s047",
+        "shard-0083-s064"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0079",
+        "shard-0083",
+        "shard-0085",
+        "shard-0086",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "later canonical correction addenda",
+        "later reconciliation addendum weakens it to `resume_url?`",
+        "resume_url?",
+        "later runtime recovery / canonical-record addenda",
+        "lexicographic `node_id` is explicitly demoted to final tiebreak only",
+        "node_id",
+        "lineage-preserving persistence through blocked records",
+        "live status still says HITL requests are keyed by `request_id`",
+        "request_id",
+        "major missing material is still concentrated in:",
+        "mirror/checklist docs that will need revalidation after owner reconciliation",
+        "mixed-canon owner docs",
+        "neither form is grounded in a named `route_target` contract",
+        "route_target"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

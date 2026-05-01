@@ -1,0 +1,58 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0411",
+  "coverage_row_ids_represented": [
+    "cov-00765"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0411",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_doc_reference",
+      "description": "WorktreeGitImprovement.md still lacks a durable worktree_record / worktree_projection family",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00765"
+      ],
+      "source_obligation_ids": [
+        "obl-0541"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0051"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "WorktreeGitImprovement.md still lacks a durable worktree_record / worktree_projection family",
+        "WorktreeGitImprovement.md still has no explicit precedence rule between persisted runtime lineage and filesystem rediscovery",
+        "WorktreeGitImprovement.md still treats git-hook blocks and state files as if they could substitute for canonical blocked/runtime events",
+        "Add the missing canonical record/projection families to storage-plan.md for worktree lifecycle and artifact index state"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "worktree_record",
+        "worktree_projection"
+      ],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Missing or incomplete doc reference vs obligation (concrete path known).",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

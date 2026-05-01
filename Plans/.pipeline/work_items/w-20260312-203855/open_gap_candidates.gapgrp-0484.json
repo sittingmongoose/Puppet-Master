@@ -1,0 +1,106 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0484",
+  "coverage_row_ids_represented": [
+    "cov-01670",
+    "cov-01671",
+    "cov-01680",
+    "cov-01681",
+    "cov-01682",
+    "cov-01690",
+    "cov-01691",
+    "cov-01692",
+    "cov-01693",
+    "cov-01694"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0484",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "Strong aligned owner: | Strong owner docs: | That leaves the system with two competing approval/blocked ontologies: | That makes `Orchestrator_Page.md` another same-file supersession case, not just an outdated page spec. | That means the main owner gap is no longer field names first. It is scope and owner identity.",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-01670",
+        "cov-01671",
+        "cov-01680",
+        "cov-01681",
+        "cov-01682",
+        "cov-01690",
+        "cov-01691",
+        "cov-01692",
+        "cov-01693",
+        "cov-01694"
+      ],
+      "source_obligation_ids": [
+        "obl-0964",
+        "obl-0965",
+        "obl-0968",
+        "obl-0969",
+        "obl-0970",
+        "obl-0974",
+        "obl-0975",
+        "obl-0976",
+        "obl-0977",
+        "obl-0978"
+      ],
+      "source_seed_ids": [
+        "shard-0079-s003",
+        "shard-0079-s127",
+        "shard-0078-s109",
+        "shard-0085-s033",
+        "shard-0084-s062",
+        "shard-0083-s050",
+        "shard-0081-s096",
+        "shard-0081-s120",
+        "shard-0081-s025",
+        "shard-0084-s059"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0079",
+        "shard-0081",
+        "shard-0083",
+        "shard-0084",
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "Strong aligned owner:",
+        "Strong owner docs:",
+        "That leaves the system with two competing approval/blocked ontologies:",
+        "That makes `Orchestrator_Page.md` another same-file supersession case, not just an outdated page spec.",
+        "Orchestrator_Page.md",
+        "That means the main owner gap is no longer field names first. It is scope and owner identity.",
+        "The `ContractRef` syntax break in `GATE-003` is a hard owner-doc integrity defect, not a style preference.",
+        "ContractRef",
+        "GATE-003",
+        "The `Decision_Log` retry succeeded under `agent-331`; keep `agent-314` recorded as the failed attempt and `agent-331` as the canonical successful run.",
+        "Decision_Log",
+        "agent-331",
+        "agent-314",
+        "The `GPT-5.2` continuation wave still produced substantive new deltas across the full 22-doc tail, so the tranche has still not converged before the final `GPT-5.3-Codex` pass.",
+        "GPT-5.2",
+        "GPT-5.3-Codex",
+        "The `GPT-5.4` wave still produced substantive owner-level deltas across the entire remaining partial tranche. This is not yet a convergence zone.",
+        "GPT-5.4",
+        "The addenda already move toward attempt-native handoff identity:"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

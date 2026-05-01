@@ -1,0 +1,112 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0080",
+  "coverage_row_ids_represented": [
+    "cov-00931",
+    "cov-01113",
+    "cov-01213",
+    "cov-01238",
+    "cov-01284",
+    "cov-01439",
+    "cov-01602",
+    "cov-01623",
+    "cov-01625",
+    "cov-01933"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0080",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "But `Plans/Executor_Protocol.md` still has owner-level drift in the same file: | Each failed node attempt must leave a structured receipt/handoff artifact containing: what it did, what changed, why failed, what to try next \u2014 this is mandatory, not optional | Governing layer design: deterministic scheduler/state machine (not one long-running super-agent); bounded worker/reviewer/remediation agents with explicit context windows; lightweight planning/replan \u2026 | Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Crosswalk\u2026 | Issue classes requiring corroboration (5): missing wiring, implementation quality concerns, unmet intent despite passing tests, missing spec/hidden dependency, graph structure insufficiency",
+      "affected_targets": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "## Attempt Handoff Artifact"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00931",
+        "cov-01113",
+        "cov-01213",
+        "cov-01238",
+        "cov-01284",
+        "cov-01439",
+        "cov-01602",
+        "cov-01623",
+        "cov-01625",
+        "cov-01933"
+      ],
+      "source_obligation_ids": [
+        "obl-0619",
+        "obl-0687",
+        "obl-0731",
+        "obl-0742",
+        "obl-0761",
+        "obl-0840",
+        "obl-0927",
+        "obl-0940",
+        "obl-0941",
+        "obl-1148"
+      ],
+      "source_seed_ids": [
+        "shard-0085-s010",
+        "shard-0003-s007",
+        "shard-0005-s009",
+        "shard-0092-s038",
+        "shard-0006-s005",
+        "shard-0007-s005",
+        "shard-0001-s018",
+        "shard-0006-s004",
+        "shard-0006-s001",
+        "shard-0090-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0001",
+        "shard-0003",
+        "shard-0005",
+        "shard-0006",
+        "shard-0007",
+        "shard-0085",
+        "shard-0090",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "But `Plans/Executor_Protocol.md` still has owner-level drift in the same file:",
+        "Plans/Executor_Protocol.md",
+        "Each failed node attempt must leave a structured receipt/handoff artifact containing: what it did, what changed, why failed, what to try next \u2014 this is mandatory, not optional",
+        "Governing layer design: deterministic scheduler/state machine (not one long-running super-agent); bounded worker/reviewer/remediation agents with explicit context windows; lightweight planning/replan agent only at graph-construction or graph-patch boundaries",
+        "Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Crosswalk.md`, and `Plans/Orchestrator_Page.md`.",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Models_System.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Crosswalk.md",
+        "Plans/Orchestrator_Page.md",
+        "Issue classes requiring corroboration (5): missing wiring, implementation quality concerns, unmet intent despite passing tests, missing spec/hidden dependency, graph structure insufficiency",
+        "Plans/Models_System.md model selection must become lane-aware \u2014 models must be selectable/overridable per lane context",
+        "Revocation and reopen labels must be: Promotion Revoked, Seam Completion Revoked, Reopened, Reopened by Patch, Reopened by New Evidence",
+        "Seam review outputs must include: verdict, failure classes with severity, evidence bundle/rationale, remediation-node or graph-patch recommendation, corroboration requirement and outcome",
+        "Seam-level acceptance dimensions (5): operability, state coherence, workflow completeness, UX coherence, architectural coherence",
+        "`Plans/Contracts_V0.md` and `Plans/Executor_Protocol.md` already carry `startup_recovered` in runtime wake canon.",
+        "startup_recovered"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

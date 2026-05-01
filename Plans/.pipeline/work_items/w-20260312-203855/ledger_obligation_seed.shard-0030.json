@@ -1,0 +1,302 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0030",
+  "seed_candidates": [
+    {
+      "seed_id": "shard-0030-s001",
+      "seed_type": "owner",
+      "exact_items": [
+        "annotation lifecycle: open -> addressed -> resolved",
+        "concern lifecycle: active -> acknowledged -> resolved -> dismissed",
+        "wizard status: attention_required vs blocked"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Family-Local Lifecycle Terms",
+        "## Object-Specific Lifecycle States"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0030",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": [
+        "Family-local workflow states must not be forced into the cross-family semantic core; they can allow cross-family historical overlays where relevant"
+      ]
+    },
+    {
+      "seed_id": "shard-0030-s002",
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "remediation.resolved enum using success/failed/ceiling_exceeded"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## remediation.resolved Enum Conflict"
+      ],
+      "stale_tokens": [
+        "success",
+        "failed",
+        "ceiling_exceeded"
+      ],
+      "canonical_replacement_hints": [
+        "fixed",
+        "superseded",
+        "abandoned",
+        "replan_required"
+      ],
+      "canonical_replacement_status": "unknown",
+      "source_shard_id": "shard-0030",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": [
+        "REAL CONTRACT CONFLICT: one section of Contracts_V0.md says fixed/superseded/abandoned/replan_required; another says success/failed/ceiling_exceeded; not just wording drift; remediation lineage is where historical semantics/reopening/patching/recovery intersect"
+      ]
+    },
+    {
+      "seed_id": "shard-0030-s003",
+      "seed_type": "owner",
+      "exact_items": [
+        "preferred remediation resolution enum: fixed, superseded, abandoned, replan_required"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Canonical Remediation Resolution Enum"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0030",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": [
+        "Richer lineage-aware enum: superseded matters for graph patch/generation lineage; abandoned \u2260 simple failure; generic failed loses historical meaning"
+      ]
+    },
+    {
+      "seed_id": "shard-0030-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "archived, removed, deleted must remain semantically distinct",
+        "thread archived vs deleted are distinct",
+        "worktree archived vs removed are distinct",
+        "removed live backing must not imply erased canonical history"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Archived / Removed / Deleted Semantic Distinction"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0030",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0030-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "reopened, revoked, and superseded should be reserved for true lineage-changing transitions, not generic old-state labels"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Reopened / Revoked / Superseded Usage Rule"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0030",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": [
+        "Especially matters for: promotions, seam/package completion truth, graph generations, recovery outcomes"
+      ]
+    },
+    {
+      "seed_id": "shard-0030-s006",
+      "seed_type": "owner",
+      "exact_items": [
+        "search filters and ledger inspectors must distinguish: current vs historical, superseded vs revoked, archived vs removed, stale_historical vs merely historical"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Search and Ledger Historical Distinction Requirements"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0030",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0030-s007",
+      "seed_type": "owner",
+      "exact_items": [
+        "concern must remain distinct from: review finding, annotation, blocked episode, graph patch request, recovery record",
+        "review finding: produced by review/corroboration/validation flow",
+        "concern: durable tracked issue/observation that may aggregate, outlive, or be updated by multiple findings/events",
+        "blocked episode: runtime execution stop with canonical recovery metadata",
+        "annotation: document-review instruction/comment object with anchoring lifecycle"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern vs Adjacent Object Boundaries"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0030",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": [
+        "A review can create or update concerns; a blocked episode can reference a concern; a patch/recovery can obsolete/resolve a concern \u2014 but these remain different record families"
+      ]
+    },
+    {
+      "seed_id": "shard-0030-s008",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "concern_id",
+        "project_id",
+        "run_id?",
+        "scope_type",
+        "scope_id",
+        "status",
+        "severity",
+        "category",
+        "summary",
+        "description?",
+        "owner_kind?",
+        "origin_kind",
+        "created_at_utc",
+        "updated_at_utc",
+        "first_observed_at_utc",
+        "last_observed_at_utc",
+        "resolution_kind?",
+        "resolution_rationale?",
+        "acknowledged_by?",
+        "acknowledged_at_utc?",
+        "dismissed_by?",
+        "dismissed_at_utc?",
+        "source_refs[]",
+        "evidence_refs[]",
+        "related_record_refs[]",
+        "lineage_refs[]",
+        "blocked_episode_refs[]?",
+        "promotion_refs[]?",
+        "graph_patch_refs[]?",
+        "recovery_refs[]?"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Record Minimum Shape",
+        "## Concern Canonical Fields"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0030",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0030-s009",
+      "seed_type": "owner",
+      "exact_items": [
+        "concern lifecycle: active -> acknowledged -> resolved -> dismissed",
+        "acknowledged and dismissed are operator/user presentation/governance actions",
+        "resolved must carry exact resolution semantics",
+        "active remains the default live state even if the same concern has been seen multiple times"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Lifecycle Rules"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0030",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "working_ledger.md:L5801-L5813 (historical semantic definitions continuation \u2014 captured in shard-0029-s008)",
+    "working_ledger.md:L5889-L5892 (contradictions/gaps narrative)",
+    "working_ledger.md:L5912-L5921 (Research Progress header + Targeted docs read \u2014 research metadata)",
+    "working_ledger.md:L5923-L5936 (key findings about concern gap \u2014 observation context)",
+    "working_ledger.md:L6000 (shard truncated mid-sentence at lifecycle content; continuation in next shard)"
+  ],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

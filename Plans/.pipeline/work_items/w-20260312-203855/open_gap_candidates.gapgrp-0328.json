@@ -1,0 +1,83 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0328",
+  "coverage_row_ids_represented": [
+    "cov-00878",
+    "cov-01575",
+    "cov-02475"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0328",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Add explicit first-class storage families for durable worktree/lane lifecycle: worktree_record, lane_record, worktree_projection, lane_projection | Rename or replace widget.terminal_output and widget.agent_terminal with one canonical identity in Widget_System.md | do not over-promise undo when the system really only supports compensating actions",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "### Candidate fixes to carry forward"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00878",
+        "cov-01575",
+        "cov-02475"
+      ],
+      "source_obligation_ids": [
+        "obl-0591",
+        "obl-0910",
+        "obl-1599"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0054",
+        "shard-0036-s013",
+        "shard-0016-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0036",
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "Add explicit first-class storage families for durable worktree/lane lifecycle: worktree_record, lane_record, worktree_projection, lane_projection",
+        "WorktreeGitImprovement.md now expects durable worktree identity, restart recovery, ownership, conflict state, historical lineage, and cross-surface CTAs but storage-plan.md currently has only adjacent state",
+        "Proposed: worktree_record.v1:{project_id}:{worktree_id}, lane_record.v1:{project_id}:{lane_id}, worktree_projection.v1:{project_id}:{worktree_id}, lane_projection.v1:{project_id}:{lane_id}",
+        "Rename or replace widget.terminal_output and widget.agent_terminal with one canonical identity in Widget_System.md",
+        "Add explicit capability bits for agent-terminal-stream vs plain output to the single canonical widget",
+        "Expose Orchestrator-owned worktree grouping in Source Control: either as a label/filter field on existing worktree records or as a named partition descriptor",
+        "do not over-promise undo when the system really only supports compensating actions",
+        "Undo only when true immediate undo exists; Reopen, Restore, Retry from Safe Point, Create New Lane, Re-request Promotion, Reapply for distinct compensating cases",
+        "strong confirmations should show: action name, target object(s), concrete consequence summary, whether local work/artifacts/history remain, reversibility class",
+        "hard_gate should show: runtime-defined allowed actions, why the gate exists, exact consequence of each allowed action, no hidden alternative path"
+      ],
+      "stale_tokens": [
+        "widget.terminal_output",
+        "widget.agent_terminal",
+        "Undo (overused)",
+        "revert (ambiguous cross-domain)"
+      ],
+      "canonical_replacement_hints": [
+        "worktree_record.v1:{project_id}:{worktree_id}",
+        "lane_record.v1:{project_id}:{lane_id}",
+        "worktree_projection.v1:{project_id}:{worktree_id}",
+        "lane_projection.v1:{project_id}:{lane_id}",
+        "widget.terminal",
+        "Undo / Reopen / Restore / Retry from Safe Point / Create New Lane / Re-request Promotion / Reapply"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

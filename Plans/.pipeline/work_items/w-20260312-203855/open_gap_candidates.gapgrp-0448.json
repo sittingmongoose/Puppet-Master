@@ -1,0 +1,111 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0448",
+  "coverage_row_ids_represented": [
+    "cov-00133",
+    "cov-00134",
+    "cov-00135",
+    "cov-00136",
+    "cov-00137",
+    "cov-00138",
+    "cov-00139",
+    "cov-00140",
+    "cov-00141",
+    "cov-00142"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0448",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "`blocked_projection.{run_id}.{node_id}.{blocked_sequence}` | `execution_role` absent in many key owner/consumer docs | `gap-008` now points at the real storage/usage/interview sections that currently carry the partial account-history and requested/effective identity transfer, rather than pseudo owner-section labels th\u2026 | `hitl_request_id` remains in the graph view-model even though the surrounding blocked/recovery model is already moving toward blocked-episode identity. | `preview_subject_id = doc:<document_id> | artifact:<artifact_id>`",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-00133",
+        "cov-00134",
+        "cov-00135",
+        "cov-00136",
+        "cov-00137",
+        "cov-00138",
+        "cov-00139",
+        "cov-00140",
+        "cov-00141",
+        "cov-00142"
+      ],
+      "source_obligation_ids": [
+        "obl-0104",
+        "obl-0105",
+        "obl-0106",
+        "obl-0107",
+        "obl-0108",
+        "obl-0109",
+        "obl-0110",
+        "obl-0111",
+        "obl-0112",
+        "obl-0113"
+      ],
+      "source_seed_ids": [
+        "shard-0084-s004",
+        "shard-0088-s028",
+        "shard-0090-s040",
+        "shard-0079-s041",
+        "shard-0084-s007",
+        "shard-0084-s016",
+        "shard-0082-s129",
+        "shard-0084-s090",
+        "shard-0078-s028",
+        "shard-0080-s045",
+        "shard-0080-s067"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0079",
+        "shard-0080",
+        "shard-0082",
+        "shard-0084",
+        "shard-0088",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`blocked_projection.{run_id}.{node_id}.{blocked_sequence}`",
+        "blocked_projection.{run_id}.{node_id}.{blocked_sequence}",
+        "`execution_role` absent in many key owner/consumer docs",
+        "execution_role",
+        "`gap-008` now points at the real storage/usage/interview sections that currently carry the partial account-history and requested/effective identity transfer, rather than pseudo owner-section labels that do not yet exist verbatim.",
+        "gap-008",
+        "`hitl_request_id` remains in the graph view-model even though the surrounding blocked/recovery model is already moving toward blocked-episode identity.",
+        "hitl_request_id",
+        "`preview_subject_id = doc:<document_id> | artifact:<artifact_id>`",
+        "preview_subject_id = doc:<document_id> | artifact:<artifact_id>",
+        "`preview_subject_id` gives a strong subject-first restore identity",
+        "preview_subject_id",
+        "`projection_freshness` / `projection_health`",
+        "projection_freshness",
+        "projection_health",
+        "`requested_persona_id` and `effective_persona_id` are still being named in consumer docs even though the owner contract already disallows them as canonical fields.",
+        "requested_persona_id",
+        "effective_persona_id",
+        "`widget.agent_terminal` = current worker output",
+        "widget.agent_terminal",
+        "`widget.agent_terminal` filtered by `tier_id`",
+        "tier_id"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

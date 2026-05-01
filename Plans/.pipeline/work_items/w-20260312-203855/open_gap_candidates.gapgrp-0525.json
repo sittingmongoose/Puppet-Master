@@ -1,0 +1,112 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0525",
+  "coverage_row_ids_represented": [
+    "cov-02737",
+    "cov-02744",
+    "cov-02747",
+    "cov-02748",
+    "cov-02749",
+    "cov-02758",
+    "cov-02761",
+    "cov-02768",
+    "cov-02771",
+    "cov-02772"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0525",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "safe-point, remediation, worktree-conflict, and blocked/runtime state are already present | search/log APIs already key to `thread_id`, `run_id`, `message_id`, and `event_id` | section `1.1 EventRecord` still lists `run.tier_started` and `run.tier_completed` among events that carry the runtime snapshot | section `2` references `ContractName:Contracts_V0.md` instead of the file-path form used elsewhere | section `6. HITLRequest` still defines approval around `request_id`, `tier_id`, `tier_type`, `request_kind = tier_boundary_approval`, and `allowed_actions[]`",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-02737",
+        "cov-02744",
+        "cov-02747",
+        "cov-02748",
+        "cov-02749",
+        "cov-02758",
+        "cov-02761",
+        "cov-02768",
+        "cov-02771",
+        "cov-02772"
+      ],
+      "source_obligation_ids": [
+        "obl-1762",
+        "obl-1766",
+        "obl-1768",
+        "obl-1769",
+        "obl-1770",
+        "obl-1774",
+        "obl-1776",
+        "obl-1780",
+        "obl-1782",
+        "obl-1783"
+      ],
+      "source_seed_ids": [
+        "shard-0085-s008",
+        "shard-0085-s096",
+        "shard-0083-s057",
+        "shard-0082-s131",
+        "shard-0083-s056",
+        "shard-0088-s004",
+        "shard-0088-s036",
+        "shard-0087-s007",
+        "shard-0085-s147",
+        "shard-0085-s148"
+      ],
+      "source_shard_ids": [
+        "shard-0082",
+        "shard-0083",
+        "shard-0085",
+        "shard-0087",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "safe-point, remediation, worktree-conflict, and blocked/runtime state are already present",
+        "search/log APIs already key to `thread_id`, `run_id`, `message_id`, and `event_id`",
+        "thread_id",
+        "run_id",
+        "message_id",
+        "event_id",
+        "section `1.1 EventRecord` still lists `run.tier_started` and `run.tier_completed` among events that carry the runtime snapshot",
+        "1.1 EventRecord",
+        "run.tier_started",
+        "run.tier_completed",
+        "section `2` references `ContractName:Contracts_V0.md` instead of the file-path form used elsewhere",
+        "2",
+        "ContractName:Contracts_V0.md",
+        "section `6. HITLRequest` still defines approval around `request_id`, `tier_id`, `tier_type`, `request_kind = tier_boundary_approval`, and `allowed_actions[]`",
+        "6. HITLRequest",
+        "request_id",
+        "tier_id",
+        "tier_type",
+        "request_kind = tier_boundary_approval",
+        "allowed_actions[]",
+        "shared Orchestrator export manifest contract",
+        "some earlier baseline framing implied a fully new trust-state model was missing; the stronger reading is that the **operationalization** of trust states is missing, not the base freshness/health model itself.",
+        "state / storage / command / audit-trail behavior",
+        "still describes Usage by `tier/session` and says tier config shows current usage",
+        "tier/session",
+        "still mirrors worktree ownership through `tier_id`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

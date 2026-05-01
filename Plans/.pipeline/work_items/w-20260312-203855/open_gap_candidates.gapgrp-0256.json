@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0256",
+  "coverage_row_ids_represented": [
+    "cov-03127"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0256",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "stale_token_replacement_unknown",
+      "description": "Contradiction: automation-first design principle conflicts with 'regular'/HTE-by-default in Run_Modes.md \u2014 Run_Modes.md must be updated to reflect automation-first as the default",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Modes.md",
+          "heading": "## Automation-First vs HTE Default Contradiction"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-03127"
+      ],
+      "source_obligation_ids": [
+        "obl-2026"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "exact_missing_items": [
+        "Contradiction: automation-first design principle conflicts with 'regular'/HTE-by-default in Run_Modes.md \u2014 Run_Modes.md must be updated to reflect automation-first as the default"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Canonical replacement unknown; audit before applying live wording.",
+      "next_resolution_stage": "Audit Mode"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0445",
+  "coverage_row_ids_represented": [
+    "cov-00067",
+    "cov-00068",
+    "cov-00069",
+    "cov-00070",
+    "cov-00071",
+    "cov-00072",
+    "cov-00073",
+    "cov-00074",
+    "cov-00075",
+    "cov-00076"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0445",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "The graph and Orchestrator surfaces now show a direct mixed-era contract in one place. | The strongest final-pass pattern is exact structural breakage in owner docs and traceability surfaces: | The unresolved identity defect is therefore no longer missing `account_id`; it is the missing requested/effective account identity carry-through, runtime-role carry-through, and explicit usage/account\u2026 | The widget data contract section is also still sourced from: | Then consumer cleanup and same-file supersession collapse.",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-00067",
+        "cov-00068",
+        "cov-00069",
+        "cov-00070",
+        "cov-00071",
+        "cov-00072",
+        "cov-00073",
+        "cov-00074",
+        "cov-00075",
+        "cov-00076"
+      ],
+      "source_obligation_ids": [
+        "obl-0046",
+        "obl-0047",
+        "obl-0048",
+        "obl-0049",
+        "obl-0050",
+        "obl-0051",
+        "obl-0052",
+        "obl-0053",
+        "obl-0054",
+        "obl-0055"
+      ],
+      "source_seed_ids": [
+        "shard-0079-s019",
+        "shard-0082-s054",
+        "shard-0090-s026",
+        "shard-0080-s076",
+        "shard-0088-s050",
+        "shard-0086-s023",
+        "shard-0083-s126",
+        "shard-0078-s034",
+        "shard-0078-s069",
+        "shard-0077-s113"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0078",
+        "shard-0079",
+        "shard-0080",
+        "shard-0082",
+        "shard-0083",
+        "shard-0086",
+        "shard-0088",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "The graph and Orchestrator surfaces now show a direct mixed-era contract in one place.",
+        "The strongest final-pass pattern is exact structural breakage in owner docs and traceability surfaces:",
+        "The unresolved identity defect is therefore no longer missing `account_id`; it is the missing requested/effective account identity carry-through, runtime-role carry-through, and explicit usage/account-history section ownership.",
+        "account_id",
+        "The widget data contract section is also still sourced from:",
+        "Then consumer cleanup and same-file supersession collapse.",
+        "These docs should be treated as mirrors and summaries, not as places to re-own runtime or surface contracts.",
+        "This file is still teaching consumers how to persist approval state. Leaving the old section in place will keep recreating the same storage and command drift.",
+        "This is now a direct owner-versus-consumer mismatch. The canonical field names already exist.",
+        "This is the upstream language source for several downstream consumer drifts already logged.",
+        "This means the branch is past the point where isolated consumer cleanup would be reliable."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

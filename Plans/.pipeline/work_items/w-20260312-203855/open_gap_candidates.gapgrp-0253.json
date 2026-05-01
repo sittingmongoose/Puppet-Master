@@ -1,0 +1,66 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0253",
+  "coverage_row_ids_represented": [
+    "cov-00458",
+    "cov-00464",
+    "cov-00570"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0253",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "`MiscPlan.md` still conflicts with safe-point cleanup ordering, remediation lineage preservation, attempt-scoped evidence retention, and also carries orphan cleanup/crew runtime contracts not owned an\u2026 | `OpenCode_Deep_Extraction.md` source-verifies hard architecture limits: server-global SSE with concurrent-client pollution, fixed server working directory requiring separate instances per worktree, se\u2026 | `Plugins_System.md` still has a severe hook/schema split, missing `mutation_capable` on plugin tools, in-process execution ambiguity vs subprocess-sandbox expectations, and prompt/param hooks that can\u2026",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Modes.md",
+          "heading": "## Safe-Point Cleanup Ordering"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00458",
+        "cov-00464",
+        "cov-00570"
+      ],
+      "source_obligation_ids": [
+        "obl-0331",
+        "obl-0333",
+        "obl-0395"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0048",
+        "seed-WAVE007-0049",
+        "seed-WAVE007-0024"
+      ],
+      "source_shard_ids": [
+        "shard-0064",
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`MiscPlan.md` still conflicts with safe-point cleanup ordering, remediation lineage preservation, attempt-scoped evidence retention, and also carries orphan cleanup/crew runtime contracts not owned anywhere else.",
+        "`OpenCode_Deep_Extraction.md` source-verifies hard architecture limits: server-global SSE with concurrent-client pollution, fixed server working directory requiring separate instances per worktree, session-scoped approvals and compaction state that are destroyed on session deletion, no observable upstream account identity, and no real reconnect/observe path for mid-run SSE loss.",
+        "These should not be collapsed back into generic summary language during reconciliation.",
+        "`Plugins_System.md` still has a severe hook/schema split, missing `mutation_capable` on plugin tools, in-process execution ambiguity vs subprocess-sandbox expectations, and prompt/param hooks that can bypass run-mode safety assumptions."
+      ],
+      "stale_tokens": [
+        "missing mutation_capable on plugin tools"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

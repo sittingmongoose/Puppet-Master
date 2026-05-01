@@ -1,0 +1,107 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0507",
+  "coverage_row_ids_represented": [
+    "cov-02241",
+    "cov-02242",
+    "cov-02243",
+    "cov-02244",
+    "cov-02245",
+    "cov-02246",
+    "cov-02247",
+    "cov-02248",
+    "cov-02249",
+    "cov-02250"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0507",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "`run.qa_cycle_started` | `run.started` with `tier_id` | `run.tier_completed` | `run.tier_started` | `run.tier_started`, `run.tier_completed`",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-02241",
+        "cov-02242",
+        "cov-02243",
+        "cov-02244",
+        "cov-02245",
+        "cov-02246",
+        "cov-02247",
+        "cov-02248",
+        "cov-02249",
+        "cov-02250"
+      ],
+      "source_obligation_ids": [
+        "obl-1438",
+        "obl-1439",
+        "obl-1440",
+        "obl-1441",
+        "obl-1442",
+        "obl-1443",
+        "obl-1444",
+        "obl-1445",
+        "obl-1446",
+        "obl-1447"
+      ],
+      "source_seed_ids": [
+        "shard-0078-s083",
+        "shard-0077-s024",
+        "shard-0078-s080",
+        "shard-0078-s079",
+        "shard-0077-s026",
+        "shard-0084-s010",
+        "shard-0078-s081",
+        "shard-0077-s027",
+        "shard-0078-s129",
+        "shard-0084-s060",
+        "shard-0079-s117"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0078",
+        "shard-0079",
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`run.qa_cycle_started`",
+        "run.qa_cycle_started",
+        "`run.started` with `tier_id`",
+        "run.started",
+        "tier_id",
+        "`run.tier_completed`",
+        "run.tier_completed",
+        "`run.tier_started`",
+        "run.tier_started",
+        "`run.tier_started`, `run.tier_completed`",
+        "`run.verification_result`",
+        "run.verification_result",
+        "`run.verification_result` keyed by `tier`",
+        "tier",
+        "`run_id`",
+        "run_id",
+        "`run_id`, `node_id`, `attempt_id`",
+        "node_id",
+        "attempt_id",
+        "`safe_point.created`",
+        "safe_point.created"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

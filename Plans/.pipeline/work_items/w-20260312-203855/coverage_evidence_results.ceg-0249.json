@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0249",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-02459",
+      "source_obligation_ids": [
+        "obl-1588"
+      ],
+      "source_seed_ids": [
+        "shard-0025-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 4/5 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02476",
+      "source_obligation_ids": [
+        "obl-1600"
+      ],
+      "source_seed_ids": [
+        "shard-0040-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 0/3 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02480",
+      "source_obligation_ids": [
+        "obl-1601"
+      ],
+      "source_seed_ids": [
+        "shard-0038-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 2/3 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02485",
+      "source_obligation_ids": [
+        "obl-1604"
+      ],
+      "source_seed_ids": [
+        "shard-0018-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02493",
+      "source_obligation_ids": [
+        "obl-1610"
+      ],
+      "source_seed_ids": [
+        "shard-0018-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02502",
+      "source_obligation_ids": [
+        "obl-1617"
+      ],
+      "source_seed_ids": [
+        "shard-0027-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02519",
+      "source_obligation_ids": [
+        "obl-1631"
+      ],
+      "source_seed_ids": [
+        "shard-0017-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 1/2 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02522",
+      "source_obligation_ids": [
+        "obl-1632"
+      ],
+      "source_seed_ids": [
+        "shard-0011-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02532",
+      "source_obligation_ids": [
+        "obl-1636"
+      ],
+      "source_seed_ids": [
+        "shard-0029-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 3/7 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02538",
+      "source_obligation_ids": [
+        "obl-1638"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0042"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

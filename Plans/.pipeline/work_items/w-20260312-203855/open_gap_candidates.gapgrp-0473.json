@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0473",
+  "coverage_row_ids_represented": [
+    "cov-00920",
+    "cov-00926",
+    "cov-00929",
+    "cov-00930",
+    "cov-00953",
+    "cov-00966",
+    "cov-00967",
+    "cov-00968",
+    "cov-00969",
+    "cov-01002"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0473",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "Base route/open primitives landed, but missing: | Both are already contradicted by the runtime command consolidation: | Bridge fields exist, but precedence/join semantics and compatibility fallback rules remain under-specified. | But HITL owner docs still describe a parallel request-era approval model centered on `request_id`, `tier_id`, and `tier_type`. | Canonical owner:",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-00920",
+        "cov-00926",
+        "cov-00929",
+        "cov-00930",
+        "cov-00953",
+        "cov-00966",
+        "cov-00967",
+        "cov-00968",
+        "cov-00969",
+        "cov-01002"
+      ],
+      "source_obligation_ids": [
+        "obl-0612",
+        "obl-0615",
+        "obl-0617",
+        "obl-0618",
+        "obl-0627",
+        "obl-0632",
+        "obl-0633",
+        "obl-0634",
+        "obl-0635",
+        "obl-0647"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s043",
+        "shard-0079-s081",
+        "shard-0087-s027",
+        "shard-0078-s108",
+        "shard-0078-s023",
+        "shard-0087-s024",
+        "shard-0087-s030",
+        "shard-0087-s041",
+        "shard-0079-s008",
+        "shard-0087-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0079",
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Base route/open primitives landed, but missing:",
+        "Both are already contradicted by the runtime command consolidation:",
+        "Bridge fields exist, but precedence/join semantics and compatibility fallback rules remain under-specified.",
+        "But HITL owner docs still describe a parallel request-era approval model centered on `request_id`, `tier_id`, and `tier_type`.",
+        "request_id",
+        "tier_id",
+        "tier_type",
+        "Canonical owner:",
+        "Cluster B - Storage / governance / record-schema transfer misses",
+        "Cluster C - Identity / attribution / owner-doc transfer misses",
+        "Cluster D - Route / open-subject / bridge-field refinement misses",
+        "Collapse approval identity onto the runtime/blocked model.",
+        "Constraint for this pass: do **not** edit planning docs directly; use the existing work-item ledger plus current canonical docs."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

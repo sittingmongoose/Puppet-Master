@@ -1,0 +1,398 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0040",
+  "seed_candidates": [
+    {
+      "seed_id": "shard-0040-s001",
+      "seed_type": "owner",
+      "exact_items": [
+        "Reconciliation-readiness criteria must be specified: when is a project/run state ready for reconciliation after an account switch or degradation event?",
+        "Criteria list must be explicit and testable: all pending receipts committed, no open HITL requests tied to the old account context, permission snapshots revalidated under new account, active workers notified and acknowledged",
+        "This criteria list is the gate for resuming execution and must be normative in Contracts_V0.md and referenced by Multi-Account.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Multi-Account.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Reconciliation-Readiness Criteria",
+        "## Account Switch Readiness Gate"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0040",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": [
+        "Reconciliation-readiness gate prevents silent execution continuation after account context invalidation \u2014 a behavioral safety requirement"
+      ]
+    },
+    {
+      "seed_id": "shard-0040-s002",
+      "seed_type": "owner",
+      "exact_items": [
+        "requested_account_id? alone is insufficient: must be paired with requested_account_binding (none | preferred | required)",
+        "none: no account preference; system uses default account",
+        "preferred: system tries requested account, falls back to default with degraded-mode flag if unavailable",
+        "required: system must use requested account; hard-blocks if unavailable, fires concern/blocked episode",
+        "This three-value binding model is cleaner than a bare optional field and must be the canonical model in Contracts_V0.md and Multi-Account.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Multi-Account.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## requested_account_binding Canonical Values",
+        "## Account Binding Failure Modes"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "requested_account_binding: none | preferred | required"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0040",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0040-s003",
+      "seed_type": "owner",
+      "exact_items": [
+        "manual_preferred_account_id (set by user in settings) is distinct from requested_account_id (set per-run by the caller/dispatcher)",
+        "manual_preferred_account_id is a persistent user preference that provides a default requested account for runs that do not specify one",
+        "requested_account_id takes precedence over manual_preferred_account_id when both are present",
+        "This distinction must be clearly defined in Multi-Account.md and in the account-identity resolution chain"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## manual_preferred_account_id vs requested_account_id"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "manual_preferred_account_id (settings-level)",
+        "requested_account_id (per-run)"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0040",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0040-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "operational_identity block must be present in all runtime snapshots: run.started events, attempt records, receipt records, usage events, concern records, and attention items",
+        "The block must be a stable named inline object (not spread fields) so it can be referenced by name in storage and consumption contracts",
+        "Fields: effective_account_id, effective_runtime_id, effective_persona_key, execution_role, actor_kind, requested_account_binding, pressure_flags, degradation_flags"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## operational_identity Block in Runtime Snapshots"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "operational_identity block"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0040",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": [
+        "Lowercase operational_identity (not OperationalIdentity) appears to be the canonical name in the ledger; both forms seen \u2014 must be normalized to one"
+      ]
+    },
+    {
+      "seed_id": "shard-0040-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "UsageRecord must include account_switch_reason? and switch_event_ref? fields",
+        "usage-feature.md wants UsageRecord to explain why account switched mid-run (for billing, audit, and anomaly detection)",
+        "but UsageRecord currently omits both fields even though account_switch_event family now carries the canonical switch explanation",
+        "Usage records for calls that occurred after a switch must carry the switch_event_ref linking to the account_switch_event record"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## UsageRecord account_switch Fields",
+        "## UsageRecord Post-Switch Attribution"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "account_switch_reason?",
+        "switch_event_ref?"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0040",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0040-s006",
+      "seed_type": "owner",
+      "exact_items": [
+        "Blocked/degraded reason fields in the effective-resolution record must be normative and explicit",
+        "blocked_reason_code is the canonical machine-readable reason; blocked_reason_detail is optional human-readable context",
+        "degraded_reason_code and degraded_reason_detail follow the same pattern",
+        "Both pairs must appear on the effective-resolution record, not scattered as ad-hoc strings in concern records, HITL events, or attention items"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Effective-Resolution Record Reason Fields",
+        "## blocked_reason_code SSOT"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "blocked_reason_code",
+        "blocked_reason_detail",
+        "degraded_reason_code",
+        "degraded_reason_detail"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0040",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0040-s007",
+      "seed_type": "owner",
+      "exact_items": [
+        "transport/upstream provider split in Models_System.md must be completed: add transport_host_id and upstream_provider_id as distinct identity fields in model configuration and in usage records",
+        "A model_routing_record must carry both fields so that locally proxied calls are attributed to the correct upstream commercial provider",
+        "Models_System.md account-health display for model-provider account degradation must reference upstream_provider_id, not transport host"
+      ],
+      "affected_doc_hints": [
+        "Plans/Models_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## transport_host_id vs upstream_provider_id Fix"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "transport_host_id",
+        "upstream_provider_id"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0040",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0040-s008",
+      "seed_type": "owner",
+      "exact_items": [
+        "Identity/Projection closure: all surfaces that display effective identity (Orchestrator, History, Ledger, Usage, Source Control, Widgets) must consistently show the operational_identity block",
+        "No surface may display implied identity (run-level default assumed) when the actual effective identity diverged from the default during the execution",
+        "This is the canonical readiness posture for multi-account correctness: every surface that could show stale or misleading identity must have an explicit trust-state / freshness contract"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Widget_System.md",
+        "Plans/usage-feature.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Identity/Projection Closure",
+        "## Surface Identity Display Contract"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0040",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": [
+        "This is the coherence closure for all identity work in wave-004: every surface must be provably correct or explicitly show freshness warning"
+      ]
+    },
+    {
+      "seed_id": "shard-0040-s009",
+      "seed_type": "owner",
+      "exact_items": [
+        "Projection closure for route payloads: every primary_route_payload on an attention item and every resume_url must be derivable from the canonical route payload schema",
+        "Any surface that accepts a route payload as input (deep-link, cmd.*.open_in_*, palette action, attention item navigation) must validate it against the canonical schema",
+        "Stale or malformed route payloads must surface a clear user-facing error, not silently navigate to the wrong surface"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Route Payload Closure",
+        "## Route Payload Validation"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0040",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0040-s010",
+      "seed_type": "owner",
+      "exact_items": [
+        "Projection closure for concern records: every concern must be queryable by source surface (Orchestrator, Run Graph, Usage, History), by owner, by severity, and by resolution status",
+        "The canonical concern record family must be present in storage-plan.md; currently entirely absent",
+        "concern_id must be stable and usable as a route payload object_id for deep-link targeting"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Record Projection Closure",
+        "## concern_id as Route Target"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "concern_id (stable opaque)"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0040",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": [
+        "The canonical concern record family is confirmed absent from storage-plan.md \u2014 this is the most critical structural gap across all 10 shards"
+      ]
+    },
+    {
+      "seed_id": "shard-0040-s011",
+      "seed_type": "owner",
+      "exact_items": [
+        "do-not-forget: run.started MUST field list in storage-plan.md must agree with the operational_identity block definition \u2014 the event row must include the full operational_identity snapshot inline or by normative reference",
+        "do-not-forget: provider_accounts.run_snapshot policy_hash must become policy_version_ref to support downstream policy-validity queries",
+        "do-not-forget: usage_event_ref as structured locator must be defined before any surface ships Show in Usage or Show in Ledger pivots"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Multi-Account.md",
+        "Plans/usage-feature.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Do-not-forget details (wave-004 closure)"
+      ],
+      "stale_tokens": [
+        "policy_hash"
+      ],
+      "canonical_replacement_hints": [
+        "policy_version_ref"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0040",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0040-s012",
+      "seed_type": "owner",
+      "exact_items": [
+        "Wave-004 identity closure checklist \u2014 each item must be tracked to a doc owner:",
+        "1. operational_identity block anchored in Contracts_V0.md",
+        "2. requested_account_binding (none/preferred/required) defined in Contracts_V0.md + Multi-Account.md",
+        "3. manual_preferred_account_id vs requested_account_id distinction in Multi-Account.md",
+        "4. account_switch_event + account_pressure_episode in storage-plan.md + Contracts_V0.md",
+        "5. reconciliation-readiness criteria list in Contracts_V0.md + Multi-Account.md",
+        "6. actor_kind + execution_role enums in Contracts_V0.md",
+        "7. transport_host_id vs upstream_provider_id separation in Models_System.md",
+        "8. OperationalIdentity block present in run.started, receipts, usage events, concern records",
+        "9. UsageRecord account_switch_reason? + switch_event_ref? in usage-feature.md",
+        "10. blocked/degraded reason field pairs in Contracts_V0.md effective-resolution record"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Multi-Account.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/Models_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Wave-004 Identity Closure Checklist"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0040",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": [
+        "This checklist seeds the tracking structure for wave-005 verification"
+      ]
+    }
+  ],
+  "noise_items": [
+    "L7796-L7800: section header and targeted-docs-read list only",
+    "L7893-L7905: wave metadata / pipeline section separators only",
+    "L7960-L7980: pipeline-process notes and ledger-closure markers only"
+  ],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

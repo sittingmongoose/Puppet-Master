@@ -1,0 +1,486 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0226",
+  "represented_seed_ids": [
+    "shard-0085-s029",
+    "shard-0085-s030",
+    "shard-0085-s031",
+    "shard-0085-s033",
+    "shard-0085-s042",
+    "shard-0085-s044",
+    "shard-0085-s045",
+    "shard-0085-s046",
+    "shard-0085-s047",
+    "shard-0085-s048",
+    "shard-0085-s052",
+    "shard-0085-s053",
+    "shard-0085-s054",
+    "shard-0085-s055",
+    "shard-0085-s063"
+  ],
+  "source_shard_ids": [
+    "shard-0085"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0085-s029"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "The lower `Orchestrator_Page.md` addenda are closer to the rewrite:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The lower `Orchestrator_Page.md` addenda are closer to the rewrite:",
+        "Orchestrator_Page.md"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016836"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: The lower `Orchestrator_Page.md` addenda are closer to the rewrite:"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0085-s030"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "blocked/recovery rows use `allowed_action_ids[]`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "blocked/recovery rows use `allowed_action_ids[]`",
+        "allowed_action_ids[]"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016837"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: blocked/recovery rows use `allowed_action_ids[]`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0085-s031"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "requested vs effective identity is called out later",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "requested vs effective identity is called out later"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016838"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: requested vs effective identity is called out later"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0085-s033"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "That makes `Orchestrator_Page.md` another same-file supersession case, not just an outdated page spec.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "That makes `Orchestrator_Page.md` another same-file supersession case, not just an outdated page spec.",
+        "Orchestrator_Page.md"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016840"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: That makes `Orchestrator_Page.md` another same-file supersession case, not just an outdate"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0085-s042"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Executor_Protocol.md` still names only the older `Overseer` execution role at the top even though governance has split into package and seam overseers elsewhere.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Executor_Protocol.md` still names only the older `Overseer` execution role at the top even though governance has split into package and seam overseers elsewhere.",
+        "Executor_Protocol.md",
+        "Overseer"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016856"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Executor_Protocol.md` still names only the older `Overseer` execution role at the top eve"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0085-s044"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "Reconciliation should use `Executor_Protocol.md` as the stronger runtime baseline and pull `Orchestrator_Page.md` toward it, not the reverse.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Reconciliation should use `Executor_Protocol.md` as the stronger runtime baseline and pull `Orchestrator_Page.md` toward it, not the reverse.",
+        "Executor_Protocol.md",
+        "Orchestrator_Page.md"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016860"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Reconciliation should use `Executor_Protocol.md` as the stronger runtime baseline and pull"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0085-s045"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Executor_Protocol.md` needs:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Executor_Protocol.md` needs:",
+        "Executor_Protocol.md"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016861"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Executor_Protocol.md` needs:"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0085-s046"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "explicit owner placement for the execution-unit context replacing `TierContext`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "explicit owner placement for the execution-unit context replacing `TierContext`",
+        "TierContext"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016862"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: explicit owner placement for the execution-unit context replacing `TierContext`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0085-s047"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "clear relationship between runtime scheduler/execution roles and the newer package/seam overseer governance model",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "clear relationship between runtime scheduler/execution roles and the newer package/seam overseer governance model"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016863"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: clear relationship between runtime scheduler/execution roles and the newer package/seam ov"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0085-s048"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Orchestrator_Page.md` needs:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Orchestrator_Page.md` needs:",
+        "Orchestrator_Page.md"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016864"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Orchestrator_Page.md` needs:"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0085-s052"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`tier_id` filters and worker identity fields replaced with canonical node/attempt/runtime identity",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`tier_id` filters and worker identity fields replaced with canonical node/attempt/runtime identity",
+        "tier_id"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016868"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `tier_id` filters and worker identity fields replaced with canonical node/attempt/runtime "
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "shard-0085-s053"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "blocked/runtime event sources elevated over request-centric HITL and `TierChanged` event assumptions",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "blocked/runtime event sources elevated over request-centric HITL and `TierChanged` event assumptions",
+        "TierChanged"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016869"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: blocked/runtime event sources elevated over request-centric HITL and `TierChanged` event a"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-013",
+      "source_seed_ids": [
+        "shard-0085-s054"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Executor_Protocol.md` is no longer the main source of tier-era drift. `Orchestrator_Page.md` is now the much larger multiplier.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Executor_Protocol.md` is no longer the main source of tier-era drift. `Orchestrator_Page.md` is now the much larger multiplier.",
+        "Executor_Protocol.md",
+        "Orchestrator_Page.md"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016872"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Executor_Protocol.md` is no longer the main source of tier-era drift. `Orchestrator_Page."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-014",
+      "source_seed_ids": [
+        "shard-0085-s055"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "The page doc still contains enough lower aligned material that reconciliation should collapse same-file contradictions instead of replacing the whole thing blindly.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The page doc still contains enough lower aligned material that reconciliation should collapse same-file contradictions instead of replacing the whole thing blindly."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016873"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: The page doc still contains enough lower aligned material that reconciliation should colla"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-015",
+      "source_seed_ids": [
+        "shard-0085-s063"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "verifier activity is scoped to node `tier_id`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "verifier activity is scoped to node `tier_id`",
+        "tier_id"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016887"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: verifier activity is scoped to node `tier_id`"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

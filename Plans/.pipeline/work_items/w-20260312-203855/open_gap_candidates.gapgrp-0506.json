@@ -1,0 +1,108 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0506",
+  "coverage_row_ids_represented": [
+    "cov-02230",
+    "cov-02231",
+    "cov-02232",
+    "cov-02233",
+    "cov-02234",
+    "cov-02235",
+    "cov-02236",
+    "cov-02238",
+    "cov-02239",
+    "cov-02240"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0506",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "`resume_url` reduced to transport, not first-class navigation identity | `rewrite-tie-in-memo.md` first as rewrite-root routing | `rewrite-tie-in-memo.md` is mostly ahead, which makes it a strong place to record the missing rewrite-root decisions rather than inventing another owner doc. | `rewrite-tie-in-memo.md` needs explicit rewrite-root routing for: | `route_target`",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-02230",
+        "cov-02231",
+        "cov-02232",
+        "cov-02233",
+        "cov-02234",
+        "cov-02235",
+        "cov-02236",
+        "cov-02238",
+        "cov-02239",
+        "cov-02240"
+      ],
+      "source_obligation_ids": [
+        "obl-1427",
+        "obl-1428",
+        "obl-1429",
+        "obl-1430",
+        "obl-1431",
+        "obl-1432",
+        "obl-1433",
+        "obl-1435",
+        "obl-1436",
+        "obl-1437"
+      ],
+      "source_seed_ids": [
+        "shard-0084-s134",
+        "shard-0084-s123",
+        "shard-0084-s138",
+        "shard-0084-s126",
+        "shard-0083-s054",
+        "shard-0082-s128",
+        "shard-0084-s089",
+        "shard-0083-s024",
+        "shard-0088-s033",
+        "shard-0078-s082",
+        "shard-0078-s084"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`resume_url` reduced to transport, not first-class navigation identity",
+        "resume_url",
+        "`rewrite-tie-in-memo.md` first as rewrite-root routing",
+        "rewrite-tie-in-memo.md",
+        "`rewrite-tie-in-memo.md` is mostly ahead, which makes it a strong place to record the missing rewrite-root decisions rather than inventing another owner doc.",
+        "`rewrite-tie-in-memo.md` needs explicit rewrite-root routing for:",
+        "`route_target`",
+        "route_target",
+        "`route_target` / `OpenSubject`",
+        "OpenSubject",
+        "`route_target` pass-through",
+        "`route_target`, `OpenSubject`, `command_kind`, `normalizes_to_contract`, `target_kind`, `object_kind`, and `inspector_target` remain confirmed as already landed.",
+        "command_kind",
+        "normalizes_to_contract",
+        "target_kind",
+        "object_kind",
+        "inspector_target",
+        "`run.persona_stage_changed`",
+        "run.persona_stage_changed",
+        "`run.qa_cycle_completed`",
+        "run.qa_cycle_completed"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0472",
+  "coverage_row_ids_represented": [
+    "cov-00803",
+    "cov-00804",
+    "cov-00806",
+    "cov-00807",
+    "cov-00811",
+    "cov-00893",
+    "cov-00894",
+    "cov-00895",
+    "cov-00896",
+    "cov-00909"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0472",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "1. Owner docs and rewrite-root routing | 1. Reconcile owner contracts and schemas first. | 1. owner-doc integrity and routing | 13 matching Opus 4.6 subauditors** over the same seam boundaries | 4. provider/runtime identity and bridge adjacencies",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-00803",
+        "cov-00804",
+        "cov-00806",
+        "cov-00807",
+        "cov-00811",
+        "cov-00893",
+        "cov-00894",
+        "cov-00895",
+        "cov-00896",
+        "cov-00909"
+      ],
+      "source_obligation_ids": [
+        "obl-0558",
+        "obl-0559",
+        "obl-0561",
+        "obl-0562",
+        "obl-0566",
+        "obl-0598",
+        "obl-0599",
+        "obl-0600",
+        "obl-0601",
+        "obl-0606"
+      ],
+      "source_seed_ids": [
+        "shard-0086-s050",
+        "shard-0087-s093",
+        "shard-0077-s084",
+        "shard-0087-s101",
+        "shard-0077-s105",
+        "shard-0082-s146",
+        "shard-0083-s016",
+        "shard-0082-s028",
+        "shard-0081-s095",
+        "shard-0083-s125"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0086",
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "1. Owner docs and rewrite-root routing",
+        "1. Reconcile owner contracts and schemas first.",
+        "1. owner-doc integrity and routing",
+        "13 matching Opus 4.6 subauditors** over the same seam boundaries",
+        "4. provider/runtime identity and bridge adjacencies",
+        "Adjacent owners implicated by this seam:",
+        "Adjacent references checked through existing owner docs:",
+        "After this merge, the remaining partial tail should sit uniformly at `Gemini + Opus + Sonnet + GPT-5.4 + GPT-5.2`.",
+        "Gemini + Opus + Sonnet + GPT-5.4 + GPT-5.2",
+        "After this merge, the remaining partial tail should sit uniformly at `Gemini + Opus + Sonnet + GPT-5.4`.",
+        "Gemini + Opus + Sonnet + GPT-5.4",
+        "Any surviving `request_id` wording belongs only in compatibility or lineage notes.",
+        "request_id"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

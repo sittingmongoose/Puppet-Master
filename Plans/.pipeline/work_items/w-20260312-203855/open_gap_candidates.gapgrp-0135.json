@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0135",
+  "coverage_row_ids_represented": [
+    "cov-01095",
+    "cov-01425",
+    "cov-01957",
+    "cov-01958",
+    "cov-02479",
+    "cov-02763"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0135",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Define usage_event_ref explicitly and make all Show in Usage / Show in Ledger pivots prefer receipt + attempt + usage-event identity over run-only or tier-only filters | Package-based worktrees are preferred over per-node worktrees for scale; dependent nodes within the same package need defined lane/ordering rules | `Plans/GitHub_Integration.md:251-258` | `Plans/GitHub_Integration.md:258-258` | do-not-forget: selected_repo_id already exists in storage planning; gap is now in UI contract adoption",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### Candidate fixes to carry forward"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-01095",
+        "cov-01425",
+        "cov-01957",
+        "cov-01958",
+        "cov-02479",
+        "cov-02763"
+      ],
+      "source_obligation_ids": [
+        "obl-0680",
+        "obl-0831",
+        "obl-1172",
+        "obl-1173",
+        "obl-1601",
+        "obl-1777"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s006",
+        "shard-0004-s007",
+        "shard-0089-s111",
+        "shard-0090-s073",
+        "shard-0090-s122",
+        "shard-0091-s015",
+        "shard-0091-s047",
+        "shard-0091-s151",
+        "shard-0038-s013",
+        "shard-0010-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0004",
+        "shard-0010",
+        "shard-0035",
+        "shard-0038",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "Define usage_event_ref explicitly and make all Show in Usage / Show in Ledger pivots prefer receipt + attempt + usage-event identity over run-only or tier-only filters",
+        "Add a shared projection-health / trust-state record family built from committed projection state, checkpoints, and last-updated metadata",
+        "Normalize terminal widget IDs/hostability and explicitly decide how Orchestrator-owned worktree state is grouped in Source Control",
+        "Bind GitHub Integration to project-scoped selected_repo_id and provider_accounts.* state, and fold Deferred GitHub Recovery Binding into canonical blocked-episode detail paths",
+        "selected_repo_id already exists in storage planning; the gap is now in UI contract adoption, not in basic storage vocabulary",
+        "Package-based worktrees are preferred over per-node worktrees for scale; dependent nodes within the same package need defined lane/ordering rules",
+        "`Plans/GitHub_Integration.md:251-258`",
+        "Plans/GitHub_Integration.md:251-258",
+        "`Plans/GitHub_Integration.md:258-258`",
+        "Plans/GitHub_Integration.md:258-258",
+        "do-not-forget: selected_repo_id already exists in storage planning; gap is now in UI contract adoption",
+        "GitHub_Integration.md must adopt selected_repo_id from storage-plan.md rather than treating it as a future undefined key",
+        "Deferred GitHub Recovery Binding must be wired to the canonical blocked-episode / concern record path, not to a UI-local heuristic",
+        "source_control.project_state.{project_id} already has selected_worktree_id \u2014 this existing field must be formally documented and extended to support lane linkage"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

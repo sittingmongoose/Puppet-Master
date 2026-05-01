@@ -1,0 +1,550 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0631",
+  "represented_seed_ids": [
+    "shard-0086-s134",
+    "shard-0087-s002",
+    "shard-0087-s015",
+    "shard-0088-s025",
+    "shard-0088-s052",
+    "shard-0088-s056",
+    "shard-0088-s069",
+    "shard-0088-s081",
+    "shard-0088-s089",
+    "shard-0088-s125",
+    "shard-0089-s002",
+    "shard-0089-s039",
+    "shard-0089-s045",
+    "shard-0089-s124",
+    "shard-0089-s152"
+  ],
+  "source_shard_ids": [
+    "shard-0086",
+    "shard-0087",
+    "shard-0088",
+    "shard-0089"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0086-s134"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "`MUST CHANGE` docs carry either direct stale canon or owner-level gaps. Packetization should assume stale sections must be replaced or retired, not merely annotated.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`MUST CHANGE` docs carry either direct stale canon or owner-level gaps. Packetization should assume stale sections must be replaced or retired, not merely annotated.",
+        "MUST CHANGE"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "MUST CHANGE"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017183"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `MUST CHANGE` docs carry either direct stale canon or owner-level gaps. Packetization shou"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0087-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Owner docs must go first, primary stale consumers second, mirrors and checklists after.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Owner docs must go first, primary stale consumers second, mirrors and checklists after."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017203"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Owner docs must go first, primary stale consumers second, mirrors and checklists after."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0087-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Same-file supersession remains a major source of stale implementation guidance.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Same-file supersession remains a major source of stale implementation guidance."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017238"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Same-file supersession remains a major source of stale implementation guidance."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0088-s025"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`resume_url` demotion rule exists, but stale consumer docs still treat it as a primary behavioral field",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`resume_url` demotion rule exists, but stale consumer docs still treat it as a primary behavioral field",
+        "resume_url"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "resume_url"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017445"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `resume_url` demotion rule exists, but stale consumer docs still treat it as a primary beh"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0088-s052"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "capture any newly visible stale survivors or false-cognate cross-references that the current gap wording was not explicit enough about",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "capture any newly visible stale survivors or false-cognate cross-references that the current gap wording was not explicit enough about"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017500"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: capture any newly visible stale survivors or false-cognate cross-references that the curre"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0088-s056"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "result: keep the assistant-chat blocked-state/runtime-identity cluster open and record this verdict text as an additional stale contradictory survivor rather than treating the surrounding section as t\u2026",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "result: keep the assistant-chat blocked-state/runtime-identity cluster open and record this verdict text as an additional stale contradictory survivor rather than treating the surrounding section as trustworthy closure text"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017505"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: result: keep the assistant-chat blocked-state/runtime-identity cluster open and record thi"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0088-s069"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Exact stale survivors still to retire include `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, a\u2026",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Exact stale survivors still to retire include `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, and `restore points`.",
+        "TierContext",
+        "tier_id",
+        "detached_window",
+        "result_id",
+        "artifact_kind",
+        "task_id",
+        "{ tool_name, invocation_summary, options }",
+        "No remaining gaps"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "No remaining gaps",
+        "TierContext",
+        "artifact_kind",
+        "detached_window",
+        "restore points",
+        "result_id",
+        "task_id",
+        "tier_id",
+        "{ tool_name, invocation_summary, options }"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017525"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Exact stale survivors still to retire include `TierContext`, `tier_id`, `detached_window`,"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0088-s081"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "summary: Re-audited live owner and consumer docs in chunks and confirmed that several blockers remain real but are overstated as total absence; the live failures are now more precisely partial-transfe\u2026",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "summary: Re-audited live owner and consumer docs in chunks and confirmed that several blockers remain real but are overstated as total absence; the live failures are now more precisely partial-transfer, structural-heading, and stale-survivor defects."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017545"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: summary: Re-audited live owner and consumer docs in chunks and confirmed that several bloc"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0088-s089"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Exact stale contradictory survivors still confirmed: `No remaining gaps`, `restore points`, `TierContext`, `tier_id`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options\u2026",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Exact stale contradictory survivors still confirmed: `No remaining gaps`, `restore points`, `TierContext`, `tier_id`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`.",
+        "No remaining gaps",
+        "restore points",
+        "TierContext",
+        "tier_id",
+        "result_id",
+        "artifact_kind",
+        "task_id",
+        "{ tool_name, invocation_summary, options }"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "No remaining gaps",
+        "TierContext",
+        "artifact_kind",
+        "restore points",
+        "result_id",
+        "task_id",
+        "tier_id",
+        "{ tool_name, invocation_summary, options }"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017554"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Exact stale contradictory survivors still confirmed: `No remaining gaps`, `restore points`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0088-s125"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`gap-005` remains real, but the exact-missing set narrows to blocked-packet consumer carry-through, escalation semantics, the composite ask tuple `{ tool_name, invocation_summary, options }`, and the \u2026",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`gap-005` remains real, but the exact-missing set narrows to blocked-packet consumer carry-through, escalation semantics, the composite ask tuple `{ tool_name, invocation_summary, options }`, and the stale assistant-chat verdict `No remaining gaps`.",
+        "gap-005",
+        "{ tool_name, invocation_summary, options }",
+        "No remaining gaps"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "No remaining gaps",
+        "gap-005",
+        "{ tool_name, invocation_summary, options }"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017600"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `gap-005` remains real, but the exact-missing set narrows to blocked-packet consumer carry"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0089-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "Exact stale contradictory survivors remain confirmed: `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining \u2026",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Exact stale contradictory survivors remain confirmed: `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, `restore points`.",
+        "TierContext",
+        "tier_id",
+        "detached_window",
+        "result_id",
+        "artifact_kind",
+        "task_id",
+        "{ tool_name, invocation_summary, options }",
+        "No remaining gaps"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "No remaining gaps",
+        "TierContext",
+        "artifact_kind",
+        "detached_window",
+        "restore points",
+        "result_id",
+        "task_id",
+        "tier_id",
+        "{ tool_name, invocation_summary, options }"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017602"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Exact stale contradictory survivors remain confirmed: `TierContext`, `tier_id`, `detached_"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "shard-0089-s039"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "This pass keeps all `8` blocker families open, but it sharpens the unresolved set so follow-on audit work can target exact missing anchors and stale survivors instead of re-auditing already transferre\u2026",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "This pass keeps all `8` blocker families open, but it sharpens the unresolved set so follow-on audit work can target exact missing anchors and stale survivors instead of re-auditing already transferred fields.",
+        "8"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "8"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017643"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: This pass keeps all `8` blocker families open, but it sharpens the unresolved set so follo"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-013",
+      "source_seed_ids": [
+        "shard-0089-s045"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "`gap-003` still blocks on missing project-state ownership and lifecycle-boundary semantics; `artifact_kind` and `task_id` survive only as stale anti-pattern references and should not remain in that ga\u2026",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`gap-003` still blocks on missing project-state ownership and lifecycle-boundary semantics; `artifact_kind` and `task_id` survive only as stale anti-pattern references and should not remain in that gap's exact-missing list.",
+        "gap-003",
+        "artifact_kind",
+        "task_id"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "artifact_kind",
+        "gap-003",
+        "task_id"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017654"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `gap-003` still blocks on missing project-state ownership and lifecycle-boundary semantics"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-014",
+      "source_seed_ids": [
+        "shard-0089-s124"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "No blocker families resolved; the live defects remain owner-anchor absence, skeletal consumer carry-through, and exact stale contradictory survivors.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "No blocker families resolved; the live defects remain owner-anchor absence, skeletal consumer carry-through, and exact stale contradictory survivors."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017752"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: No blocker families resolved; the live defects remain owner-anchor absence, skeletal consu"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-015",
+      "source_seed_ids": [
+        "shard-0089-s152"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "The unresolved shape is still the same: missing owner anchors, skeletal consumer carry-through, and exact stale contradictory survivors.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "The unresolved shape is still the same: missing owner anchors, skeletal consumer carry-through, and exact stale contradictory survivors."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017793"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: The unresolved shape is still the same: missing owner anchors, skeletal consumer carry-thr"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

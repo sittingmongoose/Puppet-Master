@@ -1,0 +1,128 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0280",
+  "coverage_row_ids_represented": [
+    "cov-00208",
+    "cov-00222",
+    "cov-00400",
+    "cov-00479",
+    "cov-00536",
+    "cov-00537",
+    "cov-00538",
+    "cov-00539",
+    "cov-00540",
+    "cov-00541"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0280",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "6. `Plans/UI_Command_Catalog.md` | Commands_System.md contains an internal acceptance-criteria contradiction on reserved slash-command overrides | Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.m\u2026 | `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Ou\u2026 | `Plans/UI_Command_Catalog.md:214-223`",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00208",
+        "cov-00222",
+        "cov-00400",
+        "cov-00479",
+        "cov-00536",
+        "cov-00537",
+        "cov-00538",
+        "cov-00539",
+        "cov-00540",
+        "cov-00541"
+      ],
+      "source_obligation_ids": [
+        "obl-0172",
+        "obl-0180",
+        "obl-0299",
+        "obl-0337",
+        "obl-0373",
+        "obl-0374",
+        "obl-0375",
+        "obl-0376",
+        "obl-0377",
+        "obl-0378"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s047",
+        "seed-WAVE005-0061",
+        "shard-0090-s053",
+        "shard-0088-s018",
+        "shard-0091-s039",
+        "shard-0088-s099",
+        "shard-0089-s099",
+        "shard-0090-s123",
+        "shard-0091-s011",
+        "shard-0088-s100",
+        "shard-0089-s036",
+        "shard-0089-s060",
+        "shard-0089-s100",
+        "shard-0090-s068"
+      ],
+      "source_shard_ids": [
+        "shard-0049",
+        "shard-0088",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "6. `Plans/UI_Command_Catalog.md`",
+        "Plans/UI_Command_Catalog.md",
+        "Commands_System.md contains an internal acceptance-criteria contradiction on reserved slash-command overrides",
+        "assistant-chat-design.md and UI_Command_Catalog.md still state the opposite rule from Commands_System.md and do not even mention override_builtin",
+        "Reconcile reserved slash-command override policy into one canonical rule and register all real cmd.chat.* / cmd.orchestrator.* IDs in the catalog before more UI wiring lands",
+        "Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.md`, `Plans/FinalGUISpec.md`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `restore points`, and the broken `#11. Source Control boundary` reference.",
+        "gap-002",
+        "gap-006",
+        "gap-007",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FinalGUISpec.md",
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Crosswalk.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md",
+        "Plans/FileManager.md",
+        "Plans/Project_Output_Artifacts.md",
+        "`Plans/UI_Command_Catalog.md:214-223`",
+        "Plans/UI_Command_Catalog.md:214-223",
+        "`Plans/UI_Command_Catalog.md:224-246`",
+        "Plans/UI_Command_Catalog.md:224-246",
+        "`Plans/UI_Command_Catalog.md:29-90`",
+        "Plans/UI_Command_Catalog.md:29-90",
+        "`Plans/UI_Command_Catalog.md:29-92`",
+        "Plans/UI_Command_Catalog.md:29-92",
+        "`Plans/UI_Command_Catalog.md:29-95`",
+        "Plans/UI_Command_Catalog.md:29-95",
+        "`Plans/UI_Command_Catalog.md:617-622`",
+        "Plans/UI_Command_Catalog.md:617-622"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

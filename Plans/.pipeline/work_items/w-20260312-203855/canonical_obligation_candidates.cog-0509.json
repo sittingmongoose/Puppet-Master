@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0509",
+  "represented_seed_ids": [
+    "seed-WAVE005-0013"
+  ],
+  "source_shard_ids": [
+    "shard-0042"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE005-0013"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "canon_label": "Tools.md still needs richer event payloads, reconciled outcome taxonomy, and DAE tool-event reconstruction",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Tools.md still needs richer event payloads, reconciled outcome taxonomy, and DAE tool-event reconstruction",
+        "tool.invoked / tool.denied still omit node/attempt/actor/account context",
+        "the tool outcome taxonomy still diverges from canonical blocked reason taxonomy",
+        "mutation_capable is declared as authoritative but still barely integrated into schema/event/policy surfaces",
+        "Extend tool events with node/attempt/actor/account context and reconcile tool outcomes with canonical blocked codes"
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L008318-L008400"
+      ],
+      "notes": [
+        "DAE runs still need a clear post-hoc tool-event story or their analytics/blocked truth will drift immediately"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

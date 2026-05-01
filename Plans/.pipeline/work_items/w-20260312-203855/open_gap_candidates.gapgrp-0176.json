@@ -1,0 +1,55 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0176",
+  "coverage_row_ids_represented": [
+    "cov-00245"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0176",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "FinalGUISpec.md now shows a second internal navigation contradiction beyond the already-known Orchestrator-page drift (\u00a74.1 vs \u00a75.1)",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "\u00a74.1"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00245"
+      ],
+      "source_obligation_ids": [
+        "obl-0195"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0044"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "FinalGUISpec.md now shows a second internal navigation contradiction beyond the already-known Orchestrator-page drift (\u00a74.1 vs \u00a75.1)",
+        "FinalGUISpec.md still conflicts with Orchestrator-page canon by listing standalone Tiers / Evidence / History / Ledger views, and still hosts non-canonical cmd.orchestrator.* action IDs where UI_Command_Catalog.md defines different stable IDs"
+      ],
+      "stale_tokens": [
+        "cmd.orchestrator.* (non-canonical action IDs in FinalGUISpec)"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

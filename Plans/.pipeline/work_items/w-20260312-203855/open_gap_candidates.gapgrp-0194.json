@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0194",
+  "coverage_row_ids_represented": [
+    "cov-00255"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0194",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "GPT-5.3-Codex: tier-boundary and single-Overseer audit rules are too rigid for a package/seam overseer model \u2014 Permissions_System.md must be updated",
+      "affected_targets": [
+        {
+          "path": "Plans/Permissions_System.md",
+          "heading": "## Permissions Audit Rules Update"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00255"
+      ],
+      "source_obligation_ids": [
+        "obl-0201"
+      ],
+      "source_seed_ids": [
+        "shard-0010-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "GPT-5.3-Codex: tier-boundary and single-Overseer audit rules are too rigid for a package/seam overseer model \u2014 Permissions_System.md must be updated"
+      ],
+      "stale_tokens": [
+        "tier_boundary_approval",
+        "single Overseer"
+      ],
+      "canonical_replacement_hints": [
+        "Rewrite audit rules around package/seam overseer actors"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

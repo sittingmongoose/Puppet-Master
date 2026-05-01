@@ -1,0 +1,122 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0043",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-01766",
+      "source_obligation_ids": [
+        "obl-1029"
+      ],
+      "source_seed_ids": [
+        "shard-0083-s021"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "path": "Plans/DRY_Rules.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/DRY_Rules.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01941",
+      "source_obligation_ids": [
+        "obl-1156"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s091",
+        "shard-0081-s007",
+        "shard-0081-s048",
+        "shard-0081-s089",
+        "shard-0081-s102",
+        "shard-0081-s140",
+        "shard-0082-s018",
+        "shard-0082-s035",
+        "shard-0082-s069",
+        "shard-0082-s120",
+        "shard-0082-s144",
+        "shard-0083-s017",
+        "shard-0083-s032",
+        "shard-0086-s034",
+        "shard-0086-s062",
+        "shard-0086-s101"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0086"
+      ],
+      "path": "Plans/DRY_Rules.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/DRY_Rules.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01942",
+      "source_obligation_ids": [
+        "obl-1157"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s130"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "path": "Plans/DRY_Rules.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/DRY_Rules.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02999",
+      "source_obligation_ids": [
+        "obl-1944"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0026"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "path": "Plans/DRY_Rules.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/DRY_Rules.md: first-400-line window scan for stale_retirement",
+        "stale tokens absent or only in retirement/compatibility context in window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

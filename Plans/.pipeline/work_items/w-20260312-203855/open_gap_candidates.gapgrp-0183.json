@@ -1,0 +1,119 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0183",
+  "coverage_row_ids_represented": [
+    "cov-01978",
+    "cov-01979",
+    "cov-01980",
+    "cov-01981",
+    "cov-01982",
+    "cov-01983",
+    "cov-01984",
+    "cov-01985",
+    "cov-01986",
+    "cov-01987"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0183",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "`Plans/Orchestrator_Page.md:1-44` | `Plans/Orchestrator_Page.md:12-13` | `Plans/Orchestrator_Page.md:16-43` | `Plans/Orchestrator_Page.md:171-171` | `Plans/Orchestrator_Page.md:200-209`",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-01978",
+        "cov-01979",
+        "cov-01980",
+        "cov-01981",
+        "cov-01982",
+        "cov-01983",
+        "cov-01984",
+        "cov-01985",
+        "cov-01986",
+        "cov-01987"
+      ],
+      "source_obligation_ids": [
+        "obl-1193",
+        "obl-1194",
+        "obl-1195",
+        "obl-1196",
+        "obl-1197",
+        "obl-1198",
+        "obl-1199",
+        "obl-1200",
+        "obl-1201",
+        "obl-1202"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s109",
+        "shard-0090-s071",
+        "shard-0090-s120",
+        "shard-0091-s014",
+        "shard-0092-s028",
+        "shard-0088-s112",
+        "shard-0091-s070",
+        "shard-0091-s103",
+        "shard-0090-s121",
+        "shard-0091-s071",
+        "shard-0091-s104",
+        "shard-0091-s145",
+        "shard-0091-s072",
+        "shard-0091-s105",
+        "shard-0089-s033",
+        "shard-0091-s073",
+        "shard-0091-s106",
+        "shard-0091-s146"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:1-44`",
+        "Plans/Orchestrator_Page.md:1-44",
+        "`Plans/Orchestrator_Page.md:12-13`",
+        "Plans/Orchestrator_Page.md:12-13",
+        "`Plans/Orchestrator_Page.md:16-43`",
+        "Plans/Orchestrator_Page.md:16-43",
+        "`Plans/Orchestrator_Page.md:171-171`",
+        "Plans/Orchestrator_Page.md:171-171",
+        "`Plans/Orchestrator_Page.md:200-209`",
+        "Plans/Orchestrator_Page.md:200-209",
+        "`Plans/Orchestrator_Page.md:209-209`",
+        "Plans/Orchestrator_Page.md:209-209",
+        "`Plans/Orchestrator_Page.md:209-230`",
+        "Plans/Orchestrator_Page.md:209-230",
+        "`Plans/Orchestrator_Page.md:230-230`",
+        "Plans/Orchestrator_Page.md:230-230",
+        "`Plans/Orchestrator_Page.md:258-266`",
+        "Plans/Orchestrator_Page.md:258-266",
+        "`Plans/Orchestrator_Page.md:270-270`",
+        "Plans/Orchestrator_Page.md:270-270"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

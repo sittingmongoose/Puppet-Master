@@ -1,0 +1,235 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0218",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-02536",
+      "source_obligation_ids": [
+        "obl-1638"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0042"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/human-in-the-loop.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02539",
+      "source_obligation_ids": [
+        "obl-1639"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0012"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/human-in-the-loop.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03065",
+      "source_obligation_ids": [
+        "obl-1987"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0028"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/human-in-the-loop.md: first-400-line window scan for stale_retirement",
+        "stale token still appears in live-use context in window"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03128",
+      "source_obligation_ids": [
+        "obl-2026"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/human-in-the-loop.md: canonical_replacement_status unknown; requires resolution"
+      ],
+      "required_action": "stale_token_replacement_resolution",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03137",
+      "source_obligation_ids": [
+        "obl-2029"
+      ],
+      "source_seed_ids": [
+        "shard-0009-s017"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/human-in-the-loop.md: bounded window token/phrase match 1/1"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03159",
+      "source_obligation_ids": [
+        "obl-2037"
+      ],
+      "source_seed_ids": [
+        "shard-0009-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/human-in-the-loop.md: bounded window token/phrase match 1/1"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03179",
+      "source_obligation_ids": [
+        "obl-2043"
+      ],
+      "source_seed_ids": [
+        "shard-0009-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/human-in-the-loop.md: bounded window token/phrase match 1/1"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03219",
+      "source_obligation_ids": [
+        "obl-2065"
+      ],
+      "source_seed_ids": [
+        "shard-0010-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/human-in-the-loop.md: bounded window token/phrase match 1/1"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03235",
+      "source_obligation_ids": [
+        "obl-2073"
+      ],
+      "source_seed_ids": [
+        "shard-0010-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/human-in-the-loop.md: bounded window token/phrase match 1/1"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03241",
+      "source_obligation_ids": [
+        "obl-2074"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0001"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/human-in-the-loop.md: bounded window token/phrase match 3/3"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

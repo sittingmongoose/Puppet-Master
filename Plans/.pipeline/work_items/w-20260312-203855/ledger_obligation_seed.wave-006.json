@@ -1,0 +1,144 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_wave.v2.1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-006",
+  "subagent_tasks": [
+    {
+      "task_id": "extract-shard-0041",
+      "shard_id": "shard-0041",
+      "description": "Lineage-clamp extraction output for shard-0041"
+    },
+    {
+      "task_id": "extract-shard-0042",
+      "shard_id": "shard-0042",
+      "description": "Lineage-clamp extraction output for shard-0042"
+    },
+    {
+      "task_id": "extract-shard-0043",
+      "shard_id": "shard-0043",
+      "description": "Lineage-clamp extraction output for shard-0043"
+    },
+    {
+      "task_id": "extract-shard-0044",
+      "shard_id": "shard-0044",
+      "description": "Lineage-clamp extraction output for shard-0044"
+    },
+    {
+      "task_id": "extract-shard-0045",
+      "shard_id": "shard-0045",
+      "description": "Lineage-clamp extraction output for shard-0045"
+    },
+    {
+      "task_id": "extract-shard-0046",
+      "shard_id": "shard-0046",
+      "description": "Lineage-clamp extraction output for shard-0046"
+    },
+    {
+      "task_id": "extract-shard-0047",
+      "shard_id": "shard-0047",
+      "description": "Lineage-clamp extraction output for shard-0047"
+    },
+    {
+      "task_id": "extract-shard-0048",
+      "shard_id": "shard-0048",
+      "description": "Lineage-clamp extraction output for shard-0048"
+    }
+  ],
+  "assigned_input_boundaries": {
+    "shard_ids": [
+      "shard-0041",
+      "shard-0042",
+      "shard-0043",
+      "shard-0044",
+      "shard-0045",
+      "shard-0046",
+      "shard-0047",
+      "shard-0048"
+    ],
+    "manifest": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json"
+  },
+  "subagent_result_status": "complete",
+  "completed_task_count": 8,
+  "failed_task_count": 0,
+  "shard_ids_assigned": [
+    "shard-0041",
+    "shard-0042",
+    "shard-0043",
+    "shard-0044",
+    "shard-0045",
+    "shard-0046",
+    "shard-0047",
+    "shard-0048"
+  ],
+  "shard_ids_completed": [
+    "shard-0041",
+    "shard-0042",
+    "shard-0043",
+    "shard-0044",
+    "shard-0045",
+    "shard-0046",
+    "shard-0047",
+    "shard-0048"
+  ],
+  "seed_ids_returned": [
+    "seed-WAVE005-0001",
+    "seed-WAVE005-0002",
+    "seed-WAVE005-0003",
+    "seed-WAVE005-0004",
+    "seed-WAVE005-0005",
+    "seed-WAVE005-0006",
+    "seed-WAVE005-0007",
+    "seed-WAVE005-0008",
+    "seed-WAVE005-0009",
+    "seed-WAVE005-0010",
+    "seed-WAVE005-0011",
+    "seed-WAVE005-0012",
+    "seed-WAVE005-0013",
+    "seed-WAVE005-0014",
+    "seed-WAVE005-0015",
+    "seed-WAVE005-0016",
+    "seed-WAVE005-0017",
+    "seed-WAVE005-0018",
+    "seed-WAVE005-0019",
+    "seed-WAVE005-0020",
+    "seed-WAVE005-0021",
+    "seed-WAVE005-0022",
+    "seed-WAVE005-0023",
+    "seed-WAVE005-0024",
+    "seed-WAVE005-0025",
+    "seed-WAVE005-0026",
+    "seed-WAVE005-0027",
+    "seed-WAVE005-0028",
+    "seed-WAVE005-0029",
+    "seed-WAVE005-0030",
+    "seed-WAVE005-0031",
+    "seed-WAVE005-0032",
+    "seed-WAVE005-0033",
+    "seed-WAVE005-0034",
+    "seed-WAVE005-0035",
+    "seed-WAVE005-0036",
+    "seed-WAVE005-0037",
+    "seed-WAVE005-0038",
+    "seed-WAVE005-0039",
+    "seed-WAVE005-0040",
+    "seed-WAVE005-0041",
+    "seed-WAVE005-0042",
+    "seed-WAVE005-0043",
+    "seed-WAVE005-0044",
+    "seed-WAVE005-0045",
+    "seed-WAVE005-0046",
+    "seed-WAVE005-0047",
+    "seed-WAVE005-0048",
+    "seed-WAVE005-0049",
+    "seed-WAVE005-0050",
+    "seed-WAVE005-0051",
+    "seed-WAVE005-0052",
+    "seed-WAVE005-0053",
+    "seed-WAVE005-0054",
+    "seed-WAVE005-0055",
+    "seed-WAVE005-0056",
+    "seed-WAVE005-0057"
+  ],
+  "noise_item_count": 24,
+  "deferred_item_count": 0
+}

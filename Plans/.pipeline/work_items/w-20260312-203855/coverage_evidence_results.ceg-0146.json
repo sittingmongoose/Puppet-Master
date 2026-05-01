@@ -1,0 +1,146 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0146",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-03172",
+      "source_obligation_ids": [
+        "obl-2040"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s017"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/Personas.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Personas.md: bounded window token/phrase match 1/1"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03195",
+      "source_obligation_ids": [
+        "obl-2050"
+      ],
+      "source_seed_ids": [
+        "shard-0009-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path": "Plans/Personas.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/Personas.md: canonical_replacement_status unknown; requires resolution"
+      ],
+      "required_action": "stale_token_replacement_resolution",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03197",
+      "source_obligation_ids": [
+        "obl-2051"
+      ],
+      "source_seed_ids": [
+        "shard-0011-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "path": "Plans/Personas.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Personas.md: bounded window token/phrase match 1/1"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03208",
+      "source_obligation_ids": [
+        "obl-2061"
+      ],
+      "source_seed_ids": [
+        "shard-0009-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path": "Plans/Personas.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Personas.md: bounded window token/phrase match 1/1"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03213",
+      "source_obligation_ids": [
+        "obl-2062"
+      ],
+      "source_seed_ids": [
+        "shard-0011-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "path": "Plans/Personas.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Personas.md: bounded window token/phrase match 2/2"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03231",
+      "source_obligation_ids": [
+        "obl-2070"
+      ],
+      "source_seed_ids": [
+        "shard-0032-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "path": "Plans/Personas.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Personas.md: bounded window token/phrase match 1/3"
+      ],
+      "required_action": "stale_token_replacement_resolution",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

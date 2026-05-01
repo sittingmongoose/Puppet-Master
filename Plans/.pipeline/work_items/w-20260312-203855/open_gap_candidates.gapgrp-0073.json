@@ -1,0 +1,66 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0073",
+  "coverage_row_ids_represented": [
+    "cov-02311",
+    "cov-02706"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0073",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "acknowledge: confirmation none; rationale optional; reversibility compensating_action_only via explicit return to active | resolution_kind values: fixed, accepted_risk, superseded, merged, split, invalidated, obsoleted_by_patch, obsoleted_by_recovery",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "### Recommended default policy"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-02311",
+        "cov-02706"
+      ],
+      "source_obligation_ids": [
+        "obl-1498",
+        "obl-1745"
+      ],
+      "source_seed_ids": [
+        "shard-0033-s004",
+        "shard-0031-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0031",
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "acknowledge: confirmation none; rationale optional; reversibility compensating_action_only via explicit return to active",
+        "resolve from a linked canonical fix/recovery/patch outcome: confirmation none or light; rationale optional if the linked record is sufficient; reversibility compensating_action_only via reopened",
+        "resolve without linked canonical evidence, including accepted_risk: confirmation strong; rationale required; reversibility compensating_action_only",
+        "dismiss: confirmation strong; rationale required; reversibility compensating_action_only via explicit reopened",
+        "reopen: confirmation none or light; rationale optional but recommended when reopening a dismissed concern; reversibility compensating_action_only",
+        "merge / split / supersede: confirmation strong; rationale required; reversibility compensating_action_only through new lineage records, never silent history rewrite",
+        "Reserve hard_gate for: admin repair, privacy/redaction paths, cross-run or cross-scope lineage rewrites that could materially change audit interpretation",
+        "resolution_kind values: fixed, accepted_risk, superseded, merged, split, invalidated, obsoleted_by_patch, obsoleted_by_recovery",
+        "dismissed is not a substitute for resolved",
+        "accepted_risk is a resolution, not a dismissal"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

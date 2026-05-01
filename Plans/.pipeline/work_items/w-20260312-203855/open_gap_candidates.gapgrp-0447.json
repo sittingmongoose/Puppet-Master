@@ -1,0 +1,105 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0447",
+  "coverage_row_ids_represented": [
+    "cov-00123",
+    "cov-00124",
+    "cov-00125",
+    "cov-00126",
+    "cov-00127",
+    "cov-00128",
+    "cov-00129",
+    "cov-00130",
+    "cov-00131",
+    "cov-00132"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0447",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "`Run_Graph_View.md` and `usage-feature.md` still reinforce each other through `tier_id`, which keeps the old usage/evidence/runtime correlation alive. | `Run_Graph_View.md` needs: | `Run_Graph_View.md` still exposes `hitl_request_id` | `Section15_MVP_Promoted_Features_Spec.md` still points at missing command rows and unresolved shell-surface ownership for project/session browser and attention center. | `View in Tiers`",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-00123",
+        "cov-00124",
+        "cov-00125",
+        "cov-00126",
+        "cov-00127",
+        "cov-00128",
+        "cov-00129",
+        "cov-00130",
+        "cov-00131",
+        "cov-00132"
+      ],
+      "source_obligation_ids": [
+        "obl-0094",
+        "obl-0095",
+        "obl-0096",
+        "obl-0097",
+        "obl-0098",
+        "obl-0099",
+        "obl-0100",
+        "obl-0101",
+        "obl-0102",
+        "obl-0103"
+      ],
+      "source_seed_ids": [
+        "shard-0085-s108",
+        "shard-0085-s120",
+        "shard-0078-s094",
+        "shard-0081-s037",
+        "shard-0085-s071",
+        "shard-0085-s064",
+        "shard-0085-s114",
+        "shard-0080-s104",
+        "shard-0085-s124",
+        "shard-0090-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0080",
+        "shard-0081",
+        "shard-0085",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Run_Graph_View.md` and `usage-feature.md` still reinforce each other through `tier_id`, which keeps the old usage/evidence/runtime correlation alive.",
+        "Run_Graph_View.md",
+        "usage-feature.md",
+        "tier_id",
+        "`Run_Graph_View.md` needs:",
+        "`Run_Graph_View.md` still exposes `hitl_request_id`",
+        "hitl_request_id",
+        "`Section15_MVP_Promoted_Features_Spec.md` still points at missing command rows and unresolved shell-surface ownership for project/session browser and attention center.",
+        "Section15_MVP_Promoted_Features_Spec.md",
+        "`View in Tiers`",
+        "View in Tiers",
+        "`View in Usage` still filters by `tier_id`",
+        "View in Usage",
+        "`Widget_System.md`",
+        "Widget_System.md",
+        "`Widget_System.md` currently gives two incompatible migration outcomes in the same section:",
+        "`Widget_System.md` needs:",
+        "`action_available` still does not have a discoverable owner or consumer presence in the live Plans docs.",
+        "action_available"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

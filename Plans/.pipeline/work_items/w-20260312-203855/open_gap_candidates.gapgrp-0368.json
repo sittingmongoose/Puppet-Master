@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0368",
+  "coverage_row_ids_represented": [
+    "cov-00553",
+    "cov-00554"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0368",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "`Plans/human-in-the-loop.md` is still explicitly built around: | `Plans/human-in-the-loop.md` still opens with a canonical request contract built on:",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00553",
+        "cov-00554"
+      ],
+      "source_obligation_ids": [
+        "obl-0389",
+        "obl-0390"
+      ],
+      "source_seed_ids": [
+        "shard-0078-s085",
+        "shard-0083-s096"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "`Plans/human-in-the-loop.md` is still explicitly built around:",
+        "Plans/human-in-the-loop.md",
+        "`Plans/human-in-the-loop.md` still opens with a canonical request contract built on:"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

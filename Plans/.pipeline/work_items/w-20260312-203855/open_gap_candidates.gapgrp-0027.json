@@ -1,0 +1,62 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0027",
+  "coverage_row_ids_represented": [
+    "cov-00747",
+    "cov-00766"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0027",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_doc_reference",
+      "description": "Runtime_Artifacts_Panel.md shows artifacts but provides no documented linkage from usage receipts to runtime artifacts | `Contracts_V0.md` still has no canonical route-target/open-subject contract, which is why command docs keep improvising local payload semantics.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Receipt to Artifact Linkage"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00747",
+        "cov-00766"
+      ],
+      "source_obligation_ids": [
+        "obl-0532",
+        "obl-0542"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0072",
+        "seed-WAVE007-0029"
+      ],
+      "source_shard_ids": [
+        "shard-0058",
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "Runtime_Artifacts_Panel.md shows artifacts but provides no documented linkage from usage receipts to runtime artifacts",
+        "The receipt\u2192artifact join is the critical projection step that populates the panel; without a documented linkage, implementations will diverge",
+        "`Contracts_V0.md` still has no canonical route-target/open-subject contract, which is why command docs keep improvising local payload semantics.",
+        "There is still no canonical navigation primitive in the contract layer, so wrapper commands remain forced to carry semantics in prose.",
+        "Keep domain-facing wrapper commands public and stable; add canonical `route_target` / `OpenSubject` semantics underneath them; let wrappers normalize internally to the shared navigation primitive",
+        "A smaller hidden or lower-level canonical navigation primitive still looks necessary, but it should be contract-owned rather than catalog-dominant."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Missing or incomplete doc reference vs obligation (concrete path known).",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

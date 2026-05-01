@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0181",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-01318",
+      "source_obligation_ids": [
+        "obl-0778"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0018"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md: exact_items matched 6/6 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01359",
+      "source_obligation_ids": [
+        "obl-0800"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0006"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01480",
+      "source_obligation_ids": [
+        "obl-0861"
+      ],
+      "source_seed_ids": [
+        "shard-0040-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01525",
+      "source_obligation_ids": [
+        "obl-0879"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md: exact_items matched 4/8 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01539",
+      "source_obligation_ids": [
+        "obl-0883"
+      ],
+      "source_seed_ids": [
+        "shard-0036-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md: exact_items matched 3/4 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01599",
+      "source_obligation_ids": [
+        "obl-0926"
+      ],
+      "source_seed_ids": [
+        "shard-0038-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01603",
+      "source_obligation_ids": [
+        "obl-0928"
+      ],
+      "source_seed_ids": [
+        "shard-0039-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01704",
+      "source_obligation_ids": [
+        "obl-0984"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0037"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md: exact_items matched 2/6 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01709",
+      "source_obligation_ids": [
+        "obl-0986"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0039"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md: exact_items matched 3/7 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01718",
+      "source_obligation_ids": [
+        "obl-0988"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0053"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md: exact_items matched 1/6 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0232",
+  "coverage_row_ids_represented": [
+    "cov-02623"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0232",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "persona_override_owner_id still allows tier_id-style ownership in shared runtime docs \u2014 likely needs a migration path toward run/node/attempt/subagent-owned scopes",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-02623"
+      ],
+      "source_obligation_ids": [
+        "obl-1695"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0073"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "persona_override_owner_id still allows tier_id-style ownership in shared runtime docs \u2014 likely needs a migration path toward run/node/attempt/subagent-owned scopes",
+        "Prompt_Pipeline.md still allows persona_override_owner_id scope values that include tier_id, which is increasingly a legacy ownership key for Orchestrator execution"
+      ],
+      "stale_tokens": [
+        "tier_id (as persona_override_owner_id scope value)"
+      ],
+      "canonical_replacement_hints": [
+        "run/node/attempt/subagent-owned scopes"
+      ],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

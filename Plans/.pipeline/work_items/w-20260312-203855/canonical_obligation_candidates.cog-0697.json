@@ -1,0 +1,132 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0697",
+  "represented_seed_ids": [
+    "shard-0007-s016",
+    "shard-0008-s005",
+    "shard-0008-s013"
+  ],
+  "source_shard_ids": [
+    "shard-0007",
+    "shard-0008"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0007-s016"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "HandoffMessage and graph breadcrumbs still use phase_id/task_id where node/package/seam identity is required",
+      "obligation_type": "stale_token_replacement",
+      "exact_tokens": [
+        "HandoffMessage and graph breadcrumbs still use phase_id/task_id where node/package/seam identity is required"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## HandoffMessage Field Update"
+      ],
+      "stale_residue_to_retire": [
+        "phase_id",
+        "task_id"
+      ],
+      "canonical_replacement_hints": [
+        "Replace phase_id/task_id with node_id, package_id, seam_id"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L001375-L001400"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0008-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "GPT-5.2: old tier-era contracts AND newer node/safe-point addenda are both marked canonical simultaneously \u2014 only the node/safe-point model is canonical; tier-era content must be superseded",
+      "obligation_type": "stale_token_replacement",
+      "exact_tokens": [
+        "GPT-5.2: old tier-era contracts AND newer node/safe-point addenda are both marked canonical simultaneously \u2014 only the node/safe-point model is canonical; tier-era content must be superseded"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_reconciliation",
+      "heading_hints": [
+        "## Tier-Era vs Node/Safe-Point Contradiction"
+      ],
+      "stale_residue_to_retire": [
+        "tier_runtime_record",
+        "tier_id"
+      ],
+      "canonical_replacement_hints": [
+        "Remove tier-era canonical markers; elevate node/safe-point model"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L001480-L001510"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0008-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "AttemptJournal and handoff payloads remain subtask/iteration-shaped \u2014 must be updated to attempt record shape with package/seam/lane fields",
+      "obligation_type": "stale_token_replacement",
+      "exact_tokens": [
+        "AttemptJournal and handoff payloads remain subtask/iteration-shaped \u2014 must be updated to attempt record shape with package/seam/lane fields"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## AttemptJournal Shape Update"
+      ],
+      "stale_residue_to_retire": [
+        "AttemptJournal"
+      ],
+      "canonical_replacement_hints": [
+        "Replace subtask/iteration shape with attempt record containing package_id/seam_id/lane_id"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L001401-L001430"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

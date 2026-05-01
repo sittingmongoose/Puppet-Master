@@ -1,0 +1,146 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0185",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-03174",
+      "source_obligation_ids": [
+        "obl-2041"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md: bounded window token/phrase match 0/1"
+      ],
+      "required_action": "stale_token_replacement_resolution",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03186",
+      "source_obligation_ids": [
+        "obl-2047"
+      ],
+      "source_seed_ids": [
+        "shard-0010-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md: bounded window token/phrase match 1/1"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03205",
+      "source_obligation_ids": [
+        "obl-2058"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0017"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md: bounded window token/phrase match 2/2"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03206",
+      "source_obligation_ids": [
+        "obl-2059"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0029"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md: bounded window token/phrase match 4/4"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03220",
+      "source_obligation_ids": [
+        "obl-2065"
+      ],
+      "source_seed_ids": [
+        "shard-0010-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md: bounded window token/phrase match 1/1"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03222",
+      "source_obligation_ids": [
+        "obl-2067"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0004"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md: bounded window token/phrase match 1/1"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

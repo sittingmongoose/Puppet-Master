@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0485",
+  "coverage_row_ids_represented": [
+    "cov-01695",
+    "cov-01698",
+    "cov-01699",
+    "cov-01707",
+    "cov-01713",
+    "cov-01721",
+    "cov-01722",
+    "cov-01723",
+    "cov-01724",
+    "cov-01725"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0485",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "The approval seam is now precise: the docs currently describe two different action targets for the same family of approval/recovery behavior. | The authored sweep itself is complete and should now hand off to reconciliation rather than additional model passes. | The blocked/runtime lineage work already moved toward: | The canonical runtime action model has already made both versions obsolete. | The command catalog and the graph spec cannot both be correct.",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-01695",
+        "cov-01698",
+        "cov-01699",
+        "cov-01707",
+        "cov-01713",
+        "cov-01721",
+        "cov-01722",
+        "cov-01723",
+        "cov-01724",
+        "cov-01725"
+      ],
+      "source_obligation_ids": [
+        "obl-0979",
+        "obl-0981",
+        "obl-0982",
+        "obl-0985",
+        "obl-0987",
+        "obl-0990",
+        "obl-0991",
+        "obl-0992",
+        "obl-0993",
+        "obl-0994"
+      ],
+      "source_seed_ids": [
+        "shard-0078-s126",
+        "shard-0082-s110",
+        "shard-0078-s104",
+        "shard-0079-s089",
+        "shard-0079-s088",
+        "shard-0089-s069",
+        "shard-0084-s015",
+        "shard-0083-s027",
+        "shard-0078-s025",
+        "shard-0083-s117"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0079",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084",
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "The approval seam is now precise: the docs currently describe two different action targets for the same family of approval/recovery behavior.",
+        "The authored sweep itself is complete and should now hand off to reconciliation rather than additional model passes.",
+        "The blocked/runtime lineage work already moved toward:",
+        "The canonical runtime action model has already made both versions obsolete.",
+        "The command catalog and the graph spec cannot both be correct.",
+        "The current unresolved set is sharp enough that another broad audit pass would mostly reconfirm existing evidence.",
+        "The doc is already ahead on identity in some places:",
+        "The doc still uses non-deterministic phrasing in owner-level gate text:",
+        "The docs now have two simultaneous identity drifts:",
+        "The file still claims HITL semantics must not change, while later sections already change the meaning from request-centric tier-boundary approvals to blocked/runtime overlays."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

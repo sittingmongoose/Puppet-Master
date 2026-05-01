@@ -1,0 +1,109 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0504",
+  "coverage_row_ids_represented": [
+    "cov-02206",
+    "cov-02207",
+    "cov-02208",
+    "cov-02209",
+    "cov-02210",
+    "cov-02211",
+    "cov-02212",
+    "cov-02213",
+    "cov-02214",
+    "cov-02215"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0504",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "`provider` | `remediation.resolved` | `remediation.resolved` is also internally inconsistent inside the same file: | `remediation.spawned` | `replan_generation`",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-02206",
+        "cov-02207",
+        "cov-02208",
+        "cov-02209",
+        "cov-02210",
+        "cov-02211",
+        "cov-02212",
+        "cov-02213",
+        "cov-02214",
+        "cov-02215"
+      ],
+      "source_obligation_ids": [
+        "obl-1406",
+        "obl-1407",
+        "obl-1408",
+        "obl-1409",
+        "obl-1410",
+        "obl-1411",
+        "obl-1412",
+        "obl-1413",
+        "obl-1414",
+        "obl-1415"
+      ],
+      "source_seed_ids": [
+        "shard-0078-s006",
+        "shard-0085-s025",
+        "shard-0079-s120",
+        "shard-0083-s065",
+        "shard-0079-s119",
+        "shard-0080-s028",
+        "shard-0078-s086",
+        "shard-0078-s135",
+        "shard-0083-s097",
+        "shard-0080-s004",
+        "shard-0083-s093",
+        "shard-0078-s089",
+        "shard-0078-s138",
+        "shard-0083-s100",
+        "shard-0088-s029"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0079",
+        "shard-0080",
+        "shard-0083",
+        "shard-0085",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`provider`",
+        "provider",
+        "`remediation.resolved`",
+        "remediation.resolved",
+        "`remediation.resolved` is also internally inconsistent inside the same file:",
+        "`remediation.spawned`",
+        "remediation.spawned",
+        "`replan_generation`",
+        "replan_generation",
+        "`request_id`",
+        "request_id",
+        "`request_id` approval targeting",
+        "`request_id` can survive as compatibility lineage. It cannot remain the primary approval identity.",
+        "`request_kind = tier_boundary_approval`",
+        "request_kind = tier_boundary_approval",
+        "`requested_account_id` absent where the ledger expects it",
+        "requested_account_id"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0388",
+  "represented_seed_ids": [
+    "shard-0033-s011"
+  ],
+  "source_shard_ids": [
+    "shard-0033"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0033-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "Expand Glossary.md so it becomes the owner for the stable term list, with longer help entries explaining: why the object exists, how it relates to nearby objects, common misunderstandings, links to re\u2026",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Expand Glossary.md so it becomes the owner for the stable term list, with longer help entries explaining: why the object exists, how it relates to nearby objects, common misunderstandings, links to related concepts",
+        "History and Ledger especially need precise help because they are easy to collapse into one generic past activity concept",
+        "lane and worktree need asymmetric help across surfaces: Orchestrator emphasizes lane as operational object; Source Control emphasizes worktree as concrete Git object",
+        "legacy tier wording still present in docs is now both a data-model risk and a user-copy/help migration risk"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Candidate fixes to carry forward",
+        "### Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [
+        "tier"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006401"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0087",
+  "coverage_row_ids_represented": [
+    "cov-03117"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0087",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_cross_reference",
+      "description": "Blocked payload normalization: 'reason_code' / 'recovery_options[]' vs 'blocked_reason_code' / 'allowed_action_ids[]' are both active in docs \u2014 one canonical form must be chosen",
+      "affected_targets": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "## Blocked Payload Normalization"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-03117"
+      ],
+      "source_obligation_ids": [
+        "obl-2022"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "exact_missing_items": [
+        "Blocked payload normalization: 'reason_code' / 'recovery_options[]' vs 'blocked_reason_code' / 'allowed_action_ids[]' are both active in docs \u2014 one canonical form must be chosen"
+      ],
+      "stale_tokens": [
+        "reason_code",
+        "recovery_options[]"
+      ],
+      "canonical_replacement_hints": [
+        "Use 'blocked_reason_code' and 'allowed_action_ids[]' as canonical field names"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

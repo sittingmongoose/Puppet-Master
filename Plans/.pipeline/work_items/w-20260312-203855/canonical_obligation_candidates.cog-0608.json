@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0608",
+  "represented_seed_ids": [
+    "shard-0035-s003"
+  ],
+  "source_shard_ids": [
+    "shard-0035"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0035-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "usage_event_ref? is treated as the canonical bridge name in storage/receipt rules, but no doc actually defines what it is",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "usage_event_ref? is treated as the canonical bridge name in storage/receipt rules, but no doc actually defines what it is",
+        "Runtime_Artifacts_Panel.md assumes concrete runtime-artifact schema enforcement that is not currently present in the repo",
+        "Orchestrator_Page.md TOC sections 13-17 are genuinely missing, not relocated"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## usage_event_ref Definition Gap",
+        "## Orchestrator Page Missing Sections"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006801"
+      ],
+      "notes": [
+        "usage_event_ref is a hard blocker for trust-safe cross-surface navigation; Orchestrator_Page.md sections 13-17 are confirmed absent"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

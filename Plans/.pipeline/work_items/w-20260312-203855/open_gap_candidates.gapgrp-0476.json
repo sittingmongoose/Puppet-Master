@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0476",
+  "coverage_row_ids_represented": [
+    "cov-01266",
+    "cov-01293",
+    "cov-01294",
+    "cov-01295",
+    "cov-01296",
+    "cov-01297",
+    "cov-01306",
+    "cov-01307",
+    "cov-01308",
+    "cov-01309"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0476",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "Impacted docs and likely owner order | Keep any surviving `PuppetMasterEvent::*` references explicitly marked as compatibility transport or migration notes, not as the primary operational source. | Keep any surviving `request_id` only as lineage or compatibility metadata for historical replay, not as the primary approval action target. | Keep any surviving `request_id` text explicitly labeled as compatibility lineage or historical replay support only. | Keep canonical usage-event identity primary for Usage/Ledger navigation.",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-01266",
+        "cov-01293",
+        "cov-01294",
+        "cov-01295",
+        "cov-01296",
+        "cov-01297",
+        "cov-01306",
+        "cov-01307",
+        "cov-01308",
+        "cov-01309"
+      ],
+      "source_obligation_ids": [
+        "obl-0754",
+        "obl-0764",
+        "obl-0765",
+        "obl-0766",
+        "obl-0767",
+        "obl-0768",
+        "obl-0773",
+        "obl-0774",
+        "obl-0775",
+        "obl-0776"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s074",
+        "shard-0080-s007",
+        "shard-0079-s009",
+        "shard-0079-s069",
+        "shard-0077-s015",
+        "shard-0077-s016",
+        "shard-0079-s055",
+        "shard-0086-s093",
+        "shard-0086-s112",
+        "shard-0086-s128"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0079",
+        "shard-0080",
+        "shard-0086",
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Impacted docs and likely owner order",
+        "Keep any surviving `PuppetMasterEvent::*` references explicitly marked as compatibility transport or migration notes, not as the primary operational source.",
+        "PuppetMasterEvent::*",
+        "Keep any surviving `request_id` only as lineage or compatibility metadata for historical replay, not as the primary approval action target.",
+        "request_id",
+        "Keep any surviving `request_id` text explicitly labeled as compatibility lineage or historical replay support only.",
+        "Keep canonical usage-event identity primary for Usage/Ledger navigation.",
+        "Keep node/attempt identity primary for runtime and graph inspectors.",
+        "Later canonical correction text says:",
+        "MUST CHANGE",
+        "MUST RECONCILE",
+        "MUST VERIFY"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}
